@@ -24,6 +24,7 @@ import melox.provider.kugou.KugouProvider
 import melox.provider.kuwo.KuwoProvider
 import melox.provider.netease.NeteaseProvider
 import melox.provider.qqmusic.QQMusicProvider
+import melox.ui.theme.MeloXLanTingProFontFamily
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -45,6 +46,23 @@ fun MeloXApp() {
             onPrimary = Color.White,
             primaryContainer = Color(0xFF3700B3),
             secondary = Color(0xFF03DAC5),
+        ),
+        typography = Typography().copy(
+            displayLarge = Typography().displayLarge.copy(fontFamily = MeloXLanTingProFontFamily),
+            displayMedium = Typography().displayMedium.copy(fontFamily = MeloXLanTingProFontFamily),
+            displaySmall = Typography().displaySmall.copy(fontFamily = MeloXLanTingProFontFamily),
+            headlineLarge = Typography().headlineLarge.copy(fontFamily = MeloXLanTingProFontFamily),
+            headlineMedium = Typography().headlineMedium.copy(fontFamily = MeloXLanTingProFontFamily),
+            headlineSmall = Typography().headlineSmall.copy(fontFamily = MeloXLanTingProFontFamily),
+            titleLarge = Typography().titleLarge.copy(fontFamily = MeloXLanTingProFontFamily),
+            titleMedium = Typography().titleMedium.copy(fontFamily = MeloXLanTingProFontFamily),
+            titleSmall = Typography().titleSmall.copy(fontFamily = MeloXLanTingProFontFamily),
+            bodyLarge = Typography().bodyLarge.copy(fontFamily = MeloXLanTingProFontFamily),
+            bodyMedium = Typography().bodyMedium.copy(fontFamily = MeloXLanTingProFontFamily),
+            bodySmall = Typography().bodySmall.copy(fontFamily = MeloXLanTingProFontFamily),
+            labelLarge = Typography().labelLarge.copy(fontFamily = MeloXLanTingProFontFamily),
+            labelMedium = Typography().labelMedium.copy(fontFamily = MeloXLanTingProFontFamily),
+            labelSmall = Typography().labelSmall.copy(fontFamily = MeloXLanTingProFontFamily),
         )
     ) {
         Column(modifier = Modifier.fillMaxSize().background(Color(0xFF121212))) {
