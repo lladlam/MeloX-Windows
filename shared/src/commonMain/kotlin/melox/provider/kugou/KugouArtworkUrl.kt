@@ -1,6 +1,7 @@
 package melox.provider.kugou
 
 import org.json.JSONObject
+import org.json.JSONArray
 
 internal fun normalizeKugouArtworkUrl(value: String): String? {
     val normalized = value.trim()
@@ -39,4 +40,34 @@ internal fun kugouArtworkUrl(item: JSONObject): String? {
         else -> null
     }
     return transParam?.let(::fromObject)
+}
+
+internal fun kugouFirstString(value: JSONObject, vararg keys: String): String =
+    kugouObjects(value)
+        .asSequence()
+        .flatMap { item -> keys.asSequence().map(item::optString) }
+        .firstOrNull(String::isNotBlank)
+        .orEmpty()
+
+internal fun kugouFirstLong(value: JSONObject, vararg keys: String): Long {
+    for (item in kugouObjects(value)) {
+        for (key in keys) {
+            when (val raw = item.opt(key)) {
+                is Number -> return raw.toLong()
+                is String -> raw.toLongOrNull()?.let { return it }
+            }
+        }
+    }
+    return -1L
+}
+
+private fun kugouObjects(value: Any?): List<JSONObject> = when (value) {
+    is JSONObject -> buildList {
+        add(value)
+        value.keys().forEach { key -> addAll(kugouObjects(value.opt(key))) }
+    }
+    is JSONArray -> buildList {
+        for (index in 0 until value.length()) addAll(kugouObjects(value.opt(index)))
+    }
+    else -> emptyList()
 }
