@@ -7,32 +7,48 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
+  build-jar:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
-      
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
-      
-      - name: Build shared module
-        run: gradle :shared:compileKotlinDesktop
-      
-      - name: Build desktop module
-        run: gradle :desktop:compileKotlinDesktop
-      
-      - name: Package uber jar
+      - name: Build
         run: gradle :desktop:packageUberJarForCurrentOS
-      
-      - name: Upload artifact
+      - name: Upload JAR
         uses: actions/upload-artifact@v4
         with:
-          name: MeloX-Desktop
+          name: MeloX-Desktop-JAR
           path: desktop/build/compose/jars/*.jar
           if-no-files-found: error
+
+  build-exe:
+    runs-on: windows-latest
+    needs: build-jar
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+      - name: Download JAR artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: MeloX-Desktop-JAR
+          path: desktop/build/compose/jars/
+      - name: Build MSI/EXE
+        run: gradle :desktop:packageMsi
+      - name: Upload MSI
+        uses: actions/upload-artifact@v4
+        with:
+          name: MeloX-Desktop-Installer
+          path: desktop/build/compose/binaries/main/msi/*.msi
+          if-no-files-found: warn
