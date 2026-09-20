@@ -34,8 +34,17 @@ compose.desktop {
         mainClass = "melox.MainKt"
         nativeDistributions {
             targetFormats(TargetFormat.Exe, TargetFormat.Msi)
-            packageName = "Melox"
+            packageName = "MeloX-Desktop"
             packageVersion = "1.0.0"
+            description = "MeloX Music Player for Windows"
+            vendor = "MeloX"
+            includeAllModules = true
+            windows {
+                menuGroup = "MeloX"
+                upgradeUuid = "a1b2c3d4-e5f6-7890-abcd-ef1234567890"
+                perUserInstall = true
+                dirChooser = true
+            }
         }
     }
 }

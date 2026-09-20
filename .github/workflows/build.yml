@@ -18,32 +18,15 @@ jobs:
           distribution: 'temurin'
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
-      - name: Build uber jar
-        run: gradle :desktop:packageUberJarForCurrentOS
-      - name: Get jar info
-        id: jar
+      - name: Build exe via Gradle Compose plugin
+        run: gradle :desktop:packageExe
+      - name: List output
         shell: pwsh
         run: |
-          $jar = Get-ChildItem desktop/build/compose/jars/*.jar | Select-Object -First 1
-          echo "jar_path=$($jar.FullName)" >> $env:GITHUB_OUTPUT
-          echo "jar_name=$($jar.Name)" >> $env:GITHUB_OUTPUT
-          echo "jar_dir=$($jar.DirectoryName)" >> $env:GITHUB_OUTPUT
-          echo "jar_size=$($jar.Length)" >> $env:GITHUB_OUTPUT
-          echo "Found: $($jar.Name) ($($jar.Length) bytes)"
-      - name: Create exe with jpackage
-        shell: pwsh
-        run: |
-          jpackage --type app-image `
-            --input "${{ steps.jar.outputs.jar_dir }}" `
-            --main-jar "${{ steps.jar.outputs.jar_name }}" `
-            --name MeloX-Desktop `
-            --dest desktop/build/releases `
-            --java-options "-Xmx1g"
-      - name: Upload artifacts
+          Get-ChildItem -Recurse desktop/build/compose/binaries/main/exe/ | ForEach-Object { Write-Output "$($_.FullName) ($($_.Length) bytes)" }
+      - name: Upload exe artifact
         uses: actions/upload-artifact@v4
         with:
           name: MeloX-Desktop-${{ runner.os }}
-          path: |
-            desktop/build/releases/MeloX-Desktop/**
-            desktop/build/compose/jars/*.jar
+          path: desktop/build/compose/binaries/main/exe/**
           if-no-files-found: error
