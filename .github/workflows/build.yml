@@ -26,3 +26,13 @@ jobs:
       
       - name: Build desktop module
         run: gradle :desktop:compileKotlinDesktop
+      
+      - name: Run full build
+        run: gradle :desktop:packageUberJarForCurrentOS
+      
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: MeloX-Desktop
+          path: desktop/build/libs/desktop-*.jar
+          if-no-files-found: warn
