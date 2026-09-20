@@ -30,18 +30,6 @@ jobs:
           echo "jar_dir=$($jar.DirectoryName)" >> $env:GITHUB_OUTPUT
           echo "jar_size=$($jar.Length)" >> $env:GITHUB_OUTPUT
           echo "Found: $($jar.Name) ($($jar.Length) bytes)"
-      - name: Test run uber jar directly
-        shell: pwsh
-        run: |
-          Write-Output "=== Testing uber jar directly ==="
-          $jar = "${{ steps.jar.outputs.jar_path }}"
-          Write-Output "Running: java -jar $jar"
-          $proc = Start-Process -FilePath "java" -ArgumentList "-jar", "`"$jar`"" -NoNewWindow -Wait -PassThru -RedirectStandardError "stderr.txt" -RedirectStandardOutput "stdout.txt"
-          Write-Output "Exit code: $($proc.ExitCode)"
-          Write-Output "=== STDOUT ==="
-          Get-Content "stdout.txt" -ErrorAction SilentlyContinue
-          Write-Output "=== STDERR ==="
-          Get-Content "stderr.txt" -ErrorAction SilentlyContinue
       - name: Create app-image with jpackage
         shell: pwsh
         run: |
