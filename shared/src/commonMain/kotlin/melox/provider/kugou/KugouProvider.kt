@@ -32,7 +32,7 @@ import melox.music.provider.UserLibraryCapability
 import okhttp3.OkHttpClient
 
 class KugouProvider(
-    sessionProvider: () -> KugouSession,
+    sessionProvider: () -> KugouSession = { KugouSession("", 0L, "", 0, "-", "", "", "", "", "") },
     httpClient: OkHttpClient = melox.network.MeloXHttpClient.shared,
 ) : MusicProvider,
     SearchCapability,

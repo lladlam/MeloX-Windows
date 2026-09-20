@@ -20,14 +20,16 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
       - name: Build uber jar
         run: gradle :desktop:packageUberJarForCurrentOS
-      - name: Get jar name
+      - name: Get jar info
         id: jar
         shell: pwsh
         run: |
           $jar = Get-ChildItem desktop/build/compose/jars/*.jar | Select-Object -First 1
+          echo "jar_path=$($jar.FullName)" >> $env:GITHUB_OUTPUT
           echo "jar_name=$($jar.Name)" >> $env:GITHUB_OUTPUT
           echo "jar_dir=$($jar.DirectoryName)" >> $env:GITHUB_OUTPUT
-          echo "Found: $($jar.Name)"
+          echo "jar_size=$($jar.Length)" >> $env:GITHUB_OUTPUT
+          echo "Found: $($jar.Name) ($($jar.Length) bytes)"
       - name: Create exe with jpackage
         shell: pwsh
         run: |
@@ -37,12 +39,11 @@ jobs:
             --name MeloX-Desktop `
             --dest desktop/build/releases `
             --java-options "-Xmx1g"
-        if: success()
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: MeloX-Desktop-Release
+          name: MeloX-Desktop-${{ runner.os }}
           path: |
             desktop/build/releases/MeloX-Desktop/**
             desktop/build/compose/jars/*.jar
-          if-no-files-found: warn
+          if-no-files-found: error
