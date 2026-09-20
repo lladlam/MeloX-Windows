@@ -20,38 +20,29 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
       - name: Build uber jar
         run: gradle :desktop:packageUberJarForCurrentOS
-      - name: Get jar path
+      - name: Get jar name
         id: jar
         shell: pwsh
         run: |
           $jar = Get-ChildItem desktop/build/compose/jars/*.jar | Select-Object -First 1
-          echo "jar_path=$($jar.FullName)" >> $env:GITHUB_OUTPUT
           echo "jar_name=$($jar.Name)" >> $env:GITHUB_OUTPUT
+          echo "jar_dir=$($jar.DirectoryName)" >> $env:GITHUB_OUTPUT
+          echo "Found: $($jar.Name)"
       - name: Create exe with jpackage
         shell: pwsh
         run: |
           jpackage --type app-image `
-            --input desktop/build/compose/jarx `
-            --main-jar ${{ steps.jar.outputs.jar_name }} `
-            --name MeloX-Desktop `
-            --dest desktop/build/releases `
-            --icon desktop/src/main/resources/icon.png `
-            --java-options "-Xmx1g"
-      - name: Create installer with jpackage
-        shell: pwsh
-        run: |
-          jpackage --type msi `
-            --input desktop/build/compose/jars `
-            --main-jar ${{ steps.jar.outputs.jar_name }} `
+            --input "${{ steps.jar.outputs.jar_dir }}" `
+            --main-jar "${{ steps.jar.outputs.jar_name }}" `
             --name MeloX-Desktop `
             --dest desktop/build/releases `
             --java-options "-Xmx1g"
+        if: success()
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
           name: MeloX-Desktop-Release
           path: |
-            desktop/build/releases/*.exe
-            desktop/build/releases/*.msi
+            desktop/build/releases/MeloX-Desktop/**
             desktop/build/compose/jars/*.jar
           if-no-files-found: warn
