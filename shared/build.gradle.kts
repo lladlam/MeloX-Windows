@@ -20,6 +20,7 @@ kotlin {
                 implementation(libs.compose.ui)
                 implementation(libs.compose.runtime)
                 implementation(libs.compose.material3)
+                implementation(libs.okhttp)
             }
         }
         val commonMain by getting {
