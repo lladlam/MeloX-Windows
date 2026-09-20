@@ -38,7 +38,15 @@ compose.desktop {
             packageVersion = "1.0.0"
             description = "MeloX Music Player for Windows"
             vendor = "MeloX"
-            includeAllModules = true
+            modules(
+                "java.instrument",
+                "java.prefs",
+                "java.sql",
+                "jdk.unsupported",
+                "jdk.crypto.ec",
+                "jdk.localedata",
+                "jdk.accessibility"
+            )
             windows {
                 menuGroup = "MeloX"
                 upgradeUuid = "a1b2c3d4-e5f6-7890-abcd-ef1234567890"

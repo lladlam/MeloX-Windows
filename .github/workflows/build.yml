@@ -24,6 +24,29 @@ jobs:
         shell: pwsh
         run: |
           Get-ChildItem -Recurse desktop/build/compose/binaries/main/exe/ | ForEach-Object { Write-Output "$($_.FullName) ($($_.Length) bytes)" }
+      - name: Diagnose runtime modules
+        if: always()
+        shell: pwsh
+        run: |
+          $runtime = Get-ChildItem -Recurse desktop/build/compose/binaries/main/exe/ -Filter "java.exe" | Select-Object -First 1
+          if ($runtime) {
+            Write-Output "Found java.exe at: $($runtime.FullName)"
+            & $runtime.FullName --list-modules 2>&1 | ForEach-Object { Write-Output $_ }
+          } else {
+            Write-Output "java.exe not found in output"
+          }
+      - name: Test run (headless)
+        if: always()
+        shell: pwsh
+        run: |
+          $app = Get-ChildItem -Recurse desktop/build/compose/binaries/main/exe/ -Filter "MeloX-Desktop.bat" | Select-Object -First 1
+          if (-not $app) {
+            $app = Get-ChildItem -Recurse desktop/build/compose/binaries/main/exe/ -Filter "MeloX-Desktop.exe" | Select-Object -First 1
+          }
+          if ($app) {
+            Write-Output "Found launcher: $($app.FullName)"
+            Start-Process -FilePath $app.FullName -ArgumentList "--help" -NoNewWindow -Wait -PassThru 2>&1 | ForEach-Object { Write-Output $_ }
+          }
       - name: Upload exe artifact
         uses: actions/upload-artifact@v4
         with:
