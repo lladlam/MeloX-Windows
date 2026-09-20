@@ -7,29 +7,8 @@ on:
     branches: [ main ]
 
 jobs:
-  build-jar:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Set up JDK 17
-        uses: actions/setup-java@v4
-        with:
-          java-version: '17'
-          distribution: 'temurin'
-      - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v4
-      - name: Build
-        run: gradle :desktop:packageUberJarForCurrentOS
-      - name: Upload JAR
-        uses: actions/upload-artifact@v4
-        with:
-          name: MeloX-Desktop-JAR
-          path: desktop/build/compose/jars/*.jar
-          if-no-files-found: error
-
-  build-exe:
+  build:
     runs-on: windows-latest
-    needs: build-jar
     steps:
       - uses: actions/checkout@v4
       - name: Set up JDK 17
@@ -39,16 +18,40 @@ jobs:
           distribution: 'temurin'
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
-      - name: Download JAR artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: MeloX-Desktop-JAR
-          path: desktop/build/compose/jars/
-      - name: Build MSI/EXE
-        run: gradle :desktop:packageMsi
-      - name: Upload MSI
+      - name: Build uber jar
+        run: gradle :desktop:packageUberJarForCurrentOS
+      - name: Get jar path
+        id: jar
+        shell: pwsh
+        run: |
+          $jar = Get-ChildItem desktop/build/compose/jars/*.jar | Select-Object -First 1
+          echo "jar_path=$($jar.FullName)" >> $env:GITHUB_OUTPUT
+          echo "jar_name=$($jar.Name)" >> $env:GITHUB_OUTPUT
+      - name: Create exe with jpackage
+        shell: pwsh
+        run: |
+          jpackage --type app-image `
+            --input desktop/build/compose/jarx `
+            --main-jar ${{ steps.jar.outputs.jar_name }} `
+            --name MeloX-Desktop `
+            --dest desktop/build/releases `
+            --icon desktop/src/main/resources/icon.png `
+            --java-options "-Xmx1g"
+      - name: Create installer with jpackage
+        shell: pwsh
+        run: |
+          jpackage --type msi `
+            --input desktop/build/compose/jars `
+            --main-jar ${{ steps.jar.outputs.jar_name }} `
+            --name MeloX-Desktop `
+            --dest desktop/build/releases `
+            --java-options "-Xmx1g"
+      - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: MeloX-Desktop-Installer
-          path: desktop/build/compose/binaries/main/msi/*.msi
+          name: MeloX-Desktop-Release
+          path: |
+            desktop/build/releases/*.exe
+            desktop/build/releases/*.msi
+            desktop/build/compose/jars/*.jar
           if-no-files-found: warn
