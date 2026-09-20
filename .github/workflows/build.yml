@@ -18,38 +18,48 @@ jobs:
           distribution: 'temurin'
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
-      - name: Build exe via Gradle Compose plugin
-        run: gradle :desktop:packageExe
-      - name: List output
+      - name: Build uber jar
+        run: gradle :desktop:packageUberJarForCurrentOS
+      - name: Get jar info
+        id: jar
         shell: pwsh
         run: |
-          Get-ChildItem -Recurse desktop/build/compose/binaries/main/exe/ | ForEach-Object { Write-Output "$($_.FullName) ($($_.Length) bytes)" }
-      - name: Diagnose runtime modules
-        if: always()
+          $jar = Get-ChildItem desktop/build/compose/jars/*.jar | Select-Object -First 1
+          echo "jar_path=$($jar.FullName)" >> $env:GITHUB_OUTPUT
+          echo "jar_name=$($jar.Name)" >> $env:GITHUB_OUTPUT
+          echo "jar_dir=$($jar.DirectoryName)" >> $env:GITHUB_OUTPUT
+          echo "jar_size=$($jar.Length)" >> $env:GITHUB_OUTPUT
+          echo "Found: $($jar.Name) ($($jar.Length) bytes)"
+      - name: Create app-image with jpackage (system JDK)
         shell: pwsh
         run: |
-          $runtime = Get-ChildItem -Recurse desktop/build/compose/binaries/main/exe/ -Filter "java.exe" | Select-Object -First 1
-          if ($runtime) {
-            Write-Output "Found java.exe at: $($runtime.FullName)"
-            & $runtime.FullName --list-modules 2>&1 | ForEach-Object { Write-Output $_ }
+          jpackage --type app-image `
+            --input "${{ steps.jar.outputs.jar_dir }}" `
+            --main-jar "${{ steps.jar.outputs.jar_name }}" `
+            --name MeloX-Desktop `
+            --dest desktop/build/releases `
+            --java-options "-Xmx1g" `
+            --add-modules jdk.accessibility
+      - name: Diagnose output
+        shell: pwsh
+        run: |
+          Get-ChildItem -Recurse desktop/build/releases/MeloX-Desktop/ | ForEach-Object { Write-Output "$($_.FullName) ($($_.Length) bytes)" }
+          $java = Get-ChildItem -Recurse desktop/build/releases/MeloX-Desktop/ -Filter "java.exe" | Select-Object -First 1
+          if ($java) {
+            Write-Output "Found java.exe at: $($java.FullName)"
+            & $java.FullName --list-modules 2>&1 | ForEach-Object { Write-Output $_ }
           } else {
-            Write-Output "java.exe not found in output"
+            Write-Output "WARNING: java.exe not found in output"
           }
-      - name: Test run (headless)
-        if: always()
+      - name: Zip the app-image
         shell: pwsh
         run: |
-          $app = Get-ChildItem -Recurse desktop/build/compose/binaries/main/exe/ -Filter "MeloX-Desktop.bat" | Select-Object -First 1
-          if (-not $app) {
-            $app = Get-ChildItem -Recurse desktop/build/compose/binaries/main/exe/ -Filter "MeloX-Desktop.exe" | Select-Object -First 1
-          }
-          if ($app) {
-            Write-Output "Found launcher: $($app.FullName)"
-            Start-Process -FilePath $app.FullName -ArgumentList "--help" -NoNewWindow -Wait -PassThru 2>&1 | ForEach-Object { Write-Output $_ }
-          }
-      - name: Upload exe artifact
+          Compress-Archive -Path "desktop/build/releases/MeloX-Desktop/*" -DestinationPath "desktop/build/releases/MeloX-Desktop-Windows.zip"
+          $zip = Get-Item "desktop/build/releases/MeloX-Desktop-Windows.zip"
+          Write-Output "Zip: $($zip.FullName) ($($zip.Length) bytes)"
+      - name: Upload zip artifact
         uses: actions/upload-artifact@v4
         with:
           name: MeloX-Desktop-${{ runner.os }}
-          path: desktop/build/compose/binaries/main/exe/**
+          path: desktop/build/releases/MeloX-Desktop-Windows.zip
           if-no-files-found: error
