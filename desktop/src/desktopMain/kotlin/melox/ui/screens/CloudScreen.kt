@@ -1,28 +1,28 @@
 package melox.ui.screens
 
-import androidx.compose.animation.animateColorAsState
-import androidx.compose.foundation.*
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.*
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.material3.LinearProgressIndicator
+import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.compose.foundation.hoverable
-import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.interaction.collectIsHoveredAsState
+import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.ui.text.TextStyle
+import melox.ui.foundation.*
 import melox.ui.navigation.MeloXNavState
 import melox.ui.theme.MeloXColors
 import melox.ui.theme.MeloXLanTingProFontFamily
+import melox.ui.theme.MeloXTypography
 
 private data class CloudFile(
     val id: String,
@@ -58,7 +58,6 @@ fun CloudScreen(
     var isUploading by remember { mutableStateOf(false) }
     var showDeleteDialog by remember { mutableStateOf<CloudFile?>(null) }
     val cloudFiles = remember { mutableStateListOf<CloudFile>() }
-    var isRefreshing by remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
         cloudFiles.clear()
@@ -89,16 +88,26 @@ fun CloudScreen(
             .fillMaxSize()
             .background(MeloXColors.Background),
     ) {
-        CloudTopBar(
-            isRefreshing = isRefreshing,
-            onRefresh = {
-                isRefreshing = true
-                isRefreshing = false
-            },
-            onUpload = {
-                isUploading = true
-                // Simulate upload completion
-                isUploading = false
+        MeloXIosTopBar(
+            title = "云盘",
+            actions = {
+                MeloXSymbolIcon(
+                    symbol = MeloXSymbol.Upload,
+                    modifier = Modifier
+                        .size(44.dp)
+                        .clickable {
+                            isUploading = true
+                            isUploading = false
+                        },
+                    color = MeloXColors.Primary,
+                    size = 22,
+                )
+                MeloXSymbolIcon(
+                    symbol = MeloXSymbol.Refresh,
+                    modifier = Modifier.size(44.dp),
+                    color = MeloXColors.OnSurfaceVariant,
+                    size = 20,
+                )
             },
         )
 
@@ -154,73 +163,24 @@ fun CloudScreen(
 }
 
 @Composable
-private fun CloudTopBar(
-    isRefreshing: Boolean,
-    onRefresh: () -> Unit,
-    onUpload: () -> Unit,
-) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(MeloXColors.Background)
-            .padding(horizontal = 24.dp, vertical = 16.dp),
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        Text(
-            text = "云盘",
-            color = MeloXColors.TextPrimary,
-            fontFamily = MeloXLanTingProFontFamily,
-            fontWeight = FontWeight.Bold,
-            fontSize = 28.sp,
-        )
-        Spacer(modifier = Modifier.weight(1f))
-        IconButton(onClick = onUpload) {
-            Surface(
-                shape = CircleShape,
-                color = MeloXColors.Primary,
-                modifier = Modifier.size(32.dp),
-            ) {
-                Box(contentAlignment = Alignment.Center) {
-                    Text(
-                        text = "↑",
-                        color = MeloXColors.OnPrimary,
-                        fontSize = 16.sp,
-                    )
-                }
-            }
-        }
-        Spacer(modifier = Modifier.width(8.dp))
-        IconButton(onClick = onRefresh, enabled = !isRefreshing) {
-            Text(
-                text = if (isRefreshing) "⟳" else "↻",
-                color = MeloXColors.OnSurfaceVariant,
-                fontSize = 20.sp,
-            )
-        }
-    }
-}
-
-@Composable
 private fun StorageQuotaBar(quota: StorageQuota) {
     val usedPercent = quota.usedGB / quota.totalGB
 
-    Column(modifier = Modifier.padding(horizontal = 24.dp)) {
+    Column(modifier = Modifier.padding(horizontal = 16.dp)) {
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
                 text = "存储空间",
-                color = MeloXColors.TextSecondary,
-                fontFamily = MeloXLanTingProFontFamily,
-                fontSize = 13.sp,
+                style = MeloXTypography.subheadline,
+                color = MeloXColors.OnSurfaceVariant,
             )
             Spacer(modifier = Modifier.weight(1f))
             Text(
                 text = "${quota.usedGB} GB / ${quota.totalGB} GB",
-                color = MeloXColors.TextSecondary,
-                fontFamily = MeloXLanTingProFontFamily,
-                fontSize = 13.sp,
+                style = MeloXTypography.subheadline,
+                color = MeloXColors.OnSurfaceVariant,
             )
         }
         Spacer(modifier = Modifier.height(8.dp))
@@ -228,14 +188,14 @@ private fun StorageQuotaBar(quota: StorageQuota) {
             modifier = Modifier
                 .fillMaxWidth()
                 .height(8.dp)
-                .clip(RoundedCornerShape(4.dp))
+                .clip(MeloXGlass.capsuleShape)
                 .background(MeloXColors.SurfaceVariant),
         ) {
             Box(
                 modifier = Modifier
                     .fillMaxHeight()
                     .fillMaxWidth(fraction = usedPercent)
-                    .clip(RoundedCornerShape(4.dp))
+                    .clip(MeloXGlass.capsuleShape)
                     .background(
                         Brush.horizontalGradient(
                             colors = listOf(MeloXColors.Primary, MeloXColors.Secondary),
@@ -246,9 +206,8 @@ private fun StorageQuotaBar(quota: StorageQuota) {
         Spacer(modifier = Modifier.height(4.dp))
         Text(
             text = "已使用 ${(usedPercent * 100).toInt()}%",
-            color = MeloXColors.TextTertiary,
-            fontFamily = MeloXLanTingProFontFamily,
-            fontSize = 11.sp,
+            style = MeloXTypography.caption,
+            color = MeloXColors.OnSurfaceVariant.copy(alpha = 0.6f),
         )
     }
 }
@@ -258,56 +217,46 @@ private fun SearchField(
     query: String,
     onQueryChange: (String) -> Unit,
 ) {
-    Surface(
+    Box(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 24.dp),
-        shape = RoundedCornerShape(12.dp),
-        color = MeloXColors.SurfaceVariant,
+            .padding(horizontal = 16.dp)
+            .clip(MeloXGlass.capsuleShape)
+            .background(MeloXColors.OnBackground.copy(alpha = 0.055f))
+            .padding(horizontal = 12.dp, vertical = 10.dp),
     ) {
-        Row(
-            modifier = Modifier.padding(horizontal = 12.dp, vertical = 10.dp),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Text(
-                text = "⌕",
-                color = MeloXColors.TextTertiary,
-                fontSize = 16.sp,
-            )
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            MeloXSymbolIcon(symbol = MeloXSymbol.Search, color = MeloXColors.OnSurfaceVariant, size = 18)
             Spacer(modifier = Modifier.width(8.dp))
-            androidx.compose.foundation.text.BasicTextField(
-                value = query,
-                onValueChange = onQueryChange,
-                textStyle = androidx.compose.ui.text.TextStyle(
-                    color = MeloXColors.TextPrimary,
-                    fontFamily = MeloXLanTingProFontFamily,
-                    fontSize = 14.sp,
-                ),
-                modifier = Modifier.weight(1f),
-                singleLine = true,
-                decorationBox = { innerTextField ->
-                    if (query.isEmpty()) {
-                        Text(
-                            text = "搜索云盘歌曲...",
-                            color = MeloXColors.TextTertiary,
-                            fontFamily = MeloXLanTingProFontFamily,
-                            fontSize = 14.sp,
-                        )
-                    }
-                    innerTextField()
-                },
-            )
-            if (query.isNotEmpty()) {
-                IconButton(
-                    onClick = { onQueryChange("") },
-                    modifier = Modifier.size(20.dp),
-                ) {
+            Box(modifier = Modifier.weight(1f)) {
+                if (query.isEmpty()) {
                     Text(
-                        text = "✕",
-                        color = MeloXColors.TextTertiary,
-                        fontSize = 12.sp,
+                        text = "搜索云盘歌曲...",
+                        style = MeloXTypography.body,
+                        color = MeloXColors.OnSurfaceVariant.copy(alpha = 0.5f),
                     )
                 }
+                BasicTextField(
+                    value = query,
+                    onValueChange = onQueryChange,
+                    textStyle = TextStyle(
+                        color = MeloXColors.OnSurface,
+                        fontFamily = MeloXLanTingProFontFamily,
+                        fontSize = MeloXTypography.body.fontSize,
+                    ),
+                    modifier = Modifier.fillMaxWidth(),
+                    singleLine = true,
+                )
+            }
+            if (query.isNotEmpty()) {
+                MeloXSymbolIcon(
+                    symbol = MeloXSymbol.XMark,
+                    modifier = Modifier
+                        .size(20.dp)
+                        .clickable { onQueryChange("") },
+                    color = MeloXColors.OnSurfaceVariant,
+                    size = 14,
+                )
             }
         }
     }
@@ -322,31 +271,29 @@ private fun SortOptionsBar(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 24.dp),
+            .padding(horizontal = 16.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
             text = "共 $fileCount 首",
-            color = MeloXColors.TextTertiary,
-            fontFamily = MeloXLanTingProFontFamily,
-            fontSize = 12.sp,
+            style = MeloXTypography.caption,
+            color = MeloXColors.OnSurfaceVariant.copy(alpha = 0.6f),
         )
         Spacer(modifier = Modifier.weight(1f))
         listOf("名称", "日期", "大小").forEach { option ->
             val isActive = selectedOption == option
-            Surface(
+            Box(
                 modifier = Modifier
-                    .clip(RoundedCornerShape(16.dp))
-                    .clickable { onOptionChange(option) },
-                shape = RoundedCornerShape(16.dp),
-                color = if (isActive) MeloXColors.ChipBackgroundSelected else MeloXColors.ChipBackground,
+                    .clip(MeloXGlass.capsuleShape)
+                    .background(if (isActive) MeloXColors.Primary else MeloXColors.SurfaceVariant)
+                    .clickable { onOptionChange(option) }
+                    .padding(horizontal = 14.dp, vertical = 6.dp),
+                contentAlignment = Alignment.Center,
             ) {
                 Text(
                     text = option,
-                    color = if (isActive) MeloXColors.OnPrimary else MeloXColors.OnSurfaceVariant,
-                    fontFamily = MeloXLanTingProFontFamily,
-                    fontSize = 12.sp,
-                    modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
+                    style = MeloXTypography.caption,
+                    color = if (isActive) Color.White else MeloXColors.OnSurfaceVariant,
                 )
             }
             Spacer(modifier = Modifier.width(6.dp))
@@ -356,30 +303,22 @@ private fun SortOptionsBar(
 
 @Composable
 private fun UploadProgressIndicator() {
-    Surface(
+    Box(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 24.dp),
-        shape = RoundedCornerShape(12.dp),
-        color = MeloXColors.CardBackground,
+            .padding(horizontal = 16.dp)
+            .clip(MeloXGlass.cardShape)
+            .background(MeloXColors.SurfaceVariant)
+            .padding(14.dp),
     ) {
-        Column(
-            modifier = Modifier.padding(14.dp),
-        ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                CircularProgressIndicator(
-                    color = MeloXColors.Primary,
-                    strokeWidth = 2.dp,
-                    modifier = Modifier.size(16.dp),
-                )
+        Column {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                MeloXSymbolIcon(symbol = MeloXSymbol.Upload, color = MeloXColors.Primary, size = 16)
                 Spacer(modifier = Modifier.width(10.dp))
                 Text(
                     text = "正在上传...",
-                    color = MeloXColors.TextPrimary,
-                    fontFamily = MeloXLanTingProFontFamily,
-                    fontSize = 13.sp,
+                    style = MeloXTypography.subheadline,
+                    color = MeloXColors.OnSurface,
                 )
             }
             Spacer(modifier = Modifier.height(8.dp))
@@ -388,16 +327,15 @@ private fun UploadProgressIndicator() {
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(4.dp)
-                    .clip(RoundedCornerShape(2.dp)),
+                    .clip(MeloXGlass.capsuleShape),
                 color = MeloXColors.Primary,
-                trackColor = MeloXColors.PlayerProgressBackground,
+                trackColor = MeloXColors.PlayerProgressBg,
             )
             Spacer(modifier = Modifier.height(4.dp))
             Text(
                 text = "65% · 12.4 MB / 19.1 MB",
-                color = MeloXColors.TextTertiary,
-                fontFamily = MeloXLanTingProFontFamily,
-                fontSize = 11.sp,
+                style = MeloXTypography.caption,
+                color = MeloXColors.OnSurfaceVariant.copy(alpha = 0.6f),
             )
         }
     }
@@ -408,13 +346,25 @@ private fun CloudFileList(
     files: List<CloudFile>,
     onDeleteFile: (CloudFile) -> Unit,
 ) {
-    Column(modifier = Modifier.padding(horizontal = 24.dp)) {
-        files.forEach { file ->
+    Column(
+        modifier = Modifier
+            .padding(horizontal = 16.dp)
+            .clip(MeloXGlass.largeCardShape)
+            .background(MeloXColors.SurfaceVariant),
+    ) {
+        files.forEachIndexed { index, file ->
             CloudFileItem(
                 file = file,
                 onDelete = { onDeleteFile(file) },
             )
-            Spacer(modifier = Modifier.height(4.dp))
+            if (index < files.lastIndex) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(0.5.dp)
+                        .background(MeloXGlass.separatorColor),
+                )
+            }
         }
     }
 }
@@ -424,75 +374,54 @@ private fun CloudFileItem(
     file: CloudFile,
     onDelete: () -> Unit,
 ) {
-    val interactionSource = remember { MutableInteractionSource() }
-    val isHovered by interactionSource.collectIsHoveredAsState()
-
-    Surface(
+    Row(
         modifier = Modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(10.dp))
-            .hoverable(interactionSource),
-        shape = RoundedCornerShape(10.dp),
-        color = if (isHovered) MeloXColors.CardBackgroundHover else MeloXColors.CardBackground,
+            .padding(horizontal = 16.dp, vertical = 10.dp),
+        verticalAlignment = Alignment.CenterVertically,
     ) {
-        Row(
-            modifier = Modifier.padding(10.dp),
-            verticalAlignment = Alignment.CenterVertically,
+        Box(
+            modifier = Modifier
+                .size(44.dp)
+                .clip(MeloXGlass.compactShape)
+                .background(Brush.linearGradient(file.gradientColors)),
+            contentAlignment = Alignment.Center,
         ) {
-            Box(
-                modifier = Modifier
-                    .size(44.dp)
-                    .clip(RoundedCornerShape(8.dp))
-                    .background(Brush.linearGradient(file.gradientColors)),
-                contentAlignment = Alignment.Center,
-            ) {
-                Text(
-                    text = "☁",
-                    color = Color.White.copy(alpha = 0.9f),
-                    fontSize = 18.sp,
-                )
-            }
-            Spacer(modifier = Modifier.width(12.dp))
-            Column(modifier = Modifier.weight(1f)) {
-                Text(
-                    text = file.name,
-                    color = MeloXColors.TextPrimary,
-                    fontFamily = MeloXLanTingProFontFamily,
-                    fontWeight = FontWeight.Medium,
-                    fontSize = 14.sp,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                )
-                Spacer(modifier = Modifier.height(2.dp))
-                Text(
-                    text = "${file.artist} · ${file.uploadDate}",
-                    color = MeloXColors.TextSecondary,
-                    fontFamily = MeloXLanTingProFontFamily,
-                    fontSize = 12.sp,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                )
-            }
-            Spacer(modifier = Modifier.width(8.dp))
-            Text(
-                text = file.fileSize,
-                color = MeloXColors.TextTertiary,
-                fontFamily = MeloXLanTingProFontFamily,
-                fontSize = 12.sp,
-                modifier = Modifier.width(56.dp),
-                textAlign = TextAlign.End,
-            )
-            Spacer(modifier = Modifier.width(4.dp))
-            IconButton(
-                onClick = onDelete,
-                modifier = Modifier.size(28.dp),
-            ) {
-                Text(
-                    text = "🗑",
-                    fontSize = 14.sp,
-                )
-            }
+            MeloXSymbolIcon(symbol = MeloXSymbol.Cloud, color = Color.White.copy(alpha = 0.9f), size = 20)
         }
+        Spacer(modifier = Modifier.width(12.dp))
+        Column(modifier = Modifier.weight(1f)) {
+            Text(
+                text = file.name,
+                style = MeloXTypography.body,
+                color = MeloXColors.OnSurface,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+            )
+            Spacer(modifier = Modifier.height(2.dp))
+            Text(
+                text = "${file.artist} · ${file.uploadDate}",
+                style = MeloXTypography.subheadline,
+                color = MeloXColors.OnSurfaceVariant,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+            )
+        }
+        Spacer(modifier = Modifier.width(8.dp))
+        Text(
+            text = file.fileSize,
+            style = MeloXTypography.subheadline,
+            color = MeloXColors.OnSurfaceVariant,
+            modifier = Modifier.width(56.dp),
+            textAlign = TextAlign.End,
+        )
+        Spacer(modifier = Modifier.width(4.dp))
+        MeloXSymbolIcon(
+            symbol = MeloXSymbol.Trash,
+            modifier = Modifier.size(28.dp).clickable { onDelete() },
+            color = MeloXColors.Error.copy(alpha = 0.7f),
+            size = 16,
+        )
     }
 }
 
@@ -502,73 +431,71 @@ private fun DeleteConfirmDialog(
     onConfirm: () -> Unit,
     onDismiss: () -> Unit,
 ) {
-    Surface(
+    Box(
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(48.dp),
-        shape = RoundedCornerShape(16.dp),
-        color = MeloXColors.Surface,
-        shadowElevation = 8.dp,
+            .fillMaxSize()
+            .background(Color.Black.copy(alpha = 0.5f))
+            .clickable(onClick = onDismiss),
+        contentAlignment = Alignment.Center,
     ) {
-        Column(
-            modifier = Modifier.padding(24.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
+        Box(
+            modifier = Modifier
+                .padding(48.dp)
+                .clip(MeloXGlass.dialogShape)
+                .background(MeloXColors.Surface)
+                .clickable { },
         ) {
-            Text(
-                text = "确认删除",
-                color = MeloXColors.TextPrimary,
-                fontFamily = MeloXLanTingProFontFamily,
-                fontWeight = FontWeight.Bold,
-                fontSize = 18.sp,
-            )
-            Spacer(modifier = Modifier.height(12.dp))
-            Text(
-                text = "确定要从云盘删除「$fileName」吗？",
-                color = MeloXColors.TextSecondary,
-                fontFamily = MeloXLanTingProFontFamily,
-                fontSize = 14.sp,
-                textAlign = TextAlign.Center,
-            )
-            Spacer(modifier = Modifier.height(20.dp))
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(12.dp),
+            Column(
+                modifier = Modifier.padding(24.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                Surface(
-                    modifier = Modifier
-                        .weight(1f)
-                        .clip(RoundedCornerShape(10.dp))
-                        .clickable { onDismiss() },
-                    shape = RoundedCornerShape(10.dp),
-                    color = MeloXColors.ChipBackground,
+                Text(
+                    text = "确认删除",
+                    style = MeloXTypography.headline,
+                    color = MeloXColors.OnBackground,
+                )
+                Spacer(modifier = Modifier.height(12.dp))
+                Text(
+                    text = "确定要从云盘删除「$fileName」吗？",
+                    style = MeloXTypography.body,
+                    color = MeloXColors.OnSurfaceVariant,
+                    textAlign = TextAlign.Center,
+                )
+                Spacer(modifier = Modifier.height(20.dp))
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(12.dp),
                 ) {
-                    Text(
-                        text = "取消",
-                        color = MeloXColors.TextPrimary,
-                        fontFamily = MeloXLanTingProFontFamily,
-                        fontWeight = FontWeight.Medium,
-                        fontSize = 14.sp,
-                        modifier = Modifier.padding(vertical = 12.dp),
-                        textAlign = TextAlign.Center,
-                    )
-                }
-                Surface(
-                    modifier = Modifier
-                        .weight(1f)
-                        .clip(RoundedCornerShape(10.dp))
-                        .clickable { onConfirm() },
-                    shape = RoundedCornerShape(10.dp),
-                    color = MeloXColors.Error,
-                ) {
-                    Text(
-                        text = "删除",
-                        color = Color.White,
-                        fontFamily = MeloXLanTingProFontFamily,
-                        fontWeight = FontWeight.Medium,
-                        fontSize = 14.sp,
-                        modifier = Modifier.padding(vertical = 12.dp),
-                        textAlign = TextAlign.Center,
-                    )
+                    Box(
+                        modifier = Modifier
+                            .weight(1f)
+                            .clip(MeloXGlass.capsuleShape)
+                            .background(MeloXColors.SurfaceVariant)
+                            .clickable { onDismiss() }
+                            .padding(vertical = 12.dp),
+                        contentAlignment = Alignment.Center,
+                    ) {
+                        Text(
+                            text = "取消",
+                            style = MeloXTypography.subheadline,
+                            color = MeloXColors.OnSurface,
+                        )
+                    }
+                    Box(
+                        modifier = Modifier
+                            .weight(1f)
+                            .clip(MeloXGlass.capsuleShape)
+                            .background(MeloXColors.Error)
+                            .clickable { onConfirm() }
+                            .padding(vertical = 12.dp),
+                        contentAlignment = Alignment.Center,
+                    ) {
+                        Text(
+                            text = "删除",
+                            style = MeloXTypography.subheadline,
+                            color = Color.White,
+                        )
+                    }
                 }
             }
         }
@@ -578,51 +505,46 @@ private fun DeleteConfirmDialog(
 @Composable
 private fun CloudEmptyState() {
     Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(240.dp),
+        modifier = Modifier.fillMaxWidth().height(240.dp),
         contentAlignment = Alignment.Center,
     ) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            Text(
-                text = "☁",
-                color = MeloXColors.TextTertiary,
-                fontSize = 48.sp,
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            MeloXSymbolIcon(
+                symbol = MeloXSymbol.Cloud,
+                color = MeloXColors.OnSurfaceVariant.copy(alpha = 0.5f),
+                size = 48,
             )
             Spacer(modifier = Modifier.height(16.dp))
             Text(
                 text = "云盘为空",
-                color = MeloXColors.TextSecondary,
-                fontFamily = MeloXLanTingProFontFamily,
-                fontWeight = FontWeight.Medium,
-                fontSize = 16.sp,
+                style = MeloXTypography.headline,
+                color = MeloXColors.OnSurfaceVariant,
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
                 text = "上传音乐文件到云盘，随时随地访问",
-                color = MeloXColors.TextTertiary,
-                fontFamily = MeloXLanTingProFontFamily,
-                fontSize = 13.sp,
+                style = MeloXTypography.subheadline,
+                color = MeloXColors.OnSurfaceVariant.copy(alpha = 0.6f),
                 textAlign = TextAlign.Center,
             )
             Spacer(modifier = Modifier.height(16.dp))
-            Surface(
+            Box(
                 modifier = Modifier
-                    .clip(RoundedCornerShape(20.dp))
-                    .clickable { },
-                shape = RoundedCornerShape(20.dp),
-                color = MeloXColors.Primary,
+                    .clip(MeloXGlass.capsuleShape)
+                    .background(MeloXColors.Primary)
+                    .clickable { }
+                    .padding(horizontal = 24.dp, vertical = 10.dp),
+                contentAlignment = Alignment.Center,
             ) {
-                Text(
-                    text = "上传文件",
-                    color = MeloXColors.OnPrimary,
-                    fontFamily = MeloXLanTingProFontFamily,
-                    fontWeight = FontWeight.Medium,
-                    fontSize = 14.sp,
-                    modifier = Modifier.padding(horizontal = 24.dp, vertical = 10.dp),
-                )
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    MeloXSymbolIcon(symbol = MeloXSymbol.Upload, color = Color.White, size = 18)
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(
+                        text = "上传文件",
+                        style = MeloXTypography.subheadline,
+                        color = Color.White,
+                    )
+                }
             }
         }
     }
@@ -631,33 +553,26 @@ private fun CloudEmptyState() {
 @Composable
 private fun SearchEmptyState(query: String) {
     Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(160.dp),
+        modifier = Modifier.fillMaxWidth().height(160.dp),
         contentAlignment = Alignment.Center,
     ) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            Text(
-                text = "⌕",
-                color = MeloXColors.TextTertiary,
-                fontSize = 36.sp,
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            MeloXSymbolIcon(
+                symbol = MeloXSymbol.Search,
+                color = MeloXColors.OnSurfaceVariant.copy(alpha = 0.5f),
+                size = 36,
             )
             Spacer(modifier = Modifier.height(12.dp))
             Text(
                 text = "未找到「$query」",
-                color = MeloXColors.TextSecondary,
-                fontFamily = MeloXLanTingProFontFamily,
-                fontWeight = FontWeight.Medium,
-                fontSize = 14.sp,
+                style = MeloXTypography.body,
+                color = MeloXColors.OnSurfaceVariant,
             )
             Spacer(modifier = Modifier.height(4.dp))
             Text(
                 text = "尝试其他关键词搜索",
-                color = MeloXColors.TextTertiary,
-                fontFamily = MeloXLanTingProFontFamily,
-                fontSize = 12.sp,
+                style = MeloXTypography.caption,
+                color = MeloXColors.OnSurfaceVariant.copy(alpha = 0.6f),
             )
         }
     }

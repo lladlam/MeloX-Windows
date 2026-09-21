@@ -8,26 +8,29 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsHoveredAsState
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.itemsIndexed as gridItemsIndexed
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.*
+import androidx.compose.material3.Text
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import melox.music.model.*
 import melox.player.AudioPlayer
+import melox.ui.foundation.*
 import melox.ui.navigation.MeloXNavState
 import melox.ui.navigation.Route
 import melox.ui.theme.MeloXColors
-import melox.ui.theme.MeloXLanTingProFontFamily
+import melox.ui.theme.MeloXTypography
 
 private enum class LibraryTab(val label: String) {
     Songs("歌曲"),
@@ -174,8 +177,8 @@ private val playlistCardColors = listOf(
     MeloXColors.Secondary,
     MeloXColors.Warning,
     MeloXColors.Success,
-    Color(0xFF7C4DFF),
-    Color(0xFFFF6E40),
+    MeloXColors.GlassBlue,
+    MeloXColors.GlassRed,
 )
 
 @Composable
@@ -189,11 +192,17 @@ fun LibraryScreen(
             .fillMaxSize()
             .background(MeloXColors.Background),
     ) {
-        TopBar()
-        TabBar(
-            selectedTab = selectedTab,
-            onTabSelected = { selectedTab = it },
+        MeloXIosTopBar(title = "音乐库")
+
+        MeloXSegmentedControl(
+            selectedIndex = selectedTab.ordinal,
+            options = LibraryTab.entries.map { it.label },
+            onSelected = { selectedTab = LibraryTab.entries[it] },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp, vertical = 8.dp),
         )
+
         Box(modifier = Modifier.weight(1f).fillMaxWidth()) {
             when (selectedTab) {
                 LibraryTab.Songs -> SongsTab(navState = navState)
@@ -201,70 +210,6 @@ fun LibraryScreen(
                 LibraryTab.Podcasts -> PodcastsTab()
                 LibraryTab.Downloads -> DownloadsTab()
                 LibraryTab.History -> HistoryTab()
-            }
-        }
-    }
-}
-
-@Composable
-private fun TopBar() {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 20.dp, vertical = 14.dp),
-    ) {
-        Text(
-            text = "音乐库",
-            color = MeloXColors.TextPrimary,
-            fontFamily = MeloXLanTingProFontFamily,
-            fontWeight = FontWeight.Bold,
-            fontSize = 24.sp,
-        )
-    }
-}
-
-@Composable
-private fun TabBar(
-    selectedTab: LibraryTab,
-    onTabSelected: (LibraryTab) -> Unit,
-) {
-    ScrollableTabRow(
-        selectedTabIndex = selectedTab.ordinal,
-        containerColor = MeloXColors.Background,
-        contentColor = MeloXColors.Primary,
-        edgePadding = 20.dp,
-        divider = {},
-        indicator = {},
-    ) {
-        LibraryTab.entries.forEach { tab ->
-            val isSelected = tab == selectedTab
-            val interactionSource = remember { MutableInteractionSource() }
-            val isHovered by interactionSource.collectIsHoveredAsState()
-
-            Box(
-                modifier = Modifier
-                    .padding(start = 0.dp, end = 8.dp, top = 6.dp, bottom = 6.dp)
-                    .clip(RoundedCornerShape(20.dp))
-                    .background(
-                        when {
-                            isSelected -> MeloXColors.ChipBackgroundSelected
-                            isHovered -> MeloXColors.SurfaceHigh
-                            else -> MeloXColors.ChipBackground
-                        },
-                    )
-                    .hoverable(interactionSource)
-                    .clickable(interactionSource = interactionSource, indication = null) {
-                        onTabSelected(tab)
-                    }
-                    .padding(horizontal = 16.dp, vertical = 8.dp),
-            ) {
-                Text(
-                    text = tab.label,
-                    color = if (isSelected) MeloXColors.OnPrimary else MeloXColors.TextSecondary,
-                    fontFamily = MeloXLanTingProFontFamily,
-                    fontSize = 13.sp,
-                    fontWeight = if (isSelected) FontWeight.Medium else FontWeight.Normal,
-                )
             }
         }
     }
@@ -281,14 +226,13 @@ private fun SongsTab(navState: MeloXNavState?) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 20.dp, vertical = 8.dp),
+                .padding(horizontal = 16.dp, vertical = 8.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
                 text = "共 ${mockTracks.size} 首",
-                color = MeloXColors.TextTertiary,
-                fontFamily = MeloXLanTingProFontFamily,
-                fontSize = 12.sp,
+                style = MeloXTypography.caption,
+                color = MeloXColors.OnSurfaceVariant,
             )
             Spacer(modifier = Modifier.weight(1f))
             PlayAllButton(
@@ -324,20 +268,17 @@ private fun SongsTab(navState: MeloXNavState?) {
 private fun PlayAllButton(onClick: () -> Unit) {
     Row(
         modifier = Modifier
-            .clip(RoundedCornerShape(20.dp))
-            .background(MeloXColors.Primary)
+            .glassButton(MeloXColors.Primary)
             .clickable(onClick = onClick)
             .padding(horizontal = 16.dp, vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        Text("▶", color = MeloXColors.OnPrimary, fontSize = 12.sp)
+        MeloXSymbolIcon(symbol = MeloXSymbol.Play, color = MeloXColors.OnPrimary, size = 14)
         Spacer(modifier = Modifier.width(6.dp))
         Text(
             text = "播放全部",
+            style = MeloXTypography.caption,
             color = MeloXColors.OnPrimary,
-            fontFamily = MeloXLanTingProFontFamily,
-            fontSize = 13.sp,
-            fontWeight = FontWeight.Medium,
         )
     }
 }
@@ -353,35 +294,28 @@ private fun SongListItem(
     val interactionSource = remember { MutableInteractionSource() }
     val isHovered by interactionSource.collectIsHoveredAsState()
 
-    val bgColor = when {
-        isHovered -> MeloXColors.SurfaceVariant
-        else -> MeloXColors.Background
-    }
-
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .height(56.dp)
-            .background(bgColor)
+            .background(if (isHovered) MeloXColors.SurfaceVariant else MeloXColors.Background)
             .hoverable(interactionSource)
             .clickable(interactionSource = interactionSource, indication = null, onClick = onClick)
-            .padding(horizontal = 20.dp),
+            .padding(horizontal = 16.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         if (isCurrentTrack) {
-            Text(
-                text = if (isPlaying) "♫" else "▶",
+            MeloXSymbolIcon(
+                symbol = if (isPlaying) MeloXSymbol.MusicNote else MeloXSymbol.Play,
                 color = MeloXColors.Primary,
-                fontFamily = MeloXLanTingProFontFamily,
-                fontSize = 14.sp,
+                size = 18,
                 modifier = Modifier.width(28.dp),
             )
         } else {
             Text(
                 text = "%02d".format(number),
-                color = MeloXColors.TextTertiary,
-                fontFamily = MeloXLanTingProFontFamily,
-                fontSize = 13.sp,
+                style = MeloXTypography.caption,
+                color = MeloXColors.OnSurfaceVariant,
                 modifier = Modifier.width(28.dp),
             )
         }
@@ -391,19 +325,18 @@ private fun SongListItem(
         Column(modifier = Modifier.weight(1f)) {
             Text(
                 text = track.title,
-                color = if (isCurrentTrack) MeloXColors.Primary else MeloXColors.TextPrimary,
-                fontFamily = MeloXLanTingProFontFamily,
-                fontSize = 14.sp,
-                fontWeight = if (isCurrentTrack) FontWeight.Medium else FontWeight.Normal,
+                style = MeloXTypography.body.copy(
+                    fontWeight = if (isCurrentTrack) FontWeight.Medium else FontWeight.Normal,
+                ),
+                color = if (isCurrentTrack) MeloXColors.Primary else MeloXColors.OnSurface,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
             )
             Spacer(modifier = Modifier.height(2.dp))
             Text(
                 text = track.artistText,
-                color = MeloXColors.TextSecondary,
-                fontFamily = MeloXLanTingProFontFamily,
-                fontSize = 12.sp,
+                style = MeloXTypography.subheadline,
+                color = MeloXColors.OnSurfaceVariant,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
             )
@@ -417,16 +350,15 @@ private fun SongListItem(
 
         Text(
             text = formatDuration(track.durationMs),
-            color = MeloXColors.TextTertiary,
-            fontFamily = MeloXLanTingProFontFamily,
-            fontSize = 12.sp,
+            style = MeloXTypography.caption,
+            color = MeloXColors.OnSurfaceVariant,
         )
     }
 }
 
 @Composable
 private fun SourceBadge(source: MusicSource) {
-    val badgeColor = MeloXColors.sourceColors[source.storageValue] ?: MeloXColors.TextTertiary
+    val badgeColor = MeloXColors.sourceColors[source.storageValue] ?: MeloXColors.OnSurfaceVariant
 
     Box(
         modifier = Modifier
@@ -436,9 +368,8 @@ private fun SourceBadge(source: MusicSource) {
     ) {
         Text(
             text = source.displayName,
+            style = TextStyle(fontSize = 10.sp),
             color = badgeColor,
-            fontFamily = MeloXLanTingProFontFamily,
-            fontSize = 10.sp,
         )
     }
 }
@@ -449,36 +380,27 @@ private fun SourceBadge(source: MusicSource) {
 private fun PlaylistsTab(navState: MeloXNavState?) {
     if (mockPlaylists.isEmpty()) {
         EmptyState(
-            icon = "♫",
+            symbol = MeloXSymbol.MusicNote,
             title = "暂无歌单",
             subtitle = "创建或收藏你的第一个歌单",
         )
         return
     }
 
-    LazyColumn(
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(3),
         modifier = Modifier.fillMaxSize(),
-        contentPadding = PaddingValues(horizontal = 20.dp, vertical = 12.dp),
+        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 12.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        items(mockPlaylists.chunked(3)) { row ->
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(12.dp),
-            ) {
-                row.forEach { playlist ->
-                    PlaylistCard(
-                        playlist = playlist,
-                        modifier = Modifier.weight(1f),
-                        onClick = {
-                            navState?.navigateTo(Route.PlaylistDetail(playlist.id.value, playlist.title))
-                        },
-                    )
-                }
-                repeat(3 - row.size) {
-                    Spacer(modifier = Modifier.weight(1f))
-                }
-            }
-            Spacer(modifier = Modifier.height(12.dp))
+        gridItemsIndexed(mockPlaylists) { index, playlist ->
+            PlaylistCard(
+                playlist = playlist,
+                onClick = {
+                    navState?.navigateTo(Route.PlaylistDetail(playlist.id.value, playlist.title))
+                },
+            )
         }
     }
 }
@@ -497,8 +419,7 @@ private fun PlaylistCard(
 
     Column(
         modifier = modifier
-            .clip(RoundedCornerShape(12.dp))
-            .background(if (isHovered) MeloXColors.CardBackgroundHover else MeloXColors.CardBackground)
+            .glassSurface(MeloXGlass.cardShape, MeloXColors.SurfaceVariant)
             .hoverable(interactionSource)
             .clickable(interactionSource = interactionSource, indication = null, onClick = onClick)
             .padding(12.dp),
@@ -511,27 +432,24 @@ private fun PlaylistCard(
                 .background(playlistCardColors[colorIndex].copy(alpha = 0.3f)),
             contentAlignment = Alignment.Center,
         ) {
-            Text(
-                text = "♫",
-                fontSize = 32.sp,
+            MeloXSymbolIcon(
+                symbol = MeloXSymbol.MusicNote,
                 color = playlistCardColors[colorIndex],
+                size = 32,
             )
         }
         Spacer(modifier = Modifier.height(8.dp))
         Text(
             text = playlist.title,
-            color = MeloXColors.TextPrimary,
-            fontFamily = MeloXLanTingProFontFamily,
-            fontSize = 13.sp,
-            fontWeight = FontWeight.Medium,
+            style = MeloXTypography.caption.copy(fontWeight = FontWeight.Medium),
+            color = MeloXColors.OnSurface,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
         )
         Text(
             text = "${playlist.trackCount ?: 0} 首",
-            color = MeloXColors.TextTertiary,
-            fontFamily = MeloXLanTingProFontFamily,
-            fontSize = 11.sp,
+            style = MeloXTypography.caption,
+            color = MeloXColors.OnSurfaceVariant,
         )
     }
 }
@@ -542,7 +460,7 @@ private fun PlaylistCard(
 private fun PodcastsTab() {
     if (mockPodcasts.isEmpty()) {
         EmptyState(
-            icon = "◉",
+            symbol = MeloXSymbol.Podcast,
             title = "暂无播客",
             subtitle = "订阅你喜欢的播客节目",
         )
@@ -553,55 +471,17 @@ private fun PodcastsTab() {
         modifier = Modifier.fillMaxSize(),
         contentPadding = PaddingValues(bottom = 80.dp),
     ) {
-        items(mockPodcasts) { (name, description) ->
-            PodcastItem(name = name, description = description)
-        }
-    }
-}
-
-@Composable
-private fun PodcastItem(name: String, description: String) {
-    val interactionSource = remember { MutableInteractionSource() }
-    val isHovered by interactionSource.collectIsHoveredAsState()
-
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(64.dp)
-            .background(if (isHovered) MeloXColors.SurfaceVariant else MeloXColors.Background)
-            .hoverable(interactionSource)
-            .clickable(interactionSource = interactionSource, indication = null) { /* navigate */ }
-            .padding(horizontal = 20.dp, vertical = 8.dp),
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        Box(
-            modifier = Modifier
-                .size(48.dp)
-                .clip(RoundedCornerShape(10.dp))
-                .background(MeloXColors.SurfaceVariant),
-            contentAlignment = Alignment.Center,
-        ) {
-            Text("◉", color = MeloXColors.Primary, fontSize = 20.sp)
-        }
-        Spacer(modifier = Modifier.width(12.dp))
-        Column(modifier = Modifier.weight(1f)) {
-            Text(
-                text = name,
-                color = MeloXColors.TextPrimary,
-                fontFamily = MeloXLanTingProFontFamily,
-                fontSize = 14.sp,
-                fontWeight = FontWeight.Medium,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-            )
-            Text(
-                text = description,
-                color = MeloXColors.TextSecondary,
-                fontFamily = MeloXLanTingProFontFamily,
-                fontSize = 12.sp,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-            )
+        mockPodcasts.forEach { (name, description) ->
+            item {
+                MeloXIosListRow(
+                    title = name,
+                    subtitle = description,
+                    leadingIcon = MeloXSymbol.Podcast,
+                    leadingIconColor = MeloXColors.Primary,
+                    showChevron = false,
+                    onClick = { },
+                )
+            }
         }
     }
 }
@@ -615,7 +495,7 @@ private fun DownloadsTab() {
 
     if (mockDownloads.isEmpty()) {
         EmptyState(
-            icon = "↓",
+            symbol = MeloXSymbol.Download,
             title = "暂无下载",
             subtitle = "下载歌曲以便离线收听",
         )
@@ -626,20 +506,22 @@ private fun DownloadsTab() {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 20.dp, vertical = 8.dp),
+                .padding(horizontal = 16.dp, vertical = 8.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
                 text = if (multiSelectMode) "已选 ${selectedIds.size} 项" else "共 ${mockDownloads.size} 首",
-                color = MeloXColors.TextTertiary,
-                fontFamily = MeloXLanTingProFontFamily,
-                fontSize = 12.sp,
+                style = MeloXTypography.caption,
+                color = MeloXColors.OnSurfaceVariant,
             )
             Spacer(modifier = Modifier.weight(1f))
             Box(
                 modifier = Modifier
-                    .clip(RoundedCornerShape(16.dp))
-                    .background(if (multiSelectMode) MeloXColors.Primary.copy(alpha = 0.15f) else MeloXColors.ChipBackground)
+                    .clip(MeloXGlass.capsuleShape)
+                    .background(
+                        if (multiSelectMode) MeloXColors.Primary.copy(alpha = 0.15f)
+                        else MeloXColors.OnBackground.copy(alpha = 0.055f),
+                    )
                     .clickable {
                         multiSelectMode = !multiSelectMode
                         if (!multiSelectMode) selectedIds = emptySet()
@@ -648,9 +530,8 @@ private fun DownloadsTab() {
             ) {
                 Text(
                     text = if (multiSelectMode) "取消" else "多选",
-                    color = if (multiSelectMode) MeloXColors.Primary else MeloXColors.TextSecondary,
-                    fontFamily = MeloXLanTingProFontFamily,
-                    fontSize = 12.sp,
+                    style = MeloXTypography.caption,
+                    color = if (multiSelectMode) MeloXColors.Primary else MeloXColors.OnSurfaceVariant,
                 )
             }
         }
@@ -659,33 +540,35 @@ private fun DownloadsTab() {
             modifier = Modifier.fillMaxSize(),
             contentPadding = PaddingValues(bottom = 80.dp),
         ) {
-            items(mockDownloads) { download ->
-                DownloadItem(
-                    download = download,
-                    isMultiSelectMode = multiSelectMode,
-                    isSelected = download.track.id.value in selectedIds,
-                    onToggleSelect = {
-                        selectedIds = if (download.track.id.value in selectedIds) {
-                            selectedIds - download.track.id.value
-                        } else {
-                            selectedIds + download.track.id.value
-                        }
-                    },
-                    onClick = {
-                        if (!multiSelectMode) {
-                            AudioPlayer.play(
-                                "https://music.163.com/song/media/outer/url?id=${download.track.id.value}",
-                                download.track,
-                            )
-                        } else {
+            mockDownloads.forEach { download ->
+                item {
+                    DownloadItem(
+                        download = download,
+                        isMultiSelectMode = multiSelectMode,
+                        isSelected = download.track.id.value in selectedIds,
+                        onToggleSelect = {
                             selectedIds = if (download.track.id.value in selectedIds) {
                                 selectedIds - download.track.id.value
                             } else {
                                 selectedIds + download.track.id.value
                             }
-                        }
-                    },
-                )
+                         },
+                        onClick = {
+                            if (!multiSelectMode) {
+                                AudioPlayer.play(
+                                    "https://music.163.com/song/media/outer/url?id=${download.track.id.value}",
+                                    download.track,
+                                )
+                            } else {
+                                selectedIds = if (download.track.id.value in selectedIds) {
+                                    selectedIds - download.track.id.value
+                                } else {
+                                    selectedIds + download.track.id.value
+                                }
+                            }
+                        },
+                    )
+                }
             }
         }
     }
@@ -715,7 +598,7 @@ private fun DownloadItem(
             )
             .hoverable(interactionSource)
             .clickable(interactionSource = interactionSource, indication = null, onClick = onClick)
-            .padding(horizontal = 20.dp),
+            .padding(horizontal = 16.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         if (isMultiSelectMode) {
@@ -723,13 +606,11 @@ private fun DownloadItem(
                 modifier = Modifier
                     .size(20.dp)
                     .clip(RoundedCornerShape(4.dp))
-                    .background(
-                        if (isSelected) MeloXColors.Primary else MeloXColors.SurfaceVariant,
-                    ),
+                    .background(if (isSelected) MeloXColors.Primary else MeloXColors.SurfaceVariant),
                 contentAlignment = Alignment.Center,
             ) {
                 if (isSelected) {
-                    Text("✓", color = MeloXColors.OnPrimary, fontSize = 12.sp)
+                    MeloXSymbolIcon(symbol = MeloXSymbol.Checkmark, color = MeloXColors.OnPrimary, size = 14)
                 }
             }
             Spacer(modifier = Modifier.width(12.dp))
@@ -738,19 +619,16 @@ private fun DownloadItem(
         Column(modifier = Modifier.weight(1f)) {
             Text(
                 text = download.track.title,
-                color = if (isSelected) MeloXColors.Primary else MeloXColors.TextPrimary,
-                fontFamily = MeloXLanTingProFontFamily,
-                fontSize = 14.sp,
-                fontWeight = FontWeight.Medium,
+                style = MeloXTypography.body.copy(fontWeight = FontWeight.Medium),
+                color = if (isSelected) MeloXColors.Primary else MeloXColors.OnSurface,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
             )
             Spacer(modifier = Modifier.height(2.dp))
             Text(
                 text = download.track.artistText,
-                color = MeloXColors.TextSecondary,
-                fontFamily = MeloXLanTingProFontFamily,
-                fontSize = 12.sp,
+                style = MeloXTypography.subheadline,
+                color = MeloXColors.OnSurfaceVariant,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
             )
@@ -764,9 +642,8 @@ private fun DownloadItem(
 
         Text(
             text = download.fileSize,
-            color = MeloXColors.TextTertiary,
-            fontFamily = MeloXLanTingProFontFamily,
-            fontSize = 11.sp,
+            style = MeloXTypography.caption,
+            color = MeloXColors.OnSurfaceVariant,
         )
     }
 }
@@ -777,7 +654,7 @@ private fun DownloadItem(
 private fun HistoryTab() {
     if (mockHistory.isEmpty()) {
         EmptyState(
-            icon = "◷",
+            symbol = MeloXSymbol.Clock,
             title = "暂无播放记录",
             subtitle = "听过的歌曲会出现在这里",
         )
@@ -788,8 +665,10 @@ private fun HistoryTab() {
         modifier = Modifier.fillMaxSize(),
         contentPadding = PaddingValues(bottom = 80.dp),
     ) {
-        items(mockHistory) { entry ->
-            HistoryItem(entry = entry)
+        mockHistory.forEach { entry ->
+            item {
+                HistoryItem(entry = entry)
+            }
         }
     }
 }
@@ -811,25 +690,22 @@ private fun HistoryItem(entry: HistoryEntry) {
                     entry.track,
                 )
             }
-            .padding(horizontal = 20.dp),
+            .padding(horizontal = 16.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Column(modifier = Modifier.weight(1f)) {
             Text(
                 text = entry.track.title,
-                color = MeloXColors.TextPrimary,
-                fontFamily = MeloXLanTingProFontFamily,
-                fontSize = 14.sp,
-                fontWeight = FontWeight.Medium,
+                style = MeloXTypography.body.copy(fontWeight = FontWeight.Medium),
+                color = MeloXColors.OnSurface,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
             )
             Spacer(modifier = Modifier.height(2.dp))
             Text(
                 text = entry.track.artistText,
-                color = MeloXColors.TextSecondary,
-                fontFamily = MeloXLanTingProFontFamily,
-                fontSize = 12.sp,
+                style = MeloXTypography.subheadline,
+                color = MeloXColors.OnSurfaceVariant,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
             )
@@ -844,15 +720,13 @@ private fun HistoryItem(entry: HistoryEntry) {
         Column(horizontalAlignment = Alignment.End) {
             Text(
                 text = formatDuration(entry.track.durationMs),
-                color = MeloXColors.TextTertiary,
-                fontFamily = MeloXLanTingProFontFamily,
-                fontSize = 12.sp,
+                style = MeloXTypography.caption,
+                color = MeloXColors.OnSurfaceVariant,
             )
             Text(
                 text = entry.timestamp,
-                color = MeloXColors.TextTertiary,
-                fontFamily = MeloXLanTingProFontFamily,
-                fontSize = 10.sp,
+                style = MeloXTypography.caption,
+                color = MeloXColors.OnSurfaceVariant,
             )
         }
     }
@@ -862,7 +736,7 @@ private fun HistoryItem(entry: HistoryEntry) {
 
 @Composable
 private fun EmptyState(
-    icon: String,
+    symbol: MeloXSymbol,
     title: String,
     subtitle: String,
 ) {
@@ -871,25 +745,18 @@ private fun EmptyState(
         contentAlignment = Alignment.Center,
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            Text(
-                text = icon,
-                fontSize = 48.sp,
-                color = MeloXColors.TextTertiary,
-            )
+            MeloXSymbolIcon(symbol = symbol, color = MeloXColors.OnSurfaceVariant, size = 48)
             Spacer(modifier = Modifier.height(12.dp))
             Text(
                 text = title,
-                color = MeloXColors.TextSecondary,
-                fontFamily = MeloXLanTingProFontFamily,
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Medium,
+                style = MeloXTypography.headline,
+                color = MeloXColors.OnSurfaceVariant,
             )
             Spacer(modifier = Modifier.height(4.dp))
             Text(
                 text = subtitle,
-                color = MeloXColors.TextTertiary,
-                fontFamily = MeloXLanTingProFontFamily,
-                fontSize = 13.sp,
+                style = MeloXTypography.subheadline,
+                color = MeloXColors.OnSurfaceVariant,
             )
         }
     }

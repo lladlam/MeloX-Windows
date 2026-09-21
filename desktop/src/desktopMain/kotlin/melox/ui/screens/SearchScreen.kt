@@ -11,18 +11,16 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.material3.*
+import androidx.compose.material3.Text
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.input.key.*
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -31,8 +29,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import melox.music.model.*
 import melox.player.AudioPlayer
+import melox.ui.foundation.*
 import melox.ui.theme.MeloXColors
-import melox.ui.theme.MeloXLanTingProFontFamily
+import melox.ui.theme.MeloXTypography
 
 private enum class SearchScope(val label: String) {
     Songs("歌曲"),
@@ -175,23 +174,79 @@ fun SearchScreen() {
             .fillMaxSize()
             .background(MeloXColors.Background),
     ) {
-        SearchBar(
-            query = query,
-            onQueryChange = { query = it },
-            onSearch = { performSearch(query) },
-            onClear = {
-                query = ""
-                searchResults = emptyList()
-                hasSearched = false
-                searchError = null
+        MeloXIosTopBar(title = "搜索")
+
+        MeloXGlassTextField(
+            value = query,
+            onValueChange = { query = it },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp, vertical = 8.dp),
+            placeholder = "搜索歌曲、歌手、专辑...",
+            leadingIcon = {
+                MeloXSymbolIcon(symbol = MeloXSymbol.Search, color = MeloXColors.OnSurfaceVariant, size = 18)
             },
-            focusRequester = focusRequester,
+            trailingIcon = {
+                if (query.isNotEmpty()) {
+                    Box(
+                        modifier = Modifier
+                            .size(24.dp)
+                            .clip(RoundedCornerShape(50))
+                            .background(MeloXColors.OnBackground.copy(alpha = 0.055f))
+                            .clickable {
+                                query = ""
+                                searchResults = emptyList()
+                                hasSearched = false
+                                searchError = null
+                            },
+                        contentAlignment = Alignment.Center,
+                    ) {
+                        MeloXSymbolIcon(symbol = MeloXSymbol.XMark, color = MeloXColors.OnSurfaceVariant, size = 14)
+                    }
+                }
+            },
         )
 
-        ScopeSelector(
-            selectedScope = selectedScope,
-            onScopeSelected = { selectedScope = it },
-        )
+        // Scope pills
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp, vertical = 4.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+        ) {
+            SearchScope.entries.forEach { scope ->
+                val isSelected = scope == selectedScope
+                val interactionSource = remember { MutableInteractionSource() }
+                val isHovered by interactionSource.collectIsHoveredAsState()
+
+                Box(
+                    modifier = Modifier
+                        .clip(MeloXGlass.capsuleShape)
+                        .background(
+                            when {
+                                isSelected -> MeloXColors.Primary
+                                isHovered -> MeloXColors.SurfaceVariant
+                                else -> MeloXColors.OnBackground.copy(alpha = 0.055f)
+                            },
+                        )
+                        .hoverable(interactionSource)
+                        .clickable(interactionSource = interactionSource, indication = null) {
+                            selectedScope = scope
+                        }
+                        .padding(horizontal = 14.dp, vertical = 6.dp),
+                ) {
+                    Text(
+                        text = scope.label,
+                        style = MeloXTypography.caption.copy(
+                            fontWeight = if (isSelected) FontWeight.SemiBold else FontWeight.Normal,
+                        ),
+                        color = if (isSelected) Color.White else MeloXColors.OnSurfaceVariant,
+                    )
+                }
+            }
+        }
+
+        Spacer(modifier = Modifier.height(8.dp))
 
         Box(modifier = Modifier.weight(1f).fillMaxWidth()) {
             when {
@@ -223,131 +278,6 @@ fun SearchScreen() {
     }
 }
 
-@Composable
-private fun SearchBar(
-    query: String,
-    onQueryChange: (String) -> Unit,
-    onSearch: () -> Unit,
-    onClear: () -> Unit,
-    focusRequester: FocusRequester,
-) {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 20.dp, vertical = 12.dp),
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(44.dp)
-                .clip(RoundedCornerShape(22.dp))
-                .background(MeloXColors.SurfaceVariant.copy(alpha = 0.7f))
-                .padding(horizontal = 16.dp),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Text(
-                text = "⌕",
-                color = MeloXColors.TextTertiary,
-                fontSize = 16.sp,
-            )
-            Spacer(modifier = Modifier.width(8.dp))
-            Box(modifier = Modifier.weight(1f)) {
-                if (query.isEmpty()) {
-                    Text(
-                        text = "搜索歌曲、歌手、专辑...",
-                        color = MeloXColors.TextTertiary,
-                        fontFamily = MeloXLanTingProFontFamily,
-                        fontSize = 14.sp,
-                    )
-                }
-                BasicTextField(
-                    value = query,
-                    onValueChange = onQueryChange,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .focusRequester(focusRequester)
-                        .onKeyEvent { event ->
-                            if (event.type == KeyEventType.KeyDown && event.key == Key.Enter) {
-                                onSearch()
-                                true
-                            } else {
-                                false
-                            }
-                        },
-                    textStyle = TextStyle(
-                        color = MeloXColors.TextPrimary,
-                        fontFamily = MeloXLanTingProFontFamily,
-                        fontSize = 14.sp,
-                    ),
-                    singleLine = true,
-                    cursorBrush = SolidColor(MeloXColors.Primary),
-                )
-            }
-            if (query.isNotEmpty()) {
-                Spacer(modifier = Modifier.width(8.dp))
-                Box(
-                    modifier = Modifier
-                        .size(24.dp)
-                        .clip(CircleShape)
-                        .background(MeloXColors.SurfaceHigh)
-                        .clickable(onClick = onClear),
-                    contentAlignment = Alignment.Center,
-                ) {
-                    Text(
-                        text = "✕",
-                        color = MeloXColors.TextSecondary,
-                        fontSize = 12.sp,
-                    )
-                }
-            }
-        }
-    }
-}
-
-@Composable
-private fun ScopeSelector(
-    selectedScope: SearchScope,
-    onScopeSelected: (SearchScope) -> Unit,
-) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 20.dp, vertical = 4.dp),
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
-    ) {
-        SearchScope.entries.forEach { scope ->
-            val isSelected = scope == selectedScope
-            val interactionSource = remember { MutableInteractionSource() }
-            val isHovered by interactionSource.collectIsHoveredAsState()
-
-            Box(
-                modifier = Modifier
-                    .clip(RoundedCornerShape(16.dp))
-                    .background(
-                        when {
-                            isSelected -> MeloXColors.ChipBackgroundSelected
-                            isHovered -> MeloXColors.SurfaceHigh
-                            else -> MeloXColors.ChipBackground
-                        },
-                    )
-                    .hoverable(interactionSource)
-                    .clickable(interactionSource = interactionSource, indication = null) {
-                        onScopeSelected(scope)
-                    }
-                    .padding(horizontal = 14.dp, vertical = 6.dp),
-            ) {
-                Text(
-                    text = scope.label,
-                    color = if (isSelected) MeloXColors.OnPrimary else MeloXColors.TextSecondary,
-                    fontFamily = MeloXLanTingProFontFamily,
-                    fontSize = 12.sp,
-                    fontWeight = if (isSelected) FontWeight.Medium else FontWeight.Normal,
-                )
-            }
-        }
-    }
-}
-
 // ── Discovery View ──
 
 @Composable
@@ -357,7 +287,12 @@ private fun DiscoveryView(onQuerySelected: (String) -> Unit) {
         contentPadding = PaddingValues(bottom = 80.dp),
     ) {
         item {
-            SectionTitle("推荐歌单")
+            Text(
+                text = "推荐歌单",
+                style = MeloXTypography.headline,
+                color = MeloXColors.OnSurface,
+                modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp),
+            )
             Spacer(modifier = Modifier.height(8.dp))
         }
         item {
@@ -365,14 +300,19 @@ private fun DiscoveryView(onQuerySelected: (String) -> Unit) {
             Spacer(modifier = Modifier.height(20.dp))
         }
         item {
-            SectionTitle("热门搜索")
+            Text(
+                text = "热门搜索",
+                style = MeloXTypography.headline,
+                color = MeloXColors.OnSurface,
+                modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp),
+            )
             Spacer(modifier = Modifier.height(8.dp))
         }
         items(trendingSearches.chunked(4)) { row ->
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 20.dp),
+                    .padding(horizontal = 16.dp),
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
             ) {
                 row.forEach { term ->
@@ -389,14 +329,19 @@ private fun DiscoveryView(onQuerySelected: (String) -> Unit) {
             Spacer(modifier = Modifier.height(12.dp))
         }
         item {
-            SectionTitle("搜索历史")
+            Text(
+                text = "搜索历史",
+                style = MeloXTypography.headline,
+                color = MeloXColors.OnSurface,
+                modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp),
+            )
             Spacer(modifier = Modifier.height(8.dp))
         }
         items(searchHistory.chunked(4)) { row ->
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 20.dp),
+                    .padding(horizontal = 16.dp),
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
             ) {
                 row.forEach { term ->
@@ -413,22 +358,10 @@ private fun DiscoveryView(onQuerySelected: (String) -> Unit) {
 }
 
 @Composable
-private fun SectionTitle(title: String) {
-    Text(
-        text = title,
-        color = MeloXColors.TextPrimary,
-        fontFamily = MeloXLanTingProFontFamily,
-        fontSize = 16.sp,
-        fontWeight = FontWeight.Bold,
-        modifier = Modifier.padding(horizontal = 20.dp, vertical = 4.dp),
-    )
-}
-
-@Composable
 private fun RecommendedPlaylistsRow(onQuerySelected: (String) -> Unit) {
     LazyRow(
-        contentPadding = PaddingValues(horizontal = 20.dp),
-        horizontalArrangement = Arrangement.spacedBy(12.dp),
+        contentPadding = PaddingValues(horizontal = 16.dp),
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         items(recommendedPlaylists) { (name, color) ->
             val interactionSource = remember { MutableInteractionSource() }
@@ -437,10 +370,7 @@ private fun RecommendedPlaylistsRow(onQuerySelected: (String) -> Unit) {
             Column(
                 modifier = Modifier
                     .width(100.dp)
-                    .clip(RoundedCornerShape(10.dp))
-                    .background(
-                        if (isHovered) MeloXColors.CardBackgroundHover else MeloXColors.CardBackground,
-                    )
+                    .glassSurface(MeloXGlass.cardShape, MeloXColors.SurfaceVariant)
                     .hoverable(interactionSource)
                     .clickable(interactionSource = interactionSource, indication = null) {
                         onQuerySelected(name)
@@ -455,15 +385,13 @@ private fun RecommendedPlaylistsRow(onQuerySelected: (String) -> Unit) {
                         .background(color.copy(alpha = 0.25f)),
                     contentAlignment = Alignment.Center,
                 ) {
-                    Text("♫", color = color, fontSize = 28.sp)
+                    MeloXSymbolIcon(symbol = MeloXSymbol.MusicNote, color = color, size = 28)
                 }
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
                     text = name,
-                    color = MeloXColors.TextPrimary,
-                    fontFamily = MeloXLanTingProFontFamily,
-                    fontSize = 12.sp,
-                    fontWeight = FontWeight.Medium,
+                    style = MeloXTypography.caption.copy(fontWeight = FontWeight.Medium),
+                    color = MeloXColors.OnSurface,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                 )
@@ -483,17 +411,19 @@ private fun TrendingChip(
 
     Box(
         modifier = modifier
-            .clip(RoundedCornerShape(8.dp))
-            .background(if (isHovered) MeloXColors.SurfaceHigh else MeloXColors.ChipBackground)
+            .clip(MeloXGlass.capsuleShape)
+            .background(
+                if (isHovered) MeloXColors.SurfaceVariant
+                else MeloXColors.OnBackground.copy(alpha = 0.055f),
+            )
             .hoverable(interactionSource)
             .clickable(interactionSource = interactionSource, indication = null, onClick = onClick)
             .padding(horizontal = 12.dp, vertical = 8.dp),
     ) {
         Text(
             text = term,
-            color = MeloXColors.TextSecondary,
-            fontFamily = MeloXLanTingProFontFamily,
-            fontSize = 12.sp,
+            style = MeloXTypography.caption,
+            color = MeloXColors.OnSurfaceVariant,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
         )
@@ -511,24 +441,22 @@ private fun HistoryChip(
 
     Box(
         modifier = modifier
-            .clip(RoundedCornerShape(8.dp))
-            .background(if (isHovered) MeloXColors.SurfaceHigh else MeloXColors.ChipBackground)
+            .clip(MeloXGlass.capsuleShape)
+            .background(
+                if (isHovered) MeloXColors.SurfaceVariant
+                else MeloXColors.OnBackground.copy(alpha = 0.055f),
+            )
             .hoverable(interactionSource)
             .clickable(interactionSource = interactionSource, indication = null, onClick = onClick)
             .padding(horizontal = 12.dp, vertical = 8.dp),
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            Text(
-                text = "◷",
-                color = MeloXColors.TextTertiary,
-                fontSize = 11.sp,
-            )
+            MeloXSymbolIcon(symbol = MeloXSymbol.Clock, color = MeloXColors.OnSurfaceVariant, size = 12)
             Spacer(modifier = Modifier.width(4.dp))
             Text(
                 text = term,
-                color = MeloXColors.TextSecondary,
-                fontFamily = MeloXLanTingProFontFamily,
-                fontSize = 12.sp,
+                style = MeloXTypography.caption,
+                color = MeloXColors.OnSurfaceVariant,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
             )
@@ -552,10 +480,9 @@ private fun ResultsView(
         item {
             Text(
                 text = "找到 ${results.size} 首歌曲",
-                color = MeloXColors.TextTertiary,
-                fontFamily = MeloXLanTingProFontFamily,
-                fontSize = 12.sp,
-                modifier = Modifier.padding(horizontal = 20.dp, vertical = 8.dp),
+                style = MeloXTypography.caption,
+                color = MeloXColors.OnSurfaceVariant,
+                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
             )
         }
         itemsIndexed(results) { _, track ->
@@ -585,17 +512,13 @@ private fun SearchResultItem(
             .fillMaxWidth()
             .height(64.dp)
             .background(
-                when {
-                    isHovered -> MeloXColors.SurfaceVariant
-                    else -> MeloXColors.Background
-                },
+                if (isHovered) MeloXColors.SurfaceVariant else MeloXColors.Background,
             )
             .hoverable(interactionSource)
             .clickable(interactionSource = interactionSource, indication = null, onClick = onPlay)
-            .padding(horizontal = 20.dp),
+            .padding(horizontal = 16.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        // Artwork placeholder
         Box(
             modifier = Modifier
                 .size(44.dp)
@@ -606,10 +529,10 @@ private fun SearchResultItem(
                 ),
             contentAlignment = Alignment.Center,
         ) {
-            Text(
-                text = if (isCurrentTrack && isPlaying) "♫" else "♪",
-                color = MeloXColors.sourceColors[track.id.source.storageValue] ?: MeloXColors.TextTertiary,
-                fontSize = 18.sp,
+            MeloXSymbolIcon(
+                symbol = if (isCurrentTrack && isPlaying) MeloXSymbol.MusicNote else MeloXSymbol.Play,
+                color = MeloXColors.sourceColors[track.id.source.storageValue] ?: MeloXColors.OnSurfaceVariant,
+                size = 18,
             )
         }
 
@@ -618,10 +541,10 @@ private fun SearchResultItem(
         Column(modifier = Modifier.weight(1f)) {
             Text(
                 text = track.title,
-                color = if (isCurrentTrack) MeloXColors.Primary else MeloXColors.TextPrimary,
-                fontFamily = MeloXLanTingProFontFamily,
-                fontSize = 14.sp,
-                fontWeight = if (isCurrentTrack) FontWeight.Medium else FontWeight.Normal,
+                style = MeloXTypography.body.copy(
+                    fontWeight = if (isCurrentTrack) FontWeight.Medium else FontWeight.Normal,
+                ),
+                color = if (isCurrentTrack) MeloXColors.Primary else MeloXColors.OnSurface,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
             )
@@ -629,9 +552,8 @@ private fun SearchResultItem(
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
                     text = track.artistText,
-                    color = MeloXColors.TextSecondary,
-                    fontFamily = MeloXLanTingProFontFamily,
-                    fontSize = 12.sp,
+                    style = MeloXTypography.subheadline,
+                    color = MeloXColors.OnSurfaceVariant,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                 )
@@ -639,9 +561,8 @@ private fun SearchResultItem(
                 if (albumName?.isNotBlank() == true) {
                     Text(
                         text = " · $albumName",
-                        color = MeloXColors.TextTertiary,
-                        fontFamily = MeloXLanTingProFontFamily,
-                        fontSize = 12.sp,
+                        style = MeloXTypography.subheadline,
+                        color = MeloXColors.OnSurfaceVariant,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                     )
@@ -657,26 +578,24 @@ private fun SearchResultItem(
 
         Text(
             text = formatSearchDuration(track.durationMs),
-            color = MeloXColors.TextTertiary,
-            fontFamily = MeloXLanTingProFontFamily,
-            fontSize = 12.sp,
+            style = MeloXTypography.caption,
+            color = MeloXColors.OnSurfaceVariant,
         )
 
         Spacer(modifier = Modifier.width(8.dp))
 
-        // Play button
         Box(
             modifier = Modifier
                 .size(32.dp)
-                .clip(CircleShape)
+                .clip(RoundedCornerShape(50))
                 .background(MeloXColors.SurfaceVariant)
                 .clickable(onClick = onPlay),
             contentAlignment = Alignment.Center,
         ) {
-            Text(
-                text = if (isCurrentTrack && isPlaying) "⏸" else "▶",
+            MeloXSymbolIcon(
+                symbol = if (isCurrentTrack && isPlaying) MeloXSymbol.Pause else MeloXSymbol.Play,
                 color = MeloXColors.OnSurface,
-                fontSize = 12.sp,
+                size = 14,
             )
         }
     }
@@ -684,7 +603,7 @@ private fun SearchResultItem(
 
 @Composable
 private fun SearchSourceBadge(source: MusicSource) {
-    val badgeColor = MeloXColors.sourceColors[source.storageValue] ?: MeloXColors.TextTertiary
+    val badgeColor = MeloXColors.sourceColors[source.storageValue] ?: MeloXColors.OnSurfaceVariant
 
     Box(
         modifier = Modifier
@@ -694,9 +613,8 @@ private fun SearchSourceBadge(source: MusicSource) {
     ) {
         Text(
             text = source.displayName,
+            style = TextStyle(fontSize = 10.sp),
             color = badgeColor,
-            fontFamily = MeloXLanTingProFontFamily,
-            fontSize = 10.sp,
         )
     }
 }
@@ -718,9 +636,8 @@ private fun LoadingView() {
             Spacer(modifier = Modifier.height(12.dp))
             Text(
                 text = "搜索中...",
-                color = MeloXColors.TextTertiary,
-                fontFamily = MeloXLanTingProFontFamily,
-                fontSize = 13.sp,
+                style = MeloXTypography.subheadline,
+                color = MeloXColors.OnSurfaceVariant,
             )
         }
     }
@@ -733,25 +650,18 @@ private fun EmptySearchView() {
         contentAlignment = Alignment.Center,
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            Text(
-                text = "⌕",
-                fontSize = 48.sp,
-                color = MeloXColors.TextTertiary,
-            )
+            MeloXSymbolIcon(symbol = MeloXSymbol.Search, color = MeloXColors.OnSurfaceVariant, size = 48)
             Spacer(modifier = Modifier.height(12.dp))
             Text(
                 text = "没有找到相关结果",
-                color = MeloXColors.TextSecondary,
-                fontFamily = MeloXLanTingProFontFamily,
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Medium,
+                style = MeloXTypography.headline,
+                color = MeloXColors.OnSurfaceVariant,
             )
             Spacer(modifier = Modifier.height(4.dp))
             Text(
                 text = "换个关键词试试",
-                color = MeloXColors.TextTertiary,
-                fontFamily = MeloXLanTingProFontFamily,
-                fontSize = 13.sp,
+                style = MeloXTypography.subheadline,
+                color = MeloXColors.OnSurfaceVariant,
             )
         }
     }
@@ -767,40 +677,30 @@ private fun ErrorView(
         contentAlignment = Alignment.Center,
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            Text(
-                text = "⚠",
-                fontSize = 48.sp,
-                color = MeloXColors.Warning,
-            )
+            MeloXSymbolIcon(symbol = MeloXSymbol.Refresh, color = MeloXColors.Warning, size = 48)
             Spacer(modifier = Modifier.height(12.dp))
             Text(
                 text = "搜索出错",
-                color = MeloXColors.TextSecondary,
-                fontFamily = MeloXLanTingProFontFamily,
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Medium,
+                style = MeloXTypography.headline,
+                color = MeloXColors.OnSurfaceVariant,
             )
             Spacer(modifier = Modifier.height(4.dp))
             Text(
                 text = message,
-                color = MeloXColors.TextTertiary,
-                fontFamily = MeloXLanTingProFontFamily,
-                fontSize = 13.sp,
+                style = MeloXTypography.subheadline,
+                color = MeloXColors.OnSurfaceVariant,
             )
             Spacer(modifier = Modifier.height(16.dp))
             Box(
                 modifier = Modifier
-                    .clip(RoundedCornerShape(20.dp))
-                    .background(MeloXColors.Primary)
+                    .glassButton(MeloXColors.Primary)
                     .clickable(onClick = onRetry)
                     .padding(horizontal = 20.dp, vertical = 10.dp),
             ) {
                 Text(
                     text = "重试",
+                    style = MeloXTypography.caption,
                     color = MeloXColors.OnPrimary,
-                    fontFamily = MeloXLanTingProFontFamily,
-                    fontSize = 13.sp,
-                    fontWeight = FontWeight.Medium,
                 )
             }
         }
