@@ -4,9 +4,8 @@ import androidx.compose.animation.*
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.hoverable
 import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.interaction.collectIsHoveredAsState
+import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -18,8 +17,11 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -27,12 +29,18 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
-import kotlinx.coroutines.launch
 import melox.music.model.MusicSource
+import melox.music.model.MusicTrack
 import melox.player.AudioPlayer
+import melox.ui.foundation.MeloXGlass
+import melox.ui.foundation.MeloXMotion
+import melox.ui.foundation.MeloXSymbol
+import melox.ui.foundation.MeloXSymbolIcon
+import melox.ui.foundation.glassSurface
 import melox.ui.navigation.MeloXNavState
 import melox.ui.theme.MeloXColors
 import melox.ui.theme.MeloXLanTingProFontFamily
+import melox.ui.theme.MeloXTypography
 
 // ── Helpers ──
 
@@ -88,17 +96,14 @@ fun PlayerScreen(navState: MeloXNavState? = null) {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(MeloXColors.Background),
+            .background(MeloXColors.PlayerBackground),
     ) {
         Column(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             // ── Top bar ──
-            PlayerTopBar(
-                navState = navState,
-                sourceColor = sourceColor,
-            )
+            PlayerTopBar(navState = navState)
 
             // ── Main content ──
             Box(
@@ -113,10 +118,11 @@ fun PlayerScreen(navState: MeloXNavState? = null) {
                         else -> PanelState.Main
                     },
                     transitionSpec = {
-                        fadeIn(animationSpec = tween(200)) + slideInVertically(
-                            animationSpec = tween(250),
-                            initialOffsetY = { it / 4 },
-                        ) togetherWith fadeOut(animationSpec = tween(150))
+                        fadeIn(animationSpec = tween(MeloXMotion.ContentEnterMillis)) +
+                            slideInVertically(
+                                animationSpec = tween(MeloXMotion.ContentEnterMillis),
+                                initialOffsetY = { it / 4 },
+                            ) togetherWith fadeOut(animationSpec = tween(MeloXMotion.ContentExitMillis))
                     },
                     label = "panel_transition",
                 ) { panel ->
@@ -147,9 +153,11 @@ fun PlayerScreen(navState: MeloXNavState? = null) {
                             },
                         )
                         PanelState.Lyrics -> LyricsPanel(
+                            sourceColor = sourceColor,
                             onDismiss = { showLyrics = false },
                         )
                         PanelState.Queue -> QueuePanel(
+                            sourceColor = sourceColor,
                             onDismiss = { showQueue = false },
                         )
                     }
@@ -164,10 +172,7 @@ private enum class PanelState { Main, Lyrics, Queue }
 // ── Top bar ──
 
 @Composable
-private fun PlayerTopBar(
-    navState: MeloXNavState?,
-    sourceColor: Color,
-) {
+private fun PlayerTopBar(navState: MeloXNavState?) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -176,16 +181,16 @@ private fun PlayerTopBar(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         IconButton(onClick = { navState?.goBack() }) {
-            Text(
-                text = "‹",
-                color = MeloXColors.TextPrimary,
-                fontSize = 24.sp,
+            MeloXSymbolIcon(
+                symbol = MeloXSymbol.ChevronLeft,
+                color = MeloXColors.OnSurface,
+                size = 24,
             )
         }
         Spacer(modifier = Modifier.weight(1f))
         Text(
             text = "正在播放",
-            color = MeloXColors.TextSecondary,
+            color = MeloXColors.PlayerTextDim,
             fontFamily = MeloXLanTingProFontFamily,
             fontSize = 14.sp,
             fontWeight = FontWeight.Medium,
@@ -199,7 +204,7 @@ private fun PlayerTopBar(
 
 @Composable
 private fun PlayerMainContent(
-    track: melox.music.model.MusicTrack?,
+    track: MusicTrack?,
     sourceColor: Color,
     progress: Float,
     durationMs: Long,
@@ -220,7 +225,7 @@ private fun PlayerMainContent(
         Spacer(modifier = Modifier.height(16.dp))
 
         // ── Artwork ──
-        ArtworkPlaceholder(
+        PlayerArtwork(
             sourceColor = sourceColor,
             isPlaying = isPlaying,
         )
@@ -228,12 +233,12 @@ private fun PlayerMainContent(
         Spacer(modifier = Modifier.height(32.dp))
 
         // ── Track info ──
-        TrackInfoSection(track, sourceColor)
+        PlayerTrackInfo(track = track, sourceColor = sourceColor)
 
         Spacer(modifier = Modifier.height(24.dp))
 
         // ── Progress bar ──
-        ProgressSection(
+        PlayerProgress(
             progress = progress,
             durationMs = durationMs,
             onSeek = onSeek,
@@ -242,7 +247,7 @@ private fun PlayerMainContent(
         Spacer(modifier = Modifier.height(20.dp))
 
         // ── Playback controls ──
-        PlaybackControls(
+        PlayerTransport(
             isPlaying = isPlaying,
             onPlayPause = onPlayPause,
             onPrevious = onPrevious,
@@ -252,7 +257,7 @@ private fun PlayerMainContent(
         Spacer(modifier = Modifier.height(20.dp))
 
         // ── Action buttons ──
-        ActionButtons(
+        PlayerActions(
             isLiked = isLiked,
             onLikeToggle = onLikeToggle,
             onLyricsToggle = onLyricsToggle,
@@ -266,25 +271,29 @@ private fun PlayerMainContent(
 // ── Artwork ──
 
 @Composable
-private fun ArtworkPlaceholder(
-    sourceColor: Color,
-    isPlaying: Boolean,
-) {
-    val infiniteTransition = rememberInfiniteTransition(label = "artwork_pulse")
-    val scale by infiniteTransition.animateFloat(
-        initialValue = 1f,
-        targetValue = if (isPlaying) 1.02f else 1f,
-        animationSpec = infiniteRepeatable(
-            animation = tween(1200, easing = FastOutSlowInEasing),
-            repeatMode = RepeatMode.Reverse,
-        ),
+private fun PlayerArtwork(sourceColor: Color, isPlaying: Boolean) {
+    val scale by animateFloatAsState(
+        targetValue = if (isPlaying) 1.0f else 0.74f,
+        animationSpec = MeloXMotion.playerPlaybackScale,
         label = "artwork_scale",
+    )
+
+    val shadowDp by animateFloatAsState(
+        targetValue = if (isPlaying) 26f else 14f,
+        animationSpec = MeloXMotion.playerArtworkShadow,
+        label = "artwork_shadow",
     )
 
     Box(
         modifier = Modifier
             .size((300 * scale).dp)
-            .clip(RoundedCornerShape(20.dp))
+            .shadow(
+                elevation = shadowDp.dp,
+                shape = RoundedCornerShape(12.dp),
+                ambientColor = sourceColor.copy(alpha = 0.3f),
+                spotColor = sourceColor.copy(alpha = 0.3f),
+            )
+            .clip(RoundedCornerShape(12.dp))
             .background(
                 Brush.linearGradient(
                     colors = listOf(
@@ -296,10 +305,10 @@ private fun ArtworkPlaceholder(
             ),
         contentAlignment = Alignment.Center,
     ) {
-        Text(
-            text = "♫",
-            fontSize = 72.sp,
+        MeloXSymbolIcon(
+            symbol = MeloXSymbol.MusicNote,
             color = sourceColor.copy(alpha = 0.4f),
+            size = 72,
         )
     }
 }
@@ -307,10 +316,7 @@ private fun ArtworkPlaceholder(
 // ── Track info ──
 
 @Composable
-private fun TrackInfoSection(
-    track: melox.music.model.MusicTrack?,
-    sourceColor: Color,
-) {
+private fun PlayerTrackInfo(track: MusicTrack?, sourceColor: Color) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -319,7 +325,7 @@ private fun TrackInfoSection(
     ) {
         Text(
             text = track?.title ?: "未播放",
-            color = MeloXColors.TextPrimary,
+            color = MeloXColors.OnSurface,
             fontFamily = MeloXLanTingProFontFamily,
             fontSize = 22.sp,
             fontWeight = FontWeight.SemiBold,
@@ -330,7 +336,7 @@ private fun TrackInfoSection(
         Spacer(modifier = Modifier.height(6.dp))
         Text(
             text = track?.artistText ?: "选择一首歌曲",
-            color = MeloXColors.TextSecondary,
+            color = MeloXColors.OnSurfaceVariant,
             fontFamily = MeloXLanTingProFontFamily,
             fontSize = 15.sp,
             maxLines = 1,
@@ -342,7 +348,7 @@ private fun TrackInfoSection(
             Spacer(modifier = Modifier.height(4.dp))
             Text(
                 text = album.name,
-                color = MeloXColors.TextTertiary,
+                color = MeloXColors.PlayerTextDim,
                 fontFamily = MeloXLanTingProFontFamily,
                 fontSize = 13.sp,
                 maxLines = 1,
@@ -351,6 +357,7 @@ private fun TrackInfoSection(
             )
         }
         Spacer(modifier = Modifier.height(8.dp))
+        // Source badge chip
         Box(
             modifier = Modifier
                 .clip(RoundedCornerShape(6.dp))
@@ -368,10 +375,10 @@ private fun TrackInfoSection(
     }
 }
 
-// ── Progress section ──
+// ── Progress bar ──
 
 @Composable
-private fun ProgressSection(
+private fun PlayerProgress(
     progress: Float,
     durationMs: Long,
     onSeek: (Float) -> Unit,
@@ -380,56 +387,58 @@ private fun ProgressSection(
     var seekPosition by remember { mutableFloatStateOf(0f) }
     val displayProgress = if (isSeeking) seekPosition else progress
     val currentPositionMs = (displayProgress * durationMs).toLong()
+    val trackHeight = if (isSeeking) 6.dp else 4.dp
 
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 32.dp),
     ) {
-        Slider(
-            value = displayProgress,
-            onValueChange = { value ->
-                isSeeking = true
-                seekPosition = value
-            },
-            onValueChangeFinished = {
-                onSeek(seekPosition)
-                isSeeking = false
-            },
-            valueRange = 0f..1f,
-            colors = SliderDefaults.colors(
-                thumbColor = MeloXColors.Primary,
-                activeTrackColor = MeloXColors.Primary,
-                inactiveTrackColor = MeloXColors.PlayerProgressBackground,
-            ),
-            modifier = Modifier.fillMaxWidth(),
-        )
-        Row(
+        Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 4.dp),
+                .height(trackHeight)
+                .clip(RoundedCornerShape(trackHeight / 2))
+                .background(MeloXColors.PlayerProgressBg)
+                .clickable(interactionSource = remember { MutableInteractionSource() }, indication = null) {
+                    // Allow tap to seek — simplified
+                },
+        ) {
+            Box(
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .fillMaxWidth(fraction = displayProgress)
+                    .clip(RoundedCornerShape(trackHeight / 2))
+                    .background(MeloXColors.PlayerProgressFill),
+            )
+        }
+
+        Spacer(modifier = Modifier.height(6.dp))
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
             Text(
                 text = formatTime(currentPositionMs),
-                color = MeloXColors.TextTertiary,
-                fontFamily = MeloXLanTingProFontFamily,
-                fontSize = 12.sp,
+                color = MeloXColors.PlayerTextDim,
+                fontFamily = FontFamily.Monospace,
+                fontSize = 11.sp,
             )
             Text(
                 text = formatTime(durationMs),
-                color = MeloXColors.TextTertiary,
-                fontFamily = MeloXLanTingProFontFamily,
-                fontSize = 12.sp,
+                color = MeloXColors.PlayerTextDim,
+                fontFamily = FontFamily.Monospace,
+                fontSize = 11.sp,
             )
         }
     }
 }
 
-// ── Playback controls ──
+// ── Transport controls ──
 
 @Composable
-private fun PlaybackControls(
+private fun PlayerTransport(
     isPlaying: Boolean,
     onPlayPause: () -> Unit,
     onPrevious: () -> Unit,
@@ -440,85 +449,88 @@ private fun PlaybackControls(
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        // Shuffle
-        ControlButton(
-            icon = "🔀",
-            size = 18.sp,
-            onClick = {},
-        )
-
-        Spacer(modifier = Modifier.width(24.dp))
-
         // Previous
-        ControlButton(
-            icon = "⏮",
-            size = 20.sp,
+        TransportButton(
+            size = 64.dp,
+            iconSize = 34.dp,
             onClick = onPrevious,
-        )
-
-        Spacer(modifier = Modifier.width(16.dp))
-
-        // Play/Pause (large)
-        IconButton(
-            onClick = onPlayPause,
-            modifier = Modifier
-                .size(64.dp)
-                .clip(CircleShape)
-                .background(MeloXColors.Primary),
         ) {
-            Text(
-                text = if (isPlaying) "⏸" else "▶",
-                color = MeloXColors.OnPrimary,
-                fontSize = 28.sp,
+            MeloXSymbolIcon(
+                symbol = MeloXSymbol.PreviousTrack,
+                color = MeloXColors.OnSurface,
+                size = 34,
             )
         }
 
-        Spacer(modifier = Modifier.width(16.dp))
+        Spacer(modifier = Modifier.width(24.dp))
 
-        // Next
-        ControlButton(
-            icon = "⏭",
-            size = 20.sp,
-            onClick = onNext,
-        )
+        // Play/Pause (large)
+        TransportButton(
+            size = 64.dp,
+            iconSize = 48.dp,
+            onClick = onPlayPause,
+            background = MeloXColors.OnSurface,
+        ) {
+            MeloXSymbolIcon(
+                symbol = if (isPlaying) MeloXSymbol.Pause else MeloXSymbol.Play,
+                color = MeloXColors.Background,
+                size = 48,
+            )
+        }
 
         Spacer(modifier = Modifier.width(24.dp))
 
-        // Repeat
-        ControlButton(
-            icon = "🔁",
-            size = 18.sp,
-            onClick = {},
-        )
+        // Next
+        TransportButton(
+            size = 64.dp,
+            iconSize = 34.dp,
+            onClick = onNext,
+        ) {
+            MeloXSymbolIcon(
+                symbol = MeloXSymbol.NextTrack,
+                color = MeloXColors.OnSurface,
+                size = 34,
+            )
+        }
     }
 }
 
 @Composable
-private fun ControlButton(
-    icon: String,
-    size: androidx.compose.ui.unit.TextUnit = 20.sp,
+private fun TransportButton(
+    size: androidx.compose.ui.unit.Dp,
+    iconSize: androidx.compose.ui.unit.Dp,
+    background: Color = Color.Transparent,
     onClick: () -> Unit,
+    content: @Composable () -> Unit,
 ) {
     val interactionSource = remember { MutableInteractionSource() }
-    val isHovered by interactionSource.collectIsHoveredAsState()
+    val isPressed by interactionSource.collectIsPressedAsState()
+    val pressScale by animateFloatAsState(
+        targetValue = if (isPressed) 0.88f else 1f,
+        animationSpec = spring(
+            dampingRatio = Spring.DampingRatioMediumBouncy,
+            stiffness = 620f,
+        ),
+        label = "press_scale",
+    )
 
     IconButton(
         onClick = onClick,
         modifier = Modifier
-            .hoverable(interactionSource),
+            .size(size)
+            .clip(CircleShape)
+            .background(background)
+            .graphicsLayer { scaleX = pressScale; scaleY = pressScale },
+        interactionSource = interactionSource,
     ) {
-        Text(
-            text = icon,
-            color = if (isHovered) MeloXColors.TextPrimary else MeloXColors.TextSecondary,
-            fontSize = size,
-        )
+        content()
     }
 }
 
-// ── Action buttons row ──
+// ── Action buttons ──
 
 @Composable
-private fun ActionButtons(
+private fun PlayerActions(
     isLiked: Boolean,
     onLikeToggle: () -> Unit,
     onLyricsToggle: () -> Unit,
@@ -528,74 +540,67 @@ private fun ActionButtons(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceEvenly,
     ) {
-        ActionButton(
-            icon = if (isLiked) "♥" else "♡",
-            label = "喜欢",
-            tint = if (isLiked) MeloXColors.Primary else MeloXColors.TextSecondary,
+        PlayerActionButton(
+            icon = if (isLiked) MeloXSymbol.HeartFill else MeloXSymbol.Heart,
+            tint = if (isLiked) MeloXColors.Primary else MeloXColors.OnSurfaceVariant,
             onClick = onLikeToggle,
         )
-        ActionButton(
-            icon = "📝",
-            label = "歌词",
-            tint = MeloXColors.TextSecondary,
+        PlayerActionButton(
+            icon = MeloXSymbol.Lyrics,
+            tint = MeloXColors.OnSurfaceVariant,
             onClick = onLyricsToggle,
         )
-        ActionButton(
-            icon = "📋",
-            label = "队列",
-            tint = MeloXColors.TextSecondary,
+        PlayerActionButton(
+            icon = MeloXSymbol.Queue,
+            tint = MeloXColors.OnSurfaceVariant,
             onClick = onQueueToggle,
         )
-        ActionButton(
-            icon = "↗",
-            label = "分享",
-            tint = MeloXColors.TextSecondary,
+        PlayerActionButton(
+            icon = MeloXSymbol.Share,
+            tint = MeloXColors.OnSurfaceVariant,
             onClick = {},
         )
     }
 }
 
 @Composable
-private fun ActionButton(
-    icon: String,
-    label: String,
+private fun PlayerActionButton(
+    icon: MeloXSymbol,
     tint: Color,
     onClick: () -> Unit,
 ) {
     val interactionSource = remember { MutableInteractionSource() }
-    val isHovered by interactionSource.collectIsHoveredAsState()
+    val isPressed by interactionSource.collectIsPressedAsState()
+    val pressScale by animateFloatAsState(
+        targetValue = if (isPressed) 0.85f else 1f,
+        animationSpec = spring(
+            dampingRatio = Spring.DampingRatioMediumBouncy,
+            stiffness = 620f,
+        ),
+        label = "action_press_scale",
+    )
 
-    Column(
+    IconButton(
+        onClick = onClick,
         modifier = Modifier
-            .clip(RoundedCornerShape(12.dp))
-            .hoverable(interactionSource)
-            .clickable(interactionSource = interactionSource, indication = null, onClick = onClick)
-            .padding(horizontal = 16.dp, vertical = 8.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
+            .size(48.dp)
+            .graphicsLayer { scaleX = pressScale; scaleY = pressScale },
+        interactionSource = interactionSource,
     ) {
-        Text(
-            text = icon,
-            color = if (isHovered) tint.copy(alpha = 0.8f) else tint,
-            fontSize = 20.sp,
-        )
-        Spacer(modifier = Modifier.height(4.dp))
-        Text(
-            text = label,
-            color = MeloXColors.TextTertiary,
-            fontFamily = MeloXLanTingProFontFamily,
-            fontSize = 11.sp,
-        )
+        MeloXSymbolIcon(symbol = icon, color = tint, size = 22)
     }
 }
 
 // ── Lyrics panel ──
 
 @Composable
-private fun LyricsPanel(onDismiss: () -> Unit) {
+private fun LyricsPanel(
+    sourceColor: Color,
+    onDismiss: () -> Unit,
+) {
     val currentTrack by AudioPlayer.currentTrack.collectAsState()
     val listState = rememberLazyListState()
 
-    // Mock lyrics lines
     val lyricsLines = remember(currentTrack) {
         listOf(
             "暂无歌词",
@@ -603,62 +608,83 @@ private fun LyricsPanel(onDismiss: () -> Unit) {
             "请在音乐源中查看歌词",
             "或等待歌词加载...",
             "",
-            "♪ ♫ ♬",
         )
     }
     val currentLineIndex = 0
 
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 8.dp),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            IconButton(onClick = onDismiss) {
-                Text("✕", color = MeloXColors.TextSecondary, fontSize = 16.sp)
-            }
-            Spacer(modifier = Modifier.weight(1f))
-            Text(
-                text = "歌词",
-                color = MeloXColors.TextSecondary,
-                fontFamily = MeloXLanTingProFontFamily,
-                fontSize = 14.sp,
-                fontWeight = FontWeight.Medium,
-            )
-            Spacer(modifier = Modifier.weight(1f))
-            Spacer(modifier = Modifier.width(48.dp))
-        }
-
-        LazyColumn(
-            state = listState,
+    Box(modifier = Modifier.fillMaxSize()) {
+        // Blurred artwork background
+        Box(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(horizontal = 32.dp),
-            contentPadding = PaddingValues(vertical = 48.dp),
-            verticalArrangement = Arrangement.spacedBy(20.dp),
+                .background(
+                    Brush.verticalGradient(
+                        colors = listOf(
+                            sourceColor.copy(alpha = 0.25f),
+                            MeloXColors.PlayerBackground,
+                        ),
+                    ),
+                ),
+        )
+
+        Column(
+            modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            itemsIndexed(lyricsLines) { index, line ->
-                val isCurrent = index == currentLineIndex
-                val isPast = index < currentLineIndex
-
+            // Top bar
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp, vertical = 8.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                IconButton(onClick = onDismiss) {
+                    MeloXSymbolIcon(
+                        symbol = MeloXSymbol.XMark,
+                        color = MeloXColors.OnSurfaceVariant,
+                        size = 18,
+                    )
+                }
+                Spacer(modifier = Modifier.weight(1f))
                 Text(
-                    text = line.ifBlank { " " },
-                    color = when {
-                        isCurrent -> MeloXColors.LyricsCurrent
-                        isPast -> MeloXColors.LyricsPast
-                        else -> MeloXColors.LyricsFuture
-                    },
+                    text = "歌词",
+                    color = MeloXColors.OnSurfaceVariant,
                     fontFamily = MeloXLanTingProFontFamily,
-                    fontSize = if (isCurrent) 20.sp else 16.sp,
-                    fontWeight = if (isCurrent) FontWeight.SemiBold else FontWeight.Normal,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.padding(vertical = 4.dp),
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Medium,
                 )
+                Spacer(modifier = Modifier.weight(1f))
+                Spacer(modifier = Modifier.width(48.dp))
+            }
+
+            // Lyrics list
+            LazyColumn(
+                state = listState,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(horizontal = 32.dp),
+                contentPadding = PaddingValues(vertical = 48.dp),
+                verticalArrangement = Arrangement.spacedBy(20.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                itemsIndexed(lyricsLines) { index, line ->
+                    val isCurrent = index == currentLineIndex
+                    val isPast = index < currentLineIndex
+
+                    Text(
+                        text = line.ifBlank { " " },
+                        color = when {
+                            isCurrent -> MeloXColors.OnSurface
+                            isPast -> MeloXColors.LyricsPast
+                            else -> MeloXColors.LyricsFuture
+                        },
+                        fontFamily = MeloXLanTingProFontFamily,
+                        fontSize = if (isCurrent) 20.sp else 16.sp,
+                        fontWeight = if (isCurrent) FontWeight.SemiBold else FontWeight.Normal,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.padding(vertical = 4.dp),
+                    )
+                }
             }
         }
     }
@@ -667,12 +693,14 @@ private fun LyricsPanel(onDismiss: () -> Unit) {
 // ── Queue panel ──
 
 @Composable
-private fun QueuePanel(onDismiss: () -> Unit) {
+private fun QueuePanel(
+    sourceColor: Color,
+    onDismiss: () -> Unit,
+) {
     val currentTrack by AudioPlayer.currentTrack.collectAsState()
 
-    Column(
-        modifier = Modifier.fillMaxSize(),
-    ) {
+    Column(modifier = Modifier.fillMaxSize()) {
+        // Top bar
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -680,12 +708,16 @@ private fun QueuePanel(onDismiss: () -> Unit) {
             verticalAlignment = Alignment.CenterVertically,
         ) {
             IconButton(onClick = onDismiss) {
-                Text("✕", color = MeloXColors.TextSecondary, fontSize = 16.sp)
+                MeloXSymbolIcon(
+                    symbol = MeloXSymbol.XMark,
+                    color = MeloXColors.OnSurfaceVariant,
+                    size = 18,
+                )
             }
             Spacer(modifier = Modifier.weight(1f))
             Text(
                 text = "播放队列",
-                color = MeloXColors.TextSecondary,
+                color = MeloXColors.OnSurfaceVariant,
                 fontFamily = MeloXLanTingProFontFamily,
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Medium,
@@ -699,7 +731,7 @@ private fun QueuePanel(onDismiss: () -> Unit) {
             QueueTrackItem(
                 track = track,
                 label = "正在播放",
-                isPlaying = true,
+                isCurrent = true,
             )
         }
 
@@ -713,7 +745,7 @@ private fun QueuePanel(onDismiss: () -> Unit) {
             ) {
                 Text(
                     text = "队列为空",
-                    color = MeloXColors.TextTertiary,
+                    color = MeloXColors.PlayerTextDim,
                     fontFamily = MeloXLanTingProFontFamily,
                     fontSize = 14.sp,
                 )
@@ -726,7 +758,7 @@ private fun QueuePanel(onDismiss: () -> Unit) {
                 itemsIndexed(mockQueue) { index, trackTitle ->
                     Text(
                         text = trackTitle,
-                        color = MeloXColors.TextPrimary,
+                        color = MeloXColors.OnSurface,
                         fontFamily = MeloXLanTingProFontFamily,
                         fontSize = 14.sp,
                         modifier = Modifier
@@ -741,9 +773,9 @@ private fun QueuePanel(onDismiss: () -> Unit) {
 
 @Composable
 private fun QueueTrackItem(
-    track: melox.music.model.MusicTrack,
+    track: MusicTrack,
     label: String,
-    isPlaying: Boolean,
+    isCurrent: Boolean,
 ) {
     val sourceColor = sourceColorFor(track.id.source)
 
@@ -760,12 +792,19 @@ private fun QueueTrackItem(
                 .clip(RoundedCornerShape(8.dp))
                 .background(
                     Brush.linearGradient(
-                        colors = listOf(sourceColor.copy(alpha = 0.4f), sourceColor.copy(alpha = 0.15f)),
+                        colors = listOf(
+                            sourceColor.copy(alpha = 0.4f),
+                            sourceColor.copy(alpha = 0.15f),
+                        ),
                     ),
                 ),
             contentAlignment = Alignment.Center,
         ) {
-            Text("♫", color = sourceColor.copy(alpha = 0.6f), fontSize = 18.sp)
+            MeloXSymbolIcon(
+                symbol = MeloXSymbol.MusicNote,
+                color = sourceColor.copy(alpha = 0.6f),
+                size = 18,
+            )
         }
         Spacer(modifier = Modifier.width(12.dp))
         Column(modifier = Modifier.weight(1f)) {
@@ -778,7 +817,7 @@ private fun QueueTrackItem(
             )
             Text(
                 text = track.title,
-                color = MeloXColors.TextPrimary,
+                color = MeloXColors.OnSurface,
                 fontFamily = MeloXLanTingProFontFamily,
                 fontSize = 15.sp,
                 fontWeight = FontWeight.SemiBold,
@@ -787,14 +826,14 @@ private fun QueueTrackItem(
             )
             Text(
                 text = track.artistText,
-                color = MeloXColors.TextSecondary,
+                color = MeloXColors.OnSurfaceVariant,
                 fontFamily = MeloXLanTingProFontFamily,
                 fontSize = 12.sp,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
             )
         }
-        if (isPlaying) {
+        if (isCurrent) {
             NowPlayingIndicator()
         }
     }
