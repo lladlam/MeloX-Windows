@@ -4,20 +4,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 
-/** 米兰亭 Pro 字体族 - 桌面版（使用系统字体） */
-val MeloXLanTingProFontFamily = FontFamily.Default
+// TODO: Load actual fonts from resources (Font() constructor varies by platform)
+private val MeloXLanTingPro = FontFamily.Default
+private val MeloXSFPro = FontFamily.Default
+private val MeloXMaterialSymbols = FontFamily.Default
 
-/** SF Pro 字体族 - 桌面版 */
-val MeloXSFProFontFamily = FontFamily.Default
+val MeloXLanTingProFontFamily = MeloXLanTingPro
+val MeloXSFProFontFamily = MeloXSFPro
+val MeloXMaterialSymbolsFamily = MeloXMaterialSymbols
 
-/** Material Symbols 字体族 - 图标 */
-val MeloXMaterialSymbolsFamily = FontFamily.Default
+val LocalMeloXFontFamily = compositionLocalOf { MeloXLanTingProFontFamily }
 
-/** 组合本地字体提供者 */
-val LocalMeloXFontFamily = compositionLocalOf<FontFamily> { MeloXLanTingProFontFamily }
-
-/** 记忆化字体族选择 */
 @Composable
 fun rememberMeloXFontFamily(): FontFamily {
     val useSystemFont = remember { false }

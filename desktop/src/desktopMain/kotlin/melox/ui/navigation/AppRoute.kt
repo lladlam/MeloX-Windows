@@ -12,6 +12,8 @@ sealed class Route {
     data object Player : Route()
     data class PlaylistDetail(val id: String, val name: String) : Route()
     data class AlbumDetail(val id: String, val name: String) : Route()
+    data object Login : Route()
+    data object Messages : Route()
     data object ProviderServices : Route()
 }
 

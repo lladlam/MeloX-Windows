@@ -10,10 +10,20 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import melox.ui.navigation.*
+import melox.ui.screens.AlbumDetailScreen
+import melox.ui.screens.CloudScreen
+import melox.ui.screens.DownloadsScreen
 import melox.ui.screens.ExploreScreen
 import melox.ui.screens.HomeScreen
 import melox.ui.screens.LibraryScreen
+import melox.ui.screens.LoginScreen
+import melox.ui.screens.MessagesScreen
+import melox.ui.screens.PlayerScreen
+import melox.ui.screens.PlaylistDetailScreen
+import melox.ui.screens.PodcastsScreen
+import melox.ui.screens.ProviderServicesScreen
 import melox.ui.screens.SearchScreen
+import melox.ui.screens.SettingsScreen
 import melox.ui.theme.MeloXColors
 import melox.ui.theme.MeloXLanTingProFontFamily
 
@@ -110,99 +120,19 @@ private fun ContentArea(navState: MeloXNavState) {
                     is Route.Home -> HomeScreen(navState = navState)
                     is Route.Explore -> ExploreScreen(navState = navState)
                     is Route.Library -> LibraryScreen(navState = navState)
-                    is Route.Podcasts -> PodcastsScreen()
-                    is Route.Downloads -> DownloadsScreen()
-                    is Route.Cloud -> CloudScreen()
+                    is Route.Podcasts -> PodcastsScreen(navState = navState)
+                    is Route.Downloads -> DownloadsScreen(navState = navState)
+                    is Route.Cloud -> CloudScreen(navState = navState)
                     is Route.Settings -> SettingsScreen()
                     is Route.Search -> SearchScreen()
-                    is Route.Player -> PlayerScreen()
-                    is Route.PlaylistDetail -> PlaylistDetailScreen(route.id, route.name)
-                    is Route.AlbumDetail -> AlbumDetailScreen(route.id, route.name)
-                    is Route.ProviderServices -> ProviderServicesScreen()
+                    is Route.Player -> PlayerScreen(navState = navState)
+                    is Route.PlaylistDetail -> PlaylistDetailScreen(navState = navState, playlistId = route.id, playlistName = route.name)
+                    is Route.AlbumDetail -> AlbumDetailScreen(navState = navState, albumId = route.id, albumName = route.name)
+                    is Route.Login -> LoginScreen(navState = navState)
+                    is Route.Messages -> MessagesScreen()
+                    is Route.ProviderServices -> ProviderServicesScreen(navState = navState)
                 }
             }
         }
-    }
-}
-
-// ── Placeholder screen composables ──
-
-@Composable
-private fun PodcastsScreen() {
-    Box(
-        modifier = Modifier.fillMaxSize().padding(24.dp),
-        contentAlignment = Alignment.TopStart,
-    ) {
-        Text("播客", style = MaterialTheme.typography.headlineMedium, color = MeloXColors.OnSurface)
-    }
-}
-
-@Composable
-private fun DownloadsScreen() {
-    Box(
-        modifier = Modifier.fillMaxSize().padding(24.dp),
-        contentAlignment = Alignment.TopStart,
-    ) {
-        Text("下载", style = MaterialTheme.typography.headlineMedium, color = MeloXColors.OnSurface)
-    }
-}
-
-@Composable
-private fun CloudScreen() {
-    Box(
-        modifier = Modifier.fillMaxSize().padding(24.dp),
-        contentAlignment = Alignment.TopStart,
-    ) {
-        Text("云盘", style = MaterialTheme.typography.headlineMedium, color = MeloXColors.OnSurface)
-    }
-}
-
-@Composable
-private fun SettingsScreen() {
-    Box(
-        modifier = Modifier.fillMaxSize().padding(24.dp),
-        contentAlignment = Alignment.TopStart,
-    ) {
-        Text("设置", style = MaterialTheme.typography.headlineMedium, color = MeloXColors.OnSurface)
-    }
-}
-
-@Composable
-private fun PlayerScreen() {
-    Box(
-        modifier = Modifier.fillMaxSize().padding(24.dp),
-        contentAlignment = Alignment.TopStart,
-    ) {
-        Text("播放器", style = MaterialTheme.typography.headlineMedium, color = MeloXColors.OnSurface)
-    }
-}
-
-@Composable
-private fun PlaylistDetailScreen(id: String, name: String) {
-    Box(
-        modifier = Modifier.fillMaxSize().padding(24.dp),
-        contentAlignment = Alignment.TopStart,
-    ) {
-        Text("播放列表: $name", style = MaterialTheme.typography.headlineMedium, color = MeloXColors.OnSurface)
-    }
-}
-
-@Composable
-private fun AlbumDetailScreen(id: String, name: String) {
-    Box(
-        modifier = Modifier.fillMaxSize().padding(24.dp),
-        contentAlignment = Alignment.TopStart,
-    ) {
-        Text("专辑: $name", style = MaterialTheme.typography.headlineMedium, color = MeloXColors.OnSurface)
-    }
-}
-
-@Composable
-private fun ProviderServicesScreen() {
-    Box(
-        modifier = Modifier.fillMaxSize().padding(24.dp),
-        contentAlignment = Alignment.TopStart,
-    ) {
-        Text("音乐源服务", style = MaterialTheme.typography.headlineMedium, color = MeloXColors.OnSurface)
     }
 }
