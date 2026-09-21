@@ -6,44 +6,46 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.platform.FileFont
-import java.io.File
 
-private fun loadFont(path: String, weight: FontWeight): Font {
-    val url = MeloXFontLoader::class.java.classLoader?.getResource(path)
-        ?: error("Font resource not found: $path")
+private fun loadFont(path: String, weight: FontWeight): Font? {
     return try {
-        FileFont(file = File(url.toURI()), weight = weight, style = FontStyle.Normal)
-    } catch (e: Exception) {
-        val tempFile = File.createTempFile("font_", ".ttf")
-        tempFile.deleteOnExit()
-        url.openStream().use { input ->
-            tempFile.outputStream().use { output -> input.copyTo(output) }
+        val cl = Thread.currentThread().contextClassLoader
+            ?: MeloXFontLoader::class.java.classLoader
+            ?: return null
+        val url = cl.getResource(path) ?: return null
+        val file = try {
+            java.io.File(url.toURI())
+        } catch (e: Exception) {
+            val temp = java.io.File.createTempFile("melox_font_", ".ttf")
+            temp.deleteOnExit()
+            url.openStream().use { input ->
+                temp.outputStream().use { output -> input.copyTo(output) }
+            }
+            temp
         }
-        FileFont(file = tempFile, weight = weight, style = FontStyle.Normal)
+        FileFont(file = file, weight = weight, style = FontStyle.Normal)
+    } catch (e: Exception) {
+        System.err.println("Failed to load font $path: ${e.message}")
+        null
     }
 }
 
 private object MeloXFontLoader
 
-private val MiLanPro = FontFamily(
-    loadFont("fonts/mi_lan_pro_vf.ttf", FontWeight.Thin),
-    loadFont("fonts/mi_lan_pro_vf.ttf", FontWeight.ExtraLight),
-    loadFont("fonts/mi_lan_pro_vf.ttf", FontWeight.Light),
-    loadFont("fonts/mi_lan_pro_vf.ttf", FontWeight.Normal),
-    loadFont("fonts/mi_lan_pro_vf.ttf", FontWeight.Medium),
-    loadFont("fonts/mi_lan_pro_vf.ttf", FontWeight.SemiBold),
-    loadFont("fonts/mi_lan_pro_vf.ttf", FontWeight.Bold),
-    loadFont("fonts/mi_lan_pro_vf.ttf", FontWeight.ExtraBold),
-    loadFont("fonts/mi_lan_pro_vf.ttf", FontWeight.Black),
-)
+private val MiLanPro = run {
+    val font = loadFont("fonts/mi_lan_pro_vf.ttf", FontWeight.Normal)
+    if (font != null) FontFamily(font) else FontFamily.Default
+}
 
-private val SFProSymbols = FontFamily(
-    loadFont("fonts/sf_pro_subset.ttf", FontWeight.Normal),
-)
+private val SFProSymbols = run {
+    val font = loadFont("fonts/sf_pro_subset.ttf", FontWeight.Normal)
+    if (font != null) FontFamily(font) else FontFamily.Default
+}
 
-private val MaterialSymbols = FontFamily(
-    loadFont("fonts/material_symbols_rounded_filled_static.ttf", FontWeight.Normal),
-)
+private val MaterialSymbols = run {
+    val font = loadFont("fonts/material_symbols_rounded_filled_static.ttf", FontWeight.Normal)
+    if (font != null) FontFamily(font) else FontFamily.Default
+}
 
 val MeloXLanTingProFontFamily = MiLanPro
 val MeloXSFProFontFamily = SFProSymbols
