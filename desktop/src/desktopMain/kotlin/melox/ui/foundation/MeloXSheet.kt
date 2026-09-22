@@ -28,10 +28,10 @@ fun MeloXGlassSheet(
 ) {
     AnimatedVisibility(
         visible = visible,
-        enter = fadeIn(MeloXMotion.panelEnterSpec) + expandVertically(
+        enter = fadeIn(MeloXMotion.panelEnterSpec()) + expandVertically(
             animationSpec = spring(dampingRatio = 0.86f, stiffness = 420f)
         ),
-        exit = fadeOut(MeloXMotion.panelExitSpec) + shrinkVertically(
+        exit = fadeOut(MeloXMotion.panelExitSpec()) + shrinkVertically(
             animationSpec = spring(dampingRatio = 0.90f, stiffness = 500f)
         ),
     ) {

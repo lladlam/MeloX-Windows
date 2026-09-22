@@ -52,7 +52,7 @@ fun Modifier.glassSurface(
     LaunchedEffect(isPressed) {
         pressAlpha.animateTo(
             targetValue = if (isPressed) 1f else 0f,
-            animationSpec = MeloXMotion.interactivePress,
+            animationSpec = MeloXMotion.interactivePress(),
         )
     }
 

@@ -27,6 +27,8 @@ object MeloXColors {
     // Glass system tokens
     val GlassBlue = Color(0xFF0A84FF)
     val GlassRed = Color(0xFFFF3B30)
+    val Red = GlassRed  // Android MeloXSystemColors.Red
+    val Blue = GlassBlue
     val SecondaryFill = Color(0x26787880)  // 15% opacity
     val TertiaryFill = Color(0x1F767680)   // 12% opacity
     val Separator = Color(0x4A3C3C43)      // 29% opacity
