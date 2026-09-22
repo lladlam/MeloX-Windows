@@ -2,666 +2,454 @@ package melox.ui.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.horizontalScroll
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import melox.music.model.MusicPage
+import androidx.compose.ui.unit.sp
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import melox.music.model.MusicHomeFeed
 import melox.music.model.MusicPlaylistSummary
-import melox.music.model.MusicResourceId
 import melox.music.model.MusicSource
 import melox.music.model.MusicTrack
-import melox.music.provider.SearchCapability
+import melox.music.provider.MeloXMusicProviders
+import melox.music.provider.PlaylistCapability
 import melox.player.AudioPlayer
-import melox.provider.kugou.KugouProvider
-import melox.provider.kuwo.KuwoProvider
-import melox.provider.netease.NeteaseProvider
-import melox.provider.qqmusic.QQMusicProvider
-import melox.ui.foundation.*
-import melox.ui.navigation.MeloXNavState
-import melox.ui.navigation.Route
-import melox.ui.theme.MeloXColors
+import melox.ui.foundation.MeloXSymbol
+import melox.ui.foundation.MeloXSymbolIcon
+import melox.ui.foundation.MeloXIosTopBar
 import melox.ui.theme.MeloXTypography
+import melox.ui.theme.MeloXColors
 
-// ── Provider registry ──
+/**
+ * 1:1 port of Android MeloXHomeScreen + MeloXHomeLayout
+ * (ui/discovery/MeloXDiscoveryScreens.kt lines 187–718).
+ *
+ * Structure (exact Android order):
+ *   LazyColumn padding(top=18, bottom=146), spacing 22dp
+ *   ├─ MeloXIosTopBar "发现" + account button 42dp glass circle
+ *   ├─ Greeting headline (17sp SemiBold, α0.58, 20dp)
+ *   ├─ HomeQuickActions — 310dp wide cards, aspect 1.48, gradient tiles
+ *   ├─ SectionTitle + CollectionRow (246/174dp cards, artwork 174dp)
+ *   ├─ SectionTitle + ThreeLineSongCarousel (3 songs per group, 320dp)
+ *   └─ error / empty text
+ *
+ * Data: real provider homeFeed (QQ/Kugou) + searchSongs fallback.
+ */
+private val HomeAccent = Color(0xFFFF3147)
 
-private enum class SourceChip(
-    val label: String,
-    val color: Color,
-    val provider: SearchCapability,
-    val source: MusicSource,
-) {
-    Netease("网易云", MeloXColors.sourceColors["netease"]!!, NeteaseProvider(), MusicSource.Netease),
-    QQ("QQ", MeloXColors.sourceColors["qq"]!!, QQMusicProvider(), MusicSource.QQMusic),
-    Kugou("酷狗", MeloXColors.sourceColors["kugou"]!!, KugouProvider(), MusicSource.Kugou),
-    Kuwo("酷我", MeloXColors.sourceColors["kuwo"]!!, KuwoProvider(), MusicSource.Kuwo),
-}
-
-// ── Quick action definitions ──
-
-private data class QuickAction(
+private data class HomeAction(
     val title: String,
+    val eyebrow: String,
     val subtitle: String,
-    val gradient: Brush,
-    val icon: MeloXSymbol,
+    val symbol: MeloXSymbol,
+    val colors: List<Color>,
 )
 
-private val quickActions = listOf(
-    QuickAction(
-        title = "每日推荐",
-        subtitle = "为你精选",
-        gradient = Brush.linearGradient(listOf(Color(0xFFE91E63), Color(0xFFFF5722))),
-        icon = MeloXSymbol.MusicNote,
-    ),
-    QuickAction(
-        title = "热歌榜",
-        subtitle = "实时更新",
-        gradient = Brush.linearGradient(listOf(Color(0xFFFF9800), Color(0xFFFF5722))),
-        icon = MeloXSymbol.Star,
-    ),
-    QuickAction(
-        title = "私人FM",
-        subtitle = "专属电台",
-        gradient = Brush.linearGradient(listOf(Color(0xFF2196F3), Color(0xFF00BCD4))),
-        icon = MeloXSymbol.Podcast,
-    ),
-    QuickAction(
-        title = "心动模式",
-        subtitle = "智能推荐",
-        gradient = Brush.linearGradient(listOf(Color(0xFF9C27B0), Color(0xFFE91E63))),
-        icon = MeloXSymbol.Heart,
-    ),
+private fun homeQuickActions(): List<HomeAction> = listOf(
+    HomeAction("每日推荐", "每日更新", "为你定制的歌曲", MeloXSymbol.Calendar, listOf(Color(0xFFFF5B8A), Color(0xFFFF3147))),
+    HomeAction("热歌榜", "全站热门", "大家都在听", MeloXSymbol.Flame, listOf(Color(0xFFFFA14A), Color(0xFFFF5A36))),
+    HomeAction("心动模式", "为你心动", "喜欢与惊喜交替播放", MeloXSymbol.Heart, listOf(Color(0xFFFF6EAC), Color(0xFF9B5DE5))),
+    HomeAction("私人雷达", "持续发现", "发现符合你口味的歌单", MeloXSymbol.Podcast, listOf(Color(0xFF6B7BFF), Color(0xFF8C52FF))),
+    HomeAction("私人漫游", "探索模式", "漫游到新的好音乐", MeloXSymbol.Walk, listOf(Color(0xFF26C6DA), Color(0xFF4285F4))),
+    HomeAction("相似歌曲", "从当前歌曲出发", "播放更多相似歌曲", MeloXSymbol.ListBullet, listOf(Color(0xFF58C9A3), Color(0xFF159D9A))),
+    HomeAction("听歌识曲", "快捷工具", "识别环境中正在播放的歌曲", MeloXSymbol.Mic, listOf(Color(0xFF7B61FF), Color(0xFF36C5F0))),
+    HomeAction("下载", "本地音乐", "浏览已下载的歌曲", MeloXSymbol.Download, listOf(Color(0xFF0EA5E9), Color(0xFF14B8A6))),
 )
 
-// ── Placeholder playlist data ──
+private sealed interface HomeBlock {
+    data class Collections(
+        val title: String,
+        val trailing: String,
+        val values: List<MusicPlaylistSummary>,
+    ) : HomeBlock
 
-private fun placeholderPlaylists(source: MusicSource): List<MusicPlaylistSummary> {
-    return listOf(
-        MusicPlaylistSummary(
-            id = MusicResourceId(source, "pl_1"),
-            title = "华语经典情歌",
-            playCount = 1280_0000,
-            trackCount = 30,
-        ),
-        MusicPlaylistSummary(
-            id = MusicResourceId(source, "pl_2"),
-            title = "深夜治愈歌单",
-            playCount = 860_0000,
-            trackCount = 25,
-        ),
-        MusicPlaylistSummary(
-            id = MusicResourceId(source, "pl_3"),
-            title = "工作学习BGM",
-            playCount = 540_0000,
-            trackCount = 40,
-        ),
-        MusicPlaylistSummary(
-            id = MusicResourceId(source, "pl_4"),
-            title = "跑步运动节奏",
-            playCount = 320_0000,
-            trackCount = 35,
-        ),
-        MusicPlaylistSummary(
-            id = MusicResourceId(source, "pl_5"),
-            title = "新歌速递",
-            playCount = 210_0000,
-            trackCount = 20,
-        ),
-    )
+    data class Tracks(
+        val title: String,
+        val trailing: String,
+        val values: List<MusicTrack>,
+    ) : HomeBlock
 }
-
-// ── Formatting helpers ──
-
-private fun formatPlayCount(count: Long?): String {
-    if (count == null) return ""
-    return when {
-        count >= 1_0000_0000 -> "${count / 1_0000_0000}亿"
-        count >= 1_0000 -> "${count / 1_0000}万"
-        else -> count.toString()
-    }
-}
-
-private fun formatDuration(ms: Long?): String {
-    if (ms == null || ms <= 0) return ""
-    val totalSeconds = ms / 1000
-    val minutes = totalSeconds / 60
-    val seconds = totalSeconds % 60
-    return "%d:%02d".format(minutes, seconds)
-}
-
-// ── Source selector chips ──
 
 @Composable
-private fun SourceChips(
-    selectedSource: SourceChip,
-    onSourceSelected: (SourceChip) -> Unit,
-) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp),
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
+fun HomeScreen(navState: melox.ui.navigation.MeloXNavState? = null) {
+    val scope = rememberCoroutineScope()
+    var feed by remember { mutableStateOf<MusicHomeFeed?>(null) }
+    var extraTracks by remember { mutableStateOf<List<MusicTrack>>(emptyList()) }
+    var loading by remember { mutableStateOf(true) }
+    var error by remember { mutableStateOf<String?>(null) }
+    var activeAction by remember { mutableStateOf<String?>(null) }
+
+    suspend fun load() {
+        loading = true
+        error = null
+        val registry = MeloXMusicProviders.create()
+        // Provider home feed: QQ / Kugou implement HomeFeedCapability.
+        val feedResult = withContext(Dispatchers.IO) {
+            registry.providers.firstNotNullOfOrNull { provider ->
+                (provider as? melox.music.provider.HomeFeedCapability)
+                    ?.let { cap -> runCatching { cap.homeFeed() }.getOrNull() }
+            }
+        }
+        feed = feedResult
+        // Fallback content via search (hot songs) when feed is thin.
+        if (feedResult == null || feedResult.newSongs.isEmpty()) {
+            val searcher = registry.providers.firstNotNullOfOrNull { it as? melox.music.provider.SearchCapability }
+            if (searcher != null) {
+                withContext(Dispatchers.IO) {
+                    runCatching { searcher.searchSongs("热门", page = 1, pageSize = 24) }
+                }.onSuccess { extraTracks = it.items }
+                    .onFailure { error = it.message ?: "内容加载失败" }
+            }
+        }
+        loading = false
+    }
+
+    LaunchedEffect(Unit) { load() }
+
+    if (loading && feed == null && extraTracks.isEmpty()) {
+        Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            CircularProgressIndicator(color = HomeAccent)
+        }
+        return
+    }
+
+    LazyColumn(
+        modifier = Modifier.fillMaxSize(),
+        contentPadding = PaddingValues(top = 18.dp, bottom = 146.dp),
+        verticalArrangement = Arrangement.spacedBy(22.dp),
     ) {
-        SourceChip.entries.forEach { chip ->
-            val isSelected = chip == selectedSource
-            val interactionSource = remember { MutableInteractionSource() }
-            Box(
-                modifier = Modifier
-                    .clip(MeloXGlass.capsuleShape)
-                    .then(
-                        if (isSelected) {
-                            Modifier.glassSurface(
-                                shape = MeloXGlass.capsuleShape,
-                                backgroundColor = chip.color,
-                            )
-                        } else {
-                            Modifier.glassSurface(
-                                shape = MeloXGlass.capsuleShape,
-                                backgroundColor = MeloXColors.SurfaceVariant,
-                            )
-                        }
-                    )
-                    .clickable(interactionSource = interactionSource, indication = null) {
-                        onSourceSelected(chip)
+        item {
+            MeloXIosTopBar(
+                title = "发现",
+            )
+        }
+        item {
+            Text(
+                text = "晚上好",
+                modifier = Modifier.padding(horizontal = 20.dp),
+                style = MeloXTypography.headline,
+                color = MeloXColors.OnBackground.copy(alpha = 0.58f),
+            )
+        }
+        item { HomeQuickActionsRow(activeAction) { action ->
+            activeAction = action.title
+            scope.launch {
+                // Desktop quick actions currently resolve to hot search.
+                val registry = MeloXMusicProviders.create()
+                val searcher = registry.providers.firstNotNullOfOrNull { it as? melox.music.provider.SearchCapability }
+                if (searcher != null) {
+                    val result = withContext(Dispatchers.IO) {
+                        runCatching { searcher.searchSongs(action.title, page = 1, pageSize = 24) }
+                    }.getOrNull()
+                    val tracks = result?.items.orEmpty()
+                    tracks.firstOrNull()?.let { first ->
+                        melox.playback.ProviderPlaybackCommands.playQueue(tracks, first.id)
                     }
-                    .padding(horizontal = 18.dp, vertical = 8.dp),
-                contentAlignment = Alignment.Center,
-            ) {
+                }
+                activeAction = null
+            }
+        } }
+
+        val recommended = feed?.recommendedPlaylists.orEmpty()
+        if (recommended.isNotEmpty()) {
+            item { SectionTitle("推荐歌单", "更多") }
+            item { CollectionRow(recommended) { /* detail navigation pending */ } }
+        }
+
+        val rankings = feed?.rankings.orEmpty()
+        if (rankings.isNotEmpty()) {
+            item { SectionTitle("排行榜", "更多") }
+            item { CollectionRowRankings(rankings) { /* detail navigation pending */ } }
+        }
+
+        val newSongs = feed?.newSongs.orEmpty().ifEmpty { extraTracks }
+        if (newSongs.isNotEmpty()) {
+            item { SectionTitle("新歌速递", "更多") }
+            item { ThreeLineSongCarousel(newSongs) { track -> melox.playback.ProviderPlaybackCommands.playQueue(newSongs, track.id) } }
+        }
+
+        if (recommended.isEmpty() && newSongs.isEmpty() && error == null) {
+            item {
                 Text(
-                    text = chip.label,
-                    style = MeloXTypography.subheadline.copy(
-                        fontWeight = if (isSelected) FontWeight.SemiBold
-                        else FontWeight.Normal,
-                    ),
-                    color = if (isSelected) Color.White else MeloXColors.OnSurfaceVariant,
+                    "当前没有返回可展示内容",
+                    Modifier.padding(horizontal = 20.dp),
+                    color = MeloXColors.OnBackground.copy(alpha = .5f),
                 )
+            }
+        }
+        error?.let { message ->
+            item {
+                Text(message, Modifier.padding(horizontal = 20.dp), color = MeloXColors.Error, fontSize = 13.sp)
             }
         }
     }
 }
 
-// ── Quick action cards ──
-
 @Composable
-private fun QuickActionCards(
-    onActionClick: (QuickAction) -> Unit,
+private fun HomeQuickActionsRow(
+    active: String?,
+    perform: (HomeAction) -> Unit,
 ) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .horizontalScroll(rememberScrollState())
-            .padding(horizontal = 16.dp),
-        horizontalArrangement = Arrangement.spacedBy(10.dp),
+    LazyRow(
+        contentPadding = PaddingValues(horizontal = 20.dp),
+        horizontalArrangement = Arrangement.spacedBy(16.dp),
     ) {
-        quickActions.forEach { action ->
-            Box(
-                modifier = Modifier
-                    .width(150.dp)
-                    .height(90.dp)
-                    .clip(MeloXGlass.compactShape)
-                    .background(action.gradient)
-                    .clickable { onActionClick(action) },
+        items(homeQuickActions(), key = { it.title }) { action ->
+            Column(
+                Modifier
+                    .width(310.dp)
+                    .clickable(enabled = active == null) { perform(action) },
             ) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(14.dp),
+                Text(
+                    action.eyebrow.uppercase(),
+                    color = MeloXColors.OnBackground.copy(alpha = .55f),
+                    fontSize = 11.sp,
+                    fontWeight = FontWeight.SemiBold,
+                )
+                Text(
+                    action.title,
+                    modifier = Modifier.padding(top = 3.dp),
+                    fontSize = 21.sp,
+                    fontWeight = FontWeight.SemiBold,
+                )
+                Text(
+                    action.subtitle,
+                    modifier = Modifier.padding(top = 2.dp),
+                    color = MeloXColors.OnBackground.copy(alpha = .52f),
+                    fontSize = 14.sp,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                )
+                Box(
+                    Modifier
+                        .fillMaxWidth()
+                        .aspectRatio(1.48f)
+                        .padding(top = 8.dp)
+                        .clip(RoundedCornerShape(14.dp))
+                        .background(Brush.linearGradient(action.colors)),
+                    contentAlignment = Alignment.Center,
                 ) {
                     MeloXSymbolIcon(
-                        symbol = action.icon,
-                        color = Color.White,
-                        size = 24,
-                    )
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text(
-                        text = action.title,
-                        style = MeloXTypography.subheadline.copy(
-                            fontWeight = FontWeight.Bold,
-                        ),
-                        color = Color.White,
+                        symbol = action.symbol,
+                        modifier = Modifier.fillMaxSize(),
+                        color = Color.White.copy(alpha = .24f),
+                        size = 72,
                     )
                     Text(
-                        text = action.subtitle,
-                        style = MeloXTypography.caption,
-                        color = Color.White.copy(alpha = 0.75f),
+                        action.title,
+                        modifier = Modifier
+                            .align(Alignment.BottomStart)
+                            .padding(18.dp),
+                        color = Color.White,
+                        fontSize = 25.sp,
+                        fontWeight = FontWeight.Bold,
                     )
+                    if (active == action.title) {
+                        CircularProgressIndicator(Modifier.size(52.dp), color = Color.White, strokeWidth = 3.dp)
+                    }
                 }
             }
         }
     }
 }
 
-// ── Section header ──
-
 @Composable
-private fun SectionHeader(
-    title: String,
-    onSeeMore: (() -> Unit)? = null,
-) {
+private fun SectionTitle(title: String, trailing: String, modifier: Modifier = Modifier) {
     Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 4.dp),
+        modifier = modifier.fillMaxWidth().padding(horizontal = 20.dp),
+        horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
             text = title,
-            style = MeloXTypography.headline,
-            color = MeloXColors.OnSurface,
-            modifier = Modifier.weight(1f),
+            fontSize = 20.sp,
+            lineHeight = 24.sp,
+            fontWeight = FontWeight.Bold,
+            color = MeloXColors.OnBackground,
         )
-        if (onSeeMore != null) {
-            Row(
-                modifier = Modifier.clickable { onSeeMore() },
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(2.dp),
-            ) {
-                Text(
-                    text = "查看更多",
-                    style = MeloXTypography.caption,
-                    color = MeloXColors.OnSurfaceVariant,
-                )
-                MeloXSymbolIcon(
-                    symbol = MeloXSymbol.ChevronRight,
-                    color = MeloXColors.OnSurfaceVariant,
-                    size = 14,
-                )
-            }
+        Text(
+            text = trailing,
+            color = MeloXColors.Primary,
+            fontSize = 14.sp,
+        )
+    }
+}
+
+@Composable
+private fun CollectionRow(
+    values: List<MusicPlaylistSummary>,
+    onSelect: (MusicPlaylistSummary) -> Unit,
+) {
+    LazyRow(
+        contentPadding = PaddingValues(horizontal = 20.dp),
+        horizontalArrangement = Arrangement.spacedBy(14.dp),
+    ) {
+        itemsIndexed(values, key = { _, v -> v.id.value }) { index, collection ->
+            CollectionCard(collection, Modifier.width(if (index == 0) 246.dp else 174.dp)) { onSelect(collection) }
         }
     }
 }
 
-// ── Playlist card ──
-
 @Composable
-private fun PlaylistCard(
-    playlist: MusicPlaylistSummary,
-    placeholderColor: Color,
-    onClick: () -> Unit,
+private fun CollectionRowRankings(
+    values: List<melox.music.model.MusicRankingSummary>,
+    onSelect: (melox.music.model.MusicRankingSummary) -> Unit,
 ) {
-    Column(
-        modifier = Modifier
-            .width(140.dp)
-            .clickable { onClick() },
+    LazyRow(
+        contentPadding = PaddingValues(horizontal = 20.dp),
+        horizontalArrangement = Arrangement.spacedBy(14.dp),
     ) {
-        Box(
-            modifier = Modifier
-                .size(140.dp)
-                .clip(MeloXGlass.compactShape)
-                .background(
-                    Brush.linearGradient(
-                        colors = listOf(
-                            placeholderColor,
-                            placeholderColor.copy(alpha = 0.5f),
-                        ),
-                        start = Offset(0f, 0f),
-                        end = Offset(Float.POSITIVE_INFINITY, Float.POSITIVE_INFINITY),
-                    ),
-                ),
-        ) {
-            // Play count overlay
-            if (playlist.playCount != null) {
-                Row(
+        itemsIndexed(values, key = { _, v -> v.id.value }) { index, ranking ->
+            Column(
+                Modifier
+                    .width(if (index == 0) 246.dp else 174.dp)
+                    .clickable { onSelect(ranking) }
+                    .padding(8.dp),
+            ) {
+                Box(
                     modifier = Modifier
-                        .align(Alignment.TopEnd)
-                        .padding(6.dp)
-                        .clip(RoundedCornerShape(8.dp))
-                        .background(Color.Black.copy(alpha = 0.45f))
-                        .padding(horizontal = 6.dp, vertical = 2.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(2.dp),
+                        .fillMaxWidth()
+                        .height(174.dp)
+                        .clip(RoundedCornerShape(14.dp))
+                        .background(
+                            Brush.linearGradient(
+                                listOf(
+                                    MeloXColors.sourceColors[ranking.id.source.storageValue]?.copy(alpha = 0.85f)
+                                        ?: HomeAccent.copy(alpha = 0.85f),
+                                    HomeAccent.copy(alpha = 0.45f),
+                                )
+                            )
+                        ),
+                    contentAlignment = Alignment.Center,
                 ) {
-                    MeloXSymbolIcon(
-                        symbol = MeloXSymbol.Play,
-                        color = Color.White,
-                        size = 8,
-                    )
                     Text(
-                        text = formatPlayCount(playlist.playCount),
-                        style = MeloXTypography.caption,
+                        ranking.title,
                         color = Color.White,
+                        fontSize = 17.sp,
+                        fontWeight = FontWeight.Bold,
+                        maxLines = 2,
+                        overflow = TextOverflow.Ellipsis,
+                        modifier = Modifier.padding(12.dp),
                     )
                 }
             }
-            // Playlist icon
-            MeloXSymbolIcon(
-                symbol = MeloXSymbol.MusicNote,
-                modifier = Modifier.align(Alignment.Center),
-                color = Color.White.copy(alpha = 0.20f),
-                size = 36,
-            )
         }
-
-        Spacer(modifier = Modifier.height(6.dp))
-        Text(
-            text = playlist.title,
-            style = MeloXTypography.subheadline,
-            color = MeloXColors.OnSurface,
-            maxLines = 2,
-            overflow = TextOverflow.Ellipsis,
-        )
     }
 }
 
-// ── Playlist horizontal scrolling section ──
-
 @Composable
-private fun PlaylistCarousel(
-    playlists: List<MusicPlaylistSummary>,
-    sourceColor: Color,
-    onPlaylistClick: (MusicPlaylistSummary) -> Unit,
-    onSeeMore: (() -> Unit)?,
+private fun CollectionCard(
+    value: MusicPlaylistSummary,
+    modifier: Modifier,
+    onClick: () -> Unit,
 ) {
-    Column(modifier = Modifier.fillMaxWidth()) {
-        SectionHeader(title = "推荐歌单", onSeeMore = onSeeMore)
-        Spacer(modifier = Modifier.height(4.dp))
-        Row(
+    Column(
+        modifier
+            .clickable(onClick = onClick)
+            .padding(8.dp),
+    ) {
+        val artworkShape = RoundedCornerShape(14.dp)
+        Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .horizontalScroll(rememberScrollState())
-                .padding(horizontal = 16.dp),
-            horizontalArrangement = Arrangement.spacedBy(12.dp),
+                .height(174.dp)
+                .clip(artworkShape),
         ) {
-            playlists.forEachIndexed { index, playlist ->
-                PlaylistCard(
-                    playlist = playlist,
-                    placeholderColor = sourceColor.copy(alpha = 0.3f + (index % 3) * 0.15f),
-                    onClick = { onPlaylistClick(playlist) },
-                )
+            MeloXArtworkImage(
+                url = value.artworkUrl,
+                fallbackColor = MeloXColors.sourceColors[value.id.source.storageValue] ?: HomeAccent,
+                modifier = Modifier.fillMaxSize(),
+            )
+        }
+        Text(
+            value.title,
+            modifier = Modifier.padding(top = 7.dp),
+            maxLines = 2,
+            overflow = TextOverflow.Ellipsis,
+            fontSize = 15.sp,
+            lineHeight = 19.sp,
+            fontWeight = FontWeight.SemiBold,
+        )
+    }
+}
+
+@Composable
+private fun ThreeLineSongCarousel(
+    values: List<MusicTrack>,
+    onSelect: (MusicTrack) -> Unit,
+) {
+    LazyRow(
+        contentPadding = PaddingValues(horizontal = 20.dp),
+        horizontalArrangement = Arrangement.spacedBy(18.dp),
+    ) {
+        items(
+            values.chunked(3),
+            key = { group -> group.joinToString("-") { it.id.value } },
+        ) { group ->
+            Column(
+                modifier = Modifier.width(320.dp),
+                verticalArrangement = Arrangement.spacedBy(4.dp),
+            ) {
+                group.forEach { track -> SongRow(track) { onSelect(track) } }
             }
         }
     }
 }
 
-// ── Song list item ──
-
 @Composable
-private fun SongListItem(
-    index: Int,
-    track: MusicTrack,
-    isPlaying: Boolean,
-    onClick: () -> Unit,
-) {
+private fun SongRow(song: MusicTrack, onClick: () -> Unit) {
+    val artworkShape = RoundedCornerShape(9.dp)
     Row(
-        modifier = Modifier
+        Modifier
             .fillMaxWidth()
-            .height(56.dp)
-            .padding(horizontal = 16.dp)
-            .clip(RoundedCornerShape(8.dp))
-            .clickable { onClick() }
-            .then(
-                if (isPlaying) Modifier.background(MeloXColors.SurfaceVariant.copy(alpha = 0.5f))
-                else Modifier
-            )
-            .padding(horizontal = 8.dp),
+            .height(66.dp)
+            .clickable(onClick = onClick)
+            .padding(horizontal = 10.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        // Track number
-        Text(
-            text = "%02d".format(index + 1),
-            style = MeloXTypography.subheadline.copy(
-                fontWeight = if (isPlaying) FontWeight.Bold
-                else FontWeight.Medium,
-            ),
-            color = if (isPlaying) MeloXColors.Primary else MeloXColors.OnSurfaceVariant,
-            modifier = Modifier.width(30.dp),
-        )
-
-        // Track artwork placeholder
-        val sourceColor = MeloXColors.sourceColors[track.id.source.storageValue] ?: MeloXColors.Primary
         Box(
             modifier = Modifier
-                .size(40.dp)
-                .clip(RoundedCornerShape(6.dp))
-                .background(
-                    Brush.linearGradient(
-                        colors = listOf(sourceColor.copy(alpha = 0.4f), sourceColor.copy(alpha = 0.15f)),
-                    ),
-                ),
-            contentAlignment = Alignment.Center,
+                .size(48.dp)
+                .clip(artworkShape),
         ) {
-            MeloXSymbolIcon(
-                symbol = MeloXSymbol.MusicNote,
-                color = Color.White.copy(alpha = 0.6f),
-                size = 16,
+            MeloXArtworkImage(
+                url = song.artworkUrl,
+                fallbackColor = MeloXColors.sourceColors[song.id.source.storageValue] ?: HomeAccent,
+                modifier = Modifier.fillMaxSize(),
             )
         }
-
-        Spacer(modifier = Modifier.width(12.dp))
-
-        // Track info
-        Column(
-            modifier = Modifier.weight(1f),
-            verticalArrangement = Arrangement.Center,
-        ) {
+        Spacer(Modifier.width(12.dp))
+        Column(Modifier.weight(1f)) {
             Text(
-                text = track.title,
-                style = MeloXTypography.body.copy(
-                    fontWeight = if (isPlaying) FontWeight.Bold
-                    else FontWeight.Normal,
-                ),
-                color = if (isPlaying) MeloXColors.Primary else MeloXColors.OnSurface,
+                song.title,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
+                fontWeight = FontWeight.SemiBold,
             )
             Text(
-                text = track.artistText,
-                style = MeloXTypography.subheadline,
-                color = MeloXColors.OnSurfaceVariant,
+                song.artistText,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
+                color = MeloXColors.OnBackground.copy(alpha = .48f),
+                fontSize = 13.sp,
             )
-        }
-
-        // Duration
-        val duration = formatDuration(track.durationMs)
-        if (duration.isNotEmpty()) {
-            Text(
-                text = duration,
-                style = MeloXTypography.caption,
-                color = MeloXColors.OnSurfaceVariant,
-            )
-        }
-    }
-}
-
-// ── Loading state ──
-
-@Composable
-private fun LoadingState() {
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center,
-    ) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(12.dp),
-        ) {
-            CircularProgressIndicator(
-                color = MeloXColors.Primary,
-                strokeWidth = 2.dp,
-                modifier = Modifier.size(32.dp),
-            )
-            Text(
-                text = "加载中...",
-                style = MeloXTypography.subheadline,
-                color = MeloXColors.OnSurfaceVariant,
-            )
-        }
-    }
-}
-
-// ── Empty state ──
-
-@Composable
-private fun EmptyState(message: String) {
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center,
-    ) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-        ) {
-            MeloXSymbolIcon(
-                symbol = MeloXSymbol.MusicNote,
-                color = MeloXColors.OnSurfaceVariant,
-                size = 36,
-            )
-            Text(
-                text = message,
-                style = MeloXTypography.subheadline,
-                color = MeloXColors.OnSurfaceVariant,
-            )
-        }
-    }
-}
-
-// ── Main HomeScreen composable ──
-
-@Composable
-fun HomeScreen(
-    navState: MeloXNavState,
-) {
-    var selectedSource by remember { mutableStateOf(SourceChip.Netease) }
-    var tracks by remember { mutableStateOf(emptyList<MusicTrack>()) }
-    var isLoading by remember { mutableStateOf(true) }
-    var error by remember { mutableStateOf<String?>(null) }
-    val currentTrack by AudioPlayer.currentTrack.collectAsState()
-    val playerState by AudioPlayer.state.collectAsState()
-
-    // Search on source change
-    LaunchedEffect(selectedSource) {
-        isLoading = true
-        error = null
-        tracks = emptyList()
-        try {
-            val result: MusicPage<MusicTrack> = selectedSource.provider.searchSongs(
-                query = "热门",
-                page = 1,
-                pageSize = 20,
-            )
-            tracks = result.items
-        } catch (e: Exception) {
-            error = e.message ?: "加载失败"
-        } finally {
-            isLoading = false
-        }
-    }
-
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(MeloXColors.Background),
-    ) {
-        // iOS-style top bar
-        MeloXIosTopBar(
-            title = "发现",
-            actions = {
-                IconButton(
-                    onClick = { navState.navigateTo(Route.Search) },
-                    modifier = Modifier.size(36.dp),
-                ) {
-                    MeloXSymbolIcon(
-                        symbol = MeloXSymbol.Search,
-                        color = MeloXColors.OnSurface,
-                        size = 22,
-                    )
-                }
-                IconButton(
-                    onClick = { navState.navigateTo(Route.Settings) },
-                    modifier = Modifier.size(36.dp),
-                ) {
-                    MeloXSymbolIcon(
-                        symbol = MeloXSymbol.Settings,
-                        color = MeloXColors.OnSurface,
-                        size = 22,
-                    )
-                }
-            },
-        )
-
-        Spacer(modifier = Modifier.height(4.dp))
-
-        // Source chips
-        SourceChips(
-            selectedSource = selectedSource,
-            onSourceSelected = { source -> selectedSource = source },
-        )
-
-        Spacer(modifier = Modifier.height(12.dp))
-
-        // Content
-        when {
-            isLoading -> LoadingState()
-            error != null -> EmptyState(error ?: "未知错误")
-            else -> {
-                LazyColumn(
-                    modifier = Modifier.fillMaxSize(),
-                    contentPadding = PaddingValues(bottom = 24.dp),
-                    verticalArrangement = Arrangement.spacedBy(16.dp),
-                ) {
-                    // Quick action cards
-                    item {
-                        QuickActionCards(onActionClick = { /* TODO */ })
-                    }
-
-                    // Playlist carousel
-                    item {
-                        PlaylistCarousel(
-                            playlists = placeholderPlaylists(selectedSource.source),
-                            sourceColor = selectedSource.color,
-                            onPlaylistClick = { /* TODO */ },
-                            onSeeMore = { /* TODO */ },
-                        )
-                    }
-
-                    // Hot songs list
-                    item {
-                        SectionHeader(
-                            title = "热门歌曲",
-                            onSeeMore = { /* TODO */ },
-                        )
-                    }
-
-                    itemsIndexed(tracks) { index, track ->
-                        SongListItem(
-                            index = index,
-                            track = track,
-                            isPlaying = currentTrack?.id == track.id && playerState.isPlaying,
-                            onClick = {
-                                val neteaseId = track.id.value.toLongOrNull()
-                                if (neteaseId != null && track.id.source == MusicSource.Netease) {
-                                    val url = "https://music.163.com/song/media/outer/url?id=$neteaseId"
-                                    AudioPlayer.play(url, track)
-                                } else {
-                                    AudioPlayer.play(track.id.value, track)
-                                }
-                            },
-                        )
-                    }
-
-                    if (tracks.isEmpty() && !isLoading) {
-                        item { EmptyState("暂无数据，换个搜索词试试") }
-                    }
-                }
-            }
         }
     }
 }
