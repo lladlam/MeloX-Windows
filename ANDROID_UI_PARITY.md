@@ -68,16 +68,21 @@ Android `main` 分支是唯一 UI/UX Source of Truth。
 |---|---|---|---|---|
 | Home | discovery/MeloXDiscoveryScreens.kt:187-718 | ☑ | ◐ (homeFeed QQ/Kugou; Netease 缺) | ◐ |
 | Explore | discovery:720-915 | ◐ | ◐ | ◐ |
-| Library | library/LibraryScreen.kt | ☐ | ☐ | ☐ |
+| Library | library/LibraryScreen.kt | ☑ | ☑ (Netease snapshot; 登录门/心动模式/能力门控页) | ◐ (Podcasts/Cloud 嵌入简化版) |
+| Library SegmentedPicker (liquid panel + lens spring(1f,460f)) | LibraryScreen.kt:1044-1155 | ☑ | — | ◐ (无 backdrop 采样) |
+| Library PlaylistDetail (palette bg/hero/liquid play/搜索/swipe) | LibraryScreen.kt:1536-2012 | ☑ | ☑ (client+cache+provider bridge) | ◐ (排序菜单未接) |
+| Library Downloads (Root/Active/Playlists/Detail + 多选/浏览模式/导出) | LibraryScreen.kt:543-943 | ☑ | ☑ (MeloXDownloadStore+ProviderStore) | ◐ (导出依赖平台) |
+| SwipeActionRow (spring .82/260, full-swipe .44) | glass/MeloXSwipeActionRow.kt | ☑ | — | ☑ |
+| DetailPalette (160px 均色 0.52 亮度分割) | library/MeloXDetailPalette.kt | ☑ | — | ☑ |
 | Search | search/SearchScreen.kt | ☐ | ◐ | ☐ |
 | Settings | settings/ | ◐ | ✗ mock | ☐ |
 | Podcasts | podcast/MeloXPodcastScreen.kt | ☐ | ✗ mock | ☐ |
-| Downloads | LibraryScreen(forcedPage) | ☐ | ✗ mock | ☐ |
+| Downloads (底部 Tab 独立页) | LibraryScreen(forcedPage) | ☑ | ☑ (Library Downloads 版复用) | ◐ |
 | Cloud | cloud/MeloXCloudMusicScreen.kt | ☐ | ✗ mock | ☐ |
 | Messages | messages/MessagesScreen.kt | ☐ | ✗ mock | ☐ |
-| Login | account/NeteaseLoginScreen.kt | ☐ | ✗ | ☐ |
+| Login | account/NeteaseLoginScreen.kt | ☐ | ◐ (LoginScreen 已有, 未接 Route.Login) | ◐ |
 | AlbumDetail | collection/ | ☐ | ✗ | ☐ |
-| PlaylistDetail | library/MeloXUnifiedPlaylistDetailScreen.kt | ☐ | ✗ | ☐ |
+| PlaylistDetail | library/MeloXUnifiedPlaylistDetailScreen.kt | ☑ (见 Library) | ☑ | ◐ |
 | Provider 页面 | provider/ | ☐ | ✗ | ☐ |
 | Messages slide-in 300ms | MeloXApp.kt:614-630 | ☐ | — | ☐ |
 

@@ -1,11 +1,29 @@
 package melox.ui.glass
 
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.unit.dp
 
 /**
  * 1:1 port of Android MeloXGlassTokens.kt (ui/glass/MeloXGlassTokens.kt).
  */
+
+/**
+ * Same continuous/capsule geometry tokens as Android MeloXShapes.
+ * Desktop has no continuous-corner (squircle) renderer, so the same radii
+ * ride on RoundedCornerShape; Capsule and Circle are identical primitives.
+ */
+object MeloXShapes {
+    val capsule: Shape = RoundedCornerShape(50)
+    val compact: Shape = RoundedCornerShape(16.dp)
+    val card: Shape = RoundedCornerShape(22.dp)
+    val largeCard: Shape = RoundedCornerShape(28.dp)
+    val sheet: Shape = RoundedCornerShape(topStart = 36.dp, topEnd = 36.dp)
+    val circle: Shape = CircleShape
+}
 
 /** The two Liquid Glass variants Apple exposes for custom components. */
 enum class MeloXGlassMaterial {
