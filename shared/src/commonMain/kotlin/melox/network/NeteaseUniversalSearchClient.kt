@@ -20,6 +20,60 @@ import java.security.SecureRandom
 import javax.crypto.Cipher
 import javax.crypto.spec.SecretKeySpec
 import kotlin.collections.forEach
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+
+enum class MeloXSearchKind(val apiType: Int, val title: String) {
+    Songs(1, "歌曲"), Albums(10, "专辑"), Artists(100, "歌手"), Playlists(1000, "歌单"), Podcasts(1009, "播客"), Users(1002, "用户")
+}
+
+data class MeloXSearchMediaItem(
+    val id: Long,
+    val kind: MeloXSearchKind,
+    val title: String,
+    val subtitle: String = "",
+    val artworkUrl: String? = null,
+    val trackCount: Int = 0,
+)
+
+
+data class MeloXPodcastHost(val id: Long = 0L, val nickname: String = "网易云主播", val avatarUrl: String? = null)
+data class MeloXPodcast(
+    val id: Long,
+    val name: String,
+    val artworkUrl: String? = null,
+    val description: String? = null,
+    val category: String? = null,
+    val programCount: Int = 0,
+    val subscriberCount: Long = 0L,
+    val host: MeloXPodcastHost? = null,
+    val subscribed: Boolean = false,
+)
+data class MeloXPodcastCategory(val id: Long, val name: String, val artworkUrl: String? = null)
+data class MeloXPodcastProgram(
+    val id: Long,
+    val name: String,
+    val artworkUrl: String? = null,
+    val durationMs: Long = 0L,
+    val radioId: Long,
+    val radioName: String,
+    val playbackSong: melox.model.SearchSong? = null,
+)
+data class MeloXPodcastPage<T>(val values: List<T>, val hasMore: Boolean = false, val totalCount: Int = values.size)
+
+data class MeloXCloudSong(
+    val id: Long,
+    val song: melox.model.SearchSong,
+    val fileSize: Long = 0L,
+    val bitrate: Int = 0,
+)
+data class MeloXCloudPage(
+    val values: List<MeloXCloudSong>,
+    val totalCount: Int,
+    val usedBytes: Long,
+    val maxBytes: Long,
+    val hasMore: Boolean,
+)
 
 class NeteaseUniversalSearchClient(
     private val cookieProvider: () -> String = { "" },
@@ -90,6 +144,221 @@ class NeteaseUniversalSearchClient(
             availability = if (status == 0) TrackAvailability.Playable else TrackAvailability.Unavailable,
             providerMetadata = ProviderTrackMetadata.Netease(id),
         )
+    }
+
+
+    suspend fun searchMedia(keywords: String, kind: MeloXSearchKind, limit: Int = 30): List<MeloXSearchMediaItem> =
+        withContext(Dispatchers.IO) {
+            if (kind == MeloXSearchKind.Songs) return@withContext emptyList()
+            val query = keywords.trim()
+            if (query.isEmpty()) return@withContext emptyList()
+            val response = eapi(
+                "/api/search/get",
+                JSONObject().put("s", query).put("type", kind.apiType).put("limit", limit.coerceIn(1, 50)).put("offset", 0),
+            )
+            val result = response.optJSONObject("result") ?: return@withContext emptyList()
+            val values = when (kind) {
+                MeloXSearchKind.Albums -> result.optJSONArray("albums")
+                MeloXSearchKind.Artists -> result.optJSONArray("artists")
+                MeloXSearchKind.Playlists -> result.optJSONArray("playlists")
+                MeloXSearchKind.Podcasts -> result.optJSONArray("djRadios") ?: result.optJSONArray("radios")
+                MeloXSearchKind.Users -> result.optJSONArray("userprofiles") ?: result.optJSONArray("userProfiles")
+                else -> null
+            } ?: JSONArray()
+            buildList {
+                for (i in 0 until values.length()) {
+                    val value = values.optJSONObject(i) ?: continue
+                    val id = if (kind == MeloXSearchKind.Users) value.optLong("userId", -1L) else value.optLong("id", -1L)
+                    if (id <= 0L) continue
+                    when (kind) {
+                        MeloXSearchKind.Albums -> add(MeloXSearchMediaItem(
+                            id, kind,
+                            value.optString("name").ifBlank { "未命名专辑" },
+                            value.optJSONObject("artist")?.optString("name").orEmpty(),
+                            secureUrl(value.optString("picUrl").takeIf(String::isNotBlank)),
+                            value.optInt("size", 0),
+                        ))
+                        MeloXSearchKind.Artists -> add(MeloXSearchMediaItem(
+                            id, kind,
+                            value.optString("name").ifBlank { "未知歌手" },
+                            buildList {
+                                val aliases = value.optJSONArray("alias") ?: JSONArray()
+                                for (j in 0 until aliases.length()) aliases.optString(j).takeIf(String::isNotBlank)?.let(::add)
+                            }.joinToString(" / "),
+                            secureUrl(value.optString("picUrl").takeIf(String::isNotBlank) ?: value.optString("img1v1Url").takeIf(String::isNotBlank)),
+                        ))
+                        MeloXSearchKind.Playlists -> add(MeloXSearchMediaItem(
+                            id, kind,
+                            value.optString("name").ifBlank { "未命名歌单" },
+                            value.optJSONObject("creator")?.optString("nickname").orEmpty(),
+                            secureUrl(value.optString("coverImgUrl").takeIf(String::isNotBlank) ?: value.optString("picUrl").takeIf(String::isNotBlank)),
+                            value.optInt("trackCount", 0),
+                        ))
+                        MeloXSearchKind.Podcasts -> add(MeloXSearchMediaItem(id, kind, value.optString("name").ifBlank { "未命名播客" }, value.optJSONObject("dj")?.optString("nickname").orEmpty(), secureUrl(value.optString("picUrl").takeIf(String::isNotBlank)), value.optInt("programCount", 0)))
+                        MeloXSearchKind.Users -> add(MeloXSearchMediaItem(value.optLong("userId", id), kind, value.optString("nickname").ifBlank { "网易云用户" }, value.optString("signature"), secureUrl(value.optString("avatarUrl").takeIf(String::isNotBlank))))
+                        else -> Unit
+                    }
+                }
+            }
+        }
+
+    suspend fun songDetail(songId: Long): SearchSong? = withContext(Dispatchers.IO) {
+        val arr = JSONArray().put(JSONObject().put("id", songId))
+        val result = eapi("/api/v3/song/detail", JSONObject().put("c", arr.toString()))
+        parseSong(result.optJSONArray("songs")?.optJSONObject(0))
+    }
+
+    suspend fun collectionSongs(item: MeloXSearchMediaItem): List<SearchSong> = withContext(Dispatchers.IO) {
+        val values = when (item.kind) {
+            MeloXSearchKind.Albums -> eapi("/api/v1/album/${item.id}", JSONObject()).optJSONArray("songs")
+            MeloXSearchKind.Artists -> eapi("/api/v1/artist/${item.id}", JSONObject()).optJSONArray("hotSongs")
+            MeloXSearchKind.Podcasts -> {
+                val response = eapi(
+                    "/api/dj/program/byradio",
+                    JSONObject().put("radioId", item.id).put("limit", 100).put("offset", 0).put("asc", false),
+                )
+                val programs = response.optJSONArray("programs") ?: JSONArray()
+                return@withContext buildList {
+                    for (i in 0 until programs.length()) {
+                        val program = programs.optJSONObject(i) ?: continue
+                        parseSong(program.optJSONObject("mainSong"))?.let(::add)
+                    }
+                }
+            }
+            else -> JSONArray()
+        } ?: JSONArray()
+        buildList {
+            for (i in 0 until values.length()) parseSong(values.optJSONObject(i))?.let(::add)
+        }
+    }
+
+    fun parseSong(value: JSONObject?): SearchSong? {
+        value ?: return null
+        val id = value.optLong("id", -1L)
+        if (id <= 0L) return null
+        val artistArray = value.optJSONArray("ar") ?: value.optJSONArray("artists") ?: JSONArray()
+        val artists = buildList {
+            for (i in 0 until artistArray.length()) artistArray.optJSONObject(i)?.optString("name")?.takeIf(String::isNotBlank)?.let(::add)
+        }.joinToString(" / ")
+        val album = value.optJSONObject("al") ?: value.optJSONObject("album")
+        return SearchSong(
+            id = id,
+            name = value.optString("name").ifBlank { "未知歌曲" },
+            artists = artists.ifBlank { "未知歌手" },
+            album = album?.optString("name").orEmpty(),
+            artworkUrl = secureUrl(album?.optString("picUrl")?.takeIf(String::isNotBlank) ?: album?.optString("blurPicUrl")?.takeIf(String::isNotBlank)),
+            durationMs = value.optLong("dt", value.optLong("duration", 0L)).coerceAtLeast(0L),
+        )
+    }
+
+    private fun secureUrl(value: String?): String? {
+        val raw = value?.trim()?.takeIf(String::isNotBlank) ?: return null
+        return when {
+            raw.startsWith("//") -> "https:$raw"
+            raw.startsWith("http://") -> "https://" + raw.removePrefix("http://")
+            else -> raw
+        }
+    }
+
+
+    suspend fun podcastCategories(): List<MeloXPodcastCategory> = withContext(Dispatchers.IO) {
+        val values = eapi("/api/djradio/category/get", JSONObject()).optJSONArray("categories") ?: JSONArray()
+        buildList {
+            for (index in 0 until values.length()) {
+                val value = values.optJSONObject(index) ?: continue
+                val id = value.optLong("id", -1L)
+                if (id <= 0L) continue
+                add(MeloXPodcastCategory(id, value.optString("name").ifBlank { "播客" }, secureUrl(value.optString("pic96x96Url").takeIf(String::isNotBlank))))
+            }
+        }
+    }
+
+    suspend fun featuredPodcasts(): List<MeloXPodcast> = withContext(Dispatchers.IO) {
+        parsePodcasts(eapi("/api/djradio/recommend/v1", JSONObject()).optJSONArray("djRadios"))
+    }
+
+    suspend fun personalizedPodcasts(limit: Int = 12): List<MeloXPodcast> = withContext(Dispatchers.IO) {
+        parsePodcasts(eapi("/api/djradio/personalize/rcmd", JSONObject().put("limit", limit.coerceIn(1, 50))).optJSONArray("data"))
+    }
+
+    suspend fun podcastsByCategory(categoryId: Long, offset: Int = 0, limit: Int = 30): MeloXPodcastPage<MeloXPodcast> = withContext(Dispatchers.IO) {
+        val response = eapi("/api/djradio/hot", JSONObject().put("cateId", categoryId).put("limit", limit.coerceIn(1, 50)).put("offset", offset.coerceAtLeast(0)))
+        val values = parsePodcasts(response.optJSONArray("djRadios"))
+        val total = response.optInt("count", offset + values.size)
+        MeloXPodcastPage(values, offset + values.size < total, total)
+    }
+
+    suspend fun podcastPrograms(radioId: Long, offset: Int = 0, limit: Int = 30): MeloXPodcastPage<MeloXPodcastProgram> = withContext(Dispatchers.IO) {
+        val response = eapi("/api/dj/program/byradio", JSONObject().put("radioId", radioId).put("limit", limit.coerceIn(1, 50)).put("offset", offset.coerceAtLeast(0)).put("asc", false))
+        val source = response.optJSONArray("programs") ?: JSONArray()
+        val values = buildList { for (index in 0 until source.length()) parsePodcastProgram(source.optJSONObject(index))?.let(::add) }
+        val total = response.optInt("count", offset + values.size)
+        MeloXPodcastPage(values, offset + values.size < total, total)
+    }
+
+    suspend fun setPodcastSubscribed(id: Long, subscribed: Boolean) = withContext(Dispatchers.IO) {
+        eapi(if (subscribed) "/api/djradio/sub" else "/api/djradio/unsub", JSONObject().put("id", id))
+        Unit
+    }
+
+    private fun parsePodcasts(values: JSONArray?): List<MeloXPodcast> {
+        val source = values ?: JSONArray()
+        return buildList { for (index in 0 until source.length()) parsePodcast(source.optJSONObject(index))?.let(::add) }
+    }
+
+    private fun parsePodcast(value: JSONObject?): MeloXPodcast? {
+        value ?: return null
+        val id = value.optLong("id", -1L)
+        if (id <= 0L) return null
+        val dj = value.optJSONObject("dj")
+        return MeloXPodcast(
+            id = id,
+            name = value.optString("name").ifBlank { "未知播客" },
+            artworkUrl = secureUrl(value.optString("picUrl").takeIf(String::isNotBlank)),
+            description = value.optString("desc").takeIf(String::isNotBlank),
+            category = value.optString("category").takeIf(String::isNotBlank),
+            programCount = value.optInt("programCount", 0),
+            subscriberCount = value.optLong("subCount", 0L),
+            host = dj?.let { MeloXPodcastHost(it.optLong("userId", 0L), it.optString("nickname").ifBlank { "网易云主播" }, secureUrl(it.optString("avatarUrl").takeIf(String::isNotBlank))) },
+            subscribed = value.optBoolean("subed", false),
+        )
+    }
+
+    private fun parsePodcastProgram(value: JSONObject?): MeloXPodcastProgram? {
+        value ?: return null
+        val id = value.optLong("id", -1L)
+        if (id <= 0L) return null
+        val radio = value.optJSONObject("radio") ?: JSONObject()
+        val song = parseSong(value.optJSONObject("mainSong"))
+        return MeloXPodcastProgram(
+            id = id,
+            name = value.optString("name").ifBlank { "未知节目" },
+            artworkUrl = secureUrl(value.optString("coverUrl").takeIf(String::isNotBlank) ?: radio.optString("picUrl").takeIf(String::isNotBlank)),
+            durationMs = value.optLong("duration", song?.durationMs ?: 0L),
+            radioId = radio.optLong("id", 0L),
+            radioName = radio.optString("name").ifBlank { "未知播客" },
+            playbackSong = song,
+        )
+    }
+
+    suspend fun cloudSongs(limit: Int = 200, offset: Int = 0): MeloXCloudPage = withContext(Dispatchers.IO) {
+        if (!NeteaseSessionStore.containsMusicU(cookieProvider())) throw java.io.IOException("请先登录网易云音乐")
+        val response = eapi("/api/v1/cloud/get", JSONObject().put("limit", limit.coerceIn(1, 200)).put("offset", offset.coerceAtLeast(0)))
+        val data = response.optJSONArray("data") ?: JSONArray()
+        val values = buildList {
+            for (index in 0 until data.length()) {
+                val value = data.optJSONObject(index) ?: continue
+                val parsed = parseSong(value.optJSONObject("simpleSong")) ?: continue
+                add(MeloXCloudSong(value.optLong("songId", parsed.id), parsed, value.optLong("fileSize", 0L), value.optInt("bitrate", 0)))
+            }
+        }
+        val total = response.optInt("count", offset + values.size)
+        MeloXCloudPage(values, total, response.optLong("size", 0L), response.optLong("maxSize", 0L), response.optBoolean("hasMore", offset + values.size < total))
+    }
+
+    suspend fun deleteCloudSong(songId: Long) = withContext(Dispatchers.IO) {
+        eapi("/api/cloud/del", JSONObject().put("songIds", JSONArray().put(songId)))
+        Unit
     }
 
     private fun eapi(

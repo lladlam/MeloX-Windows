@@ -1,5 +1,6 @@
 package melox.ui.foundation
 
+import androidx.compose.animation.togetherWith
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -98,4 +99,32 @@ fun MeloXSymbolIcon(
             color = color,
         ),
     )
+}
+
+/**
+ * Apple Music-style search affordance: magnifier and back arrow share one
+ * icon-enter/exit fade instead of an abrupt glyph swap.
+ */
+@Composable
+fun MeloXSearchBackMorphIcon(
+    focused: Boolean,
+    modifier: Modifier = Modifier,
+    color: Color,
+    contentDescription: String? = null,
+) {
+    androidx.compose.animation.AnimatedContent(
+        targetState = focused,
+        transitionSpec = {
+            (androidx.compose.animation.fadeIn(MeloXMotion.iconEnterTween()) togetherWith
+                androidx.compose.animation.fadeOut(MeloXMotion.iconExitTween()))
+        },
+        modifier = modifier,
+        label = "search-back-sf-transition",
+    ) { isFocused ->
+        MeloXSymbolIcon(
+            symbol = if (isFocused) MeloXSymbol.ChevronLeft else MeloXSymbol.Search,
+            color = color,
+            size = 22,
+        )
+    }
 }

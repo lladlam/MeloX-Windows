@@ -11,7 +11,7 @@ Android `main` 分支是唯一 UI/UX Source of Truth。
 | tabBarMinimized + scrollAccumulator ±18px | MeloXApp.kt:305-335 | MeloXApp.kt | ☑ |
 | SeekableTransitionState player | MeloXApp.kt | MeloXApp.kt | ◐ (无手势 seek) |
 | Content fade 320/240 | MeloXPageTransitions.kt | MeloXMotion.kt | ☑ |
-| Back 行为（返回 Home / 双击退出） | MeloXApp.kt:470-505 | ✗ 无键盘 back 语义 | ☐ |
+| Back 行为（返回 Home / 双击退出） | MeloXApp.kt:470-505 | SearchScreen Escape 分层返回 | ◐ |
 
 ## Bottom Chrome
 | 项 | Android 源 | 状态 |
@@ -35,7 +35,7 @@ Android `main` 分支是唯一 UI/UX Source of Truth。
 | chrome/surface alpha 阶梯 | MeloXIOSMiniPlayer.kt | ◐ (compactProgress 代理) |
 | 横滑切歌 ±28px, spring .68/360, 1.5s 保护 | MeloXIOSMiniPlayer.kt | ☑ (无队列，回弹) |
 | DancingBars 15×18dp 音频反应 | MeloXAudioReactiveRuntime | ◐ (合成 wobble) |
-| sharedBounds shell→player | MeloXSharedTransitions.kt | ☐ |
+| sharedBounds shell→player | MeloXSharedTransitions.kt | ☑ |
 
 ## Full Player
 | 项 | Android 源 | 状态 |
@@ -45,10 +45,10 @@ Android `main` 分支是唯一 UI/UX Source of Truth。
 | shadow 26/14 spring .92/320 | MeloXNowPlayingCoreControls.kt | ☑ |
 | play/pause swap (fadeIn 180/scaleIn .78/slideIn 24%) | MeloXNowPlayingCoreControls.kt | ☑ |
 | 页面 cross-fade spring(.7,300), lyrics/queue ±400dp | MeloXIOSNowPlayingScene.kt | ◐ (无 scale 0.92) |
-| Lyrics 引擎（逐行高亮/翻译/罗马音） | MeloXIOSLyricsPanel.kt | ☐ (暂无歌词) |
-| Queue 完整列表 + 拖拽重排 | MeloXQueuePanel.kt | ☐ |
+| Lyrics 引擎（逐行高亮/翻译/罗马音） | MeloXIOSLyricsPanel.kt | ◐ (逐行高亮+翻译，无逐字) |
+| Queue 完整列表 + 拖拽重排 | MeloXQueuePanel.kt | ◐ (真实队列，无拖拽重排) |
 | 手势下拉关闭 (grabber drag) | MeloXIOSNowPlayingScene.kt | ◐ (tap only) |
-| seek on drag + settle spring(1.0,420) | MeloXApp.kt:677-694 | ☐ |
+| seek on drag + settle spring(1.0,420) | MeloXApp.kt:677-694 | ☑ |
 | 音质选择 / actions sheet | MeloXQualitySelectionOverlay.kt | ☐ |
 
 ## Glass
@@ -74,12 +74,12 @@ Android `main` 分支是唯一 UI/UX Source of Truth。
 | Library Downloads (Root/Active/Playlists/Detail + 多选/浏览模式/导出) | LibraryScreen.kt:543-943 | ☑ | ☑ (MeloXDownloadStore+ProviderStore) | ◐ (导出依赖平台) |
 | SwipeActionRow (spring .82/260, full-swipe .44) | glass/MeloXSwipeActionRow.kt | ☑ | — | ☑ |
 | DetailPalette (160px 均色 0.52 亮度分割) | library/MeloXDetailPalette.kt | ☑ | — | ☑ |
-| Search | search/SearchScreen.kt | ☐ | ◐ | ☐ |
-| Settings | settings/ | ◐ | ✗ mock | ☐ |
-| Podcasts | podcast/MeloXPodcastScreen.kt | ☐ | ✗ mock | ☐ |
+| Search | search/SearchScreen.kt | ◐ | 真实搜索+详情 | ◐ |
+| Settings | settings/ | ◐ | 分区列表+音质 | ◐ |
+| Podcasts | podcast/MeloXPodcastScreen.kt | ◐ | 真实网易云播客 | ◐ |
 | Downloads (底部 Tab 独立页) | LibraryScreen(forcedPage) | ☑ | ☑ (Library Downloads 版复用) | ◐ |
-| Cloud | cloud/MeloXCloudMusicScreen.kt | ☐ | ✗ mock | ☐ |
-| Messages | messages/MessagesScreen.kt | ☐ | ✗ mock | ☐ |
+| Cloud | cloud/MeloXCloudMusicScreen.kt | ◐ | 真实云盘歌曲 | ◐ |
+| Messages | messages/MessagesScreen.kt | ◐ | 真实联系人 | ◐ |
 | Login | account/NeteaseLoginScreen.kt | ☐ | ◐ (LoginScreen 已有, 未接 Route.Login) | ◐ |
 | AlbumDetail | collection/ | ☐ | ✗ | ☐ |
 | PlaylistDetail | library/MeloXUnifiedPlaylistDetailScreen.kt | ☑ (见 Library) | ☑ | ◐ |
@@ -100,6 +100,21 @@ Android `main` 分支是唯一 UI/UX Source of Truth。
 | MiLanPro/SF Pro 字体加载 | ☑ |
 | iOS 字号阶梯 largeTitle→caption | ☑ |
 | Monospace 进度标签 11sp α0.50 | ☑ |
+
+
+## Native Glass（本轮）
+| 项 | Android 源 | Windows 源 | 状态 |
+|---|---|---|---|
+| MeloXGlassButton 四态 | MeloXNativeGlassComponents.kt | ui/glass/MeloXNativeGlassComponents.kt | ☑ |
+| MeloXGlassIconButton | 同上 | 同上 | ☑ |
+| MeloXGlassToggle 64×28 拖拽 | 同上 LiquidDragAnimation | Animatable + 水平拖拽 | ◐ (无 lens 旋钮) |
+| MeloXGlassTextField BasicTextField | 同上 | 同上 | ☑ |
+| MeloXGlassCard / Segmented / Toolbar | 同上 | 同上 | ☑ |
+| SearchScreen 字段/范围/发现/结果/详情 | ui/search/SearchScreen.kt | screens/SearchScreen.kt | ◐ |
+| searchMedia / songDetail / collectionSongs | NeteaseUniversalSearchClient.kt | shared 同名 | ☑ |
+| SearchBackMorphIcon | MeloXSymbol.kt | MeloXSearchBackMorphIcon | ☑ |
+| MeloXSongActionsOverlay | player | 主操作+评论 | ◐ |
+| 播客发现页 | MeloXPodcastScreen | 真实分类/推荐/节目 | ◐ |
 
 ## 截图验收
 | 状态 | 状态 |

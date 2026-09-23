@@ -175,6 +175,7 @@ fun MeloXApp() {
         ),
     ) {
         SharedTransitionLayout(modifier = Modifier.fillMaxSize()) {
+            val sharedScope = this
             Box(
                 modifier = Modifier
                     .fillMaxSize()
@@ -222,9 +223,12 @@ fun MeloXApp() {
                             enter = androidx.compose.animation.EnterTransition.None,
                             exit = androidx.compose.animation.ExitTransition.None,
                         ) {
+                            val miniVisibility = this
                             MeloXMiniPlayer(
                                 compactProgress = compactProgress,
                                 onExpand = openPlayer,
+                                sharedTransitionScope = sharedScope,
+                                animatedVisibilityScope = miniVisibility,
                             )
                         }
                     },
@@ -240,6 +244,7 @@ fun MeloXApp() {
                         .fillMaxSize()
                         .zIndex(20f),
                 ) {
+                    val playerVisibility = this
                     Box(
                         modifier = Modifier
                             .fillMaxSize()
@@ -252,6 +257,21 @@ fun MeloXApp() {
                         MeloXNowPlayingScreen(
                             navState = null,
                             onDismiss = closePlayer,
+                            sharedTransitionScope = sharedScope,
+                            animatedVisibilityScope = playerVisibility,
+                            onSeekCollapse = { fraction ->
+                                playerTransitionJob?.cancel()
+                                playerTransitionJob = null
+                                playerTransitionState.seekTo(fraction.coerceIn(0f, 0.999f), targetState = false)
+                            },
+                            onSettleCollapse = { collapse ->
+                                playerTransitionJob?.cancel()
+                                playerTransitionJob = null
+                                playerTransitionState.animateTo(
+                                    targetState = !collapse,
+                                    animationSpec = spring(dampingRatio = 1f, stiffness = 420f),
+                                )
+                            },
                         )
                     }
                 }

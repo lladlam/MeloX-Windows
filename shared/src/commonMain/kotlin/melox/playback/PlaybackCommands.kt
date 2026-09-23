@@ -11,11 +11,16 @@ import melox.platform.logInfo
 import melox.platform.logWarn
 import java.io.IOException
 import java.util.UUID
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 /**
  * Desktop playback commands. Replaces Media3/MediaController with a simple
  * in-process player bridge. The desktop player will use these commands directly.
  */
+data class PlaybackQueueSnapshot(val songs: List<SearchSong>, val index: Int)
+
 object PlaybackCommands {
     private const val TAG = "MeloXPlayback"
     const val QUEUE_ORIGIN_KEY = "melox.queue.origin"
@@ -28,6 +33,13 @@ object PlaybackCommands {
 
     @Volatile
     internal var activeController: Any? = null
+
+    private val _queue = MutableStateFlow(PlaybackQueueSnapshot(emptyList(), -1))
+    val queue: StateFlow<PlaybackQueueSnapshot> = _queue.asStateFlow()
+
+    internal fun publishQueue(player: MeloXDesktopPlayer) {
+        _queue.value = PlaybackQueueSnapshot(player.snapshot(), player.currentMediaItemIndex)
+    }
 
     fun currentSongId(): Long? = (activeController as? MeloXDesktopPlayer)?.currentMediaItem?.toLongOrNull()
 
@@ -79,6 +91,7 @@ object PlaybackCommands {
         player.prepare()
         player.play()
         activeController = player
+        publishQueue(player)
 
         logDebug(TAG, "Playback queue dispatched: size=${queue.size}, start=$startIndex, offline=$offline, quality=${quality.apiLevel}")
     }
@@ -93,6 +106,7 @@ object PlaybackCommands {
         if (!MeloXNetworkAvailability.isOnline() && !downloads.contains(song.id)) return
         val insertion = (controller.currentMediaItemIndex + 1).coerceIn(0, controller.mediaItemCount)
         controller.addMediaItem(insertion, song)
+        publishQueue(controller)
     }
 
     fun playNext(song: SearchSong) {
@@ -105,6 +119,7 @@ object PlaybackCommands {
         if (!MeloXNetworkAvailability.isOnline() && !downloads.contains(song.id)) return
         val insertion = (controller.currentMediaItemIndex + 1).coerceIn(0, controller.mediaItemCount)
         controller.addMediaItem(insertion, song)
+        publishQueue(controller)
     }
 
     fun changeQuality(quality: MusicQuality) {
@@ -152,6 +167,8 @@ class MeloXDesktopPlayer {
 
     val currentMediaItem: String?
         get() = items.getOrNull(currentMediaItemIndex)?.id?.toString()
+
+    fun snapshot(): List<SearchSong> = items.toList()
 
     fun setMediaItems(items: List<SearchSong>, startIndex: Int, startPositionMs: Long) {
         this.items.clear()

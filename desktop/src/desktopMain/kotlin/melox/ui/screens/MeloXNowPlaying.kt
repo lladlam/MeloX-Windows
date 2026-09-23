@@ -28,6 +28,9 @@ import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
+import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.rememberCoroutineScope
+import kotlinx.coroutines.launch
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -72,9 +75,14 @@ import kotlin.math.roundToInt
 private const val CONTROLS_HEIGHT_DP = 279
 
 @Composable
+@OptIn(androidx.compose.animation.ExperimentalSharedTransitionApi::class)
 fun MeloXNowPlayingScreen(
     navState: MeloXNavState? = null,
     onDismiss: (() -> Unit)? = null,
+    onSeekCollapse: (suspend (Float) -> Unit)? = null,
+    onSettleCollapse: (suspend (Boolean) -> Unit)? = null,
+    sharedTransitionScope: androidx.compose.animation.SharedTransitionScope? = null,
+    animatedVisibilityScope: androidx.compose.animation.AnimatedVisibilityScope? = null,
 ) {
     val playerState by AudioPlayer.state.collectAsState()
     val playerProgress by AudioPlayer.progress.collectAsState()
@@ -88,9 +96,11 @@ fun MeloXNowPlayingScreen(
     val sourceColor = MeloXColors.sourceColors[track.id.source.storageValue] ?: MeloXColors.Primary
 
     // ── Collapse gesture (vertical drag on grabber/scene) ──
+    val sharedShell = playerSharedShell(sharedTransitionScope, animatedVisibilityScope)
     Box(
         modifier = Modifier
             .fillMaxSize()
+            .then(sharedShell)
             .background(Color.Black)
             .pointerInput(Unit) {
                 // Vertical drag collapses; handled on grabber below (scene-level
@@ -118,7 +128,7 @@ fun MeloXNowPlayingScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             // ── Grabber (60×5dp, White α0.52) ──
-            Grabber(onDismiss = { onDismiss?.invoke() ?: navState?.goBack() })
+            Grabber(onDismiss = { onDismiss?.invoke() ?: navState?.goBack() }, onSeekCollapse = onSeekCollapse, onSettleCollapse = onSettleCollapse)
 
             Spacer(modifier = Modifier.height(8.dp))
 
@@ -134,6 +144,7 @@ fun MeloXNowPlayingScreen(
                         track = track,
                         sourceColor = sourceColor,
                         isPlaying = playerState.isPlaying,
+                        sharedModifier = playerSharedElement(sharedTransitionScope, animatedVisibilityScope),
                     )
                 }
                 // Lyrics page
@@ -204,8 +215,13 @@ private fun PageLayer(visible: Boolean, content: @Composable () -> Unit) {
 
 // ── Grabber: 30dp touch area, 60×5dp pill ──
 @Composable
-private fun Grabber(onDismiss: () -> Unit) {
-    var dragY by remember { mutableStateOf(0f) }
+private fun Grabber(
+    onDismiss: () -> Unit,
+    onSeekCollapse: (suspend (Float) -> Unit)? = null,
+    onSettleCollapse: (suspend (Boolean) -> Unit)? = null,
+) {
+    var dragY by remember { mutableFloatStateOf(0f) }
+    val scope = rememberCoroutineScope()
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -217,20 +233,65 @@ private fun Grabber(onDismiss: () -> Unit) {
                 .size(width = 60.dp, height = 5.dp)
                 .clip(RoundedCornerShape(50))
                 .background(Color.White.copy(alpha = 0.52f))
-                .pointerInput(Unit) {
+                .pointerInput(onSeekCollapse, onSettleCollapse) {
                     detectTapGestures(onTap = { onDismiss() })
                 }
-                .pointerInput(Unit) {
+                .pointerInput(onSeekCollapse, onSettleCollapse) {
+                    val range = size.height.coerceAtLeast(1).toFloat() * 18f
                     detectVerticalDragGestures(
                         onDragEnd = {
-                            if (dragY > 100f) onDismiss()
+                            val progress = (dragY / range).coerceIn(0f, 1f)
+                            val collapse = progress >= 0.42f
+                            scope.launch {
+                                if (onSettleCollapse != null) onSettleCollapse(collapse)
+                                else if (collapse) onDismiss()
+                            }
                             dragY = 0f
                         },
                     ) { change, dragAmount ->
                         change.consume()
-                        dragY += dragAmount
+                        if (dragAmount > 0f) {
+                            dragY += dragAmount
+                            val progress = (dragY / range).coerceIn(0f, 0.999f)
+                            if (onSeekCollapse != null) scope.launch { onSeekCollapse(progress) }
+                        }
                     }
                 },
+        )
+    }
+}
+
+@OptIn(androidx.compose.animation.ExperimentalSharedTransitionApi::class)
+@androidx.compose.runtime.Composable
+private fun playerSharedShell(
+    scope: androidx.compose.animation.SharedTransitionScope?,
+    visibility: androidx.compose.animation.AnimatedVisibilityScope?,
+): Modifier {
+    if (scope == null || visibility == null) return Modifier
+    return with(scope) {
+        Modifier.sharedBounds(
+            sharedContentState = rememberSharedContentState(MeloXPlayerShellKey),
+            animatedVisibilityScope = visibility,
+            enter = androidx.compose.animation.EnterTransition.None,
+            exit = androidx.compose.animation.ExitTransition.None,
+            boundsTransform = MeloXPlayerShellBoundsTransform,
+            resizeMode = androidx.compose.animation.SharedTransitionScope.ResizeMode.RemeasureToBounds,
+        )
+    }
+}
+
+@OptIn(androidx.compose.animation.ExperimentalSharedTransitionApi::class)
+@androidx.compose.runtime.Composable
+private fun playerSharedElement(
+    scope: androidx.compose.animation.SharedTransitionScope?,
+    visibility: androidx.compose.animation.AnimatedVisibilityScope?,
+): Modifier {
+    if (scope == null || visibility == null) return Modifier
+    return with(scope) {
+        Modifier.sharedElement(
+            sharedContentState = rememberSharedContentState(MeloXPlayerArtworkKey),
+            animatedVisibilityScope = visibility,
+            boundsTransform = MeloXArtworkBoundsTransform,
         )
     }
 }
@@ -241,6 +302,7 @@ private fun ArtworkPage(
     track: melox.music.model.MusicTrack,
     sourceColor: Color,
     isPlaying: Boolean,
+    sharedModifier: Modifier = Modifier,
 ) {
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -262,6 +324,7 @@ private fun ArtworkPage(
 
         Box(
             modifier = Modifier
+                .then(sharedModifier)
                 .graphicsLayer(
                     scaleX = playbackScale,
                     scaleY = playbackScale,
@@ -329,99 +392,90 @@ private fun ArtworkPage(
     }
 }
 
-// ── Lyrics page (simplified until full Apple Music lyrics engine) ──
+// ── Lyrics page: line highlight from provider lyrics ──
 @Composable
 private fun LyricsPage(track: melox.music.model.MusicTrack, sourceColor: Color) {
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(vertical = 88.dp),
-        contentAlignment = Alignment.Center,
+    var document by remember(track.id) { mutableStateOf<melox.lyrics.LyricsDocument?>(null) }
+    var failed by remember(track.id) { mutableStateOf(false) }
+    val positionMs by AudioPlayer.positionMs.collectAsState()
+    LaunchedEffect(track.id) {
+        failed = false
+        document = runCatching {
+            val provider = melox.music.provider.MeloXMusicProviders.create().require(track.id.source)
+            (provider as? melox.music.provider.LyricsCapability)?.lyrics(track)
+        }.getOrNull()
+        if (document == null || document?.lines.isNullOrEmpty()) failed = document == null
+    }
+    val lines = document?.lines.orEmpty()
+    val active = document?.highlightedIndex(positionMs) ?: -1
+    if (lines.isEmpty()) {
+        Box(Modifier.fillMaxSize().padding(vertical = 88.dp), contentAlignment = Alignment.Center) {
+            Text(
+                text = if (failed) "歌词加载失败" else "暂无歌词",
+                fontFamily = MeloXLanTingProFontFamily,
+                fontSize = 18.sp,
+                color = Color.White.copy(alpha = 0.42f),
+            )
+        }
+        return
+    }
+    androidx.compose.foundation.lazy.LazyColumn(
+        modifier = Modifier.fillMaxSize(),
+        contentPadding = PaddingValues(horizontal = 28.dp, vertical = 88.dp),
+        verticalArrangement = Arrangement.spacedBy(18.dp),
     ) {
-        Text(
-            text = "暂无歌词",
-            fontFamily = MeloXLanTingProFontFamily,
-            fontSize = 18.sp,
-            color = Color.White.copy(alpha = 0.42f),
-        )
+        items(lines.size) { index ->
+            val line = lines[index]
+            val on = index == active
+            Column {
+                Text(
+                    text = line.text,
+                    fontFamily = MeloXLanTingProFontFamily,
+                    fontSize = if (on) 26.sp else 22.sp,
+                    fontWeight = if (on) FontWeight.Bold else FontWeight.Medium,
+                    color = Color.White.copy(alpha = if (on) 1f else 0.38f),
+                )
+                line.translation?.takeIf { it.isNotBlank() }?.let { translation ->
+                    Text(translation, fontSize = 15.sp, color = Color.White.copy(alpha = if (on) 0.72f else 0.28f))
+                }
+            }
+        }
     }
 }
 
-// ── Queue page ──
 @Composable
 private fun QueuePage(sourceColor: Color) {
-    val currentTrack by AudioPlayer.currentTrack.collectAsState()
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(top = 80.dp),
-    ) {
-        if (currentTrack == null) {
-            Box(
-                modifier = Modifier
-                    .size(96.dp)
-                    .align(Alignment.Center),
-                contentAlignment = Alignment.Center,
-            ) {
-                MeloXSymbolIcon(
-                    symbol = MeloXSymbol.Queue,
-                    color = Color.White.copy(alpha = 0.55f),
-                    size = 40,
-                )
+    val snapshot by melox.playback.PlaybackCommands.queue.collectAsState()
+    val songs = snapshot.songs
+    Column(Modifier.fillMaxSize().padding(top = 24.dp)) {
+        Text(
+            text = "继续播放",
+            modifier = Modifier.padding(horizontal = 20.dp, vertical = 8.dp),
+            fontFamily = MeloXLanTingProFontFamily,
+            fontWeight = FontWeight.Bold,
+            fontSize = 22.sp,
+            color = Color.White,
+        )
+        if (songs.isEmpty()) {
+            Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                MeloXSymbolIcon(MeloXSymbol.Queue, color = Color.White.copy(alpha = 0.55f), size = 40)
             }
         } else {
-            val track = currentTrack!!
-            Column(
-                modifier = Modifier.fillMaxSize().padding(horizontal = 16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-            ) {
-                Text(
-                    text = "继续播放",
-                    fontFamily = MeloXLanTingProFontFamily,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 22.sp,
-                    color = Color.White,
-                )
-                Spacer(modifier = Modifier.height(20.dp))
-                // Queue rows artwork 48dp, corner 6dp
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.fillMaxWidth(),
-                ) {
-                    Box(
-                        modifier = Modifier
-                            .size(48.dp)
-                            .clip(RoundedCornerShape(6.dp))
-                            .background(
-                                Brush.linearGradient(
-                                    listOf(
-                                        sourceColor.copy(alpha = 0.85f),
-                                        sourceColor.copy(alpha = 0.45f),
-                                    )
-                                )
-                            ),
-                        contentAlignment = Alignment.Center,
+            androidx.compose.foundation.lazy.LazyColumn(contentPadding = PaddingValues(bottom = 24.dp)) {
+                items(songs.size) { index ->
+                    val song = songs[index]
+                    val current = index == snapshot.index
+                    Row(
+                        Modifier.fillMaxWidth().clickable {
+                            melox.playback.PlaybackCommands.playQueue(songs, song.id)
+                        }.padding(horizontal = 20.dp, vertical = 8.dp),
+                        verticalAlignment = Alignment.CenterVertically,
                     ) {
-                        MeloXSymbolIcon(MeloXSymbol.MusicNote, color = Color.White.copy(alpha = 0.9f), size = 18)
-                    }
-                    Spacer(modifier = Modifier.width(12.dp))
-                    Column(modifier = Modifier.weight(1f)) {
-                        Text(
-                            text = track.title,
-                            fontFamily = MeloXLanTingProFontFamily,
-                            fontSize = 16.sp,
-                            color = Color.White,
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis,
-                        )
-                        Text(
-                            text = track.artistText,
-                            fontFamily = MeloXLanTingProFontFamily,
-                            fontSize = 14.sp,
-                            color = Color.White.copy(alpha = 0.58f),
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis,
-                        )
+                        MeloXArtworkImage(song.artworkUrl, sourceColor, Modifier.size(48.dp).clip(RoundedCornerShape(6.dp)))
+                        Column(Modifier.padding(start = 12.dp).weight(1f)) {
+                            Text(song.name, maxLines = 1, overflow = TextOverflow.Ellipsis, color = if (current) Color.White else Color.White.copy(alpha = 0.82f), fontWeight = if (current) FontWeight.SemiBold else FontWeight.Normal)
+                            Text(song.artists, maxLines = 1, overflow = TextOverflow.Ellipsis, color = Color.White.copy(alpha = 0.58f), fontSize = 13.sp)
+                        }
                     }
                 }
             }

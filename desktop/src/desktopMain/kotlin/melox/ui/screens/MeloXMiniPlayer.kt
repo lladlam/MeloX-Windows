@@ -1,5 +1,7 @@
 package melox.ui.screens
 
+import androidx.compose.animation.AnimatedVisibilityScope
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.infiniteRepeatable
@@ -67,9 +69,12 @@ import kotlin.math.abs
  * - Play/pause button 36dp circle, icon 22sp, baseAlpha .94/0.26
  */
 @Composable
+@OptIn(androidx.compose.animation.ExperimentalSharedTransitionApi::class)
 fun MeloXMiniPlayer(
     compactProgress: Float = 0f,
     onExpand: () -> Unit = {},
+    sharedTransitionScope: androidx.compose.animation.SharedTransitionScope? = null,
+    animatedVisibilityScope: androidx.compose.animation.AnimatedVisibilityScope? = null,
 ) {
     val playerState by AudioPlayer.state.collectAsState()
     val playerProgress by AudioPlayer.progress.collectAsState()
@@ -125,10 +130,12 @@ fun MeloXMiniPlayer(
 
     val hasNext = false // desktop AudioPlayer has no queue API yet
 
+    val sharedShell = sharedShellModifier(sharedTransitionScope, animatedVisibilityScope)
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 3.dp),
+            .padding(vertical = 3.dp)
+            .then(sharedShell),
     ) {
         Box(
             modifier = Modifier
@@ -225,7 +232,7 @@ fun MeloXMiniPlayer(
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.spacedBy(lerpDpF(10.dp, 8.dp, compact)),
                     ) {
-                        MiniArtwork(artworkSize)
+                        MiniArtwork(artworkSize, sharedElementModifier(sharedTransitionScope, animatedVisibilityScope))
 
                         Column(
                             modifier = Modifier
@@ -393,11 +400,12 @@ private fun MiniVectorButton(
 
 // Artwork: size animated 40→30dp, corner 6dp, source-tinted gradient
 @Composable
-private fun MiniArtwork(size: androidx.compose.ui.unit.Dp) {
+private fun MiniArtwork(size: androidx.compose.ui.unit.Dp, sharedModifier: Modifier = Modifier) {
     val currentTrack by AudioPlayer.currentTrack.collectAsState()
     val sourceColor = MeloXColors.sourceColors[currentTrack?.id?.source?.storageValue] ?: MeloXColors.Primary
     Box(
         modifier = Modifier
+            .then(sharedModifier)
             .size(size)
             .clip(RoundedCornerShape(6.dp))
             .background(
@@ -420,3 +428,39 @@ private fun MiniArtwork(size: androidx.compose.ui.unit.Dp) {
 
 private fun lerpDpF(start: androidx.compose.ui.unit.Dp, end: androidx.compose.ui.unit.Dp, t: Float): androidx.compose.ui.unit.Dp =
     androidx.compose.ui.unit.Dp(start.value + (end.value - start.value) * t)
+
+
+@OptIn(androidx.compose.animation.ExperimentalSharedTransitionApi::class)
+@androidx.compose.runtime.Composable
+private fun sharedShellModifier(
+    scope: androidx.compose.animation.SharedTransitionScope?,
+    visibility: androidx.compose.animation.AnimatedVisibilityScope?,
+): Modifier {
+    if (scope == null || visibility == null) return Modifier
+    return with(scope) {
+        Modifier.sharedBounds(
+            sharedContentState = rememberSharedContentState(key = MeloXPlayerShellKey),
+            animatedVisibilityScope = visibility,
+            enter = androidx.compose.animation.EnterTransition.None,
+            exit = androidx.compose.animation.ExitTransition.None,
+            boundsTransform = MeloXPlayerShellBoundsTransform,
+            resizeMode = androidx.compose.animation.SharedTransitionScope.ResizeMode.RemeasureToBounds,
+        )
+    }
+}
+
+@OptIn(androidx.compose.animation.ExperimentalSharedTransitionApi::class)
+@androidx.compose.runtime.Composable
+private fun sharedElementModifier(
+    scope: androidx.compose.animation.SharedTransitionScope?,
+    visibility: androidx.compose.animation.AnimatedVisibilityScope?,
+): Modifier {
+    if (scope == null || visibility == null) return Modifier
+    return with(scope) {
+        Modifier.sharedElement(
+            sharedContentState = rememberSharedContentState(key = MeloXPlayerArtworkKey),
+            animatedVisibilityScope = visibility,
+            boundsTransform = MeloXArtworkBoundsTransform,
+        )
+    }
+}

@@ -34,6 +34,9 @@ object AudioPlayer {
     private val _progress = MutableStateFlow(0f)
     val progress: StateFlow<Float> = _progress.asStateFlow()
 
+    private val _positionMs = MutableStateFlow(0L)
+    val positionMs: StateFlow<Long> = _positionMs.asStateFlow()
+
     private val _currentTrack = MutableStateFlow<MusicTrack?>(null)
     val currentTrack: StateFlow<MusicTrack?> = _currentTrack.asStateFlow()
 
@@ -110,6 +113,7 @@ object AudioPlayer {
                 val total = clip.microsecondLength.toFloat()
                 val current = clip.microsecondPosition.toFloat()
                 _progress.value = if (total > 0) (current / total).coerceIn(0f, 1f) else 0f
+                _positionMs.value = clip.microsecondPosition / 1000L
                 delay(100)
             }
         }
