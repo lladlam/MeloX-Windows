@@ -271,7 +271,11 @@ fun SearchScreen(
                 SearchField(
                     value = query,
                     onValueChange = { query = it; skipSearchDebounce = false },
-                    onSearch = { skipSearchDebounce = true; searchTrigger += 1 },
+                    onSearch = {
+                        skipSearchDebounce = true
+                        searchTrigger += 1
+                        rememberSearchQuery(query)
+                    },
                     onBack = { if (query.isNotBlank()) query = "" else onSearchExit() },
                 )
                 if (query.isNotBlank()) {
@@ -279,6 +283,15 @@ fun SearchScreen(
                 }
                 Box(Modifier.weight(1f)) {
                     when {
+                        query.isBlank() && searchHistory().isNotEmpty() -> SearchHistoryList(
+                            values = searchHistory(),
+                            onPick = { picked ->
+                                query = picked
+                                skipSearchDebounce = true
+                                searchTrigger += 1
+                            },
+                            onClear = { clearSearchHistory() },
+                        )
                         query.isBlank() && source == MusicSource.Netease -> SearchDiscovery(
                             recommendations = recommendations,
                             onPlaylist = { selectedDetail = it.asSearchItem() },
@@ -506,6 +519,45 @@ private fun SearchCategoryCard(title: String, modifier: Modifier, onClick: () ->
         contentAlignment = Alignment.CenterStart,
     ) {
         Text(title, color = Color.White, fontWeight = FontWeight.SemiBold, fontSize = 17.sp)
+    }
+}
+
+private fun searchPreferences() = melox.platform.getPreferences("melox_search_history")
+
+private fun searchHistory(): List<String> =
+    searchPreferences().getString("history", "").orEmpty().split('\n').filter { it.isNotBlank() }
+
+private fun rememberSearchQuery(value: String) {
+    val keyword = value.trim()
+    if (keyword.isBlank()) return
+    val next = listOf(keyword) + searchHistory().filterNot { it == keyword }
+    searchPreferences().putString("history", next.take(12).joinToString("\n"))
+}
+
+private fun clearSearchHistory() {
+    searchPreferences().putString("history", "")
+}
+
+@Composable
+private fun SearchHistoryList(
+    values: List<String>,
+    onPick: (String) -> Unit,
+    onClear: () -> Unit,
+) {
+    Column(Modifier.fillMaxSize().padding(horizontal = 20.dp)) {
+        Row(Modifier.fillMaxWidth().padding(vertical = 8.dp), horizontalArrangement = Arrangement.SpaceBetween) {
+            Text("最近搜索", color = MeloXColors.OnSurface, fontWeight = FontWeight.SemiBold)
+            Text("清除", modifier = Modifier.clickable(onClick = onClear), color = SearchAccent, fontSize = 13.sp)
+        }
+        values.forEach { item ->
+            Text(
+                item,
+                modifier = Modifier.fillMaxWidth().clickable { onPick(item) }.padding(vertical = 10.dp),
+                color = MeloXColors.OnSurface,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+            )
+        }
     }
 }
 

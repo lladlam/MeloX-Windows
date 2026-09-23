@@ -21,6 +21,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import melox.music.model.MusicSource
+import melox.music.provider.MusicProviderSelectionStore
 import melox.ui.navigation.MeloXNavState
 import melox.ui.theme.MeloXColors
 import melox.ui.theme.MeloXLanTingProFontFamily
@@ -33,6 +35,20 @@ private data class ServiceProvider(
     val name: String,
     val color: Color,
 )
+
+private fun ServiceProvider.musicSource(): MusicSource = when (id) {
+    "netease" -> MusicSource.Netease
+    "qq" -> MusicSource.QQMusic
+    "kugou" -> MusicSource.Kugou
+    "kuwo" -> MusicSource.Kuwo
+    "bilibili" -> MusicSource.Bilibili
+    "spotify" -> MusicSource.Spotify
+    "youtubemusic" -> MusicSource.YouTubeMusic
+    "applemusic" -> MusicSource.AppleMusic
+    "jellyfin" -> MusicSource.Jellyfin
+    "local" -> MusicSource.Local
+    else -> MusicSource.fromStorageValue(id)
+}
 
 private val allProviders = listOf(
     ServiceProvider("netease", "网易云音乐", Color(0xFFFF2442)),
@@ -483,7 +499,9 @@ fun ProviderServicesScreen(navState: MeloXNavState) {
                                     color = MeloXColors.Primary,
                                     fontFamily = MeloXLanTingProFontFamily,
                                     fontSize = 13.sp,
-                                    modifier = Modifier.clickable { /* TODO */ }
+                                    modifier = Modifier.clickable {
+                                        MusicProviderSelectionStore.setSelectedSource(provider.musicSource())
+                                    }
                                         .pointerHoverIcon(PointerIcon(Cursor(Cursor.HAND_CURSOR))),
                                 )
                             }

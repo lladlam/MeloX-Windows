@@ -59,6 +59,12 @@ object MeloXPlaybackModePreferences {
     fun setAutoMixBoolean(key: String, value: Boolean) = prefs().putBoolean(key, value)
     fun setAutoMixFloat(key: String, value: Float) = prefs().putFloat(key, value)
 
+    fun smartQueue(): Boolean = prefs().getBoolean("smart_queue", false)
+
+    fun setSmartQueue(enabled: Boolean) {
+        prefs().putBoolean("smart_queue", enabled)
+    }
+
     fun reset() {
         MeloXPlaybackModeRuntime.shuffleEnabled = false
         MeloXPlaybackModeRuntime.autoplayEnabled = false

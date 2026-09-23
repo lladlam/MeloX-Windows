@@ -37,6 +37,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import kotlinx.coroutines.launch
+import melox.playback.MeloXDesktopPlayer
+import melox.playback.PlaybackCommands
 import melox.player.AudioPlayer
 import melox.ui.foundation.MeloXSymbol
 import melox.ui.foundation.MeloXSymbolIcon
@@ -48,6 +50,9 @@ import melox.ui.glass.rememberMeloXLiquidInteraction
 import melox.ui.theme.MeloXColors
 import melox.ui.theme.MeloXLanTingProFontFamily
 import kotlin.math.abs
+
+private fun livePlayer(): MeloXDesktopPlayer? =
+    PlaybackCommands::class.java.getMethod("getActiveController${'$'}shared").invoke(PlaybackCommands) as? MeloXDesktopPlayer
 
 /**
  * 1:1 port of Android MeloXIOSMiniPlayer (ui/player/MeloXIOSMiniPlayer.kt).
@@ -76,9 +81,12 @@ fun MeloXMiniPlayer(
     sharedTransitionScope: androidx.compose.animation.SharedTransitionScope? = null,
     animatedVisibilityScope: androidx.compose.animation.AnimatedVisibilityScope? = null,
 ) {
+    val player = livePlayer()
     val playerState by AudioPlayer.state.collectAsState()
     val playerProgress by AudioPlayer.progress.collectAsState()
     val currentTrack by AudioPlayer.currentTrack.collectAsState()
+    val queue by PlaybackCommands.queue.collectAsState()
+    val repeatMode by player?.repeatMode?.collectAsState() ?: remember { mutableIntStateOf(PlaybackCommands.REPEAT_OFF) }
     val track = currentTrack ?: return
 
     val scope = rememberCoroutineScope()
@@ -128,7 +136,7 @@ fun MeloXMiniPlayer(
     val dragProgress = (abs(contentOffset.value) / swipeWidth.coerceAtLeast(1f)).coerceIn(0f, 1f)
     val adjacentAlpha = smoothStep(dragProgress, 0.15f, 0.85f)
 
-    val hasNext = false // desktop AudioPlayer has no queue API yet
+    val hasNext = queue.index < queue.songs.lastIndex || repeatMode == PlaybackCommands.REPEAT_ALL
 
     val sharedShell = sharedShellModifier(sharedTransitionScope, animatedVisibilityScope)
     Box(
@@ -208,7 +216,7 @@ fun MeloXMiniPlayer(
                                             contentOffset.animateTo(direction * swipeWidth, spring(dampingRatio = .68f, stiffness = 360f))
                                             pendingDirection = direction
                                             pendingOutgoingMediaId = track.id.source.storageValue
-                                            // Desktop AudioPlayer has no queue; bounce back after swipe animation
+                                            if (direction < 0) player?.next() else player?.previous()
                                         }
                                     } else {
                                         scope.launch { contentOffset.animateTo(0f, spring(dampingRatio = .72f, stiffness = 430f)) }
@@ -232,7 +240,7 @@ fun MeloXMiniPlayer(
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.spacedBy(lerpDpF(10.dp, 8.dp, compact)),
                     ) {
-                        MiniArtwork(artworkSize, sharedElementModifier(sharedTransitionScope, animatedVisibilityScope))
+                        MiniArtwork(artworkSize, track.artworkUrl, sharedElementModifier(sharedTransitionScope, animatedVisibilityScope))
 
                         Column(
                             modifier = Modifier
@@ -288,9 +296,7 @@ fun MeloXMiniPlayer(
                     MiniVectorButton(
                         kind = if (playerState.isPlaying) MiniGlyph.Pause else MiniGlyph.Play,
                         enabled = true,
-                        onClick = {
-                            if (playerState.isPlaying) AudioPlayer.pause() else AudioPlayer.resume()
-                        },
+                        onClick = { player?.togglePlay() },
                         modifier = Modifier
                             .align(if (compact > 0.55f) Alignment.Center else Alignment.CenterStart)
                             .zIndex(10f),
@@ -300,7 +306,7 @@ fun MeloXMiniPlayer(
                         MiniVectorButton(
                             kind = MiniGlyph.Forward,
                             enabled = hasNext,
-                            onClick = { },
+                            onClick = { player?.next() },
                             modifier = Modifier
                                 .align(Alignment.CenterEnd)
                                 .zIndex(9f),
@@ -400,30 +406,21 @@ private fun MiniVectorButton(
 
 // Artwork: size animated 40→30dp, corner 6dp, source-tinted gradient
 @Composable
-private fun MiniArtwork(size: androidx.compose.ui.unit.Dp, sharedModifier: Modifier = Modifier) {
+private fun MiniArtwork(
+    size: androidx.compose.ui.unit.Dp,
+    artworkUrl: String?,
+    sharedModifier: Modifier = Modifier,
+) {
     val currentTrack by AudioPlayer.currentTrack.collectAsState()
     val sourceColor = MeloXColors.sourceColors[currentTrack?.id?.source?.storageValue] ?: MeloXColors.Primary
-    Box(
-        modifier = Modifier
+    MeloXArtworkImage(
+        artworkUrl,
+        sourceColor,
+        Modifier
             .then(sharedModifier)
             .size(size)
-            .clip(RoundedCornerShape(6.dp))
-            .background(
-                Brush.linearGradient(
-                    listOf(
-                        sourceColor.copy(alpha = 0.85f),
-                        sourceColor.copy(alpha = 0.45f),
-                    )
-                )
-            ),
-        contentAlignment = Alignment.Center,
-    ) {
-        MeloXSymbolIcon(
-            symbol = MeloXSymbol.MusicNote,
-            color = Color.White.copy(alpha = 0.9f),
-            size = (size.value * 0.45f).toInt().coerceAtLeast(10),
-        )
-    }
+            .clip(RoundedCornerShape(6.dp)),
+    )
 }
 
 private fun lerpDpF(start: androidx.compose.ui.unit.Dp, end: androidx.compose.ui.unit.Dp, t: Float): androidx.compose.ui.unit.Dp =

@@ -1,5 +1,8 @@
+@file:Suppress("INVISIBLE_REFERENCE", "INVISIBLE_MEMBER")
+
 package melox.ui.screens
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.hoverable
@@ -10,12 +13,15 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.toComposeImageBitmap
 import androidx.compose.ui.input.pointer.PointerIcon
 import androidx.compose.ui.input.pointer.pointerHoverIcon
 import androidx.compose.ui.text.font.FontWeight
@@ -26,12 +32,23 @@ import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import melox.account.NeteaseSessionStore
+import melox.network.NeteasePhoneAuthClient
+import melox.provider.kugou.KugouLoginClient
+import melox.provider.kugou.KugouQrLoginState
+import melox.provider.kugou.KugouSessionStore
+import melox.provider.qqmusic.QQMusicQrLoginClient
+import melox.provider.qqmusic.QQMusicQrLoginMethod
+import melox.provider.qqmusic.QQMusicQrLoginState
+import melox.provider.qqmusic.QQMusicSessionStore
 import melox.ui.navigation.MeloXNavState
 import melox.ui.theme.MeloXColors
 import melox.ui.theme.MeloXLanTingProFontFamily
 import java.awt.Cursor
+import org.jetbrains.skia.Image
 
 // ── Provider definitions ──
 
@@ -413,24 +430,51 @@ private fun NeteaseLoginForm(state: LoginScreenState, onLoginSuccess: (String) -
                     fontFamily = MeloXLanTingProFontFamily,
                 ),
             )
-            Spacer(modifier = Modifier.height(12.dp))
+            Spacer(modifier = Modifier.height(8.dp))
+            val scope = rememberCoroutineScope()
+            val authClient = remember { NeteasePhoneAuthClient() }
             LoginButton(
+                text = "获取验证码",
                 color = Color(0xFFFF2442),
                 enabled = state.dialogInput.isNotBlank() && !state.dialogLoading,
             ) {
+                val phone = state.dialogInput.trim()
                 state.dialogLoading = true
                 state.dialogMessage = null
-                CoroutineScope(Dispatchers.IO).launch {
-                    delay(1500)
-                    withContext(Dispatchers.Main) {
-                        state.dialogLoading = false
-                        state.dialogMessage = "登录成功"
-                        onLoginSuccess(state.dialogInput)
+                scope.launch {
+                    val result = runCatching {
+                        withContext(Dispatchers.IO) { authClient.sendCode("86", phone) }
+                    }
+                    state.dialogLoading = false
+                    state.dialogMessage = result.exceptionOrNull()?.message ?: "验证码已发送"
+                }
+            }
+            Spacer(modifier = Modifier.height(8.dp))
+            LoginButton(
+                color = Color(0xFFFF2442),
+                enabled = state.dialogInput.isNotBlank() &&
+                    state.dialogPassword.isNotBlank() &&
+                    !state.dialogLoading,
+            ) {
+                val phone = state.dialogInput.trim()
+                val code = state.dialogPassword.trim()
+                state.dialogLoading = true
+                state.dialogMessage = null
+                scope.launch {
+                    val result = runCatching {
+                        val cookie = withContext(Dispatchers.IO) { authClient.login("86", phone, code) }
+                        NeteaseSessionStore().acceptAuthenticatedCookie(cookie).getOrThrow()
+                        cookie
+                    }
+                    state.dialogLoading = false
+                    result.onSuccess { cookie ->
+                        onLoginSuccess(cookie)
+                    }.onFailure { error ->
+                        state.dialogMessage = error.message ?: "登录失败"
                     }
                 }
             }
         } else {
-            // QR code placeholder
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -441,23 +485,21 @@ private fun NeteaseLoginForm(state: LoginScreenState, onLoginSuccess: (String) -
             ) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Text(
-                        text = "📱",
-                        fontSize = 48.sp,
-                    )
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text(
-                        text = "请使用网易云音乐App扫描",
+                        text = "网易云请使用手机验证码登录",
                         color = MeloXColors.TextSecondary,
                         fontFamily = MeloXLanTingProFontFamily,
                         fontSize = 13.sp,
+                        textAlign = TextAlign.Center,
                     )
-                    Spacer(modifier = Modifier.height(4.dp))
-                    Text(
-                        text = "二维码登录",
-                        color = MeloXColors.TextTertiary,
-                        fontFamily = MeloXLanTingProFontFamily,
-                        fontSize = 12.sp,
-                    )
+                    Spacer(modifier = Modifier.height(12.dp))
+                    TextButton(onClick = { state.dialogTab = 0 }) {
+                        Text(
+                            text = "手机号登录",
+                            color = MeloXColors.Primary,
+                            fontFamily = MeloXLanTingProFontFamily,
+                            fontSize = 13.sp,
+                        )
+                    }
                 }
             }
         }
@@ -468,34 +510,204 @@ private fun NeteaseLoginForm(state: LoginScreenState, onLoginSuccess: (String) -
 
 @Composable
 private fun QRCodeLoginForm(provider: LoginProvider, state: LoginScreenState, onLoginSuccess: (String) -> Unit) {
+    when (provider.id) {
+        "qq" -> QqQrLoginPane(state, onLoginSuccess)
+        "kugou" -> KugouQrLoginPane(state, onLoginSuccess)
+        else -> Text(
+            text = "该来源没有扫码登录",
+            color = MeloXColors.TextSecondary,
+            fontFamily = MeloXLanTingProFontFamily,
+            fontSize = 13.sp,
+        )
+    }
+}
+
+@Composable
+private fun QqQrLoginPane(state: LoginScreenState, onLoginSuccess: (String) -> Unit) {
+    val scope = rememberCoroutineScope()
+    var attempt by remember { mutableIntStateOf(0) }
+    var qrImage by remember { mutableStateOf<ImageBitmap?>(null) }
+    var statusText by remember { mutableStateOf("正在获取二维码") }
+
+    LaunchedEffect(attempt) {
+        qrImage = null
+        statusText = "正在获取二维码"
+        val session = runCatching {
+            withContext(Dispatchers.IO) {
+                QQMusicQrLoginClient().createSession(QQMusicQrLoginMethod.QQ)
+            }
+        }.getOrElse { error ->
+            state.dialogMessage = error.message ?: "获取二维码失败"
+            statusText = "获取二维码失败"
+            return@LaunchedEffect
+        }
+        qrImage = runCatching {
+            Image.makeFromEncoded(session.imageBytes).use { it.toComposeImageBitmap() }
+        }.getOrElse { error ->
+            state.dialogMessage = error.message ?: "二维码图片无法显示"
+            statusText = "二维码图片无法显示"
+            return@LaunchedEffect
+        }
+        statusText = "请使用 QQ 扫描"
+        val client = QQMusicQrLoginClient()
+        while (isActive) {
+            delay(2000)
+            val result = runCatching { client.checkSession(session) }.getOrElse { error ->
+                state.dialogMessage = error.message ?: "查询扫码状态失败"
+                null
+            } ?: continue
+            when (result) {
+                QQMusicQrLoginState.Waiting -> statusText = "等待扫码"
+                QQMusicQrLoginState.Scanned -> statusText = "已扫码，请在手机上确认"
+                QQMusicQrLoginState.Expired -> {
+                    state.dialogMessage = "二维码已过期"
+                    statusText = "二维码已过期"
+                    return@LaunchedEffect
+                }
+                QQMusicQrLoginState.Rejected -> {
+                    state.dialogMessage = "已拒绝登录"
+                    statusText = "已拒绝登录"
+                    return@LaunchedEffect
+                }
+                is QQMusicQrLoginState.Authorized -> {
+                    val saved = runCatching { QQMusicSessionStore.write(result.cookie) }
+                    saved.onFailure { error ->
+                        state.dialogMessage = error.message ?: "保存登录态失败"
+                        return@LaunchedEffect
+                    }
+                    onLoginSuccess(saved.getOrNull()?.uin?.ifBlank { result.cookie } ?: result.cookie)
+                    return@LaunchedEffect
+                }
+            }
+        }
+    }
+
+    QrStatusColumn(statusText = statusText) {
+        qrImage?.let { bitmap ->
+            Image(
+                bitmap = bitmap,
+                contentDescription = "QQ 登录二维码",
+                modifier = Modifier.size(180.dp),
+            )
+        }
+        if (statusText == "二维码已过期" || statusText == "获取二维码失败") {
+            Spacer(modifier = Modifier.height(8.dp))
+            TextButton(onClick = { state.dialogMessage = null; attempt++ }) {
+                Text(
+                    text = "重试",
+                    color = MeloXColors.Primary,
+                    fontFamily = MeloXLanTingProFontFamily,
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun KugouQrLoginPane(state: LoginScreenState, onLoginSuccess: (String) -> Unit) {
+    var attempt by remember { mutableIntStateOf(0) }
+    var qrUrl by remember { mutableStateOf<String?>(null) }
+    var statusText by remember { mutableStateOf("正在获取二维码") }
+
+    LaunchedEffect(attempt) {
+        qrUrl = null
+        statusText = "正在获取二维码"
+        val client = KugouLoginClient(sessionProvider = { KugouSessionStore.read() })
+        val session = runCatching {
+            withContext(Dispatchers.IO) { client.createQrSession() }
+        }.getOrElse { error ->
+            state.dialogMessage = error.message ?: "获取二维码失败"
+            statusText = "获取二维码失败"
+            return@LaunchedEffect
+        }
+        qrUrl = session.qrContentUrl
+        statusText = "用酷狗 App 打开此链接"
+        while (isActive) {
+            delay(2000)
+            val result = runCatching { client.checkQrSession(session.key) }.getOrElse { error ->
+                state.dialogMessage = error.message ?: "查询扫码状态失败"
+                null
+            } ?: continue
+            when (result) {
+                KugouQrLoginState.Waiting -> statusText = "等待扫码"
+                KugouQrLoginState.Scanned -> statusText = "已扫码，请在手机上确认"
+                KugouQrLoginState.Expired -> {
+                    state.dialogMessage = "二维码已过期"
+                    statusText = "二维码已过期"
+                    return@LaunchedEffect
+                }
+                is KugouQrLoginState.Authorized -> {
+                    KugouSessionStore.updateLogin(
+                        token = result.token,
+                        userId = result.userId,
+                        vipToken = result.vipToken,
+                        vipType = result.vipType,
+                    )
+                    onLoginSuccess(result.token)
+                    return@LaunchedEffect
+                }
+                is KugouQrLoginState.Unknown -> statusText = "未知状态 ${result.status}"
+            }
+        }
+    }
+
+    QrStatusColumn(statusText = statusText) {
+        qrUrl?.let { url ->
+            SelectionContainer {
+                Text(
+                    text = url,
+                    color = MeloXColors.TextPrimary,
+                    fontFamily = MeloXLanTingProFontFamily,
+                    fontSize = 12.sp,
+                    textAlign = TextAlign.Center,
+                )
+            }
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(
+                text = "用酷狗 App 打开此链接",
+                color = MeloXColors.TextSecondary,
+                fontFamily = MeloXLanTingProFontFamily,
+                fontSize = 13.sp,
+                textAlign = TextAlign.Center,
+            )
+        }
+        if (statusText == "二维码已过期" || statusText == "获取二维码失败") {
+            Spacer(modifier = Modifier.height(8.dp))
+            TextButton(onClick = { state.dialogMessage = null; attempt++ }) {
+                Text(
+                    text = "重试",
+                    color = MeloXColors.Primary,
+                    fontFamily = MeloXLanTingProFontFamily,
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun QrStatusColumn(statusText: String, content: @Composable ColumnScope.() -> Unit) {
     Column(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Box(
             modifier = Modifier
-                .size(200.dp)
+                .fillMaxWidth()
+                .heightIn(min = 200.dp)
                 .clip(RoundedCornerShape(12.dp))
-                .background(MeloXColors.SurfaceVariant),
+                .background(MeloXColors.SurfaceVariant)
+                .padding(16.dp),
             contentAlignment = Alignment.Center,
         ) {
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Text(text = "📱", fontSize = 48.sp)
-                Spacer(modifier = Modifier.height(8.dp))
-                Text(
-                    text = "请使用${provider.name}App扫描",
-                    color = MeloXColors.TextSecondary,
-                    fontFamily = MeloXLanTingProFontFamily,
-                    fontSize = 13.sp,
-                )
-            }
+            Column(horizontalAlignment = Alignment.CenterHorizontally, content = content)
         }
         Spacer(modifier = Modifier.height(12.dp))
         Text(
-            text = "二维码登录",
+            text = statusText,
             color = MeloXColors.TextSecondary,
             fontFamily = MeloXLanTingProFontFamily,
             fontSize = 13.sp,
+            textAlign = TextAlign.Center,
         )
     }
 }
@@ -551,20 +763,57 @@ private fun PhoneCodeLoginForm(provider: LoginProvider, state: LoginScreenState,
             ),
         )
         Spacer(modifier = Modifier.height(12.dp))
-        LoginButton(
-            color = provider.color,
-            enabled = state.dialogInput.isNotBlank() && !state.dialogLoading,
-        ) {
-            state.dialogLoading = true
-            state.dialogMessage = null
-            CoroutineScope(Dispatchers.IO).launch {
-                delay(1500)
-                withContext(Dispatchers.Main) {
+        if (provider.id == "netease") {
+            val scope = rememberCoroutineScope()
+            val authClient = remember { NeteasePhoneAuthClient() }
+            LoginButton(
+                text = "获取验证码",
+                color = provider.color,
+                enabled = state.dialogInput.isNotBlank() && !state.dialogLoading,
+            ) {
+                val phone = state.dialogInput.trim()
+                state.dialogLoading = true
+                state.dialogMessage = null
+                scope.launch {
+                    val result = runCatching {
+                        withContext(Dispatchers.IO) { authClient.sendCode("86", phone) }
+                    }
                     state.dialogLoading = false
-                    state.dialogMessage = "登录成功"
-                    onLoginSuccess(state.dialogInput)
+                    state.dialogMessage = result.exceptionOrNull()?.message ?: "验证码已发送"
                 }
             }
+            Spacer(modifier = Modifier.height(8.dp))
+            LoginButton(
+                color = provider.color,
+                enabled = state.dialogInput.isNotBlank() &&
+                    state.dialogPassword.isNotBlank() &&
+                    !state.dialogLoading,
+            ) {
+                val phone = state.dialogInput.trim()
+                val code = state.dialogPassword.trim()
+                state.dialogLoading = true
+                state.dialogMessage = null
+                scope.launch {
+                    val result = runCatching {
+                        val cookie = withContext(Dispatchers.IO) { authClient.login("86", phone, code) }
+                        NeteaseSessionStore().acceptAuthenticatedCookie(cookie).getOrThrow()
+                        cookie
+                    }
+                    state.dialogLoading = false
+                    result.onSuccess { cookie ->
+                        onLoginSuccess(cookie)
+                    }.onFailure { error ->
+                        state.dialogMessage = error.message ?: "登录失败"
+                    }
+                }
+            }
+        } else {
+            Text(
+                text = "该来源的手机验证码登录尚未接入",
+                color = MeloXColors.TextSecondary,
+                fontFamily = MeloXLanTingProFontFamily,
+                fontSize = 13.sp,
+            )
         }
     }
 }
@@ -586,8 +835,6 @@ private fun WebViewLoginForm(provider: LoginProvider, state: LoginScreenState, o
             contentAlignment = Alignment.Center,
         ) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Text(text = "🌐", fontSize = 48.sp)
-                Spacer(modifier = Modifier.height(12.dp))
                 Text(
                     text = "WebView登录窗口",
                     color = MeloXColors.TextSecondary,
@@ -610,14 +857,8 @@ private fun WebViewLoginForm(provider: LoginProvider, state: LoginScreenState, o
         ) {
                 state.dialogLoading = true
                 state.dialogMessage = null
-                CoroutineScope(Dispatchers.IO).launch {
-                    delay(2000)
-                    withContext(Dispatchers.Main) {
-                        state.dialogLoading = false
-                        state.dialogMessage = "登录成功"
-                        onLoginSuccess("Bilibili用户")
-                    }
-                }
+                state.dialogLoading = false
+                state.dialogMessage = "桌面版没有内置网页登录，请到该来源的官方客户端登录后再粘贴 Cookie"
         }
     }
 }
@@ -639,8 +880,6 @@ private fun OAuthLoginForm(provider: LoginProvider, state: LoginScreenState, onL
             contentAlignment = Alignment.Center,
         ) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Text(text = "🔑", fontSize = 48.sp)
-                Spacer(modifier = Modifier.height(8.dp))
                 Text(
                     text = "即将跳转至${provider.name}授权页面",
                     color = MeloXColors.TextSecondary,
@@ -656,14 +895,8 @@ private fun OAuthLoginForm(provider: LoginProvider, state: LoginScreenState, onL
         ) {
                 state.dialogLoading = true
                 state.dialogMessage = null
-                CoroutineScope(Dispatchers.IO).launch {
-                    delay(2000)
-                    withContext(Dispatchers.Main) {
-                        state.dialogLoading = false
-                        state.dialogMessage = "登录成功"
-                        onLoginSuccess("${provider.name}用户")
-                    }
-                }
+                state.dialogLoading = false
+                state.dialogMessage = "桌面版没有${provider.name}的授权跳转，不会假装登录成功"
         }
     }
 }
@@ -732,14 +965,8 @@ private fun TokenInputForm(provider: LoginProvider, state: LoginScreenState, onL
         ) {
             state.dialogLoading = true
             state.dialogMessage = null
-            CoroutineScope(Dispatchers.IO).launch {
-                delay(1500)
-                withContext(Dispatchers.Main) {
-                    state.dialogLoading = false
-                    state.dialogMessage = "登录成功"
-                    onLoginSuccess("Apple Music用户")
-                }
-            }
+            state.dialogLoading = false
+            state.dialogMessage = "该来源的登录尚未接入，不会假装登录成功"
         }
     }
 }
@@ -827,14 +1054,8 @@ private fun ServerLoginForm(provider: LoginProvider, state: LoginScreenState, on
         ) {
             state.dialogLoading = true
             state.dialogMessage = null
-            CoroutineScope(Dispatchers.IO).launch {
-                delay(2000)
-                withContext(Dispatchers.Main) {
-                    state.dialogLoading = false
-                    state.dialogMessage = "登录成功"
-                    onLoginSuccess(state.dialogInput)
-                }
-            }
+            state.dialogLoading = false
+            state.dialogMessage = "Jellyfin 服务器登录尚未接入，不会假装登录成功"
         }
     }
 }
@@ -919,14 +1140,8 @@ private fun GenericLoginForm(provider: LoginProvider, state: LoginScreenState, o
         ) {
             state.dialogLoading = true
             state.dialogMessage = null
-            CoroutineScope(Dispatchers.IO).launch {
-                delay(1500)
-                withContext(Dispatchers.Main) {
-                    state.dialogLoading = false
-                    state.dialogMessage = "登录成功"
-                    onLoginSuccess(state.dialogInput)
-                }
-            }
+            state.dialogLoading = false
+            state.dialogMessage = "该来源的登录尚未接入，不会假装登录成功"
         }
     }
 }
@@ -937,6 +1152,7 @@ private fun GenericLoginForm(provider: LoginProvider, state: LoginScreenState, o
 private fun LoginButton(
     color: Color,
     enabled: Boolean,
+    text: String = "登录",
     onClick: () -> Unit,
 ) {
     Surface(
@@ -951,7 +1167,7 @@ private fun LoginButton(
     ) {
         Box(contentAlignment = Alignment.Center) {
             Text(
-                text = "登录",
+                text = text,
                 color = Color.White,
                 fontFamily = MeloXLanTingProFontFamily,
                 fontSize = 15.sp,

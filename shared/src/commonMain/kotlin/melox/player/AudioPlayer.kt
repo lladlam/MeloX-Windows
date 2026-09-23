@@ -3,12 +3,9 @@ package melox.player
 import melox.music.model.MusicTrack
 import melox.platform.logDebug
 import melox.platform.logError
-import melox.platform.logInfo
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
-import java.net.URL
-import java.util.concurrent.ConcurrentHashMap
 import javax.sound.sampled.*
 import javax.sound.sampled.DataLine.Info
 import kotlinx.coroutines.*
@@ -27,6 +24,9 @@ object AudioPlayer {
     private var currentClip: Clip? = null
     private var currentJob: Job? = null
     private var currentSource: String? = null
+    private var volumeLinear: Float = 1f
+    @Volatile
+    private var suppressEnd = false
 
     private val _state = MutableStateFlow(PlayerState())
     val state: StateFlow<PlayerState> = _state.asStateFlow()
@@ -37,14 +37,20 @@ object AudioPlayer {
     private val _positionMs = MutableStateFlow(0L)
     val positionMs: StateFlow<Long> = _positionMs.asStateFlow()
 
+    private val _durationMs = MutableStateFlow(0L)
+    val durationMs: StateFlow<Long> = _durationMs.asStateFlow()
+
     private val _currentTrack = MutableStateFlow<MusicTrack?>(null)
     val currentTrack: StateFlow<MusicTrack?> = _currentTrack.asStateFlow()
+
+    @Volatile
+    var onTrackEnded: (() -> Unit)? = null
 
     private val httpClient = OkHttpClient.Builder()
         .followRedirects(true)
         .build()
 
-    fun play(url: String, track: MusicTrack) {
+    fun play(url: String, track: MusicTrack, headers: Map<String, String> = emptyMap()) {
         stop()
         _currentTrack.value = track
         _state.value = PlayerState(isPlaying = true, trackTitle = track.title, trackArtist = track.artistText)
@@ -53,7 +59,7 @@ object AudioPlayer {
         currentJob = scope.launch {
             try {
                 if (url.startsWith("http")) {
-                    playFromUrl(url)
+                    playFromUrl(url, headers)
                 } else {
                     playFromFile(File(url))
                 }
@@ -64,11 +70,18 @@ object AudioPlayer {
         }
     }
 
-    private suspend fun playFromUrl(url: String) = withContext(Dispatchers.IO) {
+    private suspend fun playFromUrl(url: String, headers: Map<String, String>) = withContext(Dispatchers.IO) {
         logDebug("AudioPlayer", "从URL播放: $url")
-        val request = Request.Builder().url(url)
+        val builder = Request.Builder().url(url)
             .header("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36")
-            .build()
+        headers.forEach { (name, value) ->
+            if (name.equals("User-Agent", ignoreCase = true)) {
+                builder.header(name, value)
+            } else {
+                builder.addHeader(name, value)
+            }
+        }
+        val request = builder.build()
 
         val response = httpClient.newCall(request).execute()
         if (!response.isSuccessful) throw IOException("HTTP ${response.code}")
@@ -95,10 +108,13 @@ object AudioPlayer {
         clip.open(audioStream)
 
         currentClip = clip
+        _durationMs.value = clip.microsecondLength / 1000L
+        applyVolume(clip, volumeLinear)
         clip.addLineListener { event ->
-            if (event.type == LineEvent.Type.STOP) {
+            if (event.type == LineEvent.Type.STOP && !suppressEnd) {
                 if (clip.microsecondPosition >= clip.microsecondLength) {
-                    _state.value = PlayerState(isFinished = true)
+                    _state.value = _state.value.copy(isPlaying = false, isFinished = true)
+                    onTrackEnded?.invoke()
                 }
             }
         }
@@ -114,16 +130,41 @@ object AudioPlayer {
                 val current = clip.microsecondPosition.toFloat()
                 _progress.value = if (total > 0) (current / total).coerceIn(0f, 1f) else 0f
                 _positionMs.value = clip.microsecondPosition / 1000L
+                _durationMs.value = clip.microsecondLength / 1000L
                 delay(100)
             }
+        }
+    }
+
+    fun setVolume(volume: Float) {
+        volumeLinear = volume.coerceIn(0f, 1f)
+        currentClip?.let { applyVolume(it, volumeLinear) }
+    }
+
+    private fun applyVolume(clip: Clip, linear: Float) {
+        runCatching {
+            val control = clip.getControl(FloatControl.Type.MASTER_GAIN) as FloatControl
+            val min = control.minimum
+            val max = control.maximum
+            val gain = if (linear <= 0f) {
+                min
+            } else {
+                (20.0 * kotlin.math.log10(linear.toDouble())).toFloat().coerceIn(min, max)
+            }
+            control.value = gain
         }
     }
 
     fun pause() {
         currentClip?.let { clip ->
             if (clip.isActive) {
-                clip.stop()
-                _state.value = _state.value.copy(isPlaying = false)
+                suppressEnd = true
+                try {
+                    clip.stop()
+                } finally {
+                    suppressEnd = false
+                }
+                _state.value = _state.value.copy(isPlaying = false, isPaused = true)
             }
         }
     }
@@ -132,28 +173,36 @@ object AudioPlayer {
         currentClip?.let { clip ->
             if (!clip.isActive && clip.isOpen) {
                 clip.start()
-                _state.value = _state.value.copy(isPlaying = true)
+                _state.value = _state.value.copy(isPlaying = true, isPaused = false, isFinished = false)
             }
         }
     }
 
     fun stop() {
-        currentJob?.cancel()
-        currentClip?.let { clip ->
-            try {
-                clip.stop()
-                clip.close()
-            } catch (_: Exception) {}
+        suppressEnd = true
+        try {
+            currentJob?.cancel()
+            currentClip?.let { clip ->
+                try {
+                    clip.stop()
+                    clip.close()
+                } catch (_: Exception) {}
+            }
+        } finally {
+            suppressEnd = false
         }
         currentClip = null
         currentSource = null
         _progress.value = 0f
+        _positionMs.value = 0L
+        _durationMs.value = 0L
         _state.value = PlayerState()
     }
 
     fun seekTo(positionMs: Long) {
         currentClip?.let { clip ->
             clip.microsecondPosition = positionMs * 1000
+            _positionMs.value = positionMs
             _progress.value = if (clip.microsecondLength > 0) {
                 (positionMs * 1000f / clip.microsecondLength).coerceIn(0f, 1f)
             } else 0f

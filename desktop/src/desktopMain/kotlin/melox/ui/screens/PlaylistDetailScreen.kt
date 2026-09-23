@@ -20,123 +20,22 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import melox.music.model.*
-import melox.player.AudioPlayer
-import melox.ui.navigation.MeloXNavState
-import melox.ui.navigation.Route
+import melox.account.NeteaseSessionStore
+import melox.library.NeteaseLibraryClient
+import melox.library.NeteasePlaylistDetail
+import melox.library.NeteasePlaylistSummary
+import melox.model.SearchSong
+import melox.music.provider.MeloXLegacyUiBridge
+import melox.music.provider.MeloXMusicProviders
+import melox.music.provider.PlaylistCapability
+import melox.playback.PlaybackCommands
 import melox.ui.theme.MeloXColors
 import melox.ui.theme.MeloXLanTingProFontFamily
-
-private val mockTracks: List<MusicTrack> = listOf(
-    MusicTrack(
-        id = MusicResourceId(MusicSource.Local, "1"),
-        title = "晴天",
-        artists = listOf(MusicArtistRef(name = "周杰伦")),
-        album = MusicAlbumRef(name = "叶惠美"),
-        durationMs = 269_000,
-    ),
-    MusicTrack(
-        id = MusicResourceId(MusicSource.Local, "2"),
-        title = "七里香",
-        artists = listOf(MusicArtistRef(name = "周杰伦")),
-        album = MusicAlbumRef(name = "七里香"),
-        durationMs = 299_000,
-    ),
-    MusicTrack(
-        id = MusicResourceId(MusicSource.Local, "3"),
-        title = "夜曲",
-        artists = listOf(MusicArtistRef(name = "周杰伦")),
-        album = MusicAlbumRef(name = "十一月的萧邦"),
-        durationMs = 226_000,
-    ),
-    MusicTrack(
-        id = MusicResourceId(MusicSource.Local, "4"),
-        title = "稻香",
-        artists = listOf(MusicArtistRef(name = "周杰伦")),
-        album = MusicAlbumRef(name = "魔杰座"),
-        durationMs = 223_000,
-    ),
-    MusicTrack(
-        id = MusicResourceId(MusicSource.Local, "5"),
-        title = "告白气球",
-        artists = listOf(MusicArtistRef(name = "周杰伦")),
-        album = MusicAlbumRef(name = "周杰伦的床边故事"),
-        durationMs = 215_000,
-    ),
-    MusicTrack(
-        id = MusicResourceId(MusicSource.Local, "6"),
-        title = "青花瓷",
-        artists = listOf(MusicArtistRef(name = "周杰伦")),
-        album = MusicAlbumRef(name = "我很忙"),
-        durationMs = 239_000,
-    ),
-    MusicTrack(
-        id = MusicResourceId(MusicSource.Local, "7"),
-        title = "江南",
-        artists = listOf(MusicArtistRef(name = "林俊杰")),
-        album = MusicAlbumRef(name = "第二天堂"),
-        durationMs = 286_000,
-    ),
-    MusicTrack(
-        id = MusicResourceId(MusicSource.Local, "8"),
-        title = "修炼爱情",
-        artists = listOf(MusicArtistRef(name = "林俊杰")),
-        album = MusicAlbumRef(name = "因你而在"),
-        durationMs = 330_000,
-    ),
-    MusicTrack(
-        id = MusicResourceId(MusicSource.Local, "9"),
-        title = "可惜没如果",
-        artists = listOf(MusicArtistRef(name = "林俊杰")),
-        album = MusicAlbumRef(name = "新地球"),
-        durationMs = 352_000,
-    ),
-    MusicTrack(
-        id = MusicResourceId(MusicSource.Local, "10"),
-        title = "光年之外",
-        artists = listOf(MusicArtistRef(name = "邓紫棋")),
-        album = MusicAlbumRef(name = "光年之外"),
-        durationMs = 235_000,
-    ),
-    MusicTrack(
-        id = MusicResourceId(MusicSource.Local, "11"),
-        title = "泡沫",
-        artists = listOf(MusicArtistRef(name = "邓紫棋")),
-        album = MusicAlbumRef(name = "Xposed"),
-        durationMs = 270_000,
-    ),
-    MusicTrack(
-        id = MusicResourceId(MusicSource.Local, "12"),
-        title = "匆匆那年",
-        artists = listOf(MusicArtistRef(name = "王菲")),
-        album = MusicAlbumRef(name = "匆匆那年"),
-        durationMs = 312_000,
-    ),
-    MusicTrack(
-        id = MusicResourceId(MusicSource.Local, "13"),
-        title = "红豆",
-        artists = listOf(MusicArtistRef(name = "王菲")),
-        album = MusicAlbumRef(name = "唱游"),
-        durationMs = 302_000,
-    ),
-    MusicTrack(
-        id = MusicResourceId(MusicSource.Local, "14"),
-        title = "平凡之路",
-        artists = listOf(MusicArtistRef(name = "朴树")),
-        album = MusicAlbumRef(name = "猎户星座"),
-        durationMs = 282_000,
-    ),
-    MusicTrack(
-        id = MusicResourceId(MusicSource.Local, "15"),
-        title = "岁月神偷",
-        artists = listOf(MusicArtistRef(name = "金玟岐")),
-        album = MusicAlbumRef(name = "岁月神偷"),
-        durationMs = 247_000,
-    ),
-)
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 private fun formatDuration(ms: Long?): String {
-    if (ms == null) return "--:--"
+    if (ms == null || ms <= 0L) return "--:--"
     val totalSeconds = ms / 1000
     val minutes = totalSeconds / 60
     val seconds = totalSeconds % 60
@@ -149,9 +48,44 @@ private fun formatTotalDuration(ms: Long): String {
 }
 
 @Composable
-fun PlaylistDetailScreen(navState: MeloXNavState, playlistId: String, playlistName: String) {
-    val currentTrack by AudioPlayer.currentTrack.collectAsState()
-    val totalDurationMs = mockTracks.sumOf { it.durationMs ?: 0L }
+fun PlaylistDetailScreen(
+    playlist: NeteasePlaylistSummary,
+    onBack: () -> Unit,
+) {
+    val client = remember { NeteaseLibraryClient(cookieProvider = { NeteaseSessionStore.readCookie() }) }
+    var detail by remember(playlist.id, playlist.providerPlaylist?.id) { mutableStateOf<NeteasePlaylistDetail?>(null) }
+    var loading by remember(playlist.id, playlist.providerPlaylist?.id) { mutableStateOf(true) }
+    var error by remember(playlist.id, playlist.providerPlaylist?.id) { mutableStateOf<String?>(null) }
+    val currentSongId by remember { derivedStateOf { PlaybackCommands.currentSongId() } }
+    val queue by PlaybackCommands.queue.collectAsState()
+    val playingId = queue.songs.getOrNull(queue.index)?.id ?: currentSongId
+
+    LaunchedEffect(playlist.id, playlist.providerPlaylist?.id) {
+        loading = true
+        error = null
+        val backing = playlist.providerPlaylist
+        val result = runCatching {
+            if (backing != null) {
+                val source = backing.id.source
+                val registry = MeloXMusicProviders.create()
+                val provider = registry.require(source)
+                val capability = provider as? PlaylistCapability
+                    ?: error("${source.displayName} 当前不提供歌单详情")
+                val providerDetail = withContext(Dispatchers.IO) {
+                    capability.playlistDetail(backing)
+                }
+                MeloXLegacyUiBridge.playlistDetail(providerDetail)
+            } else {
+                client.playlistDetail(playlist.id)
+            }
+        }
+        result.onSuccess { detail = it }.onFailure { error = it.message ?: "歌单加载失败" }
+        loading = false
+    }
+
+    val shown = detail?.summary ?: playlist
+    val songs = detail?.songs.orEmpty()
+    val totalDurationMs = songs.sumOf { it.durationMs }
 
     Column(modifier = Modifier.fillMaxSize().background(MeloXColors.Background)) {
         Row(
@@ -162,15 +96,17 @@ fun PlaylistDetailScreen(navState: MeloXNavState, playlistId: String, playlistNa
                 text = "←",
                 fontSize = 20.sp,
                 color = MeloXColors.OnSurface,
-                modifier = Modifier.clickable { navState.goBack() }
+                modifier = Modifier.clickable { onBack() }
             )
             Spacer(modifier = Modifier.weight(1f))
             Text(
-                text = playlistName,
+                text = shown.name,
                 fontSize = 16.sp,
                 color = MeloXColors.TextPrimary,
                 fontWeight = FontWeight.Medium,
-                fontFamily = MeloXLanTingProFontFamily
+                fontFamily = MeloXLanTingProFontFamily,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
             )
             Spacer(modifier = Modifier.weight(1f))
             Text(
@@ -186,14 +122,13 @@ fun PlaylistDetailScreen(navState: MeloXNavState, playlistId: String, playlistNa
                     modifier = Modifier.fillMaxWidth().height(200.dp),
                     contentAlignment = Alignment.Center
                 ) {
-                    Box(
-                        modifier = Modifier.fillMaxSize().background(
-                            Brush.linearGradient(
-                                colors = listOf(MeloXColors.Primary, MeloXColors.SurfaceVariant)
-                            )
-                        ),
-                        contentAlignment = Alignment.Center
-                    ) {
+                    MeloXArtworkImage(
+                        url = shown.coverUrl,
+                        fallbackColor = MeloXColors.Primary,
+                        modifier = Modifier.fillMaxSize(),
+                        contentDescription = shown.name,
+                    )
+                    if (shown.coverUrl.isNullOrBlank()) {
                         Text(
                             text = "♫",
                             fontSize = 64.sp,
@@ -206,7 +141,7 @@ fun PlaylistDetailScreen(navState: MeloXNavState, playlistId: String, playlistNa
             item {
                 Column(modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 12.dp)) {
                     Text(
-                        text = playlistName,
+                        text = shown.name,
                         fontSize = 20.sp,
                         fontWeight = FontWeight.Bold,
                         color = MeloXColors.TextPrimary,
@@ -214,13 +149,13 @@ fun PlaylistDetailScreen(navState: MeloXNavState, playlistId: String, playlistNa
                     )
                     Spacer(modifier = Modifier.height(4.dp))
                     Text(
-                        text = "创建者: MeloX",
+                        text = "创建者: ${shown.creatorName.ifBlank { "未知" }}",
                         fontSize = 14.sp,
                         color = MeloXColors.TextSecondary
                     )
                     Spacer(modifier = Modifier.height(2.dp))
                     Text(
-                        text = "${mockTracks.size}首 · ${formatTotalDuration(totalDurationMs)}",
+                        text = "${if (detail != null) songs.size else shown.trackCount}首 · ${formatTotalDuration(totalDurationMs)}",
                         fontSize = 13.sp,
                         color = MeloXColors.TextTertiary
                     )
@@ -233,7 +168,8 @@ fun PlaylistDetailScreen(navState: MeloXNavState, playlistId: String, playlistNa
                     horizontalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
                     Button(
-                        onClick = { },
+                        onClick = { songs.firstOrNull()?.let { PlaybackCommands.playQueue(songs, it.id) } },
+                        enabled = songs.isNotEmpty(),
                         shape = RoundedCornerShape(24.dp),
                         colors = ButtonDefaults.buttonColors(containerColor = MeloXColors.Primary),
                         modifier = Modifier.height(36.dp)
@@ -281,13 +217,36 @@ fun PlaylistDetailScreen(navState: MeloXNavState, playlistId: String, playlistNa
                 )
             }
 
-            itemsIndexed(mockTracks) { index, track ->
-                TrackItem(
-                    index = index + 1,
-                    track = track,
-                    isPlaying = currentTrack?.id == track.id,
-                    onClick = { AudioPlayer.play("", track) }
-                )
+            when {
+                loading -> item {
+                    Box(Modifier.fillMaxWidth().padding(32.dp), contentAlignment = Alignment.Center) {
+                        CircularProgressIndicator(color = MeloXColors.Primary)
+                    }
+                }
+                error != null -> item {
+                    Text(
+                        text = error.orEmpty(),
+                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 24.dp),
+                        color = MeloXColors.Error,
+                        fontSize = 14.sp,
+                    )
+                }
+                songs.isEmpty() -> item {
+                    Text(
+                        text = "歌单是空的",
+                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 24.dp),
+                        color = MeloXColors.TextSecondary,
+                        fontSize = 14.sp,
+                    )
+                }
+                else -> itemsIndexed(songs) { index, song ->
+                    SongRow(
+                        index = index + 1,
+                        song = song,
+                        isPlaying = playingId == song.id,
+                        onClick = { PlaybackCommands.playQueue(songs, song.id) },
+                    )
+                }
             }
 
             item {
@@ -298,9 +257,9 @@ fun PlaylistDetailScreen(navState: MeloXNavState, playlistId: String, playlistNa
 }
 
 @Composable
-private fun TrackItem(
+private fun SongRow(
     index: Int,
-    track: MusicTrack,
+    song: SearchSong,
     isPlaying: Boolean,
     onClick: () -> Unit
 ) {
@@ -331,7 +290,7 @@ private fun TrackItem(
             verticalArrangement = Arrangement.Center
         ) {
             Text(
-                text = track.title,
+                text = song.name,
                 fontSize = 15.sp,
                 color = if (isPlaying) MeloXColors.Primary else MeloXColors.TextPrimary,
                 fontWeight = if (isPlaying) FontWeight.Medium else FontWeight.Normal,
@@ -341,7 +300,7 @@ private fun TrackItem(
             )
             Spacer(modifier = Modifier.height(2.dp))
             Text(
-                text = track.artistText,
+                text = song.artists,
                 fontSize = 12.sp,
                 color = MeloXColors.TextTertiary,
                 maxLines = 1,
@@ -350,7 +309,7 @@ private fun TrackItem(
         }
 
         Text(
-            text = formatDuration(track.durationMs),
+            text = formatDuration(song.durationMs),
             fontSize = 13.sp,
             color = MeloXColors.TextTertiary,
             modifier = Modifier.padding(start = 8.dp)

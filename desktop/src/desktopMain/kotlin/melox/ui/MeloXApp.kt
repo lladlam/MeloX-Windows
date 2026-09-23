@@ -51,7 +51,14 @@ import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.zIndex
 import kotlinx.coroutines.launch
+import melox.library.NeteasePlaylistSummary
+import melox.music.model.MusicPlaylistSummary
+import melox.music.model.MusicSource
+import melox.music.provider.MeloXLegacyUiBridge
+import melox.music.provider.MusicProviderSelectionStore
 import melox.player.AudioPlayer
+import melox.settings.MeloXSettingsPreferences
+import melox.settings.MeloXSettingsRuntime
 import melox.ui.foundation.MeloXMotion
 import melox.ui.navigation.AppTab
 import melox.ui.navigation.MeloXBottomChrome
@@ -73,14 +80,6 @@ import melox.ui.screens.SearchScreen
 import melox.ui.screens.SettingsScreen
 import melox.ui.theme.MeloXColors
 
-// Android visible tabs (Search excluded; Settings guaranteed last)
-private val VisibleTabs = listOf(
-    AppTab.Home,
-    AppTab.Explore,
-    AppTab.Library,
-    AppTab.Settings,
-)
-
 private fun playerAutomaticFractionSpec() = tween<Float>(
     durationMillis = MeloXMotion.PlayerTransitionDurationMillis,
     easing = androidx.compose.animation.core.LinearEasing,
@@ -90,6 +89,13 @@ private fun playerAutomaticFractionSpec() = tween<Float>(
 @Composable
 fun MeloXApp() {
     var selectedTab by remember { mutableStateOf(AppTab.Home) }
+    var selectedSource by remember { mutableStateOf(MusicProviderSelectionStore.selectedSource()) }
+
+    LaunchedEffect(Unit) {
+        MeloXSettingsPreferences.initialize()
+    }
+
+    val visibleTabs = visibleTabsFor(selectedSource)
 
     // ── Android state machine (MeloXApp.kt) ──
     var tabBarMinimized by remember { mutableStateOf(false) }
@@ -148,6 +154,12 @@ fun MeloXApp() {
         }
     }
 
+    LaunchedEffect(visibleTabs, selectedTab) {
+        if (selectedTab !in visibleTabs && selectedTab != AppTab.Search) {
+            selectedTab = visibleTabs.first()
+        }
+    }
+
     // Tab switch resets minimize (Android lines 399–406)
     LaunchedEffect(selectedTab) {
         tabBarMinimized = false
@@ -199,7 +211,20 @@ fun MeloXApp() {
                     rootPageState.SaveableStateProvider(tab.name) {
                         TabContent(
                             tab = tab,
-                            
+                            source = selectedSource,
+                            onOpenTool = { tool ->
+                                selectedTab = when (tool) {
+                                    "Podcasts" -> AppTab.Podcasts
+                                    "Downloads" -> AppTab.Downloads
+                                    "Cloud" -> AppTab.Cloud
+                                    "Messages" -> AppTab.Settings
+                                    else -> selectedTab
+                                }
+                            },
+                            onSourceSelected = { source ->
+                                MusicProviderSelectionStore.setSelectedSource(source)
+                                selectedSource = source
+                            },
                         )
                     }
                 }
@@ -211,7 +236,7 @@ fun MeloXApp() {
                     selectedTab = selectedTab,
                     hasMedia = hasMedia,
                     minimized = tabBarMinimized,
-                    visibleRootTabs = VisibleTabs,
+                    visibleRootTabs = visibleTabs,
                     onSelect = { tab ->
                         tabBarMinimized = false
                         scrollAccumulator = 0f
@@ -281,18 +306,78 @@ fun MeloXApp() {
 }
 
 @Composable
+private fun visibleTabsFor(source: MusicSource): List<AppTab> {
+    if (source == MusicSource.Bilibili) {
+        return listOf(AppTab.Library, AppTab.Settings)
+    }
+    return buildList {
+        add(AppTab.Home)
+        add(AppTab.Explore)
+        add(AppTab.Library)
+        if (MeloXSettingsRuntime.podcastsTabPlacement) add(AppTab.Podcasts)
+        if (MeloXSettingsRuntime.downloadsTabPlacement) add(AppTab.Downloads)
+        if (MeloXSettingsRuntime.cloudTabPlacement) add(AppTab.Cloud)
+        add(AppTab.Settings)
+    }
+}
+
+@Composable
 private fun TabContent(
     tab: AppTab,
+    source: MusicSource,
+    onOpenTool: (String) -> Unit,
+    onSourceSelected: (MusicSource) -> Unit,
 ) {
     val navState = melox.ui.navigation.rememberMeloXNavState()
-    when (tab) {
-        AppTab.Home -> HomeScreen(navState = navState)
-        AppTab.Explore -> ExploreScreen(navState = navState)
-        AppTab.Library -> LibraryScreen(navState = navState)
-        AppTab.Podcasts -> PodcastsScreen(navState = navState)
-        AppTab.Downloads -> DownloadsScreen(navState = navState)
-        AppTab.Cloud -> CloudScreen(navState = navState)
-        AppTab.Settings -> SettingsScreen()
-        AppTab.Search -> SearchScreen()
+    var selectedPlaylist by remember { mutableStateOf<NeteasePlaylistSummary?>(null) }
+    var selectedAlbum by remember { mutableStateOf<Pair<String, String>?>(null) }
+    val openPlaylist: (NeteasePlaylistSummary) -> Unit = { playlist ->
+        selectedAlbum = null
+        selectedPlaylist = playlist
+    }
+    val openProviderPlaylist: (MusicPlaylistSummary) -> Unit = { playlist ->
+        selectedAlbum = null
+        selectedPlaylist = MeloXLegacyUiBridge.playlist(playlist)
+    }
+    Box(Modifier.fillMaxSize()) {
+        when (tab) {
+            AppTab.Home -> HomeScreen(source = source, onOpenTool = onOpenTool, onOpenPlaylist = openPlaylist)
+            AppTab.Explore -> ExploreScreen(
+                source = source,
+                onOpenPodcasts = { onOpenTool("Podcasts") },
+                onOpenPlaylist = openPlaylist,
+                onOpenProviderPlaylist = openProviderPlaylist,
+            )
+            AppTab.Library -> LibraryScreen(navState = navState)
+            AppTab.Podcasts -> PodcastsScreen(navState = navState)
+            AppTab.Downloads -> DownloadsScreen(navState = navState)
+            AppTab.Cloud -> CloudScreen(navState = navState)
+            AppTab.Settings -> SettingsScreen(
+                currentSource = source,
+                onSourceSelected = onSourceSelected,
+                onOpenMessages = { navState.navigateTo(Route.Messages) },
+                onOpenServices = { navState.navigateTo(Route.ProviderServices) },
+            )
+            AppTab.Search -> SearchScreen(source = source)
+        }
+        when (navState.currentRoute) {
+            Route.Login -> LoginScreen(navState)
+            Route.Messages -> MessagesScreen()
+            Route.ProviderServices -> ProviderServicesScreen(navState)
+            else -> Unit
+        }
+        selectedPlaylist?.let { playlist ->
+            PlaylistDetailScreen(
+                playlist = playlist,
+                onBack = { selectedPlaylist = null },
+            )
+        }
+        selectedAlbum?.let { (id, name) ->
+            AlbumDetailScreen(
+                albumId = id,
+                albumName = name,
+                onBack = { selectedAlbum = null },
+            )
+        }
     }
 }
