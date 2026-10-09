@@ -99,6 +99,8 @@ fun main(args: Array<String>) = runBlocking {
                 } == true
                 "browsing" -> semantics.tagged("player-lyrics")?.config?.getOrNull(melox.ui.screens.MeloXLyricBrowsingKey) == expected.toBooleanStrict()
                 "word-lines-min" -> (semantics.tagged("player-lyrics")?.config?.getOrNull(melox.ui.screens.MeloXLyricWordLinesKey) ?: 0) >= expected.toInt()
+                "play-ready" -> melox.playback.PlaybackCommands.playerController()?.playWhenReady == expected.toBooleanStrict()
+                "error-kind" -> melox.player.AudioPlayer.state.value.errorKind?.name == expected
                 "focus-anchor" -> {
                     val line = semantics.tagged("lyric-line-$expected")?.boundsInWindow
                     val panel = semantics.tagged("player-lyrics")?.boundsInWindow
@@ -132,6 +134,8 @@ fun main(args: Array<String>) = runBlocking {
                 .put("title", track?.title ?: JSONObject.NULL)
                 .put("is_playing", state.isPlaying).put("is_loading", state.isLoading).put("is_paused", state.isPaused)
                 .put("error", state.error ?: JSONObject.NULL)
+                .put("error_kind", state.errorKind?.name ?: JSONObject.NULL)
+                .put("play_when_ready", melox.playback.PlaybackCommands.playerController()?.playWhenReady ?: false)
                 .put("position_ms", melox.player.AudioPlayer.positionMs.value)
                 .put("duration_ms", melox.player.AudioPlayer.durationMs.value)
                 .put("queue_index", queue.index).put("queue_count", queue.songs.size))

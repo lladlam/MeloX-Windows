@@ -119,7 +119,7 @@ controlled frame-rate benchmark. Search/feed animation smoothness stays PARTIAL.
 The controller regressions in `DesktopPlaybackStateTest` exercise pause/seek while
 URL resolution is suspended, cancelled late resolvers, selected-entry reordering,
 resolution failure/retry, and 2000ms position persistence/release. The shared suite
-now has **52 tests across 11 suites, 0 failures/errors/skipped**. New scenarios
+now has **70 tests across 12 suites, 0 failures/errors/skipped**. New scenarios
 cover cancellable recommendation ownership, 15s retry/de-duplication, cross-provider
 metadata gates, upcoming-only shuffle/manual ordering, and quality changes preserving
 entry identity, paused state and a zero seek position. This is controller evidence,
@@ -261,3 +261,65 @@ slider into an actual vocal interval. These checks validate seeking/paused
 presentation, not continuously audible karaoke, long-tone video or pixel parity.
 The provider returned no playable Standard stream/fallback for this account in
 v12; that real error remains in the evidence rather than being replaced by audio.
+
+### Playback completion, seek and decoder-error lifecycle
+
+Source anchors: `MeloXPlaybackService.kt:145–160` (error → downloaded/next/prepare),
+`175–194` (ended/offline/recommendation handling), and `1590–1612` (provider-neutral
+downloaded identity, forward candidates and repeat-all wrap).
+
+`AudioPlayer` now freezes completion/failure callbacks in each actual play request;
+the controller validates its generation and queue entry ID before applying events.
+Queued end events are also invalidated by an intervening seek/pause. Releasing an
+inactive controller cannot stop or overwrite the active controller's audio/queue.
+
+FFmpeg uses `-xerror` and its actual exit status is read before deciding success.
+Valid decoder EOF leaves the output open until `longFramePosition` has consumed
+all accepted PCM frames. That wait honours pause, resume, seek and replacement.
+Short device writes are accumulated correctly; pipe reads retain full PCM frames.
+The final heard position is published before `isFinished` and the end callback.
+Every seek increments a revision, including a seek back to the original 0ms;
+closing the old output/process unblocks pending reads/writes so a seek can restart.
+Bundled extraction is serialized to protect the shared `.part` path.
+
+Content decoding failures follow the pinned service's next-item recovery and
+prefer downloaded forward/wrapped entries offline, even when repeat-one is set.
+At an exhausted tail the current entry is reprepared at its latest position with
+the existing pause intent. This desktop recovery is bounded to one reprepare per
+entry in the failure chain, and an explicit Play allows another attempt. That
+bound and terminal device-wide Output/Configuration errors are deliberate platform
+adaptations; they remain **PARTIAL**, not an exact Android error-loop match.
+Resolver/account errors still expose the genuine provider error for explicit retry.
+
+Natural-end recommendation completion can append and resume the next item, while
+a user pause after the end prevents a late recommendation from restarting audio.
+The existing 60s prefetch, 1s maintenance and 15s retry constants are preserved.
+
+`DesktopAudioSessionTest` adds seven actual bundled-FFmpeg/process/PCM-loop tests:
+tail drain with pause/resume, zero-origin seek restart, a truncated WAV which emits
+PCM then exits nonzero, same-URI request replacement, and unavailable-output
+classification, a zero-PCM successful seek to the known track end, and device-start
+failure classification. Only `SourceDataLine` hardware is controlled in those tests; no
+mock decoder is selected in the production path. Eleven additional controller
+scenarios cover recovery/ownership/offline selection, exhausted repeat queues,
+late recommendation handoff and user intent. The full shared suite has 70 passing
+tests. This verifies process and controller semantics, not audible Windows output.
+Final passing task/test metadata, case names, timings and the compiled source-file
+hashes are stored in `evidence/audio-lifecycle-v3/test-results.json`.
+
+`player-live-v13` passed 33 assertions across 22 scenes at 427×924, with the actual
+five-track NetEase queue. The initial physical output failure was recorded as
+`Output`, index 0 and `play_when_ready=false`; it did not consume the queue.
+The physical Lyrics → seek → browse/follow anchor → hide/reveal → share/Back →
+Queue/index 1 → quality → Playback settings/High → Back → reopen/Back → Mini next
+(index 2) → reopen/Back chain completed successfully. The seek and queue captures
+were visually inspected. Snapshots and exact sampling times are archived under
+`evidence/player-live-v13/`. This replay includes the completion/error lifecycle
+changes, and predates the subsequent known-end zero-PCM boundary regression.
+
+A final actual FFmpeg probe confirmed that seeking to the 500ms end of a 500ms
+WAV exits 0 with no PCM. The backend now treats that bounded known-end seek as a
+normal end at 500ms; an empty decode away from the known end remains a content
+failure. `audio-lifecycle-v3` completed successfully after this correction with
+70 tests and `desktopJar`. The dedicated production-process regression covers
+this boundary behavior.

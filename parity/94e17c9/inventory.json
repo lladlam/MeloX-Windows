@@ -2,103 +2,18 @@
   "android_sha": "94e17c920bf554966584955afa2bd2ee92580a8b",
   "windows_base_sha": "87ba7992b44c5e8c844a5db2a61f2149148eed26",
   "windows_worktree": [
-    " M .gitignore",
-    " M ANDROID_UI_PARITY.md",
-    " M README.md",
-    " M desktop/build.gradle.kts",
-    " M desktop/src/desktopMain/kotlin/melox/Main.kt",
-    " M desktop/src/desktopMain/kotlin/melox/ui/MeloXApp.kt",
-    " M desktop/src/desktopMain/kotlin/melox/ui/foundation/MeloXComponents.kt",
-    " M desktop/src/desktopMain/kotlin/melox/ui/foundation/MeloXMotion.kt",
-    " M desktop/src/desktopMain/kotlin/melox/ui/foundation/MeloXSymbol.kt",
-    " M desktop/src/desktopMain/kotlin/melox/ui/glass/MeloXBackdropComponents.kt",
-    " M desktop/src/desktopMain/kotlin/melox/ui/glass/MeloXSettingsDropdown.kt",
-    " M desktop/src/desktopMain/kotlin/melox/ui/navigation/AppRoute.kt",
-    " M desktop/src/desktopMain/kotlin/melox/ui/navigation/MeloXBottomChrome.kt",
-    " M desktop/src/desktopMain/kotlin/melox/ui/player/MeloXFlowingLightBackdrop.kt",
-    " M desktop/src/desktopMain/kotlin/melox/ui/screens/AlbumDetailScreen.kt",
-    " M desktop/src/desktopMain/kotlin/melox/ui/screens/CloudScreen.kt",
-    " M desktop/src/desktopMain/kotlin/melox/ui/screens/HomeScreen.kt",
-    " M desktop/src/desktopMain/kotlin/melox/ui/screens/LoginScreen.kt",
-    " M desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXArtwork.kt",
-    " M desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXLibraryScreen.kt",
-    " M desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXMiniPlayer.kt",
-    " M desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXNowPlaying.kt",
-    " M desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerTransition.kt",
-    " M desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXSongActionsOverlay.kt",
-    " M desktop/src/desktopMain/kotlin/melox/ui/screens/MessagesScreen.kt",
-    " M desktop/src/desktopMain/kotlin/melox/ui/screens/PlaylistDetailScreen.kt",
-    " M desktop/src/desktopMain/kotlin/melox/ui/screens/PodcastsScreen.kt",
-    " M desktop/src/desktopMain/kotlin/melox/ui/screens/ProviderServicesScreen.kt",
-    " M desktop/src/desktopMain/kotlin/melox/ui/screens/SearchScreen.kt",
-    " M desktop/src/desktopMain/kotlin/melox/ui/screens/SettingsScreen.kt",
-    " M desktop/src/desktopMain/kotlin/melox/ui/theme/MeloXColors.kt",
-    " M desktop/src/desktopMain/kotlin/melox/ui/theme/MeloXFont.kt",
-    " M gradle/libs.versions.toml",
-    " M settings.gradle.kts",
-    " M shared/build.gradle.kts",
-    " M shared/src/commonMain/kotlin/melox/account/SecureSessionPreferences.kt",
-    " M shared/src/commonMain/kotlin/melox/lyrics/AmlldbLyricsClient.kt",
-    " M shared/src/commonMain/kotlin/melox/lyrics/LyricModels.kt",
-    " M shared/src/commonMain/kotlin/melox/lyrics/TtmlLyricsParser.kt",
-    " M shared/src/commonMain/kotlin/melox/music/model/MusicModels.kt",
-    " M shared/src/commonMain/kotlin/melox/music/provider/MeloXMusicProviders.kt",
-    " M shared/src/commonMain/kotlin/melox/music/provider/MusicProvider.kt",
-    " M shared/src/commonMain/kotlin/melox/network/NeteaseUniversalSearchClient.kt",
-    " M shared/src/commonMain/kotlin/melox/platform/MeloXPreferences.kt",
-    " M shared/src/commonMain/kotlin/melox/playback/MeloXAudioReactiveRuntime.kt",
-    " M shared/src/commonMain/kotlin/melox/playback/MeloXPlaybackQueueStore.kt",
+    " M desktop/src/desktopMain/kotlin/melox/validation/MeloXVisualCapture.kt",
+    " M parity/94e17c9/MATRIX.md",
+    " M parity/94e17c9/UI_MOTION.md",
+    " M parity/94e17c9/evidence/README.md",
+    " M parity/94e17c9/inventory.json",
     " M shared/src/commonMain/kotlin/melox/playback/PlaybackCommands.kt",
-    " M shared/src/commonMain/kotlin/melox/playback/ProviderPlaybackCommands.kt",
     " M shared/src/commonMain/kotlin/melox/player/AudioPlayer.kt",
-    " M shared/src/commonMain/kotlin/melox/provider/applemusic/AppleMusicSessionStore.kt",
-    " M shared/src/commonMain/kotlin/melox/provider/bilibili/BilibiliSessionStore.kt",
-    " M shared/src/commonMain/kotlin/melox/provider/jellyfin/JellyfinSessionStore.kt",
-    " M shared/src/commonMain/kotlin/melox/provider/kugou/KugouSessionStore.kt",
-    " M shared/src/commonMain/kotlin/melox/provider/kuwo/KuwoSessionStore.kt",
-    " M shared/src/commonMain/kotlin/melox/provider/lxuser/ChkszApiKeyStore.kt",
-    " M shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicSessionStore.kt",
-    " M shared/src/commonMain/kotlin/melox/provider/spotify/SpotifyApiClient.kt",
-    " M shared/src/commonMain/kotlin/melox/provider/spotify/SpotifyLibrespotPlayback.kt",
-    " M shared/src/commonMain/kotlin/melox/provider/spotify/SpotifyOAuth.kt",
-    " M shared/src/commonMain/kotlin/melox/provider/spotify/SpotifyProvider.kt",
-    " M shared/src/commonMain/kotlin/melox/provider/spotify/SpotifySessionStore.kt",
-    " M shared/src/commonMain/kotlin/melox/provider/youtubemusic/YouTubeMusicProvider.kt",
-    " M shared/src/commonMain/kotlin/melox/provider/youtubemusic/YouTubeSessionStore.kt",
-    " M shared/src/desktopMain/kotlin/melox/platform/MeloXNetwork.kt",
-    " M shared/src/desktopMain/kotlin/melox/platform/MeloXPreferences.kt",
-    "?? .gitattributes",
-    "?? build.gradle.kts",
-    "?? desktop/src/desktopMain/kotlin/melox/ui/foundation/MeloXChromeTokens.kt",
-    "?? desktop/src/desktopMain/kotlin/melox/ui/glass/MeloXBottomGlassTone.kt",
-    "?? desktop/src/desktopMain/kotlin/melox/ui/glass/MeloXLayerBackdrop.kt",
-    "?? desktop/src/desktopMain/kotlin/melox/ui/navigation/MeloXBackHandler.kt",
-    "?? desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXGlyphLyricText.kt",
-    "?? desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXIOSLandscapePlayerScene.kt",
-    "?? desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXIOSPlayerScene.kt",
-    "?? desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXLyricCascade.kt",
-    "?? desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerLyrics.kt",
-    "?? desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerQuality.kt",
-    "?? desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXQueuePanel.kt",
-    "?? desktop/src/desktopMain/kotlin/melox/ui/theme/MeloXMaterialTheme.kt",
-    "?? desktop/src/desktopMain/kotlin/melox/validation/",
-    "?? desktop/src/main/resources/decoder/",
-    "?? desktop/src/main/resources/icons/",
-    "?? innertube/",
-    "?? parity/",
-    "?? shared/src/commonMain/kotlin/melox/lyrics/LrcLibLyricsClient.kt",
-    "?? shared/src/commonMain/kotlin/melox/lyrics/MeloXLyricPresentation.kt",
-    "?? shared/src/commonMain/kotlin/melox/lyrics/MeloXLyricScript.kt",
-    "?? shared/src/commonMain/kotlin/melox/lyrics/MeloXLyricsLoad.kt",
-    "?? shared/src/commonMain/kotlin/melox/playback/MeloXDesktopAutoplay.kt",
-    "?? shared/src/commonMain/kotlin/melox/provider/spotify/SpotifyDesktopLogin.kt",
-    "?? shared/src/commonMain/kotlin/melox/settings/MeloXPlayerAppearance.kt",
-    "?? shared/src/commonTest/",
-    "?? shared/src/desktopMain/kotlin/melox/platform/DesktopAudioOutput.kt",
-    "?? shared/src/desktopMain/kotlin/melox/platform/DesktopSecretProtection.kt",
-    "?? shared/src/desktopMain/kotlin/melox/platform/PreferenceFile.kt",
-    "?? shared/src/desktopTest/",
-    "?? tools/"
+    " M shared/src/desktopTest/kotlin/melox/playback/DesktopPlaybackStateTest.kt",
+    " M tools/parity_audit.py",
+    "?? parity/94e17c9/evidence/audio-lifecycle-v3/",
+    "?? parity/94e17c9/evidence/player-live-v13/",
+    "?? shared/src/desktopTest/kotlin/melox/player/"
   ],
   "acceptance": "source scan only; no runtime, account, visual or Windows OS acceptance implied",
   "files": [
@@ -10800,7 +10715,10 @@
     {
       "android": "android/app/src/main/kotlin/com/lladlam/melox/playback/MeloXPlaybackService.kt",
       "windows": [
-        "shared/src/commonMain/kotlin/melox/playback/MeloXPlaybackService.kt"
+        "shared/src/commonMain/kotlin/melox/playback/MeloXPlaybackService.kt",
+        "shared/src/commonMain/kotlin/melox/playback/PlaybackCommands.kt",
+        "shared/src/commonMain/kotlin/melox/player/AudioPlayer.kt",
+        "shared/src/commonMain/kotlin/melox/playback/MeloXDesktopAutoplay.kt"
       ],
       "status": "PARTIAL",
       "source_identical": false,
@@ -10808,7 +10726,10 @@
       "android_sha256": "9f9c4fa735e669aa4db282b67c7142366b5d310589cd27dccca6f41031764280",
       "android_lines": 1822,
       "windows_lines": {
-        "shared/src/commonMain/kotlin/melox/playback/MeloXPlaybackService.kt": 33
+        "shared/src/commonMain/kotlin/melox/playback/MeloXPlaybackService.kt": 33,
+        "shared/src/commonMain/kotlin/melox/playback/PlaybackCommands.kt": 815,
+        "shared/src/commonMain/kotlin/melox/player/AudioPlayer.kt": 556,
+        "shared/src/commonMain/kotlin/melox/playback/MeloXDesktopAutoplay.kt": 133
       },
       "symbols": [
         {
@@ -10837,7 +10758,7 @@
         },
         {
           "name": "autoplayArtistKeys",
-          "status": "MISSING"
+          "status": "PARTIAL"
         },
         {
           "name": "buildPlayer",
@@ -10913,7 +10834,7 @@
         },
         {
           "name": "normalizeAutoplayMetadata",
-          "status": "MISSING"
+          "status": "PARTIAL"
         },
         {
           "name": "onAudioSessionIdChanged",
@@ -11037,7 +10958,7 @@
         },
         {
           "name": "selectNeteaseAutoplaySeed",
-          "status": "MISSING"
+          "status": "PARTIAL"
         },
         {
           "name": "shouldClearLegacySystemLyrics",
@@ -11264,7 +11185,7 @@
       "android_sha256": "586dc78b81fce6368b14b7bbd33d1147f063cdec0c5fa56b3df7dad4b32a3aea",
       "android_lines": 434,
       "windows_lines": {
-        "shared/src/commonMain/kotlin/melox/playback/PlaybackCommands.kt": 712
+        "shared/src/commonMain/kotlin/melox/playback/PlaybackCommands.kt": 815
       },
       "symbols": [
         {

@@ -20,6 +20,8 @@ import melox.music.model.ProviderTrackMetadata
 import melox.platform.getPreferences
 import melox.settings.MeloXSettingsPreferences
 import melox.player.AudioPlayer
+import melox.player.AudioFailureKind
+import melox.player.AudioPlaybackFailure
 import melox.audio.MusicQuality
 import melox.audio.MusicQualityPreferences
 import kotlin.test.*
@@ -33,8 +35,14 @@ class DesktopPlaybackStateTest {
         resolve: suspend (QueueEntry) -> DesktopPlaybackRequest,
         starts: MutableList<DesktopPlaybackStart> = mutableListOf(),
         positions: MutableList<Pair<Int, Long>> = mutableListOf(),
+        recommendationSource: DesktopAutoplaySource = DesktopAutoplaySource(),
+        online: () -> Boolean = { true },
+        downloaded: (SearchSong) -> Boolean = { false },
     ) = MeloXDesktopPlayer(resolve, { starts += it }, backgroundScope,
-        StandardTestDispatcher(testScheduler), {}, { index, position -> positions += index to position })
+        StandardTestDispatcher(testScheduler), {}, { index, position -> positions += index to position },
+        recommendationSource, online, downloaded)
+
+    @BeforeTest fun resetModes() { MeloXPlaybackModePreferences.reset() }
 
     @AfterTest fun cleanup() {
         PlaybackCommands.playerController()?.release()
@@ -200,7 +208,7 @@ class DesktopPlaybackStateTest {
         player.prepare()
         player.play()
         runCurrent()
-        AudioPlayer.onTrackEnded?.invoke()
+        starts.last().onEnded()
         runCurrent()
         assertEquals(listOf(9_000L, 0L), starts.map { it.positionMs })
         assertTrue(starts.last().playWhenReady)
@@ -248,5 +256,235 @@ class DesktopPlaybackStateTest {
             assertEquals(0L, starts.last().positionMs)
             assertFalse(starts.last().playWhenReady)
         } finally { MusicQualityPreferences.write(quality) }
+    }
+
+    private fun mediaFailure(kind: AudioFailureKind = AudioFailureKind.Content) =
+        AudioPlaybackFailure(kind, java.io.IOException("decoder failure"))
+
+    @Test fun decoderFailureSkipsToNextEntryEvenInRepeatOneMode() = runTest {
+        val starts = mutableListOf<DesktopPlaybackStart>()
+        val player = player({ DesktopPlaybackRequest("resolved") }, starts)
+        PlaybackCommands.adoptController(player)
+        player.setMediaItems(listOf(song(1), song(2)), 0, 0)
+        player.setRepeatMode(PlaybackCommands.REPEAT_ONE)
+        player.prepare()
+        player.play()
+        runCurrent()
+        starts.single().onFailure(mediaFailure())
+        runCurrent()
+        assertEquals(1, player.currentMediaItemIndex)
+        assertEquals(listOf("1", "2"), starts.map { it.track.id.value })
+        assertTrue(starts.last().playWhenReady)
+        assertEquals(0L, starts.last().positionMs)
+    }
+
+    @Test fun tailRecoveryRepreparesPausedPositionOnceAndExplicitPlayCanRetryAgain() = runTest {
+        val starts = mutableListOf<DesktopPlaybackStart>()
+        val errors = mutableListOf<Throwable>()
+        val player = player({ DesktopPlaybackRequest("resolved") }, starts)
+        player.onFailure = { errors += it }
+        PlaybackCommands.adoptController(player)
+        player.setMediaItems(listOf(song(1)), 0, 0)
+        player.prepare()
+        runCurrent()
+        player.seekTo(39_000)
+        player.pause()
+        starts.single().onFailure(mediaFailure())
+        runCurrent()
+        assertEquals(39_000L, starts.last().positionMs)
+        assertFalse(starts.last().playWhenReady)
+        assertTrue(errors.isEmpty())
+        starts.last().onFailure(mediaFailure())
+        runCurrent()
+        assertEquals(2, starts.size)
+        assertEquals(1, errors.size)
+        assertFalse(AudioPlayer.state.value.isFinished)
+        assertEquals("decoder failure", AudioPlayer.state.value.error)
+        player.play()
+        runCurrent()
+        assertEquals(3, starts.size)
+        assertEquals(39_000L, starts.last().positionMs)
+        assertTrue(starts.last().playWhenReady)
+    }
+
+    @Test fun missingOutputDoesNotConsumeTheWholeQueue() = runTest {
+        val starts = mutableListOf<DesktopPlaybackStart>()
+        val errors = mutableListOf<Throwable>()
+        val player = player({ DesktopPlaybackRequest("resolved") }, starts)
+        player.onFailure = { errors += it }
+        PlaybackCommands.adoptController(player)
+        player.setMediaItems(listOf(song(1), song(2), song(3)), 0, 0)
+        player.prepare()
+        player.play()
+        runCurrent()
+        starts.single().onFailure(mediaFailure(AudioFailureKind.Output))
+        runCurrent()
+        assertEquals(0, player.currentMediaItemIndex)
+        assertEquals(1, starts.size)
+        assertFalse(player.playWhenReady)
+        assertEquals(AudioFailureKind.Output, (errors.single() as AudioPlaybackFailure).kind)
+    }
+
+    @Test fun offlineFailureAndNaturalEndPreferDownloadedFutureEntries() = runTest {
+        for (error in listOf(true, false)) {
+            val starts = mutableListOf<DesktopPlaybackStart>()
+            val player = player({ DesktopPlaybackRequest("resolved") }, starts,
+                online = { false }, downloaded = { it.id == 3L })
+            PlaybackCommands.adoptController(player)
+            player.setMediaItems((1L..4L).map(::song), 0, 0)
+            player.prepare()
+            player.play()
+            runCurrent()
+            if (error) starts.single().onFailure(mediaFailure()) else starts.single().onEnded()
+            runCurrent()
+            assertEquals(2, player.currentMediaItemIndex)
+            assertEquals(listOf("1", "3"), starts.map { it.track.id.value })
+            assertEquals(listOf(1L, 2L, 3L, 4L), player.snapshot().map { it.id })
+            assertTrue(starts.last().playWhenReady)
+            player.release()
+        }
+    }
+
+    @Test fun callbacksFromAnOlderPlayOfTheSameTrackCannotAdvanceOrFailTheNewSelection() = runTest {
+        val starts = mutableListOf<DesktopPlaybackStart>()
+        val player = player({ DesktopPlaybackRequest("resolved") }, starts)
+        PlaybackCommands.adoptController(player)
+        player.setMediaItems(listOf(song(1), song(1), song(2)), 0, 0)
+        player.prepare()
+        player.play()
+        runCurrent()
+        val old = starts.single()
+        player.seekToIndex(1)
+        runCurrent()
+        old.onEnded()
+        old.onFailure(mediaFailure())
+        runCurrent()
+        assertEquals(1, player.currentMediaItemIndex)
+        assertEquals(2, starts.size)
+        assertNull(AudioPlayer.state.value.error)
+        player.release()
+        starts.last().onEnded()
+        starts.last().onFailure(mediaFailure())
+        runCurrent()
+        assertEquals(-1, player.currentMediaItemIndex)
+        assertNull(AudioPlayer.currentTrack.value)
+    }
+
+    @Test fun userPauseBeforeQueuedEndDispatchPreventsAutomaticAdvance() = runTest {
+        val starts = mutableListOf<DesktopPlaybackStart>()
+        val player = player({ DesktopPlaybackRequest("resolved") }, starts)
+        PlaybackCommands.adoptController(player)
+        player.setMediaItems(listOf(song(1), song(2)), 0, 0)
+        player.prepare()
+        player.play()
+        runCurrent()
+        starts.single().onEnded()
+        player.pause()
+        runCurrent()
+        assertEquals(0, player.currentMediaItemIndex)
+        assertEquals(1, starts.size)
+        assertFalse(player.playWhenReady)
+    }
+
+    @Test fun userSeekBeforeQueuedEndDispatchKeepsTheCurrentTrackAndNewPosition() = runTest {
+        val starts = mutableListOf<DesktopPlaybackStart>()
+        val player = player({ DesktopPlaybackRequest("resolved") }, starts)
+        PlaybackCommands.adoptController(player)
+        player.setMediaItems(listOf(song(1), song(2)), 0, 0)
+        player.prepare()
+        player.play()
+        runCurrent()
+        starts.single().onEnded()
+        player.seekTo(25_000)
+        runCurrent()
+        assertEquals(0, player.currentMediaItemIndex)
+        assertEquals(25_000L, player.currentPosition)
+        assertEquals(1, starts.size)
+        assertTrue(player.playWhenReady)
+    }
+
+    @Test fun releasingAnOldControllerCannotStopTheNewControllersSelectedAudio() = runTest {
+        val first = player({ DesktopPlaybackRequest("first") })
+        PlaybackCommands.adoptController(first)
+        first.setMediaItems(listOf(song(1)), 0, 0)
+        first.prepare()
+        runCurrent()
+        val starts = mutableListOf<DesktopPlaybackStart>()
+        val second = player({ DesktopPlaybackRequest("second") }, starts)
+        PlaybackCommands.adoptController(second)
+        second.setMediaItems(listOf(song(2)), 0, 19_000)
+        second.prepare()
+        runCurrent()
+        first.release()
+        assertEquals("2", AudioPlayer.currentTrack.value?.id?.value)
+        assertEquals(19_000L, AudioPlayer.getCurrentPositionMs())
+        assertSame(second, PlaybackCommands.playerController())
+        assertTrue(AudioPlayer.state.value.isLoading)
+    }
+
+    @Test fun exhaustedRepeatAllQueueStopsInsteadOfSpinningOnBrokenEntries() = runTest {
+        val starts = mutableListOf<DesktopPlaybackStart>()
+        val player = player({ DesktopPlaybackRequest("resolved") }, starts)
+        PlaybackCommands.adoptController(player)
+        player.setMediaItems(listOf(song(1), song(2)), 0, 0)
+        player.setRepeatMode(PlaybackCommands.REPEAT_ALL)
+        player.prepare()
+        player.play()
+        runCurrent()
+        repeat(3) {
+            starts.last().onFailure(mediaFailure())
+            runCurrent()
+        }
+        assertEquals(listOf("1", "2", "2"), starts.map { it.track.id.value })
+        assertFalse(player.playWhenReady)
+        assertNotNull(AudioPlayer.state.value.error)
+    }
+
+    @Test fun recommendationArrivingAfterNaturalEndAppendsAndResumesTheNewEntry() = runTest {
+        val recommendations = CompletableDeferred<List<SearchSong>>()
+        val starts = mutableListOf<DesktopPlaybackStart>()
+        val player = player({ DesktopPlaybackRequest("resolved") }, starts,
+            recommendationSource = object : DesktopAutoplaySource() {
+                override suspend fun recommendations(song: SearchSong) = recommendations.await()
+            })
+        PlaybackCommands.adoptController(player)
+        player.setMediaItems(listOf(song(1)), 0, 0)
+        player.prepare()
+        player.play()
+        player.setAutoplayEnabled(true)
+        runCurrent()
+        starts.single().onEnded()
+        runCurrent()
+        assertFalse(player.playWhenReady)
+        recommendations.complete(listOf(song(2), song(3)))
+        runCurrent()
+        assertEquals(listOf(1L, 2L, 3L), player.snapshot().map { it.id })
+        assertEquals(1, player.currentMediaItemIndex)
+        assertTrue(starts.last().playWhenReady)
+        assertEquals("2", starts.last().track.id.value)
+    }
+
+    @Test fun explicitPauseAfterNaturalEndPreventsLateRecommendationsFromRestartingAudio() = runTest {
+        val recommendations = CompletableDeferred<List<SearchSong>>()
+        val starts = mutableListOf<DesktopPlaybackStart>()
+        val player = player({ DesktopPlaybackRequest("resolved") }, starts,
+            recommendationSource = object : DesktopAutoplaySource() {
+                override suspend fun recommendations(song: SearchSong) = recommendations.await()
+            })
+        PlaybackCommands.adoptController(player)
+        player.setMediaItems(listOf(song(1)), 0, 0)
+        player.prepare()
+        player.play()
+        player.setAutoplayEnabled(true)
+        runCurrent()
+        starts.single().onEnded()
+        runCurrent()
+        player.pause()
+        recommendations.complete(listOf(song(2)))
+        runCurrent()
+        assertEquals(listOf(1L, 2L), player.snapshot().map { it.id })
+        assertEquals(0, player.currentMediaItemIndex)
+        assertEquals(1, starts.size)
+        assertFalse(player.playWhenReady)
     }
 }

@@ -174,7 +174,7 @@ Files: {'MISSING': 253, 'PARTIAL': 199}. Review hits: 46. Extracted Android desi
 | `android/app/src/main/kotlin/com/lladlam/melox/playback/MeloXPlaybackHistoryReporter.kt` | `shared/src/commonMain/kotlin/melox/playback/MeloXPlaybackHistoryReporter.kt` | PARTIAL |
 | `android/app/src/main/kotlin/com/lladlam/melox/playback/MeloXPlaybackModePreferences.kt` | `shared/src/commonMain/kotlin/melox/playback/MeloXPlaybackModePreferences.kt` | PARTIAL |
 | `android/app/src/main/kotlin/com/lladlam/melox/playback/MeloXPlaybackQueueStore.kt` | `shared/src/commonMain/kotlin/melox/playback/MeloXPlaybackQueueStore.kt` | PARTIAL |
-| `android/app/src/main/kotlin/com/lladlam/melox/playback/MeloXPlaybackService.kt` | `shared/src/commonMain/kotlin/melox/playback/MeloXPlaybackService.kt` | PARTIAL |
+| `android/app/src/main/kotlin/com/lladlam/melox/playback/MeloXPlaybackService.kt` | `shared/src/commonMain/kotlin/melox/playback/MeloXPlaybackService.kt`<br>`shared/src/commonMain/kotlin/melox/playback/PlaybackCommands.kt`<br>`shared/src/commonMain/kotlin/melox/player/AudioPlayer.kt`<br>`shared/src/commonMain/kotlin/melox/playback/MeloXDesktopAutoplay.kt` | PARTIAL |
 | `android/app/src/main/kotlin/com/lladlam/melox/playback/MeloXPlayerTransitionState.kt` | `shared/src/commonMain/kotlin/melox/playback/MeloXPlayerTransitionState.kt` | PARTIAL |
 | `android/app/src/main/kotlin/com/lladlam/melox/playback/MeloXSmartQueueBuilder.kt` | — | MISSING |
 | `android/app/src/main/kotlin/com/lladlam/melox/playback/NeteasePlaybackResolver.kt` | `shared/src/commonMain/kotlin/melox/playback/NeteasePlaybackResolver.kt` | PARTIAL |

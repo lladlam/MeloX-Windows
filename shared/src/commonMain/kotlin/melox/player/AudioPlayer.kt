@@ -6,6 +6,7 @@ import melox.platform.logError
 import java.io.BufferedInputStream
 import java.io.File
 import java.io.InputStream
+import java.io.IOException
 import java.util.concurrent.atomic.AtomicBoolean
 import java.util.concurrent.atomic.AtomicLong
 import java.util.concurrent.atomic.AtomicReference
@@ -14,6 +15,7 @@ import javax.sound.sampled.AudioSystem
 import javax.sound.sampled.FloatControl
 import javax.sound.sampled.SourceDataLine
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
@@ -23,8 +25,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
-import okhttp3.OkHttpClient
-import okhttp3.Request
 
 /**
  * Desktop playback. HTTP and local files are decoded by ffmpeg to PCM and
@@ -37,7 +37,6 @@ object AudioPlayer {
     const val PCM_BYTES_PER_FRAME = 4
 
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
-    private val httpClient = OkHttpClient.Builder().followRedirects(true).build()
 
     private var currentJob: Job? = null
     private var currentLine: SourceDataLine? = null
@@ -48,6 +47,7 @@ object AudioPlayer {
     private val ready = AtomicBoolean(false)
     private val writtenFrames = AtomicLong(0L)
     private val pendingSeekMs = AtomicLong(-1L)
+    private val seekRevision = AtomicLong(0L)
     private val session = AtomicReference<PlayRequest?>(null)
 
     private val _state = MutableStateFlow(PlayerState())
@@ -65,8 +65,8 @@ object AudioPlayer {
     private val _currentTrack = MutableStateFlow<MusicTrack?>(null)
     val currentTrack: StateFlow<MusicTrack?> = _currentTrack.asStateFlow()
 
-    @Volatile
-    var onTrackEnded: (() -> Unit)? = null
+    // Tests replace only the physical device; production always opens Java Sound.
+    @Volatile internal var outputLineFactory: () -> SourceDataLine = ::openSystemLine
 
     @Volatile
     var decoderCommand: List<String> = emptyList() // Bundled extraction belongs to startDecoder's IO worker.
@@ -83,8 +83,11 @@ object AudioPlayer {
         _state.value = PlayerState(isLoading = true, trackTitle = track.title, trackArtist = track.artistText)
     }
 
-    fun reportFailure(error: Throwable) {
+    fun reportFailure(error: Throwable): Unit = synchronized(playbackLock) {
+        ready.set(false)
         _state.value = _state.value.copy(isLoading = false, isPlaying = false, isPaused = false,
+            isFinished = false,
+            errorKind = (error as? AudioPlaybackFailure)?.kind,
             error = error.message?.takeIf { it.isNotBlank() } ?: "播放失败")
     }
 
@@ -95,41 +98,53 @@ object AudioPlayer {
         startPositionMs: Long = 0L,
         knownDurationMs: Long = 0L,
         playWhenReady: Boolean = true,
+        onEnded: () -> Unit = {},
+        onFailure: (AudioPlaybackFailure) -> Unit = {},
     ) {
         selectTrack(track, startPositionMs, knownDurationMs)
         paused.set(!playWhenReady)
         _state.value = _state.value.copy(isPaused = !playWhenReady)
         pendingSeekMs.set(startPositionMs.coerceAtLeast(0L))
-        val request = PlayRequest(url, headers, knownDurationMs.coerceAtLeast(0L))
+        val request = PlayRequest(url, headers, knownDurationMs.coerceAtLeast(0L), onEnded, onFailure)
         session.set(request)
         currentJob = scope.launch {
             try {
                 runSession(request)
+            } catch (cancelled: CancellationException) {
+                throw cancelled
             } catch (e: Exception) {
-                synchronized(playbackLock) {
+                val failure = e as? AudioPlaybackFailure ?: AudioPlaybackFailure(AudioFailureKind.Content, e)
+                val notify = synchronized(playbackLock) {
                     if (session.get() !== request) return@launch
                     logError("AudioPlayer", "播放失败: ${e.message}")
-                    reportFailure(e)
+                    reportFailure(failure)
                     currentProcess?.let { process ->
                         runCatching { process.destroyForcibly() }
                         if (currentProcess === process) currentProcess = null
                     }
+                    true
                 }
+                if (notify) request.onFailure(failure)
             }
         }
     }
 
-    private fun runSession(request: PlayRequest) {
-        var startAt = pendingSeekMs.get().coerceAtLeast(0L)
+    private suspend fun runSession(request: PlayRequest) {
         while (session.get() === request) {
-            synchronized(playbackLock) {
+            val (launched, launchedRevision) = synchronized(playbackLock) {
                 if (session.get() !== request) return
                 writtenFrames.set(0L)
+                val startAt = pendingSeekMs.get().coerceAtLeast(0L)
                 playbackOffsetMs.set(startAt)
                 ready.set(false)
+                startAt to seekRevision.get()
             }
-            val launched = startAt
-            val process = startDecoder(request, launched)
+            val process = try { startDecoder(request, launched) }
+            catch (error: Exception) {
+                if (session.get() !== request) return
+                if (seekRevision.get() != launchedRevision) continue
+                throw AudioPlaybackFailure(AudioFailureKind.Configuration, error)
+            }
             synchronized(playbackLock) {
                 if (session.get() !== request) {
                     process.destroyForcibly()
@@ -146,13 +161,15 @@ object AudioPlayer {
                     }
                 }
             }
-            val stdout = process.inputStream
+            val stdout = BufferedInputStream(process.inputStream)
             val line = try {
-                openLine()
+                outputLineFactory()
             } catch (error: Exception) {
                 process.destroyForcibly()
                 stderrJob.cancel()
-                throw error
+                if (session.get() !== request) return
+                if (seekRevision.get() != launchedRevision) continue
+                throw AudioPlaybackFailure(AudioFailureKind.Output, error)
             }
             synchronized(playbackLock) {
                 if (session.get() !== request) {
@@ -166,13 +183,12 @@ object AudioPlayer {
             val buffer = ByteArray(PCM_SAMPLE_RATE * PCM_BYTES_PER_FRAME / 5)
             var started = false
             var endedNaturally = false
+            var requestedEnd = false
             var restartingForSeek = false
             var progressJob: Job? = null
             try {
                 while (session.get() === request) {
-                    val requested = pendingSeekMs.get()
-                    if (requested >= 0L && requested != launched) {
-                        startAt = requested
+                    if (seekRevision.get() != launchedRevision) {
                         restartingForSeek = true
                         break
                     }
@@ -183,37 +199,81 @@ object AudioPlayer {
                     } else if (!line.isRunning && started) {
                         line.start()
                     }
-                    val read = stdout.read(buffer)
-                    if (read < 0) {
-                        endedNaturally = started
+                    // Pipe reads may split PCM frames. readNBytes preserves alignment
+                    // across short reads and exposes a malformed final partial frame.
+                    val read = stdout.readNBytes(buffer, 0, buffer.size)
+                    if (session.get() !== request) return
+                    if (seekRevision.get() != launchedRevision) {
+                        restartingForSeek = true
                         break
                     }
-                    if (read == 0) continue
-                    if (!started) {
-                        val raced = pendingSeekMs.get()
-                        if (raced >= 0L && raced != launched) {
-                            startAt = raced
+                    if (read == 0) {
+                        val exitCode = process.waitFor()
+                        stderrJob.join()
+                        if (session.get() !== request) return
+                        if (seekRevision.get() != launchedRevision) {
                             restartingForSeek = true
                             break
                         }
+                        val duration = _durationMs.value
+                        requestedEnd = !started && exitCode == 0 && duration > 0L && launched >= duration
+                        if (exitCode != 0 || !started && !requestedEnd) {
+                            throw AudioPlaybackFailure(AudioFailureKind.Content,
+                                IOException(stderr.toString().trim().ifBlank { "ffmpeg exited $exitCode without playable PCM" }))
+                        }
+                        // Media3 ENDED is after audible output, not decoder EOF. Keep
+                        // the tail queued, and allow pause/seek/stop while it plays.
+                        while (session.get() === request && seekRevision.get() == launchedRevision &&
+                            line.longFramePosition < writtenFrames.get()) {
+                            if (paused.get()) {
+                                if (line.isRunning) line.stop()
+                            } else if (!line.isRunning) line.start()
+                            delay(10)
+                        }
+                        if (session.get() !== request) return
+                        restartingForSeek = seekRevision.get() != launchedRevision
+                        endedNaturally = !restartingForSeek
+                        break
+                    }
+                    if (read % PCM_BYTES_PER_FRAME != 0) {
+                        throw AudioPlaybackFailure(AudioFailureKind.Content, IOException("ffmpeg emitted an incomplete PCM frame"))
+                    }
+                    if (!started) {
                         synchronized(playbackLock) {
                             if (session.get() !== request) break
+                            if (seekRevision.get() != launchedRevision) {
+                                restartingForSeek = true
+                                break
+                            }
                             started = true
                             ready.set(true)
-                            pendingSeekMs.compareAndSet(raced, -1L)
+                            pendingSeekMs.set(-1L)
                             if (!paused.get()) line.start()
-                            _state.value = _state.value.copy(isPlaying = !paused.get(), isPaused = paused.get(), isLoading = false, isFinished = false, error = null)
+                            _state.value = _state.value.copy(isPlaying = !paused.get(), isPaused = paused.get(), isLoading = false, isFinished = false, error = null, errorKind = null)
                         }
                         progressJob = startProgress(request)
                     }
-                    line.write(buffer, 0, read)
-                    synchronized(playbackLock) {
-                        if (session.get() === request) {
-                            writtenFrames.addAndGet(read / PCM_BYTES_PER_FRAME.toLong())
-                            publishPcmEnergy(buffer, read)
+                    var written = 0
+                    while (written < read && session.get() === request && seekRevision.get() == launchedRevision) {
+                        val accepted = try { line.write(buffer, written, read - written) }
+                        catch (error: Exception) { throw AudioPlaybackFailure(AudioFailureKind.Output, error) }
+                        if (accepted <= 0 || accepted % PCM_BYTES_PER_FRAME != 0) {
+                            throw AudioPlaybackFailure(AudioFailureKind.Output, IOException("Audio output stopped accepting PCM frames"))
                         }
+                        synchronized(playbackLock) {
+                            if (session.get() === request && seekRevision.get() == launchedRevision) {
+                                writtenFrames.addAndGet(accepted / PCM_BYTES_PER_FRAME.toLong())
+                            }
+                        }
+                        written += accepted
                     }
+                    if (session.get() === request && seekRevision.get() == launchedRevision) publishPcmEnergy(buffer, written)
                 }
+            } catch (error: Exception) {
+                if (session.get() !== request) return
+                if (seekRevision.get() != launchedRevision) restartingForSeek = true
+                else if (error is AudioPlaybackFailure || error is CancellationException) throw error
+                else throw AudioPlaybackFailure(if (error is IOException) AudioFailureKind.Content else AudioFailureKind.Output, error)
             } finally {
                 progressJob?.cancel()
                 closeDecoder(process, line)
@@ -224,33 +284,28 @@ object AudioPlayer {
                 }
             }
             if (session.get() !== request) return
-            if (restartingForSeek) continue
+            if (restartingForSeek || seekRevision.get() != launchedRevision) continue
             synchronized(playbackLock) {
                 if (session.get() !== request) return
-                if (!started) {
-                    ready.set(false)
-                    val code = runCatching { process.exitValue() }.getOrDefault(-1)
-                    _state.value = _state.value.copy(
-                        isPlaying = false,
-                        isFinished = false,
-                        isLoading = false,
-                        error = stderr.toString().ifBlank { "ffmpeg exited $code" }.trim(),
-                    )
-                    return
-                }
+                if (seekRevision.get() != launchedRevision) continue
                 if (endedNaturally) {
                     ready.set(false)
-                    _state.value = _state.value.copy(isPlaying = false, isFinished = true)
-                    onTrackEnded?.invoke()
-                    return
+                    val finalPosition = if (requestedEnd) _durationMs.value else positionMs(launched, writtenFrames.get())
+                    _positionMs.value = finalPosition
+                    _progress.value = if (_durationMs.value > 0L) (finalPosition.toFloat() / _durationMs.value).coerceIn(0f, 1f) else 0f
+                    _state.value = _state.value.copy(isPlaying = false, isPaused = false, isLoading = false, isFinished = true)
                 }
+            }
+            if (endedNaturally) {
+                request.onEnded()
+                return
             }
         }
     }
 
     internal fun decoderArgs(request: PlayRequest, startAtMs: Long): List<String> = buildList {
         addAll(decoderCommand)
-        addAll(listOf("-hide_banner", "-loglevel", "error", "-nostdin"))
+        addAll(listOf("-hide_banner", "-loglevel", "error", "-nostdin", "-xerror"))
         add("-ss")
         add("%.3f".format(java.util.Locale.ROOT, startAtMs / 1000.0))
         if (request.url.startsWith("http")) {
@@ -275,10 +330,11 @@ object AudioPlayer {
         return ProcessBuilder(command).redirectErrorStream(false).start()
     }
 
-    private fun openLine(): SourceDataLine {
+    private fun openSystemLine(): SourceDataLine {
         val format = AudioFormat(PCM_SAMPLE_RATE.toFloat(), 16, PCM_CHANNELS, true, false)
         val line = AudioSystem.getSourceDataLine(format)
-        line.open(format, PCM_SAMPLE_RATE * PCM_BYTES_PER_FRAME)
+        try { line.open(format, PCM_SAMPLE_RATE * PCM_BYTES_PER_FRAME) }
+        catch (error: Exception) { runCatching { line.close() }; throw error }
         return line
     }
 
@@ -320,16 +376,24 @@ object AudioPlayer {
         }
     }
 
-    fun pause(): Unit = synchronized(playbackLock) {
-        if (_currentTrack.value == null) return
-        paused.set(true)
-        _state.value = _state.value.copy(isPlaying = false, isPaused = true)
+    fun pause() {
+        val line = synchronized(playbackLock) {
+            if (_currentTrack.value == null) return
+            paused.set(true)
+            _state.value = _state.value.copy(isPlaying = false, isPaused = true)
+            currentLine
+        }
+        line?.let { runCatching { it.stop() } }
     }
 
-    fun resume(): Unit = synchronized(playbackLock) {
-        if (_currentTrack.value == null || _state.value.error != null || _state.value.isFinished) return
-        paused.set(false)
-        _state.value = _state.value.copy(isPlaying = ready.get(), isPaused = false, isFinished = false)
+    fun resume() {
+        val line = synchronized(playbackLock) {
+            if (_currentTrack.value == null || _state.value.error != null || _state.value.isFinished) return
+            paused.set(false)
+            _state.value = _state.value.copy(isPlaying = ready.get(), isPaused = false, isFinished = false)
+            currentLine.takeIf { ready.get() }
+        }
+        line?.let { runCatching { it.start() } }
     }
 
     fun stop(clearTrack: Boolean = true) {
@@ -343,6 +407,7 @@ object AudioPlayer {
             paused.set(false)
             writtenFrames.set(0L)
             pendingSeekMs.set(-1L)
+            seekRevision.incrementAndGet()
             _progress.value = 0f
             _positionMs.value = 0L
             _durationMs.value = 0L
@@ -356,11 +421,17 @@ object AudioPlayer {
 
     fun seekTo(positionMs: Long) {
         val target = positionMs.coerceAtLeast(0L)
-        pendingSeekMs.set(target)
-        _positionMs.value = target
-        val duration = _durationMs.value
-        _progress.value = if (duration > 0L) (target.toFloat() / duration).coerceIn(0f, 1f) else 0f
-        if (!ready.get()) return
+        val decoder = synchronized(playbackLock) {
+            pendingSeekMs.set(target)
+            seekRevision.incrementAndGet()
+            _positionMs.value = target
+            val duration = _durationMs.value
+            _progress.value = if (duration > 0L) (target.toFloat() / duration).coerceIn(0f, 1f) else 0f
+            currentProcess to currentLine
+        }
+        // A stalled network read/full stopped line must not prevent a new seek.
+        decoder.second?.let { runCatching { it.close() } }
+        decoder.first?.let { runCatching { it.destroyForcibly() } }
     }
 
     fun isReady(): Boolean = ready.get()
@@ -435,6 +506,7 @@ internal object FfmpegLocator {
         return FfmpegLocation.Bundled(file)
     }
 
+    @Synchronized
     internal fun extract(name: String, loader: ClassLoader): File? {
         val input = loader.getResourceAsStream(name) ?: return null
         val target = File(System.getProperty("java.io.tmpdir"), "melox-" + name.replace('/', '-'))
@@ -463,7 +535,14 @@ internal class PlayRequest(
     val url: String,
     val headers: Map<String, String>,
     val knownDurationMs: Long,
+    val onEnded: () -> Unit = {},
+    val onFailure: (AudioPlaybackFailure) -> Unit = {},
 )
+
+enum class AudioFailureKind { Content, Output, Configuration }
+
+class AudioPlaybackFailure(val kind: AudioFailureKind, cause: Throwable) :
+    IOException(cause.message?.takeIf(String::isNotBlank) ?: "播放失败", cause)
 
 data class PlayerState(
     val isPlaying: Boolean = false,
@@ -473,4 +552,5 @@ data class PlayerState(
     val trackTitle: String = "",
     val trackArtist: String = "",
     val error: String? = null,
+    val errorKind: AudioFailureKind? = null,
 )

@@ -1,0 +1,591 @@
+{
+  "run": "audio-lifecycle-v3",
+  "android_source_sha": "94e17c920bf554966584955afa2bd2ee92580a8b",
+  "windows_parent_sha": "0789008857dc115cfcdfca8b6b6aac9ef9cd32ce",
+  "tasks": [
+    ":shared:desktopTest",
+    ":desktop:desktopJar"
+  ],
+  "gradle_result": "BUILD SUCCESSFUL in 40s",
+  "counts": {
+    "suites": 12,
+    "tests": 70,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "source_sha256": {
+    "shared/src/commonMain/kotlin/melox/player/AudioPlayer.kt": "a6456f4f1a64f00a5f94c6cdc9aa2971f939d9d423b3674fb220976b240df036",
+    "shared/src/commonMain/kotlin/melox/playback/PlaybackCommands.kt": "fc12e288b1bb522d964ab4089d0338471807dd3c4fe0def658d3b736fd765ba6",
+    "shared/src/desktopTest/kotlin/melox/player/DesktopAudioSessionTest.kt": "b4f9a54e340a4268872f391a853b466334d700c58cb474234acb02bdf7045f57",
+    "shared/src/desktopTest/kotlin/melox/playback/DesktopPlaybackStateTest.kt": "93242e3130e46e4216219b60c984bc0903013b9b38390e6607218b0d83283048"
+  },
+  "decoder": "production bundled FFmpeg via Git LFS; no decoder replacement",
+  "audio_device": "SourceDataLine controlled in DesktopAudioSessionTest only; no audible/native acceptance implied",
+  "suites": [
+    {
+      "name": "LyricAnnotationAlignmentTest[desktop]",
+      "tests": "2",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "timestamp": "2026-10-09T23:37:59.589Z",
+      "hostname": "lladlam-arch",
+      "time": "0.092",
+      "cases": [
+        {
+          "name": "lrclibInstrumentalLinesRemainUntimedByGraphemeProcessor[desktop]",
+          "classname": "melox.lyrics.LyricAnnotationAlignmentTest",
+          "time": "0.089",
+          "result": "PASSED"
+        },
+        {
+          "name": "unmatchedHeaderDoesNotShiftEveryTranslation[desktop]",
+          "classname": "melox.lyrics.LyricAnnotationAlignmentTest",
+          "time": "0.001",
+          "result": "PASSED"
+        }
+      ]
+    },
+    {
+      "name": "LyricPresentationTest[desktop]",
+      "tests": "5",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "timestamp": "2026-10-09T23:37:59.683Z",
+      "hostname": "lladlam-arch",
+      "time": "0.018",
+      "cases": [
+        {
+          "name": "InstrumentalGapsStartAfterTheLastAuthoredWordRatherThanTheNominalLineDuration[desktop]",
+          "classname": "melox.lyrics.LyricPresentationTest",
+          "time": "0.002",
+          "result": "PASSED"
+        },
+        {
+          "name": "ReducedMotionKeepsWordProgressButRemovesLiftExpansionGlowAndShake[desktop]",
+          "classname": "melox.lyrics.LyricPresentationTest",
+          "time": "0.006",
+          "result": "PASSED"
+        },
+        {
+          "name": "UntimedPunctuationAndZeroDurationProviderWordsDoNotCreateInvalidGlyphEffects[desktop]",
+          "classname": "melox.lyrics.LyricPresentationTest",
+          "time": "0.009",
+          "result": "PASSED"
+        },
+        {
+          "name": "LatinLongToneCombinesSyllablesWhileLiftStillRespectsTheChosenGrouping[desktop]",
+          "classname": "melox.lyrics.LyricPresentationTest",
+          "time": "0.0",
+          "result": "PASSED"
+        },
+        {
+          "name": "repeatedWordsKeepTheirOwnProviderTimesAndDoNotConsumeTheGap[desktop]",
+          "classname": "melox.lyrics.LyricPresentationTest",
+          "time": "0.001",
+          "result": "PASSED"
+        }
+      ]
+    },
+    {
+      "name": "LyricsLoadTest[desktop]",
+      "tests": "6",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "timestamp": "2026-10-09T23:37:59.702Z",
+      "hostname": "lladlam-arch",
+      "time": "0.286",
+      "cases": [
+        {
+          "name": "qqAmllUsesNativeIdAndMissStillReachesNetease[desktop]",
+          "classname": "melox.lyrics.LyricsLoadTest",
+          "time": "0.14",
+          "result": "PASSED"
+        },
+        {
+          "name": "lineBindingYieldsToWordTimedQqAndWordBindingSkipsAmll[desktop]",
+          "classname": "melox.lyrics.LyricsLoadTest",
+          "time": "0.14",
+          "result": "PASSED"
+        },
+        {
+          "name": "neteaseProviderLyricsAreRequestedOnce[desktop]",
+          "classname": "melox.lyrics.LyricsLoadTest",
+          "time": "0.001",
+          "result": "PASSED"
+        },
+        {
+          "name": "qqFallsThroughToMatchedNetease[desktop]",
+          "classname": "melox.lyrics.LyricsLoadTest",
+          "time": "0.002",
+          "result": "PASSED"
+        },
+        {
+          "name": "switchesHideTranslationSyllablesScrollAndTap[desktop]",
+          "classname": "melox.lyrics.LyricsLoadTest",
+          "time": "0.0",
+          "result": "PASSED"
+        },
+        {
+          "name": "lineTimedAmllYieldsToWordTimedQqAndWordTimedAmllWins[desktop]",
+          "classname": "melox.lyrics.LyricsLoadTest",
+          "time": "0.003",
+          "result": "PASSED"
+        }
+      ]
+    },
+    {
+      "name": "ProviderFirstLyricsTest[desktop]",
+      "tests": "3",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "timestamp": "2026-10-09T23:37:59.989Z",
+      "hostname": "lladlam-arch",
+      "time": "0.033",
+      "cases": [
+        {
+          "name": "explicitProviderSelectionDoesNotMakeCrossProviderRequests[desktop]",
+          "classname": "melox.lyrics.ProviderFirstLyricsTest",
+          "time": "0.023",
+          "result": "PASSED"
+        },
+        {
+          "name": "cancelledScreenNeverReceivesUpgradeForPreviousTrack[desktop]",
+          "classname": "melox.lyrics.ProviderFirstLyricsTest",
+          "time": "0.005",
+          "result": "PASSED"
+        },
+        {
+          "name": "slowCrossProviderDoesNotBlockFastProviderAndLazyUpgradeArrives[desktop]",
+          "classname": "melox.lyrics.ProviderFirstLyricsTest",
+          "time": "0.003",
+          "result": "PASSED"
+        }
+      ]
+    },
+    {
+      "name": "TtmlLyricsParserTest[desktop]",
+      "tests": "3",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "timestamp": "2026-10-09T23:38:00.023Z",
+      "hostname": "lladlam-arch",
+      "time": "0.028",
+      "cases": [
+        {
+          "name": "officialApiLookupUsesPlatformIdAndBindingRoundTrips[desktop]",
+          "classname": "melox.lyrics.TtmlLyricsParserTest",
+          "time": "0.002",
+          "result": "PASSED"
+        },
+        {
+          "name": "selectsAuthoredTranslationBeforeScriptConversion[desktop]",
+          "classname": "melox.lyrics.TtmlLyricsParserTest",
+          "time": "0.023",
+          "result": "PASSED"
+        },
+        {
+          "name": "parsesTimedSyllablesTranslationsRomanizationAgentsAndBackground[desktop]",
+          "classname": "melox.lyrics.TtmlLyricsParserTest",
+          "time": "0.003",
+          "result": "PASSED"
+        }
+      ]
+    },
+    {
+      "name": "SecurePreferenceFileTest[desktop]",
+      "tests": "3",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "timestamp": "2026-10-09T23:38:00.052Z",
+      "hostname": "lladlam-arch",
+      "time": "0.009",
+      "cases": [
+        {
+          "name": "protectionFailurePreservesLegacyAndCommittedState[desktop]",
+          "classname": "melox.platform.SecurePreferenceFileTest",
+          "time": "0.006",
+          "result": "PASSED"
+        },
+        {
+          "name": "migratesBothLegacyNamesAndPersistsOnlyProtectedPayload[desktop]",
+          "classname": "melox.platform.SecurePreferenceFileTest",
+          "time": "0.002",
+          "result": "PASSED"
+        },
+        {
+          "name": "nonWindowsDevelopmentNeverWritesPlaintextSessions[desktop]",
+          "classname": "melox.platform.SecurePreferenceFileTest",
+          "time": "0.001",
+          "result": "PASSED"
+        }
+      ]
+    },
+    {
+      "name": "DesktopAutoplayTest[desktop]",
+      "tests": "4",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "timestamp": "2026-10-09T23:38:00.062Z",
+      "hostname": "lladlam-arch",
+      "time": "0.014",
+      "cases": [
+        {
+          "name": "crossProviderSeedsRequireTheSourceTitleArtistAndDurationMatch[desktop]",
+          "classname": "melox.playback.DesktopAutoplayTest",
+          "time": "0.003",
+          "result": "PASSED"
+        },
+        {
+          "name": "disabledAutoplayCannotCommitAnUncancellableLateRecommendation[desktop]",
+          "classname": "melox.playback.DesktopAutoplayTest",
+          "time": "0.005",
+          "result": "PASSED"
+        },
+        {
+          "name": "failureWaitsFifteenSecondsAndConcurrentRequestsAreDeduplicated[desktop]",
+          "classname": "melox.playback.DesktopAutoplayTest",
+          "time": "0.003",
+          "result": "PASSED"
+        },
+        {
+          "name": "changingTracksDiscardsTheOldResultAndAllowsTheNewSeed[desktop]",
+          "classname": "melox.playback.DesktopAutoplayTest",
+          "time": "0.003",
+          "result": "PASSED"
+        }
+      ]
+    },
+    {
+      "name": "DesktopPlaybackStateTest[desktop]",
+      "tests": "20",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "timestamp": "2026-10-09T23:38:00.081Z",
+      "hostname": "lladlam-arch",
+      "time": "1.42",
+      "cases": [
+        {
+          "name": "recommendationArrivingAfterNaturalEndAppendsAndResumesTheNewEntry[desktop]",
+          "classname": "melox.playback.DesktopPlaybackStateTest",
+          "time": "0.113",
+          "result": "PASSED"
+        },
+        {
+          "name": "qualityChangePreservesQueueEntryIdentityAndPausedZeroPosition[desktop]",
+          "classname": "melox.playback.DesktopPlaybackStateTest",
+          "time": "0.116",
+          "result": "PASSED"
+        },
+        {
+          "name": "tailRecoveryRepreparesPausedPositionOnceAndExplicitPlayCanRetryAgain[desktop]",
+          "classname": "melox.playback.DesktopPlaybackStateTest",
+          "time": "0.045",
+          "result": "PASSED"
+        },
+        {
+          "name": "periodicPositionUsesTheAndroidTwoSecondIntervalAndStopsOnRelease[desktop]",
+          "classname": "melox.playback.DesktopPlaybackStateTest",
+          "time": "0.047",
+          "result": "PASSED"
+        },
+        {
+          "name": "decoderFailureSkipsToNextEntryEvenInRepeatOneMode[desktop]",
+          "classname": "melox.playback.DesktopPlaybackStateTest",
+          "time": "0.041",
+          "result": "PASSED"
+        },
+        {
+          "name": "releasingAnOldControllerCannotStopTheNewControllersSelectedAudio[desktop]",
+          "classname": "melox.playback.DesktopPlaybackStateTest",
+          "time": "0.114",
+          "result": "PASSED"
+        },
+        {
+          "name": "exhaustedRepeatAllQueueStopsInsteadOfSpinningOnBrokenEntries[desktop]",
+          "classname": "melox.playback.DesktopPlaybackStateTest",
+          "time": "0.046",
+          "result": "PASSED"
+        },
+        {
+          "name": "missingOutputDoesNotConsumeTheWholeQueue[desktop]",
+          "classname": "melox.playback.DesktopPlaybackStateTest",
+          "time": "0.04",
+          "result": "PASSED"
+        },
+        {
+          "name": "queueReorderDuringResolutionKeepsTheSelectedEntryPlayable[desktop]",
+          "classname": "melox.playback.DesktopPlaybackStateTest",
+          "time": "0.049",
+          "result": "PASSED"
+        },
+        {
+          "name": "resolutionFailurePublishesTheNewTrackAndCanBeRetried[desktop]",
+          "classname": "melox.playback.DesktopPlaybackStateTest",
+          "time": "0.056",
+          "result": "PASSED"
+        },
+        {
+          "name": "userSeekBeforeQueuedEndDispatchKeepsTheCurrentTrackAndNewPosition[desktop]",
+          "classname": "melox.playback.DesktopPlaybackStateTest",
+          "time": "0.052",
+          "result": "PASSED"
+        },
+        {
+          "name": "pauseAndSeekDuringResolutionAreAppliedToTheDecoderStart[desktop]",
+          "classname": "melox.playback.DesktopPlaybackStateTest",
+          "time": "0.05",
+          "result": "PASSED"
+        },
+        {
+          "name": "callbacksFromAnOlderPlayOfTheSameTrackCannotAdvanceOrFailTheNewSelection[desktop]",
+          "classname": "melox.playback.DesktopPlaybackStateTest",
+          "time": "0.053",
+          "result": "PASSED"
+        },
+        {
+          "name": "shuffleOnlyReordersTheFutureAndKeepsManualEntriesAheadOfBaseTracks[desktop]",
+          "classname": "melox.playback.DesktopPlaybackStateTest",
+          "time": "0.172",
+          "result": "PASSED"
+        },
+        {
+          "name": "persistedProviderQueueRestoresIndexPositionIdentityAndStartsPaused[desktop]",
+          "classname": "melox.playback.DesktopPlaybackStateTest",
+          "time": "0.185",
+          "result": "PASSED"
+        },
+        {
+          "name": "offlineFailureAndNaturalEndPreferDownloadedFutureEntries[desktop]",
+          "classname": "melox.playback.DesktopPlaybackStateTest",
+          "time": "0.044",
+          "result": "PASSED"
+        },
+        {
+          "name": "userPauseBeforeQueuedEndDispatchPreventsAutomaticAdvance[desktop]",
+          "classname": "melox.playback.DesktopPlaybackStateTest",
+          "time": "0.044",
+          "result": "PASSED"
+        },
+        {
+          "name": "aLateCancelledResolverCannotStartThePreviousTrack[desktop]",
+          "classname": "melox.playback.DesktopPlaybackStateTest",
+          "time": "0.044",
+          "result": "PASSED"
+        },
+        {
+          "name": "explicitPauseAfterNaturalEndPreventsLateRecommendationsFromRestartingAudio[desktop]",
+          "classname": "melox.playback.DesktopPlaybackStateTest",
+          "time": "0.071",
+          "result": "PASSED"
+        },
+        {
+          "name": "repeatAllRestartsASingleItemInsteadOfLeavingItFinished[desktop]",
+          "classname": "melox.playback.DesktopPlaybackStateTest",
+          "time": "0.035",
+          "result": "PASSED"
+        }
+      ]
+    },
+    {
+      "name": "DesktopAudioSessionTest[desktop]",
+      "tests": "7",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "timestamp": "2026-10-09T23:38:01.505Z",
+      "hostname": "lladlam-arch",
+      "time": "0.83",
+      "cases": [
+        {
+          "name": "realFfmpegNonzeroExitAfterPcmIsContentFailureRatherThanNaturalEnd[desktop]",
+          "classname": "melox.player.DesktopAudioSessionTest",
+          "time": "0.099",
+          "result": "PASSED"
+        },
+        {
+          "name": "unavailableDeviceReportsOutputFailureWithoutProducingAnEndEvent[desktop]",
+          "classname": "melox.player.DesktopAudioSessionTest",
+          "time": "0.064",
+          "result": "PASSED"
+        },
+        {
+          "name": "seekingToTheDecoderOriginalZeroPositionActuallyRestartsIt[desktop]",
+          "classname": "melox.player.DesktopAudioSessionTest",
+          "time": "0.166",
+          "result": "PASSED"
+        },
+        {
+          "name": "seekingToKnownTrackEndAcceptsAZeroPcmSuccessfulDecoderExit[desktop]",
+          "classname": "melox.player.DesktopAudioSessionTest",
+          "time": "0.073",
+          "result": "PASSED"
+        },
+        {
+          "name": "replacingTheSameUriKeepsEndCallbacksOwnedByTheNewRequest[desktop]",
+          "classname": "melox.player.DesktopAudioSessionTest",
+          "time": "0.167",
+          "result": "PASSED"
+        },
+        {
+          "name": "aDeviceStartFailureIsOutputFailureRatherThanCorruptContent[desktop]",
+          "classname": "melox.player.DesktopAudioSessionTest",
+          "time": "0.073",
+          "result": "PASSED"
+        },
+        {
+          "name": "decoderEofWaitsForBufferedFramesAndPauseResumePreserveTheTail[desktop]",
+          "classname": "melox.player.DesktopAudioSessionTest",
+          "time": "0.186",
+          "result": "PASSED"
+        }
+      ]
+    },
+    {
+      "name": "PlaybackLinkTest[desktop]",
+      "tests": "9",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "timestamp": "2026-10-09T23:38:02.340Z",
+      "hostname": "lladlam-arch",
+      "time": "0.685",
+      "cases": [
+        {
+          "name": "miniBarsFollowPcmEnergyAndIdleIsNotFixedPulse[desktop]",
+          "classname": "melox.player.PlaybackLinkTest",
+          "time": "0.001",
+          "result": "PASSED"
+        },
+        {
+          "name": "positionIncludesDecoderOffset[desktop]",
+          "classname": "melox.player.PlaybackLinkTest",
+          "time": "0.0",
+          "result": "PASSED"
+        },
+        {
+          "name": "previousRestartsOnlyWhenSettingEnabled[desktop]",
+          "classname": "melox.player.PlaybackLinkTest",
+          "time": "0.08",
+          "result": "PASSED"
+        },
+        {
+          "name": "bundledDecoderEmitsPcmAndIsResolvedAgain[desktop]",
+          "classname": "melox.player.PlaybackLinkTest",
+          "time": "0.35",
+          "result": "PASSED"
+        },
+        {
+          "name": "classicQueueKeepsPlainNeteaseSongsAndDoesNotRestartCurrent[desktop]",
+          "classname": "melox.player.PlaybackLinkTest",
+          "time": "0.108",
+          "result": "PASSED"
+        },
+        {
+          "name": "providerTrackSurvivesQueueItem[desktop]",
+          "classname": "melox.player.PlaybackLinkTest",
+          "time": "0.002",
+          "result": "PASSED"
+        },
+        {
+          "name": "decoderArgsMatchTheProcessCommand[desktop]",
+          "classname": "melox.player.PlaybackLinkTest",
+          "time": "0.002",
+          "result": "PASSED"
+        },
+        {
+          "name": "locatorUsesContextClassLoaderAndReportsMissingBundle[desktop]",
+          "classname": "melox.player.PlaybackLinkTest",
+          "time": "0.002",
+          "result": "PASSED"
+        },
+        {
+          "name": "playNextPrecedesManualQueueAndManualQueuePrecedesBaseTracks[desktop]",
+          "classname": "melox.player.PlaybackLinkTest",
+          "time": "0.137",
+          "result": "PASSED"
+        }
+      ]
+    },
+    {
+      "name": "SpotifyDesktopLoginTest[desktop]",
+      "tests": "3",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "timestamp": "2026-10-09T23:38:03.029Z",
+      "hostname": "lladlam-arch",
+      "time": "0.096",
+      "cases": [
+        {
+          "name": "pkceUsesRfc7636Challenge[desktop]",
+          "classname": "melox.provider.spotify.SpotifyDesktopLoginTest",
+          "time": "0.001",
+          "result": "PASSED"
+        },
+        {
+          "name": "loopbackRejectsWrongStateThenExchangesCodeWithVerifier[desktop]",
+          "classname": "melox.provider.spotify.SpotifyDesktopLoginTest",
+          "time": "0.095",
+          "result": "PASSED"
+        },
+        {
+          "name": "duplicateCallbackParametersCannotOverrideState[desktop]",
+          "classname": "melox.provider.spotify.SpotifyDesktopLoginTest",
+          "time": "0.0",
+          "result": "PASSED"
+        }
+      ]
+    },
+    {
+      "name": "PlayerAppearanceTest[desktop]",
+      "tests": "5",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "timestamp": "2026-10-09T23:38:03.128Z",
+      "hostname": "lladlam-arch",
+      "time": "0.109",
+      "cases": [
+        {
+          "name": "backgroundModesMapToDistinctKindsAndShellsDiffer[desktop]",
+          "classname": "melox.settings.PlayerAppearanceTest",
+          "time": "0.003",
+          "result": "PASSED"
+        },
+        {
+          "name": "playerExpansionFollowsTheCollapseGestureDirection[desktop]",
+          "classname": "melox.settings.PlayerAppearanceTest",
+          "time": "0.0",
+          "result": "PASSED"
+        },
+        {
+          "name": "writingPlayerShellUpdatesRuntime[desktop]",
+          "classname": "melox.settings.PlayerAppearanceTest",
+          "time": "0.104",
+          "result": "PASSED"
+        },
+        {
+          "name": "themeModesResolveDarkLightAndSystem[desktop]",
+          "classname": "melox.settings.PlayerAppearanceTest",
+          "time": "0.001",
+          "result": "PASSED"
+        },
+        {
+          "name": "glassBlurAndLensChangeTheDraw[desktop]",
+          "classname": "melox.settings.PlayerAppearanceTest",
+          "time": "0.001",
+          "result": "PASSED"
+        }
+      ]
+    }
+  ]
+}

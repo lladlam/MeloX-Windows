@@ -12,6 +12,8 @@ import melox.network.MeloXNetworkAvailability
 import melox.platform.logDebug
 import melox.platform.logError
 import melox.player.AudioPlayer
+import melox.player.AudioFailureKind
+import melox.player.AudioPlaybackFailure
 import java.io.IOException
 import java.util.UUID
 import kotlinx.coroutines.CoroutineScope
@@ -246,7 +248,18 @@ internal data class DesktopPlaybackStart(
     val positionMs: Long,
     val durationMs: Long,
     val playWhenReady: Boolean,
+    val onEnded: () -> Unit,
+    val onFailure: (AudioPlaybackFailure) -> Unit,
 )
+
+private fun isDesktopSongDownloaded(song: SearchSong): Boolean {
+    val id = song.providerTrack?.id
+    if (id == null || id.source == MusicSource.Netease) {
+        val songId = id?.value?.toLongOrNull() ?: song.id
+        if (MeloXDownloadStore.instance().contains(songId)) return true
+    }
+    return id != null && melox.download.MeloXProviderDownloadStore.get().isDownloaded(id)
+}
 
 class MeloXDesktopPlayer internal constructor(
     private val resolutionOverride: (suspend (QueueEntry) -> DesktopPlaybackRequest)?,
@@ -256,10 +269,12 @@ class MeloXDesktopPlayer internal constructor(
     private val saveSnapshot: (MeloXDesktopPlayer) -> Unit,
     private val savePosition: (Int, Long) -> Unit,
     recommendationSource: DesktopAutoplaySource = DesktopAutoplaySource(),
+    private val isOnline: () -> Boolean = MeloXNetworkAvailability::isOnline,
+    private val isDownloaded: (SearchSong) -> Boolean = ::isDesktopSongDownloaded,
 ) {
     constructor() : this(null, { start ->
         AudioPlayer.play(start.request.uri, start.track, start.request.headers, start.positionMs,
-            start.durationMs, playWhenReady = start.playWhenReady)
+            start.durationMs, playWhenReady = start.playWhenReady, onEnded = start.onEnded, onFailure = start.onFailure)
     }, CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate), Dispatchers.IO,
         MeloXPlaybackQueueStore::save, MeloXPlaybackQueueStore::savePosition)
 
@@ -276,8 +291,12 @@ class MeloXDesktopPlayer internal constructor(
     private val items = mutableListOf<QueueEntry>()
     private var resolveJob: Job? = null
     @Volatile private var generation = 0
+    @Volatile private var actionRevision = 0
     private var pendingSeekMs: Long = 0L
     private var volume: Float = 1f
+    private val failedEntries = mutableSetOf<String>()
+    private val repreparedEntries = mutableSetOf<String>()
+    private var awaitingAutoplay = false
     private val positionJob: Job
     private val maintenanceJob: Job
     private val neteaseResolver = NeteasePlaybackResolver(
@@ -288,7 +307,7 @@ class MeloXDesktopPlayer internal constructor(
     private val autoplay = DesktopAutoplayCoordinator(scope, recommendationSource,
         enabled = {
             PlaybackCommands.playerController() == this && MeloXPlaybackModeRuntime.autoplayEnabled &&
-                !MeloXPlaybackModePreferences.smartQueue() && MeloXNetworkAvailability.isOnline()
+                !MeloXPlaybackModePreferences.smartQueue() && isOnline()
         },
         current = { items.getOrNull(currentMediaItemIndex) },
         append = { recommendations ->
@@ -303,9 +322,9 @@ class MeloXDesktopPlayer internal constructor(
             PlaybackCommands.publishQueue(this)
         },
         resumeEnded = {
-            if (AudioPlayer.state.value.isFinished && currentMediaItemIndex < items.lastIndex) {
-                seekToIndex(currentMediaItemIndex + 1)
-                play()
+            if (awaitingAutoplay && currentMediaItemIndex < items.lastIndex) {
+                playWhenReady = true
+                selectIndex(currentMediaItemIndex + 1, automatic = true)
             }
         },
     )
@@ -320,7 +339,6 @@ class MeloXDesktopPlayer internal constructor(
         get() = items.getOrNull(currentMediaItemIndex)?.song?.id?.toString()
 
     init {
-        AudioPlayer.onTrackEnded = { onNaturalEnd() }
         AudioPlayer.setVolume(volume)
         positionJob = scope.launch {
             while (isActive) {
@@ -375,6 +393,8 @@ class MeloXDesktopPlayer internal constructor(
         generation += 1
         resolveJob?.cancel()
         autoplay.cancel()
+        resetFailureRecovery()
+        awaitingAutoplay = false
         this.items.clear()
         items.forEachIndexed { index, song ->
             this.items.add(
@@ -421,6 +441,8 @@ class MeloXDesktopPlayer internal constructor(
         generation += 1
         resolveJob?.cancel()
         autoplay.cancel()
+        resetFailureRecovery()
+        awaitingAutoplay = false
         this.items.clear()
         this.items.addAll(items)
         mediaItemCount = this.items.size
@@ -434,6 +456,7 @@ class MeloXDesktopPlayer internal constructor(
         val entry = items.getOrNull(currentMediaItemIndex) ?: return
         val token = ++generation
         resolveJob?.cancel()
+        awaitingAutoplay = false
         val song = entry.song
         val track = song.providerTrack ?: MusicTrack(
             id = melox.music.model.MusicResourceId(MusicSource.Netease, song.id.toString()),
@@ -464,7 +487,9 @@ class MeloXDesktopPlayer internal constructor(
             if (token != generation || items.getOrNull(currentMediaItemIndex)?.entryId != entry.entryId) return@launch
             // Seek/pause can change while resolution is suspended; read them now.
             val startAt = pendingSeekMs
-            startPlayback(DesktopPlaybackStart(resolved, track, startAt, song.durationMs, playWhenReady))
+            startPlayback(DesktopPlaybackStart(resolved, track, startAt, song.durationMs, playWhenReady,
+                onEnded = { onNaturalEnd(token, entry.entryId, actionRevision) },
+                onFailure = { onAudioFailure(token, entry.entryId, it) }))
             pendingSeekMs = 0L
             currentPosition = startAt
         }
@@ -473,6 +498,10 @@ class MeloXDesktopPlayer internal constructor(
     fun play() {
         playWhenReady = true
         val ended = AudioPlayer.state.value.isFinished || AudioPlayer.state.value.error != null
+        if (ended) {
+            resetFailureRecovery()
+            if (AudioPlayer.state.value.error != null) pendingSeekMs = AudioPlayer.getCurrentPositionMs()
+        }
         if (!ended && AudioPlayer.currentTrack.value != null) {
             AudioPlayer.resume()
         }
@@ -483,7 +512,9 @@ class MeloXDesktopPlayer internal constructor(
     }
 
     fun pause() {
+        actionRevision += 1
         playWhenReady = false
+        awaitingAutoplay = false
         currentPosition = AudioPlayer.getCurrentPositionMs()
         AudioPlayer.pause()
         persistSnapshot()
@@ -494,13 +525,16 @@ class MeloXDesktopPlayer internal constructor(
     }
 
     fun release() {
-        persistSnapshot()
+        val active = PlaybackCommands.playerController() == this
+        if (active) persistSnapshot()
         generation += 1
         resolveJob?.cancel()
         positionJob.cancel()
         maintenanceJob.cancel()
         autoplay.cancel()
-        AudioPlayer.stop()
+        resetFailureRecovery()
+        awaitingAutoplay = false
+        if (active) AudioPlayer.stop()
         items.clear()
         mediaItemCount = 0
         currentMediaItemIndex = -1
@@ -539,6 +573,8 @@ class MeloXDesktopPlayer internal constructor(
     }
 
     fun seekTo(ms: Long) {
+        actionRevision += 1
+        awaitingAutoplay = false
         val target = ms.coerceAtLeast(0L)
         currentPosition = target
         pendingSeekMs = target
@@ -547,13 +583,17 @@ class MeloXDesktopPlayer internal constructor(
     }
 
     fun seekToIndex(index: Int) {
+        selectIndex(index, automatic = false)
+    }
+
+    private fun selectIndex(index: Int, automatic: Boolean) {
         if (index !in items.indices) return
         if (index == currentMediaItemIndex) return
+        if (!automatic) resetFailureRecovery()
         currentMediaItemIndex = index
         currentPosition = 0L
         pendingSeekMs = 0L
         prepare()
-        if (playWhenReady) play()
         PlaybackCommands.publishQueue(this)
     }
 
@@ -630,16 +670,79 @@ class MeloXDesktopPlayer internal constructor(
         mediaItemCount = items.size
     }
 
-    private fun onNaturalEnd() {
-        val token = generation
+    private fun resetFailureRecovery() {
+        failedEntries.clear()
+        repreparedEntries.clear()
+    }
+
+    private fun ownsEvent(token: Int, entryId: String): Boolean =
+        token == generation && PlaybackCommands.playerController() == this &&
+            items.getOrNull(currentMediaItemIndex)?.entryId == entryId
+
+    /** The pinned service skips media errors, preferring downloaded entries offline. */
+    private fun onAudioFailure(token: Int, entryId: String, failure: AudioPlaybackFailure) {
         scope.launch {
-            if (token != generation || PlaybackCommands.playerController() != this@MeloXDesktopPlayer) return@launch
+            if (!ownsEvent(token, entryId)) return@launch
+            logError("MeloXPlayback", "decoder failed (${failure.kind}): ${failure.message}")
+            currentPosition = AudioPlayer.getCurrentPositionMs().coerceAtLeast(0L)
+            if (failure.kind == AudioFailureKind.Content) {
+                failedEntries += entryId
+                val downloaded = if (!isOnline()) nextDownloadedIndex() else null
+                val next = downloaded ?: when {
+                    currentMediaItemIndex < items.lastIndex -> currentMediaItemIndex + 1
+                    _repeatMode.value == PlaybackCommands.REPEAT_ALL && items.isNotEmpty() -> 0
+                    else -> null
+                }
+                if (next != null && items[next].entryId !in failedEntries) {
+                    playWhenReady = true
+                    selectIndex(next, automatic = true)
+                    return@launch
+                }
+                // Source's final-item prepare recovery, bounded for a permanently
+                // broken file/device so an exhausted repeat queue cannot spin.
+                if (repreparedEntries.add(entryId)) {
+                    pendingSeekMs = currentPosition
+                    prepare()
+                    return@launch
+                }
+            }
+            // A missing desktop output/decoder is device-wide: expose the genuine
+            // error without consuming every queue entry to repeat the same failure.
+            playWhenReady = false
+            awaitingAutoplay = false
+            AudioPlayer.reportFailure(failure)
+            persistSnapshot()
+            onFailure?.invoke(failure)
+        }
+    }
+
+    private fun nextDownloadedIndex(): Int? {
+        val forward = ((currentMediaItemIndex + 1)..items.lastIndex).toList()
+        val wrapped = if (_repeatMode.value == PlaybackCommands.REPEAT_ALL) (0 until currentMediaItemIndex).toList() else emptyList()
+        return (forward + wrapped).firstOrNull { isDownloaded(items[it].song) && items[it].entryId !in failedEntries }
+    }
+
+    private fun onNaturalEnd(token: Int, entryId: String, action: Int) {
+        scope.launch {
+            if (!ownsEvent(token, entryId) || action != actionRevision) return@launch
+            resetFailureRecovery()
+            if (!playWhenReady) {
+                persistSnapshot()
+                return@launch
+            }
+            if (_repeatMode.value != PlaybackCommands.REPEAT_ONE && !isOnline()) {
+                val next = nextDownloadedIndex()
+                if (next != null) {
+                    playWhenReady = true
+                    selectIndex(next, automatic = true)
+                } else pause()
+                return@launch
+            }
             when (_repeatMode.value) {
                 PlaybackCommands.REPEAT_ONE -> {
                     pendingSeekMs = 0L
                     currentPosition = 0L
                     prepare()
-                    play()
                 }
                 PlaybackCommands.REPEAT_ALL -> {
                     val nextIndex = if (currentMediaItemIndex < items.lastIndex) currentMediaItemIndex + 1 else 0
@@ -647,14 +750,14 @@ class MeloXDesktopPlayer internal constructor(
                         pendingSeekMs = 0L
                         currentPosition = 0L
                         prepare()
-                        play()
-                    } else if (items.isNotEmpty()) seekToIndex(nextIndex)
+                    } else if (items.isNotEmpty()) selectIndex(nextIndex, automatic = true)
                 }
                 else -> {
                     if (currentMediaItemIndex < items.lastIndex) {
-                        seekToIndex(currentMediaItemIndex + 1)
+                        selectIndex(currentMediaItemIndex + 1, automatic = true)
                     } else {
                         playWhenReady = false
+                        awaitingAutoplay = true
                         currentPosition = AudioPlayer.getCurrentPositionMs()
                         persistSnapshot()
                         autoplay.ensure()

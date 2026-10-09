@@ -42,6 +42,7 @@ def main():
     for p in windows:
         by_name[Path(p).name].append(p)
     aliases = {
+        "MeloXPlaybackService.kt": ["PlaybackCommands.kt", "AudioPlayer.kt", "MeloXDesktopAutoplay.kt"],
         "MeloXProviderLyricsLoader.kt": ["MeloXLyricsLoad.kt"],
         "MeloXIOSMiniPlayer.kt": ["MeloXMiniPlayer.kt"],
         "MeloXIOSNowPlayingV2.kt": ["MeloXNowPlaying.kt"],
