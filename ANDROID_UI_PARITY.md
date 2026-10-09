@@ -1,130 +1,850 @@
-# Android UI Parity — MeloX-Windows
+# Android UI parity checklist
 
-Android `main` 分支是唯一 UI/UX Source of Truth。
-每修复一项就更新此清单。状态：☐ 未开始 / ◐ 进行中 / ☑ 与 Android 一致
+This is a checklist, not a claim that the UI matches. Every box stays unchecked until a side-by-side compare at the reference viewport.
+
+Reference source is Android main `94e17c920bf554966584955afa2bd2ee92580a8b`. The independently built reference package is `com.lladlam.melox.android.parity94e17c9`, at 1280×2772 px / density 520 (3.25), fontScale 1.0. Explicit crop and density normalization are required for desktop comparison; historical `.adb_compare` captures are not acceptance for this commit.
+
+Current numerical mapping and capture commands: [`parity/94e17c9/UI_MOTION.md`](parity/94e17c9/UI_MOTION.md). All migrated UI remains PARTIAL pending actual same-scene evidence.
+
+Android root: `MeloX-Android/android/app/src/main/kotlin/com/lladlam/melox/ui/`
+Windows root: `MeloX-Windows/desktop/src/desktopMain/kotlin/melox/ui/`
 
 ## App Shell
-| 项 | Android 源 | Windows 源 | 状态 |
-|---|---|---|---|
-| AppTab 体系 | ui/MeloXApp.kt | ui/navigation/AppRoute.kt | ☑ |
-| rememberSaveableStateHolder | MeloXApp.kt | MeloXApp.kt | ☑ |
-| tabBarMinimized + scrollAccumulator ±18px | MeloXApp.kt:305-335 | MeloXApp.kt | ☑ |
-| SeekableTransitionState player | MeloXApp.kt | MeloXApp.kt | ◐ (无手势 seek) |
-| Content fade 320/240 | MeloXPageTransitions.kt | MeloXMotion.kt | ☑ |
-| Back 行为（返回 Home / 双击退出） | MeloXApp.kt:470-505 | SearchScreen Escape 分层返回 | ◐ |
+
+页面：App Shell（`MeloXApp`）
+Android 源文件：`MeloXApp.kt` — `MeloXApp`
+Windows 源文件：`MeloXApp.kt` — `MeloXApp`
+
+布局：
+[ ] 一致
+
+Typography：
+[ ] 一致
+
+Colors：
+[ ] 一致
+
+Icons：
+[ ] 一致
+
+Glass：
+[ ] 一致
+
+Spacing：
+[ ] 一致
+
+Animation：
+[ ] 一致
+
+Interaction：
+[ ] 一致
+
+Data：
+[ ] 一致
+
+Navigation：
+[ ] 一致
+
+状态保持：
+[ ] 一致
+
+差异：
+- Windows now restores the selected tab and records the production page through GraphicsLayer. Tone sampling and platform optical effects still need visual acceptance.
 
 ## Bottom Chrome
-| 项 | Android 源 | 状态 |
-|---|---|---|
-| smoothStep 四阶段 (label .32/size .36/shrink .82/drop 1.0) | MeloXApp.kt:889-1218 | ☑ |
-| DampedDock (78/56 press, segment tap, drag select) | PublicDampedDragAnimation.kt | ☑ |
-| Selection lens sibling overlay + velocity stretch | MeloXApp.kt | ◐ (无 lens refraction 光学畸变) |
-| Liquid bar (blur 8dp, lens 24/28, highlight .32/.54+press) | MeloXBackdropComponents.kt | ◐ (无真实 backdrop 采样) |
-| chromeHeight 124/64 → 56 | MeloXApp.kt | ☑ |
-| miniLift 66dp × mediaReveal | MeloXApp.kt | ☑ |
-| Tab 图标映射 (Podcasts→RadioWaves, Cloud→Storage) | MeloXApp.kt:1323-1326 | ☑ |
-| Icon Fill variant（选中态实心） | MeloXSymbolVariant.Fill | ☐ (需 fill 字体) |
+
+页面：Bottom Chrome（Android `MeloXBottomChrome` vs Windows `navigation/MeloXBottomChrome.kt`）
+Android 源文件：`MeloXApp.kt` — `MeloXBottomChrome`
+Windows 源文件：`navigation/MeloXBottomChrome.kt` — `MeloXBottomChrome`
+
+布局：
+[ ] 一致
+
+Typography：
+[ ] 一致
+
+Colors：
+[ ] 一致
+
+Icons：
+[ ] 一致
+
+Glass：
+[ ] 一致
+
+Spacing：
+[ ] 一致
+
+Animation：
+[ ] 一致
+
+Interaction：
+[ ] 一致
+
+Data：
+[ ] 一致
+
+Navigation：
+[ ] 一致
+
+状态保持：
+[ ] 一致
+
+差异：
+- Windows now uses Android's 57→46dp signed-spring geometry and records the hidden red tab layer for the moving droplet. GPU refraction, continuous shapes and dynamic tone sampling remain PARTIAL.
 
 ## Mini Player
-| 项 | Android 源 | 状态 |
-|---|---|---|
-| 52dp capsule, White@6% glass | MeloXIOSMiniPlayer.kt | ☑ |
-| artwork 40→30dp, corner 6dp | MeloXIOSMiniPlayer.kt | ☑ |
-| title 14sp/17 SB, artist 12sp α0.64, height 15→0 | MeloXIOSMiniPlayer.kt | ☑ |
-| controlStage 72→36dp (ss .08/.84) | MeloXIOSMiniPlayer.kt | ☑ |
-| chrome/surface alpha 阶梯 | MeloXIOSMiniPlayer.kt | ◐ (compactProgress 代理) |
-| 横滑切歌 ±28px, spring .68/360, 1.5s 保护 | MeloXIOSMiniPlayer.kt | ☑ (无队列，回弹) |
-| DancingBars 15×18dp 音频反应 | MeloXAudioReactiveRuntime | ◐ (合成 wobble) |
-| sharedBounds shell→player | MeloXSharedTransitions.kt | ☑ |
+
+页面：Mini Player（`MeloXIOSMiniPlayer` / `MeloXMiniPlayer`）
+Android 源文件：`player/MeloXIOSMiniPlayer.kt` — `MeloXIOSMiniPlayer`
+Windows 源文件：`screens/MeloXMiniPlayer.kt` — `MeloXMiniPlayer`
+
+布局：
+[ ] 一致
+
+Typography：
+[ ] 一致
+
+Colors：
+[ ] 一致
+
+Icons：
+[ ] 一致
+
+Glass：
+[ ] 一致
+
+Spacing：
+[ ] 一致
+
+Animation：
+[ ] 一致
+
+Interaction：
+[ ] 一致
+
+Data：
+[ ] 一致
+
+Navigation：
+[ ] 一致
+
+状态保持：
+[ ] 一致
+
+差异：
+- Windows measures the actual MiniPlayer width, reads reactive samples, keeps the 48dp height and artist row, and drives expansion fades independently from compact progress. Same-source swipe identity and pending incoming preview were corrected; runtime swipe/transition acceptance remains pending.
 
 ## Full Player
-| 项 | Android 源 | 状态 |
-|---|---|---|
-| 279dp controls (52+19+82+31+42+3+50) | MeloXNowPlayingCoreControls.kt | ☑ |
-| artwork scale 0.74 springs (grow .70/280, shrink .94/360) | MeloXNowPlayingCoreControls.kt | ☑ |
-| shadow 26/14 spring .92/320 | MeloXNowPlayingCoreControls.kt | ☑ |
-| play/pause swap (fadeIn 180/scaleIn .78/slideIn 24%) | MeloXNowPlayingCoreControls.kt | ☑ |
-| 页面 cross-fade spring(.7,300), lyrics/queue ±400dp | MeloXIOSNowPlayingScene.kt | ◐ (无 scale 0.92) |
-| Lyrics 引擎（逐行高亮/翻译/罗马音） | MeloXIOSLyricsPanel.kt | ◐ (逐行高亮+翻译，无逐字) |
-| Queue 完整列表 + 拖拽重排 | MeloXQueuePanel.kt | ◐ (真实队列，无拖拽重排) |
-| 手势下拉关闭 (grabber drag) | MeloXIOSNowPlayingScene.kt | ◐ (tap only) |
-| seek on drag + settle spring(1.0,420) | MeloXApp.kt:677-694 | ☑ |
-| 音质选择 / actions sheet | MeloXQualitySelectionOverlay.kt | ☐ |
 
-## Glass
-| 项 | Android 源 | 状态 |
-|---|---|---|
-| MeloXGlassTokens (SystemColors/Spec/Typography) | MeloXGlassTokens.kt | ☑ |
-| Liquid Button (blur 2/lens 24/refraction 12) | MeloXBackdropComponents.kt | ◐ (无 lens 畸变) |
-| Liquid BottomBar (blur 8, lens 24/28, highlight) | MeloXBackdropComponents.kt | ◐ |
-| Liquid TabSelection (velocity stretch) | MeloXBackdropComponents.kt | ◐ |
-| Layer backdrop 真实采样 (rememberLayerBackdrop) | Kyant backdrop | ☐ (桌面无等价 API) |
-| vibrancy + chromatic aberration | Kyant backdrop | ☐ |
-| GlassSheet / GlassDialog / GlassButton | MeloXGlassSheet.kt / NativeGlassComponents.kt | ◐ (简化版) |
-| SettingsDropdown / SwipeActionRow / LiquidSlider | glass/ | ☐ |
+页面：Full Player（`MeloXIOSNowPlayingSharedHost` / `MeloXNowPlayingScreen`）
+Android 源文件：`player/MeloXIOSNowPlayingSharedHost.kt` — `MeloXIOSNowPlayingSharedHost`
+Windows 源文件：`screens/MeloXNowPlaying.kt` — `MeloXNowPlayingScreen`
 
-## Screens
-| 页面 | Android 源 | 布局 | 数据 | 状态 |
-|---|---|---|---|---|
-| Home | discovery/MeloXDiscoveryScreens.kt:187-718 | ☑ | ◐ (homeFeed QQ/Kugou; Netease 缺) | ◐ |
-| Explore | discovery:720-915 | ◐ | ◐ | ◐ |
-| Library | library/LibraryScreen.kt | ☑ | ☑ (Netease snapshot; 登录门/心动模式/能力门控页) | ◐ (Podcasts/Cloud 嵌入简化版) |
-| Library SegmentedPicker (liquid panel + lens spring(1f,460f)) | LibraryScreen.kt:1044-1155 | ☑ | — | ◐ (无 backdrop 采样) |
-| Library PlaylistDetail (palette bg/hero/liquid play/搜索/swipe) | LibraryScreen.kt:1536-2012 | ☑ | ☑ (client+cache+provider bridge) | ◐ (排序菜单未接) |
-| Library Downloads (Root/Active/Playlists/Detail + 多选/浏览模式/导出) | LibraryScreen.kt:543-943 | ☑ | ☑ (MeloXDownloadStore+ProviderStore) | ◐ (导出依赖平台) |
-| SwipeActionRow (spring .82/260, full-swipe .44) | glass/MeloXSwipeActionRow.kt | ☑ | — | ☑ |
-| DetailPalette (160px 均色 0.52 亮度分割) | library/MeloXDetailPalette.kt | ☑ | — | ☑ |
-| Search | search/SearchScreen.kt | ◐ | 真实搜索+详情 | ◐ |
-| Settings | settings/ | ◐ | 分区列表+音质 | ◐ |
-| Podcasts | podcast/MeloXPodcastScreen.kt | ◐ | 真实网易云播客 | ◐ |
-| Downloads (底部 Tab 独立页) | LibraryScreen(forcedPage) | ☑ | ☑ (Library Downloads 版复用) | ◐ |
-| Cloud | cloud/MeloXCloudMusicScreen.kt | ◐ | 真实云盘歌曲 | ◐ |
-| Messages | messages/MessagesScreen.kt | ◐ | 真实联系人 | ◐ |
-| Login | account/NeteaseLoginScreen.kt | ☐ | ◐ (LoginScreen 已有, 未接 Route.Login) | ◐ |
-| AlbumDetail | collection/ | ☐ | ✗ | ☐ |
-| PlaylistDetail | library/MeloXUnifiedPlaylistDetailScreen.kt | ☑ (见 Library) | ☑ | ◐ |
-| Provider 页面 | provider/ | ☐ | ✗ | ☐ |
-| Messages slide-in 300ms | MeloXApp.kt:614-630 | ☐ | — | ☐ |
+布局：
+[ ] 一致
 
-## Symbols
-| 项 | 状态 |
-|---|---|
-| 码点表 0x100xxx 与 Android 一致 | ☑ |
-| MeloXSymbol 全量对齐 (Android 66 项) | ◐ (约 60 项) |
-| Fill variant 字体 (SF Pro Fill) | ☐ |
-| 动态字形切换动画 | ☐ |
+Typography：
+[ ] 一致
 
-## Typography
-| 项 | 状态 |
-|---|---|
-| MiLanPro/SF Pro 字体加载 | ☑ |
-| iOS 字号阶梯 largeTitle→caption | ☑ |
-| Monospace 进度标签 11sp α0.50 | ☑ |
+Colors：
+[ ] 一致
 
+Icons：
+[ ] 一致
 
-## Native Glass（本轮）
-| 项 | Android 源 | Windows 源 | 状态 |
-|---|---|---|---|
-| MeloXGlassButton 四态 | MeloXNativeGlassComponents.kt | ui/glass/MeloXNativeGlassComponents.kt | ☑ |
-| MeloXGlassIconButton | 同上 | 同上 | ☑ |
-| MeloXGlassToggle 64×28 拖拽 | 同上 LiquidDragAnimation | Animatable + 水平拖拽 | ◐ (无 lens 旋钮) |
-| MeloXGlassTextField BasicTextField | 同上 | 同上 | ☑ |
-| MeloXGlassCard / Segmented / Toolbar | 同上 | 同上 | ☑ |
-| SearchScreen 字段/范围/发现/结果/详情 | ui/search/SearchScreen.kt | screens/SearchScreen.kt | ◐ |
-| searchMedia / songDetail / collectionSongs | NeteaseUniversalSearchClient.kt | shared 同名 | ☑ |
-| SearchBackMorphIcon | MeloXSymbol.kt | MeloXSearchBackMorphIcon | ☑ |
-| MeloXSongActionsOverlay | player | 主操作+评论 | ◐ |
-| 播客发现页 | MeloXPodcastScreen | 真实分类/推荐/节目 | ◐ |
+Glass：
+[ ] 一致
 
-## 截图验收
-| 状态 | 状态 |
-|---|---|
-| Android .adb_compare 参照归档 | ☑ (96 文件) |
-| Windows 1280×2772 参考窗口 | ☐ |
-| 截图 overlay 差异对比 | ☐ |
-| 动态交互对比（滚动/切页/展开） | ☐ |
+Spacing：
+[ ] 一致
 
-## 已知平台限制（不计入验收，但需最接近替代）
-1. **Layer backdrop 采样**：Android Kyant 库用 RenderNode 记录页面层做实时 blur+lens。Compose Desktop 无等价 API，当前用固定半透明层模拟。可调研 Skia `ImageFilter.makeBlur` + `saveLayer` 离屏采样实现。
-2. **AGSL RuntimeShader**：lens 色差用径向渐变替代。
-3. **音频反应采样**：MeloXAudioReactiveRuntime 未移植，DancingBars 用合成 wobble。
+Animation：
+[ ] 一致
+
+Interaction：
+[ ] 一致
+
+Data：
+[ ] 一致
+
+Navigation：
+[ ] 一致
+
+状态保持：
+[ ] 一致
+
+差异：
+- Android switches `MeloXPlayerShell.Classic` to `MeloXClassicNowPlayingScene` and otherwise `MeloXIOSNowPlayingScene`, with `MeloXMeiMeshBackdrop`; Windows always draws `MeloXFlowingLightBackdrop` plus one `ArtworkPage` / `LyricsPage` / `QueuePage` stack and has no classic shell.
+
+## Home
+
+页面：Home（`MeloXHomeScreen` / `HomeScreen`）
+Android 源文件：`discovery/MeloXDiscoveryScreens.kt` — `MeloXHomeScreen`
+Windows 源文件：`screens/HomeScreen.kt` — `HomeScreen`
+
+布局：
+[ ] 一致
+
+Typography：
+[ ] 一致
+
+Colors：
+[ ] 一致
+
+Icons：
+[ ] 一致
+
+Glass：
+[ ] 一致
+
+Spacing：
+[ ] 一致
+
+Animation：
+[ ] 一致
+
+Interaction：
+[ ] 一致
+
+Data：
+[ ] 一致
+
+Navigation：
+[ ] 一致
+
+状态保持：
+[ ] 一致
+
+差异：
+- Android `NeteaseHomeDataScreen` loads `LocalRecommendationStore` and opens playlist/album blocks through `DiscoveryCollectionDetail`; Windows `NeteaseHome` has no local-recommendation block and only calls `onOpenPlaylist`.
+
+## Explore
+
+页面：Explore（`MeloXExploreScreen` / `ExploreScreen`）
+Android 源文件：`discovery/MeloXDiscoveryScreens.kt` — `MeloXExploreScreen`
+Windows 源文件：`screens/ExploreScreen.kt` — `ExploreScreen`
+
+布局：
+[ ] 一致
+
+Typography：
+[ ] 一致
+
+Colors：
+[ ] 一致
+
+Icons：
+[ ] 一致
+
+Glass：
+[ ] 一致
+
+Spacing：
+[ ] 一致
+
+Animation：
+[ ] 一致
+
+Interaction：
+[ ] 一致
+
+Data：
+[ ] 一致
+
+Navigation：
+[ ] 一致
+
+状态保持：
+[ ] 一致
+
+差异：
+- Android keeps the 播客 category in-page (`showPodcast` on `MeloXExploreLayout`) and opens `DiscoveryCollectionDetail`; Windows `NeteaseExploreDataScreen` calls `onOpenPodcasts()` and leaves the explore page.
+
+## Library
+
+页面：Library（`LibraryScreen`）
+Android 源文件：`library/LibraryScreen.kt` — `LibraryScreen`
+Windows 源文件：`screens/MeloXLibraryScreen.kt` — `LibraryScreen`
+
+布局：
+[ ] 一致
+
+Typography：
+[ ] 一致
+
+Colors：
+[ ] 一致
+
+Icons：
+[ ] 一致
+
+Glass：
+[ ] 一致
+
+Spacing：
+[ ] 一致
+
+Animation：
+[ ] 一致
+
+Interaction：
+[ ] 一致
+
+Data：
+[ ] 一致
+
+Navigation：
+[ ] 一致
+
+状态保持：
+[ ] 一致
+
+差异：
+- Android `LibraryScreen` takes `source`, restores `library_last_page` via `rememberLibraryPage`, and branches to `ProviderLibraryScreen` / local aggregation; Windows `LibraryScreen` is Netease-only and always starts `selectedPage` at `MeloXLibraryPage.Songs`.
+
+## Search
+
+页面：Search（`SearchScreen`）
+Android 源文件：`search/SearchScreen.kt` — `SearchScreen`
+Windows 源文件：`screens/SearchScreen.kt` — `SearchScreen`
+
+布局：
+[ ] 一致
+
+Typography：
+[ ] 一致
+
+Colors：
+[ ] 一致
+
+Icons：
+[ ] 一致
+
+Glass：
+[ ] 一致
+
+Spacing：
+[ ] 一致
+
+Animation：
+[ ] 一致
+
+Interaction：
+[ ] 一致
+
+Data：
+[ ] 一致
+
+Navigation：
+[ ] 一致
+
+状态保持：
+[ ] 一致
+
+差异：
+- Android `SearchScreen` reads `MeloXSearchLaunchBus`, `unifiedEnabled` / `unifiedSources`, and a podcast-discovery state; Windows `SearchScreen` has none of those paths.
+
+## Settings
+
+页面：Settings（`ProviderSettingsHub` / `SettingsScreen`）
+Android 源文件：`provider/ProviderSettingsHub.kt` — `ProviderSettingsHub`（detail pages in `settings/SettingsScreen.kt` — `SettingsScreen`）
+Windows 源文件：`screens/SettingsScreen.kt` — `SettingsScreen`
+
+布局：
+[ ] 一致
+
+Typography：
+[ ] 一致
+
+Colors：
+[ ] 一致
+
+Icons：
+[ ] 一致
+
+Glass：
+[ ] 一致
+
+Spacing：
+[ ] 一致
+
+Animation：
+[ ] 一致
+
+Interaction：
+[ ] 一致
+
+Data：
+[ ] 一致
+
+Navigation：
+[ ] 一致
+
+状态保持：
+[ ] 一致
+
+差异：
+- Android detail routes (`EqualizerSettings`, `SkylineLyricsSettings`, `FloatingLyricsSettings`, `ListenTogetherSettings`, `RemoteConfigSettings`) live under `SettingsDetailScreen` on `MeloXPinnedListPage`; Windows `SettingsDetail` only has the shorter `GeneralSettings` / `AppearanceSettings` / `PlaybackSettings` set and the account row does not open login.
+
+## Podcasts
+
+页面：Podcasts（`MeloXPodcastScreen` / `PodcastsScreen`）
+Android 源文件：`podcast/MeloXPodcastScreens.kt` — `MeloXPodcastScreen`
+Windows 源文件：`screens/PodcastsScreen.kt` — `PodcastsScreen`
+
+布局：
+[ ] 一致
+
+Typography：
+[ ] 一致
+
+Colors：
+[ ] 一致
+
+Icons：
+[ ] 一致
+
+Glass：
+[ ] 一致
+
+Spacing：
+[ ] 一致
+
+Animation：
+[ ] 一致
+
+Interaction：
+[ ] 一致
+
+Data：
+[ ] 一致
+
+Navigation：
+[ ] 一致
+
+状态保持：
+[ ] 一致
+
+差异：
+- Android `PodcastDetail` is hosted in `MeloXPinnedListPage` and can toggle subscribe via `onSubscriptionChanged`; Windows `PodcastDetail` is a plain column with no subscribe control and no pinned-list chrome.
+
+## Downloads
+
+页面：Downloads（`MeloXLibraryDownloadsPage` / `DownloadsScreen`）
+Android 源文件：`library/LibraryScreen.kt` — `MeloXLibraryDownloadsPage`（tab entry is `LibraryScreen(forcedPageName = "Downloads")`）
+Windows 源文件：`screens/DownloadsScreen.kt` — `DownloadsScreen`（body `screens/MeloXLibraryDownloads.kt` — `MeloXLibraryDownloadsPage`）
+
+布局：
+[ ] 一致
+
+Typography：
+[ ] 一致
+
+Colors：
+[ ] 一致
+
+Icons：
+[ ] 一致
+
+Glass：
+[ ] 一致
+
+Spacing：
+[ ] 一致
+
+Animation：
+[ ] 一致
+
+Interaction：
+[ ] 一致
+
+Data：
+[ ] 一致
+
+Navigation：
+[ ] 一致
+
+状态保持：
+[ ] 一致
+
+差异：
+- Android downloads stay inside `LibraryScreen` so the library segmented picker and login gate remain; Windows `DownloadsScreen` mounts `MeloXLibraryDownloadsPage` alone, with no library chrome.
+
+## Cloud
+
+页面：Cloud（`MeloXCloudMusicScreen` / `CloudScreen`）
+Android 源文件：`cloud/MeloXCloudMusicScreen.kt` — `MeloXCloudMusicScreen`
+Windows 源文件：`screens/CloudScreen.kt` — `CloudScreen`
+
+布局：
+[ ] 一致
+
+Typography：
+[ ] 一致
+
+Colors：
+[ ] 一致
+
+Icons：
+[ ] 一致
+
+Glass：
+[ ] 一致
+
+Spacing：
+[ ] 一致
+
+Animation：
+[ ] 一致
+
+Interaction：
+[ ] 一致
+
+Data：
+[ ] 一致
+
+Navigation：
+[ ] 一致
+
+状态保持：
+[ ] 一致
+
+差异：
+- Android paginates every `cloudSongs` page, filters with `query`, and uploads through `GetContent` plus a `MeloXGlassDialog` delete confirm; Windows loads one page, deletes inline, and has no search or upload.
+
+## Messages
+
+页面：Messages（`MessagesScreen`）
+Android 源文件：`messages/MessagesScreen.kt` — `MessagesScreen`
+Windows 源文件：`screens/MessagesScreen.kt` — `MessagesScreen`
+
+布局：
+[ ] 一致
+
+Typography：
+[ ] 一致
+
+Colors：
+[ ] 一致
+
+Icons：
+[ ] 一致
+
+Glass：
+[ ] 一致
+
+Spacing：
+[ ] 一致
+
+Animation：
+[ ] 一致
+
+Interaction：
+[ ] 一致
+
+Data：
+[ ] 一致
+
+Navigation：
+[ ] 一致
+
+状态保持：
+[ ] 一致
+
+差异：
+- Android `MessagesScreen` opens `MessagesDetailScreen` and `MessageContactsScreen` from `privateMessageConversations`; Windows only lists contacts in `MeloXIosListRow` and the rows have no click handler.
+
+## Login
+
+页面：Login（`NeteaseLoginScreen` / `LoginScreen`）
+Android 源文件：`account/NeteaseLoginScreen.kt` — `NeteaseLoginScreen`
+Windows 源文件：`screens/LoginScreen.kt` — `LoginScreen`
+
+布局：
+[ ] 一致
+
+Typography：
+[ ] 一致
+
+Colors：
+[ ] 一致
+
+Icons：
+[ ] 一致
+
+Glass：
+[ ] 一致
+
+Spacing：
+[ ] 一致
+
+Animation：
+[ ] 一致
+
+Interaction：
+[ ] 一致
+
+Data：
+[ ] 一致
+
+Navigation：
+[ ] 一致
+
+状态保持：
+[ ] 一致
+
+差异：
+- Android login is a Netease phone/WebView flow (`NeteasePhoneAuthClient`, `https://music.163.com/#/login`) that writes `NeteaseSessionStore`; Windows `LoginScreen` is a multi-provider card list whose logout only flips in-memory `loggedInProviders`.
+
+## Album detail
+
+页面：Album detail（`MeloXUnifiedAlbumDetailScreen` / `AlbumDetailScreen`）
+Android 源文件：`library/LibraryScreen.kt` — `MeloXUnifiedAlbumDetailScreen`（renders `MeloXPlaylistDetailScreen` with `albumId`）
+Windows 源文件：`screens/AlbumDetailScreen.kt` — `AlbumDetailScreen`
+
+布局：
+[ ] 一致
+
+Typography：
+[ ] 一致
+
+Colors：
+[ ] 一致
+
+Icons：
+[ ] 一致
+
+Glass：
+[ ] 一致
+
+Spacing：
+[ ] 一致
+
+Animation：
+[ ] 一致
+
+Interaction：
+[ ] 一致
+
+Data：
+[ ] 一致
+
+Navigation：
+[ ] 一致
+
+状态保持：
+[ ] 一致
+
+差异：
+- Android album detail reuses `MeloXPlaylistDetailScreen` (shared-element hero, glass circle toolbar, `MeloXDetailPalette`); Windows `AlbumDetailScreen` is a separate 48.dp row with literal `"←"` / `"⤴"` text and a 200.dp cover, and `TabContent` never assigns `selectedAlbum`.
+
+## Playlist detail
+
+页面：Playlist detail（`MeloXPlaylistDetailScreen` / `PlaylistDetailScreen`）
+Android 源文件：`library/LibraryScreen.kt` — `MeloXPlaylistDetailScreen`（entry `MeloXUnifiedPlaylistDetailScreen`）
+Windows 源文件：`screens/PlaylistDetailScreen.kt` — `PlaylistDetailScreen`（library path is `screens/MeloXLibraryPlaylistDetail.kt` — `MeloXLibraryPlaylistDetailScreen`）
+
+布局：
+[ ] 一致
+
+Typography：
+[ ] 一致
+
+Colors：
+[ ] 一致
+
+Icons：
+[ ] 一致
+
+Glass：
+[ ] 一致
+
+Spacing：
+[ ] 一致
+
+Animation：
+[ ] 一致
+
+Interaction：
+[ ] 一致
+
+Data：
+[ ] 一致
+
+Navigation：
+[ ] 一致
+
+状态保持：
+[ ] 一致
+
+差异：
+- Home/Explore open `PlaylistDetailScreen`, whose toolbar is a 48.dp row of `"←"` and `"⤴"` text over a 200.dp cover; the library path uses `MeloXLibraryPlaylistDetailScreen` with `MeloXLibraryGlassCircleButton`, so the same playlist has two layouts.
+
+## Glass sheet
+
+页面：Glass sheet（`MeloXGlassSheet`）
+Android 源文件：`glass/MeloXGlassSheet.kt` — `MeloXGlassSheet`
+Windows 源文件：`glass/MeloXGlassSheet.kt` — `MeloXGlassSheet`
+
+布局：
+[ ] 一致
+
+Typography：
+[ ] 一致
+
+Colors：
+[ ] 一致
+
+Icons：
+[ ] 一致
+
+Glass：
+[ ] 一致
+
+Spacing：
+[ ] 一致
+
+Animation：
+[ ] 一致
+
+Interaction：
+[ ] 一致
+
+Data：
+[ ] 一致
+
+Navigation：
+[ ] 一致
+
+状态保持：
+[ ] 一致
+
+差异：
+- Android `meloXGlassSurface` takes `MeloXGlassMaterial.Regular` and `navigationBarsPadding`, and blur only exists when `LocalMeloXBackdrop` is a real layer; Windows drops the material argument, adds a 96.dp drag-to-dismiss, and treats `LocalMeloXBackdrop` as a `Boolean`.
+
+## Pinned list
+
+页面：Pinned list（`MeloXPinnedListPage`）
+Android 源文件：`glass/MeloXPinnedListPage.kt` — `MeloXPinnedListPage`
+Windows 源文件：`glass/MeloXPinnedListPage.kt` — `MeloXPinnedListPage`
+
+布局：
+[ ] 一致
+
+Typography：
+[ ] 一致
+
+Colors：
+[ ] 一致
+
+Icons：
+[ ] 一致
+
+Glass：
+[ ] 一致
+
+Spacing：
+[ ] 一致
+
+Animation：
+[ ] 一致
+
+Interaction：
+[ ] 一致
+
+Data：
+[ ] 一致
+
+Navigation：
+[ ] 一致
+
+状态保持：
+[ ] 一致
+
+差异：
+- Android pins the bar with `rememberLayerBackdrop` plus the `MeloXTopFade` runtime shader and `statusBars` inset (`toolbarHeight = statusBarHeight + 62.dp`); Windows uses `meloXBackdropBlur` at a flat `62.dp` and no call site in screens uses `MeloXPinnedListPage`.
+
+## Lyrics
+
+页面：Lyrics（`MeloXIOSLyricsPanel` / `LyricsPage`）
+Android 源文件：`player/MeloXIOSLyricsPanel.kt` — `MeloXIOSLyricsPanel`
+Windows 源文件：`screens/MeloXNowPlaying.kt` — `LyricsPage`
+
+布局：
+[ ] 一致
+
+Typography：
+[ ] 一致
+
+Colors：
+[ ] 一致
+
+Icons：
+[ ] 一致
+
+Glass：
+[ ] 一致
+
+Spacing：
+[ ] 一致
+
+Animation：
+[ ] 一致
+
+Interaction：
+[ ] 一致
+
+Data：
+[ ] 一致
+
+Navigation：
+[ ] 一致
+
+状态保持：
+[ ] 一致
+
+差异：
+- Android `MeloXAppleMusicLyricsPanel` does glyph timing, ruby text, instrumental waves, and interlude countdowns; Windows `LyricsPage` is a `LazyColumn` of 26.sp/22.sp lines with a binary syllable color.
+
+## Queue
+
+页面：Queue（`MeloXQueuePanel` / `QueuePage`）
+Android 源文件：`player/MeloXQueuePanel.kt` — `MeloXQueuePanel`
+Windows 源文件：`screens/MeloXNowPlaying.kt` — `QueuePage`
+
+布局：
+[ ] 一致
+
+Typography：
+[ ] 一致
+
+Colors：
+[ ] 一致
+
+Icons：
+[ ] 一致
+
+Glass：
+[ ] 一致
+
+Spacing：
+[ ] 一致
+
+Animation：
+[ ] 一致
+
+Interaction：
+[ ] 一致
+
+Data：
+[ ] 一致
+
+Navigation：
+[ ] 一致
+
+状态保持：
+[ ] 一致
+
+差异：
+- Android splits the queue into 历史记录 / 队列 (`MeloXQueueOrigin.Manual`) / 继续播放 under a blurred `QueueSongHeaderSurface` and `QueueModeControlsSurface`; Windows `QueuePage` is one flat song list with 已播放 / 继续播放 labels and a text "移除" button.

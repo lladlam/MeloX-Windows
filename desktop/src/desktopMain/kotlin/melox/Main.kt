@@ -1,7 +1,10 @@
 package melox
 
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
+import androidx.compose.ui.window.WindowPosition
 import androidx.compose.ui.window.application
+import androidx.compose.ui.window.rememberWindowState
 import melox.ui.MeloXApp
 import java.io.File
 import java.io.PrintWriter
@@ -39,9 +42,18 @@ fun main() {
 
     try {
         application {
+            val windowState = rememberWindowState(
+                width = 427.dp,
+                height = 924.dp,
+                position = WindowPosition.PlatformDefault,
+            )
             Window(
-                title = "MeloX Desktop",
-                onCloseRequest = ::exitApplication,
+                title = "MeloX",
+                state = windowState,
+                onCloseRequest = {
+                    melox.playback.PlaybackCommands.playerController()?.release()
+                    exitApplication()
+                },
             ) {
                 MeloXApp()
             }

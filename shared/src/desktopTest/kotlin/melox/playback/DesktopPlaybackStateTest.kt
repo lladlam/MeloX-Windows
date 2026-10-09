@@ -1,0 +1,252 @@
+package melox.playback
+
+import kotlinx.coroutines.CompletableDeferred
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.NonCancellable
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.TestScope
+import kotlinx.coroutines.test.advanceTimeBy
+import kotlinx.coroutines.test.runCurrent
+import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.test.setMain
+import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import melox.model.SearchSong
+import melox.music.model.MusicResourceId
+import melox.music.model.MusicSource
+import melox.music.model.MusicTrack
+import melox.music.model.ProviderTrackMetadata
+import melox.platform.getPreferences
+import melox.settings.MeloXSettingsPreferences
+import melox.player.AudioPlayer
+import melox.audio.MusicQuality
+import melox.audio.MusicQualityPreferences
+import kotlin.test.*
+
+/** Regression scenarios use the real controller state machine, without an audio device. */
+@OptIn(ExperimentalCoroutinesApi::class)
+class DesktopPlaybackStateTest {
+    private fun song(id: Long) = SearchSong(id, "song-$id", "artist", "album", null, durationMs = 180_000)
+
+    private fun TestScope.player(
+        resolve: suspend (QueueEntry) -> DesktopPlaybackRequest,
+        starts: MutableList<DesktopPlaybackStart> = mutableListOf(),
+        positions: MutableList<Pair<Int, Long>> = mutableListOf(),
+    ) = MeloXDesktopPlayer(resolve, { starts += it }, backgroundScope,
+        StandardTestDispatcher(testScheduler), {}, { index, position -> positions += index to position })
+
+    @AfterTest fun cleanup() {
+        PlaybackCommands.playerController()?.release()
+        PlaybackCommands.activeController = null
+        AudioPlayer.stop()
+    }
+
+    @Test fun pauseAndSeekDuringResolutionAreAppliedToTheDecoderStart() = runTest {
+        val resolved = CompletableDeferred<DesktopPlaybackRequest>()
+        val starts = mutableListOf<DesktopPlaybackStart>()
+        val player = player({ resolved.await() }, starts)
+        PlaybackCommands.adoptController(player)
+        player.setMediaItems(listOf(song(1)), 0, 0)
+        player.prepare()
+        player.play()
+        runCurrent()
+        assertEquals("1", AudioPlayer.currentTrack.value?.id?.value)
+        assertTrue(AudioPlayer.state.value.isLoading)
+        player.seekTo(42_000)
+        player.pause()
+        resolved.complete(DesktopPlaybackRequest("resolved-1"))
+        runCurrent()
+        val start = starts.single()
+        assertEquals(42_000L, start.positionMs)
+        assertFalse(start.playWhenReady)
+        assertFalse(player.playWhenReady)
+        assertEquals(42_000L, player.currentPosition)
+    }
+
+    @Test fun aLateCancelledResolverCannotStartThePreviousTrack() = runTest {
+        val first = CompletableDeferred<DesktopPlaybackRequest>()
+        val starts = mutableListOf<DesktopPlaybackStart>()
+        val player = player({ entry ->
+            if (entry.song.id == 1L) withContext(NonCancellable) { first.await() }
+            else DesktopPlaybackRequest("resolved-2")
+        }, starts)
+        PlaybackCommands.adoptController(player)
+        player.setMediaItems(listOf(song(1), song(2)), 0, 0)
+        player.prepare()
+        player.play()
+        runCurrent()
+        player.next()
+        runCurrent()
+        first.complete(DesktopPlaybackRequest("stale-1"))
+        runCurrent()
+        assertEquals(listOf("2"), starts.map { it.track.id.value })
+        assertEquals("2", AudioPlayer.currentTrack.value?.id?.value)
+        assertNull(AudioPlayer.state.value.error)
+    }
+
+    @Test fun queueReorderDuringResolutionKeepsTheSelectedEntryPlayable() = runTest {
+        val resolved = CompletableDeferred<DesktopPlaybackRequest>()
+        val starts = mutableListOf<DesktopPlaybackStart>()
+        val player = player({ resolved.await() }, starts)
+        PlaybackCommands.adoptController(player)
+        player.setMediaItems(listOf(song(1), song(2), song(3)), 1, 0)
+        player.prepare()
+        runCurrent()
+        player.move(0, 2)
+        assertEquals(0, player.currentMediaItemIndex)
+        resolved.complete(DesktopPlaybackRequest("resolved-2"))
+        runCurrent()
+        assertEquals("2", starts.single().track.id.value)
+    }
+
+    @Test fun resolutionFailurePublishesTheNewTrackAndCanBeRetried() = runTest {
+        var attempts = 0
+        val starts = mutableListOf<DesktopPlaybackStart>()
+        val errors = mutableListOf<Throwable>()
+        AudioPlayer.selectTrack(MusicTrack(MusicResourceId(MusicSource.Netease, "old"), "old", emptyList()))
+        val player = player({
+            if (++attempts == 1) throw java.io.IOException("provider unavailable")
+            DesktopPlaybackRequest("retry")
+        }, starts)
+        player.onFailure = { errors += it }
+        PlaybackCommands.adoptController(player)
+        player.setMediaItems(listOf(song(9)), 0, 0)
+        player.prepare()
+        player.play()
+        runCurrent()
+        assertEquals("9", AudioPlayer.currentTrack.value?.id?.value)
+        assertEquals("provider unavailable", AudioPlayer.state.value.error)
+        assertFalse(AudioPlayer.state.value.isLoading)
+        assertFalse(player.playWhenReady)
+        assertEquals(1, errors.size)
+        player.togglePlay()
+        runCurrent()
+        assertEquals("9", starts.single().track.id.value)
+        assertTrue(starts.single().playWhenReady)
+    }
+
+    @Test fun periodicPositionUsesTheAndroidTwoSecondIntervalAndStopsOnRelease() = runTest {
+        val positions = mutableListOf<Pair<Int, Long>>()
+        val pending = CompletableDeferred<DesktopPlaybackRequest>()
+        val player = player({ pending.await() }, positions = positions)
+        PlaybackCommands.adoptController(player)
+        player.setMediaItems(listOf(song(1), song(2)), 1, 17_000)
+        player.prepare()
+        runCurrent()
+        advanceTimeBy(1_999)
+        runCurrent()
+        assertTrue(positions.isEmpty())
+        advanceTimeBy(1)
+        runCurrent()
+        assertEquals(listOf(1 to 17_000L), positions)
+        player.seekTo(0)
+        advanceTimeBy(2_000)
+        runCurrent()
+        assertEquals(1 to 0L, positions.last())
+        player.release()
+        advanceTimeBy(4_000)
+        runCurrent()
+        assertEquals(2, positions.size)
+    }
+
+    @Test fun persistedProviderQueueRestoresIndexPositionIdentityAndStartsPaused() = runTest {
+        val store = getPreferences("melox_playback_queue")
+        store.clear()
+        MeloXSettingsPreferences.setBoolean("playback_save_queue", true)
+        val youtube = MusicTrack(MusicResourceId(MusicSource.YouTubeMusic, "video-9"), "video", emptyList(),
+            durationMs = 180_000, providerMetadata = ProviderTrackMetadata.YouTube("video-9", "playlist-entry-9"))
+        val writer = player({ DesktopPlaybackRequest("resolved") })
+        Dispatchers.setMain(StandardTestDispatcher(testScheduler))
+        try {
+            writer.setMediaItems(listOf(song(1), SearchSong(0, "video", "artist", "album", null, durationMs = 180_000,
+                providerTrack = youtube)), 1, 17_000)
+            writer.prepare()
+            writer.play()
+            val expectedIds = writer.entries().map { it.entryId }
+            MeloXPlaybackQueueStore.save(writer)
+            writer.release()
+            val starts = mutableListOf<DesktopPlaybackStart>()
+            val reader = player({ DesktopPlaybackRequest("restored") }, starts)
+            PlaybackCommands.adoptController(reader)
+            PlaybackCommands.restoreLastQueue()
+            runCurrent()
+            assertEquals(1, reader.currentMediaItemIndex)
+            assertEquals(17_000L, reader.currentPosition)
+            assertEquals(expectedIds, reader.entries().map { it.entryId })
+            assertEquals(youtube.id, reader.snapshot()[1].providerTrack?.id)
+            assertEquals("playlist-entry-9", (reader.snapshot()[1].providerTrack?.providerMetadata as? ProviderTrackMetadata.YouTube)?.setVideoId)
+            assertFalse(reader.playWhenReady)
+            assertFalse(starts.single().playWhenReady)
+            assertEquals(17_000L, starts.single().positionMs)
+            // A second initialization must not overwrite a live queue/seek.
+            reader.seekTo(0)
+            PlaybackCommands.restoreLastQueue()
+            assertEquals(0L, reader.currentPosition)
+            reader.release()
+        } finally {
+            writer.release()
+            store.clear()
+            Dispatchers.resetMain()
+        }
+    }
+
+    @Test fun repeatAllRestartsASingleItemInsteadOfLeavingItFinished() = runTest {
+        val starts = mutableListOf<DesktopPlaybackStart>()
+        val player = player({ DesktopPlaybackRequest("resolved") }, starts)
+        PlaybackCommands.adoptController(player)
+        player.setMediaItems(listOf(song(1)), 0, 9_000)
+        player.setRepeatMode(PlaybackCommands.REPEAT_ALL)
+        player.prepare()
+        player.play()
+        runCurrent()
+        AudioPlayer.onTrackEnded?.invoke()
+        runCurrent()
+        assertEquals(listOf(9_000L, 0L), starts.map { it.positionMs })
+        assertTrue(starts.last().playWhenReady)
+    }
+
+    @Test fun shuffleOnlyReordersTheFutureAndKeepsManualEntriesAheadOfBaseTracks() = runTest {
+        val pending = CompletableDeferred<DesktopPlaybackRequest>()
+        MeloXPlaybackModePreferences.setShuffle(false)
+        val player = player({ pending.await() })
+        PlaybackCommands.adoptController(player)
+        player.setMediaItems((1L..6L).map(::song), 2, 21_000)
+        player.prepare()
+        player.addMediaItem(player.mediaItemCount, song(99), PlaybackCommands.QUEUE_ORIGIN_MANUAL)
+        val head = player.entries().take(3)
+        val selectedId = AudioPlayer.currentTrack.value?.id
+        try {
+            player.setShuffleEnabled(true)
+            assertEquals(head, player.entries().take(3))
+            assertEquals(2, player.currentMediaItemIndex)
+            assertEquals(99L, player.snapshot()[3].id)
+            assertEquals(selectedId, AudioPlayer.currentTrack.value?.id)
+            assertEquals(21_000L, AudioPlayer.getCurrentPositionMs())
+            player.setShuffleEnabled(false)
+            assertEquals(listOf(1L, 2L, 3L, 99L, 4L, 5L, 6L), player.snapshot().map { it.id })
+            assertEquals(head, player.entries().take(3))
+        } finally { MeloXPlaybackModePreferences.setShuffle(false) }
+    }
+
+    @Test fun qualityChangePreservesQueueEntryIdentityAndPausedZeroPosition() = runTest {
+        val starts = mutableListOf<DesktopPlaybackStart>()
+        val player = player({ DesktopPlaybackRequest("resolved") }, starts)
+        PlaybackCommands.adoptController(player)
+        player.setMediaItems(listOf(song(1), song(2)), 1, 12_000)
+        player.prepare()
+        runCurrent()
+        player.pause()
+        player.seekTo(0)
+        val entries = player.entries()
+        val quality = MusicQualityPreferences.read()
+        try {
+            PlaybackCommands.changeQuality(MusicQuality.High)
+            runCurrent()
+            assertEquals(entries, player.entries())
+            assertEquals(1, player.currentMediaItemIndex)
+            assertEquals(0L, starts.last().positionMs)
+            assertFalse(starts.last().playWhenReady)
+        } finally { MusicQualityPreferences.write(quality) }
+    }
+}

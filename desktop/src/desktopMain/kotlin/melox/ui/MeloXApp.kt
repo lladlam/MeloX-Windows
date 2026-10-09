@@ -1,25 +1,26 @@
 package melox.ui
 
+import melox.ui.glass.meloXRecordBackdrop
+
 import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.ExperimentalSharedTransitionApi
-import androidx.compose.animation.SharedTransitionLayout
-import androidx.compose.animation.core.SeekableTransitionState
-import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.EnterTransition
-import androidx.compose.animation.ExitTransition
-import androidx.compose.animation.core.rememberTransition
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.AnimatedVisibilityScope
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionLayout
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.SeekableTransitionState
+import androidx.compose.animation.core.rememberTransition
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.focusable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -27,15 +28,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.collectAsState
-import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -45,7 +44,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.key.Key
+import androidx.compose.ui.input.key.KeyEventType
+import androidx.compose.ui.input.key.key
+import androidx.compose.ui.input.key.onPreviewKeyEvent
+import androidx.compose.ui.input.key.type
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -54,6 +60,7 @@ import kotlinx.coroutines.launch
 import melox.library.NeteasePlaylistSummary
 import melox.music.model.MusicPlaylistSummary
 import melox.music.model.MusicSource
+import melox.playback.PlaybackCommands
 import melox.music.provider.MeloXLegacyUiBridge
 import melox.music.provider.MusicProviderSelectionStore
 import melox.player.AudioPlayer
@@ -63,6 +70,9 @@ import melox.ui.foundation.MeloXMotion
 import melox.ui.navigation.AppTab
 import melox.ui.navigation.MeloXBottomChrome
 import melox.ui.navigation.Route
+import melox.ui.navigation.MeloXBackDispatcher
+import melox.ui.navigation.LocalMeloXBackDispatcher
+import melox.ui.navigation.MeloXBackHandler
 import melox.ui.screens.AlbumDetailScreen
 import melox.ui.screens.CloudScreen
 import melox.ui.screens.DownloadsScreen
@@ -81,7 +91,7 @@ import melox.ui.screens.SettingsScreen
 import melox.ui.theme.MeloXColors
 
 private fun playerAutomaticFractionSpec() = tween<Float>(
-    durationMillis = MeloXMotion.PlayerTransitionDurationMillis,
+    durationMillis = MeloXSettingsRuntime.playerTransitionDurationMs,
     easing = androidx.compose.animation.core.LinearEasing,
 )
 
@@ -90,9 +100,28 @@ private fun playerAutomaticFractionSpec() = tween<Float>(
 fun MeloXApp() {
     var selectedTab by remember { mutableStateOf(AppTab.Home) }
     var selectedSource by remember { mutableStateOf(MusicProviderSelectionStore.selectedSource()) }
+    var messagesVisible by remember { mutableStateOf(false) }
+    var heartModeLaunchAttempted by remember { mutableStateOf(false) }
+    val backDispatchers = remember { AppTab.entries.associateWith { MeloXBackDispatcher() } }
+    val playerBackDispatcher = remember { MeloXBackDispatcher() }
+    var settingsRouteRequest by remember { mutableStateOf<String?>(null) }
 
     LaunchedEffect(Unit) {
         MeloXSettingsPreferences.initialize()
+        melox.playback.MeloXPlaybackModePreferences.initialize()
+        PlaybackCommands.restoreLastQueue()
+        val restored = if (MeloXSettingsRuntime.rememberLastTab) {
+            MeloXSettingsPreferences.string("general_last_tab", MeloXSettingsRuntime.defaultTab)
+        } else {
+            MeloXSettingsRuntime.defaultTab
+        }
+        selectedTab = runCatching { AppTab.valueOf(restored) }.getOrDefault(AppTab.Home)
+    }
+
+    LaunchedEffect(selectedTab) {
+        if (MeloXSettingsRuntime.rememberLastTab) {
+            MeloXSettingsPreferences.setString("general_last_tab", selectedTab.name)
+        }
     }
 
     val visibleTabs = visibleTabsFor(selectedSource)
@@ -125,6 +154,32 @@ fun MeloXApp() {
         playerTransitionJob = playerScope.launch {
             playerTransitionState.animateTo(false, playerAutomaticFractionSpec())
         }
+    }
+
+    val playerOpen = playerTransitionState.currentState || playerTransitionState.targetState
+    val rootFocus = remember { FocusRequester() }
+    LaunchedEffect(Unit) { rootFocus.requestFocus() }
+    LaunchedEffect(playerOpen, currentTrack?.id) {
+        // Selecting an upcoming row removes that focused row from the list.
+        // Give Escape a resident target after the selection and after reopening.
+        if (playerOpen) rootFocus.requestFocus()
+    }
+    LaunchedEffect(selectedSource, hasMedia, heartModeLaunchAttempted) {
+        if (heartModeLaunchAttempted || hasMedia || selectedSource != MusicSource.Netease) return@LaunchedEffect
+        if (!MeloXSettingsRuntime.startsHeartModeOnLaunch) return@LaunchedEffect
+        heartModeLaunchAttempted = true
+        val session = melox.account.NeteaseSessionStore()
+        if (!session.isLoggedIn) return@LaunchedEffect
+        if (session.profile == null) session.refreshProfile(force = true)
+        val userId = session.profile?.userId ?: return@LaunchedEffect
+        val client = melox.library.NeteaseLibraryClient(cookieProvider = { melox.account.NeteaseSessionStore.readCookie() })
+        val songs = runCatching {
+            val snapshot = client.snapshot(userId)
+            val seed = snapshot.likedSongs.randomOrNull() ?: error("收藏歌曲为空")
+            val playlistId = snapshot.likedPlaylistId ?: error("没有可用歌单")
+            client.intelligenceModeSongs(seed.id, playlistId)
+        }.getOrNull().orEmpty()
+        songs.firstOrNull()?.let { PlaybackCommands.playQueue(songs, it.id, heartMode = true) }
     }
 
     // Scroll-based minimize: ±18px threshold, directional, resets on reversal
@@ -171,31 +226,51 @@ fun MeloXApp() {
         if (!hasMedia) playerTransitionState.snapTo(false)
     }
 
+    val composeDark = isSystemInDarkTheme()
+    var systemDark by remember { mutableStateOf(desktopSystemDark() ?: composeDark) }
+    LaunchedEffect(MeloXSettingsRuntime.themeMode) {
+        if (MeloXSettingsRuntime.themeMode != melox.settings.MeloXThemeMode.System) return@LaunchedEffect
+        while (true) {
+            kotlinx.coroutines.delay(750)
+            val current = desktopSystemDark() ?: composeDark
+            if (current != systemDark) systemDark = current
+        }
+    }
+    val resolvedTheme = melox.settings.resolveMeloXTheme(MeloXSettingsRuntime.themeMode, systemDark)
     MaterialTheme(
-        colorScheme = darkColorScheme(
-            primary = MeloXColors.Primary,
-            onPrimary = MeloXColors.OnPrimary,
-            background = MeloXColors.Background,
-            surface = MeloXColors.Surface,
-            surfaceVariant = MeloXColors.SurfaceVariant,
-            onBackground = MeloXColors.OnBackground,
-            onSurface = MeloXColors.OnSurface,
-            onSurfaceVariant = MeloXColors.OnSurfaceVariant,
-            outline = Color(0xFF3C3C3C),
-            outlineVariant = Color(0xFF2C2C2C),
-            error = MeloXColors.Error,
-        ),
+        colorScheme = if (resolvedTheme == melox.settings.MeloXResolvedTheme.Light) meloXLightScheme() else meloXDarkScheme(),
+        typography = melox.ui.theme.MeloXMaterialTypography,
+        shapes = melox.ui.theme.MeloXMaterialShapes,
     ) {
+        CompositionLocalProvider(androidx.compose.material3.LocalContentColor provides MaterialTheme.colorScheme.onBackground) {
         SharedTransitionLayout(modifier = Modifier.fillMaxSize()) {
             val sharedScope = this
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(MeloXColors.Background),
+                    .background(MaterialTheme.colorScheme.background)
+                    .onPreviewKeyEvent { event ->
+                        if (event.type != KeyEventType.KeyUp || event.key != Key.Escape) return@onPreviewKeyEvent false
+                        when {
+                            playerOpen -> if (!playerBackDispatcher.dispatch()) closePlayer()
+                            messagesVisible -> messagesVisible = false
+                            backDispatchers.getValue(selectedTab).dispatch() -> Unit
+                            selectedTab != AppTab.Home -> {
+                                tabBarMinimized = false
+                                selectedTab = AppTab.Home
+                            }
+                            else -> return@onPreviewKeyEvent false
+                        }
+                        true
+                    }
+                    .focusRequester(rootFocus)
+                    .focusable(),
             ) {
                 // ── Page content: full-bleed, chrome overlays on top
                 // (Android Scaffold structure — content is NOT clipped
                 // above the bottom chrome) ──
+                val pageBackdrop = melox.ui.glass.rememberMeloXLayerBackdrop()
+                CompositionLocalProvider(melox.ui.glass.LocalMeloXLayerBackdrop provides pageBackdrop) {
                 AnimatedContent(
                     targetState = selectedTab,
                     transitionSpec = {
@@ -205,20 +280,27 @@ fun MeloXApp() {
                     },
                     modifier = Modifier
                         .fillMaxSize()
+                        .meloXRecordBackdrop(pageBackdrop)
                         .nestedScroll(tabBarMinimizeConnection),
                     label = "melox-page-transition",
                 ) { tab ->
+                    // Descendants being recorded must not sample their own page layer.
+                    // Skia's RenderNode graph cannot contain that recursive edge.
+                    CompositionLocalProvider(melox.ui.glass.LocalMeloXLayerBackdrop provides null,
+                        LocalMeloXBackDispatcher provides backDispatchers.getValue(tab)) {
                     rootPageState.SaveableStateProvider(tab.name) {
                         TabContent(
                             tab = tab,
                             source = selectedSource,
+                            settingsRouteRequest = if (tab == AppTab.Settings) settingsRouteRequest else null,
+                            onSettingsRouteConsumed = { settingsRouteRequest = null },
                             onOpenTool = { tool ->
-                                selectedTab = when (tool) {
-                                    "Podcasts" -> AppTab.Podcasts
-                                    "Downloads" -> AppTab.Downloads
-                                    "Cloud" -> AppTab.Cloud
-                                    "Messages" -> AppTab.Settings
-                                    else -> selectedTab
+                                when (tool) {
+                                     "Messages" -> messagesVisible = true
+                                     "Home" -> selectedTab = AppTab.Home
+                                    "Podcasts" -> selectedTab = AppTab.Podcasts
+                                    "Downloads" -> selectedTab = AppTab.Downloads
+                                    "Cloud" -> selectedTab = AppTab.Cloud
                                 }
                             },
                             onSourceSelected = { source ->
@@ -226,6 +308,7 @@ fun MeloXApp() {
                                 selectedSource = source
                             },
                         )
+                    }
                     }
                 }
 
@@ -260,6 +343,15 @@ fun MeloXApp() {
                 )
                 }
 
+                AnimatedVisibility(
+                    visible = messagesVisible,
+                    modifier = Modifier.fillMaxSize().zIndex(15f),
+                    enter = slideInHorizontally(tween(300, easing = FastOutSlowInEasing)) { it },
+                    exit = slideOutHorizontally(tween(300, easing = FastOutSlowInEasing)) { it },
+                ) {
+                    MessagesScreen(onBack = { messagesVisible = false })
+                }
+
                 // ── Full player overlay (zIndex 20, Android lines 647–702) ──
                 playerTransition.AnimatedVisibility(
                     visible = { value -> value },
@@ -279,11 +371,20 @@ fun MeloXApp() {
                                 onClick = {},
                             ),
                     ) {
+                        CompositionLocalProvider(LocalMeloXBackDispatcher provides playerBackDispatcher) {
                         MeloXNowPlayingScreen(
+                            onOpenPlaybackSettings = {
+                                settingsRouteRequest = "Playback"
+                                selectedTab = AppTab.Settings
+                                closePlayer()
+                            },
                             navState = null,
                             onDismiss = closePlayer,
                             sharedTransitionScope = sharedScope,
                             animatedVisibilityScope = playerVisibility,
+                            playerExpanded = playerTransitionState.currentState,
+                            playerTargetExpanded = playerTransitionState.targetState,
+                            playerTransitionFraction = playerTransitionState.fraction,
                             onSeekCollapse = { fraction ->
                                 playerTransitionJob?.cancel()
                                 playerTransitionJob = null
@@ -294,31 +395,39 @@ fun MeloXApp() {
                                 playerTransitionJob = null
                                 playerTransitionState.animateTo(
                                     targetState = !collapse,
-                                    animationSpec = spring(dampingRatio = 1f, stiffness = 420f),
+                                    animationSpec = spring(dampingRatio = 1f, stiffness = 420f, visibilityThreshold = 0.001f),
                                 )
                             },
                         )
+                        }
                     }
                 }
+                }
             }
+        }
         }
     }
 }
 
 @Composable
 private fun visibleTabsFor(source: MusicSource): List<AppTab> {
-    if (source == MusicSource.Bilibili) {
-        return listOf(AppTab.Library, AppTab.Settings)
+    val ordered = if (source == MusicSource.Bilibili) {
+        listOf(AppTab.Library, AppTab.Settings)
+    } else {
+        MeloXSettingsRuntime.tabOrder.mapNotNull { runCatching { AppTab.valueOf(it) }.getOrNull() }
     }
-    return buildList {
-        add(AppTab.Home)
-        add(AppTab.Explore)
-        add(AppTab.Library)
-        if (MeloXSettingsRuntime.podcastsTabPlacement) add(AppTab.Podcasts)
-        if (MeloXSettingsRuntime.downloadsTabPlacement) add(AppTab.Downloads)
-        if (MeloXSettingsRuntime.cloudTabPlacement) add(AppTab.Cloud)
-        add(AppTab.Settings)
-    }
+    return ordered.filter {
+        when (it) {
+            AppTab.Home -> MeloXSettingsRuntime.homeTabEnabled
+            AppTab.Explore -> MeloXSettingsRuntime.exploreTabEnabled
+            AppTab.Library -> MeloXSettingsRuntime.libraryTabEnabled
+            AppTab.Podcasts -> MeloXSettingsRuntime.podcastsEnabled && MeloXSettingsRuntime.podcastsTabPlacement
+            AppTab.Downloads -> MeloXSettingsRuntime.downloadsEnabled && MeloXSettingsRuntime.downloadsTabPlacement
+            AppTab.Cloud -> MeloXSettingsRuntime.cloudMusicEnabled && MeloXSettingsRuntime.cloudTabPlacement
+            AppTab.Settings -> true
+            AppTab.Search -> false
+        }
+    }.let { if (AppTab.Settings in it) it else it + AppTab.Settings }
 }
 
 @Composable
@@ -327,10 +436,18 @@ private fun TabContent(
     source: MusicSource,
     onOpenTool: (String) -> Unit,
     onSourceSelected: (MusicSource) -> Unit,
+    settingsRouteRequest: String? = null,
+    onSettingsRouteConsumed: () -> Unit = {},
 ) {
     val navState = melox.ui.navigation.rememberMeloXNavState()
     var selectedPlaylist by remember { mutableStateOf<NeteasePlaylistSummary?>(null) }
     var selectedAlbum by remember { mutableStateOf<Pair<String, String>?>(null) }
+    LaunchedEffect(settingsRouteRequest) {
+        if (settingsRouteRequest == null) return@LaunchedEffect
+        selectedPlaylist = null
+        selectedAlbum = null
+        navState.navigateToTab(tab)
+    }
     val openPlaylist: (NeteasePlaylistSummary) -> Unit = { playlist ->
         selectedAlbum = null
         selectedPlaylist = playlist
@@ -338,6 +455,13 @@ private fun TabContent(
     val openProviderPlaylist: (MusicPlaylistSummary) -> Unit = { playlist ->
         selectedAlbum = null
         selectedPlaylist = MeloXLegacyUiBridge.playlist(playlist)
+    }
+    MeloXBackHandler(enabled = selectedAlbum != null || selectedPlaylist != null || navState.canGoBack, priority = 10) {
+        when {
+            selectedAlbum != null -> selectedAlbum = null
+            selectedPlaylist != null -> selectedPlaylist = null
+            else -> navState.goBack()
+        }
     }
     Box(Modifier.fillMaxSize()) {
         when (tab) {
@@ -353,12 +477,16 @@ private fun TabContent(
             AppTab.Downloads -> DownloadsScreen(navState = navState)
             AppTab.Cloud -> CloudScreen(navState = navState)
             AppTab.Settings -> SettingsScreen(
+                routeRequest = settingsRouteRequest,
+                onRouteRequestConsumed = onSettingsRouteConsumed,
                 currentSource = source,
                 onSourceSelected = onSourceSelected,
                 onOpenMessages = { navState.navigateTo(Route.Messages) },
                 onOpenServices = { navState.navigateTo(Route.ProviderServices) },
+                onOpenLogin = { navState.navigateTo(Route.Login) },
             )
-            AppTab.Search -> SearchScreen(source = source)
+            AppTab.Search -> SearchScreen(source = source,
+                onSearchExit = { onOpenTool("Home") }, onOpenPodcasts = { onOpenTool("Podcasts") })
         }
         when (navState.currentRoute) {
             Route.Login -> LoginScreen(navState)
@@ -381,3 +509,56 @@ private fun TabContent(
         }
     }
 }
+
+private fun desktopSystemDark(): Boolean? {
+    val property = runCatching {
+        val toolkit = Class.forName("java.awt.Toolkit").getMethod("getDefaultToolkit").invoke(null)
+        toolkit.javaClass.getMethod("getDesktopProperty", String::class.java)
+            .invoke(toolkit, "awt.os.theme") as? String
+    }.getOrNull()
+    if (property != null) {
+        return when {
+            property.contains("dark", ignoreCase = true) -> true
+            property.contains("light", ignoreCase = true) -> false
+            else -> null
+        }
+    }
+    if (!System.getProperty("os.name").orEmpty().lowercase().contains("linux")) return null
+    return runCatching {
+        val process = ProcessBuilder("gsettings", "get", "org.gnome.desktop.interface", "color-scheme").start()
+        val value = process.inputStream.bufferedReader().readText()
+        when {
+            value.contains("prefer-dark") -> true
+            value.contains("prefer-light") || value.contains("default") -> false
+            else -> null
+        }
+    }.getOrNull()
+}
+
+private fun meloXDarkScheme() = darkColorScheme(
+    primary = MeloXColors.Primary,
+    onPrimary = MeloXColors.OnPrimary,
+    background = MeloXColors.Background,
+    surface = MeloXColors.Surface,
+    surfaceVariant = MeloXColors.SurfaceVariant,
+    onBackground = MeloXColors.OnBackground,
+    onSurface = MeloXColors.OnSurface,
+    onSurfaceVariant = MeloXColors.OnSurfaceVariant,
+    outline = MeloXColors.Outline,
+    outlineVariant = MeloXColors.OutlineVariant,
+    error = MeloXColors.Error,
+)
+
+private fun meloXLightScheme() = lightColorScheme(
+    primary = MeloXColors.LightPrimary,
+    onPrimary = MeloXColors.OnPrimary,
+    background = MeloXColors.LightBackground,
+    surface = MeloXColors.LightSurface,
+    surfaceVariant = MeloXColors.LightSurfaceVariant,
+    onBackground = MeloXColors.LightOnBackground,
+    onSurface = MeloXColors.LightOnSurface,
+    onSurfaceVariant = MeloXColors.LightOnSurfaceVariant,
+    outline = MeloXColors.LightSurfaceVariant,
+    outlineVariant = MeloXColors.Separator,
+    error = MeloXColors.LightError,
+)

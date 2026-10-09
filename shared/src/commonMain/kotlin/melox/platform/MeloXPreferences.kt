@@ -23,6 +23,11 @@ expect class MeloXPreferences(name: String) {
     fun contains(key: String): Boolean
     fun putStringSet(key: String, values: Set<String>)
     fun getStringSet(key: String, defaultValue: Set<String>?): Set<String>?
+    /** Commit related values atomically, so crashes cannot expose mixed session/queue state. */
+    fun putValues(values: Map<String, String?>)
 }
 
 expect fun getPreferences(name: String): MeloXPreferences
+
+/** Windows DPAPI-backed account store, with atomic migration of legacy plaintext files. */
+expect fun getSecurePreferences(legacyName: String): MeloXPreferences

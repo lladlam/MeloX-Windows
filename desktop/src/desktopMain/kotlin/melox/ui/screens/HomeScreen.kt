@@ -7,6 +7,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
@@ -34,6 +35,8 @@ import melox.player.AudioPlayer
 import melox.ui.foundation.MeloXSymbol
 import melox.ui.foundation.MeloXSymbolIcon
 import melox.ui.foundation.MeloXIosTopBar
+import melox.ui.glass.MeloXSystemColors
+import melox.ui.glass.meloXGlassSurface
 import melox.ui.theme.MeloXTypography
 import melox.ui.theme.MeloXColors
 
@@ -43,7 +46,7 @@ import melox.ui.theme.MeloXColors
  *
  * Structure (exact Android order):
  *   LazyColumn padding(top=18, bottom=146), spacing 22dp
- *   ├─ MeloXIosTopBar "发现" + account button 42dp glass circle
+ *   ├─ "发现" 34sp Bold + 42dp circular account button
  *   ├─ Greeting headline (17sp SemiBold, α0.58, 20dp)
  *   ├─ HomeQuickActions — 310dp wide cards, aspect 1.48, gradient tiles
  *   ├─ SectionTitle + CollectionRow (246/174dp cards, artwork 174dp)
@@ -69,7 +72,6 @@ private fun homeQuickActions(): List<HomeAction> = listOf(
     HomeAction("私人雷达", "持续发现", "发现符合你口味的歌单", MeloXSymbol.Podcast, listOf(Color(0xFF6B7BFF), Color(0xFF8C52FF))),
     HomeAction("私人漫游", "探索模式", "漫游到新的好音乐", MeloXSymbol.Walk, listOf(Color(0xFF26C6DA), Color(0xFF4285F4))),
     HomeAction("相似歌曲", "从当前歌曲出发", "播放更多相似歌曲", MeloXSymbol.ListBullet, listOf(Color(0xFF58C9A3), Color(0xFF159D9A))),
-    HomeAction("听歌识曲", "快捷工具", "识别环境中正在播放的歌曲", MeloXSymbol.Mic, listOf(Color(0xFF7B61FF), Color(0xFF36C5F0))),
     HomeAction("下载", "本地音乐", "浏览已下载的歌曲", MeloXSymbol.Download, listOf(Color(0xFF0EA5E9), Color(0xFF14B8A6))),
 )
 
@@ -173,28 +175,18 @@ private fun NeteaseHome(
     }
 
     if (content == null && refreshing) {
-        Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) { CircularProgressIndicator(color = HomeAccent) }
+        Box(Modifier.fillMaxSize().background(MeloXColors.pageBackground()), contentAlignment = Alignment.Center) { CircularProgressIndicator(color = HomeAccent) }
         return
     }
 
     LazyColumn(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier.fillMaxSize().background(MeloXColors.pageBackground()),
         contentPadding = PaddingValues(top = 18.dp, bottom = 146.dp),
         verticalArrangement = Arrangement.spacedBy(22.dp),
     ) {
         item {
-            MeloXIosTopBar(title = "发现", actions = {
-                Text(
-                    "刷新",
-                    modifier = Modifier.clickable { scope.launch { refresh(true) } }.padding(horizontal = 8.dp),
-                    color = HomeAccent,
-                    fontSize = 14.sp,
-                )
-                session.profile?.let { profile ->
-                    Box(Modifier.size(42.dp).clip(androidx.compose.foundation.shape.CircleShape)) {
-                        MeloXArtworkImage(profile.avatarUrl, HomeAccent, Modifier.fillMaxSize())
-                    }
-                }
+            MeloXIosTopBar(title = "首页", actions = {
+                session.profile?.let { HomeAccountButton(it.avatarUrl) }
             })
         }
         item {
@@ -202,7 +194,7 @@ private fun NeteaseHome(
                 text = homeGreeting(),
                 modifier = Modifier.padding(horizontal = 20.dp),
                 style = MeloXTypography.headline,
-                color = MeloXColors.OnBackground.copy(alpha = 0.58f),
+                color = MeloXColors.pageOnBackground().copy(alpha = 0.58f),
             )
         }
         if (melox.settings.MeloXSettingsRuntime.homeQuickActionsEnabled) {
@@ -229,7 +221,7 @@ private fun NeteaseHome(
             if (block.songs.isNotEmpty()) item { NeteaseSongCarousel(block.songs) { song -> melox.playback.PlaybackCommands.playQueue(block.songs, song.id) } }
         }
         if (blocks != null && blocks.isEmpty() && error == null) {
-            item { Text("网易云音乐当前没有返回可展示内容", Modifier.padding(horizontal = 20.dp), color = MeloXColors.OnBackground.copy(alpha = .5f)) }
+            item { Text("网易云音乐当前没有返回可展示内容", Modifier.padding(horizontal = 20.dp), color = MeloXColors.pageOnBackground().copy(alpha = .5f)) }
         }
         error?.let { message -> item { Text(message, Modifier.padding(horizontal = 20.dp), color = MeloXColors.Error, fontSize = 13.sp) } }
     }
@@ -258,7 +250,6 @@ private fun neteaseActions(): List<NeteaseAction> = buildList {
         val id = melox.playback.PlaybackCommands.currentSongId() ?: error("请先播放一首歌曲")
         c.similarSongsBlocking(id)
     }))
-    add(NeteaseAction("听歌识曲", "快捷工具", "识别环境中正在播放的歌曲", MeloXSymbol.Mic, listOf(Color(0xFF7B61FF), Color(0xFF36C5F0)), tool = "Recognition"))
     add(NeteaseAction("私信", "网易云社交", "查看联系人和私信会话", MeloXSymbol.Message, listOf(Color(0xFFFF6B8B), Color(0xFFFF3B30)), tool = "Messages"))
     if (melox.settings.MeloXSettingsRuntime.podcastsEnabled && melox.settings.MeloXSettingsRuntime.podcastsHomePlacement)
         add(NeteaseAction("播客", "首页页面", "浏览播客与节目", MeloXSymbol.Podcast, listOf(Color(0xFF8B5CF6), Color(0xFFEC4899)), tool = "Podcasts"))
@@ -268,16 +259,8 @@ private fun neteaseActions(): List<NeteaseAction> = buildList {
         add(NeteaseAction("云盘", "个人音乐", "打开网易云音乐云盘", MeloXSymbol.Drive, listOf(Color(0xFF64748B), Color(0xFF6366F1)), tool = "Cloud"))
 }
 
-private fun homeGreeting(): String {
-    val hour = java.time.LocalTime.now().hour
-    return when {
-        hour < 5 -> "夜深了"
-        hour < 11 -> "早上好"
-        hour < 14 -> "中午好"
-        hour < 18 -> "下午好"
-        else -> "晚上好"
-    }
-}
+// Android's home_greeting is a localized resource, not a clock-based greeting.
+private fun homeGreeting(): String = "下午好"
 
 @Composable
 private fun DailySongsPage(songs: List<melox.model.SearchSong>, onBack: () -> Unit) {
@@ -305,7 +288,7 @@ private fun NeteaseCollectionRow(values: List<melox.library.NeteasePlaylistSumma
                 }
                 Text(playlist.name, Modifier.padding(top = 7.dp), maxLines = 2, overflow = TextOverflow.Ellipsis, fontSize = 15.sp, lineHeight = 19.sp, fontWeight = FontWeight.SemiBold)
                 if (melox.settings.MeloXSettingsRuntime.showPlaylistPlayCount && playlist.playCount > 0L) {
-                    Text(compactPlayCount(playlist.playCount) + " 次播放", color = MeloXColors.OnBackground.copy(alpha = .42f), fontSize = 11.sp)
+                    Text(compactPlayCount(playlist.playCount) + " 次播放", color = MeloXColors.pageOnBackground().copy(alpha = .42f), fontSize = 11.sp)
                 }
             }
         }
@@ -336,7 +319,7 @@ private fun NeteaseSongRow(song: melox.model.SearchSong, onClick: () -> Unit) {
         Spacer(Modifier.width(12.dp))
         Column(Modifier.weight(1f)) {
             Text(song.name, maxLines = 1, overflow = TextOverflow.Ellipsis, fontWeight = FontWeight.SemiBold)
-            Text(song.artists, maxLines = 1, overflow = TextOverflow.Ellipsis, color = MeloXColors.OnBackground.copy(alpha = .48f), fontSize = 13.sp)
+            Text(song.artists, maxLines = 1, overflow = TextOverflow.Ellipsis, color = MeloXColors.pageOnBackground().copy(alpha = .48f), fontSize = 13.sp)
         }
     }
 }
@@ -366,13 +349,20 @@ private fun ProviderHome(source: MusicSource) {
     val rankings = feed?.rankings.orEmpty()
     val newSongs = feed?.newSongs.orEmpty()
     LazyColumn(Modifier.fillMaxSize(), contentPadding = PaddingValues(top = 18.dp, bottom = 146.dp), verticalArrangement = Arrangement.spacedBy(22.dp)) {
-        item { MeloXIosTopBar(title = "发现") }
-        item { Text(homeGreeting(), Modifier.padding(horizontal = 20.dp), style = MeloXTypography.headline, color = MeloXColors.OnBackground.copy(alpha = 0.58f)) }
+        item {
+            Text(
+                "发现",
+                Modifier.fillMaxWidth().padding(horizontal = 20.dp),
+                style = MeloXTypography.largeTitle,
+                color = MeloXColors.pageOnBackground(),
+            )
+        }
+        item { Text(homeGreeting(), Modifier.padding(horizontal = 20.dp), style = MeloXTypography.headline, color = MeloXColors.pageOnBackground().copy(alpha = 0.58f)) }
         if (recommended.isNotEmpty()) { item { SectionTitle("推荐歌单", source.displayName) }; item { CollectionRow(recommended) {} } }
         if (rankings.isNotEmpty()) { item { SectionTitle("排行榜", source.displayName) }; item { CollectionRowRankings(rankings) {} } }
         if (newSongs.isNotEmpty()) { item { SectionTitle("为你推荐", "新歌") }; item { ThreeLineSongCarousel(newSongs) { track -> melox.playback.ProviderPlaybackCommands.playQueue(newSongs, track.id) } } }
         if (recommended.isEmpty() && rankings.isEmpty() && newSongs.isEmpty()) {
-            item { Text(error ?: "${source.displayName} 当前没有返回可展示内容", Modifier.padding(horizontal = 20.dp), color = if (error != null) MeloXColors.Error else MeloXColors.OnBackground.copy(alpha = .5f)) }
+            item { Text(error ?: "${source.displayName} 当前没有返回可展示内容", Modifier.padding(horizontal = 20.dp), color = if (error != null) MeloXColors.Error else MeloXColors.pageOnBackground().copy(alpha = .5f)) }
         }
     }
 }
@@ -395,7 +385,7 @@ private fun HomeQuickActionsRow(
             ) {
                 Text(
                     action.eyebrow.uppercase(),
-                    color = MeloXColors.OnBackground.copy(alpha = .55f),
+                    color = MeloXColors.pageOnBackground().copy(alpha = .55f),
                     fontSize = 11.sp,
                     fontWeight = FontWeight.SemiBold,
                 )
@@ -408,7 +398,7 @@ private fun HomeQuickActionsRow(
                 Text(
                     action.subtitle,
                     modifier = Modifier.padding(top = 2.dp),
-                    color = MeloXColors.OnBackground.copy(alpha = .52f),
+                    color = MeloXColors.pageOnBackground().copy(alpha = .52f),
                     fontSize = 14.sp,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
@@ -455,15 +445,13 @@ private fun SectionTitle(title: String, trailing: String, modifier: Modifier = M
     ) {
         Text(
             text = title,
-            fontSize = 20.sp,
-            lineHeight = 24.sp,
-            fontWeight = FontWeight.Bold,
-            color = MeloXColors.OnBackground,
+            style = MeloXTypography.title2,
+            color = MeloXColors.pageOnBackground(),
         )
         Text(
             text = trailing,
-            color = MeloXColors.Primary,
-            fontSize = 14.sp,
+            color = MeloXColors.pageOnBackground().copy(alpha = .42f),
+            fontSize = 13.sp,
         )
     }
 }
@@ -563,6 +551,43 @@ private fun CollectionCard(
             lineHeight = 19.sp,
             fontWeight = FontWeight.SemiBold,
         )
+        val playCount = value.playCount ?: 0L
+        if (melox.settings.MeloXSettingsRuntime.showPlaylistPlayCount && playCount > 0L) {
+            Text(
+                "${compactPlayCount(playCount)} 次播放",
+                color = MeloXColors.pageOnBackground().copy(alpha = .42f),
+                fontSize = 11.sp,
+            )
+        }
+    }
+}
+
+@Composable
+private fun HomeAccountButton(avatarUrl: String?) {
+    Box(
+        modifier = Modifier
+            .size(42.dp)
+            .meloXGlassSurface(
+                shape = CircleShape,
+                tint = MeloXSystemColors.Red.copy(alpha = 0.12f),
+                surfaceColor = MeloXColors.Surface.copy(alpha = 0.18f),
+            ),
+        contentAlignment = Alignment.Center,
+    ) {
+        if (avatarUrl.isNullOrBlank()) {
+            MeloXSymbolIcon(
+                symbol = MeloXSymbol.Person,
+                modifier = Modifier.size(25.dp),
+                color = MeloXSystemColors.Red,
+                size = 25,
+            )
+        } else {
+            MeloXArtworkImage(
+                url = avatarUrl,
+                fallbackColor = MeloXSystemColors.Red,
+                modifier = Modifier.fillMaxSize().clip(CircleShape),
+            )
+        }
     }
 }
 
@@ -623,7 +648,7 @@ private fun SongRow(song: MusicTrack, onClick: () -> Unit) {
                 song.artistText,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
-                color = MeloXColors.OnBackground.copy(alpha = .48f),
+                color = MeloXColors.pageOnBackground().copy(alpha = .48f),
                 fontSize = 13.sp,
             )
         }

@@ -66,7 +66,7 @@ MeloX Windows 基于 [lladlam/MeloX-Android](https://github.com/lladlam/MeloX-An
 | 网络请求 | OkHttp |
 | 歌词解析 | 自研 LRC / YRC / TTML 解析器 |
 | 异步任务 | Kotlin Coroutines |
-| 音频播放 | 待接入（mpv / javax.sound） |
+| 音频播放 | 随应用打包的 FFmpeg 解码为 PCM，Java Sound 输出 |
 
 ## iOS → Windows 平台映射
 
@@ -74,7 +74,7 @@ MeloX Windows 基于 [lladlam/MeloX-Android](https://github.com/lladlam/MeloX-An
 | --- | --- |
 | SwiftUI | Compose Multiplatform Desktop |
 | NavigationStack | Compose Navigation |
-| AVPlayer / AVFoundation | 待接入音频后端 |
+| AVPlayer / AVFoundation | FFmpeg / Java Sound（Windows 实机验收进行中） |
 | MPNowPlayingInfoCenter | 系统媒体控制（待实现） |
 | SwiftUI Mesh / Flowing Light | Compose Canvas 动态取色背景 |
 | Live Activity / Dynamic Island | 系统通知（待实现） |
@@ -87,11 +87,13 @@ MeloX Windows 基于 [lladlam/MeloX-Android](https://github.com/lladlam/MeloX-An
 
 ## 本地构建
 
-1. 克隆仓库：
+1. 安装 [Git LFS](https://git-lfs.com/) 并克隆仓库（FFmpeg 二进制使用 LFS 保存）：
 
    ```bash
-   git clone https://github.com/lladlam/MeloX-Windows.git
-   cd MeloX-Windows
+    git lfs install
+    git clone https://github.com/lladlam/MeloX-Windows.git
+    cd MeloX-Windows
+    git lfs pull
    ```
 
 2. 构建共享模块：
@@ -103,8 +105,20 @@ MeloX Windows 基于 [lladlam/MeloX-Android](https://github.com/lladlam/MeloX-An
 3. 构建桌面应用：
 
    ```bash
-   ./gradlew :desktop:run
-   ```
+    ./gradlew :desktop:run
+    ```
+
+### 迁移验证
+
+当前 1:1 对照锁定 Android 提交 `94e17c920bf554966584955afa2bd2ee92580a8b`。
+状态矩阵和回放说明位于 [`parity/94e17c9/`](parity/94e17c9/)。
+
+```bash
+./gradlew :shared:desktopTest :desktop:desktopJar
+```
+
+`desktop:captureUi` 在生产 `MeloXApp` 中发送物理输入、请求真实歌曲，并保存截图、
+逐场景状态、语义节点和断言。编译及控制器测试通过不等同于 UI/音频实机 1:1 验收。
 
 ## 项目结构
 

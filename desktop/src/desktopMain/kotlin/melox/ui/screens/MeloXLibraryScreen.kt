@@ -59,14 +59,23 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import melox.account.NeteaseSessionStore
 import melox.library.NeteaseLibraryCache
 import melox.library.NeteaseLibraryClient
 import melox.library.NeteaseLibrarySnapshot
 import melox.library.NeteasePlaylistSummary
 import melox.model.SearchSong
+import melox.music.model.MusicAccountSummary
 import melox.music.model.MusicSource
+import melox.music.provider.LocalAggregationCapability
+import melox.music.provider.MeloXLegacyUiBridge
+import melox.music.provider.MeloXMusicProviders
+import melox.music.provider.MusicProviderSelectionStore
+import melox.music.provider.PlaylistCapability
+import melox.music.provider.UserLibraryCapability
 import melox.playback.PlaybackCommands
 import melox.ui.foundation.MeloXMotion
 import melox.ui.foundation.MeloXSymbolIcon
@@ -97,49 +106,118 @@ fun LibraryScreen(
 ) {
     val scope = rememberCoroutineScope()
     val session = remember { NeteaseSessionStore() }
+    val source = MusicProviderSelectionStore.selectedSource()
     val client = remember {
         NeteaseLibraryClient(cookieProvider = { NeteaseSessionStore.readCookie() })
     }
+    val provider = remember(source) {
+        if (source == MusicSource.Netease) null else MeloXMusicProviders.create().require(source)
+    }
+    val providerLibrary = provider as? UserLibraryCapability
     val cache = remember { NeteaseLibraryCache() }
 
-    var selectedPage by rememberSaveable { mutableStateOf(MeloXLibraryPage.Songs) }
-    var selectedPlaylist by remember(session.cookie) { mutableStateOf<NeteasePlaylistSummary?>(null) }
-    var snapshot by remember(session.cookie) { mutableStateOf<NeteaseLibrarySnapshot?>(null) }
-    var loading by remember(session.cookie) { mutableStateOf(false) }
-    var errorMessage by remember(session.cookie) { mutableStateOf<String?>(null) }
+    val initialPage = if (source == MusicSource.Netease || source == MusicSource.Local) {
+        MeloXLibraryPage.Songs
+    } else {
+        MeloXLibraryPage.Playlists
+    }
+    var selectedPage by rememberSaveable(source) { mutableStateOf(initialPage) }
+    var selectedPlaylist by remember(source, session.cookie) { mutableStateOf<NeteasePlaylistSummary?>(null) }
+    var snapshot by remember(source, session.cookie) { mutableStateOf<NeteaseLibrarySnapshot?>(null) }
+    var providerAccount by remember(source) { mutableStateOf<MusicAccountSummary?>(null) }
+    var loading by remember(source, session.cookie) { mutableStateOf(source != MusicSource.Netease) }
+    var errorMessage by remember(source, session.cookie) { mutableStateOf<String?>(null) }
     val playlistListState = rememberLazyListState()
 
     suspend fun refreshLibrary() {
         loading = true
         errorMessage = null
-        if (!session.isLoggedIn) {
-            loading = false
-            return
-        }
-        if (session.profile == null) session.refreshProfile(force = true)
-        val userId = session.profile?.userId
-        if (userId == null) {
-            loading = false
-            return
-        }
-        runCatching { client.snapshot(userId) }
-            .onSuccess {
-                snapshot = it
-                cache.saveSnapshot(userId, it)
+        if (source == MusicSource.Netease) {
+            if (!session.isLoggedIn) {
+                loading = false
+                return
             }
-            .onFailure { errorMessage = it.message ?: "音乐库加载失败" }
+            if (session.profile == null) session.refreshProfile(force = true)
+            val userId = session.profile?.userId
+            if (userId == null) {
+                loading = false
+                return
+            }
+            runCatching { client.snapshot(userId) }
+                .onSuccess {
+                    snapshot = it
+                    cache.saveSnapshot(userId, it)
+                }
+                .onFailure { errorMessage = it.message ?: "音乐库加载失败" }
+        } else if (source == MusicSource.Local) {
+            runCatching {
+                withContext(Dispatchers.IO) {
+                    val tracks = (provider as? LocalAggregationCapability)
+                        ?.aggregationTracks(page = 1, pageSize = 200)
+                        ?.items
+                        ?: error("本地音乐不可用")
+                    providerAccount = MusicAccountSummary(
+                        source = MusicSource.Local,
+                        id = "local",
+                        displayName = "本地音乐",
+                    )
+                    snapshot = NeteaseLibrarySnapshot(
+                        likedSongs = tracks.map(MeloXLegacyUiBridge::track),
+                        playlists = emptyList(),
+                        recentSongs = emptyList(),
+                        likedPlaylistId = null,
+                    )
+                }
+            }.onFailure {
+                providerAccount = null
+                snapshot = null
+                errorMessage = it.message ?: "本地音乐加载失败"
+            }
+        } else {
+            val capability = providerLibrary
+            if (capability == null) {
+                providerAccount = null
+                snapshot = null
+                errorMessage = "${source.displayName} 不支持音乐库"
+                loading = false
+                return
+            }
+            runCatching {
+                withContext(Dispatchers.IO) {
+                    val account = capability.accountSummary()
+                    val playlists = if (account != null && provider is PlaylistCapability) {
+                        capability.userPlaylists(page = 1, pageSize = 100).items
+                    } else {
+                        emptyList()
+                    }
+                    account to playlists
+                }
+            }.onSuccess { (account, playlists) ->
+                providerAccount = account
+                snapshot = if (account == null) null else MeloXLegacyUiBridge.library(playlists)
+            }.onFailure { failure ->
+                providerAccount = null
+                snapshot = null
+                errorMessage = failure.message ?: "${source.displayName} 音乐库加载失败"
+            }
+        }
         loading = false
     }
 
-    LaunchedEffect(session.cookie, session.profile?.userId) {
-        val userId = session.profile?.userId ?: return@LaunchedEffect
-        cache.loadSnapshot(userId)?.let { snapshot = it }
-        if (NeteaseLibraryCache.beginLibraryColdStartRefresh(userId)) {
+    LaunchedEffect(source, session.cookie, session.profile?.userId) {
+        if (source == MusicSource.Netease) {
+            val userId = session.profile?.userId ?: return@LaunchedEffect
+            cache.loadSnapshot(userId)?.let { snapshot = it }
+            if (NeteaseLibraryCache.beginLibraryColdStartRefresh(userId)) {
+                refreshLibrary()
+            }
+        } else {
             refreshLibrary()
         }
     }
 
-    LaunchedEffect(session.cookie) {
+    LaunchedEffect(source, session.cookie) {
+        if (source != MusicSource.Netease) return@LaunchedEffect
         if (session.isLoggedIn && session.profile == null) {
             session.refreshProfile()
             if (session.profile != null) refreshLibrary()
@@ -147,10 +225,27 @@ fun LibraryScreen(
         if (!session.isLoggedIn) loading = false
     }
 
-    if (!session.isLoggedIn) {
+    LaunchedEffect(source) {
+        if (!selectedPage.isEnabled(source)) {
+            selectedPage = if (source == MusicSource.Netease || source == MusicSource.Local) {
+                MeloXLibraryPage.Songs
+            } else {
+                MeloXLibraryPage.Playlists
+            }
+        }
+    }
+
+    if (source == MusicSource.Netease && !session.isLoggedIn) {
         MeloXLibraryLoginUnavailable(
             onLogin = { navState?.navigateTo(melox.ui.navigation.Route.Login) },
-            sourceName = "网易云音乐",
+            sourceName = source.displayName,
+        )
+        return
+    }
+    if (source != MusicSource.Netease && source != MusicSource.Local && !loading && providerAccount == null && errorMessage == null) {
+        MeloXLibraryLoginUnavailable(
+            onLogin = { navState?.navigateTo(melox.ui.navigation.Route.Login) },
+            sourceName = source.displayName,
         )
         return
     }
@@ -206,7 +301,7 @@ fun LibraryScreen(
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
-                        .background(MeloXColors.Background)
+                        .background(MeloXColors.pageBackground())
                         .statusBarsPadding(),
                 ) {
                     MeloXIosTopBar(
@@ -216,6 +311,7 @@ fun LibraryScreen(
                     MeloXLibrarySegmentedPicker(
                         selected = selectedPage,
                         onSelected = { selectedPage = it },
+                        source = source,
                         modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
                     )
 
@@ -227,7 +323,7 @@ fun LibraryScreen(
                             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                                 Text(
                                     text = errorMessage.orEmpty(),
-                                    color = MeloXColors.OnBackground.copy(alpha = 0.55f),
+                                    color = MeloXColors.pageOnBackground().copy(alpha = 0.55f),
                                     textAlign = TextAlign.Center,
                                 )
                                 Text(
@@ -373,7 +469,7 @@ private fun MeloXLibraryLoginUnavailable(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(MeloXColors.Background)
+            .background(MeloXColors.pageBackground())
             .statusBarsPadding()
             .padding(horizontal = 20.dp),
     ) {
@@ -391,7 +487,7 @@ private fun MeloXLibraryLoginUnavailable(
                 Text(
                     "登录后可读取收藏歌曲、歌单和播放记录。",
                     modifier = Modifier.padding(top = 8.dp),
-                    color = MeloXColors.OnBackground.copy(alpha = 0.50f),
+                    color = MeloXColors.pageOnBackground().copy(alpha = 0.50f),
                     textAlign = TextAlign.Center,
                 )
                 if (onLogin != null) {
@@ -414,7 +510,7 @@ private fun MeloXLibraryLoginUnavailable(
                         contentAlignment = Alignment.Center,
                     ) {
                         Text(
-                            "登录网易云音乐",
+                            "登录$sourceName",
                             color = Color.White,
                             fontWeight = FontWeight.SemiBold,
                         )
@@ -433,9 +529,10 @@ private fun MeloXLibraryLoginUnavailable(
 private fun MeloXLibrarySegmentedPicker(
     selected: MeloXLibraryPage,
     onSelected: (MeloXLibraryPage) -> Unit,
+    source: MusicSource,
     modifier: Modifier = Modifier,
 ) {
-    val pages = MeloXLibraryPage.entries.filter { it.isEnabled(MusicSource.Netease) }
+    val pages = MeloXLibraryPage.entries.filter { it.isEnabled(source) }
     val panelShape = MeloXShapes.compact
     val lensShape = RoundedCornerShape(15.dp)
     val dark = true // MeloX is always dark on desktop
@@ -450,7 +547,7 @@ private fun MeloXLibrarySegmentedPicker(
         label = "library-segment-lens-position",
     )
     val panelTint = MeloXColors.Surface.copy(alpha = 0.10f)
-    val panelSurface = MeloXColors.OnBackground.copy(alpha = 0.055f)
+    val panelSurface = MeloXColors.pageOnBackground().copy(alpha = 0.055f)
     val selectionTint = if (dark) {
         Color.White.copy(alpha = 0.22f)
     } else {
@@ -527,7 +624,7 @@ private fun MeloXLibrarySegmentedPicker(
                         text = page.title,
                         fontSize = 13.sp,
                         fontWeight = if (isSelected) FontWeight.SemiBold else FontWeight.Medium,
-                        color = MeloXColors.OnBackground,
+                        color = MeloXColors.pageOnBackground(),
                     )
                 }
             }
@@ -546,7 +643,7 @@ private fun MeloXLibrarySongsPage(
         Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
             Text(
                 "暂无歌曲",
-                color = MeloXColors.OnBackground.copy(alpha = 0.48f),
+                color = MeloXColors.pageOnBackground().copy(alpha = 0.48f),
                 fontSize = 17.sp,
             )
         }
@@ -574,7 +671,7 @@ private fun MeloXLibrarySongsPage(
                         modifier = Modifier.size(22.dp),
                         color = Color(0xFFFF3B30),
                     )
-                    Text("心动模式", fontSize = 17.sp, color = MeloXColors.OnBackground)
+                    Text("心动模式", fontSize = 17.sp, color = MeloXColors.pageOnBackground())
                 }
             }
             MeloXInsetDivider(leading = 68.dp)
@@ -605,7 +702,7 @@ private fun MeloXPlayAllRow(onClick: () -> Unit) {
             text = "播放全部",
             fontSize = 17.sp,
             fontWeight = FontWeight.Normal,
-            color = MeloXColors.OnBackground,
+            color = MeloXColors.pageOnBackground(),
         )
     }
 }
@@ -641,7 +738,7 @@ private fun MeloXLibraryTrackRow(
                 lineHeight = 21.sp,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
-                color = MeloXColors.OnBackground,
+                color = MeloXColors.pageOnBackground(),
             )
             Text(
                 text = song.artists,
@@ -649,14 +746,14 @@ private fun MeloXLibraryTrackRow(
                 lineHeight = 16.sp,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
-                color = MeloXColors.OnBackground.copy(alpha = 0.46f),
+                color = MeloXColors.pageOnBackground().copy(alpha = 0.46f),
             )
         }
         if (song.durationMs > 0L) {
             Text(
                 text = meloXFormatDuration(song.durationMs),
                 fontSize = 13.sp,
-                color = MeloXColors.OnBackground.copy(alpha = 0.46f),
+                color = MeloXColors.pageOnBackground().copy(alpha = 0.46f),
             )
         }
     }
@@ -675,7 +772,7 @@ private fun MeloXLibraryPlaylistsPage(
         Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
             Text(
                 "还没有收藏歌单",
-                color = MeloXColors.OnBackground.copy(alpha = 0.48f),
+                color = MeloXColors.pageOnBackground().copy(alpha = 0.48f),
                 fontSize = 17.sp,
             )
         }
@@ -692,7 +789,7 @@ private fun MeloXLibraryPlaylistsPage(
                 text = "歌单",
                 modifier = Modifier.padding(start = 20.dp, top = 8.dp, bottom = 6.dp),
                 fontSize = 13.sp,
-                color = MeloXColors.OnBackground.copy(alpha = 0.50f),
+                color = MeloXColors.pageOnBackground().copy(alpha = 0.50f),
             )
         }
         items(playlists, key = { it.id }) { playlist ->
@@ -740,13 +837,13 @@ private fun MeloXLibraryPlaylistsPage(
                     Text(
                         "${playlist.trackCount} 首歌曲",
                         fontSize = 12.sp,
-                        color = MeloXColors.OnBackground.copy(alpha = 0.48f),
+                        color = MeloXColors.pageOnBackground().copy(alpha = 0.48f),
                     )
                 }
                 MeloXActionIcon(
                     "›",
                     Modifier.size(18.dp),
-                    MeloXColors.OnBackground.copy(alpha = 0.40f),
+                    MeloXColors.pageOnBackground().copy(alpha = 0.40f),
                 )
             }
             MeloXInsetDivider(leading = 84.dp)
@@ -759,7 +856,7 @@ private fun MeloXInsetDivider(leading: androidx.compose.ui.unit.Dp) {
     HorizontalDivider(
         modifier = Modifier.padding(start = leading, end = 18.dp),
         thickness = 0.6.dp,
-        color = MeloXColors.OnBackground.copy(alpha = 0.12f),
+        color = MeloXColors.pageOnBackground().copy(alpha = 0.12f),
     )
 }
 

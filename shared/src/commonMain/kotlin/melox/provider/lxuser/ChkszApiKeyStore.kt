@@ -1,6 +1,6 @@
 package melox.provider.lxuser
 
-import melox.platform.getPreferences
+import melox.platform.getSecurePreferences as getPreferences
 
 object ChkszApiKeyStore {
     private const val NAME = "melox_chksz"

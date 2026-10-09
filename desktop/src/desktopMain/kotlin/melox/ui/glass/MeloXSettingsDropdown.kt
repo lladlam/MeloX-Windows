@@ -37,7 +37,10 @@ import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
@@ -115,6 +118,7 @@ fun <T> MeloXSettingsDropdown(
                     selected = selected,
                     onSelected = onSelected,
                     enabled = enabled,
+                    title = title,
                 )
             },
             showTopSeparator = effectiveSeparator,
@@ -188,6 +192,7 @@ private fun <T> MeloXPopupSelector(
     selected: T,
     onSelected: (T) -> Unit,
     enabled: Boolean,
+    title: String,
 ) {
     var expanded by remember { mutableStateOf(false) }
     var popupAlive by remember { mutableStateOf(false) }
@@ -215,6 +220,7 @@ private fun <T> MeloXPopupSelector(
     Box(Modifier.onSizeChanged { anchorSize = it }) {
         Row(
             Modifier
+                .testTag("settings-selector:$title")
                 .graphicsLayer { alpha = if (expanded) 0f else 1f }
                 .clickable(
                     enabled = enabled,
@@ -356,6 +362,7 @@ private fun MeloXPopupMenuItem(title: String, checked: Boolean, enabled: Boolean
         Modifier
             .fillMaxWidth()
             .height(44.dp)
+            .testTag("settings-option:$title").semantics { selected = checked }
             .background(Color.Black.copy(alpha = .15f * highlight.pressProgress), MeloXShapes.capsule)
             .clickable(enabled = enabled, interactionSource = null, indication = null, onClick = onClick)
             .then(if (enabled) highlight.modifier else Modifier)

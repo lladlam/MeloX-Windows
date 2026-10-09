@@ -13,8 +13,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import melox.ui.theme.MeloXColors
 import melox.ui.theme.MeloXLanTingProFontFamily
@@ -25,14 +28,14 @@ fun MeloXIosTopBar(
     title: String,
     modifier: Modifier = Modifier,
     onBack: (() -> Unit)? = null,
+    contentPadding: PaddingValues = PaddingValues(horizontal = 20.dp),
     actions: @Composable RowScope.() -> Unit = {},
 ) {
-    Column(modifier = modifier.fillMaxWidth()) {
+    Column(modifier = modifier.fillMaxWidth().padding(contentPadding)) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(if (onBack != null) 56.dp else 44.dp)
-                .padding(horizontal = 20.dp),
+                .height(if (onBack != null) 56.dp else 44.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             if (onBack != null) {
@@ -46,17 +49,33 @@ fun MeloXIosTopBar(
                 )
                 Spacer(modifier = Modifier.width(8.dp))
             }
-            Text(
+            if (onBack != null) Text(
                 text = title,
                 style = MeloXTypography.largeTitle,
-                color = MeloXColors.OnBackground,
+                color = MaterialTheme.colorScheme.onBackground,
                 modifier = Modifier.weight(1f),
-            )
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+            ) else Spacer(Modifier.weight(1f))
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 actions()
             }
         }
+        if (onBack == null) Text(
+            title, style = MeloXTypography.largeTitle,
+            color = MaterialTheme.colorScheme.onBackground,
+            maxLines = 1, overflow = TextOverflow.Ellipsis,
+        )
     }
+}
+
+@Composable
+fun MeloXIosGroupedList(
+    modifier: Modifier = Modifier,
+    surfaceColor: Color = MaterialTheme.colorScheme.surface,
+    content: @Composable ColumnScope.() -> Unit,
+) {
+    Column(modifier.fillMaxWidth().clip(RoundedCornerShape(28.dp)).background(surfaceColor), content = content)
 }
 
 @Composable
@@ -69,14 +88,27 @@ fun MeloXIosListRow(
     trailingContent: @Composable (() -> Unit)? = null,
     showChevron: Boolean = true,
     onClick: (() -> Unit)? = null,
+    leading: (@Composable () -> Unit)? = null,
+    detail: String? = null,
+    chevronTint: Color = melox.ui.glass.MeloXSystemColors.Red.copy(alpha = 0.88f),
+    showTopSeparator: Boolean = false,
 ) {
     val interactionSource = remember { MutableInteractionSource() }
     val isHovered by interactionSource.collectIsHoveredAsState()
+    val separator = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.10f)
 
     Row(
         modifier = modifier
             .fillMaxWidth()
             .height(if (subtitle != null) 68.dp else 56.dp)
+            .drawBehind {
+                if (showTopSeparator) drawLine(
+                    color = separator,
+                    start = Offset(16.dp.toPx(), 0f),
+                    end = Offset(size.width - 16.dp.toPx(), 0f),
+                    strokeWidth = 1.dp.toPx(),
+                )
+            }
             .hoverable(interactionSource)
             .then(
                 if (onClick != null) Modifier.clickable(interactionSource = interactionSource, indication = null, onClick = onClick)
@@ -88,32 +120,38 @@ fun MeloXIosListRow(
             .padding(horizontal = 16.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        if (leadingIcon != null) {
+        if (leading != null) {
+            leading()
+            Spacer(Modifier.width(12.dp))
+        } else if (leadingIcon != null) {
             MeloXSymbolIcon(symbol = leadingIcon, color = leadingIconColor, size = 22)
             Spacer(modifier = Modifier.width(12.dp))
         }
-        Column(modifier = Modifier.weight(1f)) {
+        Column(modifier = Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(2.dp)) {
             Text(
                 text = title,
                 style = MeloXTypography.body,
-                color = MeloXColors.OnSurface,
+                color = MaterialTheme.colorScheme.onBackground,
             )
             if (subtitle != null) {
                 Text(
                     text = subtitle,
                     style = MeloXTypography.subheadline,
-                    color = MeloXColors.OnSurfaceVariant,
+                    color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.52f),
                     maxLines = 2,
                 )
             }
         }
+        if (detail != null) Text(detail, style = MeloXTypography.subheadline, color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.52f))
         if (trailingContent != null) {
             trailingContent()
         } else if (showChevron && onClick != null) {
+            Spacer(Modifier.width(8.dp))
             MeloXSymbolIcon(
                 symbol = MeloXSymbol.ChevronRight,
-                color = MeloXColors.Primary.copy(alpha = 0.88f),
-                size = 20,
+                 color = chevronTint,
+                 size = 20,
+                 iconSize = 19,
             )
         }
     }

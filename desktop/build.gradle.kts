@@ -17,10 +17,13 @@ kotlin {
 
     sourceSets {
         val desktopMain by getting {
+            resources.srcDir("src/main/resources")
             dependencies {
                 implementation(project(":shared"))
                 implementation(libs.kotlinx.coroutines)
+                implementation(libs.kotlinx.coroutines.swing)
                 implementation(libs.okhttp)
+                implementation(libs.org.json)
                 implementation(compose.ui)
                 implementation(compose.runtime)
                 implementation(compose.material3)
@@ -46,7 +49,8 @@ compose.desktop {
                 "jdk.unsupported",
                 "jdk.crypto.ec",
                 "jdk.localedata",
-                "jdk.accessibility"
+                "jdk.accessibility",
+                "jdk.httpserver"
             )
             windows {
                 menuGroup = "MeloX"
@@ -56,4 +60,16 @@ compose.desktop {
             }
         }
     }
+}
+
+tasks.register<JavaExec>("captureUi") {
+    group = "verification"
+    description = "Capture the production app offscreen and replay coordinate clicks."
+    dependsOn("desktopMainClasses")
+    val compilation = kotlin.targets.getByName("desktop").compilations.getByName("main")
+    classpath = files(compilation.output.allOutputs, compilation.runtimeDependencyFiles)
+    mainClass.set("melox.validation.MeloXVisualCaptureKt")
+    systemProperty("java.awt.headless", "true")
+    systemProperty("user.home", providers.gradleProperty("captureHome").getOrElse(layout.buildDirectory.dir("parity/home").get().asFile.absolutePath))
+    args(providers.gradleProperty("captureArgs").getOrElse("").split(' ').filter { it.isNotBlank() })
 }

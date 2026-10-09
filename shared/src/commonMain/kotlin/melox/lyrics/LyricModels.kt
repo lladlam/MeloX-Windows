@@ -59,6 +59,7 @@ data class LyricLine(
     val translation: String? = null,
     val romanization: String? = null,
     val romanizationSyllables: List<LyricSyllable> = emptyList(),
+    val adaptTranslation: Boolean = false,
     val agent: LyricAgent? = null,
     val timingKind: LyricTimingKind = LyricTimingKind.Precise,
     val accompaniment: List<LyricAccompaniment> = emptyList(),
@@ -294,19 +295,21 @@ object NeteaseLyricParser {
         val offset = estimateSecondaryOffset(primary, candidates)
         val adjusted = candidates.map { it.shiftBy(-offset) }
         val result = MutableList<LyricLine?>(primary.size) { null }
-        var cursor = 0
-        for ((index, target) in primary.withIndex()) {
-            while (cursor + 1 < adjusted.size &&
-                kotlin.math.abs(adjusted[cursor + 1].timeMs - target.timeMs) <=
-                kotlin.math.abs(adjusted[cursor].timeMs - target.timeMs)
-            ) {
-                cursor++
+        // Merge both timelines independently: headers and untranslated verses
+        // must not consume the annotation belonging to the following line.
+        var target = 0
+        var candidate = 0
+        while (target < primary.size && candidate < adjusted.size) {
+            val delta = adjusted[candidate].timeMs - primary[target].timeMs
+            when {
+                delta > ANNOTATION_TOLERANCE_MS -> target++
+                delta < -ANNOTATION_TOLERANCE_MS -> candidate++
+                else -> {
+                    result[target] = adjusted[candidate]
+                    target++
+                    candidate++
+                }
             }
-            val candidate = adjusted[cursor]
-            if (kotlin.math.abs(candidate.timeMs - target.timeMs) <= ANNOTATION_TOLERANCE_MS) {
-                result[index] = candidate
-            }
-            if (cursor < adjusted.lastIndex) cursor++
         }
         return result
     }
@@ -318,11 +321,16 @@ object NeteaseLyricParser {
         val differences = if (primary.size == candidates.size) {
             primary.indices.map { candidates[it].timeMs - primary[it].timeMs }
         } else {
-            primary.mapNotNull { target ->
-                candidates.minByOrNull { kotlin.math.abs(it.timeMs - target.timeMs) }
-                    ?.let { candidate ->
-                        (candidate.timeMs - target.timeMs).takeIf { kotlin.math.abs(it) <= 5_000L }
-                    }
+            primary.mapIndexedNotNull { targetIndex, target ->
+                val candidateIndex = candidates.indices.minByOrNull {
+                    kotlin.math.abs(candidates[it].timeMs - target.timeMs)
+                } ?: return@mapIndexedNotNull null
+                val reciprocalIndex = primary.indices.minByOrNull {
+                    kotlin.math.abs(primary[it].timeMs - candidates[candidateIndex].timeMs)
+                } ?: return@mapIndexedNotNull null
+                if (reciprocalIndex != targetIndex) return@mapIndexedNotNull null
+                (candidates[candidateIndex].timeMs - target.timeMs)
+                    .takeIf { kotlin.math.abs(it) <= 5_000L }
             }
         }.sorted()
         return differences.getOrNull(differences.size / 2) ?: 0L

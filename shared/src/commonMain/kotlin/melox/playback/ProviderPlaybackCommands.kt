@@ -37,9 +37,25 @@ object ProviderPlaybackCommands {
             PlaybackCommands.adoptController(newPlayer)
             newPlayer
         }
-        player.setMediaItems(tracks.map { SearchSong(it.id.value.toLongOrNull() ?: 0L, it.title, it.artistText, it.album?.name.orEmpty(), it.artworkUrl, it.durationMs ?: 0L) }, startIndex, startPositionMs)
+        player.onFailure = onFailure
+        player.setMediaItems(
+            tracks.map { track ->
+                SearchSong(
+                    id = track.id.value.toLongOrNull() ?: 0L,
+                    name = track.title,
+                    artists = track.artistText,
+                    album = track.album?.name.orEmpty(),
+                    artworkUrl = track.artworkUrl,
+                    durationMs = track.durationMs ?: 0L,
+                    providerTrack = track,
+                )
+            },
+            startIndex,
+            startPositionMs,
+        )
         player.prepare()
         player.play()
+        PlaybackCommands.publishQueue(player)
     }
 
     internal fun mediaItemFor(

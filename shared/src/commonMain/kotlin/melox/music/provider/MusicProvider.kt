@@ -134,6 +134,14 @@ interface PlaylistSyncCapability {
     suspend fun renamePlaylist(playlist: MusicPlaylistSummary, name: String)
     suspend fun removeTrackFromPlaylist(track: MusicTrack, playlist: MusicPlaylistSummary)
     suspend fun reorderPlaylistTrack(playlist: MusicPlaylistSummary, track: MusicTrack, newIndex: Int)
+
+    /** False when the provider can edit membership but has no delete API. */
+    val canDeletePlaylists: Boolean
+        get() = false
+
+    suspend fun deletePlaylist(playlist: MusicPlaylistSummary) {
+        error("这个音源不能删除歌单")
+    }
 }
 
 /** Home semantic feed. Providers return only the sections they actually expose. */
@@ -153,6 +161,12 @@ interface UserLibraryCapability {
         page: Int = 1,
         pageSize: Int = 30,
     ): MusicPage<MusicPlaylistSummary>
+}
+
+/** Saved albums and followed artists are independent of playlist/library support. */
+interface LibraryCollectionCapability {
+    suspend fun savedAlbums(page: Int = 1, pageSize: Int = 50): MusicPage<MusicAlbumSummary>
+    suspend fun followedArtists(page: Int = 1, pageSize: Int = 50): MusicPage<MusicArtistSummary>
 }
 
 /** Optional read-only data surface used by local aggregation analysis. */

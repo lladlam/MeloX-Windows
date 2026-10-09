@@ -128,6 +128,11 @@ sealed interface ProviderTrackMetadata {
         val isrc: String? = null,
     ) : ProviderTrackMetadata
 
+    data class YouTube(
+        val videoId: String,
+        val setVideoId: String? = null,
+    ) : ProviderTrackMetadata
+
     data class Local(
         val contentUri: String,
         val fileKey: String,

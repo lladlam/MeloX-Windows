@@ -16,6 +16,8 @@ import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import melox.platform.logDebug
 import java.io.File
 import java.io.InputStream
@@ -38,11 +40,23 @@ fun MeloXArtworkImage(
     var bitmap by remember(url) { mutableStateOf(url?.let(artworkCache::get)) }
 
     LaunchedEffect(url) {
-        if (url.isNullOrBlank() || artworkCache.containsKey(url)) return@LaunchedEffect
-        val loaded: ImageBitmap? = runCatching {
-            val stream: InputStream = URL(url).openStream()
-            stream.use { androidx.compose.ui.res.loadImageBitmap(it) }
-        }.getOrNull()
+        if (url.isNullOrBlank()) return@LaunchedEffect
+        artworkCache[url]?.let {
+            bitmap = it
+            return@LaunchedEffect
+        }
+        // LaunchedEffect runs on Main. Keep both blocking network reads and
+        // bitmap decoding off the UI thread; cancellation on URL/page change
+        // is propagated by withContext before publishing the result.
+        val loaded: ImageBitmap? = withContext(Dispatchers.IO) {
+            runCatching {
+                val connection = URL(url).openConnection().apply {
+                    connectTimeout = 10_000
+                    readTimeout = 10_000
+                }
+                connection.getInputStream().use { androidx.compose.ui.res.loadImageBitmap(it) }
+            }.getOrNull()
+        }
         if (loaded != null) {
             artworkCache[url] = loaded
             bitmap = loaded

@@ -87,7 +87,7 @@ fun PlaylistDetailScreen(
     val songs = detail?.songs.orEmpty()
     val totalDurationMs = songs.sumOf { it.durationMs }
 
-    Column(modifier = Modifier.fillMaxSize().background(MeloXColors.Background)) {
+    Column(modifier = Modifier.fillMaxSize().background(MeloXColors.pageBackground())) {
         Row(
             modifier = Modifier.fillMaxWidth().height(48.dp).padding(horizontal = 16.dp),
             verticalAlignment = Alignment.CenterVertically
@@ -95,14 +95,14 @@ fun PlaylistDetailScreen(
             Text(
                 text = "←",
                 fontSize = 20.sp,
-                color = MeloXColors.OnSurface,
+                color = MeloXColors.pageOnSurface(),
                 modifier = Modifier.clickable { onBack() }
             )
             Spacer(modifier = Modifier.weight(1f))
             Text(
                 text = shown.name,
                 fontSize = 16.sp,
-                color = MeloXColors.TextPrimary,
+                color = MeloXColors.pageOnSurface(),
                 fontWeight = FontWeight.Medium,
                 fontFamily = MeloXLanTingProFontFamily,
                 maxLines = 1,
@@ -112,7 +112,7 @@ fun PlaylistDetailScreen(
             Text(
                 text = "⤴",
                 fontSize = 20.sp,
-                color = MeloXColors.OnSurfaceVariant
+                color = MeloXColors.pageOnSurfaceVariant()
             )
         }
 
@@ -144,7 +144,7 @@ fun PlaylistDetailScreen(
                         text = shown.name,
                         fontSize = 20.sp,
                         fontWeight = FontWeight.Bold,
-                        color = MeloXColors.TextPrimary,
+                        color = MeloXColors.pageOnSurface(),
                         fontFamily = MeloXLanTingProFontFamily
                     )
                     Spacer(modifier = Modifier.height(4.dp))
@@ -190,7 +190,7 @@ fun PlaylistDetailScreen(
                         Text(
                             text = "♡ 收藏",
                             fontSize = 13.sp,
-                            color = MeloXColors.OnSurface,
+                            color = MeloXColors.pageOnSurface(),
                             fontFamily = MeloXLanTingProFontFamily
                         )
                     }
@@ -203,7 +203,7 @@ fun PlaylistDetailScreen(
                         Text(
                             text = "↓ 下载",
                             fontSize = 13.sp,
-                            color = MeloXColors.OnSurface,
+                            color = MeloXColors.pageOnSurface(),
                             fontFamily = MeloXLanTingProFontFamily
                         )
                     }
@@ -292,7 +292,7 @@ private fun SongRow(
             Text(
                 text = song.name,
                 fontSize = 15.sp,
-                color = if (isPlaying) MeloXColors.Primary else MeloXColors.TextPrimary,
+                color = if (isPlaying) MeloXColors.Primary else MeloXColors.pageOnSurface(),
                 fontWeight = if (isPlaying) FontWeight.Medium else FontWeight.Normal,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
@@ -318,7 +318,7 @@ private fun SongRow(
         Text(
             text = "⋯",
             fontSize = 18.sp,
-            color = MeloXColors.OnSurfaceVariant,
+            color = MeloXColors.pageOnSurfaceVariant(),
             modifier = Modifier.padding(start = 12.dp).clickable { }
         )
     }

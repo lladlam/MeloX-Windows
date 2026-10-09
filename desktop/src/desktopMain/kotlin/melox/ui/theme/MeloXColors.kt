@@ -1,5 +1,7 @@
 package melox.ui.theme
 
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
 object MeloXColors {
@@ -86,6 +88,21 @@ object MeloXColors {
     val Divider = Separator
 
     // Source provider colors
+    @Composable
+    fun pageBackground(): Color = MaterialTheme.colorScheme.background
+
+    @Composable
+    fun pageOnBackground(): Color = MaterialTheme.colorScheme.onBackground
+
+    @Composable
+    fun pageOnSurface(): Color = MaterialTheme.colorScheme.onSurface
+
+    @Composable
+    fun pageOnSurfaceVariant(): Color = MaterialTheme.colorScheme.onSurfaceVariant
+
+    @Composable
+    fun pageSurface(): Color = MaterialTheme.colorScheme.surface
+
     val sourceColors = mapOf(
         "netease" to Color(0xFFFF2442),
         "qq" to Color(0xFF12B7F5),

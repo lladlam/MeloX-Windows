@@ -1,0 +1,17 @@
+{
+  "android_sha": "94e17c920bf554966584955afa2bd2ee92580a8b",
+  "assets": [
+    {
+      "android": "android/app/src/main/res/drawable/melox_home_tab.xml",
+      "desktop": "icons/melox_home_tab.svg",
+      "android_sha256": "313fee33b7d049bdd31f5b75ce8a23d7511deacaf9dcb963a4764055e7e76483",
+      "svg_sha256": "783ea226b30961e8f9ff1e43597af1ed3c650c79cfd0f1d959865cc922f960ac"
+    },
+    {
+      "android": "android/app/src/main/res/drawable/ic_melox_brand_gear.xml",
+      "desktop": "icons/ic_melox_brand_gear.svg",
+      "android_sha256": "87fd57a3470629bed62c779a7ae67421373a5cf405b1d61f9841571522c35208",
+      "svg_sha256": "64342972cbc2d47c0a68480329eb3f0d39755f65a302e603b1e251d5813e7763"
+    }
+  ]
+}

@@ -1,0 +1,466 @@
+[
+  {
+    "clickable": false,
+    "bounds": [
+      0,
+      0,
+      427,
+      924
+    ],
+    "description": null,
+    "tag": "settings-playback",
+    "text": null,
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      72,
+      24,
+      407,
+      69
+    ],
+    "description": null,
+    "tag": null,
+    "text": "播放",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      36,
+      99,
+      321,
+      122
+    ],
+    "description": null,
+    "tag": null,
+    "text": "播放音质",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "bounds": [
+      321,
+      91,
+      391,
+      130
+    ],
+    "description": null,
+    "tag": "settings-selector:播放音质",
+    "text": null,
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      323,
+      99,
+      374,
+      122
+    ],
+    "description": null,
+    "tag": null,
+    "text": "高品质",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      36,
+      155,
+      189,
+      178
+    ],
+    "description": null,
+    "tag": null,
+    "text": "记住播放器上次页面",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "bounds": [
+      327,
+      152,
+      391,
+      180
+    ],
+    "description": null,
+    "tag": "setting-playback_remember_page",
+    "text": null,
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      36,
+      196,
+      189,
+      219
+    ],
+    "description": null,
+    "tag": null,
+    "text": "退出时保存播放队列",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      36,
+      221,
+      327,
+      261
+    ],
+    "description": null,
+    "tag": null,
+    "text": "重新打开软件时恢复退出前的播放列表、当前歌曲和进度。",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "bounds": [
+      327,
+      214,
+      391,
+      242
+    ],
+    "description": null,
+    "tag": "setting-playback_save_queue",
+    "text": null,
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      36,
+      279,
+      240,
+      302
+    ],
+    "description": null,
+    "tag": null,
+    "text": "登录后以心动模式开始播放",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "bounds": [
+      327,
+      276,
+      391,
+      304
+    ],
+    "description": null,
+    "tag": "setting-playback_heart_mode_on_launch",
+    "text": null,
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      36,
+      335,
+      294,
+      358
+    ],
+    "description": null,
+    "tag": null,
+    "text": "播放超过 5 秒时上一首先回到开头",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "bounds": [
+      327,
+      332,
+      391,
+      360
+    ],
+    "description": null,
+    "tag": "setting-playback_previous_restarts",
+    "text": null,
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      36,
+      386,
+      172,
+      409
+    ],
+    "description": null,
+    "tag": null,
+    "text": "显示播放音质提示",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      36,
+      411,
+      228,
+      431
+    ],
+    "description": null,
+    "tag": null,
+    "text": "控制进度条下方的音质提示。",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "bounds": [
+      327,
+      394,
+      391,
+      422
+    ],
+    "description": null,
+    "tag": "setting-player_show_quality_tip",
+    "text": null,
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      36,
+      459,
+      301,
+      482
+    ],
+    "description": null,
+    "tag": null,
+    "text": "播放器展开/收回时长",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "bounds": [
+      301,
+      451,
+      391,
+      490
+    ],
+    "description": null,
+    "tag": "settings-selector:播放器展开/收回时长",
+    "text": null,
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      303,
+      459,
+      374,
+      482
+    ],
+    "description": null,
+    "tag": null,
+    "text": "360 毫秒",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      51,
+      893,
+      73,
+      906
+    ],
+    "description": null,
+    "tag": null,
+    "text": "首页",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      130,
+      893,
+      152,
+      906
+    ],
+    "description": null,
+    "tag": null,
+    "text": "发现",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      205,
+      893,
+      238,
+      906
+    ],
+    "description": null,
+    "tag": null,
+    "text": "音乐库",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      290,
+      893,
+      312,
+      906
+    ],
+    "description": null,
+    "tag": null,
+    "text": "设置",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "bounds": [
+      24,
+      809,
+      308,
+      843
+    ],
+    "description": null,
+    "tag": "mini-player-expand",
+    "text": null,
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      74,
+      811,
+      172,
+      826
+    ],
+    "description": null,
+    "tag": null,
+    "text": "起风了(林俊杰)",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      74,
+      826,
+      106,
+      841
+    ],
+    "description": null,
+    "tag": null,
+    "text": "8Y1ar",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "bounds": [
+      373,
+      811,
+      403,
+      841
+    ],
+    "description": null,
+    "tag": "mini-player-next",
+    "text": null,
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "bounds": [
+      339,
+      811,
+      369,
+      841
+    ],
+    "description": null,
+    "tag": "mini-player-play-pause",
+    "text": null,
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  }
+]

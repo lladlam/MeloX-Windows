@@ -1,13 +1,19 @@
 package melox.platform
 
-import java.net.InetAddress
 import java.net.NetworkInterface
 
 actual fun isNetworkAvailable(): Boolean {
     return try {
-        InetAddress.getByName("8.8.8.8").isReachable(3000)
+        // Android checks the active network, not an unrelated host's ICMP policy.
+        // A proxy/VPN may serve HTTP while blocking ping; never block Main for 3s.
+        val interfaces = NetworkInterface.getNetworkInterfaces() ?: return true
+        interfaces.asSequence().any { iface ->
+            iface.isUp && !iface.isLoopback && iface.inetAddresses.asSequence().any { address ->
+                !address.isLoopbackAddress && !address.isAnyLocalAddress && !address.isLinkLocalAddress
+            }
+        }
     } catch (_: Exception) {
-        false
+        true // Same optimistic fallback as Android when connectivity services are unavailable.
     }
 }
 

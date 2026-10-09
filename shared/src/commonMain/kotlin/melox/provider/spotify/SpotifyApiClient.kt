@@ -118,7 +118,7 @@ class SpotifyApiClient(
     private val clientId: String,
     private val httpClient: OkHttpClient,
 ) {
-    private val oauth = SpotifyOAuth(clientId, httpClient)
+    private val oauth get() = SpotifyOAuth(clientId.ifBlank { SpotifyClientConfig.effective() }, httpClient)
     private val refreshMutex = Mutex()
 
     suspend fun accountSummary(): MusicAccountSummary = withContext(Dispatchers.IO) {
@@ -149,8 +149,14 @@ class SpotifyApiClient(
 
     suspend fun userPlaylists(page: Int, pageSize: Int): MusicPage<MusicPlaylistSummary> = withContext(Dispatchers.IO) {
         val result = pageItems("me/playlists", page, pageSize, SpotifyJsonMapper::playlist)
-        MusicPage(result.items, page.coerceAtLeast(1), pageSize.coerceAtLeast(1), result.total)
+        val items = if (page.coerceAtLeast(1) == 1) listOf(likedSongsPlaylist()) + result.items else result.items
+        MusicPage(items, page.coerceAtLeast(1), pageSize.coerceAtLeast(1), result.total?.plus(1))
     }
+
+    private fun likedSongsPlaylist() = MusicPlaylistSummary(
+        id = MusicResourceId(MusicSource.Spotify, LikedSongsPlaylistId),
+        title = "Liked songs",
+    )
 
     suspend fun writablePlaylists(page: Int, pageSize: Int): MusicPage<MusicPlaylistSummary> = withContext(Dispatchers.IO) {
         val accountId = accountSummary().id
@@ -176,6 +182,11 @@ class SpotifyApiClient(
         page: Int,
         pageSize: Int,
     ): MusicPlaylistDetail = withContext(Dispatchers.IO) {
+        require(playlist.id.source == MusicSource.Spotify)
+        if (playlist.id.value == LikedSongsPlaylistId) {
+            val result = pageItems("me/tracks", page, pageSize, SpotifyJsonMapper::playlistItem)
+            return@withContext MusicPlaylistDetail(likedSongsPlaylist(), result.items, result.total)
+        }
         val root = get("playlists/${playlist.id.value}")
         val summary = SpotifyJsonMapper.playlist(root) ?: playlist
         val result = pageItems("playlists/${playlist.id.value}/items", page, pageSize, SpotifyJsonMapper::playlistItem)
@@ -223,6 +234,54 @@ class SpotifyApiClient(
         request("POST", "playlists/${playlist.id.value}/items", body)
         Unit
     }
+
+    suspend fun savedAlbums(page: Int, pageSize: Int): MusicPage<MusicAlbumSummary> = withContext(Dispatchers.IO) {
+        if (page > 1) return@withContext MusicPage(emptyList(), page, pageSize, 0)
+        val result = pageItems("me/albums", 1, pageSize) { SpotifyJsonMapper.album(it.optJSONObject("album") ?: it) }
+        MusicPage(result.items, page, pageSize, result.total, false)
+    }
+
+    suspend fun followedArtists(page: Int, pageSize: Int): MusicPage<MusicArtistSummary> = withContext(Dispatchers.IO) {
+        if (page > 1) return@withContext MusicPage(emptyList(), page, pageSize, 0)
+        val root = get("me/following", mapOf("type" to "artist", "limit" to pageSize.coerceIn(1, 50).toString()))
+        val artists = root.optJSONObject("artists")
+        val items = artists?.optJSONArray("items").objects().mapNotNull(SpotifyJsonMapper::artist)
+        MusicPage(items, page, pageSize, artists?.optLong("total")?.takeIf { it >= 0L }, false)
+    }
+
+    suspend fun createPlaylist(name: String): MusicPlaylistSummary = withContext(Dispatchers.IO) {
+        val created = request("POST", "me/playlists", JSONObject().put("name", name.ifBlank { "New playlist" }))
+        SpotifyJsonMapper.playlist(created)
+            ?: throw IOException("Spotify 创建歌单响应缺少 id 或 name")
+    }
+
+    suspend fun renamePlaylist(playlist: MusicPlaylistSummary, name: String) = withContext(Dispatchers.IO) {
+        request("PUT", "playlists/${playlist.id.value}", JSONObject().put("name", name))
+        Unit
+    }
+
+    suspend fun deletePlaylist(playlist: MusicPlaylistSummary) = withContext(Dispatchers.IO) {
+        if (playlist.id.value == LikedSongsPlaylistId) error("喜欢的歌曲不能删除")
+        request("DELETE", "playlists/${playlist.id.value}/followers")
+        Unit
+    }
+
+    suspend fun removeTrackFromPlaylist(track: MusicTrack, playlist: MusicPlaylistSummary) = withContext(Dispatchers.IO) {
+        val body = JSONObject().put("uris", JSONArray().put("spotify:track:${track.id.value}"))
+        request("DELETE", "playlists/${playlist.id.value}/items", body)
+        Unit
+    }
+
+    suspend fun reorderPlaylistTrack(playlist: MusicPlaylistSummary, track: MusicTrack, newIndex: Int) =
+        withContext(Dispatchers.IO) {
+            val current = pageItems("playlists/${playlist.id.value}/items", 1, 100, SpotifyJsonMapper::playlistItem)
+                .items.indexOfFirst { it.id.value == track.id.value }
+            if (current < 0) error("这首歌不在歌单里，无法调整顺序")
+            val insertBefore = if (newIndex > current) newIndex + 1 else newIndex
+            request("PUT", "playlists/${playlist.id.value}/items", JSONObject()
+                .put("range_start", current).put("insert_before", insertBefore.coerceAtLeast(0)).put("range_length", 1))
+            Unit
+        }
 
     private suspend fun <T> search(
         query: String,
@@ -349,6 +408,7 @@ class SpotifyApiClient(
 
     private companion object {
         const val ApiBase = "https://api.spotify.com/v1/"
+        const val LikedSongsPlaylistId = "liked-songs"
         const val MaximumSearchLimit = 10
         const val MaximumSearchOffset = 1_000
         val JsonMediaType = "application/json; charset=utf-8".toMediaType()

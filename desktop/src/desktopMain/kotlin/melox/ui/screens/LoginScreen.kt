@@ -36,6 +36,8 @@ import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import melox.account.NeteaseSessionStore
+import melox.music.model.MusicSource
+import melox.music.provider.ProviderAccountManager
 import melox.network.NeteasePhoneAuthClient
 import melox.provider.kugou.KugouLoginClient
 import melox.provider.kugou.KugouQrLoginState
@@ -59,6 +61,20 @@ private data class LoginProvider(
     val loginMethod: String,
 )
 
+private fun LoginProvider.musicSource(): MusicSource = when (id) {
+    "netease" -> MusicSource.Netease
+    "qq" -> MusicSource.QQMusic
+    "kugou" -> MusicSource.Kugou
+    "kuwo" -> MusicSource.Kuwo
+    "bilibili" -> MusicSource.Bilibili
+    "spotify" -> MusicSource.Spotify
+    "youtubemusic" -> MusicSource.YouTubeMusic
+    "applemusic" -> MusicSource.AppleMusic
+    "jellyfin" -> MusicSource.Jellyfin
+    "local" -> MusicSource.Local
+    else -> MusicSource.fromStorageValue(id)
+}
+
 private val allProviders = listOf(
     LoginProvider("netease", "网易云音乐", Color(0xFFFF2442), "手机号登录 / 扫码登录"),
     LoginProvider("qq", "QQ音乐", Color(0xFF12B7F5), "扫码登录"),
@@ -75,9 +91,27 @@ private val allProviders = listOf(
 // ── Login state per provider ──
 
 @Stable
-private class LoginScreenState {
+private class LoginScreenState(
+    private val accounts: ProviderAccountManager = ProviderAccountManager(),
+) {
     val loggedInProviders = mutableStateMapOf<String, Boolean>()
     val usernames = mutableStateMapOf<String, String>()
+
+    init {
+        allProviders.forEach { provider ->
+            val account = accounts.state(provider.musicSource())
+            if (account.loggedIn) {
+                loggedInProviders[provider.id] = true
+                account.accountId?.let { usernames[provider.id] = it }
+            }
+        }
+    }
+
+    fun logout(provider: LoginProvider) {
+        accounts.logout(provider.musicSource())
+        loggedInProviders[provider.id] = false
+        usernames.remove(provider.id)
+    }
     var dialogTarget by mutableStateOf<LoginProvider?>(null)
     var dialogInput by mutableStateOf("")
     var dialogPassword by mutableStateOf("")
@@ -98,12 +132,12 @@ private fun LoginTopBar(onBack: () -> Unit) {
         modifier = Modifier
             .fillMaxWidth()
             .height(56.dp)
-            .background(MeloXColors.Background),
+            .background(MeloXColors.pageBackground()),
         contentAlignment = Alignment.Center,
     ) {
         Text(
             text = "账号",
-            color = MeloXColors.TextPrimary,
+            color = MeloXColors.pageOnSurface(),
             fontFamily = MeloXLanTingProFontFamily,
             fontSize = 18.sp,
             fontWeight = FontWeight.SemiBold,
@@ -120,7 +154,7 @@ private fun LoginTopBar(onBack: () -> Unit) {
         ) {
             Text(
                 text = "‹",
-                color = MeloXColors.TextPrimary,
+                color = MeloXColors.pageOnSurface(),
                 fontSize = 22.sp,
             )
         }
@@ -177,7 +211,7 @@ private fun ProviderCard(
             Column(modifier = Modifier.weight(1f)) {
                 Text(
                     text = provider.name,
-                    color = MeloXColors.TextPrimary,
+                    color = MeloXColors.pageOnSurface(),
                     fontFamily = MeloXLanTingProFontFamily,
                     fontSize = 15.sp,
                     fontWeight = FontWeight.Medium,
@@ -238,7 +272,7 @@ private fun LoginDialog(
         onDismissRequest = {
             if (!state.dialogLoading) onDismiss()
         },
-        containerColor = MeloXColors.Surface,
+        containerColor = MeloXColors.pageSurface(),
         shape = RoundedCornerShape(20.dp),
         title = {
             Row(verticalAlignment = Alignment.CenterVertically) {
@@ -260,7 +294,7 @@ private fun LoginDialog(
                 Spacer(modifier = Modifier.width(10.dp))
                 Text(
                     text = provider.name,
-                    color = MeloXColors.TextPrimary,
+                    color = MeloXColors.pageOnSurface(),
                     fontFamily = MeloXLanTingProFontFamily,
                     fontSize = 18.sp,
                     fontWeight = FontWeight.SemiBold,
@@ -278,7 +312,7 @@ private fun LoginDialog(
                     "kuwo" -> PhoneCodeLoginForm(provider, state, onLoginSuccess)
                     "bilibili" -> WebViewLoginForm(provider, state, onLoginSuccess)
                     "spotify" -> OAuthLoginForm(provider, state, onLoginSuccess)
-                    "youtubemusic" -> OAuthLoginForm(provider, state, onLoginSuccess)
+                    "youtubemusic" -> YouTubeLoginForm(provider, state, onLoginSuccess)
                     "applemusic" -> TokenInputForm(provider, state, onLoginSuccess)
                     "jellyfin" -> ServerLoginForm(provider, state, onLoginSuccess)
                     "local" -> LocalFolderForm(state, onLoginSuccess)
@@ -400,8 +434,8 @@ private fun NeteaseLoginForm(state: LoginScreenState, onLoginSuccess: (String) -
                     focusedContainerColor = MeloXColors.SurfaceVariant,
                     unfocusedContainerColor = MeloXColors.SurfaceVariant,
                     cursorColor = MeloXColors.Primary,
-                    focusedTextColor = MeloXColors.TextPrimary,
-                    unfocusedTextColor = MeloXColors.TextPrimary,
+                    focusedTextColor = MeloXColors.pageOnSurface(),
+                    unfocusedTextColor = MeloXColors.pageOnSurface(),
                 ),
                 textStyle = MaterialTheme.typography.bodyMedium.copy(
                     fontFamily = MeloXLanTingProFontFamily,
@@ -423,8 +457,8 @@ private fun NeteaseLoginForm(state: LoginScreenState, onLoginSuccess: (String) -
                     focusedContainerColor = MeloXColors.SurfaceVariant,
                     unfocusedContainerColor = MeloXColors.SurfaceVariant,
                     cursorColor = MeloXColors.Primary,
-                    focusedTextColor = MeloXColors.TextPrimary,
-                    unfocusedTextColor = MeloXColors.TextPrimary,
+                    focusedTextColor = MeloXColors.pageOnSurface(),
+                    unfocusedTextColor = MeloXColors.pageOnSurface(),
                 ),
                 textStyle = MaterialTheme.typography.bodyMedium.copy(
                     fontFamily = MeloXLanTingProFontFamily,
@@ -656,7 +690,7 @@ private fun KugouQrLoginPane(state: LoginScreenState, onLoginSuccess: (String) -
             SelectionContainer {
                 Text(
                     text = url,
-                    color = MeloXColors.TextPrimary,
+                    color = MeloXColors.pageOnSurface(),
                     fontFamily = MeloXLanTingProFontFamily,
                     fontSize = 12.sp,
                     textAlign = TextAlign.Center,
@@ -732,8 +766,8 @@ private fun PhoneCodeLoginForm(provider: LoginProvider, state: LoginScreenState,
                 focusedContainerColor = MeloXColors.SurfaceVariant,
                 unfocusedContainerColor = MeloXColors.SurfaceVariant,
                 cursorColor = provider.color,
-                focusedTextColor = MeloXColors.TextPrimary,
-                unfocusedTextColor = MeloXColors.TextPrimary,
+                focusedTextColor = MeloXColors.pageOnSurface(),
+                unfocusedTextColor = MeloXColors.pageOnSurface(),
             ),
             textStyle = MaterialTheme.typography.bodyMedium.copy(
                 fontFamily = MeloXLanTingProFontFamily,
@@ -755,8 +789,8 @@ private fun PhoneCodeLoginForm(provider: LoginProvider, state: LoginScreenState,
                 focusedContainerColor = MeloXColors.SurfaceVariant,
                 unfocusedContainerColor = MeloXColors.SurfaceVariant,
                 cursorColor = provider.color,
-                focusedTextColor = MeloXColors.TextPrimary,
-                unfocusedTextColor = MeloXColors.TextPrimary,
+                focusedTextColor = MeloXColors.pageOnSurface(),
+                unfocusedTextColor = MeloXColors.pageOnSurface(),
             ),
             textStyle = MaterialTheme.typography.bodyMedium.copy(
                 fontFamily = MeloXLanTingProFontFamily,
@@ -866,11 +900,75 @@ private fun WebViewLoginForm(provider: LoginProvider, state: LoginScreenState, o
 // ── OAuth login form ──
 
 @Composable
+private fun YouTubeLoginForm(provider: LoginProvider, state: LoginScreenState, onLoginSuccess: (String) -> Unit) {
+    val scope = rememberCoroutineScope()
+    var visitorData by remember { mutableStateOf("") }
+    var dataSyncId by remember { mutableStateOf("") }
+    var pageId by remember { mutableStateOf("") }
+    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        Text("在浏览器登录 YouTube Music 后导入 Cookie 与账号上下文。", color = MeloXColors.TextSecondary)
+        TextButton(onClick = {
+            runCatching { java.awt.Desktop.getDesktop().browse(java.net.URI("https://music.youtube.com")) }
+                .onFailure { state.dialogMessage = it.message ?: "无法打开浏览器" }
+        }) { Text("打开 YouTube Music") }
+        OutlinedTextField(value = state.dialogInput, onValueChange = { state.dialogInput = it },
+            label = { Text("Cookie (SAPISID)") }, modifier = Modifier.fillMaxWidth(), enabled = !state.dialogLoading)
+        OutlinedTextField(value = visitorData, onValueChange = { visitorData = it },
+            label = { Text("VISITOR_DATA") }, modifier = Modifier.fillMaxWidth(), singleLine = true, enabled = !state.dialogLoading)
+        OutlinedTextField(value = dataSyncId, onValueChange = { dataSyncId = it },
+            label = { Text("DATASYNC_ID") }, modifier = Modifier.fillMaxWidth(), singleLine = true, enabled = !state.dialogLoading)
+        OutlinedTextField(value = pageId, onValueChange = { pageId = it },
+            label = { Text("Page ID") }, modifier = Modifier.fillMaxWidth(), singleLine = true, enabled = !state.dialogLoading)
+        LoginButton(color = provider.color, enabled = !state.dialogLoading && state.dialogInput.contains("SAPISID=")) {
+            scope.launch {
+                state.dialogLoading = true
+                state.dialogMessage = null
+                val previous = melox.provider.youtubemusic.YouTubeSessionStore.read()
+                try {
+                    melox.provider.youtubemusic.YouTubeSessionStore.write(
+                        melox.provider.youtubemusic.YouTubeSession(state.dialogInput.trim(), visitorData.trim(), dataSyncId.trim(), pageId.trim()),
+                    )
+                    val summary = melox.provider.youtubemusic.YouTubeMusicProvider().accountSummary()
+                        ?: error("YouTube Music 登录态无效")
+                    val verified = melox.provider.youtubemusic.YouTubeSessionStore.read().copy(accountName = summary.displayName)
+                    melox.provider.youtubemusic.YouTubeSessionStore.write(verified)
+                    onLoginSuccess(summary.displayName)
+                } catch (cancelled: kotlinx.coroutines.CancellationException) {
+                    melox.provider.youtubemusic.YouTubeSessionStore.write(previous)
+                    throw cancelled
+                } catch (error: Exception) {
+                    melox.provider.youtubemusic.YouTubeSessionStore.write(previous)
+                    state.dialogMessage = error.message ?: "YouTube Music 登录验证失败"
+                } finally { state.dialogLoading = false }
+            }
+        }
+    }
+}
+
+@Composable
 private fun OAuthLoginForm(provider: LoginProvider, state: LoginScreenState, onLoginSuccess: (String) -> Unit) {
+    val scope = rememberCoroutineScope()
+    var clientId by remember { mutableStateOf(melox.provider.spotify.SpotifyClientConfig.effective()) }
     Column(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
+        OutlinedTextField(
+            value = clientId,
+            onValueChange = { clientId = it },
+            modifier = Modifier.fillMaxWidth(),
+            label = { Text("Spotify Client ID") },
+            enabled = !state.dialogLoading,
+            singleLine = true,
+        )
+        SelectionContainer {
+            Text(
+                text = "Redirect URI: ${melox.provider.spotify.SpotifyOAuth.RedirectUri}",
+                color = MeloXColors.TextSecondary,
+                fontSize = 12.sp,
+                modifier = Modifier.padding(vertical = 8.dp),
+            )
+        }
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -891,12 +989,24 @@ private fun OAuthLoginForm(provider: LoginProvider, state: LoginScreenState, onL
         Spacer(modifier = Modifier.height(12.dp))
         LoginButton(
             color = provider.color,
-            enabled = !state.dialogLoading,
+            enabled = !state.dialogLoading && clientId.isNotBlank(),
         ) {
+            scope.launch {
                 state.dialogLoading = true
                 state.dialogMessage = null
-                state.dialogLoading = false
-                state.dialogMessage = "桌面版没有${provider.name}的授权跳转，不会假装登录成功"
+                try {
+                    melox.provider.spotify.SpotifyClientConfig.write(clientId)
+                    val session = melox.provider.spotify.SpotifyDesktopLogin().login(clientId.trim())
+                    val summary = melox.provider.spotify.SpotifyApiClient(clientId.trim(), melox.network.MeloXHttpClient.shared).accountSummary()
+                    onLoginSuccess(summary.displayName.ifBlank { session.accountId })
+                } catch (cancelled: kotlinx.coroutines.CancellationException) {
+                    throw cancelled
+                } catch (error: Exception) {
+                    state.dialogMessage = error.message ?: "Spotify 登录失败"
+                } finally {
+                    state.dialogLoading = false
+                }
+            }
         }
     }
 }
@@ -928,8 +1038,8 @@ private fun TokenInputForm(provider: LoginProvider, state: LoginScreenState, onL
                 focusedContainerColor = MeloXColors.SurfaceVariant,
                 unfocusedContainerColor = MeloXColors.SurfaceVariant,
                 cursorColor = provider.color,
-                focusedTextColor = MeloXColors.TextPrimary,
-                unfocusedTextColor = MeloXColors.TextPrimary,
+                focusedTextColor = MeloXColors.pageOnSurface(),
+                unfocusedTextColor = MeloXColors.pageOnSurface(),
             ),
             textStyle = MaterialTheme.typography.bodyMedium.copy(
                 fontFamily = MeloXLanTingProFontFamily,
@@ -951,8 +1061,8 @@ private fun TokenInputForm(provider: LoginProvider, state: LoginScreenState, onL
                 focusedContainerColor = MeloXColors.SurfaceVariant,
                 unfocusedContainerColor = MeloXColors.SurfaceVariant,
                 cursorColor = provider.color,
-                focusedTextColor = MeloXColors.TextPrimary,
-                unfocusedTextColor = MeloXColors.TextPrimary,
+                focusedTextColor = MeloXColors.pageOnSurface(),
+                unfocusedTextColor = MeloXColors.pageOnSurface(),
             ),
             textStyle = MaterialTheme.typography.bodyMedium.copy(
                 fontFamily = MeloXLanTingProFontFamily,
@@ -991,8 +1101,8 @@ private fun ServerLoginForm(provider: LoginProvider, state: LoginScreenState, on
                 focusedContainerColor = MeloXColors.SurfaceVariant,
                 unfocusedContainerColor = MeloXColors.SurfaceVariant,
                 cursorColor = provider.color,
-                focusedTextColor = MeloXColors.TextPrimary,
-                unfocusedTextColor = MeloXColors.TextPrimary,
+                focusedTextColor = MeloXColors.pageOnSurface(),
+                unfocusedTextColor = MeloXColors.pageOnSurface(),
             ),
             textStyle = MaterialTheme.typography.bodyMedium.copy(
                 fontFamily = MeloXLanTingProFontFamily,
@@ -1014,8 +1124,8 @@ private fun ServerLoginForm(provider: LoginProvider, state: LoginScreenState, on
                 focusedContainerColor = MeloXColors.SurfaceVariant,
                 unfocusedContainerColor = MeloXColors.SurfaceVariant,
                 cursorColor = provider.color,
-                focusedTextColor = MeloXColors.TextPrimary,
-                unfocusedTextColor = MeloXColors.TextPrimary,
+                focusedTextColor = MeloXColors.pageOnSurface(),
+                unfocusedTextColor = MeloXColors.pageOnSurface(),
             ),
             textStyle = MaterialTheme.typography.bodyMedium.copy(
                 fontFamily = MeloXLanTingProFontFamily,
@@ -1037,8 +1147,8 @@ private fun ServerLoginForm(provider: LoginProvider, state: LoginScreenState, on
                 focusedContainerColor = MeloXColors.SurfaceVariant,
                 unfocusedContainerColor = MeloXColors.SurfaceVariant,
                 cursorColor = provider.color,
-                focusedTextColor = MeloXColors.TextPrimary,
-                unfocusedTextColor = MeloXColors.TextPrimary,
+                focusedTextColor = MeloXColors.pageOnSurface(),
+                unfocusedTextColor = MeloXColors.pageOnSurface(),
             ),
             textStyle = MaterialTheme.typography.bodyMedium.copy(
                 fontFamily = MeloXLanTingProFontFamily,
@@ -1126,8 +1236,8 @@ private fun GenericLoginForm(provider: LoginProvider, state: LoginScreenState, o
                 focusedContainerColor = MeloXColors.SurfaceVariant,
                 unfocusedContainerColor = MeloXColors.SurfaceVariant,
                 cursorColor = provider.color,
-                focusedTextColor = MeloXColors.TextPrimary,
-                unfocusedTextColor = MeloXColors.TextPrimary,
+                focusedTextColor = MeloXColors.pageOnSurface(),
+                unfocusedTextColor = MeloXColors.pageOnSurface(),
             ),
             textStyle = MaterialTheme.typography.bodyMedium.copy(
                 fontFamily = MeloXLanTingProFontFamily,
@@ -1186,7 +1296,7 @@ fun LoginScreen(navState: MeloXNavState) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(MeloXColors.Background),
+            .background(MeloXColors.pageBackground()),
     ) {
         LoginTopBar(onBack = { navState.goBack() })
 
@@ -1208,10 +1318,7 @@ fun LoginScreen(navState: MeloXNavState) {
                         state.dialogMessage = null
                         state.dialogTab = 0
                     },
-                    onLogoutClick = {
-                        state.loggedInProviders[provider.id] = false
-                        state.usernames.remove(provider.id)
-                    },
+                    onLogoutClick = { state.logout(provider) },
                 )
             }
 

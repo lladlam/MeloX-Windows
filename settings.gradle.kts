@@ -11,6 +11,7 @@ dependencyResolutionManagement {
     repositories {
         mavenCentral()
         google()
+        maven("https://jitpack.io")
     }
 }
 
@@ -18,3 +19,4 @@ rootProject.name = "MeloX-Windows"
 
 include(":shared")
 include(":desktop")
+include(":innertube")

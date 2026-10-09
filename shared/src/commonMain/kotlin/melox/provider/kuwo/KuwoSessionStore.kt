@@ -1,6 +1,6 @@
 package melox.provider.kuwo
 
-import melox.platform.getPreferences
+import melox.platform.getSecurePreferences as getPreferences
 
 data class KuwoSession(
     val token: String,

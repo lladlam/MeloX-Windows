@@ -1,5 +1,6 @@
 # Gradle
 .gradle/
+.kotlin/
 build/
 !gradle/wrapper/gradle-wrapper.jar
 
@@ -20,3 +21,7 @@ Thumbs.db
 
 # Local configuration
 local.properties
+
+# Python audit caches
+__pycache__/
+*.pyc

@@ -177,9 +177,7 @@ class SpotifyOAuth(
     }
 
     companion object {
-        const val RedirectUri = "melox.android://spotify-callback"
-        const val RedirectScheme = "melox.android"
-        const val RedirectHost = "spotify-callback"
+        const val RedirectUri = "http://127.0.0.1:43821/spotify-callback"
         const val AuthorizeEndpoint = "https://accounts.spotify.com/authorize"
         const val TokenEndpoint = "https://accounts.spotify.com/api/token"
         private const val TransactionTtlMs = 10 * 60 * 1_000L
@@ -190,6 +188,8 @@ class SpotifyOAuth(
             "playlist-modify-private",
             "playlist-modify-public",
             "user-library-modify",
+            "user-library-read",
+            "user-follow-read",
         )
     }
 }

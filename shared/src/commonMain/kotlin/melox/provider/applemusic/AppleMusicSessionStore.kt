@@ -1,6 +1,6 @@
 package melox.provider.applemusic
 
-import melox.platform.getPreferences
+import melox.platform.getSecurePreferences as getPreferences
 
 data class AppleMusicSession(
     val isConfigured: Boolean,

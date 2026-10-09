@@ -10,7 +10,13 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Stable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -23,7 +29,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import melox.music.model.MusicSource
 import melox.music.provider.MusicProviderSelectionStore
+import melox.music.provider.ProviderAccountManager
 import melox.ui.navigation.MeloXNavState
+import melox.ui.navigation.Route
 import melox.ui.theme.MeloXColors
 import melox.ui.theme.MeloXLanTingProFontFamily
 import java.awt.Cursor
@@ -66,37 +74,39 @@ private val allProviders = listOf(
 // ── State holder ──
 
 @Stable
-private class ServiceState {
-    val enabledProviders = mutableStateMapOf(
-        "netease" to true,
-        "qq" to true,
-        "kugou" to true,
-        "kuwo" to true,
-        "bilibili" to false,
-        "spotify" to false,
-        "youtubemusic" to false,
-        "applemusic" to false,
-        "jellyfin" to false,
-        "local" to true,
-    )
-    val loggedInProviders = mutableStateMapOf<String, Boolean>()
-    val usernames = mutableStateMapOf<String, String>()
-    var aggregatedSearch by mutableStateOf(true)
-    val searchScope = mutableStateMapOf(
-        "netease" to true,
-        "qq" to true,
-        "kugou" to true,
-        "kuwo" to true,
-        "bilibili" to false,
-        "spotify" to false,
-        "youtubemusic" to false,
-        "applemusic" to false,
-        "jellyfin" to false,
-        "local" to false,
-    )
+private class ServiceState(
+    private val accounts: ProviderAccountManager = ProviderAccountManager(),
+) {
+    var revision by mutableIntStateOf(0)
+    var aggregatedSearch by mutableStateOf(MusicProviderSelectionStore.unifiedEnabled())
+    var searchScope by mutableStateOf(MusicProviderSelectionStore.unifiedSources())
 
-    fun isLoggedIn(id: String): Boolean = loggedInProviders[id] == true
-    fun username(id: String): String = usernames[id] ?: ""
+    fun isEnabled(source: MusicSource): Boolean = source in searchScope
+
+    fun isLoggedIn(source: MusicSource): Boolean {
+        revision
+        return accounts.state(source).loggedIn
+    }
+
+    fun username(source: MusicSource): String {
+        revision
+        return accounts.state(source).accountId.orEmpty()
+    }
+
+    fun setEnabled(source: MusicSource, enabled: Boolean) {
+        searchScope = MusicProviderSelectionStore.setUnifiedSourceEnabled(source, enabled)
+    }
+
+    fun setAggregated(enabled: Boolean) {
+        aggregatedSearch = enabled
+        MusicProviderSelectionStore.setUnifiedEnabled(enabled)
+        searchScope = MusicProviderSelectionStore.unifiedSources()
+    }
+
+    fun logout(source: MusicSource) {
+        accounts.logout(source)
+        revision += 1
+    }
 }
 
 // ── Top bar ──
@@ -348,18 +358,16 @@ fun ProviderServicesScreen(navState: MeloXNavState) {
                     modifier = Modifier.padding(horizontal = 20.dp),
                 ) {
                     allProviders.forEachIndexed { index, provider ->
+                        val source = provider.musicSource()
                         Column {
                             ProviderRow(
                                 provider = provider,
-                                isEnabled = state.enabledProviders[provider.id] == true,
-                                isLoggedIn = state.isLoggedIn(provider.id),
-                                username = state.username(provider.id),
-                                onToggle = { state.enabledProviders[provider.id] = it },
-                                onLoginClick = { /* Navigate to login */ },
-                                onLogoutClick = {
-                                    state.loggedInProviders[provider.id] = false
-                                    state.usernames.remove(provider.id)
-                                },
+                                isEnabled = state.isEnabled(source),
+                                isLoggedIn = state.isLoggedIn(source),
+                                username = state.username(source),
+                                onToggle = { state.setEnabled(source, it) },
+                                onLoginClick = { navState.navigateTo(Route.Login) },
+                                onLogoutClick = { state.logout(source) },
                             )
                             if (index < allProviders.size - 1) {
                                 HorizontalDivider(
@@ -398,7 +406,7 @@ fun ProviderServicesScreen(navState: MeloXNavState) {
                         )
                         Switch(
                             checked = state.aggregatedSearch,
-                            onCheckedChange = { state.aggregatedSearch = it },
+                            onCheckedChange = { state.setAggregated(it) },
                             colors = SwitchDefaults.colors(
                                 checkedThumbColor = MeloXColors.OnPrimary,
                                 checkedTrackColor = MeloXColors.Primary,
@@ -429,10 +437,11 @@ fun ProviderServicesScreen(navState: MeloXNavState) {
 
                     // Search scope checkboxes
                     allProviders.forEach { provider ->
+                        val source = provider.musicSource()
                         SearchScopeItem(
                             provider = provider,
-                            checked = state.searchScope[provider.id] == true,
-                            onCheckedChange = { state.searchScope[provider.id] = it },
+                            checked = state.isEnabled(source),
+                            onCheckedChange = { state.setEnabled(source, it) },
                         )
                     }
                 }
@@ -447,7 +456,7 @@ fun ProviderServicesScreen(navState: MeloXNavState) {
                 Column(
                     modifier = Modifier.padding(horizontal = 20.dp),
                 ) {
-                    val loggedInProviders = allProviders.filter { state.isLoggedIn(it.id) }
+                    val loggedInProviders = allProviders.filter { state.isLoggedIn(it.musicSource()) }
                     if (loggedInProviders.isEmpty()) {
                         Text(
                             text = "暂无已登录的账号",
@@ -488,7 +497,7 @@ fun ProviderServicesScreen(navState: MeloXNavState) {
                                         fontSize = 14.sp,
                                     )
                                     Text(
-                                        text = state.username(provider.id),
+                                        text = state.username(provider.musicSource()),
                                         color = MeloXColors.TextTertiary,
                                         fontFamily = MeloXLanTingProFontFamily,
                                         fontSize = 12.sp,

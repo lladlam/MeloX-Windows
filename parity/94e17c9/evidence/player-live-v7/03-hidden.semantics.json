@@ -1,0 +1,930 @@
+[
+  {
+    "clickable": false,
+    "bounds": [
+      20,
+      62,
+      88,
+      107
+    ],
+    "description": null,
+    "tag": null,
+    "text": "首页",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      20,
+      129,
+      71,
+      152
+    ],
+    "description": null,
+    "tag": null,
+    "text": "下午好",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      20,
+      174,
+      64,
+      196
+    ],
+    "description": null,
+    "tag": null,
+    "text": "每日更新",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      20,
+      199,
+      104,
+      221
+    ],
+    "description": null,
+    "tag": null,
+    "text": "每日推荐",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      20,
+      223,
+      118,
+      245
+    ],
+    "description": null,
+    "tag": null,
+    "text": "为你定制的歌曲",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      38,
+      403,
+      139,
+      436
+    ],
+    "description": null,
+    "tag": null,
+    "text": "每日推荐",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      346,
+      174,
+      390,
+      196
+    ],
+    "description": null,
+    "tag": null,
+    "text": "全站热门",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      346,
+      199,
+      409,
+      221
+    ],
+    "description": null,
+    "tag": null,
+    "text": "热歌榜",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      346,
+      223,
+      416,
+      245
+    ],
+    "description": null,
+    "tag": null,
+    "text": "大家都在听",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      364,
+      403,
+      427,
+      436
+    ],
+    "description": null,
+    "tag": null,
+    "text": "热歌榜",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      20,
+      476,
+      109,
+      505
+    ],
+    "description": null,
+    "tag": null,
+    "text": "每日推荐",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      354,
+      480,
+      407,
+      502
+    ],
+    "description": null,
+    "tag": null,
+    "text": "下拉刷新",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      28,
+      716,
+      251,
+      735
+    ],
+    "description": null,
+    "tag": null,
+    "text": "国产说唱 | 你的中文说唱旋律精选",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      28,
+      735,
+      92,
+      757
+    ],
+    "description": null,
+    "tag": null,
+    "text": "3.3亿 次播放",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      288,
+      716,
+      427,
+      754
+    ],
+    "description": null,
+    "tag": null,
+    "text": "节奏控 | 那些超带感的英文歌",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      288,
+      754,
+      371,
+      776
+    ],
+    "description": null,
+    "tag": null,
+    "text": "5947.0万 次播放",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      20,
+      806,
+      109,
+      835
+    ],
+    "description": null,
+    "tag": null,
+    "text": "为你推荐",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      380,
+      810,
+      407,
+      832
+    ],
+    "description": null,
+    "tag": null,
+    "text": "新歌",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      90,
+      868,
+      158,
+      890
+    ],
+    "description": null,
+    "tag": null,
+    "text": "自由的你",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      90,
+      890,
+      169,
+      912
+    ],
+    "description": null,
+    "tag": null,
+    "text": "G.E.M.邓紫棋",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "description": null,
+    "tag": null,
+    "text": "全息恋人",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "description": null,
+    "tag": null,
+    "text": "栾一鸣Floscar",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "description": null,
+    "tag": null,
+    "text": "两难pt.2",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "description": null,
+    "tag": null,
+    "text": "加木",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "description": null,
+    "tag": null,
+    "text": "牵我的手好吗",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "description": null,
+    "tag": null,
+    "text": "吴琳珂Moske",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "description": null,
+    "tag": null,
+    "text": "月声尽，心灯明",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "description": null,
+    "tag": null,
+    "text": "鸣潮先约电台 / jixwang / Cassie Wei",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "description": null,
+    "tag": null,
+    "text": "睡前别想太多",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "description": null,
+    "tag": null,
+    "text": "李雨霏_晚饭",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      51,
+      893,
+      73,
+      906
+    ],
+    "description": null,
+    "tag": null,
+    "text": "首页",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      130,
+      893,
+      152,
+      906
+    ],
+    "description": null,
+    "tag": null,
+    "text": "发现",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      205,
+      893,
+      238,
+      906
+    ],
+    "description": null,
+    "tag": null,
+    "text": "音乐库",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      290,
+      893,
+      312,
+      906
+    ],
+    "description": null,
+    "tag": null,
+    "text": "设置",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      0,
+      0,
+      427,
+      924
+    ],
+    "description": null,
+    "tag": "now-playing",
+    "text": null,
+    "state": "Lyrics",
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "bounds": [
+      32,
+      0,
+      395,
+      30
+    ],
+    "description": null,
+    "tag": "player-collapse",
+    "text": null,
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "bounds": [
+      32,
+      309,
+      395,
+      350
+    ],
+    "description": null,
+    "tag": "lyric-line-0",
+    "text": null,
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": true
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      32,
+      309,
+      395,
+      350
+    ],
+    "description": null,
+    "tag": null,
+    "text": "这一路上走走停停",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "bounds": [
+      32,
+      378,
+      395,
+      419
+    ],
+    "description": null,
+    "tag": "lyric-line-1",
+    "text": null,
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": true
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      32,
+      378,
+      395,
+      419
+    ],
+    "description": null,
+    "tag": null,
+    "text": "顺着少年漂流的痕迹",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "bounds": [
+      32,
+      447,
+      395,
+      488
+    ],
+    "description": null,
+    "tag": "lyric-line-2",
+    "text": null,
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": true
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      32,
+      447,
+      395,
+      488
+    ],
+    "description": null,
+    "tag": null,
+    "text": "迈出车站的前一刻",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "bounds": [
+      32,
+      516,
+      395,
+      557
+    ],
+    "description": null,
+    "tag": "lyric-line-3",
+    "text": null,
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": true
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      32,
+      516,
+      395,
+      557
+    ],
+    "description": null,
+    "tag": null,
+    "text": "竟有些犹豫",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "bounds": [
+      32,
+      585,
+      395,
+      626
+    ],
+    "description": null,
+    "tag": "lyric-line-4",
+    "text": null,
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": true
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      32,
+      585,
+      395,
+      626
+    ],
+    "description": null,
+    "tag": null,
+    "text": "不禁笑这近乡情怯",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "bounds": [
+      32,
+      654,
+      395,
+      695
+    ],
+    "description": null,
+    "tag": "lyric-line-5",
+    "text": null,
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": true
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      32,
+      654,
+      395,
+      695
+    ],
+    "description": null,
+    "tag": null,
+    "text": "仍无可避免",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "bounds": [
+      32,
+      723,
+      395,
+      764
+    ],
+    "description": null,
+    "tag": "lyric-line-6",
+    "text": null,
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": true
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      32,
+      723,
+      395,
+      764
+    ],
+    "description": null,
+    "tag": null,
+    "text": "而长野的天",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "bounds": [
+      32,
+      792,
+      395,
+      833
+    ],
+    "description": null,
+    "tag": "lyric-line-7",
+    "text": null,
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": true
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      32,
+      792,
+      395,
+      833
+    ],
+    "description": null,
+    "tag": null,
+    "text": "依旧那么暖",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "bounds": [
+      32,
+      861,
+      395,
+      902
+    ],
+    "description": null,
+    "tag": "lyric-line-8",
+    "text": null,
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": true
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      32,
+      861,
+      395,
+      902
+    ],
+    "description": null,
+    "tag": null,
+    "text": "风吹起了从前",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "bounds": [
+      32,
+      645,
+      395,
+      924
+    ],
+    "description": null,
+    "tag": "lyrics-reveal-controls",
+    "text": null,
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      116,
+      42,
+      176,
+      66
+    ],
+    "description": null,
+    "tag": null,
+    "text": "起风了",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      116,
+      68,
+      294,
+      90
+    ],
+    "description": null,
+    "tag": null,
+    "text": "冯沁苑(买辣椒也用券)",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "bounds": [
+      347,
+      46,
+      387,
+      86
+    ],
+    "description": null,
+    "tag": "player-actions",
+    "text": null,
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  }
+]

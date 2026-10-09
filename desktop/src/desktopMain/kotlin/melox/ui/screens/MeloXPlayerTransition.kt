@@ -7,7 +7,7 @@ import androidx.compose.animation.core.tween
 import melox.ui.foundation.MeloXMotion
 
 internal data object MeloXPlayerShellKey
-internal data object MeloXPlayerArtworkKey
+internal data class MeloXPlayerArtworkKey(val mediaId: String?)
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 internal val MeloXArtworkBoundsTransform = BoundsTransform { _, _ ->
@@ -16,5 +16,5 @@ internal val MeloXArtworkBoundsTransform = BoundsTransform { _, _ ->
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 internal val MeloXPlayerShellBoundsTransform = BoundsTransform { _, _ ->
-    tween(durationMillis = MeloXMotion.PlayerTransitionDurationMillis, easing = FastOutSlowInEasing)
+    tween(durationMillis = melox.settings.MeloXSettingsRuntime.playerTransitionDurationMs, easing = FastOutSlowInEasing)
 }

@@ -288,6 +288,21 @@ class NeteaseUniversalSearchClient(
         MeloXPodcastPage(values, offset + values.size < total, total)
     }
 
+    suspend fun podcastDetail(id: Long): MeloXPodcast? = withContext(Dispatchers.IO) {
+        val response = eapi("/api/djradio/v2/get", JSONObject().put("id", id))
+        parsePodcast(response.optJSONObject("data") ?: response.optJSONObject("djRadio"))
+    }
+
+    suspend fun subscribedPodcasts(offset: Int = 0, limit: Int = 50): MeloXPodcastPage<MeloXPodcast> = withContext(Dispatchers.IO) {
+        val response = eapi(
+            "/api/djradio/get/subed",
+            JSONObject().put("limit", limit.coerceIn(1, 100)).put("offset", offset.coerceAtLeast(0)).put("total", true),
+        )
+        val values = parsePodcasts(response.optJSONArray("djRadios")).map { it.copy(subscribed = true) }
+        val total = response.optInt("count", offset + values.size)
+        MeloXPodcastPage(values, offset + values.size < total, total)
+    }
+
     suspend fun podcastPrograms(radioId: Long, offset: Int = 0, limit: Int = 30): MeloXPodcastPage<MeloXPodcastProgram> = withContext(Dispatchers.IO) {
         val response = eapi("/api/dj/program/byradio", JSONObject().put("radioId", radioId).put("limit", limit.coerceIn(1, 50)).put("offset", offset.coerceAtLeast(0)).put("asc", false))
         val source = response.optJSONArray("programs") ?: JSONArray()

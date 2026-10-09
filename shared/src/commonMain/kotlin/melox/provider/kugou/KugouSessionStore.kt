@@ -1,6 +1,6 @@
 package melox.provider.kugou
 
-import melox.platform.getPreferences
+import melox.platform.getSecurePreferences as getPreferences
 import java.math.BigInteger
 import java.security.MessageDigest
 import java.security.SecureRandom

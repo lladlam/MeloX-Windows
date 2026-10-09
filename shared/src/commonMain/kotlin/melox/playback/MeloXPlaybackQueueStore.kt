@@ -10,6 +10,7 @@ import melox.music.model.ProviderTrackMetadata
 import melox.platform.getPreferences
 import org.json.JSONArray
 import org.json.JSONObject
+import melox.settings.MeloXSettingsPreferences
 
 internal data class MeloXPersistedQueue(
     val items: List<QueueEntry>,
@@ -26,12 +27,11 @@ internal object MeloXPlaybackQueueStore {
     private const val PLAY_WHEN_READY = "playWhenReady"
 
     fun save(player: MeloXDesktopPlayer) {
+        if (!MeloXSettingsPreferences.boolean("playback_save_queue", true)) return
         val preferences = getPreferences(PREFS)
         if (player.mediaItemCount == 0) {
-            preferences.remove(QUEUE)
-            preferences.remove(INDEX)
-            preferences.remove(POSITION)
-            preferences.remove(PLAY_WHEN_READY)
+            // Android main: an empty startup player must not erase the queue
+            // before its restore pass has run.
             return
         }
         val array = JSONArray()
@@ -53,13 +53,21 @@ internal object MeloXPlaybackQueueStore {
                     put("providerSource", track.id.source.storageValue)
                     put("providerId", track.id.value)
                     put("providerArtists", JSONArray(track.artists.map { it.name }))
+                    (track.providerMetadata as? ProviderTrackMetadata.YouTube)?.let {
+                        put("youtubeSetVideoId", it.setVideoId)
+                    }
                 }
             })
         }
-        preferences.putString(QUEUE, array.toString())
-        preferences.putInt(INDEX, player.currentMediaItemIndex.coerceAtLeast(0))
-        preferences.putLong(POSITION, player.currentPosition.coerceAtLeast(0L))
-        preferences.putBoolean(PLAY_WHEN_READY, player.playWhenReady)
+        preferences.putValues(mapOf(QUEUE to array.toString(), INDEX to player.currentMediaItemIndex.coerceAtLeast(0).toString(),
+            POSITION to player.currentPosition.coerceAtLeast(0L).toString(), PLAY_WHEN_READY to player.playWhenReady.toString()))
+    }
+
+    fun savePosition(index: Int, positionMs: Long) {
+        if (!MeloXSettingsPreferences.boolean("playback_save_queue", true)) return
+        getPreferences(PREFS).putValues(
+            mapOf(INDEX to index.coerceAtLeast(0).toString(), POSITION to positionMs.coerceAtLeast(0L).toString()),
+        )
     }
 
     fun read(): MeloXPersistedQueue? {
@@ -96,7 +104,9 @@ internal object MeloXPlaybackQueueStore {
                         album = value.optString("album").takeIf(String::isNotBlank)?.let { MusicAlbumRef(name = it) },
                         artworkUrl = value.optString("artwork").takeIf(String::isNotBlank),
                         durationMs = value.optLong("durationMs", 0L).takeIf { it > 0L },
-                        providerMetadata = ProviderTrackMetadata.Empty,
+                        providerMetadata = if (source == MusicSource.YouTubeMusic) ProviderTrackMetadata.YouTube(
+                            providerId, value.optString("youtubeSetVideoId").takeIf { it.isNotBlank() && it != "null" },
+                        ) else ProviderTrackMetadata.Empty,
                     )
                 } else {
                     null

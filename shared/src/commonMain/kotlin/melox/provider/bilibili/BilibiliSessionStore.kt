@@ -1,6 +1,6 @@
 package melox.provider.bilibili
 
-import melox.platform.getPreferences
+import melox.platform.getSecurePreferences as getPreferences
 
 data class BilibiliSession(
     val cookie: String,

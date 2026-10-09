@@ -1,0 +1,897 @@
+{
+  "renderer": "production ImageComposeScene",
+  "start_tab": "Home",
+  "play_query": "起风了",
+  "density": 1,
+  "frames": [],
+  "width": 427,
+  "scenes": [
+    {
+      "queue_count": 5,
+      "queue_tracks": [
+        "netease:1330348068",
+        "netease:2636494144",
+        "netease:1475596788",
+        "netease:1916691093",
+        "netease:1845698007"
+      ],
+      "title": "起风了",
+      "error": "line with format PCM_SIGNED 44100.0 Hz, 16 bit, stereo, 4 bytes/frame, little-endian not supported.",
+      "duration_ms": 325868,
+      "position_ms": 0,
+      "repeat_mode": 0,
+      "file": "00-home.png",
+      "shuffle_enabled": false,
+      "is_paused": false,
+      "is_playing": false,
+      "selected_quality": "standard",
+      "captured_elapsed_ms": 4676.408735,
+      "is_loading": false,
+      "page": null,
+      "queue_entry_ids": [
+        "8e3f7e64-8f2e-4f51-80ed-013b9398a14f",
+        "4d3724f3-85d8-4161-8de8-1521e8fa8b18",
+        "bbc2fb07-0364-4c80-ab06-01f6f1a0fa8b",
+        "b1c4bbc4-1a82-4f9f-97e4-8826ac8ee353",
+        "f7630b86-8885-4c78-8699-41e83bcc07a1"
+      ],
+      "track": "netease:1330348068",
+      "queue_index": 0,
+      "controls_visible": false,
+      "autoplay_enabled": false
+    },
+    {
+      "queue_count": 5,
+      "queue_tracks": [
+        "netease:1330348068",
+        "netease:2636494144",
+        "netease:1475596788",
+        "netease:1916691093",
+        "netease:1845698007"
+      ],
+      "title": "起风了",
+      "error": "line with format PCM_SIGNED 44100.0 Hz, 16 bit, stereo, 4 bytes/frame, little-endian not supported.",
+      "duration_ms": 325868,
+      "position_ms": 0,
+      "repeat_mode": 0,
+      "file": "01-player.png",
+      "shuffle_enabled": false,
+      "is_paused": false,
+      "is_playing": false,
+      "selected_quality": "standard",
+      "captured_elapsed_ms": 5890.461989,
+      "is_loading": false,
+      "page": "Artwork",
+      "queue_entry_ids": [
+        "8e3f7e64-8f2e-4f51-80ed-013b9398a14f",
+        "4d3724f3-85d8-4161-8de8-1521e8fa8b18",
+        "bbc2fb07-0364-4c80-ab06-01f6f1a0fa8b",
+        "b1c4bbc4-1a82-4f9f-97e4-8826ac8ee353",
+        "f7630b86-8885-4c78-8699-41e83bcc07a1"
+      ],
+      "assertions": [{
+        "expected": "page:Artwork",
+        "passed": true
+      }],
+      "track": "netease:1330348068",
+      "queue_index": 0,
+      "controls_visible": true,
+      "autoplay_enabled": false,
+      "action_elapsed_ms": 1213.947796
+    },
+    {
+      "queue_count": 5,
+      "queue_tracks": [
+        "netease:1330348068",
+        "netease:2636494144",
+        "netease:1475596788",
+        "netease:1916691093",
+        "netease:1845698007"
+      ],
+      "title": "起风了",
+      "error": "line with format PCM_SIGNED 44100.0 Hz, 16 bit, stereo, 4 bytes/frame, little-endian not supported.",
+      "duration_ms": 325868,
+      "position_ms": 0,
+      "repeat_mode": 0,
+      "file": "02-lyrics.png",
+      "shuffle_enabled": false,
+      "is_paused": false,
+      "is_playing": false,
+      "selected_quality": "standard",
+      "captured_elapsed_ms": 7236.406251,
+      "is_loading": false,
+      "page": "Lyrics",
+      "queue_entry_ids": [
+        "8e3f7e64-8f2e-4f51-80ed-013b9398a14f",
+        "4d3724f3-85d8-4161-8de8-1521e8fa8b18",
+        "bbc2fb07-0364-4c80-ab06-01f6f1a0fa8b",
+        "b1c4bbc4-1a82-4f9f-97e4-8826ac8ee353",
+        "f7630b86-8885-4c78-8699-41e83bcc07a1"
+      ],
+      "assertions": [{
+        "expected": "page:Lyrics",
+        "passed": true
+      }],
+      "track": "netease:1330348068",
+      "queue_index": 0,
+      "controls_visible": true,
+      "autoplay_enabled": false,
+      "action_elapsed_ms": 1345.369469
+    },
+    {
+      "queue_count": 5,
+      "queue_tracks": [
+        "netease:1330348068",
+        "netease:2636494144",
+        "netease:1475596788",
+        "netease:1916691093",
+        "netease:1845698007"
+      ],
+      "title": "起风了",
+      "error": "line with format PCM_SIGNED 44100.0 Hz, 16 bit, stereo, 4 bytes/frame, little-endian not supported.",
+      "duration_ms": 325868,
+      "position_ms": 0,
+      "repeat_mode": 0,
+      "file": "03-hidden.png",
+      "shuffle_enabled": false,
+      "is_paused": false,
+      "is_playing": false,
+      "selected_quality": "standard",
+      "captured_elapsed_ms": 15143.923858,
+      "is_loading": false,
+      "page": "Lyrics",
+      "queue_entry_ids": [
+        "8e3f7e64-8f2e-4f51-80ed-013b9398a14f",
+        "4d3724f3-85d8-4161-8de8-1521e8fa8b18",
+        "bbc2fb07-0364-4c80-ab06-01f6f1a0fa8b",
+        "b1c4bbc4-1a82-4f9f-97e4-8826ac8ee353",
+        "f7630b86-8885-4c78-8699-41e83bcc07a1"
+      ],
+      "assertions": [{
+        "expected": "absent:player-controls",
+        "passed": true
+      }],
+      "track": "netease:1330348068",
+      "queue_index": 0,
+      "controls_visible": false,
+      "autoplay_enabled": false,
+      "action_elapsed_ms": 7907.131929
+    },
+    {
+      "queue_count": 5,
+      "queue_tracks": [
+        "netease:1330348068",
+        "netease:2636494144",
+        "netease:1475596788",
+        "netease:1916691093",
+        "netease:1845698007"
+      ],
+      "title": "起风了",
+      "error": "line with format PCM_SIGNED 44100.0 Hz, 16 bit, stereo, 4 bytes/frame, little-endian not supported.",
+      "duration_ms": 325868,
+      "position_ms": 0,
+      "repeat_mode": 0,
+      "file": "04-reveal.png",
+      "shuffle_enabled": false,
+      "is_paused": false,
+      "is_playing": false,
+      "selected_quality": "standard",
+      "captured_elapsed_ms": 16482.961812,
+      "is_loading": false,
+      "page": "Lyrics",
+      "queue_entry_ids": [
+        "8e3f7e64-8f2e-4f51-80ed-013b9398a14f",
+        "4d3724f3-85d8-4161-8de8-1521e8fa8b18",
+        "bbc2fb07-0364-4c80-ab06-01f6f1a0fa8b",
+        "b1c4bbc4-1a82-4f9f-97e4-8826ac8ee353",
+        "f7630b86-8885-4c78-8699-41e83bcc07a1"
+      ],
+      "assertions": [{
+        "expected": "tag:player-controls",
+        "passed": true
+      }],
+      "track": "netease:1330348068",
+      "queue_index": 0,
+      "controls_visible": true,
+      "autoplay_enabled": false,
+      "action_elapsed_ms": 1338.640308
+    },
+    {
+      "queue_count": 5,
+      "queue_tracks": [
+        "netease:1330348068",
+        "netease:2636494144",
+        "netease:1475596788",
+        "netease:1916691093",
+        "netease:1845698007"
+      ],
+      "title": "起风了",
+      "error": "line with format PCM_SIGNED 44100.0 Hz, 16 bit, stereo, 4 bytes/frame, little-endian not supported.",
+      "duration_ms": 325868,
+      "position_ms": 0,
+      "repeat_mode": 0,
+      "file": "05-share.png",
+      "shuffle_enabled": false,
+      "is_paused": false,
+      "is_playing": false,
+      "selected_quality": "standard",
+      "captured_elapsed_ms": 18379.876038,
+      "is_loading": false,
+      "page": "Lyrics",
+      "queue_entry_ids": [
+        "8e3f7e64-8f2e-4f51-80ed-013b9398a14f",
+        "4d3724f3-85d8-4161-8de8-1521e8fa8b18",
+        "bbc2fb07-0364-4c80-ab06-01f6f1a0fa8b",
+        "b1c4bbc4-1a82-4f9f-97e4-8826ac8ee353",
+        "f7630b86-8885-4c78-8699-41e83bcc07a1"
+      ],
+      "assertions": [{
+        "expected": "tag:lyric-share",
+        "passed": true
+      }],
+      "track": "netease:1330348068",
+      "queue_index": 0,
+      "controls_visible": true,
+      "autoplay_enabled": false,
+      "action_elapsed_ms": 1896.771646
+    },
+    {
+      "queue_count": 5,
+      "queue_tracks": [
+        "netease:1330348068",
+        "netease:2636494144",
+        "netease:1475596788",
+        "netease:1916691093",
+        "netease:1845698007"
+      ],
+      "title": "起风了",
+      "error": "line with format PCM_SIGNED 44100.0 Hz, 16 bit, stereo, 4 bytes/frame, little-endian not supported.",
+      "duration_ms": 325868,
+      "position_ms": 0,
+      "repeat_mode": 0,
+      "file": "06-share-back.png",
+      "shuffle_enabled": false,
+      "is_paused": false,
+      "is_playing": false,
+      "selected_quality": "standard",
+      "captured_elapsed_ms": 19702.506968,
+      "is_loading": false,
+      "page": "Lyrics",
+      "queue_entry_ids": [
+        "8e3f7e64-8f2e-4f51-80ed-013b9398a14f",
+        "4d3724f3-85d8-4161-8de8-1521e8fa8b18",
+        "bbc2fb07-0364-4c80-ab06-01f6f1a0fa8b",
+        "b1c4bbc4-1a82-4f9f-97e4-8826ac8ee353",
+        "f7630b86-8885-4c78-8699-41e83bcc07a1"
+      ],
+      "assertions": [
+        {
+          "expected": "absent:lyric-share",
+          "passed": true
+        },
+        {
+          "expected": "page:Lyrics",
+          "passed": true
+        }
+      ],
+      "track": "netease:1330348068",
+      "queue_index": 0,
+      "controls_visible": true,
+      "autoplay_enabled": false,
+      "action_elapsed_ms": 1322.351501
+    },
+    {
+      "queue_count": 5,
+      "queue_tracks": [
+        "netease:1330348068",
+        "netease:2636494144",
+        "netease:1475596788",
+        "netease:1916691093",
+        "netease:1845698007"
+      ],
+      "title": "起风了",
+      "error": "line with format PCM_SIGNED 44100.0 Hz, 16 bit, stereo, 4 bytes/frame, little-endian not supported.",
+      "duration_ms": 325868,
+      "position_ms": 0,
+      "repeat_mode": 0,
+      "file": "07-queue.png",
+      "shuffle_enabled": false,
+      "is_paused": false,
+      "is_playing": false,
+      "selected_quality": "standard",
+      "captured_elapsed_ms": 20969.569899,
+      "is_loading": false,
+      "page": "Queue",
+      "queue_entry_ids": [
+        "8e3f7e64-8f2e-4f51-80ed-013b9398a14f",
+        "4d3724f3-85d8-4161-8de8-1521e8fa8b18",
+        "bbc2fb07-0364-4c80-ab06-01f6f1a0fa8b",
+        "b1c4bbc4-1a82-4f9f-97e4-8826ac8ee353",
+        "f7630b86-8885-4c78-8699-41e83bcc07a1"
+      ],
+      "assertions": [{
+        "expected": "page:Queue",
+        "passed": true
+      }],
+      "track": "netease:1330348068",
+      "queue_index": 0,
+      "controls_visible": true,
+      "autoplay_enabled": false,
+      "action_elapsed_ms": 1266.765986
+    },
+    {
+      "queue_count": 5,
+      "queue_tracks": [
+        "netease:1330348068",
+        "netease:2636494144",
+        "netease:1475596788",
+        "netease:1916691093",
+        "netease:1845698007"
+      ],
+      "title": "起风了(林俊杰)",
+      "error": "line with format PCM_SIGNED 44100.0 Hz, 16 bit, stereo, 4 bytes/frame, little-endian not supported.",
+      "duration_ms": 285024,
+      "position_ms": 0,
+      "repeat_mode": 0,
+      "file": "08-queue-next.png",
+      "shuffle_enabled": false,
+      "is_paused": false,
+      "is_playing": false,
+      "selected_quality": "standard",
+      "captured_elapsed_ms": 22312.607726,
+      "is_loading": false,
+      "page": "Queue",
+      "queue_entry_ids": [
+        "8e3f7e64-8f2e-4f51-80ed-013b9398a14f",
+        "4d3724f3-85d8-4161-8de8-1521e8fa8b18",
+        "bbc2fb07-0364-4c80-ab06-01f6f1a0fa8b",
+        "b1c4bbc4-1a82-4f9f-97e4-8826ac8ee353",
+        "f7630b86-8885-4c78-8699-41e83bcc07a1"
+      ],
+      "assertions": [
+        {
+          "expected": "page:Queue",
+          "passed": true
+        },
+        {
+          "expected": "index:1",
+          "passed": true
+        }
+      ],
+      "track": "netease:2636494144",
+      "queue_index": 1,
+      "controls_visible": true,
+      "autoplay_enabled": false,
+      "action_elapsed_ms": 1342.839544
+    },
+    {
+      "queue_count": 5,
+      "queue_tracks": [
+        "netease:1330348068",
+        "netease:2636494144",
+        "netease:1475596788",
+        "netease:1916691093",
+        "netease:1845698007"
+      ],
+      "title": "起风了(林俊杰)",
+      "error": "line with format PCM_SIGNED 44100.0 Hz, 16 bit, stereo, 4 bytes/frame, little-endian not supported.",
+      "duration_ms": 285024,
+      "position_ms": 0,
+      "repeat_mode": 0,
+      "file": "09-quality.png",
+      "shuffle_enabled": false,
+      "is_paused": false,
+      "is_playing": false,
+      "selected_quality": "standard",
+      "captured_elapsed_ms": 23532.028782,
+      "is_loading": false,
+      "page": "Queue",
+      "queue_entry_ids": [
+        "8e3f7e64-8f2e-4f51-80ed-013b9398a14f",
+        "4d3724f3-85d8-4161-8de8-1521e8fa8b18",
+        "bbc2fb07-0364-4c80-ab06-01f6f1a0fa8b",
+        "b1c4bbc4-1a82-4f9f-97e4-8826ac8ee353",
+        "f7630b86-8885-4c78-8699-41e83bcc07a1"
+      ],
+      "assertions": [{
+        "expected": "tag:quality-dialog",
+        "passed": true
+      }],
+      "track": "netease:2636494144",
+      "queue_index": 1,
+      "controls_visible": true,
+      "autoplay_enabled": false,
+      "action_elapsed_ms": 1219.184989
+    },
+    {
+      "queue_count": 5,
+      "queue_tracks": [
+        "netease:1330348068",
+        "netease:2636494144",
+        "netease:1475596788",
+        "netease:1916691093",
+        "netease:1845698007"
+      ],
+      "title": "起风了(林俊杰)",
+      "error": "line with format PCM_SIGNED 44100.0 Hz, 16 bit, stereo, 4 bytes/frame, little-endian not supported.",
+      "duration_ms": 285024,
+      "position_ms": 0,
+      "repeat_mode": 0,
+      "file": "10-settings.png",
+      "shuffle_enabled": false,
+      "is_paused": false,
+      "is_playing": false,
+      "selected_quality": "standard",
+      "captured_elapsed_ms": 24622.75371,
+      "is_loading": false,
+      "page": null,
+      "queue_entry_ids": [
+        "8e3f7e64-8f2e-4f51-80ed-013b9398a14f",
+        "4d3724f3-85d8-4161-8de8-1521e8fa8b18",
+        "bbc2fb07-0364-4c80-ab06-01f6f1a0fa8b",
+        "b1c4bbc4-1a82-4f9f-97e4-8826ac8ee353",
+        "f7630b86-8885-4c78-8699-41e83bcc07a1"
+      ],
+      "assertions": [
+        {
+          "expected": "full-tag:settings-playback",
+          "passed": true
+        },
+        {
+          "expected": "absent:now-playing",
+          "passed": true
+        }
+      ],
+      "track": "netease:2636494144",
+      "queue_index": 1,
+      "controls_visible": false,
+      "autoplay_enabled": false,
+      "action_elapsed_ms": 1090.570536
+    },
+    {
+      "queue_count": 5,
+      "queue_tracks": [
+        "netease:1330348068",
+        "netease:2636494144",
+        "netease:1475596788",
+        "netease:1916691093",
+        "netease:1845698007"
+      ],
+      "title": "起风了(林俊杰)",
+      "error": "line with format PCM_SIGNED 44100.0 Hz, 16 bit, stereo, 4 bytes/frame, little-endian not supported.",
+      "duration_ms": 285024,
+      "position_ms": 0,
+      "repeat_mode": 0,
+      "file": "11-quality-menu.png",
+      "shuffle_enabled": false,
+      "is_paused": false,
+      "is_playing": false,
+      "selected_quality": "standard",
+      "captured_elapsed_ms": 25718.620825,
+      "is_loading": false,
+      "page": null,
+      "queue_entry_ids": [
+        "8e3f7e64-8f2e-4f51-80ed-013b9398a14f",
+        "4d3724f3-85d8-4161-8de8-1521e8fa8b18",
+        "bbc2fb07-0364-4c80-ab06-01f6f1a0fa8b",
+        "b1c4bbc4-1a82-4f9f-97e4-8826ac8ee353",
+        "f7630b86-8885-4c78-8699-41e83bcc07a1"
+      ],
+      "assertions": [{
+        "expected": "tag:settings-option:超清母带",
+        "passed": true
+      }],
+      "track": "netease:2636494144",
+      "queue_index": 1,
+      "controls_visible": false,
+      "autoplay_enabled": false,
+      "action_elapsed_ms": 1095.6552
+    },
+    {
+      "queue_count": 5,
+      "queue_tracks": [
+        "netease:1330348068",
+        "netease:2636494144",
+        "netease:1475596788",
+        "netease:1916691093",
+        "netease:1845698007"
+      ],
+      "title": "起风了(林俊杰)",
+      "error": "line with format PCM_SIGNED 44100.0 Hz, 16 bit, stereo, 4 bytes/frame, little-endian not supported.",
+      "duration_ms": 285024,
+      "position_ms": 0,
+      "repeat_mode": 0,
+      "file": "12-quality-high.png",
+      "shuffle_enabled": false,
+      "is_paused": false,
+      "is_playing": false,
+      "selected_quality": "exhigh",
+      "captured_elapsed_ms": 26914.337257,
+      "is_loading": false,
+      "page": null,
+      "queue_entry_ids": [
+        "8e3f7e64-8f2e-4f51-80ed-013b9398a14f",
+        "4d3724f3-85d8-4161-8de8-1521e8fa8b18",
+        "bbc2fb07-0364-4c80-ab06-01f6f1a0fa8b",
+        "b1c4bbc4-1a82-4f9f-97e4-8826ac8ee353",
+        "f7630b86-8885-4c78-8699-41e83bcc07a1"
+      ],
+      "assertions": [
+        {
+          "expected": "quality:exhigh",
+          "passed": true
+        },
+        {
+          "expected": "index:1",
+          "passed": true
+        }
+      ],
+      "track": "netease:2636494144",
+      "queue_index": 1,
+      "controls_visible": false,
+      "autoplay_enabled": false,
+      "action_elapsed_ms": 1195.553563
+    },
+    {
+      "queue_count": 5,
+      "queue_tracks": [
+        "netease:1330348068",
+        "netease:2636494144",
+        "netease:1475596788",
+        "netease:1916691093",
+        "netease:1845698007"
+      ],
+      "title": "起风了(林俊杰)",
+      "error": "line with format PCM_SIGNED 44100.0 Hz, 16 bit, stereo, 4 bytes/frame, little-endian not supported.",
+      "duration_ms": 285024,
+      "position_ms": 0,
+      "repeat_mode": 0,
+      "file": "13-settings-back.png",
+      "shuffle_enabled": false,
+      "is_paused": false,
+      "is_playing": false,
+      "selected_quality": "exhigh",
+      "captured_elapsed_ms": 27990.969646,
+      "is_loading": false,
+      "page": null,
+      "queue_entry_ids": [
+        "8e3f7e64-8f2e-4f51-80ed-013b9398a14f",
+        "4d3724f3-85d8-4161-8de8-1521e8fa8b18",
+        "bbc2fb07-0364-4c80-ab06-01f6f1a0fa8b",
+        "b1c4bbc4-1a82-4f9f-97e4-8826ac8ee353",
+        "f7630b86-8885-4c78-8699-41e83bcc07a1"
+      ],
+      "assertions": [{
+        "expected": "absent:settings-playback",
+        "passed": true
+      }],
+      "track": "netease:2636494144",
+      "queue_index": 1,
+      "controls_visible": false,
+      "autoplay_enabled": false,
+      "action_elapsed_ms": 1076.421489
+    },
+    {
+      "queue_count": 5,
+      "queue_tracks": [
+        "netease:1330348068",
+        "netease:2636494144",
+        "netease:1475596788",
+        "netease:1916691093",
+        "netease:1845698007"
+      ],
+      "title": "起风了(林俊杰)",
+      "error": "line with format PCM_SIGNED 44100.0 Hz, 16 bit, stereo, 4 bytes/frame, little-endian not supported.",
+      "duration_ms": 285024,
+      "position_ms": 0,
+      "repeat_mode": 0,
+      "file": "14-player-reopen.png",
+      "shuffle_enabled": false,
+      "is_paused": false,
+      "is_playing": false,
+      "selected_quality": "exhigh",
+      "captured_elapsed_ms": 29200.731798,
+      "is_loading": false,
+      "page": "Queue",
+      "queue_entry_ids": [
+        "8e3f7e64-8f2e-4f51-80ed-013b9398a14f",
+        "4d3724f3-85d8-4161-8de8-1521e8fa8b18",
+        "bbc2fb07-0364-4c80-ab06-01f6f1a0fa8b",
+        "b1c4bbc4-1a82-4f9f-97e4-8826ac8ee353",
+        "f7630b86-8885-4c78-8699-41e83bcc07a1"
+      ],
+      "assertions": [
+        {
+          "expected": "page:Queue",
+          "passed": true
+        },
+        {
+          "expected": "index:1",
+          "passed": true
+        }
+      ],
+      "track": "netease:2636494144",
+      "queue_index": 1,
+      "controls_visible": true,
+      "autoplay_enabled": false,
+      "action_elapsed_ms": 1209.56669
+    },
+    {
+      "queue_count": 5,
+      "queue_tracks": [
+        "netease:1330348068",
+        "netease:2636494144",
+        "netease:1475596788",
+        "netease:1916691093",
+        "netease:1845698007"
+      ],
+      "title": "起风了(林俊杰)",
+      "error": "line with format PCM_SIGNED 44100.0 Hz, 16 bit, stereo, 4 bytes/frame, little-endian not supported.",
+      "duration_ms": 285024,
+      "position_ms": 0,
+      "repeat_mode": 0,
+      "file": "15-quality-after-switch.png",
+      "shuffle_enabled": false,
+      "is_paused": false,
+      "is_playing": false,
+      "selected_quality": "exhigh",
+      "captured_elapsed_ms": 30390.32687,
+      "is_loading": false,
+      "page": "Queue",
+      "queue_entry_ids": [
+        "8e3f7e64-8f2e-4f51-80ed-013b9398a14f",
+        "4d3724f3-85d8-4161-8de8-1521e8fa8b18",
+        "bbc2fb07-0364-4c80-ab06-01f6f1a0fa8b",
+        "b1c4bbc4-1a82-4f9f-97e4-8826ac8ee353",
+        "f7630b86-8885-4c78-8699-41e83bcc07a1"
+      ],
+      "assertions": [{
+        "expected": "tag:quality-dialog",
+        "passed": true
+      }],
+      "track": "netease:2636494144",
+      "queue_index": 1,
+      "controls_visible": true,
+      "autoplay_enabled": false,
+      "action_elapsed_ms": 1189.341688
+    },
+    {
+      "queue_count": 5,
+      "queue_tracks": [
+        "netease:1330348068",
+        "netease:2636494144",
+        "netease:1475596788",
+        "netease:1916691093",
+        "netease:1845698007"
+      ],
+      "title": "起风了(林俊杰)",
+      "error": "line with format PCM_SIGNED 44100.0 Hz, 16 bit, stereo, 4 bytes/frame, little-endian not supported.",
+      "duration_ms": 285024,
+      "position_ms": 0,
+      "repeat_mode": 0,
+      "file": "16-quality-back.png",
+      "shuffle_enabled": false,
+      "is_paused": false,
+      "is_playing": false,
+      "selected_quality": "exhigh",
+      "captured_elapsed_ms": 31612.96085,
+      "is_loading": false,
+      "page": "Queue",
+      "queue_entry_ids": [
+        "8e3f7e64-8f2e-4f51-80ed-013b9398a14f",
+        "4d3724f3-85d8-4161-8de8-1521e8fa8b18",
+        "bbc2fb07-0364-4c80-ab06-01f6f1a0fa8b",
+        "b1c4bbc4-1a82-4f9f-97e4-8826ac8ee353",
+        "f7630b86-8885-4c78-8699-41e83bcc07a1"
+      ],
+      "assertions": [
+        {
+          "expected": "absent:quality-dialog",
+          "passed": true
+        },
+        {
+          "expected": "page:Queue",
+          "passed": true
+        }
+      ],
+      "track": "netease:2636494144",
+      "queue_index": 1,
+      "controls_visible": true,
+      "autoplay_enabled": false,
+      "action_elapsed_ms": 1222.509425
+    },
+    {
+      "queue_count": 5,
+      "queue_tracks": [
+        "netease:1330348068",
+        "netease:2636494144",
+        "netease:1475596788",
+        "netease:1916691093",
+        "netease:1845698007"
+      ],
+      "title": "起风了(林俊杰)",
+      "error": "line with format PCM_SIGNED 44100.0 Hz, 16 bit, stereo, 4 bytes/frame, little-endian not supported.",
+      "duration_ms": 285024,
+      "position_ms": 0,
+      "repeat_mode": 0,
+      "file": "17-close.png",
+      "shuffle_enabled": false,
+      "is_paused": false,
+      "is_playing": false,
+      "selected_quality": "exhigh",
+      "captured_elapsed_ms": 32699.235248,
+      "is_loading": false,
+      "page": null,
+      "queue_entry_ids": [
+        "8e3f7e64-8f2e-4f51-80ed-013b9398a14f",
+        "4d3724f3-85d8-4161-8de8-1521e8fa8b18",
+        "bbc2fb07-0364-4c80-ab06-01f6f1a0fa8b",
+        "b1c4bbc4-1a82-4f9f-97e4-8826ac8ee353",
+        "f7630b86-8885-4c78-8699-41e83bcc07a1"
+      ],
+      "assertions": [{
+        "expected": "absent:now-playing",
+        "passed": true
+      }],
+      "track": "netease:2636494144",
+      "queue_index": 1,
+      "controls_visible": false,
+      "autoplay_enabled": false,
+      "action_elapsed_ms": 1086.100852
+    },
+    {
+      "queue_count": 5,
+      "queue_tracks": [
+        "netease:1330348068",
+        "netease:2636494144",
+        "netease:1475596788",
+        "netease:1916691093",
+        "netease:1845698007"
+      ],
+      "title": "起风了",
+      "error": "网易云未返回可播放的 高品质 音源，且 MeloX 降级链路也没有可用资源",
+      "duration_ms": 311485,
+      "position_ms": 0,
+      "repeat_mode": 0,
+      "file": "18-mini-next.png",
+      "shuffle_enabled": false,
+      "is_paused": false,
+      "is_playing": false,
+      "selected_quality": "exhigh",
+      "captured_elapsed_ms": 33860.256001,
+      "is_loading": false,
+      "page": null,
+      "queue_entry_ids": [
+        "8e3f7e64-8f2e-4f51-80ed-013b9398a14f",
+        "4d3724f3-85d8-4161-8de8-1521e8fa8b18",
+        "bbc2fb07-0364-4c80-ab06-01f6f1a0fa8b",
+        "b1c4bbc4-1a82-4f9f-97e4-8826ac8ee353",
+        "f7630b86-8885-4c78-8699-41e83bcc07a1"
+      ],
+      "assertions": [
+        {
+          "expected": "index:2",
+          "passed": true
+        },
+        {
+          "expected": "absent:now-playing",
+          "passed": true
+        }
+      ],
+      "track": "netease:1475596788",
+      "queue_index": 2,
+      "controls_visible": false,
+      "autoplay_enabled": false,
+      "action_elapsed_ms": 1160.897088
+    },
+    {
+      "queue_count": 5,
+      "queue_tracks": [
+        "netease:1330348068",
+        "netease:2636494144",
+        "netease:1475596788",
+        "netease:1916691093",
+        "netease:1845698007"
+      ],
+      "title": "起风了",
+      "error": "网易云未返回可播放的 高品质 音源，且 MeloX 降级链路也没有可用资源",
+      "duration_ms": 311485,
+      "position_ms": 0,
+      "repeat_mode": 0,
+      "file": "19-player-last.png",
+      "shuffle_enabled": false,
+      "is_paused": false,
+      "is_playing": false,
+      "selected_quality": "exhigh",
+      "captured_elapsed_ms": 35080.985717,
+      "is_loading": false,
+      "page": "Queue",
+      "queue_entry_ids": [
+        "8e3f7e64-8f2e-4f51-80ed-013b9398a14f",
+        "4d3724f3-85d8-4161-8de8-1521e8fa8b18",
+        "bbc2fb07-0364-4c80-ab06-01f6f1a0fa8b",
+        "b1c4bbc4-1a82-4f9f-97e4-8826ac8ee353",
+        "f7630b86-8885-4c78-8699-41e83bcc07a1"
+      ],
+      "assertions": [
+        {
+          "expected": "page:Queue",
+          "passed": true
+        },
+        {
+          "expected": "index:2",
+          "passed": true
+        }
+      ],
+      "track": "netease:1475596788",
+      "queue_index": 2,
+      "controls_visible": true,
+      "autoplay_enabled": false,
+      "action_elapsed_ms": 1220.582962
+    },
+    {
+      "queue_count": 5,
+      "queue_tracks": [
+        "netease:1330348068",
+        "netease:2636494144",
+        "netease:1475596788",
+        "netease:1916691093",
+        "netease:1845698007"
+      ],
+      "title": "起风了",
+      "error": "网易云未返回可播放的 高品质 音源，且 MeloX 降级链路也没有可用资源",
+      "duration_ms": 311485,
+      "position_ms": 0,
+      "repeat_mode": 0,
+      "file": "20-close-last.png",
+      "shuffle_enabled": false,
+      "is_paused": false,
+      "is_playing": false,
+      "selected_quality": "exhigh",
+      "captured_elapsed_ms": 36149.260283,
+      "is_loading": false,
+      "page": null,
+      "queue_entry_ids": [
+        "8e3f7e64-8f2e-4f51-80ed-013b9398a14f",
+        "4d3724f3-85d8-4161-8de8-1521e8fa8b18",
+        "bbc2fb07-0364-4c80-ab06-01f6f1a0fa8b",
+        "b1c4bbc4-1a82-4f9f-97e4-8826ac8ee353",
+        "f7630b86-8885-4c78-8699-41e83bcc07a1"
+      ],
+      "assertions": [{
+        "expected": "absent:now-playing",
+        "passed": true
+      }],
+      "track": "netease:1475596788",
+      "queue_index": 2,
+      "controls_visible": false,
+      "autoplay_enabled": false,
+      "action_elapsed_ms": 1068.130772
+    }
+  ],
+  "theme": "Dark",
+  "steps": [
+    "player:tap@mini-player-expand",
+    "lyrics:tap@player-show-lyrics",
+    "hidden:wait@6500",
+    "reveal:tap@lyrics-reveal-controls",
+    "share:hold-tag@lyric-line-0",
+    "share-back:escape",
+    "queue:tap@player-show-queue",
+    "queue-next:tap@queue-track-1",
+    "quality:tap@player-quality",
+    "settings:tap@quality-settings",
+    "quality-menu:tap@settings-selector:播放音质",
+    "quality-high:tap@settings-option:高品质",
+    "settings-back:escape",
+    "player-reopen:tap@mini-player-expand",
+    "quality-after-switch:tap@player-quality",
+    "quality-back:escape",
+    "close:escape",
+    "mini-next:tap@mini-player-next",
+    "player-last:tap@mini-player-expand",
+    "close-last:escape"
+  ],
+  "height": 924,
+  "home": "/home/lladlam/项目/MeloX-Windows/desktop/build/parity/player-v7-home"
+}

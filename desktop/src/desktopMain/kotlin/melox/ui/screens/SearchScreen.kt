@@ -58,8 +58,12 @@ import melox.music.model.MusicArtistSummary
 import melox.music.model.MusicPlaylistSummary
 import melox.music.model.MusicSource
 import melox.music.model.MusicTrack
+import melox.music.provider.AlbumCapability
+import melox.music.provider.ArtistCapability
 import melox.music.provider.CatalogSearchCapability
+import melox.music.provider.MeloXLegacyUiBridge
 import melox.music.provider.MeloXMusicProviders
+import melox.music.provider.PlaylistCapability
 import melox.music.provider.SearchCapability
 import melox.network.MeloXSearchKind
 import melox.network.MeloXSearchMediaItem
@@ -79,7 +83,7 @@ import melox.ui.theme.MeloXColors
 
 private val SearchAccent = Color(0xFF0A84FF)
 private val SearchCategories = listOf(
-    "推荐歌单", "排行榜", "精品歌单", "华语", "欧美", "流行", "摇滚", "民谣", "电子", "轻音乐", "影视原声", "ACG",
+    "排行榜", "播客", "华语", "欧美", "日语", "韩语", "粤语", "流行", "摇滚", "民谣", "电子", "说唱", "R&B/Soul", "古典", "ACG", "影视原声", "学习", "工作", "放松", "夜晚",
 )
 
 private enum class SearchBackAction { ClearOverlay, ClearQuery, SwitchToHome }
@@ -88,6 +92,7 @@ private enum class SearchBackAction { ClearOverlay, ClearQuery, SwitchToHome }
 fun SearchScreen(
     source: MusicSource = MusicSource.Netease,
     onSearchExit: () -> Unit = {},
+    onOpenPodcasts: () -> Unit = {},
 ) {
     val scope = rememberCoroutineScope()
     val cookie = remember { { NeteaseSessionStore.readCookie() } }
@@ -124,6 +129,9 @@ fun SearchScreen(
     var categoryTitle by remember(source) { mutableStateOf<String?>(null) }
     var categoryPlaylists by remember(source) { mutableStateOf<List<NeteasePlaylistSummary>>(emptyList()) }
     var selectedDetail by remember(source) { mutableStateOf<MeloXSearchMediaItem?>(null) }
+    var selectedProviderPlaylist by remember(source) { mutableStateOf<MusicPlaylistSummary?>(null) }
+    var selectedProviderAlbum by remember(source) { mutableStateOf<MusicAlbumSummary?>(null) }
+    var selectedProviderArtist by remember(source) { mutableStateOf<MusicArtistSummary?>(null) }
     var loading by remember(source) { mutableStateOf(false) }
     var error by remember(source) { mutableStateOf<String?>(null) }
     var selectedActionSong by remember(source) { mutableStateOf<SearchSong?>(null) }
@@ -220,7 +228,7 @@ fun SearchScreen(
     }
 
     val backAction = when {
-        selectedDetail != null || categoryTitle != null -> SearchBackAction.ClearOverlay
+        selectedDetail != null || selectedProviderPlaylist != null || selectedProviderAlbum != null || selectedProviderArtist != null || categoryTitle != null -> SearchBackAction.ClearOverlay
         query.isNotBlank() -> SearchBackAction.ClearQuery
         else -> SearchBackAction.SwitchToHome
     }
@@ -228,6 +236,9 @@ fun SearchScreen(
         when (backAction) {
             SearchBackAction.ClearOverlay -> {
                 selectedDetail = null
+                selectedProviderPlaylist = null
+                selectedProviderAlbum = null
+                selectedProviderArtist = null
                 categoryTitle = null
                 categoryPlaylists = emptyList()
                 error = null
@@ -244,6 +255,7 @@ fun SearchScreen(
     Box(
         Modifier
             .fillMaxSize()
+            .background(MeloXColors.pageBackground())
             .onPreviewKeyEvent { event ->
                 if (event.type == KeyEventType.KeyUp && event.key == Key.Escape) {
                     consumeBack()
@@ -252,6 +264,27 @@ fun SearchScreen(
             },
     ) {
         when {
+            selectedProviderPlaylist != null -> ProviderCollectionDetail(
+                title = selectedProviderPlaylist!!.title,
+                subtitle = selectedProviderPlaylist!!.creatorName.orEmpty(),
+                artwork = selectedProviderPlaylist!!.artworkUrl,
+                load = { (currentProvider as? PlaylistCapability)?.playlistDetail(selectedProviderPlaylist!!)?.tracks.orEmpty() },
+                onBack = { selectedProviderPlaylist = null },
+            )
+            selectedProviderAlbum != null -> ProviderCollectionDetail(
+                title = selectedProviderAlbum!!.title,
+                subtitle = "",
+                artwork = selectedProviderAlbum!!.artworkUrl,
+                load = { (currentProvider as? AlbumCapability)?.albumDetail(selectedProviderAlbum!!)?.tracks.orEmpty() },
+                onBack = { selectedProviderAlbum = null },
+            )
+            selectedProviderArtist != null -> ProviderCollectionDetail(
+                title = selectedProviderArtist!!.name,
+                subtitle = "",
+                artwork = selectedProviderArtist!!.artworkUrl,
+                load = { (currentProvider as? ArtistCapability)?.artistDetail(selectedProviderArtist!!)?.tracks.orEmpty() },
+                onBack = { selectedProviderArtist = null },
+            )
             selectedDetail != null -> SearchCollectionDetail(
                 item = selectedDetail!!,
                 universal = universal,
@@ -295,7 +328,8 @@ fun SearchScreen(
                         query.isBlank() && source == MusicSource.Netease -> SearchDiscovery(
                             recommendations = recommendations,
                             onPlaylist = { selectedDetail = it.asSearchItem() },
-                            onCategory = { category ->
+                             onCategory = { category ->
+                                if (category == "播客") { onOpenPodcasts(); return@SearchDiscovery }
                                 categoryTitle = category
                                 loading = true
                                 error = null
@@ -337,14 +371,17 @@ fun SearchScreen(
                         source != MusicSource.Netease && kind == MeloXSearchKind.Playlists -> ProviderMediaResults(
                             titles = providerPlaylists.map { it.title to (it.creatorName.orEmpty()) },
                             artworks = providerPlaylists.map { it.artworkUrl },
+                            onOpen = { selectedProviderPlaylist = providerPlaylists[it] },
                         )
                         source != MusicSource.Netease && kind == MeloXSearchKind.Albums -> ProviderMediaResults(
                             titles = providerAlbums.map { it.title to "" },
                             artworks = providerAlbums.map { it.artworkUrl },
+                            onOpen = { selectedProviderAlbum = providerAlbums[it] },
                         )
                         source != MusicSource.Netease && kind == MeloXSearchKind.Artists -> ProviderMediaResults(
                             titles = providerArtists.map { it.name to "" },
                             artworks = providerArtists.map { it.artworkUrl },
+                            onOpen = { selectedProviderArtist = providerArtists[it] },
                         )
                         else -> SearchMediaResults(media) { selectedDetail = it }
                     }
@@ -409,7 +446,7 @@ private fun SearchField(
             )
         },
         placeholder = {
-            Text("搜索歌曲、歌手、专辑", color = MaterialTheme.colorScheme.onSurface.copy(alpha = .42f), fontSize = 17.sp)
+            Text("歌曲、歌手、专辑或歌单", color = MaterialTheme.colorScheme.onSurface.copy(alpha = .42f), fontSize = 17.sp)
         },
         trailingContent = {
             if (value.isNotBlank()) {
@@ -478,20 +515,20 @@ private fun SearchDiscovery(
 ) {
     LazyColumn(Modifier.fillMaxSize(), contentPadding = PaddingValues(bottom = 140.dp)) {
         if (recommendations.isNotEmpty()) {
-            item { Text("热门推荐", modifier = Modifier.padding(start = 20.dp, top = 14.dp, bottom = 12.dp), fontSize = 24.sp, fontWeight = FontWeight.Bold, color = MeloXColors.OnSurface) }
+            item { Text("热门推荐", modifier = Modifier.padding(start = 20.dp, top = 14.dp, bottom = 12.dp), fontSize = 24.sp, fontWeight = FontWeight.Bold, color = MeloXColors.pageOnSurface()) }
             item {
                 LazyRow(contentPadding = PaddingValues(horizontal = 20.dp), horizontalArrangement = Arrangement.spacedBy(14.dp)) {
                     items(recommendations, key = { it.id }) { playlist ->
                         Column(Modifier.width(160.dp).clickable { onPlaylist(playlist) }) {
                             MeloXArtworkImage(playlist.coverUrl, MeloXColors.SurfaceVariant, Modifier.size(160.dp).clip(RoundedCornerShape(14.dp)))
-                            Text(playlist.name, modifier = Modifier.padding(top = 7.dp), maxLines = 2, overflow = TextOverflow.Ellipsis, fontWeight = FontWeight.SemiBold, color = MeloXColors.OnSurface)
+                            Text(playlist.name, modifier = Modifier.padding(top = 7.dp), maxLines = 2, overflow = TextOverflow.Ellipsis, fontWeight = FontWeight.SemiBold, color = MeloXColors.pageOnSurface())
                         }
                     }
                 }
             }
         }
-        item { Text("浏览类别", modifier = Modifier.padding(start = 20.dp, top = 26.dp, bottom = 12.dp), fontSize = 24.sp, fontWeight = FontWeight.Bold, color = MeloXColors.OnSurface) }
-        items(SearchCategories.chunked(2)) { pair ->
+        item { Text("浏览类别", modifier = Modifier.padding(start = 20.dp, top = 26.dp, bottom = 12.dp), fontSize = 24.sp, fontWeight = FontWeight.Bold, color = MeloXColors.pageOnSurface()) }
+        items(SearchCategories.filter { it != "播客" || melox.settings.MeloXSettingsRuntime.podcastsEnabled }.chunked(2)) { pair ->
             Row(Modifier.fillMaxWidth().padding(horizontal = 20.dp, vertical = 6.dp), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                 pair.forEach { category -> SearchCategoryCard(category, Modifier.weight(1f)) { onCategory(category) } }
                 if (pair.size == 1) Spacer(Modifier.weight(1f))
@@ -511,14 +548,14 @@ private fun SearchCategoryCard(title: String, modifier: Modifier, onClick: () ->
     }
     Box(
         modifier
-            .height(72.dp)
+            .height(96.dp)
             .clip(RoundedCornerShape(16.dp))
             .background(tint)
             .clickable(onClick = onClick)
-            .padding(16.dp),
-        contentAlignment = Alignment.CenterStart,
+            .padding(14.dp),
+        contentAlignment = Alignment.BottomStart,
     ) {
-        Text(title, color = Color.White, fontWeight = FontWeight.SemiBold, fontSize = 17.sp)
+        Text(title, color = Color.White, fontWeight = FontWeight.Bold, fontSize = 18.sp)
     }
 }
 
@@ -546,14 +583,14 @@ private fun SearchHistoryList(
 ) {
     Column(Modifier.fillMaxSize().padding(horizontal = 20.dp)) {
         Row(Modifier.fillMaxWidth().padding(vertical = 8.dp), horizontalArrangement = Arrangement.SpaceBetween) {
-            Text("最近搜索", color = MeloXColors.OnSurface, fontWeight = FontWeight.SemiBold)
+            Text("最近搜索", color = MeloXColors.pageOnSurface(), fontWeight = FontWeight.SemiBold)
             Text("清除", modifier = Modifier.clickable(onClick = onClear), color = SearchAccent, fontSize = 13.sp)
         }
         values.forEach { item ->
             Text(
                 item,
                 modifier = Modifier.fillMaxWidth().clickable { onPick(item) }.padding(vertical = 10.dp),
-                color = MeloXColors.OnSurface,
+                color = MeloXColors.pageOnSurface(),
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
             )
@@ -569,17 +606,32 @@ private fun SearchSongResults(
 ) {
     LazyColumn(Modifier.fillMaxSize(), contentPadding = PaddingValues(bottom = 140.dp)) {
         items(values, key = { it.id }) { song ->
-            Row(
-                Modifier.fillMaxWidth().combinedClickable(
-                    onClick = { onPlay(song) },
-                    onLongClick = { onMore?.invoke(song) },
-                ).padding(horizontal = 20.dp, vertical = 8.dp),
-                verticalAlignment = Alignment.CenterVertically,
+            MeloXSwipeActionRow(
+                startActions = listOf(
+                    MeloXSwipeAction("下一首播放", melox.ui.foundation.MeloXSymbol.NextTrack, Color(0xFF8E5AF7)) {
+                        melox.playback.PlaybackCommands.playNext(song)
+                    },
+                    MeloXSwipeAction("稍后播放", melox.ui.foundation.MeloXSymbol.Queue, Color(0xFFFF9F0A)) {
+                        melox.playback.PlaybackCommands.addToQueue(song)
+                    },
+                ),
+                endActions = listOf(
+                    MeloXSwipeAction("添加到资料库", melox.ui.foundation.MeloXSymbol.Heart, Color(0xFFFF3B30)) {
+                        onMore?.invoke(song)
+                    },
+                ),
+                onClick = { onPlay(song) },
+                onLongClick = { onMore?.invoke(song) },
             ) {
-                MeloXArtworkImage(song.artworkUrl, MeloXColors.SurfaceVariant, Modifier.size(52.dp).clip(RoundedCornerShape(8.dp)))
-                Column(Modifier.padding(start = 12.dp).weight(1f)) {
-                    Text(song.name, maxLines = 1, overflow = TextOverflow.Ellipsis, color = MeloXColors.OnSurface, fontWeight = FontWeight.Medium)
-                    Text(song.artists, maxLines = 1, overflow = TextOverflow.Ellipsis, color = MeloXColors.OnSurfaceVariant, fontSize = 13.sp)
+                Row(
+                    Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 9.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    MeloXArtworkImage(song.artworkUrl, MeloXColors.SurfaceVariant, Modifier.size(52.dp).clip(RoundedCornerShape(8.dp)))
+                    Column(Modifier.padding(start = 12.dp).weight(1f)) {
+                        Text(song.name, maxLines = 1, overflow = TextOverflow.Ellipsis, color = MeloXColors.pageOnSurface(), fontSize = 17.sp, fontWeight = FontWeight.Medium)
+                        Text(song.artists, maxLines = 1, overflow = TextOverflow.Ellipsis, color = MeloXColors.pageOnSurfaceVariant(), fontSize = 13.sp)
+                    }
                 }
             }
         }
@@ -596,8 +648,8 @@ private fun ProviderSearchSongResults(values: List<MusicTrack>, onPlay: (MusicTr
             ) {
                 MeloXArtworkImage(track.artworkUrl, MeloXColors.SurfaceVariant, Modifier.size(52.dp).clip(RoundedCornerShape(8.dp)))
                 Column(Modifier.padding(start = 12.dp).weight(1f)) {
-                    Text(track.title, maxLines = 1, overflow = TextOverflow.Ellipsis, color = MeloXColors.OnSurface, fontWeight = FontWeight.Medium)
-                    Text(track.artistText, maxLines = 1, overflow = TextOverflow.Ellipsis, color = MeloXColors.OnSurfaceVariant, fontSize = 13.sp)
+                    Text(track.title, maxLines = 1, overflow = TextOverflow.Ellipsis, color = MeloXColors.pageOnSurface(), fontWeight = FontWeight.Medium)
+                    Text(track.artistText, maxLines = 1, overflow = TextOverflow.Ellipsis, color = MeloXColors.pageOnSurfaceVariant(), fontSize = 13.sp)
                 }
             }
         }
@@ -614,8 +666,8 @@ private fun SearchMediaResults(values: List<MeloXSearchMediaItem>, onOpen: (Melo
             ) {
                 MeloXArtworkImage(item.artworkUrl, MeloXColors.SurfaceVariant, Modifier.size(56.dp).clip(RoundedCornerShape(10.dp)))
                 Column(Modifier.padding(start = 12.dp).weight(1f)) {
-                    Text(item.title, maxLines = 1, overflow = TextOverflow.Ellipsis, color = MeloXColors.OnSurface, fontWeight = FontWeight.Medium)
-                    if (item.subtitle.isNotBlank()) Text(item.subtitle, maxLines = 1, overflow = TextOverflow.Ellipsis, color = MeloXColors.OnSurfaceVariant, fontSize = 13.sp)
+                    Text(item.title, maxLines = 1, overflow = TextOverflow.Ellipsis, color = MeloXColors.pageOnSurface(), fontWeight = FontWeight.Medium)
+                    if (item.subtitle.isNotBlank()) Text(item.subtitle, maxLines = 1, overflow = TextOverflow.Ellipsis, color = MeloXColors.pageOnSurfaceVariant(), fontSize = 13.sp)
                 }
             }
         }
@@ -623,18 +675,22 @@ private fun SearchMediaResults(values: List<MeloXSearchMediaItem>, onOpen: (Melo
 }
 
 @Composable
-private fun ProviderMediaResults(titles: List<Pair<String, String>>, artworks: List<String?>) {
+private fun ProviderMediaResults(
+    titles: List<Pair<String, String>>,
+    artworks: List<String?>,
+    onOpen: (Int) -> Unit,
+) {
     LazyColumn(Modifier.fillMaxSize(), contentPadding = PaddingValues(bottom = 140.dp)) {
         items(titles.size) { index ->
             val (title, subtitle) = titles[index]
             Row(
-                Modifier.fillMaxWidth().padding(horizontal = 20.dp, vertical = 8.dp),
+                Modifier.fillMaxWidth().clickable { onOpen(index) }.padding(horizontal = 20.dp, vertical = 8.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 MeloXArtworkImage(artworks.getOrNull(index), MeloXColors.SurfaceVariant, Modifier.size(56.dp).clip(RoundedCornerShape(10.dp)))
                 Column(Modifier.padding(start = 12.dp).weight(1f)) {
-                    Text(title, maxLines = 1, overflow = TextOverflow.Ellipsis, color = MeloXColors.OnSurface, fontWeight = FontWeight.Medium)
-                    if (subtitle.isNotBlank()) Text(subtitle, maxLines = 1, overflow = TextOverflow.Ellipsis, color = MeloXColors.OnSurfaceVariant, fontSize = 13.sp)
+                    Text(title, maxLines = 1, overflow = TextOverflow.Ellipsis, color = MeloXColors.pageOnSurface(), fontWeight = FontWeight.Medium)
+                    if (subtitle.isNotBlank()) Text(subtitle, maxLines = 1, overflow = TextOverflow.Ellipsis, color = MeloXColors.pageOnSurfaceVariant(), fontSize = 13.sp)
                 }
             }
         }
@@ -660,12 +716,49 @@ private fun SearchCategoryPage(
                     Row(Modifier.fillMaxWidth().clickable { onPlaylist(playlist) }, verticalAlignment = Alignment.CenterVertically) {
                         MeloXArtworkImage(playlist.coverUrl, MeloXColors.SurfaceVariant, Modifier.size(64.dp).clip(RoundedCornerShape(12.dp)))
                         Column(Modifier.padding(start = 12.dp)) {
-                            Text(playlist.name, color = MeloXColors.OnSurface, fontWeight = FontWeight.Medium, maxLines = 1, overflow = TextOverflow.Ellipsis)
-                            Text("${playlist.trackCount} 首 · ${playlist.creatorName}", color = MeloXColors.OnSurfaceVariant, fontSize = 13.sp)
+                            Text(playlist.name, color = MeloXColors.pageOnSurface(), fontWeight = FontWeight.Medium, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                            Text("${playlist.trackCount} 首 · ${playlist.creatorName}", color = MeloXColors.pageOnSurfaceVariant(), fontSize = 13.sp)
                         }
                     }
                 }
             }
+        }
+    }
+}
+
+@Composable
+private fun ProviderCollectionDetail(
+    title: String,
+    subtitle: String,
+    artwork: String?,
+    load: suspend () -> List<MusicTrack>,
+    onBack: () -> Unit,
+) {
+    var tracks by remember(title, artwork) { mutableStateOf<List<MusicTrack>>(emptyList()) }
+    var loading by remember(title, artwork) { mutableStateOf(true) }
+    var error by remember(title, artwork) { mutableStateOf<String?>(null) }
+    LaunchedEffect(title, artwork) {
+        loading = true
+        runCatching { load() }
+            .onSuccess { tracks = it }
+            .onFailure { error = it.message ?: "加载失败" }
+        loading = false
+    }
+    val songs = tracks.map(MeloXLegacyUiBridge::track)
+    Column(Modifier.fillMaxSize().padding(top = 26.dp)) {
+        MeloXIosTopBar(title = title, onBack = onBack)
+        Spacer(Modifier.height(12.dp))
+        Row(Modifier.padding(horizontal = 20.dp), verticalAlignment = Alignment.CenterVertically) {
+            MeloXArtworkImage(artwork, MeloXColors.SurfaceVariant, Modifier.size(96.dp).clip(RoundedCornerShape(16.dp)))
+            Column(Modifier.padding(start = 16.dp)) {
+                Text(title, color = MeloXColors.pageOnSurface(), fontWeight = FontWeight.Bold, fontSize = 20.sp)
+                if (subtitle.isNotBlank()) Text(subtitle, color = MeloXColors.pageOnSurfaceVariant())
+            }
+        }
+        when {
+            loading -> Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) { CircularProgressIndicator(color = SearchAccent) }
+            error != null -> Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) { Text(error.orEmpty(), color = MaterialTheme.colorScheme.error) }
+            else -> SearchSongResults(songs, onPlay = { song -> PlaybackCommands.playQueue(songs, song.id) })
         }
     }
 }
@@ -692,8 +785,8 @@ private fun SearchCollectionDetail(
         Row(Modifier.padding(horizontal = 20.dp), verticalAlignment = Alignment.CenterVertically) {
             MeloXArtworkImage(item.artworkUrl, MeloXColors.SurfaceVariant, Modifier.size(96.dp).clip(RoundedCornerShape(16.dp)))
             Column(Modifier.padding(start = 16.dp)) {
-                Text(item.title, color = MeloXColors.OnSurface, fontWeight = FontWeight.Bold, fontSize = 20.sp)
-                if (item.subtitle.isNotBlank()) Text(item.subtitle, color = MeloXColors.OnSurfaceVariant)
+                Text(item.title, color = MeloXColors.pageOnSurface(), fontWeight = FontWeight.Bold, fontSize = 20.sp)
+                if (item.subtitle.isNotBlank()) Text(item.subtitle, color = MeloXColors.pageOnSurfaceVariant())
             }
         }
         when {

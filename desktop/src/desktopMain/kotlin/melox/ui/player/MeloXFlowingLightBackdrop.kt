@@ -24,15 +24,20 @@ import androidx.compose.ui.graphics.FilterQuality
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asComposeImageBitmap
 import androidx.compose.ui.graphics.toComposeImageBitmap
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
+import androidx.compose.runtime.mutableFloatStateOf
 import java.io.File
 import java.net.URI
 import java.util.LinkedHashMap
 import kotlin.math.cos
 import kotlin.math.sin
+import melox.settings.MeloXPlayerBackgroundMode
+import melox.settings.playerShowsLyricsArtworkBackdrop
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.awaitCancellation
 import kotlinx.coroutines.delay
@@ -322,12 +327,19 @@ internal fun MeloXLyricsArtworkBackdrop(
         ColorFilter.colorMatrix(ColorMatrix().apply { setToSaturation(saturation) })
     }
     val latestIsPlaying by rememberUpdatedState(isPlaying)
+    val latestReduceMotion by rememberUpdatedState(reduceMotion)
     val elapsedWhilePlayingMs = remember(artworkUrl) { mutableLongStateOf(0L) }
     val settleUntilMs = remember(artworkUrl) { System.currentTimeMillis() + 1_600L }
-    LaunchedEffect(planeCount, artworkUrl, frameRate) {
+    LaunchedEffect(planeCount, artworkUrl, frameRate, reduceMotion) {
+        if (reduceMotion) return@LaunchedEffect
         var previousFrameAt = System.currentTimeMillis()
         while (true) {
             val now = System.currentTimeMillis()
+            if (latestReduceMotion) {
+                delay(500L)
+                previousFrameAt = System.currentTimeMillis()
+                continue
+            }
             if (!latestIsPlaying && now >= settleUntilMs) {
                 previousFrameAt = now
                 delay(500L)
@@ -372,6 +384,81 @@ internal fun MeloXLyricsArtworkBackdrop(
                 ),
             )
         }
+    }
+}
+
+@Composable
+internal fun MeloXMeiMeshBackdrop(
+    artworkUrl: String?,
+    isPlaying: Boolean,
+    modifier: Modifier = Modifier,
+    reduceMotion: Boolean = false,
+) {
+    var palette by remember { mutableStateOf(ArtworkDynamicPalette.Fallback) }
+    val phase = remember { mutableFloatStateOf(0f) }
+    LaunchedEffect(artworkUrl) {
+        palette = ArtworkDynamicPaletteProvider.paletteFor(artworkUrl)
+    }
+    LaunchedEffect(reduceMotion, isPlaying) {
+        if (reduceMotion || !isPlaying) return@LaunchedEffect
+        while (true) {
+            withFrameNanos {
+                phase.floatValue = (phase.floatValue + 0.004f) % 1f
+            }
+        }
+    }
+    Canvas(modifier.fillMaxSize()) {
+        val t = if (reduceMotion) 0f else phase.floatValue
+        drawRect(palette.average)
+        val columns = 6
+        val rows = 10
+        val cellWidth = size.width / columns
+        val cellHeight = size.height / rows
+        for (y in 0 until rows) {
+            for (x in 0 until columns) {
+                val color = palette.cells[(x + y) % palette.cells.size]
+                val drift = if (reduceMotion) 0f else sin((t + x * 0.11f + y * 0.07f) * 6.28318f) * 10f
+                drawRect(
+                    color = color.copy(alpha = 0.62f),
+                    topLeft = Offset(x * cellWidth + drift, y * cellHeight),
+                    size = Size(cellWidth * 0.9f, cellHeight * 0.9f),
+                )
+            }
+        }
+    }
+}
+
+@Composable
+internal fun MeloXPlayerBackdrop(
+    mode: MeloXPlayerBackgroundMode,
+    lyricsPage: Boolean,
+    artworkUrl: String?,
+    isPlaying: Boolean,
+    mediaId: String?,
+    reduceMotion: Boolean,
+    modifier: Modifier = Modifier,
+) {
+    when {
+        playerShowsLyricsArtworkBackdrop(mode, lyricsPage) -> MeloXLyricsArtworkBackdrop(
+            artworkUrl = artworkUrl,
+            isPlaying = isPlaying,
+            modifier = modifier,
+            reduceMotion = reduceMotion,
+        )
+        mode == MeloXPlayerBackgroundMode.MeiMesh -> MeloXMeiMeshBackdrop(
+            artworkUrl = artworkUrl,
+            isPlaying = isPlaying,
+            modifier = modifier,
+            reduceMotion = reduceMotion,
+        )
+        mode == MeloXPlayerBackgroundMode.FlowingLight -> MeloXFlowingLightBackdrop(
+            artworkUrl = artworkUrl,
+            isPlaying = isPlaying,
+            mediaId = mediaId,
+            modifier = modifier,
+            reduceMotion = reduceMotion,
+        )
+        else -> MeloXBlurredArtworkBackdrop(artworkUrl, modifier)
     }
 }
 

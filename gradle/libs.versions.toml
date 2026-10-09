@@ -1,15 +1,17 @@
 [versions]
-kotlin = "2.1.20"
+kotlin = "2.3.21"
 compose = "1.8.1"
 skiko = "0.9.4.2"
 kotlinx-serialization = "1.8.1"
-kotlinx-coroutines = "1.10.0"
-okhttp = "4.12.0"
+kotlinx-coroutines = "1.11.0"
+okhttp = "5.3.2"
 org-json = "20240303"
 
 [libraries]
 kotlinx-serialization = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
 kotlinx-coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
+kotlinx-coroutines-swing = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-swing", version.ref = "kotlinx-coroutines" }
+kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinx-coroutines" }
 okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp" }
 org-json = { group = "org.json", name = "json", version.ref = "org-json" }
 kotlin-test = { group = "org.jetbrains.kotlin", name = "kotlin-test", version.ref = "kotlin" }

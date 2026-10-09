@@ -25,7 +25,9 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import kotlinx.coroutines.launch
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -41,6 +43,7 @@ import melox.network.NeteaseUniversalSearchClient
 import melox.playback.PlaybackCommands
 import melox.ui.foundation.MeloXIosTopBar
 import melox.ui.glass.MeloXGlassButton
+import melox.ui.glass.MeloXGlassButtonStyle
 import melox.ui.navigation.MeloXNavState
 import melox.ui.theme.MeloXColors
 
@@ -96,12 +99,12 @@ private fun PodcastHome(
             Text(error.orEmpty(), color = MaterialTheme.colorScheme.error)
         }
         else -> LazyColumn(
-            modifier.fillMaxSize().background(MeloXColors.Background),
+            modifier.fillMaxSize().background(MeloXColors.pageBackground()),
             contentPadding = PaddingValues(top = 22.dp, bottom = 140.dp),
             verticalArrangement = Arrangement.spacedBy(22.dp),
         ) {
             item {
-                Text("播客", Modifier.padding(horizontal = 20.dp), color = MeloXColors.OnBackground, fontSize = 34.sp, fontWeight = FontWeight.Bold)
+                Text("播客", Modifier.padding(horizontal = 20.dp), color = MeloXColors.pageOnBackground(), fontSize = 34.sp, fontWeight = FontWeight.Bold)
             }
             if (categories.isNotEmpty()) {
                 item {
@@ -128,13 +131,13 @@ private fun PodcastHome(
 @Composable
 private fun PodcastRow(title: String, values: List<MeloXPodcast>, onPodcast: (MeloXPodcast) -> Unit) {
     Column {
-        Text(title, Modifier.padding(start = 20.dp, bottom = 12.dp), color = MeloXColors.OnSurface, fontSize = 22.sp, fontWeight = FontWeight.Bold)
+        Text(title, Modifier.padding(start = 20.dp, bottom = 12.dp), color = MeloXColors.pageOnSurface(), fontSize = 22.sp, fontWeight = FontWeight.Bold)
         LazyRow(contentPadding = PaddingValues(horizontal = 20.dp), horizontalArrangement = Arrangement.spacedBy(14.dp)) {
             items(values, key = { it.id }) { podcast ->
                 Column(Modifier.width(148.dp).clickable { onPodcast(podcast) }) {
                     MeloXArtworkImage(podcast.artworkUrl, MeloXColors.SurfaceVariant, Modifier.size(148.dp).clip(RoundedCornerShape(14.dp)))
-                    Text(podcast.name, Modifier.padding(top = 7.dp), maxLines = 2, overflow = TextOverflow.Ellipsis, color = MeloXColors.OnSurface, fontWeight = FontWeight.SemiBold)
-                    Text(podcast.host?.nickname.orEmpty(), maxLines = 1, color = MeloXColors.OnSurfaceVariant, fontSize = 12.sp)
+                    Text(podcast.name, Modifier.padding(top = 7.dp), maxLines = 2, overflow = TextOverflow.Ellipsis, color = MeloXColors.pageOnSurface(), fontWeight = FontWeight.SemiBold)
+                    Text(podcast.host?.nickname.orEmpty(), maxLines = 1, color = MeloXColors.pageOnSurfaceVariant(), fontSize = 12.sp)
                 }
             }
         }
@@ -142,23 +145,49 @@ private fun PodcastRow(title: String, values: List<MeloXPodcast>, onPodcast: (Me
 }
 
 @Composable
-private fun PodcastDetail(client: NeteaseUniversalSearchClient, podcast: MeloXPodcast, onBack: () -> Unit) {
+private fun PodcastDetail(client: NeteaseUniversalSearchClient, initial: MeloXPodcast, onBack: () -> Unit) {
+    val scope = rememberCoroutineScope()
+    var podcast by remember(initial.id) { mutableStateOf(initial) }
     var programs by remember(podcast.id) { mutableStateOf<List<MeloXPodcastProgram>>(emptyList()) }
     var loading by remember(podcast.id) { mutableStateOf(true) }
+    var subscribing by remember(podcast.id) { mutableStateOf(false) }
     var error by remember(podcast.id) { mutableStateOf<String?>(null) }
     LaunchedEffect(podcast.id) {
-        runCatching { client.podcastPrograms(podcast.id).values }
-            .onSuccess { programs = it }
+        runCatching {
+            client.podcastDetail(podcast.id)?.let { podcast = it }
+            client.podcastPrograms(podcast.id, limit = 100).values
+        }.onSuccess { programs = it }
             .onFailure { error = it.message ?: "节目加载失败" }
         loading = false
     }
-    Column(Modifier.fillMaxSize().background(MeloXColors.Background).padding(top = 18.dp)) {
+    Column(Modifier.fillMaxSize().background(MeloXColors.pageBackground()).padding(top = 18.dp)) {
         MeloXIosTopBar(title = podcast.name, onBack = onBack)
         Row(Modifier.padding(20.dp), verticalAlignment = Alignment.CenterVertically) {
             MeloXArtworkImage(podcast.artworkUrl, MeloXColors.SurfaceVariant, Modifier.size(96.dp).clip(RoundedCornerShape(16.dp)))
-            Column(Modifier.padding(start = 16.dp)) {
-                Text(podcast.name, color = MeloXColors.OnSurface, fontWeight = FontWeight.Bold, fontSize = 20.sp)
-                Text(podcast.host?.nickname.orEmpty(), color = MeloXColors.OnSurfaceVariant)
+            Column(Modifier.padding(start = 16.dp).weight(1f)) {
+                Text(podcast.name, color = MeloXColors.pageOnSurface(), fontWeight = FontWeight.Bold, fontSize = 20.sp)
+                Text(podcast.host?.nickname.orEmpty(), color = MeloXColors.pageOnSurfaceVariant())
+            }
+            MeloXGlassButton(
+                onClick = {
+                    if (NeteaseSessionStore.readCookie().isBlank()) {
+                        error = "请先登录网易云音乐"
+                        return@MeloXGlassButton
+                    }
+                    if (subscribing) return@MeloXGlassButton
+                    val desired = !podcast.subscribed
+                    subscribing = true
+                    scope.launch {
+                        runCatching { client.setPodcastSubscribed(podcast.id, desired) }
+                            .onSuccess { podcast = podcast.copy(subscribed = desired) }
+                            .onFailure { error = it.message ?: "订阅失败" }
+                        subscribing = false
+                    }
+                },
+                enabled = !subscribing,
+                style = if (podcast.subscribed) MeloXGlassButtonStyle.BorderedProminent else MeloXGlassButtonStyle.Bordered,
+            ) {
+                Text(if (podcast.subscribed) "已订阅" else "订阅")
             }
         }
         when {
@@ -168,14 +197,18 @@ private fun PodcastDetail(client: NeteaseUniversalSearchClient, podcast: MeloXPo
                 items(programs, key = { it.id }) { program ->
                     Row(
                         Modifier.fillMaxWidth().clickable {
-                            program.playbackSong?.let { PlaybackCommands.playQueue(listOf(it), it.id) }
+                            val playable = programs.mapNotNull(MeloXPodcastProgram::playbackSong)
+                            val selected = program.playbackSong ?: return@clickable
+                            val start = playable.indexOfFirst { it.id == selected.id }.coerceAtLeast(0)
+                            val queue = if (start == 0) playable else playable.drop(start) + playable.take(start)
+                            if (queue.isNotEmpty()) PlaybackCommands.playQueue(queue, queue.first().id)
                         }.padding(horizontal = 20.dp, vertical = 8.dp),
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
                         MeloXArtworkImage(program.artworkUrl, MeloXColors.SurfaceVariant, Modifier.size(52.dp).clip(RoundedCornerShape(8.dp)))
                         Column(Modifier.padding(start = 12.dp)) {
-                            Text(program.name, color = MeloXColors.OnSurface, maxLines = 1, overflow = TextOverflow.Ellipsis)
-                            Text(program.radioName, color = MeloXColors.OnSurfaceVariant, fontSize = 13.sp)
+                            Text(program.name, color = MeloXColors.pageOnSurface(), maxLines = 1, overflow = TextOverflow.Ellipsis)
+                            Text(program.radioName, color = MeloXColors.pageOnSurfaceVariant(), fontSize = 13.sp)
                         }
                     }
                 }

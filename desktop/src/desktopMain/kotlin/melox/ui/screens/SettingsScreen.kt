@@ -1,8 +1,12 @@
 package melox.ui.screens
 
 import androidx.compose.foundation.background
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,12 +17,18 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.semantics.clearAndSetSemantics
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.zIndex
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -33,15 +43,24 @@ import melox.network.NeteaseSearchClient
 import melox.platform.meloXCacheDir
 import melox.platform.meloXDataDir
 import melox.playback.MeloXMediaCache
+import melox.playback.PlaybackCommands
 import melox.settings.MeloXPlayerBackgroundMode
+import melox.settings.MeloXPlayerShell
 import melox.settings.MeloXSettingsPreferences
 import melox.settings.MeloXSettingsRuntime
 import melox.settings.MeloXThemeMode
 import melox.ui.foundation.MeloXIosListRow
 import melox.ui.foundation.MeloXIosTopBar
+import melox.ui.foundation.MeloXIosGroupedList
+import melox.ui.foundation.MeloXSymbolIcon
 import melox.ui.foundation.MeloXSymbol
+import melox.ui.foundation.meloXPageEnter
+import melox.ui.foundation.meloXPageExit
+import melox.ui.navigation.MeloXBackHandler
 import melox.ui.glass.MeloXGlassSegmentedControl
 import melox.ui.glass.MeloXGlassTextField
+import melox.ui.glass.MeloXSettingsDropdown
+import melox.ui.glass.LocalSettingsGroupRowIndex
 import melox.ui.theme.MeloXColors
 
 private enum class SettingsRoute(val title: String, val subtitle: String, val symbol: MeloXSymbol) {
@@ -64,55 +83,61 @@ private val SettingsSections = listOf(
 
 @Composable
 fun SettingsScreen(
+    routeRequest: String? = null,
+    onRouteRequestConsumed: () -> Unit = {},
     currentSource: MusicSource = MusicSource.Netease,
     onSourceSelected: (MusicSource) -> Unit = {},
     onOpenMessages: () -> Unit = {},
     onOpenServices: () -> Unit = {},
+    onOpenLogin: () -> Unit = {},
 ) {
     var route by remember { mutableStateOf<SettingsRoute?>(null) }
+    LaunchedEffect(routeRequest) {
+        if (routeRequest == null) return@LaunchedEffect
+        route = SettingsRoute.entries.firstOrNull { it.name == routeRequest }
+        onRouteRequestConsumed()
+    }
     var search by remember { mutableStateOf("") }
     val scroll = rememberScrollState()
-    if (route != null) {
-        SettingsDetail(route!!, currentSource, onSourceSelected, onBack = { route = null })
-        return
-    }
+    var detailRoute by remember { mutableStateOf<SettingsRoute?>(null) }
+    if (route != null) detailRoute = route
+    MeloXBackHandler(enabled = route != null) { route = null }
+    Box(Modifier.fillMaxSize()) {
     val normalized = search.trim()
     Column(
-        Modifier.fillMaxSize().background(MeloXColors.Background).verticalScroll(scroll).padding(top = 18.dp, bottom = 140.dp),
+        Modifier.fillMaxSize().background(MeloXColors.pageBackground()).verticalScroll(scroll)
+            .padding(horizontal = 20.dp).padding(top = 18.dp, bottom = 140.dp)
+            .then(if (route != null) Modifier.clearAndSetSemantics { } else Modifier),
     ) {
-        MeloXIosTopBar(title = "设置")
+        MeloXIosTopBar(title = "设置", contentPadding = PaddingValues(0.dp))
         Spacer(Modifier.height(14.dp))
         MeloXGlassTextField(
             value = search,
             onValueChange = { search = it },
-            modifier = Modifier.padding(horizontal = 20.dp),
-            placeholder = { Text("搜索设置", color = MaterialTheme.colorScheme.onSurface.copy(alpha = .42f)) },
+            modifier = Modifier.fillMaxWidth(),
+            leadingContent = { MeloXSymbolIcon(MeloXSymbol.Search, size = 20, iconSize = 24, color = MaterialTheme.colorScheme.onSurface.copy(alpha = .55f)) },
+            placeholder = { Text("搜索设置", color = MaterialTheme.colorScheme.onSurface.copy(alpha = .42f), fontSize = 16.sp) },
+            textStyle = androidx.compose.ui.text.TextStyle(color = MaterialTheme.colorScheme.onSurface, fontSize = 16.sp, lineHeight = 21.sp),
         )
         Spacer(Modifier.height(20.dp))
-        SettingsAccountCard()
-        MeloXIosListRow(
-            title = "音乐来源",
-            subtitle = currentSource.displayName,
-            leadingIcon = MeloXSymbol.MusicNote,
-            showChevron = false,
-        )
-        MeloXIosListRow(
-            title = "音乐源服务",
-            subtitle = "登录 QQ 音乐、酷狗和其他来源",
-            leadingIcon = MeloXSymbol.Settings,
-            onClick = onOpenServices,
-        )
+        if (normalized.isBlank() || "账号 登录 网易云 服务 音乐源".contains(normalized)) {
+            SettingsAccountCard(onOpenLogin = onOpenLogin, onOpenServices = onOpenServices)
+            Spacer(Modifier.height(24.dp))
+        }
         SettingsSections.forEach { (title, items) ->
             val visible = items.filter { item ->
                 normalized.isBlank() || item.title.contains(normalized) || item.subtitle.contains(normalized)
             }
             if (visible.isEmpty()) return@forEach
-            Text(title, Modifier.padding(start = 28.dp, bottom = 8.dp, top = 8.dp), color = MeloXColors.OnBackground.copy(alpha = 0.48f), fontSize = 13.sp, fontWeight = FontWeight.Medium)
-            visible.forEach { item ->
+            Text(title, Modifier.padding(start = 8.dp, bottom = 8.dp, top = 8.dp), color = MeloXColors.pageOnBackground().copy(alpha = 0.48f), fontSize = 13.sp, fontWeight = FontWeight.Medium)
+            MeloXIosGroupedList {
+            visible.forEachIndexed { index, item ->
                 MeloXIosListRow(
                     title = item.title,
-                    subtitle = item.subtitle,
-                    leadingIcon = item.symbol,
+                    leading = { Box(Modifier.size(28.dp), contentAlignment = Alignment.Center) {
+                        MeloXSymbolIcon(item.symbol, size = 22, iconSize = 24, color = melox.ui.glass.MeloXSystemColors.Red)
+                    } },
+                    showTopSeparator = index > 0,
                     onClick = {
                         when (item) {
                             SettingsRoute.Messages -> onOpenMessages()
@@ -121,25 +146,50 @@ fun SettingsScreen(
                     },
                 )
             }
+            }
             Spacer(Modifier.height(22.dp))
         }
+    }
+    AnimatedVisibility(
+        visible = route != null,
+        enter = meloXPageEnter(fromRight = true),
+        exit = meloXPageExit(toRight = true),
+        modifier = Modifier.fillMaxSize().zIndex(1f),
+    ) {
+        detailRoute?.let { SettingsDetail(it, currentSource, onSourceSelected, onBack = { route = null }) }
+    }
     }
 }
 
 @Composable
-private fun SettingsAccountCard() {
+private fun SettingsAccountCard(onOpenLogin: () -> Unit, onOpenServices: () -> Unit) {
     var nickname by remember { mutableStateOf<String?>(null) }
-    val loggedIn = remember { NeteaseSessionStore.containsMusicU(NeteaseSessionStore.readCookie()) }
+    var loggedIn by remember { mutableStateOf(NeteaseSessionStore.containsMusicU(NeteaseSessionStore.readCookie())) }
     LaunchedEffect(loggedIn) {
-        if (!loggedIn) return@LaunchedEffect
+        if (!loggedIn) {
+            nickname = null
+            return@LaunchedEffect
+        }
         nickname = runCatching { NeteaseSearchClient(cookieProvider = { NeteaseSessionStore.readCookie() }).accountProfile().nickname }.getOrNull()
     }
+    val accent = melox.ui.glass.MeloXSystemColors.Red
+    Text("账号", Modifier.padding(start = 8.dp, bottom = 8.dp), fontSize = 13.sp,
+        color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.48f))
+    MeloXIosGroupedList {
     MeloXIosListRow(
         title = nickname ?: if (loggedIn) "网易云账号" else "登录网易云音乐",
-        subtitle = if (loggedIn) "已登录" else "登录后同步资料库、云盘和私信",
-        leadingIcon = MeloXSymbol.Person,
-        showChevron = false,
+        detail = if (loggedIn) "已登录" else null,
+        leading = { MeloXSymbolIcon(MeloXSymbol.Person, size = 30, iconSize = 24, weight = FontWeight.Medium, color = accent) },
+        onClick = onOpenLogin,
     )
+    MeloXIosListRow(
+        title = "音乐服务",
+        subtitle = "切换音乐源、登录账号与聚合设置",
+        leading = { MeloXSymbolIcon(MeloXSymbol.MusicNote, size = 30, iconSize = 24, color = accent) },
+        showTopSeparator = true,
+        onClick = onOpenServices,
+    )
+    }
 }
 
 @Composable
@@ -149,7 +199,8 @@ private fun SettingsDetail(
     onSourceSelected: (MusicSource) -> Unit,
     onBack: () -> Unit,
 ) {
-    Column(Modifier.fillMaxSize().background(MeloXColors.Background).padding(top = 18.dp)) {
+    Column(Modifier.fillMaxSize().testTag("settings-${route.name.lowercase()}")
+        .background(MeloXColors.pageBackground()).padding(top = 18.dp)) {
         MeloXIosTopBar(title = route.title, onBack = onBack)
         Column(Modifier.verticalScroll(rememberScrollState()).padding(bottom = 48.dp)) {
             when (route) {
@@ -197,6 +248,16 @@ private fun AppearanceSettings() {
         modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp),
     )
     Spacer(Modifier.height(12.dp))
+    val shells = listOf(MeloXPlayerShell.AppleMusic, MeloXPlayerShell.Classic)
+    val shellLabels = listOf("Apple Music", "经典播放器")
+    SectionLabel("播放器外观")
+    MeloXGlassSegmentedControl(
+        items = shellLabels,
+        selectedIndex = shells.indexOf(MeloXSettingsRuntime.playerShell).coerceAtLeast(0),
+        onSelected = { MeloXSettingsPreferences.setString("player_shell", shells[it].name) },
+        modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp),
+    )
+    Spacer(Modifier.height(12.dp))
     PreferenceToggle("封面播放动效", MeloXSettingsRuntime.artworkMotionEnabled, "player_artwork_motion")
     PreferenceToggle("减少动态效果", MeloXSettingsRuntime.reduceMotion, "reduce_motion")
     PreferenceToggle("使用毛玻璃", MeloXSettingsRuntime.frostedGlassEnabled, "player_frosted_glass")
@@ -222,23 +283,49 @@ private fun ContentSettings() {
 
 @Composable
 private fun PlaybackSettings() {
-    val options = listOf(MusicQuality.Standard, MusicQuality.High, MusicQuality.Lossless, MusicQuality.HiResolution)
-    var selected by remember { mutableStateOf(options.indexOf(MusicQualityPreferences.read()).coerceAtLeast(0)) }
-    Column(Modifier.padding(horizontal = 20.dp, vertical = 8.dp)) {
-        Text("音质", color = MeloXColors.OnSurface, fontWeight = FontWeight.SemiBold)
-        Spacer(Modifier.height(12.dp))
-        MeloXGlassSegmentedControl(
-            items = options.map { it.title },
-            selectedIndex = selected.coerceIn(0, options.lastIndex),
-            onSelected = {
-                selected = it
-                MusicQualityPreferences.write(options[it])
-            },
-            modifier = Modifier.fillMaxWidth(),
-        )
+    var quality by remember { mutableStateOf(MusicQualityPreferences.read()) }
+    MeloXIosGroupedList(Modifier.padding(horizontal = 20.dp, vertical = 8.dp)) {
+        CompositionLocalProvider(LocalSettingsGroupRowIndex provides mutableIntStateOf(0)) {
+            MeloXSettingsDropdown(
+                title = "播放音质", selected = quality, items = MusicQuality.entries.map { it to it.title },
+                onSelected = { quality = it; PlaybackCommands.changeQuality(it) }, grouped = true,
+            )
+        }
+        PreferenceToggle("记住播放器上次页面", MeloXSettingsPreferences.boolean("playback_remember_page", true),
+            "playback_remember_page", showTopSeparator = true)
+        PreferenceToggle("退出时保存播放队列", MeloXSettingsPreferences.boolean("playback_save_queue", true),
+            "playback_save_queue", subtitle = "重新打开软件时恢复退出前的播放列表、当前歌曲和进度。", showTopSeparator = true)
+        PreferenceToggle("登录后以心动模式开始播放", MeloXSettingsRuntime.startsHeartModeOnLaunch,
+            "playback_heart_mode_on_launch", showTopSeparator = true)
+        PreferenceToggle("播放超过 5 秒时上一首先回到开头", MeloXSettingsRuntime.previousRestartsAfterFiveSeconds,
+            "playback_previous_restarts", showTopSeparator = true)
+        PreferenceToggle("显示播放音质提示", MeloXSettingsRuntime.showPlayerQualityTip,
+            "player_show_quality_tip", subtitle = "控制进度条下方的音质提示。", showTopSeparator = true)
+        CompositionLocalProvider(LocalSettingsGroupRowIndex provides mutableIntStateOf(1)) {
+            MeloXSettingsDropdown(
+                title = "播放器展开/收回时长", selected = MeloXSettingsRuntime.playerTransitionDurationMs,
+                items = listOf(240, 300, 360, 460, 600).map { it to "$it 毫秒" },
+                onSelected = { MeloXSettingsPreferences.setInt("player_transition_duration_ms", it) }, grouped = true,
+            )
+        }
     }
-    PreferenceToggle("播放超过 5 秒时上一首先回到开头", MeloXSettingsRuntime.previousRestartsAfterFiveSeconds, "playback_previous_restarts")
-    PreferenceToggle("登录后以心动模式开始播放", MeloXSettingsRuntime.startsHeartModeOnLaunch, "playback_heart_mode_on_launch")
+}
+
+@Composable
+private fun PreferenceToggle(title: String, checked: Boolean, key: String, subtitle: String? = null, showTopSeparator: Boolean = false) {
+    MeloXIosListRow(
+        title = title,
+        subtitle = subtitle,
+        showChevron = false,
+        showTopSeparator = showTopSeparator,
+        trailingContent = {
+            melox.ui.glass.MeloXGlassToggle(
+                checked = checked,
+                modifier = Modifier.testTag("setting-$key"),
+                onCheckedChange = { MeloXSettingsPreferences.setBoolean(key, it) },
+            )
+        },
+    )
 }
 
 @Composable
@@ -321,25 +408,11 @@ private fun AboutSettings() {
 }
 
 @Composable
-private fun PreferenceToggle(title: String, checked: Boolean, key: String) {
-    MeloXIosListRow(
-        title = title,
-        showChevron = false,
-        trailingContent = {
-            melox.ui.glass.MeloXGlassToggle(
-                checked = checked,
-                onCheckedChange = { MeloXSettingsPreferences.setBoolean(key, it) },
-            )
-        },
-    )
-}
-
-@Composable
 private fun SectionLabel(title: String) {
     Text(
         title,
         Modifier.padding(start = 28.dp, top = 16.dp, bottom = 8.dp),
-        color = MeloXColors.OnBackground.copy(alpha = 0.48f),
+        color = MeloXColors.pageOnBackground().copy(alpha = 0.48f),
         fontSize = 13.sp,
         fontWeight = FontWeight.Medium,
     )

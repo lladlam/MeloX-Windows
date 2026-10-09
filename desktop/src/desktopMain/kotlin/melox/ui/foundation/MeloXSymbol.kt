@@ -1,13 +1,29 @@
 package melox.ui.foundation
 
 import androidx.compose.animation.togetherWith
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.foundation.Canvas
+import androidx.compose.material3.LocalContentColor
+import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
+import androidx.compose.ui.graphics.nativeCanvas
+import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.TextStyle
+import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Icon
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import melox.ui.theme.MeloXSFProFontFamily
+import melox.ui.theme.meloXSfTypeface
+import org.jetbrains.skia.Font
+import org.jetbrains.skia.FontFeature
+import org.jetbrains.skia.Paint
+import org.jetbrains.skia.TextLine
+import org.jetbrains.skia.shaper.ShapingOptions
 
 enum class MeloXSymbol(
     val sfName: String,
@@ -89,16 +105,43 @@ fun MeloXSymbolIcon(
     modifier: Modifier = Modifier,
     color: Color = Color.Unspecified,
     size: Int = 22,
+    iconSize: Int = size,
+    weight: FontWeight = FontWeight.Normal,
 ) {
-    Text(
-        text = codePointToString(symbol.codePoints),
-        modifier = modifier,
-        style = TextStyle(
-            fontFamily = MeloXSFProFontFamily,
-            fontSize = size.sp,
-            color = color,
-        ),
-    )
+    if (symbol == MeloXSymbol.Settings || symbol == MeloXSymbol.Home) {
+        Icon(
+            painter = painterResource(if (symbol == MeloXSymbol.Home) "icons/melox_home_tab.svg" else "icons/ic_melox_brand_gear.svg"),
+            contentDescription = null,
+            modifier = modifier.size(size.dp),
+            tint = color,
+        )
+        return
+    }
+    val density = LocalDensity.current
+    val em = with(density) { iconSize.sp.toPx() }
+    val foreground = if (color == Color.Unspecified) LocalContentColor.current else color
+    val font = remember(weight, em) { Font(meloXSfTypeface(weight), em).apply { isSubpixel = true } }
+    val line = remember(symbol, font) {
+        TextLine.make(codePointToString(symbol.codePoints), font,
+            ShapingOptions.DEFAULT.withFeatures(arrayOf(FontFeature("ss16", 1))))
+    }
+    val bounds = remember(line) { line.textBlob?.use { it.tightBounds } }
+    DisposableEffect(line) { onDispose { line.close() } }
+    DisposableEffect(font) { onDispose { font.close() } }
+    // Center actual ink, as Android Paint.getTextBounds does. A Text layout's
+    // ascender box clips wide SF glyphs and offsets their optical center.
+    Canvas(modifier = modifier.size(size.dp)) {
+        drawIntoCanvas { canvas ->
+            val bounds = bounds ?: return@drawIntoCanvas
+            Paint().use { paint ->
+                paint.color = foreground.toArgb()
+                paint.isAntiAlias = true
+                canvas.nativeCanvas.drawTextLine(line,
+                    this.size.width / 2f - (bounds.left + bounds.right) / 2f,
+                    this.size.height / 2f - (bounds.top + bounds.bottom) / 2f, paint)
+            }
+        }
+    }
 }
 
 /**

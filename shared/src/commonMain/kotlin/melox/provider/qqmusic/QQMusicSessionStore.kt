@@ -1,6 +1,6 @@
 package melox.provider.qqmusic
 
-import melox.platform.getPreferences
+import melox.platform.getSecurePreferences as getPreferences
 
 data class QQMusicSession(
     val cookie: String,

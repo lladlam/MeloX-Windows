@@ -46,12 +46,8 @@ object SpotifySessionStore {
     }
 
     fun write(session: SpotifySession) {
-        prefs().apply {
-            putString(AccessToken, session.accessToken)
-            putString(RefreshToken, session.refreshToken)
-            putLong(ExpiresAt, session.expiresAtEpochMs)
-            putString(AccountId, session.accountId)
-        }
+        prefs().putValues(mapOf(AccessToken to session.accessToken, RefreshToken to session.refreshToken,
+            ExpiresAt to session.expiresAtEpochMs.toString(), AccountId to session.accountId))
     }
 
     fun updateAccountId(accountId: String) {
@@ -59,10 +55,8 @@ object SpotifySessionStore {
     }
 
     fun saveTransaction(transaction: SpotifyAuthorizationTransaction) {
-        val p = prefs()
-        p.putString(OAuthState, transaction.state)
-        p.putString(OAuthVerifier, transaction.codeVerifier)
-        p.putLong(OAuthCreatedAt, transaction.createdAtEpochMs)
+        prefs().putValues(mapOf(OAuthState to transaction.state, OAuthVerifier to transaction.codeVerifier,
+            OAuthCreatedAt to transaction.createdAtEpochMs.toString()))
     }
 
     fun transaction(): SpotifyAuthorizationTransaction? = prefs().let {
@@ -76,10 +70,7 @@ object SpotifySessionStore {
     }
 
     fun clearTransaction() {
-        val p = prefs()
-        p.remove(OAuthState)
-        p.remove(OAuthVerifier)
-        p.remove(OAuthCreatedAt)
+        prefs().putValues(mapOf(OAuthState to null, OAuthVerifier to null, OAuthCreatedAt to null))
     }
 
     fun setOAuthError(message: String) {
@@ -92,6 +83,7 @@ object SpotifySessionStore {
     }
 
     fun clear() {
+        SpotifyLibrespotPlayback.shared.disconnect()
         prefs().clear()
     }
 }

@@ -1,15 +1,15 @@
 package melox.account
 
 import melox.platform.MeloXPreferences
-import melox.platform.getPreferences
+import melox.platform.getSecurePreferences
 
 /**
  * Desktop session preferences.
  *
  * Android uses EncryptedSharedPreferences with a legacy-plaintext migration.
- * Desktop JVM has no Keystore-backed encryption wired yet, so sessions live in
- * the plain MeloX preference store; the API surface stays identical so callers
- * only drop the context argument.
+ * Windows uses current-user DPAPI. Legacy stores are migrated only after an
+ * encrypted, verified, atomic write succeeds. Native failures never fall back
+ * to writing plaintext credentials.
  */
 internal object SecureSessionPreferences {
     private val instances = mutableMapOf<String, MeloXPreferences>()
@@ -17,7 +17,7 @@ internal object SecureSessionPreferences {
     @Synchronized
     fun open(legacyName: String): MeloXPreferences {
         instances[legacyName]?.let { return it }
-        val prefs = getPreferences("${legacyName}_encrypted_v1")
+        val prefs = getSecurePreferences(legacyName)
         instances[legacyName] = prefs
         return prefs
     }

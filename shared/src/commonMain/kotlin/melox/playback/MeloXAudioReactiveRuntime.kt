@@ -18,17 +18,41 @@ object MeloXAudioReactiveRuntime {
     @Volatile
     private var playing: Boolean = false
 
+    @Volatile
+    private var pcmEnergy: Float? = null
+
     fun select(mediaId: String?) {
         if (this.mediaId == mediaId) return
         this.mediaId = mediaId
         analysis = null
         positionMs = 0L
+        pcmEnergy = null
     }
 
     fun publish(mediaId: String?, positionMs: Long, isPlaying: Boolean) {
         select(mediaId)
         this.positionMs = positionMs.coerceAtLeast(0L)
         playing = isPlaying
+        if (!isPlaying) pcmEnergy = null
+    }
+
+    fun publishPcm(mediaId: String?, samples: ShortArray, count: Int, volume: Float) {
+        select(mediaId)
+        if (count <= 0) return
+        var sum = 0.0
+        val limit = count.coerceAtMost(samples.size)
+        for (index in 0 until limit) {
+            val sample = samples[index] / 32768.0
+            sum += sample * sample
+        }
+        val rms = kotlin.math.sqrt(sum / limit).toFloat() * volume.coerceIn(0f, 1f)
+        pcmEnergy = (rms * 4f).coerceIn(0f, 1f)
+        playing = true
+    }
+
+    fun publishPosition(mediaId: String?, positionMs: Long) {
+        if (this.mediaId != mediaId) return
+        this.positionMs = positionMs.coerceAtLeast(0L)
     }
 
     fun attach(mediaId: String, analysis: MeloXAutoMixTrackAnalysis) {
@@ -40,17 +64,18 @@ object MeloXAudioReactiveRuntime {
         analysis = null
         positionMs = 0L
         playing = false
+        pcmEnergy = null
     }
 
     fun sample(expectedMediaId: String?): MeloXAudioReactiveSample {
         if (expectedMediaId == null || expectedMediaId != mediaId) return MeloXAudioReactiveSample.Idle
         val localAnalysis = analysis ?: run {
-            if (!playing) return MeloXAudioReactiveSample.Idle
-            val phase = positionMs / 1000f
+            val energy = pcmEnergy
+            if (!playing || energy == null) return MeloXAudioReactiveSample.Idle
             return MeloXAudioReactiveSample(
-                energy = (0.34f + 0.16f * abs(sin(phase * 5.3f))).coerceIn(0f, 1f),
-                beat = ((sin(phase * 8.1f) + 1f) * 0.5f).coerceIn(0f, 1f),
-                downbeat = ((sin(phase * 2.7f) + 1f) * 0.5f).coerceIn(0f, 1f),
+                energy = energy,
+                beat = energy,
+                downbeat = energy * 0.5f,
                 isPlaying = true,
             )
         }
@@ -58,8 +83,10 @@ object MeloXAudioReactiveRuntime {
         val frame = localAnalysis.frameAt(time)
         val beat = pulseAt(localAnalysis.beatTimesMs, time, 230L)
         val downbeat = pulseAt(localAnalysis.downbeatTimesMs, time, 360L)
+        val frameEnergy = frame?.energy ?: 0.18f
+        val energy = pcmEnergy?.let { ((frameEnergy + it) * 0.5f) } ?: frameEnergy
         return MeloXAudioReactiveSample(
-            energy = (frame?.energy ?: 0.18f).coerceIn(0f, 1.25f),
+            energy = energy.coerceIn(0f, 1.25f),
             beat = beat,
             downbeat = downbeat,
             isPlaying = playing,
@@ -85,4 +112,16 @@ data class MeloXAudioReactiveSample(
     companion object {
         val Idle = MeloXAudioReactiveSample(0.18f, 0f, 0f, false)
     }
+}
+
+fun miniBarFractions(isPlaying: Boolean, sample: MeloXAudioReactiveSample): List<Float> {
+    val energy = if (isPlaying && sample.isPlaying) sample.energy.coerceIn(0.08f, 1f) else 0.10f
+    val beat = if (isPlaying && sample.isPlaying) sample.beat else 0f
+    val downbeat = if (isPlaying && sample.isPlaying) sample.downbeat else 0f
+    return listOf(
+        energy * (0.58f + downbeat * 0.30f),
+        energy * (0.86f + beat * 0.22f),
+        energy * (0.46f + downbeat * 0.42f),
+        energy * (0.72f + beat * 0.28f),
+    )
 }

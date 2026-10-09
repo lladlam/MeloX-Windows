@@ -1,0 +1,434 @@
+[
+  {
+    "clickable": false,
+    "bounds": [
+      20,
+      62,
+      88,
+      107
+    ],
+    "description": null,
+    "tag": null,
+    "text": "设置",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      64,
+      135,
+      129,
+      157
+    ],
+    "description": null,
+    "tag": null,
+    "text": "搜索设置",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      28,
+      191,
+      55,
+      213
+    ],
+    "description": null,
+    "tag": null,
+    "text": "账号",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      78,
+      238,
+      197,
+      261
+    ],
+    "description": null,
+    "tag": null,
+    "text": "登录网易云音乐",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      78,
+      289,
+      146,
+      312
+    ],
+    "description": null,
+    "tag": null,
+    "text": "音乐服务",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      78,
+      314,
+      300,
+      334
+    ],
+    "description": null,
+    "tag": null,
+    "text": "切换音乐源、登录账号与聚合设置",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      28,
+      377,
+      55,
+      399
+    ],
+    "description": null,
+    "tag": null,
+    "text": "应用",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      76,
+      424,
+      110,
+      447
+    ],
+    "description": null,
+    "tag": null,
+    "text": "通用",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      76,
+      480,
+      110,
+      503
+    ],
+    "description": null,
+    "tag": null,
+    "text": "外观",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      76,
+      536,
+      110,
+      559
+    ],
+    "description": null,
+    "tag": null,
+    "text": "内容",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      76,
+      592,
+      110,
+      615
+    ],
+    "description": null,
+    "tag": null,
+    "text": "播放",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      76,
+      648,
+      110,
+      671
+    ],
+    "description": null,
+    "tag": null,
+    "text": "歌词",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      76,
+      704,
+      144,
+      727
+    ],
+    "description": null,
+    "tag": null,
+    "text": "存储管理",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      28,
+      773,
+      55,
+      795
+    ],
+    "description": null,
+    "tag": null,
+    "text": "扩展",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      76,
+      820,
+      144,
+      843
+    ],
+    "description": null,
+    "tag": null,
+    "text": "功能模块",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      76,
+      876,
+      195,
+      899
+    ],
+    "description": null,
+    "tag": null,
+    "text": "私信与站内分享",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "description": null,
+    "tag": null,
+    "text": "关于",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "description": null,
+    "tag": null,
+    "text": "关于 MeloX",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      51,
+      893,
+      73,
+      906
+    ],
+    "description": null,
+    "tag": null,
+    "text": "首页",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      130,
+      893,
+      152,
+      906
+    ],
+    "description": null,
+    "tag": null,
+    "text": "发现",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      205,
+      893,
+      238,
+      906
+    ],
+    "description": null,
+    "tag": null,
+    "text": "音乐库",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      290,
+      893,
+      312,
+      906
+    ],
+    "description": null,
+    "tag": null,
+    "text": "设置",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "bounds": [
+      24,
+      809,
+      308,
+      843
+    ],
+    "description": null,
+    "tag": "mini-player-expand",
+    "text": null,
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      74,
+      811,
+      172,
+      826
+    ],
+    "description": null,
+    "tag": null,
+    "text": "起风了(林俊杰)",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      74,
+      826,
+      106,
+      841
+    ],
+    "description": null,
+    "tag": null,
+    "text": "8Y1ar",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "bounds": [
+      373,
+      811,
+      403,
+      841
+    ],
+    "description": null,
+    "tag": "mini-player-next",
+    "text": null,
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "bounds": [
+      339,
+      811,
+      369,
+      841
+    ],
+    "description": null,
+    "tag": "mini-player-play-pause",
+    "text": null,
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  }
+]

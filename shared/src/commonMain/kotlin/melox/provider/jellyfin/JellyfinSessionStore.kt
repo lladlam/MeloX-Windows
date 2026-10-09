@@ -1,6 +1,6 @@
 package melox.provider.jellyfin
 
-import melox.platform.getPreferences
+import melox.platform.getSecurePreferences as getPreferences
 import java.util.Base64
 import javax.crypto.Cipher
 import javax.crypto.KeyGenerator

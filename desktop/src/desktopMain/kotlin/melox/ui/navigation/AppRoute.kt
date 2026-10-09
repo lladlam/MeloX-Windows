@@ -18,8 +18,8 @@ sealed class Route {
 }
 
 enum class AppTab(val label: String, val icon: String) {
-    Home("发现", "home"),
-    Explore("探索", "explore"),
+    Home("首页", "home"),
+    Explore("发现", "explore"),
     Library("音乐库", "library"),
     Podcasts("播客", "podcasts"),
     Downloads("下载", "downloads"),

@@ -1,0 +1,914 @@
+[
+  {
+    "clickable": false,
+    "bounds": [
+      20,
+      62,
+      88,
+      107
+    ],
+    "description": null,
+    "tag": null,
+    "text": "设置",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      64,
+      135,
+      129,
+      157
+    ],
+    "description": null,
+    "tag": null,
+    "text": "搜索设置",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      28,
+      191,
+      55,
+      213
+    ],
+    "description": null,
+    "tag": null,
+    "text": "账号",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      78,
+      238,
+      197,
+      261
+    ],
+    "description": null,
+    "tag": null,
+    "text": "登录网易云音乐",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      78,
+      289,
+      146,
+      312
+    ],
+    "description": null,
+    "tag": null,
+    "text": "音乐服务",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      78,
+      314,
+      300,
+      334
+    ],
+    "description": null,
+    "tag": null,
+    "text": "切换音乐源、登录账号与聚合设置",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      28,
+      377,
+      55,
+      399
+    ],
+    "description": null,
+    "tag": null,
+    "text": "应用",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      76,
+      424,
+      110,
+      447
+    ],
+    "description": null,
+    "tag": null,
+    "text": "通用",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      76,
+      480,
+      110,
+      503
+    ],
+    "description": null,
+    "tag": null,
+    "text": "外观",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      76,
+      536,
+      110,
+      559
+    ],
+    "description": null,
+    "tag": null,
+    "text": "内容",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      76,
+      592,
+      110,
+      615
+    ],
+    "description": null,
+    "tag": null,
+    "text": "播放",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      76,
+      648,
+      110,
+      671
+    ],
+    "description": null,
+    "tag": null,
+    "text": "歌词",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      76,
+      704,
+      144,
+      727
+    ],
+    "description": null,
+    "tag": null,
+    "text": "存储管理",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      28,
+      773,
+      55,
+      795
+    ],
+    "description": null,
+    "tag": null,
+    "text": "扩展",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      76,
+      820,
+      144,
+      843
+    ],
+    "description": null,
+    "tag": null,
+    "text": "功能模块",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      76,
+      876,
+      195,
+      899
+    ],
+    "description": null,
+    "tag": null,
+    "text": "私信与站内分享",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "description": null,
+    "tag": null,
+    "text": "关于",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "description": null,
+    "tag": null,
+    "text": "关于 MeloX",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      51,
+      893,
+      73,
+      906
+    ],
+    "description": null,
+    "tag": null,
+    "text": "首页",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      130,
+      893,
+      152,
+      906
+    ],
+    "description": null,
+    "tag": null,
+    "text": "发现",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      205,
+      893,
+      238,
+      906
+    ],
+    "description": null,
+    "tag": null,
+    "text": "音乐库",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      290,
+      893,
+      312,
+      906
+    ],
+    "description": null,
+    "tag": null,
+    "text": "设置",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      0,
+      0,
+      427,
+      924
+    ],
+    "description": null,
+    "tag": "now-playing",
+    "text": null,
+    "state": "Queue",
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "bounds": [
+      32,
+      0,
+      395,
+      30
+    ],
+    "description": null,
+    "tag": "player-collapse",
+    "text": null,
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "bounds": [
+      40,
+      118,
+      147,
+      166
+    ],
+    "description": "随机播放",
+    "tag": "queue-shuffle",
+    "text": null,
+    "state": null,
+    "selected": false,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "bounds": [
+      159,
+      118,
+      267,
+      166
+    ],
+    "description": "循环播放",
+    "tag": "queue-repeat",
+    "text": null,
+    "state": null,
+    "selected": false,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "bounds": [
+      279,
+      118,
+      387,
+      166
+    ],
+    "description": "无尽播放",
+    "tag": "queue-autoplay",
+    "text": null,
+    "state": null,
+    "selected": false,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      32,
+      204,
+      104,
+      226
+    ],
+    "description": null,
+    "tag": null,
+    "text": "历史记录",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "bounds": [
+      32,
+      238,
+      395,
+      294
+    ],
+    "description": null,
+    "tag": "queue-track-0",
+    "text": null,
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      92,
+      243,
+      141,
+      265
+    ],
+    "description": null,
+    "tag": null,
+    "text": "起风了",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      92,
+      267,
+      231,
+      289
+    ],
+    "description": null,
+    "tag": null,
+    "text": "冯沁苑(买辣椒也用券)",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "bounds": [
+      32,
+      298,
+      395,
+      354
+    ],
+    "description": null,
+    "tag": "queue-track-1",
+    "text": null,
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      92,
+      303,
+      203,
+      325
+    ],
+    "description": null,
+    "tag": null,
+    "text": "起风了(林俊杰)",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      92,
+      327,
+      129,
+      349
+    ],
+    "description": null,
+    "tag": null,
+    "text": "8Y1ar",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      32,
+      374,
+      121,
+      403
+    ],
+    "description": null,
+    "tag": null,
+    "text": "继续播放",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "bounds": [
+      32,
+      415,
+      395,
+      471
+    ],
+    "description": null,
+    "tag": "queue-track-3",
+    "text": null,
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      92,
+      420,
+      203,
+      442
+    ],
+    "description": null,
+    "tag": null,
+    "text": "起风了(女声版)",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      92,
+      444,
+      120,
+      466
+    ],
+    "description": null,
+    "tag": null,
+    "text": "宴深",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "bounds": [
+      32,
+      475,
+      395,
+      531
+    ],
+    "description": null,
+    "tag": "queue-track-4",
+    "text": null,
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      92,
+      480,
+      219,
+      502
+    ],
+    "description": null,
+    "tag": null,
+    "text": "起风了(纯钢琴版)",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      92,
+      504,
+      319,
+      526
+    ],
+    "description": null,
+    "tag": null,
+    "text": "苏冷末 / 柳州DJ斯斯Mix / 赛文音乐",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      116,
+      42,
+      176,
+      66
+    ],
+    "description": null,
+    "tag": null,
+    "text": "起风了",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      116,
+      68,
+      152,
+      90
+    ],
+    "description": null,
+    "tag": null,
+    "text": "周深",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "bounds": [
+      347,
+      46,
+      387,
+      86
+    ],
+    "description": null,
+    "tag": "player-actions",
+    "text": null,
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      0,
+      645,
+      427,
+      924
+    ],
+    "description": null,
+    "tag": "player-controls",
+    "text": null,
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      32,
+      645,
+      395,
+      924
+    ],
+    "description": null,
+    "tag": "player-controls",
+    "text": null,
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      22,
+      650,
+      405,
+      666
+    ],
+    "description": null,
+    "tag": "player-progress",
+    "text": null,
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      32,
+      670,
+      59,
+      692
+    ],
+    "description": null,
+    "tag": null,
+    "text": "0:00",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "bounds": [
+      179,
+      668,
+      249,
+      694
+    ],
+    "description": null,
+    "tag": "player-quality",
+    "text": null,
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      207,
+      675,
+      240,
+      688
+    ],
+    "description": null,
+    "tag": null,
+    "text": "高品质",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "bounds": [
+      362,
+      670,
+      395,
+      692
+    ],
+    "description": null,
+    "tag": null,
+    "text": "−5:11",
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "bounds": [
+      74,
+      725,
+      138,
+      789
+    ],
+    "description": null,
+    "tag": "player-previous",
+    "text": null,
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "bounds": [
+      181,
+      725,
+      245,
+      789
+    ],
+    "description": null,
+    "tag": "player-play-pause",
+    "text": null,
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "bounds": [
+      288,
+      725,
+      352,
+      789
+    ],
+    "description": null,
+    "tag": "player-next",
+    "text": null,
+    "state": null,
+    "selected": null,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "bounds": [
+      64,
+      875,
+      112,
+      923
+    ],
+    "description": "歌词",
+    "tag": "player-show-lyrics",
+    "text": null,
+    "state": null,
+    "selected": false,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "bounds": [
+      190,
+      875,
+      238,
+      923
+    ],
+    "description": "音频输出",
+    "tag": "player-output",
+    "text": null,
+    "state": null,
+    "selected": false,
+    "enabled": true,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "bounds": [
+      314.04,
+      874.04004,
+      363.96,
+      923.95996
+    ],
+    "description": "接下来播放",
+    "tag": "player-show-queue",
+    "text": null,
+    "state": null,
+    "selected": true,
+    "enabled": true,
+    "long_clickable": false
+  }
+]

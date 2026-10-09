@@ -33,15 +33,17 @@ object MeloXMotion {
     fun dropdownSpec() = spring<Float>(dampingRatio = 0.82f, stiffness = DropdownStiffness, visibilityThreshold = 0.001f)
 
     // ── Bottom chrome (from MeloXApp.kt audit) ──
-    fun tabMinimizeSpec() = spring<Float>(dampingRatio = 0.90f, stiffness = 330f, visibilityThreshold = 0.001f)
-    fun mediaRevealSpec() = spring<Float>(dampingRatio = 0.90f, stiffness = 360f)
+    fun tabExpandSpec() = spring<Float>(dampingRatio = 1f - 0.245f, stiffness = 250f, visibilityThreshold = 0.001f)
+    fun tabCollapseSpec() = spring<Float>(dampingRatio = 1f - 0.30f, stiffness = 250f, visibilityThreshold = 0.001f)
+    fun tabMinimizeSpec() = tabCollapseSpec()
+    fun mediaRevealSpec() = spring<Float>(dampingRatio = 1f - 0.34f, stiffness = 300f)
     fun tabSelectionAlphaSpec() = spring<Float>(dampingRatio = 0.86f, stiffness = 440f)
     fun tabColorSpec() = spring<Float>(dampingRatio = 0.84f, stiffness = 480f)
 
     // ── Mini player ──
     fun miniSwipeDismiss() = spring<Float>(dampingRatio = 0.68f, stiffness = 360f)
     fun miniSwipeBounceBack() = spring<Float>(dampingRatio = 0.72f, stiffness = 430f)
-    fun miniReveal() = spring<Float>(dampingRatio = 0.90f, stiffness = 360f)
+    fun miniReveal() = mediaRevealSpec()
 
     // ── Player transition (MeloXPlayerTransitionSpec.kt) ──
     const val PlayerTransitionDurationMillis = 360
@@ -68,6 +70,7 @@ object MeloXMotion {
 
     // ── Scene page cross-fades ──
     fun scenePageSpec() = spring<Float>(dampingRatio = 0.7f, stiffness = 300f)
+    fun scenePageOffsetSpec() = spring<androidx.compose.ui.unit.Dp>(dampingRatio = 0.7f, stiffness = 300f)
 
     // ── Controls reveal ──
     fun controlsEnterAlpha() = tween<Float>(220, easing = FastOutSlowInEasing)
@@ -92,3 +95,17 @@ fun smoothStep(value: Float, start: Float, end: Float): Float {
 
 fun lerpDp(a: androidx.compose.ui.unit.Dp, b: androidx.compose.ui.unit.Dp, fraction: Float): androidx.compose.ui.unit.Dp =
     androidx.compose.ui.unit.Dp(a.value + (b.value - a.value) * fraction)
+
+fun sprungFrac(value: Float): Float = value.coerceIn(-0.09f, 1.09f)
+
+fun meloXPageEnter(fromRight: Boolean = true): androidx.compose.animation.EnterTransition =
+    androidx.compose.animation.slideInHorizontally(
+        animationSpec = MeloXMotion.pageEnterTween(),
+        initialOffsetX = { if (fromRight) it else -it / 4 },
+    ) + androidx.compose.animation.fadeIn(MeloXMotion.pageEnterTween())
+
+fun meloXPageExit(toRight: Boolean = true): androidx.compose.animation.ExitTransition =
+    androidx.compose.animation.slideOutHorizontally(
+        animationSpec = MeloXMotion.pageExitTween(),
+        targetOffsetX = { if (toRight) it / 4 else -it / 4 },
+    ) + androidx.compose.animation.fadeOut(MeloXMotion.pageExitTween())

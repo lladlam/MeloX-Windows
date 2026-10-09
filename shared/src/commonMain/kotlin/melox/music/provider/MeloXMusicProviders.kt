@@ -60,8 +60,7 @@ object MeloXMusicProviders {
         )
         return MusicProviderRegistry(
             nativeProviders + SpotifyProvider(
-                null,
-                MeloXBuildConfig.SPOTIFY_CLIENT_ID,
+                httpClient = httpClient,
                 playbackProviders = { nativeProviders },
             ),
         )
@@ -98,8 +97,7 @@ object MeloXMusicProviders {
         )
         return MusicProviderRegistry(
             nativeProviders + SpotifyProvider(
-                null,
-                MeloXBuildConfig.SPOTIFY_CLIENT_ID,
+                httpClient = httpClient,
                 playbackProviders = { nativeProviders },
             ),
         )
