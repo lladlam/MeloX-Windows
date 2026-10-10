@@ -18,9 +18,10 @@ Historical `parity/94e17c9/` evidence is reference material, not new acceptance.
 | Playlist album artwork toggle and hidden search | `LibraryScreen`, `MeloXSettingsPreferences`, `SettingsScreen` | Runtime persistence + live settings + artwork rows + pull-at-top search/filter | Desktop playlist layout still differs; precise reveal gesture/animation not yet accepted | PARTIAL |
 | Song-recognition identity additions | `core/recognition/SongRecognitionClient.kt` | Existing Windows recognition client is still an empty-result stub | Requires actual desktop fingerprint/capture implementation; no fabricated matches | MISSING |
 | Search launch request and provider-aware routing | `ui/search/SearchScreen.kt` (`MeloXSearchLaunchBus`) | `navigation/MeloXSearchLaunchBus.kt`, App Shell, SearchScreen, album/artist fallback requests | Unified aggregation and provider account replay remain outstanding | PARTIAL |
-| FFmpeg source and packaged executable integrity | `.github/workflows/build.yml`, decoder resources | Explicit LFS checkout; manifest size/SHA-256/x64 ELF+PE; source/JAR/app-image/final-ZIP native decode checks | Local integrity/PCM passed; new Windows CI and physical output tracked separately | PARTIAL |
+| FFmpeg source and packaged executable integrity | `.github/workflows/build.yml`, decoder resources | Explicit LFS checkout; manifest size/SHA-256/x64 ELF+PE; source/JAR/app-image/final-ZIP native decode checks | Windows run 38019093278 at 9328f78 passed source/JAR/app-image/final-ZIP native checks and 81 tests; evidence/windows-ci-9328f78. New AutoMix Linux JAR verified separately | PLATFORM_EQUIVALENT |
 | Real PCM beat/energy/FFT/audible/phrase analysis | `playback/MeloXAutoMixAudioAnalyzer.kt` | Real independent FFmpeg decoder + 11025Hz/1024 FFT/512 hop, signed PCM, source-keyed cache, cancellable native ownership | Generated 90/105/140 BPM, silence, FFT bands, malformed data and real WAV decode tests; no claim of production AutoMix | PARTIAL |
-| Primary/incoming mixing, tempo, EQ, SmartQueue, dual-cover handoff | `MeloXPlaybackService`, `MeloXAutoMixTransitionRuntime`, `MeloXSmartQueueBuilder`, bass envelope | Analyzer is the first dependency; production currently remains single deck | Next implementation batch; not represented by logical-ID tests | MISSING |
+| Primary/incoming mixing, tempo, EQ, SmartQueue, dual-cover handoff | `MeloXPlaybackService`, `MeloXAutoMixTransitionRuntime`, `MeloXSmartQueueBuilder`, bass envelope | Production AudioPlayer continuous dual-native-decode/PCM mix; controller scored/fallback plans/preload; native pitch-preserving tempo; real RBJ bass exchange; analyzed candidate queue; clock-driven dual covers and settings/buttons | AUTOMIX.md; real two-frequency kernel/controller tests and independent capture PCM readback; 7 production UI scenes / 8 assertions. Source cover-shadow artifact fixed from screenshot. Authenticated streams/Windows hardware/Android pixels outstanding | PARTIAL |
+| Local source playback and search preserve file identity | `core/provider/local/LocalProvider.kt`, provider resolver | Real indexed Local search and readable-file resolution; encoded track metadata/URI, no online fallback; bridge preserves collection identity | Production Local provider/controller AutoMix tests, Unicode/plus/ampersand path regression and generated-source UI replay | PARTIAL |
 | Windows sustained audible playback / AutoMix | Physical output requirement | `tools/windows_audio_acceptance.ps1` checks final app-image and captures explicit user observations | No Windows 10/11 device or audio hardware in this Linux session | BLOCKED |
 | Android/Windows same-content pixel and dynamic frames | All named UI pages and player scenes | Production ImageComposeScene capture retained; old reference evidence preserved | Connected Android devices = 0; missing current pinned reference frames. No new MATCH from unrelated feed SSIM | BLOCKED |
 | Remaining settings, Classic/alternate lyric shells, Glass refraction, cloud upload, podcast/provider acceptance | Source paths specified by task | Existing implementations retained; confirmed gaps require subsequent batches | Not accepted by build or old matrix inventory | PARTIAL |
@@ -33,10 +34,13 @@ Historical `parity/94e17c9/` evidence is reference material, not new acceptance.
 4. Windows physical audible playback (currently BLOCKED).
 5. Same-content pinned Android/Windows pixels and dynamic frame acceptance (currently BLOCKED).
 
-Local batch results: **81 tests / 14 suites / 0 failures, errors or skipped**;
+Latest AutoMix batch results: **102 tests / 18 suites / 0 failures, errors or skipped**;
 desktopJar + Linux uber JAR successful. Source and final Linux uber JAR were
 verified independently (size/SHA-256/magic, native WAV/MP3/FLAC/AAC, required HTTP
 authorization headers). See `evidence/upstream-validation.json` and native
-decoder JSON. This is not Windows physical playback or Android pixel acceptance.
+decoder JSON. Latest implementation: `evidence/automix-validation.json`,
+`automix-ui-v3/`, `automix-pcm-readback.json`, and
+`automix-linux-packaged-decoder.json`. Previous 81-test batch remains archived.
+This is not Windows physical playback or Android pixel acceptance.
 
 Each level is reported independently. No `MATCH` entry is introduced solely by compilation, an existing file, or unit-test success.

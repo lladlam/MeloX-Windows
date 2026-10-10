@@ -1,0 +1,1204 @@
+{
+  "renderer": "production ImageComposeScene",
+  "start_tab": "Home",
+  "density": 1,
+  "frames": [
+    {
+      "actual_ms": 19.210561,
+      "file": "01-open-frame-0.png",
+      "requested_ms": 0
+    },
+    {
+      "actual_ms": 301.08553,
+      "file": "01-open-frame-120.png",
+      "requested_ms": 120
+    },
+    {
+      "actual_ms": 433.098539,
+      "file": "01-open-frame-320.png",
+      "requested_ms": 320
+    },
+    {
+      "actual_ms": 35.811507,
+      "file": "02-queue-frame-0.png",
+      "requested_ms": 0
+    },
+    {
+      "actual_ms": 205.968629,
+      "file": "02-queue-frame-120.png",
+      "requested_ms": 120
+    },
+    {
+      "actual_ms": 338.834686,
+      "file": "02-queue-frame-320.png",
+      "requested_ms": 320
+    },
+    {
+      "actual_ms": 38.409444,
+      "file": "03-off-frame-0.png",
+      "requested_ms": 0
+    },
+    {
+      "actual_ms": 188.219061,
+      "file": "03-off-frame-120.png",
+      "requested_ms": 120
+    },
+    {
+      "actual_ms": 332.706278,
+      "file": "03-off-frame-320.png",
+      "requested_ms": 320
+    },
+    {
+      "actual_ms": 32.710897,
+      "file": "04-on-frame-0.png",
+      "requested_ms": 0
+    },
+    {
+      "actual_ms": 180.709659,
+      "file": "04-on-frame-120.png",
+      "requested_ms": 120
+    },
+    {
+      "actual_ms": 329.87681,
+      "file": "04-on-frame-320.png",
+      "requested_ms": 320
+    },
+    {
+      "actual_ms": 47.04891,
+      "file": "05-artwork-frame-0.png",
+      "requested_ms": 0
+    },
+    {
+      "actual_ms": 167.152118,
+      "file": "05-artwork-frame-120.png",
+      "requested_ms": 120
+    },
+    {
+      "actual_ms": 415.735777,
+      "file": "05-artwork-frame-320.png",
+      "requested_ms": 320
+    },
+    {
+      "actual_ms": 5009.202712,
+      "file": "06-overlap-frame-0.png",
+      "requested_ms": 0
+    },
+    {
+      "actual_ms": 5125.319312,
+      "file": "06-overlap-frame-120.png",
+      "requested_ms": 120
+    },
+    {
+      "actual_ms": 5237.090634,
+      "file": "06-overlap-frame-320.png",
+      "requested_ms": 320
+    },
+    {
+      "actual_ms": 7033.49065,
+      "file": "07-handoff-frame-0.png",
+      "requested_ms": 0
+    },
+    {
+      "actual_ms": 7133.34347,
+      "file": "07-handoff-frame-120.png",
+      "requested_ms": 120
+    },
+    {
+      "actual_ms": 7230.423154,
+      "file": "07-handoff-frame-320.png",
+      "requested_ms": 320
+    }
+  ],
+  "physical_audible_acceptance": "BLOCKED",
+  "steps": [
+    "open:tap@mini-player-expand",
+    "queue:tap@player-show-queue",
+    "off:tap@queue-automix",
+    "on:tap@queue-automix",
+    "artwork:tap@player-show-queue",
+    "overlap:wait@5000",
+    "handoff:wait@7000"
+  ],
+  "home": "/home/lladlam/项目/MeloX-Windows/desktop/build/parity/sol3-mix-home-v3",
+  "play_id": null,
+  "play_query": "",
+  "pcm_outputs": [
+    {
+      "file": "pcm-output-0.s16le",
+      "written_frames": 181544,
+      "hardware_output": false,
+      "closed": true,
+      "consumed_frames": 172814
+    },
+    {
+      "file": "pcm-output-1.s16le",
+      "written_frames": 817552,
+      "hardware_output": false,
+      "closed": true,
+      "consumed_frames": 808813
+    }
+  ],
+  "width": 427,
+  "scenes": [
+    {
+      "title": "generated-1000hz",
+      "error": null,
+      "automix_status": "prepared",
+      "file": "00-home.png",
+      "is_playing": true,
+      "play_when_ready": true,
+      "selected_quality": "standard",
+      "is_loading": false,
+      "track": "local:366817f8b773dfcd2b51d202",
+      "queue_count": 2,
+      "error_kind": null,
+      "queue_tracks": [
+        "local:366817f8b773dfcd2b51d202",
+        "local:3327a2d00ab2689eaa3aeca5"
+      ],
+      "lyric_document": null,
+      "automix_progress": 0,
+      "automix_active": false,
+      "duration_ms": 20000,
+      "position_ms": 1148,
+      "repeat_mode": 0,
+      "shuffle_enabled": false,
+      "is_paused": false,
+      "captured_elapsed_ms": 1571.907381,
+      "page": null,
+      "queue_entry_ids": [
+        "c71c509c-b17c-4885-beac-b6f4059ff582",
+        "4ce9886a-7599-470e-8dfc-051fffd6b69d"
+      ],
+      "lyric_word_lines": null,
+      "queue_index": 0,
+      "controls_visible": false,
+      "autoplay_enabled": false
+    },
+    {
+      "title": "generated-1000hz",
+      "error": null,
+      "automix_status": "prepared",
+      "file": "01-open-frame-0.png",
+      "is_playing": true,
+      "play_when_ready": true,
+      "selected_quality": "standard",
+      "is_loading": false,
+      "track": "local:366817f8b773dfcd2b51d202",
+      "queue_count": 2,
+      "error_kind": null,
+      "queue_tracks": [
+        "local:366817f8b773dfcd2b51d202",
+        "local:3327a2d00ab2689eaa3aeca5"
+      ],
+      "lyric_document": null,
+      "automix_progress": 0,
+      "automix_active": false,
+      "duration_ms": 20000,
+      "position_ms": 1451,
+      "repeat_mode": 0,
+      "shuffle_enabled": false,
+      "is_paused": false,
+      "captured_elapsed_ms": 1872.965239,
+      "page": "Artwork",
+      "queue_entry_ids": [
+        "c71c509c-b17c-4885-beac-b6f4059ff582",
+        "4ce9886a-7599-470e-8dfc-051fffd6b69d"
+      ],
+      "lyric_word_lines": null,
+      "queue_index": 0,
+      "controls_visible": true,
+      "autoplay_enabled": false
+    },
+    {
+      "title": "generated-1000hz",
+      "error": null,
+      "automix_status": "prepared",
+      "file": "01-open-frame-120.png",
+      "is_playing": true,
+      "play_when_ready": true,
+      "selected_quality": "standard",
+      "is_loading": false,
+      "track": "local:366817f8b773dfcd2b51d202",
+      "queue_count": 2,
+      "error_kind": null,
+      "queue_tracks": [
+        "local:366817f8b773dfcd2b51d202",
+        "local:3327a2d00ab2689eaa3aeca5"
+      ],
+      "lyric_document": null,
+      "automix_progress": 0,
+      "automix_active": false,
+      "duration_ms": 20000,
+      "position_ms": 1581,
+      "repeat_mode": 0,
+      "shuffle_enabled": false,
+      "is_paused": false,
+      "captured_elapsed_ms": 2005.074071,
+      "page": "Artwork",
+      "queue_entry_ids": [
+        "c71c509c-b17c-4885-beac-b6f4059ff582",
+        "4ce9886a-7599-470e-8dfc-051fffd6b69d"
+      ],
+      "lyric_word_lines": null,
+      "queue_index": 0,
+      "controls_visible": true,
+      "autoplay_enabled": false
+    },
+    {
+      "title": "generated-1000hz",
+      "error": null,
+      "automix_status": "prepared",
+      "file": "01-open-frame-320.png",
+      "is_playing": true,
+      "play_when_ready": true,
+      "selected_quality": "standard",
+      "is_loading": false,
+      "track": "local:366817f8b773dfcd2b51d202",
+      "queue_count": 2,
+      "error_kind": null,
+      "queue_tracks": [
+        "local:366817f8b773dfcd2b51d202",
+        "local:3327a2d00ab2689eaa3aeca5"
+      ],
+      "lyric_document": null,
+      "automix_progress": 0,
+      "automix_active": false,
+      "duration_ms": 20000,
+      "position_ms": 1675,
+      "repeat_mode": 0,
+      "shuffle_enabled": false,
+      "is_paused": false,
+      "captured_elapsed_ms": 2094.269008,
+      "page": "Artwork",
+      "queue_entry_ids": [
+        "c71c509c-b17c-4885-beac-b6f4059ff582",
+        "4ce9886a-7599-470e-8dfc-051fffd6b69d"
+      ],
+      "lyric_word_lines": null,
+      "queue_index": 0,
+      "controls_visible": true,
+      "autoplay_enabled": false
+    },
+    {
+      "title": "generated-1000hz",
+      "error": null,
+      "automix_status": "prepared",
+      "file": "01-open.png",
+      "is_playing": true,
+      "play_when_ready": true,
+      "selected_quality": "standard",
+      "is_loading": false,
+      "assertions": [{
+        "expected": "page:Artwork",
+        "passed": true
+      }],
+      "track": "local:366817f8b773dfcd2b51d202",
+      "queue_count": 2,
+      "error_kind": null,
+      "queue_tracks": [
+        "local:366817f8b773dfcd2b51d202",
+        "local:3327a2d00ab2689eaa3aeca5"
+      ],
+      "lyric_document": null,
+      "automix_progress": 0,
+      "automix_active": false,
+      "duration_ms": 20000,
+      "position_ms": 2506,
+      "repeat_mode": 0,
+      "shuffle_enabled": false,
+      "is_paused": false,
+      "captured_elapsed_ms": 2935.804104,
+      "page": "Artwork",
+      "queue_entry_ids": [
+        "c71c509c-b17c-4885-beac-b6f4059ff582",
+        "4ce9886a-7599-470e-8dfc-051fffd6b69d"
+      ],
+      "lyric_word_lines": null,
+      "queue_index": 0,
+      "controls_visible": true,
+      "autoplay_enabled": false,
+      "action_elapsed_ms": 1363.800894
+    },
+    {
+      "title": "generated-1000hz",
+      "error": null,
+      "automix_status": "prepared",
+      "file": "02-queue-frame-0.png",
+      "is_playing": true,
+      "play_when_ready": true,
+      "selected_quality": "standard",
+      "is_loading": false,
+      "track": "local:366817f8b773dfcd2b51d202",
+      "queue_count": 2,
+      "error_kind": null,
+      "queue_tracks": [
+        "local:366817f8b773dfcd2b51d202",
+        "local:3327a2d00ab2689eaa3aeca5"
+      ],
+      "lyric_document": null,
+      "automix_progress": 0,
+      "automix_active": false,
+      "duration_ms": 20000,
+      "position_ms": 2720,
+      "repeat_mode": 0,
+      "shuffle_enabled": false,
+      "is_paused": false,
+      "captured_elapsed_ms": 3142.279885,
+      "page": "Queue",
+      "queue_entry_ids": [
+        "c71c509c-b17c-4885-beac-b6f4059ff582",
+        "4ce9886a-7599-470e-8dfc-051fffd6b69d"
+      ],
+      "lyric_word_lines": null,
+      "queue_index": 0,
+      "controls_visible": true,
+      "autoplay_enabled": false
+    },
+    {
+      "title": "generated-1000hz",
+      "error": null,
+      "automix_status": "prepared",
+      "file": "02-queue-frame-120.png",
+      "is_playing": true,
+      "play_when_ready": true,
+      "selected_quality": "standard",
+      "is_loading": false,
+      "track": "local:366817f8b773dfcd2b51d202",
+      "queue_count": 2,
+      "error_kind": null,
+      "queue_tracks": [
+        "local:366817f8b773dfcd2b51d202",
+        "local:3327a2d00ab2689eaa3aeca5"
+      ],
+      "lyric_document": null,
+      "automix_progress": 0,
+      "automix_active": false,
+      "duration_ms": 20000,
+      "position_ms": 2850,
+      "repeat_mode": 0,
+      "shuffle_enabled": false,
+      "is_paused": false,
+      "captured_elapsed_ms": 3275.178454,
+      "page": "Queue",
+      "queue_entry_ids": [
+        "c71c509c-b17c-4885-beac-b6f4059ff582",
+        "4ce9886a-7599-470e-8dfc-051fffd6b69d"
+      ],
+      "lyric_word_lines": null,
+      "queue_index": 0,
+      "controls_visible": true,
+      "autoplay_enabled": false
+    },
+    {
+      "title": "generated-1000hz",
+      "error": null,
+      "automix_status": "prepared",
+      "file": "02-queue-frame-320.png",
+      "is_playing": true,
+      "play_when_ready": true,
+      "selected_quality": "standard",
+      "is_loading": false,
+      "track": "local:366817f8b773dfcd2b51d202",
+      "queue_count": 2,
+      "error_kind": null,
+      "queue_tracks": [
+        "local:366817f8b773dfcd2b51d202",
+        "local:3327a2d00ab2689eaa3aeca5"
+      ],
+      "lyric_document": null,
+      "automix_progress": 0,
+      "automix_active": false,
+      "duration_ms": 20000,
+      "position_ms": 3012,
+      "repeat_mode": 0,
+      "shuffle_enabled": false,
+      "is_paused": false,
+      "captured_elapsed_ms": 3431.897706,
+      "page": "Queue",
+      "queue_entry_ids": [
+        "c71c509c-b17c-4885-beac-b6f4059ff582",
+        "4ce9886a-7599-470e-8dfc-051fffd6b69d"
+      ],
+      "lyric_word_lines": null,
+      "queue_index": 0,
+      "controls_visible": true,
+      "autoplay_enabled": false
+    },
+    {
+      "title": "generated-1000hz",
+      "error": null,
+      "automix_status": "prepared",
+      "file": "02-queue.png",
+      "is_playing": true,
+      "play_when_ready": true,
+      "selected_quality": "standard",
+      "is_loading": false,
+      "assertions": [{
+        "expected": "selected:queue-automix",
+        "passed": true
+      }],
+      "track": "local:366817f8b773dfcd2b51d202",
+      "queue_count": 2,
+      "error_kind": null,
+      "queue_tracks": [
+        "local:366817f8b773dfcd2b51d202",
+        "local:3327a2d00ab2689eaa3aeca5"
+      ],
+      "lyric_document": null,
+      "automix_progress": 0,
+      "automix_active": false,
+      "duration_ms": 20000,
+      "position_ms": 3901,
+      "repeat_mode": 0,
+      "shuffle_enabled": false,
+      "is_paused": false,
+      "captured_elapsed_ms": 4326.119883,
+      "page": "Queue",
+      "queue_entry_ids": [
+        "c71c509c-b17c-4885-beac-b6f4059ff582",
+        "4ce9886a-7599-470e-8dfc-051fffd6b69d"
+      ],
+      "lyric_word_lines": null,
+      "queue_index": 0,
+      "controls_visible": true,
+      "autoplay_enabled": false,
+      "action_elapsed_ms": 1389.790853
+    },
+    {
+      "title": "generated-1000hz",
+      "error": null,
+      "automix_status": "idle",
+      "file": "03-off-frame-0.png",
+      "is_playing": true,
+      "play_when_ready": true,
+      "selected_quality": "standard",
+      "is_loading": false,
+      "track": "local:366817f8b773dfcd2b51d202",
+      "queue_count": 2,
+      "error_kind": null,
+      "queue_tracks": [
+        "local:366817f8b773dfcd2b51d202",
+        "local:3327a2d00ab2689eaa3aeca5"
+      ],
+      "lyric_document": null,
+      "automix_progress": 0,
+      "automix_active": false,
+      "duration_ms": 20000,
+      "position_ms": 3981,
+      "repeat_mode": 0,
+      "shuffle_enabled": false,
+      "is_paused": false,
+      "captured_elapsed_ms": 4514.592889,
+      "page": "Queue",
+      "queue_entry_ids": [
+        "c71c509c-b17c-4885-beac-b6f4059ff582",
+        "4ce9886a-7599-470e-8dfc-051fffd6b69d"
+      ],
+      "lyric_word_lines": null,
+      "queue_index": 0,
+      "controls_visible": true,
+      "autoplay_enabled": false
+    },
+    {
+      "title": "generated-1000hz",
+      "error": null,
+      "automix_status": "idle",
+      "file": "03-off-frame-120.png",
+      "is_playing": true,
+      "play_when_ready": true,
+      "selected_quality": "standard",
+      "is_loading": false,
+      "track": "local:366817f8b773dfcd2b51d202",
+      "queue_count": 2,
+      "error_kind": null,
+      "queue_tracks": [
+        "local:366817f8b773dfcd2b51d202",
+        "local:3327a2d00ab2689eaa3aeca5"
+      ],
+      "lyric_document": null,
+      "automix_progress": 0,
+      "automix_active": false,
+      "duration_ms": 20000,
+      "position_ms": 4122,
+      "repeat_mode": 0,
+      "shuffle_enabled": false,
+      "is_paused": false,
+      "captured_elapsed_ms": 4659.089747,
+      "page": "Queue",
+      "queue_entry_ids": [
+        "c71c509c-b17c-4885-beac-b6f4059ff582",
+        "4ce9886a-7599-470e-8dfc-051fffd6b69d"
+      ],
+      "lyric_word_lines": null,
+      "queue_index": 0,
+      "controls_visible": true,
+      "autoplay_enabled": false
+    },
+    {
+      "title": "generated-1000hz",
+      "error": null,
+      "automix_status": "idle",
+      "file": "03-off-frame-320.png",
+      "is_playing": true,
+      "play_when_ready": true,
+      "selected_quality": "standard",
+      "is_loading": false,
+      "track": "local:366817f8b773dfcd2b51d202",
+      "queue_count": 2,
+      "error_kind": null,
+      "queue_tracks": [
+        "local:366817f8b773dfcd2b51d202",
+        "local:3327a2d00ab2689eaa3aeca5"
+      ],
+      "lyric_document": null,
+      "automix_progress": 0,
+      "automix_active": false,
+      "duration_ms": 20000,
+      "position_ms": 4262,
+      "repeat_mode": 0,
+      "shuffle_enabled": false,
+      "is_paused": false,
+      "captured_elapsed_ms": 4804.173084,
+      "page": "Queue",
+      "queue_entry_ids": [
+        "c71c509c-b17c-4885-beac-b6f4059ff582",
+        "4ce9886a-7599-470e-8dfc-051fffd6b69d"
+      ],
+      "lyric_word_lines": null,
+      "queue_index": 0,
+      "controls_visible": true,
+      "autoplay_enabled": false
+    },
+    {
+      "title": "generated-1000hz",
+      "error": null,
+      "automix_status": "idle",
+      "file": "03-off.png",
+      "is_playing": true,
+      "play_when_ready": true,
+      "selected_quality": "standard",
+      "is_loading": false,
+      "assertions": [{
+        "expected": "unselected:queue-automix",
+        "passed": true
+      }],
+      "track": "local:366817f8b773dfcd2b51d202",
+      "queue_count": 2,
+      "error_kind": null,
+      "queue_tracks": [
+        "local:366817f8b773dfcd2b51d202",
+        "local:3327a2d00ab2689eaa3aeca5"
+      ],
+      "lyric_document": null,
+      "automix_progress": 0,
+      "automix_active": false,
+      "duration_ms": 20000,
+      "position_ms": 5161,
+      "repeat_mode": 0,
+      "shuffle_enabled": false,
+      "is_paused": false,
+      "captured_elapsed_ms": 5691.07998,
+      "page": "Queue",
+      "queue_entry_ids": [
+        "c71c509c-b17c-4885-beac-b6f4059ff582",
+        "4ce9886a-7599-470e-8dfc-051fffd6b69d"
+      ],
+      "lyric_word_lines": null,
+      "queue_index": 0,
+      "controls_visible": true,
+      "autoplay_enabled": false,
+      "action_elapsed_ms": 1364.692268
+    },
+    {
+      "title": "generated-1000hz",
+      "error": null,
+      "automix_status": "analyzing",
+      "file": "04-on-frame-0.png",
+      "is_playing": true,
+      "play_when_ready": true,
+      "selected_quality": "standard",
+      "is_loading": false,
+      "track": "local:366817f8b773dfcd2b51d202",
+      "queue_count": 2,
+      "error_kind": null,
+      "queue_tracks": [
+        "local:366817f8b773dfcd2b51d202",
+        "local:3327a2d00ab2689eaa3aeca5"
+      ],
+      "lyric_document": null,
+      "automix_progress": 0,
+      "automix_active": false,
+      "duration_ms": 20000,
+      "position_ms": 5341,
+      "repeat_mode": 0,
+      "shuffle_enabled": false,
+      "is_paused": false,
+      "captured_elapsed_ms": 5871.894368,
+      "page": "Queue",
+      "queue_entry_ids": [
+        "c71c509c-b17c-4885-beac-b6f4059ff582",
+        "4ce9886a-7599-470e-8dfc-051fffd6b69d"
+      ],
+      "lyric_word_lines": null,
+      "queue_index": 0,
+      "controls_visible": true,
+      "autoplay_enabled": false
+    },
+    {
+      "title": "generated-1000hz",
+      "error": null,
+      "automix_status": "analyzing",
+      "file": "04-on-frame-120.png",
+      "is_playing": true,
+      "play_when_ready": true,
+      "selected_quality": "standard",
+      "is_loading": false,
+      "track": "local:366817f8b773dfcd2b51d202",
+      "queue_count": 2,
+      "error_kind": null,
+      "queue_tracks": [
+        "local:366817f8b773dfcd2b51d202",
+        "local:3327a2d00ab2689eaa3aeca5"
+      ],
+      "lyric_document": null,
+      "automix_progress": 0,
+      "automix_active": false,
+      "duration_ms": 20000,
+      "position_ms": 5482,
+      "repeat_mode": 0,
+      "shuffle_enabled": false,
+      "is_paused": false,
+      "captured_elapsed_ms": 6021.098774,
+      "page": "Queue",
+      "queue_entry_ids": [
+        "c71c509c-b17c-4885-beac-b6f4059ff582",
+        "4ce9886a-7599-470e-8dfc-051fffd6b69d"
+      ],
+      "lyric_word_lines": null,
+      "queue_index": 0,
+      "controls_visible": true,
+      "autoplay_enabled": false
+    },
+    {
+      "title": "generated-1000hz",
+      "error": null,
+      "automix_status": "analyzing",
+      "file": "04-on-frame-320.png",
+      "is_playing": true,
+      "play_when_ready": true,
+      "selected_quality": "standard",
+      "is_loading": false,
+      "track": "local:366817f8b773dfcd2b51d202",
+      "queue_count": 2,
+      "error_kind": null,
+      "queue_tracks": [
+        "local:366817f8b773dfcd2b51d202",
+        "local:3327a2d00ab2689eaa3aeca5"
+      ],
+      "lyric_document": null,
+      "automix_progress": 0,
+      "automix_active": false,
+      "duration_ms": 20000,
+      "position_ms": 5635,
+      "repeat_mode": 0,
+      "shuffle_enabled": false,
+      "is_paused": false,
+      "captured_elapsed_ms": 6163.398549,
+      "page": "Queue",
+      "queue_entry_ids": [
+        "c71c509c-b17c-4885-beac-b6f4059ff582",
+        "4ce9886a-7599-470e-8dfc-051fffd6b69d"
+      ],
+      "lyric_word_lines": null,
+      "queue_index": 0,
+      "controls_visible": true,
+      "autoplay_enabled": false
+    },
+    {
+      "title": "generated-1000hz",
+      "error": null,
+      "automix_status": "prepared",
+      "file": "04-on.png",
+      "is_playing": true,
+      "play_when_ready": true,
+      "selected_quality": "standard",
+      "is_loading": false,
+      "assertions": [{
+        "expected": "selected:queue-automix",
+        "passed": true
+      }],
+      "track": "local:366817f8b773dfcd2b51d202",
+      "queue_count": 2,
+      "error_kind": null,
+      "queue_tracks": [
+        "local:366817f8b773dfcd2b51d202",
+        "local:3327a2d00ab2689eaa3aeca5"
+      ],
+      "lyric_document": null,
+      "automix_progress": 0,
+      "automix_active": false,
+      "duration_ms": 20000,
+      "position_ms": 6522,
+      "repeat_mode": 0,
+      "shuffle_enabled": false,
+      "is_paused": false,
+      "captured_elapsed_ms": 7060.450645,
+      "page": "Queue",
+      "queue_entry_ids": [
+        "c71c509c-b17c-4885-beac-b6f4059ff582",
+        "4ce9886a-7599-470e-8dfc-051fffd6b69d"
+      ],
+      "lyric_word_lines": null,
+      "queue_index": 0,
+      "controls_visible": true,
+      "autoplay_enabled": false,
+      "action_elapsed_ms": 1369.220475
+    },
+    {
+      "title": "generated-1000hz",
+      "error": null,
+      "automix_status": "prepared",
+      "file": "05-artwork-frame-0.png",
+      "is_playing": true,
+      "play_when_ready": true,
+      "selected_quality": "standard",
+      "is_loading": false,
+      "track": "local:366817f8b773dfcd2b51d202",
+      "queue_count": 2,
+      "error_kind": null,
+      "queue_tracks": [
+        "local:366817f8b773dfcd2b51d202",
+        "local:3327a2d00ab2689eaa3aeca5"
+      ],
+      "lyric_document": null,
+      "automix_progress": 0,
+      "automix_active": false,
+      "duration_ms": 20000,
+      "position_ms": 6684,
+      "repeat_mode": 0,
+      "shuffle_enabled": false,
+      "is_paused": false,
+      "captured_elapsed_ms": 7227.765859,
+      "page": "Artwork",
+      "queue_entry_ids": [
+        "c71c509c-b17c-4885-beac-b6f4059ff582",
+        "4ce9886a-7599-470e-8dfc-051fffd6b69d"
+      ],
+      "lyric_word_lines": null,
+      "queue_index": 0,
+      "controls_visible": true,
+      "autoplay_enabled": false
+    },
+    {
+      "title": "generated-1000hz",
+      "error": null,
+      "automix_status": "prepared",
+      "file": "05-artwork-frame-120.png",
+      "is_playing": true,
+      "play_when_ready": true,
+      "selected_quality": "standard",
+      "is_loading": false,
+      "track": "local:366817f8b773dfcd2b51d202",
+      "queue_count": 2,
+      "error_kind": null,
+      "queue_tracks": [
+        "local:366817f8b773dfcd2b51d202",
+        "local:3327a2d00ab2689eaa3aeca5"
+      ],
+      "lyric_document": null,
+      "automix_progress": 0,
+      "automix_active": false,
+      "duration_ms": 20000,
+      "position_ms": 6785,
+      "repeat_mode": 0,
+      "shuffle_enabled": false,
+      "is_paused": false,
+      "captured_elapsed_ms": 7323.309876,
+      "page": "Artwork",
+      "queue_entry_ids": [
+        "c71c509c-b17c-4885-beac-b6f4059ff582",
+        "4ce9886a-7599-470e-8dfc-051fffd6b69d"
+      ],
+      "lyric_word_lines": null,
+      "queue_index": 0,
+      "controls_visible": true,
+      "autoplay_enabled": false
+    },
+    {
+      "title": "generated-1000hz",
+      "error": null,
+      "automix_status": "prepared",
+      "file": "05-artwork-frame-320.png",
+      "is_playing": true,
+      "play_when_ready": true,
+      "selected_quality": "standard",
+      "is_loading": false,
+      "track": "local:366817f8b773dfcd2b51d202",
+      "queue_count": 2,
+      "error_kind": null,
+      "queue_tracks": [
+        "local:366817f8b773dfcd2b51d202",
+        "local:3327a2d00ab2689eaa3aeca5"
+      ],
+      "lyric_document": null,
+      "automix_progress": 0,
+      "automix_active": false,
+      "duration_ms": 20000,
+      "position_ms": 7042,
+      "repeat_mode": 0,
+      "shuffle_enabled": false,
+      "is_paused": false,
+      "captured_elapsed_ms": 7575.674019,
+      "page": "Artwork",
+      "queue_entry_ids": [
+        "c71c509c-b17c-4885-beac-b6f4059ff582",
+        "4ce9886a-7599-470e-8dfc-051fffd6b69d"
+      ],
+      "lyric_word_lines": null,
+      "queue_index": 0,
+      "controls_visible": true,
+      "autoplay_enabled": false
+    },
+    {
+      "title": "generated-1000hz",
+      "error": null,
+      "automix_status": "prepared",
+      "file": "05-artwork.png",
+      "is_playing": true,
+      "play_when_ready": true,
+      "selected_quality": "standard",
+      "is_loading": false,
+      "assertions": [],
+      "track": "local:366817f8b773dfcd2b51d202",
+      "queue_count": 2,
+      "error_kind": null,
+      "queue_tracks": [
+        "local:366817f8b773dfcd2b51d202",
+        "local:3327a2d00ab2689eaa3aeca5"
+      ],
+      "lyric_document": null,
+      "automix_progress": 0,
+      "automix_active": false,
+      "duration_ms": 20000,
+      "position_ms": 7862,
+      "repeat_mode": 0,
+      "shuffle_enabled": false,
+      "is_paused": false,
+      "captured_elapsed_ms": 8396.117488,
+      "page": "Artwork",
+      "queue_entry_ids": [
+        "c71c509c-b17c-4885-beac-b6f4059ff582",
+        "4ce9886a-7599-470e-8dfc-051fffd6b69d"
+      ],
+      "lyric_word_lines": null,
+      "queue_index": 0,
+      "controls_visible": true,
+      "autoplay_enabled": false,
+      "action_elapsed_ms": 1335.474166
+    },
+    {
+      "title": "generated-1000hz",
+      "error": null,
+      "automix_status": "mixing",
+      "file": "06-overlap-frame-0.png",
+      "is_playing": true,
+      "play_when_ready": true,
+      "selected_quality": "standard",
+      "is_loading": false,
+      "track": "local:366817f8b773dfcd2b51d202",
+      "queue_count": 2,
+      "error_kind": null,
+      "queue_tracks": [
+        "local:366817f8b773dfcd2b51d202",
+        "local:3327a2d00ab2689eaa3aeca5"
+      ],
+      "lyric_document": null,
+      "automix_progress": 0.12397959,
+      "automix_active": true,
+      "duration_ms": 20000,
+      "position_ms": 12991,
+      "repeat_mode": 0,
+      "shuffle_enabled": false,
+      "is_paused": false,
+      "captured_elapsed_ms": 13521.416557,
+      "page": "Artwork",
+      "queue_entry_ids": [
+        "c71c509c-b17c-4885-beac-b6f4059ff582",
+        "4ce9886a-7599-470e-8dfc-051fffd6b69d"
+      ],
+      "lyric_word_lines": null,
+      "queue_index": 0,
+      "controls_visible": true,
+      "autoplay_enabled": false
+    },
+    {
+      "title": "generated-1000hz",
+      "error": null,
+      "automix_status": "mixing",
+      "file": "06-overlap-frame-120.png",
+      "is_playing": true,
+      "play_when_ready": true,
+      "selected_quality": "standard",
+      "is_loading": false,
+      "track": "local:366817f8b773dfcd2b51d202",
+      "queue_count": 2,
+      "error_kind": null,
+      "queue_tracks": [
+        "local:366817f8b773dfcd2b51d202",
+        "local:3327a2d00ab2689eaa3aeca5"
+      ],
+      "lyric_document": null,
+      "automix_progress": 0.13770407,
+      "automix_active": true,
+      "duration_ms": 20000,
+      "position_ms": 13101,
+      "repeat_mode": 0,
+      "shuffle_enabled": false,
+      "is_paused": false,
+      "captured_elapsed_ms": 13633.202612,
+      "page": "Artwork",
+      "queue_entry_ids": [
+        "c71c509c-b17c-4885-beac-b6f4059ff582",
+        "4ce9886a-7599-470e-8dfc-051fffd6b69d"
+      ],
+      "lyric_word_lines": null,
+      "queue_index": 0,
+      "controls_visible": true,
+      "autoplay_enabled": false
+    },
+    {
+      "title": "generated-1000hz",
+      "error": null,
+      "automix_status": "mixing",
+      "file": "06-overlap-frame-320.png",
+      "is_playing": true,
+      "play_when_ready": true,
+      "selected_quality": "standard",
+      "is_loading": false,
+      "track": "local:366817f8b773dfcd2b51d202",
+      "queue_count": 2,
+      "error_kind": null,
+      "queue_tracks": [
+        "local:366817f8b773dfcd2b51d202",
+        "local:3327a2d00ab2689eaa3aeca5"
+      ],
+      "lyric_document": null,
+      "automix_progress": 0.1516695,
+      "automix_active": true,
+      "duration_ms": 20000,
+      "position_ms": 13213,
+      "repeat_mode": 0,
+      "shuffle_enabled": false,
+      "is_paused": false,
+      "captured_elapsed_ms": 13750.747687,
+      "page": "Artwork",
+      "queue_entry_ids": [
+        "c71c509c-b17c-4885-beac-b6f4059ff582",
+        "4ce9886a-7599-470e-8dfc-051fffd6b69d"
+      ],
+      "lyric_word_lines": null,
+      "queue_index": 0,
+      "controls_visible": true,
+      "autoplay_enabled": false
+    },
+    {
+      "title": "generated-1000hz",
+      "error": null,
+      "automix_status": "mixing",
+      "file": "06-overlap.png",
+      "is_playing": true,
+      "play_when_ready": true,
+      "selected_quality": "standard",
+      "is_loading": false,
+      "assertions": [
+        {
+          "expected": "mix-active:true",
+          "passed": true
+        },
+        {
+          "expected": "tag:automix-paired-artwork",
+          "passed": true
+        },
+        {
+          "expected": "index:0",
+          "passed": true
+        }
+      ],
+      "track": "local:366817f8b773dfcd2b51d202",
+      "queue_count": 2,
+      "error_kind": null,
+      "queue_tracks": [
+        "local:366817f8b773dfcd2b51d202",
+        "local:3327a2d00ab2689eaa3aeca5"
+      ],
+      "lyric_document": null,
+      "automix_progress": 0.25519276,
+      "automix_active": true,
+      "duration_ms": 20000,
+      "position_ms": 14041,
+      "repeat_mode": 0,
+      "shuffle_enabled": false,
+      "is_paused": false,
+      "captured_elapsed_ms": 14573.897862,
+      "page": "Artwork",
+      "queue_entry_ids": [
+        "c71c509c-b17c-4885-beac-b6f4059ff582",
+        "4ce9886a-7599-470e-8dfc-051fffd6b69d"
+      ],
+      "lyric_word_lines": null,
+      "queue_index": 0,
+      "controls_visible": true,
+      "autoplay_enabled": false,
+      "action_elapsed_ms": 6177.780994
+    },
+    {
+      "title": "generated-4000hz",
+      "error": null,
+      "automix_status": "idle",
+      "file": "07-handoff-frame-0.png",
+      "is_playing": true,
+      "play_when_ready": true,
+      "selected_quality": "standard",
+      "is_loading": false,
+      "track": "local:3327a2d00ab2689eaa3aeca5",
+      "queue_count": 2,
+      "error_kind": null,
+      "queue_tracks": [
+        "local:366817f8b773dfcd2b51d202",
+        "local:3327a2d00ab2689eaa3aeca5"
+      ],
+      "lyric_document": null,
+      "automix_progress": 0,
+      "automix_active": false,
+      "duration_ms": 16000,
+      "position_ms": 9171,
+      "repeat_mode": 0,
+      "shuffle_enabled": false,
+      "is_paused": false,
+      "captured_elapsed_ms": 21707.485342,
+      "page": "Artwork",
+      "queue_entry_ids": [
+        "c71c509c-b17c-4885-beac-b6f4059ff582",
+        "4ce9886a-7599-470e-8dfc-051fffd6b69d"
+      ],
+      "lyric_word_lines": null,
+      "queue_index": 1,
+      "controls_visible": true,
+      "autoplay_enabled": false
+    },
+    {
+      "title": "generated-4000hz",
+      "error": null,
+      "automix_status": "idle",
+      "file": "07-handoff-frame-120.png",
+      "is_playing": true,
+      "play_when_ready": true,
+      "selected_quality": "standard",
+      "is_loading": false,
+      "track": "local:3327a2d00ab2689eaa3aeca5",
+      "queue_count": 2,
+      "error_kind": null,
+      "queue_tracks": [
+        "local:366817f8b773dfcd2b51d202",
+        "local:3327a2d00ab2689eaa3aeca5"
+      ],
+      "lyric_document": null,
+      "automix_progress": 0,
+      "automix_active": false,
+      "duration_ms": 16000,
+      "position_ms": 9271,
+      "repeat_mode": 0,
+      "shuffle_enabled": false,
+      "is_paused": false,
+      "captured_elapsed_ms": 21804.56206,
+      "page": "Artwork",
+      "queue_entry_ids": [
+        "c71c509c-b17c-4885-beac-b6f4059ff582",
+        "4ce9886a-7599-470e-8dfc-051fffd6b69d"
+      ],
+      "lyric_word_lines": null,
+      "queue_index": 1,
+      "controls_visible": true,
+      "autoplay_enabled": false
+    },
+    {
+      "title": "generated-4000hz",
+      "error": null,
+      "automix_status": "idle",
+      "file": "07-handoff-frame-320.png",
+      "is_playing": true,
+      "play_when_ready": true,
+      "selected_quality": "standard",
+      "is_loading": false,
+      "track": "local:3327a2d00ab2689eaa3aeca5",
+      "queue_count": 2,
+      "error_kind": null,
+      "queue_tracks": [
+        "local:366817f8b773dfcd2b51d202",
+        "local:3327a2d00ab2689eaa3aeca5"
+      ],
+      "lyric_document": null,
+      "automix_progress": 0,
+      "automix_active": false,
+      "duration_ms": 16000,
+      "position_ms": 9360,
+      "repeat_mode": 0,
+      "shuffle_enabled": false,
+      "is_paused": false,
+      "captured_elapsed_ms": 21901.301015,
+      "page": "Artwork",
+      "queue_entry_ids": [
+        "c71c509c-b17c-4885-beac-b6f4059ff582",
+        "4ce9886a-7599-470e-8dfc-051fffd6b69d"
+      ],
+      "lyric_word_lines": null,
+      "queue_index": 1,
+      "controls_visible": true,
+      "autoplay_enabled": false
+    },
+    {
+      "title": "generated-4000hz",
+      "error": null,
+      "automix_status": "idle",
+      "file": "07-handoff.png",
+      "is_playing": true,
+      "play_when_ready": true,
+      "selected_quality": "standard",
+      "is_loading": false,
+      "assertions": [{
+        "expected": "index:1",
+        "passed": true
+      }],
+      "track": "local:3327a2d00ab2689eaa3aeca5",
+      "queue_count": 2,
+      "error_kind": null,
+      "queue_tracks": [
+        "local:366817f8b773dfcd2b51d202",
+        "local:3327a2d00ab2689eaa3aeca5"
+      ],
+      "lyric_document": null,
+      "automix_progress": 0,
+      "automix_active": false,
+      "duration_ms": 16000,
+      "position_ms": 10181,
+      "repeat_mode": 0,
+      "shuffle_enabled": false,
+      "is_paused": false,
+      "captured_elapsed_ms": 22728.073156,
+      "page": "Artwork",
+      "queue_entry_ids": [
+        "c71c509c-b17c-4885-beac-b6f4059ff582",
+        "4ce9886a-7599-470e-8dfc-051fffd6b69d"
+      ],
+      "lyric_word_lines": null,
+      "queue_index": 1,
+      "controls_visible": true,
+      "autoplay_enabled": false,
+      "action_elapsed_ms": 8153.895497
+    }
+  ],
+  "theme": "Dark",
+  "audio_endpoint": "VALIDATION_SOFTWARE_PCM_OUTPUT",
+  "height": 924
+}

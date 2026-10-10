@@ -272,6 +272,7 @@ private fun PersistentPlayerArtwork(
     track: MusicTrack, sourceColor: Color, isPlaying: Boolean, page: Int, expansion: Float, sharedModifier: Modifier,
     isLandscape: Boolean,
 ) {
+    val mix by melox.playback.MeloXAutoMixTransitionRuntime.state.collectAsState()
     val headerProgress by animateFloatAsState(if (page == 0) 0f else 1f,
         tween(480, easing = FastOutSlowInEasing), label = "persistent-artwork-page-frame")
     val playbackScale by animateFloatAsState(
@@ -295,10 +296,11 @@ private fun PersistentPlayerArtwork(
         val y = fullY + (contentTop - fullY) * pageFrameProgress
         val shape = RoundedCornerShape(12.dp)
         Box(Modifier.offset(x, y).size(coverSize).then(sharedModifier)) {
-            MeloXArtworkImage(track.artworkUrl, sourceColor, Modifier.fillMaxSize().graphicsLayer {
+            MeloXAutoMixArtwork(track, sourceColor, Modifier.fillMaxSize().graphicsLayer {
                 scaleX = effectiveScale; scaleY = effectiveScale
-            }.shadow(elevation * blend * (1f - pageFrameProgress * .55f), shape, clip = false,
-                ambientColor = Color.Black.copy(alpha = .28f), spotColor = Color.Black.copy(alpha = .28f)).clip(shape))
+            }.then(if (mix.active || mix.handedOff) Modifier else Modifier
+                .shadow(elevation * blend * (1f - pageFrameProgress * .55f), shape, clip = false,
+                    ambientColor = Color.Black.copy(alpha = .28f), spotColor = Color.Black.copy(alpha = .28f)).clip(shape)))
         }
     }
 }

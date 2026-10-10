@@ -1,0 +1,23 @@
+{
+  "origin": "generated sine PCM, no private audio",
+  "tracks": [
+    {
+      "file": "generated-1000hz.wav",
+      "frequency_hz": 1000,
+      "duration_ms": 20000,
+      "channels": 2,
+      "sample_rate": 44100,
+      "pcm_amplitude": 6000,
+      "wav_sha256": "a226141b0b361f54da767b9cff7711ea15849c6880dffa9485ec08724d461207"
+    },
+    {
+      "file": "generated-4000hz.wav",
+      "frequency_hz": 4000,
+      "duration_ms": 16000,
+      "channels": 2,
+      "sample_rate": 44100,
+      "pcm_amplitude": 6000,
+      "wav_sha256": "97c85f9e827461b7bb53671fa959f1ece18e7fdffcecca3ccd8f718637949efb"
+    }
+  ]
+}

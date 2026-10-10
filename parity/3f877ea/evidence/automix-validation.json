@@ -1,0 +1,49 @@
+{
+  "android_sha": "3f877eaffe30c82eb6d24eb3647702f5bc554dd3",
+  "windows_parent_sha": "9328f7846a08894eb3b5de989b80b0b0e508f6d4",
+  "environment": "Linux native FFmpeg + controlled software PCM endpoint + production ImageComposeScene",
+  "tests": {
+    "tests": 102,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "suites": 18,
+  "production_ui_scenes": 7,
+  "production_ui_assertions": 8,
+  "jar": {
+    "path": "desktop/build/compose/jars/MeloX-Desktop-linux-x64-1.0.0.jar",
+    "bytes": 221387883,
+    "sha256": "3f9c38f3564a5e83763848a40bdc0e65d000a30baf77c5f8a880ad52ff189458"
+  },
+  "source_sha256": {
+    "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXAutoMixArtwork.kt": "88e2092e88a503febe5c6e8205d07c25ff63791adae7b6c6ff7b68a3912bdd63",
+    "desktop/src/desktopMain/kotlin/melox/validation/MeloXPcmCaptureOutput.kt": "37b0dcc65619e9fe04d78385b1d986e1b0f9571d7ee6cf205797bcb432843ca8",
+    "shared/src/commonMain/kotlin/melox/playback/MeloXAutoMixTransitionRuntime.kt": "bc54cbffe93f06e48c078041cdf66da312023e727376ef2029c9b3eb2971e2c5",
+    "shared/src/commonMain/kotlin/melox/playback/MeloXAutoMixTransitionScorer.kt": "06fbbc8363568ea42b3c4ed48c6d65a5eec4d2a08b03406056fe4ae87fadb69f",
+    "shared/src/commonMain/kotlin/melox/playback/MeloXSmartQueueBuilder.kt": "775deadcfe50565ebdd74fe6f7b98c51618cae65407b5c643a944f611f67476e",
+    "shared/src/commonMain/kotlin/melox/player/MeloXBufferedPcmDeck.kt": "9c693636390325730ec716337e73c8afbb552c16c4a743f1c66bf9369d376e31",
+    "shared/src/commonMain/kotlin/melox/player/MeloXDualDecodeSession.kt": "17ad7eb0695775905b511d659a57326c1256e944896feba2f8f5c1bcefe723ca",
+    "shared/src/commonMain/kotlin/melox/player/MeloXPcmMix.kt": "8f341ac9766539c6733880ec227a81d3d1815bc61b2fd8a3edf4a2ca9f95bbf5",
+    "shared/src/desktopTest/kotlin/melox/playback/DesktopAutoMixIntegrationTest.kt": "208b66d07873d7458b2283648bbaeccb97f95b4607b3af55bf7dacdcd3131582",
+    "shared/src/desktopTest/kotlin/melox/playback/LocalProviderPlaybackTest.kt": "d6d6ced4e03fd4ba0e84d3038bb27824b9d96be66ab0029966dfbb2d310b1238",
+    "shared/src/desktopTest/kotlin/melox/player/DesktopDualPcmTest.kt": "c508f8b98d9ef766b1aa6b6fe90393378498f3e39152ddfcd67161c7f71710a8",
+    "tools/generate_pcm_fixtures.py": "b75b669227bb2f597232ee5debd20ef49baad946e1936de5b8994b406c739be0",
+    "tools/verify_captured_automix.py": "d408b76802b42a94f16b448989c473cc488b2982afccd49b0ffdd5442c3d8f24",
+    "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXIOSPlayerScene.kt": "09e535df9bbd13730c7afb46541606b5bc8092657a66790a34c39aa7758e4196",
+    "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXQueuePanel.kt": "d282536ca1fb80c030757ed38240fc8ad5253d8f226e1a3cd4c205a93ce80c77",
+    "desktop/src/desktopMain/kotlin/melox/ui/screens/SettingsScreen.kt": "4f456cdc0ed577908f5d0495ed060054fbf7881df331d97870e3165de9155ce4",
+    "desktop/src/desktopMain/kotlin/melox/validation/MeloXVisualCapture.kt": "0334826b04283ed50bb64e221ecbf6fba6914629b0ea33629e17a181a059e878",
+    "shared/src/commonMain/kotlin/melox/playback/MeloXAutoMixEqualizerEnvelope.kt": "d5b48128d74b2c3a1f0ea313032847b634bb4ab477f4d675753f449e66579d84",
+    "shared/src/commonMain/kotlin/melox/playback/MeloXPlaybackModePreferences.kt": "9db3f2fdc564b013f9df43ec7393e1c309262a8e06eba22a4c9e147691ade2ec",
+    "shared/src/commonMain/kotlin/melox/playback/PlaybackCommands.kt": "34d842ad5b73d5db7eb48278b0ba7c8188eefaa59fb781085b50bd3ae50d1017",
+    "shared/src/commonMain/kotlin/melox/playback/ProviderPlaybackCommands.kt": "26872deecdc32a3bf466738fdd1049bde0cb048233a5073fd77f41698f112cd7",
+    "shared/src/commonMain/kotlin/melox/playback/ProviderPlaybackResolver.kt": "a7dd7a74df8d68c768bb881e2f5ddf69d7e4fe86f4e7358910f3e0816a3fb9e3",
+    "shared/src/commonMain/kotlin/melox/player/AudioPlayer.kt": "75a06efdd793aed6017126ebd2602d69a7d061c5b70e9146d04174db09998778",
+    "shared/src/commonMain/kotlin/melox/player/FfmpegPcmDecoder.kt": "f6d299dec6727211b2d5d820f1903b08794339297cae7f4a192482475fc4c37e",
+    "shared/src/commonMain/kotlin/melox/provider/local/LocalProvider.kt": "5f231e1503838815e208a29e138d5ea654891f78f45746edf60196425be26ddd",
+    "shared/src/desktopTest/kotlin/melox/player/DesktopAudioSessionTest.kt": "1348383b729c23c7b29e9950bf1aba6f8424e5bca8ca96e75adbd403200ef915"
+  },
+  "physical_windows_audio": "BLOCKED",
+  "android_same_content_pixel_motion": "BLOCKED"
+}

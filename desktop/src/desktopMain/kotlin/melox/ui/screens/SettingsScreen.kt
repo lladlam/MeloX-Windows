@@ -311,6 +311,7 @@ private fun PlaybackSettings() {
             )
         }
     }
+    AutoMixPlaybackSettings()
 }
 
 @Composable
@@ -328,6 +329,44 @@ private fun PreferenceToggle(title: String, checked: Boolean, key: String, subti
             )
         },
     )
+}
+
+@Composable
+private fun AutoMixPlaybackSettings() {
+    var settings by remember { mutableStateOf(melox.playback.MeloXAutoMixSettings.read()) }
+    val modes = melox.playback.MeloXPlaybackModeRuntime
+    SectionLabel("AutoMix 与智能队列")
+    MeloXIosListRow(title = "自动过渡", showChevron = false, trailingContent = {
+        melox.ui.glass.MeloXGlassToggle(modes.autoMixEnabled, onCheckedChange = {
+            PlaybackCommands.playerController()?.setAutoMixEnabled(it) ?: melox.playback.MeloXPlaybackModePreferences.setAutoMix(it)
+        }, modifier = Modifier.testTag("setting-auto_mix"))
+    })
+    MeloXIosListRow(title = "智能队列", subtitle = "分析候选歌曲，按兼容节拍逐首扩展队列", showChevron = false, trailingContent = {
+        melox.ui.glass.MeloXGlassToggle(modes.smartQueueEnabled, onCheckedChange = {
+            PlaybackCommands.playerController()?.setSmartQueueEnabled(it) ?: melox.playback.MeloXPlaybackModePreferences.setSmartQueue(it)
+        }, modifier = Modifier.testTag("setting-smart_queue"))
+    })
+    MeloXSettingsDropdown("过渡模式", settings.mode, melox.playback.MeloXAutoMixMode.entries.map { it to if (it == melox.playback.MeloXAutoMixMode.Smart) "智能分析" else "固定时长" },
+        onSelected = { melox.playback.MeloXPlaybackModePreferences.setAutoMixString("automix_mode", it.name); settings = settings.copy(mode = it) })
+    MeloXSettingsDropdown("音量曲线", settings.fadeCurve, melox.playback.MeloXAutoMixFadeCurve.entries.map { it to it.name },
+        onSelected = { melox.playback.MeloXPlaybackModePreferences.setAutoMixString("automix_fade_curve", it.name); settings = settings.copy(fadeCurve = it) })
+    MeloXSettingsDropdown("固定过渡时长", settings.fixedDurationMs, listOf(3000L, 5000L, 8000L, 12000L, 20000L).map { it to "${it / 1000} 秒" },
+        onSelected = { melox.playback.MeloXPlaybackModePreferences.setAutoMixLong("automix_fixed_duration_ms", it); settings = settings.copy(fixedDurationMs = it) })
+    MeloXSettingsDropdown("分析失败回退", settings.fallback, melox.playback.MeloXAutoMixFallback.entries.map { it to when (it) {
+        melox.playback.MeloXAutoMixFallback.Crossfade -> "交叉淡化"
+        melox.playback.MeloXAutoMixFallback.ShortCrossfade -> "短交叉淡化"
+        else -> "正常播放"
+    } }, onSelected = { melox.playback.MeloXPlaybackModePreferences.setAutoMixString("automix_fallback", it.name); settings = settings.copy(fallback = it) })
+    MeloXIosListRow(title = "节拍匹配", showChevron = false, trailingContent = {
+        melox.ui.glass.MeloXGlassToggle(settings.tempoMatching, onCheckedChange = {
+            melox.playback.MeloXPlaybackModePreferences.setAutoMixBoolean("automix_tempo_matching", it); settings = settings.copy(tempoMatching = it)
+        })
+    })
+    MeloXIosListRow(title = "流媒体音频分析", showChevron = false, trailingContent = {
+        melox.ui.glass.MeloXGlassToggle(settings.analyzeStreaming, onCheckedChange = {
+            melox.playback.MeloXPlaybackModePreferences.setAutoMixBoolean("automix_analyze_streaming", it); settings = settings.copy(analyzeStreaming = it)
+        })
+    })
 }
 
 @Composable

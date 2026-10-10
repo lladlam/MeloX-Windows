@@ -56,10 +56,10 @@ class ResolvedRequest(
     private val inFlight = ConcurrentHashMap<ResolveKey, CompletableFuture<ResolvedRequest>>()
 
     private fun queryParam(uri: java.net.URI, key: String): String? {
-        val query = uri.query ?: return null
+        val query = uri.rawQuery ?: return null
         for (param in query.split("&")) {
             val parts = param.split("=", limit = 2)
-            if (parts.firstOrNull() == key) return parts.getOrNull(1)
+            if (parts.firstOrNull() == key) return parts.getOrNull(1)?.let { java.net.URLDecoder.decode(it, "UTF-8") }
         }
         return null
     }
@@ -108,7 +108,7 @@ class ResolvedRequest(
             logDebug(TAG, "resolve detail source=${source.storageValue} id=${resourceValue.take(8)} title=${track.title.take(40)} " +
                 "artists=${track.artistText.take(60)} durationMs=${track.durationMs} metadata=${track.providerMetadata.javaClass.simpleName}")
             logInfo(TAG, "Resolve start source=${source.storageValue} quality=${quality.name} thirdParty=${thirdPartySourcesEnabled()}")
-            val allowExternalResolver = source != MusicSource.Jellyfin
+            val allowExternalResolver = source != MusicSource.Jellyfin && source != MusicSource.Local
             val lx = if (allowExternalResolver && thirdPartySourcesEnabled() && !thirdPartyOnlyForMembership()) {
                 runCatching { lxUserPlayback?.resolve(track, quality) }
                     .onFailure { logWarn(TAG, "LX stage failed source=${source.storageValue} error=${it.javaClass.simpleName}") }
@@ -285,11 +285,29 @@ class ResolvedRequest(
             append("$MeloXScheme://$ProviderTrackHost/")
             append(track.id.source.storageValue)
             append("/")
-            append(track.id.value)
-            append("?${QualityQuery}=${quality.name}")
-            append("&${TrackTitleQuery}=${track.title}")
-            append("&${TrackArtistsQuery}=${track.artists.joinToString("\u001f") { it.name }}")
-            track.durationMs?.let { append("&${TrackDurationQuery}=$it") }
+            fun encoded(value: String) = java.net.URLEncoder.encode(value, "UTF-8").replace("+", "%20")
+            append(encoded(track.id.value))
+            val fields = linkedMapOf(QualityQuery to quality.name, TrackTitleQuery to track.title,
+                TrackArtistsQuery to track.artists.joinToString("\u001f") { it.name })
+            track.durationMs?.let { fields[TrackDurationQuery] = it.toString() }
+            when (val metadata = track.providerMetadata) {
+                is ProviderTrackMetadata.Local -> fields["localContentUri"] = metadata.contentUri
+                is ProviderTrackMetadata.QQMusic -> {
+                    metadata.mediaMid?.let { fields[QQMediaMidQuery] = it }
+                    metadata.numericSongId?.let { fields[QQNumericIdQuery] = it.toString() }
+                }
+                is ProviderTrackMetadata.Kugou -> {
+                    metadata.albumAudioId?.let { fields[KugouAlbumAudioIdQuery] = it.toString() }
+                    metadata.albumId?.let { fields[KugouAlbumIdQuery] = it }
+                }
+                is ProviderTrackMetadata.AppleMusic -> {
+                    fields[AppleStorefrontQuery] = metadata.storefront
+                    metadata.previewUrl?.let { fields[ApplePreviewUrlQuery] = it }
+                }
+                is ProviderTrackMetadata.Spotify -> metadata.isrc?.let { fields[SpotifyIsrcQuery] = it }
+                else -> Unit
+            }
+            append(fields.entries.joinToString("&", prefix = "?") { "${it.key}=${encoded(it.value)}" })
         }
     }
 }

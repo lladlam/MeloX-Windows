@@ -20,7 +20,8 @@ import melox.music.model.MusicTrack
 import kotlin.test.*
 
 /** Actual production FFmpeg/process/PCM loop; only physical hardware is controlled. */
-class DesktopAudioSessionTest {
+open class DesktopAudioSessionTest {
+    protected open val autoMix: Boolean = false
     private val originalOutput = AudioPlayer.outputLineFactory
     private val directory = File(System.getProperty("user.home"), "audio-session-${UUID.randomUUID()}").apply { mkdirs() }
     private val outputs = CopyOnWriteArrayList<ControlledOutput>()
@@ -28,12 +29,15 @@ class DesktopAudioSessionTest {
 
     @BeforeTest fun controlledDevice() {
         AudioPlayer.stop()
+        melox.playback.MeloXPlaybackModePreferences.reset()
+        melox.playback.MeloXPlaybackModePreferences.setAutoMix(autoMix)
         AudioPlayer.outputLineFactory = { ControlledOutput().also(outputs::add).line }
     }
 
     @AfterTest fun cleanup() {
         AudioPlayer.stop()
         AudioPlayer.outputLineFactory = originalOutput
+        melox.playback.MeloXPlaybackModePreferences.reset()
         directory.deleteRecursively()
     }
 
@@ -189,4 +193,9 @@ class DesktopAudioSessionTest {
             playedFrames.set(acceptedBytes.get() / AudioPlayer.PCM_BYTES_PER_FRAME)
         }
     }
+}
+
+/** Run all original FFmpeg lifecycle regressions through the streaming/mix-capable path too. */
+class DesktopStreamingAudioSessionTest : DesktopAudioSessionTest() {
+    override val autoMix: Boolean = true
 }

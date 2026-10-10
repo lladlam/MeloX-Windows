@@ -38,6 +38,7 @@ internal fun QueuePage(sourceColor: Color, interactive: Boolean = true, modifier
     val repeat by player?.repeatMode?.collectAsState() ?: remember { mutableIntStateOf(0) }
     val shuffle by player?.shuffleEnabled?.collectAsState() ?: remember { mutableStateOf(false) }
     val listState = rememberLazyListState()
+    val mix by melox.playback.MeloXAutoMixTransitionRuntime.state.collectAsState()
     val historyCount = queue.index.coerceIn(0, queue.songs.size)
     val currentEntryId = queue.entryIds.getOrNull(queue.index)
     LaunchedEffect(currentEntryId, historyCount) {
@@ -62,7 +63,20 @@ internal fun QueuePage(sourceColor: Color, interactive: Boolean = true, modifier
                     "queue-autoplay", "无尽播放", Modifier.weight(1f)) {
                     player?.setAutoplayEnabled(!MeloXPlaybackModeRuntime.autoplayEnabled)
                 }
+                QueueModeButton(MeloXSymbol.Waveform, MeloXPlaybackModeRuntime.autoMixEnabled, interactive,
+                    "queue-automix", "自动过渡", Modifier.weight(1f)) {
+                    player?.setAutoMixEnabled(!MeloXPlaybackModeRuntime.autoMixEnabled)
+                }
             }
+        }
+        if (MeloXPlaybackModeRuntime.autoMixEnabled && mix.status != "idle") {
+            Text(mix.message ?: when (mix.status) {
+                "analyzing" -> "正在分析真实音频"
+                "prepared" -> "下一首已预加载"
+                "mixing" -> "自动过渡 ${(mix.progress * 100).toInt()}% · ${mix.incoming?.title.orEmpty()}"
+                "handoff" -> "已切换到下一首"
+                else -> mix.status
+            }, color = Color.White.copy(alpha = .6f), fontSize = 12.sp, modifier = Modifier.padding(vertical = 4.dp).testTag("automix-status"))
         }
         LazyColumn(state = listState, userScrollEnabled = interactive, modifier = Modifier.weight(1f).fillMaxWidth(),
             contentPadding = PaddingValues(top = 10.dp, bottom = 12.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {

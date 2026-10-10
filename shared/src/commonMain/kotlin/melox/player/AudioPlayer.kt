@@ -1,6 +1,9 @@
 package melox.player
 
 import melox.music.model.MusicTrack
+import melox.playback.MeloXAutoMixPlan
+import melox.playback.MeloXAutoMixFadeCurve
+import melox.playback.MeloXAutoMixTransitionRuntime
 import melox.platform.logDebug
 import melox.platform.logError
 import java.io.BufferedInputStream
@@ -12,7 +15,6 @@ import java.util.concurrent.atomic.AtomicLong
 import java.util.concurrent.atomic.AtomicReference
 import javax.sound.sampled.AudioFormat
 import javax.sound.sampled.AudioSystem
-import javax.sound.sampled.FloatControl
 import javax.sound.sampled.SourceDataLine
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.CancellationException
@@ -41,7 +43,7 @@ object AudioPlayer {
     private var currentJob: Job? = null
     private var currentLine: SourceDataLine? = null
     private var currentProcess: Process? = null
-    private var volumeLinear: Float = 1f
+    @Volatile private var volumeLinear: Float = 1f
     private val playbackLock = Any()
     private val paused = AtomicBoolean(false)
     private val ready = AtomicBoolean(false)
@@ -49,6 +51,7 @@ object AudioPlayer {
     private val pendingSeekMs = AtomicLong(-1L)
     private val seekRevision = AtomicLong(0L)
     private val session = AtomicReference<PlayRequest?>(null)
+    private val dualSession = AtomicReference<MeloXDualDecodeSession?>(null)
 
     private val _state = MutableStateFlow(PlayerState())
     val state: StateFlow<PlayerState> = _state.asStateFlow()
@@ -100,6 +103,7 @@ object AudioPlayer {
         playWhenReady: Boolean = true,
         onEnded: () -> Unit = {},
         onFailure: (AudioPlaybackFailure) -> Unit = {},
+        autoMix: Boolean = melox.playback.MeloXPlaybackModeRuntime.autoMixEnabled,
     ) {
         selectTrack(track, startPositionMs, knownDurationMs)
         paused.set(!playWhenReady)
@@ -109,7 +113,7 @@ object AudioPlayer {
         session.set(request)
         currentJob = scope.launch {
             try {
-                runSession(request)
+                if (autoMix) runDualSession(request, track, startPositionMs) else runSession(request)
             } catch (cancelled: CancellationException) {
                 throw cancelled
             } catch (e: Exception) {
@@ -128,6 +132,93 @@ object AudioPlayer {
             }
         }
     }
+
+    /** Attach real, bounded PCM preload to the current streaming output without restarting it. */
+    internal suspend fun prepareAutoMix(
+        outgoing: MusicTrack, incoming: MusicTrack, uri: String, headers: Map<String, String>,
+        plan: MeloXAutoMixPlan, curve: MeloXAutoMixFadeCurve, onHandoff: (Long) -> Unit,
+    ): Boolean {
+        val owner = session.get() ?: return false
+        val engine = dualSession.get() ?: return false
+        if (_currentTrack.value?.id != outgoing.id || engine.hasMix()) return false
+        owner.tracks[trackKey(incoming)] = incoming
+        owner.handoff = { onHandoff(_positionMs.value) }
+        val prepared = engine.prepareIncoming(MeloXDeckSource(uri, headers, identity = trackKey(incoming), durationMs = incoming.durationMs ?: 0), plan, curve)
+        if (prepared && session.get() === owner && dualSession.get() === engine && engine.hasMix()) {
+            MeloXAutoMixTransitionRuntime.status("prepared")
+            return true
+        }
+        return false
+    }
+
+    internal fun supportsAutoMix() = dualSession.get() != null
+    internal fun hasAutoMix() = dualSession.get()?.hasMix() == true
+    internal fun incomingMixPosition(): Long? = dualSession.get()?.clock()?.takeIf { it.incoming != null && it.mixProgress > 0 }?.incomingPositionMs
+    internal fun cancelAutoMix() {
+        val engine = dualSession.get() ?: return
+        if (engine.hasMix()) engine.seek(_positionMs.value)
+        MeloXAutoMixTransitionRuntime.cancel()
+    }
+
+    private suspend fun runDualSession(request: PlayRequest, track: MusicTrack, startAtMs: Long) {
+        request.tracks[trackKey(track)] = track
+        val engine = MeloXDualDecodeSession(
+            primarySource = MeloXDeckSource(request.url, request.headers, startAtMs, trackKey(track), _durationMs.value),
+            outputFactory = { outputLineFactory() },
+            bassSwap = !melox.platform.getPreferences("melox_playback").getBoolean("equalizer_enabled", false),
+            onClock = { clock ->
+                synchronized(playbackLock) {
+                    if (session.get() === request) {
+                        val selected = clock.source?.identity?.let { request.tracks[it] } ?: track
+                        _currentTrack.value = selected
+                        _durationMs.value = selected.durationMs ?: request.knownDurationMs
+                        _positionMs.value = clock.positionMs
+                        _progress.value = if (_durationMs.value > 0) (clock.positionMs.toFloat() / _durationMs.value).coerceIn(0f, 1f) else 0f
+                        _state.value = _state.value.copy(trackTitle = selected.title, trackArtist = selected.artistText)
+                        val incoming = clock.incoming?.identity?.let { request.tracks[it] }
+                        if (incoming != null && clock.mixProgress > 0) MeloXAutoMixTransitionRuntime.update(selected, incoming, clock.mixProgress.toFloat(), clock.incomingPositionMs)
+                        clock.source?.let { request.url = it.uri; request.headers = it.headers }
+                    }
+                }
+            },
+            onHandoff = {
+                synchronized(playbackLock) {
+                    if (session.get() === request) {
+                        MeloXAutoMixTransitionRuntime.handoff(); request.handoff?.invoke()
+                        val handedOff = MeloXAutoMixTransitionRuntime.state.value
+                        scope.launch { delay(650); if (session.get() === request && MeloXAutoMixTransitionRuntime.state.value === handedOff) MeloXAutoMixTransitionRuntime.cancel() }
+                    }
+                }
+            },
+            onFallback = { failure -> if (session.get() === request) MeloXAutoMixTransitionRuntime.cancel(failure.message ?: "AutoMix unavailable") },
+            onReady = {
+                synchronized(playbackLock) {
+                    if (session.get() === request) {
+                        ready.set(true)
+                        _state.value = _state.value.copy(isLoading = false, isPlaying = !paused.get(), isPaused = paused.get(), error = null, errorKind = null)
+                    }
+                }
+            },
+        )
+        engine.volume = volumeLinear
+        if (paused.get()) engine.pause()
+        synchronized(playbackLock) {
+            if (session.get() !== request) { engine.close(); return }
+            dualSession.set(engine)
+        }
+        try {
+            engine.run()
+            synchronized(playbackLock) {
+                if (session.get() !== request) return
+                _positionMs.value = engine.clock().positionMs
+                ready.set(false)
+                _state.value = _state.value.copy(isLoading = false, isPlaying = false, isPaused = false, isFinished = true)
+            }
+            if (session.get() === request) request.onEnded()
+        } finally { dualSession.compareAndSet(engine, null); engine.close() }
+    }
+
+    private fun trackKey(track: MusicTrack) = "${track.id.source.storageValue}:${track.id.value}"
 
     private suspend fun runSession(request: PlayRequest) {
         while (session.get() === request) {
@@ -179,7 +270,6 @@ object AudioPlayer {
                 }
                 currentLine = line
             }
-            applyVolume(line, volumeLinear)
             val buffer = ByteArray(PCM_SAMPLE_RATE * PCM_BYTES_PER_FRAME / 5)
             var started = false
             var endedNaturally = false
@@ -253,6 +343,7 @@ object AudioPlayer {
                         }
                         progressJob = startProgress(request)
                     }
+                    MeloXPcmMix.scale(buffer, read, volumeLinear)
                     var written = 0
                     while (written < read && session.get() === request && seekRevision.get() == launchedRevision) {
                         val accepted = try { line.write(buffer, written, read - written) }
@@ -326,7 +417,7 @@ object AudioPlayer {
         decoderCommand = FfmpegLocator.command()
         if (decoderCommand.isEmpty()) throw IllegalStateException("bundled ffmpeg missing")
         val command = decoderArgs(request, startAtMs)
-        logDebug("AudioPlayer", "decode ${request.url} at ${startAtMs}ms")
+        logDebug("AudioPlayer", "decode ${if (request.url.startsWith("http")) "HTTP source" else "local source"} at ${startAtMs}ms")
         return ProcessBuilder(command).redirectErrorStream(false).start()
     }
 
@@ -362,19 +453,9 @@ object AudioPlayer {
 
     fun setVolume(volume: Float) {
         volumeLinear = volume.coerceIn(0f, 1f)
-        currentLine?.let { applyVolume(it, volumeLinear) }
+        dualSession.get()?.volume = volumeLinear
     }
 
-    private fun applyVolume(line: SourceDataLine, linear: Float) {
-        runCatching {
-            val control = line.getControl(FloatControl.Type.MASTER_GAIN) as FloatControl
-            control.value = if (linear <= 0f) {
-                control.minimum
-            } else {
-                (20.0 * kotlin.math.log10(linear.toDouble())).toFloat().coerceIn(control.minimum, control.maximum)
-            }
-        }
-    }
 
     fun pause() {
         val line = synchronized(playbackLock) {
@@ -383,6 +464,7 @@ object AudioPlayer {
             _state.value = _state.value.copy(isPlaying = false, isPaused = true)
             currentLine
         }
+        dualSession.get()?.pause()
         line?.let { runCatching { it.stop() } }
     }
 
@@ -393,12 +475,15 @@ object AudioPlayer {
             _state.value = _state.value.copy(isPlaying = ready.get(), isPaused = false, isFinished = false)
             currentLine.takeIf { ready.get() }
         }
+        dualSession.get()?.resume()
         line?.let { runCatching { it.start() } }
     }
 
     fun stop(clearTrack: Boolean = true) {
         val decoder = synchronized(playbackLock) {
             session.set(null)
+            dualSession.getAndSet(null)?.close()
+            MeloXAutoMixTransitionRuntime.cancel()
             currentJob?.cancel()
             val old = currentProcess to currentLine
             currentProcess = null
@@ -421,6 +506,13 @@ object AudioPlayer {
 
     fun seekTo(positionMs: Long) {
         val target = positionMs.coerceAtLeast(0L)
+        dualSession.get()?.let { engine ->
+            engine.seek(target)
+            _positionMs.value = target
+            _progress.value = if (_durationMs.value > 0) (target.toFloat() / _durationMs.value).coerceIn(0f, 1f) else 0f
+            MeloXAutoMixTransitionRuntime.cancel()
+            return
+        }
         val decoder = synchronized(playbackLock) {
             pendingSeekMs.set(target)
             seekRevision.incrementAndGet()
@@ -532,12 +624,15 @@ internal object FfmpegLocator {
 
 // Identity distinguishes two consecutive plays of the same URI from each other.
 internal class PlayRequest(
-    val url: String,
-    val headers: Map<String, String>,
+    @Volatile var url: String,
+    @Volatile var headers: Map<String, String>,
     val knownDurationMs: Long,
     val onEnded: () -> Unit = {},
     val onFailure: (AudioPlaybackFailure) -> Unit = {},
-)
+) {
+    val tracks = java.util.concurrent.ConcurrentHashMap<String, MusicTrack>()
+    @Volatile var handoff: (() -> Unit)? = null
+}
 
 enum class AudioFailureKind { Content, Output, Configuration }
 

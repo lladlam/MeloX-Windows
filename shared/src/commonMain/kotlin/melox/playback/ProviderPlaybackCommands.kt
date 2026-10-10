@@ -39,17 +39,7 @@ object ProviderPlaybackCommands {
         }
         player.onFailure = onFailure
         player.setMediaItems(
-            tracks.map { track ->
-                SearchSong(
-                    id = track.id.value.toLongOrNull() ?: 0L,
-                    name = track.title,
-                    artists = track.artistText,
-                    album = track.album?.name.orEmpty(),
-                    artworkUrl = track.artworkUrl,
-                    durationMs = track.durationMs ?: 0L,
-                    providerTrack = track,
-                )
-            },
+            tracks.map { track -> melox.music.provider.MeloXLegacyUiBridge.track(track) },
             startIndex,
             startPositionMs,
         )

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="PlaybackLinkTest[desktop]" tests="9" skipped="0" failures="0" errors="0" timestamp="2026-10-10T04:48:03.840Z" hostname="lladlam-arch" time="1.399">
+  <properties/>
+  <testcase name="miniBarsFollowPcmEnergyAndIdleIsNotFixedPulse[desktop]" classname="melox.player.PlaybackLinkTest" time="0.001"/>
+  <testcase name="positionIncludesDecoderOffset[desktop]" classname="melox.player.PlaybackLinkTest" time="0.0"/>
+  <testcase name="previousRestartsOnlyWhenSettingEnabled[desktop]" classname="melox.player.PlaybackLinkTest" time="0.07"/>
+  <testcase name="bundledDecoderEmitsPcmAndIsResolvedAgain[desktop]" classname="melox.player.PlaybackLinkTest" time="1.114"/>
+  <testcase name="classicQueueKeepsPlainNeteaseSongsAndDoesNotRestartCurrent[desktop]" classname="melox.player.PlaybackLinkTest" time="0.078"/>
+  <testcase name="providerTrackSurvivesQueueItem[desktop]" classname="melox.player.PlaybackLinkTest" time="0.001"/>
+  <testcase name="decoderArgsMatchTheProcessCommand[desktop]" classname="melox.player.PlaybackLinkTest" time="0.0"/>
+  <testcase name="locatorUsesContextClassLoaderAndReportsMissingBundle[desktop]" classname="melox.player.PlaybackLinkTest" time="0.0"/>
+  <testcase name="playNextPrecedesManualQueueAndManualQueuePrecedesBaseTracks[desktop]" classname="melox.player.PlaybackLinkTest" time="0.134"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[[MeloXPlayback] resolve failed: 网易云未返回可播放的 标准 音源，且 MeloX 降级链路也没有可用资源
+]]></system-err>
+</testsuite>

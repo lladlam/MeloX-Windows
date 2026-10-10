@@ -33,6 +33,12 @@ fun main(args: Array<String>) = runBlocking {
     val waitMs = option("--wait-ms", "3500").toLong()
     val output = File(option("--output", "build/parity/desktop"))
     output.mkdirs()
+    val pcmOutput = if ("--capture-pcm" in args) MeloXPcmCaptureOutput(output) else null
+    if (pcmOutput != null) {
+        // Keep controlled endpoints confined to the explicit validation entry point.
+        melox.player.AudioPlayer::class.java.getDeclaredField("outputLineFactory").apply { isAccessible = true }
+            .set(null, { pcmOutput.open() })
+    }
     val steps = option("--steps", "").split(';').filter { it.isNotBlank() }
     val frameOffsets = option("--frames-ms", "").split(',').filter { it.isNotBlank() }.map { it.toLong() }
     require(frameOffsets.all { it >= 0 } && frameOffsets == frameOffsets.distinct().sorted())
@@ -61,6 +67,21 @@ fun main(args: Array<String>) = runBlocking {
             melox.ui.navigation.MeloXCollectionLaunchBus.open(melox.ui.navigation.MeloXCollectionTarget.Artist(it))
         }
         val playId = option("--play-id", "").takeIf(String::isNotBlank)?.toLong()
+        option("--local-wavs", "").takeIf(String::isNotBlank)?.let { paths ->
+            val tracks = paths.split(',').map { path ->
+                val file = File(path).canonicalFile
+                val duration = javax.sound.sampled.AudioSystem.getAudioInputStream(file).use { it.frameLength * 1000 / it.format.frameRate.toLong() }
+                val key = java.security.MessageDigest.getInstance("SHA-256").digest(file.path.toByteArray()).joinToString("") { "%02x".format(it) }.take(24)
+                melox.music.model.MusicTrack(melox.music.model.MusicResourceId(melox.music.model.MusicSource.Local, key), file.nameWithoutExtension,
+                    listOf(melox.music.model.MusicArtistRef(name = "Generated PCM fixture")), durationMs = duration,
+                    artworkUrl = File(file.parentFile, "${file.nameWithoutExtension}.png").takeIf(File::isFile)?.toURI()?.toString(),
+                    providerMetadata = melox.music.model.ProviderTrackMetadata.Local(file.toURI().toString(), key))
+            }
+            melox.playback.MeloXPlaybackModePreferences.setAutoMix("--automix" in args)
+            melox.playback.MeloXPlaybackModePreferences.setAutoMixString("automix_mode", "Fixed")
+            melox.music.provider.MusicProviderSelectionStore.setSelectedSource(melox.music.model.MusicSource.Local)
+            melox.playback.ProviderPlaybackCommands.playQueue(tracks, tracks.first().id)
+        }
         if (playQuery.isNotBlank() || playId != null) {
             val client = melox.network.NeteaseSearchClient()
             val results = if (playId != null) listOf(requireNotNull(melox.network.NeteaseUniversalSearchClient().songDetail(playId)) {
@@ -108,6 +129,7 @@ fun main(args: Array<String>) = runBlocking {
                 "word-lines-min" -> (semantics.tagged("player-lyrics")?.config?.getOrNull(melox.ui.screens.MeloXLyricWordLinesKey) ?: 0) >= expected.toInt()
                 "play-ready" -> melox.playback.PlaybackCommands.playerController()?.playWhenReady == expected.toBooleanStrict()
                 "error-kind" -> melox.player.AudioPlayer.state.value.errorKind?.name == expected
+                "mix-active" -> melox.playback.MeloXAutoMixTransitionRuntime.state.value.active == expected.toBooleanStrict()
                 "focus-anchor" -> {
                     val line = semantics.tagged("lyric-line-$expected")?.boundsInWindow
                     val panel = semantics.tagged("player-lyrics")?.boundsInWindow
@@ -140,6 +162,9 @@ fun main(args: Array<String>) = runBlocking {
                 .put("track", track?.id?.let { "${it.source.storageValue}:${it.value}" } ?: JSONObject.NULL)
                 .put("title", track?.title ?: JSONObject.NULL)
                 .put("is_playing", state.isPlaying).put("is_loading", state.isLoading).put("is_paused", state.isPaused)
+                .put("automix_status", melox.playback.MeloXAutoMixTransitionRuntime.state.value.status)
+                .put("automix_progress", melox.playback.MeloXAutoMixTransitionRuntime.state.value.progress)
+                .put("automix_active", melox.playback.MeloXAutoMixTransitionRuntime.state.value.active)
                 .put("error", state.error ?: JSONObject.NULL)
                 .put("error_kind", state.errorKind?.name ?: JSONObject.NULL)
                 .put("play_when_ready", melox.playback.PlaybackCommands.playerController()?.playWhenReady ?: false)
@@ -238,8 +263,12 @@ fun main(args: Array<String>) = runBlocking {
                 }
             }
         } finally {
+            melox.playback.PlaybackCommands.playerController()?.release()
             File(output, "capture.json").writeText(JSONObject()
                 .put("renderer", "production ImageComposeScene")
+                .put("audio_endpoint", if (pcmOutput == null) "Java Sound physical output" else "VALIDATION_SOFTWARE_PCM_OUTPUT")
+                .put("physical_audible_acceptance", "BLOCKED")
+                .put("pcm_outputs", JSONArray(pcmOutput?.evidence().orEmpty()))
                 .put("width", width).put("height", height).put("density", density)
                 .put("theme", theme).put("home", System.getProperty("user.home"))
                 .put("start_tab", startTab)
@@ -247,7 +276,6 @@ fun main(args: Array<String>) = runBlocking {
                 .put("play_query", playQuery).put("scenes", sceneEvidence)
                 .put("steps", JSONArray(steps)).put("frames", frameEvidence).toString(2))
             scene.close()
-            melox.playback.PlaybackCommands.playerController()?.release()
         }
     }
 }

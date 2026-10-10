@@ -29,6 +29,10 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kotlinx.coroutines.withTimeout
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import melox.settings.MeloXSettingsPreferences
 
 /**
@@ -254,6 +258,13 @@ internal data class DesktopPlaybackStart(
 
 private fun isDesktopSongDownloaded(song: SearchSong): Boolean {
     val id = song.providerTrack?.id
+    if (id?.source == MusicSource.Local) {
+        val location = (song.providerTrack?.providerMetadata as? melox.music.model.ProviderTrackMetadata.Local)?.contentUri
+        return location?.let { runCatching {
+            val file = if (it.startsWith("file:")) java.io.File(java.net.URI(it)) else java.io.File(it)
+            file.isFile && file.canRead()
+        }.getOrDefault(false) } ?: false
+    }
     if (id == null || id.source == MusicSource.Netease) {
         val songId = id?.value?.toLongOrNull() ?: song.id
         if (MeloXDownloadStore.instance().contains(songId)) return true
@@ -290,6 +301,13 @@ class MeloXDesktopPlayer internal constructor(
 
     private val items = mutableListOf<QueueEntry>()
     private var resolveJob: Job? = null
+    private var mixJob: Job? = null
+    private var smartJob: Job? = null
+    private var mixAttemptFor: String? = null
+    private var currentResolved: DesktopPlaybackRequest? = null
+    @Volatile private var playingEntryId: String? = null
+    private val autoMixAnalyzer = MeloXAutoMixAudioAnalyzer()
+    private val smartQueue = MeloXSmartQueueBuilder()
     @Volatile private var generation = 0
     @Volatile private var actionRevision = 0
     private var pendingSeekMs: Long = 0L
@@ -354,6 +372,7 @@ class MeloXDesktopPlayer internal constructor(
         maintenanceJob = scope.launch {
             while (isActive) {
                 delay(1_000)
+                if (PlaybackCommands.playerController() == this@MeloXDesktopPlayer) maintainAutoMix()
                 if (currentMediaItemIndex == items.lastIndex && items.isNotEmpty()) {
                     val duration = AudioPlayer.getDurationMs()
                     val preloadMs = if (MeloXPlaybackModeRuntime.autoMixEnabled) {
@@ -392,6 +411,7 @@ class MeloXDesktopPlayer internal constructor(
     ) {
         generation += 1
         resolveJob?.cancel()
+        cancelMix(); smartJob?.cancel(); smartQueue.reset()
         autoplay.cancel()
         resetFailureRecovery()
         awaitingAutoplay = false
@@ -410,6 +430,11 @@ class MeloXDesktopPlayer internal constructor(
         currentMediaItemIndex = if (this.items.isEmpty()) -1 else startIndex.coerceIn(0, this.items.lastIndex)
         currentPosition = startPositionMs.coerceAtLeast(0L)
         pendingSeekMs = currentPosition
+        if (this.items.isNotEmpty() && MeloXPlaybackModeRuntime.smartQueueEnabled) {
+            val selected = smartQueue.begin(this.items.toList(), currentMediaItemIndex)
+            this.items.clear(); this.items += selected
+            currentMediaItemIndex = 0; mediaItemCount = 1
+        }
         if (_shuffleEnabled.value) reorderFuture(shuffle = true)
         if (this.items.isEmpty()) {
             if (PlaybackCommands.playerController() == this) AudioPlayer.stop()
@@ -423,6 +448,7 @@ class MeloXDesktopPlayer internal constructor(
     }
 
     fun addMediaItem(index: Int, song: SearchSong, origin: String) {
+        cancelMix()
         val insertion = index.coerceIn(0, items.size)
         items.add(
             insertion,
@@ -445,6 +471,7 @@ class MeloXDesktopPlayer internal constructor(
     internal fun restore(items: List<QueueEntry>, startIndex: Int, startPositionMs: Long) {
         generation += 1
         resolveJob?.cancel()
+        cancelMix(); smartJob?.cancel(); smartQueue.reset()
         autoplay.cancel()
         resetFailureRecovery()
         awaitingAutoplay = false
@@ -461,25 +488,17 @@ class MeloXDesktopPlayer internal constructor(
         val entry = items.getOrNull(currentMediaItemIndex) ?: return
         val token = ++generation
         resolveJob?.cancel()
+        cancelMix()
         awaitingAutoplay = false
         val song = entry.song
-        val track = song.providerTrack ?: MusicTrack(
-            id = melox.music.model.MusicResourceId(MusicSource.Netease, song.id.toString()),
-            title = song.name,
-            artists = listOf(melox.music.model.MusicArtistRef(name = song.artists,
-                id = song.artistId?.let { melox.music.model.MusicResourceId(MusicSource.Netease, it.toString()) })),
-            album = song.album.takeIf { it.isNotBlank() }?.let { melox.music.model.MusicAlbumRef(name = it,
-                id = song.albumId?.let { id -> melox.music.model.MusicResourceId(MusicSource.Netease, id.toString()) }) },
-            artworkUrl = song.artworkUrl,
-            durationMs = song.durationMs.takeIf { it > 0L },
-        )
+        val track = trackFor(song)
         AudioPlayer.selectTrack(track, pendingSeekMs, song.durationMs)
         autoplay.selectionChanged()
         if (currentMediaItemIndex >= items.lastIndex) autoplay.ensure()
         if (!playWhenReady) AudioPlayer.pause()
         resolveJob = scope.launch {
             val resolved = try {
-                withContext(resolutionDispatcher) { resolutionOverride?.invoke(entry) ?: resolve(entry) }
+                resolveRequest(entry)
             } catch (cancelled: CancellationException) {
                 throw cancelled
             } catch (error: Exception) {
@@ -492,14 +511,147 @@ class MeloXDesktopPlayer internal constructor(
                 return@launch
             }
             if (token != generation || items.getOrNull(currentMediaItemIndex)?.entryId != entry.entryId) return@launch
-            // Seek/pause can change while resolution is suspended; read them now.
+            currentResolved = resolved
+            playingEntryId = entry.entryId
             val startAt = pendingSeekMs
             startPlayback(DesktopPlaybackStart(resolved, track, startAt, song.durationMs, playWhenReady,
-                onEnded = { onNaturalEnd(token, entry.entryId, actionRevision) },
-                onFailure = { onAudioFailure(token, entry.entryId, it) }))
+                onEnded = { onNaturalEnd(token, eventEntryId(entry), actionRevision) },
+                onFailure = { onAudioFailure(token, eventEntryId(entry), it) }))
             pendingSeekMs = 0L
             currentPosition = startAt
+            if (MeloXPlaybackModeRuntime.smartQueueEnabled) analyzeSmartCandidates(entry, resolved)
         }
+    }
+
+    private fun eventEntryId(initial: QueueEntry): String = playingEntryId ?: initial.entryId
+
+    private fun trackFor(song: SearchSong): MusicTrack = song.providerTrack ?: MusicTrack(
+            id = melox.music.model.MusicResourceId(MusicSource.Netease, song.id.toString()),
+            title = song.name,
+            artists = listOf(melox.music.model.MusicArtistRef(name = song.artists,
+                id = song.artistId?.let { melox.music.model.MusicResourceId(MusicSource.Netease, it.toString()) })),
+            album = song.album.takeIf { it.isNotBlank() }?.let { melox.music.model.MusicAlbumRef(name = it,
+                id = song.albumId?.let { id -> melox.music.model.MusicResourceId(MusicSource.Netease, id.toString()) }) },
+            artworkUrl = song.artworkUrl,
+            durationMs = song.durationMs.takeIf { it > 0L },
+        )
+
+    private suspend fun resolveRequest(entry: QueueEntry) = withContext(resolutionDispatcher) { resolutionOverride?.invoke(entry) ?: resolve(entry) }
+
+    private fun cancelMix() {
+        mixJob?.cancel(); mixJob = null; mixAttemptFor = null
+        if (PlaybackCommands.playerController() == this) AudioPlayer.cancelAutoMix()
+    }
+
+    private fun maintainAutoMix() {
+        if (!MeloXPlaybackModeRuntime.autoMixEnabled || _repeatMode.value == PlaybackCommands.REPEAT_ONE) {
+            if (AudioPlayer.hasAutoMix() || mixJob?.isActive == true) cancelMix()
+            return
+        }
+        if (!playWhenReady || !AudioPlayer.isReady() || AudioPlayer.hasAutoMix() || mixJob?.isActive == true) return
+        val source = items.getOrNull(currentMediaItemIndex) ?: return
+        val target = items.getOrNull(currentMediaItemIndex + 1) ?: return
+        if (mixAttemptFor == source.entryId || !isOnline() && !isDownloaded(target.song)) return
+        if (!AudioPlayer.supportsAutoMix()) {
+            MeloXAutoMixTransitionRuntime.status("waiting", "AutoMix 将从下一首开始使用双解码输出")
+            return
+        }
+        val settings = MeloXAutoMixSettings.read()
+        val duration = AudioPlayer.getDurationMs()
+        if (duration <= 0 || duration - AudioPlayer.getCurrentPositionMs() > settings.preloadLeadMs) return
+        val resolvedSource = currentResolved ?: return
+        val token = generation; val action = actionRevision
+        mixAttemptFor = source.entryId
+        MeloXAutoMixTransitionRuntime.status("analyzing")
+        mixJob = scope.launch {
+            try {
+                val incomingRequest = resolveRequest(target)
+                val analyses = if (settings.mode == MeloXAutoMixMode.Smart && (settings.analyzeStreaming ||
+                    !resolvedSource.uri.startsWith("http") && !incomingRequest.uri.startsWith("http"))) {
+                    try {
+                        withTimeout(20_000) { coroutineScope {
+                            val a = async { autoMixAnalyzer.analyze(source.entryId, resolvedSource.uri, resolvedSource.headers) }
+                            val b = async { autoMixAnalyzer.analyze(target.entryId, incomingRequest.uri, incomingRequest.headers) }
+                            a.await() to b.await()
+                        } }
+                    } catch (cancelled: kotlinx.coroutines.TimeoutCancellationException) { null }
+                    catch (cancelled: CancellationException) { throw cancelled }
+                    catch (_: Exception) { null }
+                } else null
+                val smart = analyses?.let { MeloXAutoMixTransitionScorer.plan(settings, it.first, it.second) }
+                val fallback = MeloXAutoMixPlanner.plan(settings.copy(mode = if (settings.mode == MeloXAutoMixMode.Fixed) MeloXAutoMixMode.Fixed else MeloXAutoMixMode.Smart), duration)
+                val selectedPlan = smart ?: fallback.copy(outgoingStartMs = (duration - fallback.durationMs - fallback.outgoingEndOffsetMs).coerceAtLeast(0))
+                if (!selectedPlan.performsTransition) { MeloXAutoMixTransitionRuntime.cancel("分析未满足阈值，正常播放"); return@launch }
+                if (token != generation || action != actionRevision || items.getOrNull(currentMediaItemIndex + 1)?.entryId != target.entryId) return@launch
+                if (selectedPlan.outgoingStartMs <= AudioPlayer.getCurrentPositionMs() + 250) { MeloXAutoMixTransitionRuntime.cancel("过渡准备过晚，正常播放"); return@launch }
+                AudioPlayer.prepareAutoMix(trackFor(source.song), trackFor(target.song), incomingRequest.uri, incomingRequest.headers, selectedPlan, settings.fadeCurve) { position ->
+                    if (token == generation) playingEntryId = target.entryId
+                    scope.launch {
+                        if (token != generation || !playWhenReady) return@launch
+                        val index = items.indexOfFirst { it.entryId == target.entryId }
+                        if (index < 0) return@launch
+                        currentMediaItemIndex = index; currentPosition = position; currentResolved = incomingRequest
+                        mixAttemptFor = null; pendingSeekMs = 0
+                        autoplay.selectionChanged(); ensureSmartNext()
+                        PlaybackCommands.publishQueue(this@MeloXDesktopPlayer)
+                    }
+                }
+            } catch (cancelled: CancellationException) { throw cancelled }
+            catch (failure: Exception) { if (token == generation) MeloXAutoMixTransitionRuntime.cancel(failure.message ?: "AutoMix 预加载失败，正常播放") }
+        }
+    }
+
+    private fun analyzeSmartCandidates(source: QueueEntry, resolved: DesktopPlaybackRequest) {
+        ensureSmartNext()
+        if (smartJob?.isActive == true || smartQueue.snapshot().items.isEmpty()) return
+        val snapshot = smartQueue.snapshot()
+        smartJob = scope.launch {
+            suspend fun analyze(entry: QueueEntry, request: DesktopPlaybackRequest) {
+                try {
+                    if (!MeloXAutoMixSettings.read().analyzeStreaming && request.uri.startsWith("http")) throw IOException("未启用流媒体分析")
+                    val analysis = withTimeout(20_000) { autoMixAnalyzer.analyze(entry.entryId, request.uri, request.headers) }
+                    smartQueue.record(snapshot.generation, entry, analysis)
+                } catch (cancelled: kotlinx.coroutines.TimeoutCancellationException) { smartQueue.failure(snapshot.generation, entry) }
+                catch (cancelled: CancellationException) { throw cancelled }
+                catch (_: Exception) { smartQueue.failure(snapshot.generation, entry) }
+                ensureSmartNext()
+            }
+            analyze(source, resolved)
+            // Limit URL resolution as well as native analysis; never launch a decoder per playlist item at once.
+            val permits = kotlinx.coroutines.sync.Semaphore(2)
+            coroutineScope { snapshot.items.map { entry -> async {
+                permits.acquire()
+                try { analyze(entry, resolveRequest(entry)) }
+                catch (cancelled: CancellationException) { throw cancelled }
+                catch (_: Exception) { smartQueue.failure(snapshot.generation, entry) }
+                finally { permits.release() }
+            } }.awaitAll() }
+            ensureSmartNext(emergency = true)
+        }
+    }
+
+    private fun ensureSmartNext(emergency: Boolean = false) {
+        if (!MeloXPlaybackModeRuntime.smartQueueEnabled || currentMediaItemIndex < items.lastIndex) return
+        val source = items.getOrNull(currentMediaItemIndex) ?: return
+        val snapshot = smartQueue.snapshot()
+        val match = smartQueue.best(snapshot.generation, source) ?: if (emergency) smartQueue.emergency(snapshot.generation) else null
+        val selected = match?.let { smartQueue.consume(snapshot.generation, it) } ?: return
+        items += selected; mediaItemCount = items.size
+        PlaybackCommands.publishQueue(this)
+        if (awaitingAutoplay) { playWhenReady = true; selectIndex(currentMediaItemIndex + 1, automatic = true) }
+    }
+
+    fun setSmartQueueEnabled(enabled: Boolean) {
+        cancelMix(); smartJob?.cancel()
+        MeloXPlaybackModePreferences.setSmartQueue(enabled)
+        if (enabled && currentMediaItemIndex in items.indices) {
+            val head = items.take(currentMediaItemIndex + 1)
+            smartQueue.begin(items.drop(currentMediaItemIndex), 0)
+            items.clear(); items += head; mediaItemCount = items.size
+            val current = items[currentMediaItemIndex]
+            currentResolved?.let { analyzeSmartCandidates(current, it) }
+        } else { items += smartQueue.snapshot().items; smartQueue.reset(); mediaItemCount = items.size }
+        PlaybackCommands.publishQueue(this)
     }
 
     fun play() {
@@ -524,6 +676,7 @@ class MeloXDesktopPlayer internal constructor(
         awaitingAutoplay = false
         currentPosition = AudioPlayer.getCurrentPositionMs()
         AudioPlayer.pause()
+        cancelMix()
         persistSnapshot()
     }
 
@@ -536,6 +689,7 @@ class MeloXDesktopPlayer internal constructor(
         if (active) persistSnapshot()
         generation += 1
         resolveJob?.cancel()
+        cancelMix(); smartJob?.cancel(); smartQueue.reset()
         positionJob.cancel()
         maintenanceJob.cancel()
         autoplay.cancel()
@@ -554,6 +708,7 @@ class MeloXDesktopPlayer internal constructor(
     fun clearQueue() {
         generation += 1
         resolveJob?.cancel()
+        cancelMix(); smartJob?.cancel(); smartQueue.reset()
         autoplay.cancel()
         resetFailureRecovery()
         awaitingAutoplay = false
@@ -575,7 +730,9 @@ class MeloXDesktopPlayer internal constructor(
             _repeatMode.value == PlaybackCommands.REPEAT_ALL -> 0
             else -> return
         }
+        val incomingPosition = AudioPlayer.incomingMixPosition()
         seekToIndex(nextIndex)
+        if (incomingPosition != null) seekTo(incomingPosition)
     }
 
     fun previous() {
@@ -598,6 +755,7 @@ class MeloXDesktopPlayer internal constructor(
 
     fun seekTo(ms: Long) {
         actionRevision += 1
+        mixJob?.cancel(); mixAttemptFor = null
         awaitingAutoplay = false
         val target = ms.coerceAtLeast(0L)
         currentPosition = target
@@ -623,6 +781,7 @@ class MeloXDesktopPlayer internal constructor(
 
     fun removeAt(index: Int) {
         if (index !in items.indices || items.size <= 1) return
+        cancelMix()
         val removingCurrent = index == currentMediaItemIndex
         items.removeAt(index)
         mediaItemCount = items.size
@@ -641,6 +800,7 @@ class MeloXDesktopPlayer internal constructor(
 
     fun move(from: Int, to: Int) {
         if (from !in items.indices || to !in items.indices || from == to) return
+        cancelMix()
         val currentId = items.getOrNull(currentMediaItemIndex)?.entryId
         val entry = items.removeAt(from)
         items.add(to, entry)
@@ -649,6 +809,7 @@ class MeloXDesktopPlayer internal constructor(
     }
 
     fun setRepeatMode(mode: Int) {
+        cancelMix()
         _repeatMode.value = mode.coerceIn(PlaybackCommands.REPEAT_OFF, PlaybackCommands.REPEAT_ALL)
     }
 
@@ -666,12 +827,19 @@ class MeloXDesktopPlayer internal constructor(
         else if (currentMediaItemIndex >= items.lastIndex) autoplay.ensure()
     }
 
+    fun setAutoMixEnabled(enabled: Boolean) {
+        cancelMix()
+        MeloXPlaybackModePreferences.setAutoMix(enabled)
+        if (enabled) maintainAutoMix()
+    }
+
     fun setVolume(level: Float) {
         volume = level.coerceIn(0f, 1f)
         AudioPlayer.setVolume(volume)
     }
 
     fun setShuffleEnabled(enabled: Boolean) {
+        cancelMix()
         _shuffleEnabled.value = enabled
         MeloXPlaybackModePreferences.setShuffle(enabled)
         if (items.size <= 1) return
@@ -782,6 +950,7 @@ class MeloXDesktopPlayer internal constructor(
                     } else {
                         playWhenReady = false
                         awaitingAutoplay = true
+                        ensureSmartNext(emergency = smartJob?.isActive != true)
                         currentPosition = AudioPlayer.getCurrentPositionMs()
                         persistSnapshot()
                         autoplay.ensure()

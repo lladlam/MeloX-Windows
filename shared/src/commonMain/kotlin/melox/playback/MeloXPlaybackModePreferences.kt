@@ -14,6 +14,8 @@ object MeloXPlaybackModeRuntime {
         internal set
     var autoMixEnabled by mutableStateOf(false)
         internal set
+    var smartQueueEnabled by mutableStateOf(false)
+        internal set
 }
 
 object MeloXPlaybackModePreferences {
@@ -30,6 +32,7 @@ object MeloXPlaybackModePreferences {
         MeloXPlaybackModeRuntime.shuffleEnabled = preferences.getBoolean(KEY_SHUFFLE, false)
         MeloXPlaybackModeRuntime.autoplayEnabled = preferences.getBoolean(KEY_AUTOPLAY, false)
         MeloXPlaybackModeRuntime.autoMixEnabled = preferences.getBoolean(KEY_AUTOMIX, false)
+        MeloXPlaybackModeRuntime.smartQueueEnabled = preferences.getBoolean("smart_queue", false)
     }
 
     fun shuffle(): Boolean = prefs().getBoolean(KEY_SHUFFLE, false)
@@ -62,6 +65,7 @@ object MeloXPlaybackModePreferences {
     fun smartQueue(): Boolean = prefs().getBoolean("smart_queue", false)
 
     fun setSmartQueue(enabled: Boolean) {
+        MeloXPlaybackModeRuntime.smartQueueEnabled = enabled
         prefs().putBoolean("smart_queue", enabled)
     }
 
@@ -69,6 +73,7 @@ object MeloXPlaybackModePreferences {
         MeloXPlaybackModeRuntime.shuffleEnabled = false
         MeloXPlaybackModeRuntime.autoplayEnabled = false
         MeloXPlaybackModeRuntime.autoMixEnabled = false
+        MeloXPlaybackModeRuntime.smartQueueEnabled = false
         prefs().clear()
     }
 }

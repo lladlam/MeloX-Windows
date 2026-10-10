@@ -30,6 +30,7 @@ internal class FfmpegPcmDecoder(
         if (filters != null) addAll(listOf("-af", filters))
         addAll(listOf("-f", "s16le", "-acodec", "pcm_s16le", "-ar", "44100", "-ac", "2", "pipe:1"))
     }).start()
+    init { processes.add(process) }
     private val errorReader = thread(name = "melox-pcm-stderr", isDaemon = true) {
         runCatching { process.errorStream.bufferedReader().use { reader ->
             while (true) {
@@ -38,9 +39,10 @@ internal class FfmpegPcmDecoder(
             }
         } }
     }
-    fun read(bytes: ByteArray): Int {
+    fun read(bytes: ByteArray, length: Int = bytes.size): Int {
         check(!closed.get()) { "Decoder session released" }
-        val count = process.inputStream.readNBytes(bytes, 0, bytes.size)
+        require(length in 0..bytes.size && length % 4 == 0)
+        val count = process.inputStream.readNBytes(bytes, 0, length)
         if (count % 4 != 0) throw IOException("Decoder emitted incomplete stereo PCM frame")
         return count
     }
@@ -58,5 +60,10 @@ internal class FfmpegPcmDecoder(
         runCatching { process.outputStream.close() }
         process.waitFor(2, java.util.concurrent.TimeUnit.SECONDS)
         errorReader.join(1000)
+        if (!process.isAlive) processes.remove(process)
+    }
+    companion object {
+        private val processes = java.util.concurrent.ConcurrentHashMap.newKeySet<Process>()
+        internal fun activeProcesses(): Int = processes.count { it.isAlive }
     }
 }

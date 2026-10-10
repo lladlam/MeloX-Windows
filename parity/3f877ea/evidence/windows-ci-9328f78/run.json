@@ -1,0 +1,57 @@
+{
+  "head_sha": "9328f7846a08894eb3b5de989b80b0b0e508f6d4",
+  "run_id": 38019093278,
+  "url": "https://github.com/lladlam/MeloX-Windows/actions/runs/38019093278",
+  "conclusion": "success",
+  "environment": "GitHub hosted Windows runner, native decoder and controlled audio endpoints",
+  "tests": {
+    "tests": 81,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "suites": 14,
+  "artifacts": [
+    {
+      "id": 11658190115,
+      "node_id": "MDg6QXJ0aWZhY3QxMTY1ODE5MDExNQ==",
+      "name": "MeloX-Desktop-Windows",
+      "size_in_bytes": 263040878,
+      "url": "https://api.github.com/repos/lladlam/MeloX-Windows/actions/artifacts/11658190115",
+      "archive_download_url": "https://api.github.com/repos/lladlam/MeloX-Windows/actions/artifacts/11658190115/zip",
+      "expired": false,
+      "digest": "sha256:6d3b9b144be67060d74e031810528dc20931f2fa3f47c738b85708f25e38b6f5",
+      "created_at": "2026-10-10T03:07:08Z",
+      "updated_at": "2026-10-10T03:07:08Z",
+      "expires_at": "2027-01-08T03:01:30Z",
+      "workflow_run": {
+        "id": 38019093278,
+        "repository_id": 1376937043,
+        "head_repository_id": 1376937043,
+        "head_branch": "main",
+        "head_sha": "9328f7846a08894eb3b5de989b80b0b0e508f6d4"
+      }
+    },
+    {
+      "id": 11657014942,
+      "node_id": "MDg6QXJ0aWZhY3QxMTY1NzAxNDk0Mg==",
+      "name": "Verification-Windows",
+      "size_in_bytes": 14279,
+      "url": "https://api.github.com/repos/lladlam/MeloX-Windows/actions/artifacts/11657014942",
+      "archive_download_url": "https://api.github.com/repos/lladlam/MeloX-Windows/actions/artifacts/11657014942/zip",
+      "expired": false,
+      "digest": "sha256:55fd8e3913758a734821494d4ca19f06a1bfccf5a5514b1656cfaf29682e0320",
+      "created_at": "2026-10-10T03:07:00Z",
+      "updated_at": "2026-10-10T03:07:00Z",
+      "expires_at": "2027-01-08T03:01:30Z",
+      "workflow_run": {
+        "id": 38019093278,
+        "repository_id": 1376937043,
+        "head_repository_id": 1376937043,
+        "head_branch": "main",
+        "head_sha": "9328f7846a08894eb3b5de989b80b0b0e508f6d4"
+      }
+    }
+  ],
+  "physical_audible_output": "BLOCKED"
+}
