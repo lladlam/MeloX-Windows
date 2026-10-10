@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="DesktopAudioSessionTest[desktop]" tests="7" skipped="0" failures="0" errors="0" timestamp="2026-10-10T07:18:31.111Z" hostname="lladlam-arch" time="2.545">
+  <properties/>
+  <testcase name="realFfmpegNonzeroExitAfterPcmIsContentFailureRatherThanNaturalEnd[desktop]" classname="melox.player.DesktopAudioSessionTest" time="0.316"/>
+  <testcase name="unavailableDeviceReportsOutputFailureWithoutProducingAnEndEvent[desktop]" classname="melox.player.DesktopAudioSessionTest" time="0.251"/>
+  <testcase name="seekingToTheDecoderOriginalZeroPositionActuallyRestartsIt[desktop]" classname="melox.player.DesktopAudioSessionTest" time="0.41"/>
+  <testcase name="seekingToKnownTrackEndAcceptsAZeroPcmSuccessfulDecoderExit[desktop]" classname="melox.player.DesktopAudioSessionTest" time="0.376"/>
+  <testcase name="replacingTheSameUriKeepsEndCallbacksOwnedByTheNewRequest[desktop]" classname="melox.player.DesktopAudioSessionTest" time="0.411"/>
+  <testcase name="aDeviceStartFailureIsOutputFailureRatherThanCorruptContent[desktop]" classname="melox.player.DesktopAudioSessionTest" time="0.277"/>
+  <testcase name="decoderEofWaitsForBufferedFramesAndPauseResumePreserveTheTail[desktop]" classname="melox.player.DesktopAudioSessionTest" time="0.502"/>
+  <system-out><![CDATA[[AudioPlayer] decode local source at 0ms
+[AudioPlayer] decode local source at 0ms
+[AudioPlayer] decode local source at 0ms
+[AudioPlayer] decode local source at 0ms
+[AudioPlayer] decode local source at 500ms
+[AudioPlayer] decode local source at 0ms
+[AudioPlayer] decode local source at 0ms
+[AudioPlayer] decode local source at 0ms
+[AudioPlayer] decode local source at 0ms
+]]></system-out>
+  <system-err><![CDATA[[AudioPlayer] 播放失败: [in#0/wav @ 0x55e2f7911a00] corrupt input packet in stream 0
+[in#0/wav @ 0x55e2f7911a00] Task finished with error: Invalid data found when processing input
+[in#0/wav @ 0x55e2f7911a00] Terminating thread with error: Invalid data found when processing input
+[AudioPlayer] 播放失败: test device unavailable
+[AudioPlayer] 播放失败: device start failed
+]]></system-err>
+</testsuite>

@@ -1,0 +1,33 @@
+{
+  "android_sha": "3f877eaffe30c82eb6d24eb3647702f5bc554dd3",
+  "windows_parent_sha": "3ac97e0503ab6b776301f38ac3a7bcafb1e4c3f4",
+  "tests": {
+    "tests": 108,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "suites": 19,
+  "cloud_protocol_cases": 6,
+  "protocol_environment": "real files/native FFmpeg metadata/encrypted production HTTP transports with local remote-service fixture",
+  "production_ui_scenes": 3,
+  "production_ui_assertions": 7,
+  "ui_environment": "production ImageComposeScene, isolated unauthenticated home, real missing-login refresh/retry",
+  "jar": {
+    "bytes": 221440481,
+    "sha256": "28d5750d9e44cf6736311b480279ceedfd4200cc76ea21a91607c50d4a6ca428"
+  },
+  "source_sha256": {
+    "shared/src/commonMain/kotlin/melox/network/MeloXOwnedHttpCall.kt": "ee8ea6f2191b564b2655e2a3b873e34ed295577d01df14f42a46b5815ee6b5a7",
+    "shared/src/commonMain/kotlin/melox/network/NeteaseCloudUploadClient.kt": "bbc61e9d990f316b5a231abea1e2f832585bc6669ccb27554fdaeee907e14feb",
+    "shared/src/desktopTest/kotlin/melox/network/CloudUploadProtocolTest.kt": "9967d50244f4d7564c9bfd0561cdd64c9ee7bb73e9ba67e091ac906369a5b384",
+    "desktop/src/desktopMain/kotlin/melox/ui/screens/CloudScreen.kt": "512c0feb1880798d0ab352f66744820f7b6e298f0cdd20e0e86d81d9c99b10c9",
+    "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXLibraryScreen.kt": "4c1b5a94fa76dcc9286f661cce3de9afe8a23bd35cdd5994c0bbe566d39f2f0f",
+    "desktop/src/desktopMain/kotlin/melox/validation/MeloXVisualCapture.kt": "3f75c88eacbb526a25874d29eaf6498934775466bbe472a12493d6d19dfcccc2",
+    "shared/src/commonMain/kotlin/melox/network/NeteaseAuthenticatedWeapi.kt": "bed37eaf3bb4ba3fd7131266a0cc19d5bf87d4594b407b0098161515fd1f0d00",
+    "shared/src/commonMain/kotlin/melox/network/NeteaseUniversalSearchClient.kt": "86837dcec7edc90c71d068aab32b2635becbbb3a48c3333b5f781c9d4fac519e"
+  },
+  "live_cloud_account": "BLOCKED",
+  "windows_chooser": "BLOCKED",
+  "android_pixels": "BLOCKED"
+}

@@ -1,0 +1,57 @@
+{
+  "conclusion": "success",
+  "headSha": "3ac97e0503ab6b776301f38ac3a7bcafb1e4c3f4",
+  "status": "completed",
+  "url": "https://github.com/lladlam/MeloX-Windows/actions/runs/38025529598",
+  "run_id": 38025529598,
+  "tests": {
+    "tests": 102,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "suites": 18,
+  "physical_audible_output": "BLOCKED",
+  "artifacts": [
+    {
+      "id": 11659669625,
+      "node_id": "MDg6QXJ0aWZhY3QxMTY1OTY2OTYyNQ==",
+      "name": "Verification-Windows",
+      "size_in_bytes": 18103,
+      "url": "https://api.github.com/repos/lladlam/MeloX-Windows/actions/artifacts/11659669625",
+      "archive_download_url": "https://api.github.com/repos/lladlam/MeloX-Windows/actions/artifacts/11659669625/zip",
+      "expired": false,
+      "digest": "sha256:b585b83bb51e1158899e6eb71859080b3aaab7fe54e5c661ed530bfad90184fa",
+      "created_at": "2026-10-10T04:55:51Z",
+      "updated_at": "2026-10-10T04:55:51Z",
+      "expires_at": "2027-01-08T04:51:48Z",
+      "workflow_run": {
+        "id": 38025529598,
+        "repository_id": 1376937043,
+        "head_repository_id": 1376937043,
+        "head_branch": "main",
+        "head_sha": "3ac97e0503ab6b776301f38ac3a7bcafb1e4c3f4"
+      }
+    },
+    {
+      "id": 11659494865,
+      "node_id": "MDg6QXJ0aWZhY3QxMTY1OTQ5NDg2NQ==",
+      "name": "MeloX-Desktop-Windows",
+      "size_in_bytes": 263186779,
+      "url": "https://api.github.com/repos/lladlam/MeloX-Windows/actions/artifacts/11659494865",
+      "archive_download_url": "https://api.github.com/repos/lladlam/MeloX-Windows/actions/artifacts/11659494865/zip",
+      "expired": false,
+      "digest": "sha256:3d2559aa1d5caa9a0d86370eead6fb17b54777a4d84455eb9d3cbffd39b5e771",
+      "created_at": "2026-10-10T04:55:58Z",
+      "updated_at": "2026-10-10T04:55:58Z",
+      "expires_at": "2027-01-08T04:51:48Z",
+      "workflow_run": {
+        "id": 38025529598,
+        "repository_id": 1376937043,
+        "head_repository_id": 1376937043,
+        "head_branch": "main",
+        "head_sha": "3ac97e0503ab6b776301f38ac3a7bcafb1e4c3f4"
+      }
+    }
+  ]
+}

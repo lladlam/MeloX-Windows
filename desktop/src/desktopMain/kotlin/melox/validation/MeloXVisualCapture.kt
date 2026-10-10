@@ -53,6 +53,10 @@ fun main(args: Array<String>) = runBlocking {
         val theme = option("--theme", "")
         val startTab = option("--start-tab", "Home")
         require(melox.ui.navigation.AppTab.entries.any { it.name == startTab })
+        if ("--enable-start-tab" in args) {
+            require(startTab in listOf("Cloud", "Downloads", "Podcasts"))
+            melox.settings.MeloXSettingsPreferences.setBoolean("placement_${startTab.lowercase()}_tab", true)
+        }
         melox.settings.MeloXSettingsPreferences.setString("general_last_tab", startTab)
         melox.settings.MeloXSettingsPreferences.setString("general_default_tab", startTab)
         if (theme.isNotBlank()) {
@@ -183,9 +187,21 @@ fun main(args: Array<String>) = runBlocking {
                 .put("lyric_document", semantics.tagged("player-lyrics")?.config?.getOrNull(melox.ui.screens.MeloXLyricDocumentKey) ?: JSONObject.NULL)
                 .put("lyric_word_lines", semantics.tagged("player-lyrics")?.config?.getOrNull(melox.ui.screens.MeloXLyricWordLinesKey) ?: JSONObject.NULL)
         }
+        fun assertScene(name: String) {
+            val assertions = expectations[name].orEmpty()
+            sceneEvidence.getJSONObject(sceneEvidence.length() - 1)
+                .put("assertions", JSONArray(assertions.map { assertion -> JSONObject()
+                    .put("expected", assertion).put("passed", assertionMatches(assertion)) }))
+            assertions.forEach { assertion ->
+                check(assertionMatches(assertion)) { "Production UI assertion failed at $name: $assertion" }
+                println("Verified $name: $assertion")
+            }
+        }
         try {
             settle(option("--startup-wait-ms", waitMs.toString()).toLong())
+            expectations["00-${startTab.lowercase()}"]?.let { assertions -> awaitUi { assertions.all(::assertionMatches) } }
             capture("00-${startTab.lowercase()}")
+            assertScene("00-${startTab.lowercase()}")
             steps.forEachIndexed { index, step ->
                 val (name, coordinates) = step.split(':', limit = 2)
                 val eventStart = System.nanoTime()
@@ -255,12 +271,7 @@ fun main(args: Array<String>) = runBlocking {
                 capture("${(index + 1).toString().padStart(2, '0')}-$name")
                 sceneEvidence.getJSONObject(sceneEvidence.length() - 1)
                     .put("action_elapsed_ms", (System.nanoTime() - eventStart) / 1_000_000.0)
-                    .put("assertions", JSONArray(assertions.map { assertion -> JSONObject()
-                        .put("expected", assertion).put("passed", assertionMatches(assertion)) }))
-                assertions.forEach { assertion ->
-                    check(assertionMatches(assertion)) { "Production UI assertion failed at $name: $assertion" }
-                    println("Verified $name: $assertion")
-                }
+                assertScene(name)
             }
         } finally {
             melox.playback.PlaybackCommands.playerController()?.release()
@@ -272,6 +283,7 @@ fun main(args: Array<String>) = runBlocking {
                 .put("width", width).put("height", height).put("density", density)
                 .put("theme", theme).put("home", System.getProperty("user.home"))
                 .put("start_tab", startTab)
+                .put("enabled_start_tab", "--enable-start-tab" in args)
                 .put("play_id", playId ?: JSONObject.NULL)
                 .put("play_query", playQuery).put("scenes", sceneEvidence)
                 .put("steps", JSONArray(steps)).put("frames", frameEvidence).toString(2))

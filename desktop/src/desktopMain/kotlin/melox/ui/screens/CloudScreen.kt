@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -27,11 +26,19 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
+import javax.swing.JFileChooser
+import javax.swing.SwingUtilities
+import javax.swing.filechooser.FileNameExtensionFilter
 import melox.account.NeteaseSessionStore
 import melox.network.MeloXCloudSong
 import melox.network.NeteaseUniversalSearchClient
@@ -48,6 +55,7 @@ import melox.ui.theme.MeloXColors
 fun CloudScreen(
     navState: MeloXNavState,
     modifier: Modifier = Modifier,
+    embedded: Boolean = false,
 ) {
     val client = remember { NeteaseUniversalSearchClient(cookieProvider = { NeteaseSessionStore.readCookie() }) }
     val scope = rememberCoroutineScope()
@@ -57,11 +65,14 @@ fun CloudScreen(
     var loading by remember { mutableStateOf(true) }
     var error by remember { mutableStateOf<String?>(null) }
     var pendingDelete by remember { mutableStateOf<MeloXCloudSong?>(null) }
+    var uploading by remember { mutableStateOf(false) }
+    var uploadProgress by remember { mutableStateOf<melox.network.MeloXCloudUploadProgress?>(null) }
+    var uploadJob by remember { mutableStateOf<kotlinx.coroutines.Job?>(null) }
 
     suspend fun refresh() {
         loading = true
         error = null
-        runCatching {
+        try { runCatching {
             val first = client.cloudSongs()
             if (!first.hasMore) first else {
                 var page = first
@@ -78,8 +89,10 @@ fun CloudScreen(
         }.onSuccess { page ->
             values = page.values
             quota = if (page.maxBytes > 0L) "${formatBytes(page.usedBytes)} / ${formatBytes(page.maxBytes)} · ${page.totalCount} 首" else "${page.totalCount} 首"
-        }.onFailure { error = it.message ?: "云盘加载失败" }
-        loading = false
+        }.onFailure {
+            if (it is CancellationException) throw it
+            error = it.message ?: "云盘加载失败"
+        } } finally { loading = false }
     }
     LaunchedEffect(Unit) { refresh() }
     val displayed = values.filter { song ->
@@ -107,8 +120,29 @@ fun CloudScreen(
         }
     }
 
-    Column(modifier.fillMaxSize().background(MeloXColors.pageBackground()).padding(top = 18.dp)) {
-        MeloXIosTopBar(title = "音乐云盘", onBack = { navState.goBack() })
+    val actions: @Composable () -> Unit = {
+            Text(if (uploading) "上传中" else "上传", color = MeloXColors.Primary,
+                modifier = Modifier.testTag("cloud-upload").clickable(enabled = !uploading) {
+                    uploadJob = scope.launch {
+                        uploading = true; error = null; uploadProgress = null
+                        try {
+                            val selected = chooseCloudAudioFile() ?: return@launch
+                            val owner = kotlinx.coroutines.currentCoroutineContext()[kotlinx.coroutines.Job]
+                            client.uploadCloudSong(selected) { stage -> scope.launch { if (owner?.isActive == true) uploadProgress = stage } }
+                            uploadProgress = melox.network.MeloXCloudUploadProgress("上传完成", selected.length(), selected.length())
+                            refresh()
+                        } catch (cancelled: CancellationException) { throw cancelled }
+                        catch (failure: Exception) { error = failure.message ?: "云盘上传失败" }
+                        finally { uploading = false }
+                    }
+                }.padding(10.dp))
+            Text("刷新", color = MeloXColors.Primary, modifier = Modifier.testTag("cloud-refresh")
+                .clickable(enabled = !loading && !uploading) { scope.launch { refresh() } }.padding(10.dp))
+    }
+    Column(modifier.fillMaxSize().background(MeloXColors.pageBackground()).padding(top = if (embedded) 0.dp else 18.dp)) {
+        if (embedded) Row(Modifier.fillMaxWidth().padding(horizontal = 18.dp, vertical = 2.dp),
+            horizontalArrangement = Arrangement.End, verticalAlignment = Alignment.CenterVertically) { actions() }
+        else MeloXIosTopBar(title = "音乐云盘", actions = { actions() })
         MeloXGlassTextField(
             value = query,
             onValueChange = { query = it },
@@ -116,9 +150,29 @@ fun CloudScreen(
             modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp, vertical = 8.dp),
         )
         Text(quota, Modifier.padding(horizontal = 20.dp, vertical = 8.dp), color = MeloXColors.pageOnSurfaceVariant(), fontSize = 13.sp)
+        if (uploading || uploadProgress?.stage == "上传完成") {
+            Row(Modifier.fillMaxWidth().padding(horizontal = 20.dp, vertical = 8.dp).testTag("cloud-upload-status"),
+                verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                if (uploading) CircularProgressIndicator(Modifier.size(18.dp), color = MeloXColors.Primary, strokeWidth = 2.dp)
+                val stage = uploadProgress
+                Text(if (stage == null) "请选择音频文件" else stage.stage + if (stage.stage == "上传音频" && stage.totalBytes > 0)
+                    " · ${stage.uploadedBytes * 100 / stage.totalBytes}%" else "", modifier = Modifier.weight(1f),
+                    color = MeloXColors.pageOnSurfaceVariant(), fontSize = 12.sp)
+                if (uploading) Text("取消", color = MeloXColors.Primary, modifier = Modifier.testTag("cloud-upload-cancel")
+                    .clickable { uploadJob?.cancel(); uploadProgress = null }.padding(10.dp))
+            }
+        }
+        if (error != null && values.isNotEmpty()) Text(error.orEmpty(), color = MeloXColors.Error,
+            modifier = Modifier.padding(horizontal = 20.dp, vertical = 8.dp).testTag("cloud-error"))
         when {
-            loading -> Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) { CircularProgressIndicator(color = MeloXColors.Primary) }
-            error != null -> Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) { Text(error.orEmpty(), color = MeloXColors.Error) }
+            loading && values.isEmpty() -> Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) { CircularProgressIndicator(color = MeloXColors.Primary) }
+            error != null && values.isEmpty() -> Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Text(error.orEmpty(), color = MeloXColors.Error, modifier = Modifier.testTag("cloud-error"))
+                    Text("重试", color = MeloXColors.Primary, modifier = Modifier.padding(top = 12.dp).testTag("cloud-retry")
+                        .clickable { scope.launch { refresh() } })
+                }
+            }
             else -> LazyColumn(contentPadding = PaddingValues(bottom = 140.dp)) {
                 items(displayed, key = { it.id }) { item ->
                     Row(
@@ -137,6 +191,27 @@ fun CloudScreen(
                 }
             }
         }
+    }
+}
+
+/** Desktop file chooser on the EDT; disposing/cancelling the screen closes the dialog. */
+private suspend fun chooseCloudAudioFile(): java.io.File? = suspendCancellableCoroutine { continuation ->
+    val chooser = java.util.concurrent.atomic.AtomicReference<JFileChooser?>()
+    continuation.invokeOnCancellation { SwingUtilities.invokeLater { chooser.get()?.cancelSelection() } }
+    SwingUtilities.invokeLater {
+        if (!continuation.isActive) return@invokeLater
+        try {
+            val picker = JFileChooser().apply {
+                dialogTitle = "选择要上传到网易云盘的音频"
+                fileSelectionMode = JFileChooser.FILES_ONLY
+                fileFilter = FileNameExtensionFilter("音频文件", "mp3", "flac", "m4a", "aac", "wav", "ogg", "opus", "wma")
+                isMultiSelectionEnabled = false
+            }
+            chooser.set(picker)
+            if (!continuation.isActive) return@invokeLater
+            val result = picker.showOpenDialog(null)
+            if (continuation.isActive) continuation.resume(if (result == JFileChooser.APPROVE_OPTION) picker.selectedFile else null)
+        } catch (failure: Exception) { if (continuation.isActive) continuation.resumeWithException(failure) }
     }
 }
 

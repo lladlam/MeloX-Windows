@@ -1,0 +1,139 @@
+{
+  "renderer": "production ImageComposeScene",
+  "start_tab": "Cloud",
+  "density": 1,
+  "frames": [],
+  "physical_audible_acceptance": "BLOCKED",
+  "steps": [
+    "refresh:tap@cloud-refresh",
+    "retry:tap@cloud-retry"
+  ],
+  "home": "/home/lladlam/项目/MeloX-Windows/desktop/build/parity/sol3-cloud-home-v3",
+  "enabled_start_tab": true,
+  "play_id": null,
+  "play_query": "",
+  "pcm_outputs": [],
+  "width": 427,
+  "scenes": [
+    {
+      "title": null,
+      "error": null,
+      "automix_status": "idle",
+      "file": "00-cloud.png",
+      "is_playing": false,
+      "play_when_ready": false,
+      "selected_quality": "standard",
+      "is_loading": false,
+      "assertions": [
+        {
+          "expected": "tag:cloud-upload",
+          "passed": true
+        },
+        {
+          "expected": "tag:cloud-refresh",
+          "passed": true
+        },
+        {
+          "expected": "tag:cloud-error",
+          "passed": true
+        }
+      ],
+      "track": null,
+      "queue_count": 0,
+      "error_kind": null,
+      "queue_tracks": [],
+      "lyric_document": null,
+      "automix_progress": 0,
+      "automix_active": false,
+      "duration_ms": 0,
+      "position_ms": 0,
+      "is_paused": false,
+      "captured_elapsed_ms": 1284.923983,
+      "page": null,
+      "queue_entry_ids": [],
+      "lyric_word_lines": null,
+      "queue_index": -1,
+      "controls_visible": false,
+      "autoplay_enabled": false
+    },
+    {
+      "title": null,
+      "error": null,
+      "automix_status": "idle",
+      "file": "01-refresh.png",
+      "is_playing": false,
+      "play_when_ready": false,
+      "selected_quality": "standard",
+      "is_loading": false,
+      "assertions": [
+        {
+          "expected": "tag:cloud-error",
+          "passed": true
+        },
+        {
+          "expected": "tag:cloud-upload",
+          "passed": true
+        }
+      ],
+      "track": null,
+      "queue_count": 0,
+      "error_kind": null,
+      "queue_tracks": [],
+      "lyric_document": null,
+      "automix_progress": 0,
+      "automix_active": false,
+      "duration_ms": 0,
+      "position_ms": 0,
+      "is_paused": false,
+      "captured_elapsed_ms": 2106.040135,
+      "page": null,
+      "queue_entry_ids": [],
+      "lyric_word_lines": null,
+      "queue_index": -1,
+      "controls_visible": false,
+      "autoplay_enabled": false,
+      "action_elapsed_ms": 818.727536
+    },
+    {
+      "title": null,
+      "error": null,
+      "automix_status": "idle",
+      "file": "02-retry.png",
+      "is_playing": false,
+      "play_when_ready": false,
+      "selected_quality": "standard",
+      "is_loading": false,
+      "assertions": [
+        {
+          "expected": "tag:cloud-error",
+          "passed": true
+        },
+        {
+          "expected": "tag:cloud-upload",
+          "passed": true
+        }
+      ],
+      "track": null,
+      "queue_count": 0,
+      "error_kind": null,
+      "queue_tracks": [],
+      "lyric_document": null,
+      "automix_progress": 0,
+      "automix_active": false,
+      "duration_ms": 0,
+      "position_ms": 0,
+      "is_paused": false,
+      "captured_elapsed_ms": 2883.875354,
+      "page": null,
+      "queue_entry_ids": [],
+      "lyric_word_lines": null,
+      "queue_index": -1,
+      "controls_visible": false,
+      "autoplay_enabled": false,
+      "action_elapsed_ms": 776.998003
+    }
+  ],
+  "theme": "Dark",
+  "audio_endpoint": "Java Sound physical output",
+  "height": 924
+}

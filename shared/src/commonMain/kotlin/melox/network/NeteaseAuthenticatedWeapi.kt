@@ -1,6 +1,7 @@
 package melox.network
 
 import melox.account.NeteaseSessionStore
+import kotlinx.coroutines.ensureActive
 import java.io.IOException
 import java.math.BigInteger
 import java.net.URLEncoder
@@ -33,14 +34,15 @@ internal class NeteaseAuthenticatedWeapi(
         KeyFactory.getInstance("RSA").generatePublic(spec) as RSAPublicKey
     }
 
-    fun post(uri: String, data: JSONObject = JSONObject()): JSONObject {
+    fun post(uri: String, data: JSONObject = JSONObject(), owner: kotlinx.coroutines.Job? = null): JSONObject {
         val rawCookie = cookieProvider()
         if (!NeteaseSessionStore.containsMusicU(rawCookie)) throw IOException("请先登录网易云音乐")
 
         var lastError: Throwable? = null
         repeat(3) { attempt ->
             try {
-                return requestOnce(uri, data, rawCookie)
+                owner?.ensureActive()
+                return requestOnce(uri, data, rawCookie, owner)
             } catch (error: IOException) {
                 lastError = error
                 if (!error.message.orEmpty().contains("空响应") || attempt == 2) throw error
@@ -50,7 +52,7 @@ internal class NeteaseAuthenticatedWeapi(
         throw IOException("网易云 WEAPI 请求失败", lastError)
     }
 
-    private fun requestOnce(uri: String, data: JSONObject, rawCookie: String): JSONObject {
+    private fun requestOnce(uri: String, data: JSONObject, rawCookie: String, owner: kotlinx.coroutines.Job?): JSONObject {
         val cookies = NeteaseSessionStore.parseCookie(rawCookie).toMutableMap()
         val csrf = cookies["__csrf"].orEmpty()
         val payload = JSONObject(data.toString()).put("csrf_token", csrf)
@@ -71,7 +73,7 @@ internal class NeteaseAuthenticatedWeapi(
             .post(FormBody.Builder().add("params", params).add("encSecKey", encSecKey).build())
             .build()
 
-        httpClient.newCall(request).execute().use { response ->
+        return httpClient.executeOwned(request, owner) { response ->
             val body = response.body?.string() ?: throw IOException("网易云返回了空响应")
             if (!response.isSuccessful) throw IOException("网易云请求失败：HTTP ${response.code}")
             if (body.isBlank()) throw IOException("网易云返回了空响应")
@@ -84,7 +86,7 @@ internal class NeteaseAuthenticatedWeapi(
                         .ifBlank { "请求失败（$code）" },
                 )
             }
-            return result
+            result
         }
     }
 

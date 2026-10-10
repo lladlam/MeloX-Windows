@@ -384,9 +384,18 @@ class NeteaseUniversalSearchClient(
         Unit
     }
 
+    suspend fun uploadCloudSong(file: java.io.File, onProgress: (MeloXCloudUploadProgress) -> Unit = {}): Long {
+        val owner = kotlinx.coroutines.currentCoroutineContext()[kotlinx.coroutines.Job]
+        return NeteaseCloudUploadClient(cookieProvider, httpClient,
+            eapi = { path, payload -> eapi(path, payload, owner) },
+            weapi = { path, payload -> NeteaseAuthenticatedWeapi(cookieProvider, httpClient).post(path, payload, owner) },
+        ).upload(file, onProgress)
+    }
+
     private fun eapi(
         uri: String,
         data: JSONObject,
+        owner: kotlinx.coroutines.Job? = null,
     ): JSONObject {
         val timestampMillis = System.currentTimeMillis()
         val cookieHeader = cookieProvider()
@@ -438,7 +447,7 @@ class NeteaseUniversalSearchClient(
             .post(okhttp3.FormBody.Builder().add("params", params).build())
             .build()
 
-        return httpClient.newCall(request).execute().use { response ->
+        return httpClient.executeOwned(request, owner) { response ->
             val body = response.body?.string() ?: throw IOException("响应体为空")
             if (!response.isSuccessful) throw IOException("网易云请求失败：HTTP ${response.code}")
             if (body.isBlank()) throw IOException("网易云返回了空响应")

@@ -399,7 +399,7 @@ fun LibraryScreen(
                             MeloXLibraryPage.Cloud -> Box(
                                 modifier = Modifier.weight(1f).fillMaxWidth(),
                             ) {
-                                CloudScreen(navState = navState ?: remember { MeloXNavState() })
+                                CloudScreen(navState = navState ?: remember { MeloXNavState() }, embedded = true)
                             }
 
                             MeloXLibraryPage.History -> MeloXLibrarySongsPage(
