@@ -676,6 +676,8 @@ class MeloXDownloadStore private constructor() {
                 name = value.optString("name"),
                 artists = value.optString("artists"),
                 album = value.optString("album"),
+                albumId = value.optLong("albumId").takeIf { it > 0L },
+                artistId = value.optLong("artistId").takeIf { it > 0L },
                 artworkUrl = value.optString("artworkUrl").takeIf(String::isNotBlank),
                 durationMs = value.optLong("durationMs", 0L),
             )
@@ -736,6 +738,8 @@ class MeloXDownloadStore private constructor() {
                     .put("name", record.song.name)
                     .put("artists", record.song.artists)
                     .put("album", record.song.album)
+                    .put("albumId", record.song.albumId ?: JSONObject.NULL)
+                    .put("artistId", record.song.artistId ?: JSONObject.NULL)
                     .put("artworkUrl", record.song.artworkUrl ?: "")
                     .put("durationMs", record.song.durationMs)
                     .put("quality", record.quality.apiLevel)

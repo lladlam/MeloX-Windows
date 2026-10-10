@@ -220,6 +220,8 @@ private fun SettingsDetail(
 
 @Composable
 private fun GeneralSettings() {
+    PreferenceToggle("歌单显示专辑封面", MeloXSettingsRuntime.playlistShowArtwork, "playlist_show_artwork")
+    PreferenceToggle("歌单隐藏搜索栏", MeloXSettingsRuntime.playlistSearchBarHidden, "playlist_search_bar_hidden", "顶部下拉显示搜索")
     val modes = listOf(MeloXThemeMode.System, MeloXThemeMode.Light, MeloXThemeMode.Dark)
     val labels = listOf("跟随系统", "浅色", "深色")
     val selected = modes.indexOf(MeloXSettingsRuntime.themeMode).coerceAtLeast(0)

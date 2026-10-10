@@ -54,6 +54,12 @@ fun main(args: Array<String>) = runBlocking {
             melox.settings.MeloXSettingsPreferences.setString("theme_mode", theme)
         }
         val playQuery = option("--play-query", "")
+        option("--search-query", "").takeIf(String::isNotBlank)?.let {
+            melox.ui.navigation.MeloXSearchLaunchBus.post(it, melox.network.MeloXSearchKind.Songs)
+        }
+        option("--artist-id", "").takeIf(String::isNotBlank)?.toLong()?.let {
+            melox.ui.navigation.MeloXCollectionLaunchBus.open(melox.ui.navigation.MeloXCollectionTarget.Artist(it))
+        }
         val playId = option("--play-id", "").takeIf(String::isNotBlank)?.toLong()
         if (playQuery.isNotBlank() || playId != null) {
             val client = melox.network.NeteaseSearchClient()
@@ -85,6 +91,7 @@ fun main(args: Array<String>) = runBlocking {
             val semantics = scene.captureSemantics()
             return when (kind) {
                 "page" -> semantics.tagged("now-playing")?.config?.getOrNull(SemanticsProperties.StateDescription) == expected
+                "state" -> expected.split(':', limit = 2).let { (tag, value) -> semantics.tagged(tag)?.config?.getOrNull(SemanticsProperties.StateDescription) == value }
                 "index" -> melox.playback.PlaybackCommands.queue.value.index == expected.toInt()
                 "tag" -> semantics.tagged(expected) != null
                 "full-tag" -> semantics.tagged(expected)?.boundsInWindow?.let { it.width >= width * .97f && it.height >= height * .97f } == true

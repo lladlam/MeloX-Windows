@@ -410,6 +410,8 @@ class NeteaseLibraryClient(
             name = value.optString("name").ifBlank { "未知歌曲" },
             artists = artists.ifBlank { "未知歌手" },
             album = album?.optString("name").orEmpty(),
+            albumId = album?.optLong("id")?.takeIf { it > 0L },
+            artistId = artistsArray.optJSONObject(0)?.optLong("id")?.takeIf { it > 0L },
             artworkUrl = artwork,
             durationMs = duration,
         )
@@ -473,7 +475,7 @@ class NeteaseLibraryClient(
                 throw IOException("网易云请求失败：HTTP ${response.code}")
             }
             if (body.isBlank()) throw IOException("网易云返回了空响应")
-            val result = JSONObject(body)
+            val result = melox.network.parseNeteaseResponseJson(body)
             val code = result.optInt("code", response.code)
             if (code !in 200..299) {
                 val message = result.optString("message")

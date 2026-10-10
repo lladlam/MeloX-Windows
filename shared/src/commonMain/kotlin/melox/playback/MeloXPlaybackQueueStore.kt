@@ -30,8 +30,8 @@ internal object MeloXPlaybackQueueStore {
         if (!MeloXSettingsPreferences.boolean("playback_save_queue", true)) return
         val preferences = getPreferences(PREFS)
         if (player.mediaItemCount == 0) {
-            // Android main: an empty startup player must not erase the queue
-            // before its restore pass has run.
+            // Restoring is asynchronous on desktop. Startup must not erase the
+            // saved queue; explicit clearQueue performs the new upstream clear.
             return
         }
         val array = JSONArray()
@@ -44,6 +44,8 @@ internal object MeloXPlaybackQueueStore {
                 put("title", song.name)
                 put("artist", song.artists)
                 put("album", song.album)
+                put("albumId", song.albumId ?: JSONObject.NULL)
+                put("artistId", song.artistId ?: JSONObject.NULL)
                 put("artwork", song.artworkUrl)
                 put("origin", entry.origin)
                 put("originalIndex", entry.originalIndex)
@@ -61,6 +63,10 @@ internal object MeloXPlaybackQueueStore {
         }
         preferences.putValues(mapOf(QUEUE to array.toString(), INDEX to player.currentMediaItemIndex.coerceAtLeast(0).toString(),
             POSITION to player.currentPosition.coerceAtLeast(0L).toString(), PLAY_WHEN_READY to player.playWhenReady.toString()))
+    }
+
+    fun clear() {
+        getPreferences(PREFS).putValues(mapOf(QUEUE to null, INDEX to null, POSITION to null, PLAY_WHEN_READY to null))
     }
 
     fun savePosition(index: Int, positionMs: Long) {
@@ -118,6 +124,8 @@ internal object MeloXPlaybackQueueStore {
                             name = value.optString("title"),
                             artists = value.optString("artist"),
                             album = value.optString("album"),
+                            albumId = value.optLong("albumId").takeIf { it > 0L },
+                            artistId = value.optLong("artistId").takeIf { it > 0L },
                             artworkUrl = value.optString("artwork").takeIf(String::isNotBlank),
                             durationMs = value.optLong("durationMs", 0L),
                             providerTrack = providerTrack,

@@ -570,7 +570,7 @@ class NeteaseMusicOperationsClient(
         val req=b.post(FormBody.Builder().add("params",params).build()).build()
         httpClient.newCall(req).execute().use { response ->
             val body=response.body?.string() ?: throw IOException("网易云返回了空响应"); if(!response.isSuccessful)throw IOException("网易云请求失败：HTTP ${response.code}")
-            if(body.isBlank())throw IOException("网易云返回了空响应"); val result=JSONObject(body); val code=result.optInt("code",response.code)
+            if(body.isBlank())throw IOException("网易云返回了空响应"); val result=parseNeteaseResponseJson(body); val code=result.optInt("code",response.code)
             if(code !in 200..299)throw IOException(result.optString("message").ifBlank{result.optString("msg")}.ifBlank{"请求失败（$code）"}); return result
         }
     }

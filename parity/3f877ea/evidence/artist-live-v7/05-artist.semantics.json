@@ -1,0 +1,2202 @@
+[
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      20,
+      62,
+      88,
+      107
+    ],
+    "tag": null,
+    "text": "首页",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      20,
+      129,
+      71,
+      152
+    ],
+    "tag": null,
+    "text": "下午好",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      20,
+      174,
+      64,
+      196
+    ],
+    "tag": null,
+    "text": "每日更新",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      20,
+      199,
+      104,
+      221
+    ],
+    "tag": null,
+    "text": "每日推荐",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      20,
+      223,
+      118,
+      245
+    ],
+    "tag": null,
+    "text": "为你定制的歌曲",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      38,
+      403,
+      139,
+      436
+    ],
+    "tag": null,
+    "text": "每日推荐",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      346,
+      174,
+      390,
+      196
+    ],
+    "tag": null,
+    "text": "全站热门",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      346,
+      199,
+      409,
+      221
+    ],
+    "tag": null,
+    "text": "热歌榜",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      346,
+      223,
+      416,
+      245
+    ],
+    "tag": null,
+    "text": "大家都在听",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      364,
+      403,
+      427,
+      436
+    ],
+    "tag": null,
+    "text": "热歌榜",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      20,
+      476,
+      109,
+      505
+    ],
+    "tag": null,
+    "text": "每日推荐",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      354,
+      480,
+      407,
+      502
+    ],
+    "tag": null,
+    "text": "下拉刷新",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      28,
+      716,
+      258,
+      754
+    ],
+    "tag": null,
+    "text": "[一周原创发现] 低苦艾陪你注视镜中的自己",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      28,
+      754,
+      109,
+      776
+    ],
+    "tag": null,
+    "text": "6125.9万 次播放",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      288,
+      716,
+      427,
+      754
+    ],
+    "tag": null,
+    "text": "时间治愈的是 愿意自渡之人",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      288,
+      754,
+      372,
+      776
+    ],
+    "tag": null,
+    "text": "6026.3万 次播放",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      20,
+      806,
+      109,
+      835
+    ],
+    "tag": null,
+    "text": "为你推荐",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      380,
+      810,
+      407,
+      832
+    ],
+    "tag": null,
+    "text": "新歌",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      90,
+      868,
+      158,
+      890
+    ],
+    "tag": null,
+    "text": "自由的你",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      90,
+      890,
+      169,
+      912
+    ],
+    "tag": null,
+    "text": "G.E.M.邓紫棋",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "tag": null,
+    "text": "全息恋人",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "tag": null,
+    "text": "栾一鸣Floscar",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "tag": null,
+    "text": "两难pt.2",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "tag": null,
+    "text": "加木",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "tag": null,
+    "text": "牵我的手好吗",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "tag": null,
+    "text": "吴琳珂Moske",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "tag": null,
+    "text": "睡前别想太多",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "tag": null,
+    "text": "李雨霏_晚饭",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "tag": null,
+    "text": "月声尽，心灯明",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "tag": null,
+    "text": "鸣潮先约电台 / jixwang / Cassie Wei",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      51,
+      893,
+      73,
+      906
+    ],
+    "tag": null,
+    "text": "首页",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      130,
+      893,
+      152,
+      906
+    ],
+    "tag": null,
+    "text": "发现",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      205,
+      893,
+      238,
+      906
+    ],
+    "tag": null,
+    "text": "音乐库",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      290,
+      893,
+      312,
+      906
+    ],
+    "tag": null,
+    "text": "设置",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      0,
+      0,
+      427,
+      924
+    ],
+    "tag": "artist-detail",
+    "text": null,
+    "state": "loaded",
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "tag": null,
+    "text": "布拉格广场",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "tag": null,
+    "text": "蔡依林 / 周杰伦",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "tag": "artist-song-more-210049",
+    "text": null,
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      94,
+      0,
+      128,
+      3
+    ],
+    "tag": null,
+    "text": "屋顶",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      94,
+      3,
+      217,
+      19
+    ],
+    "tag": null,
+    "text": "周杰伦 / 温岚 / 吴宗宪",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      324,
+      0,
+      356,
+      16
+    ],
+    "tag": "artist-song-more-5257138",
+    "text": null,
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      94,
+      51,
+      233,
+      73
+    ],
+    "tag": null,
+    "text": "想你就写信 (Live)",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      94,
+      73,
+      205,
+      89
+    ],
+    "tag": null,
+    "text": "周杰伦 / 李硕 / 张鑫",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      324,
+      54,
+      356,
+      86
+    ],
+    "tag": "artist-song-more-509781655",
+    "text": null,
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      94,
+      121,
+      165,
+      143
+    ],
+    "tag": null,
+    "text": "默 (Live)",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      94,
+      143,
+      180,
+      159
+    ],
+    "tag": null,
+    "text": "李荣浩 / 周杰伦",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      324,
+      124,
+      356,
+      156
+    ],
+    "tag": "artist-song-more-1888354230",
+    "text": null,
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      94,
+      191,
+      145,
+      213
+    ],
+    "tag": null,
+    "text": "刀马旦",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      94,
+      213,
+      168,
+      229
+    ],
+    "tag": null,
+    "text": "李玟 / 周杰伦",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      324,
+      194,
+      356,
+      226
+    ],
+    "tag": "artist-song-more-255020",
+    "text": null,
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "tag": null,
+    "text": "手牵手",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "tag": null,
+    "text": "王力宏 / 陶喆 / 蔡琴 / 江蕙 / 苏芮 / 庾澄庆 / 张惠妹 / 顺子 / 动力火车 / 张清芳 / 周华健 / 张信哲 / 伍思凯 / 张宇 / 周杰伦 / 李玟 / 吴宗宪 / 陶晶莹 / 林慧萍 / 蔡依林 / 许茹芸 / 萧亚轩 / 孙燕姿 / 徐若瑄 / 彭佳慧 / 信乐团 / 游鸿明 / 范逸臣 / 迪克牛仔 / 李心洁 / S.H.E / 周渝民 / 朱孝天 / Energy / 可米小子 / B.A.D / 黄立成&麻吉 / Tension / 林志炫 / 罗志祥 / 欧汉声 / 光良 / 品冠 / 万芳 / 温岚 / 黄立行 / 王心凌 / 杨丞琳 / 范玮琪 / 潘玮柏 / 丁文琪 / 林晓培 / 袁惟仁 / 张惠春 / 康康 / 黄韵玲 / 黄嘉千 / 许慧欣 / 路嘉欣 / 萧潇 / 江美琪 / Lisa Djaati",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "tag": "artist-song-more-5268423",
+    "text": null,
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "tag": null,
+    "text": "骑士精神",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "tag": null,
+    "text": "蔡依林 / 周杰伦",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "tag": "artist-song-more-210062",
+    "text": null,
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "tag": null,
+    "text": "沧海一声笑 (Live)",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "tag": null,
+    "text": "那英 / 周杰伦 / 刘欢 / 陈奕迅",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "tag": "artist-song-more-490602328",
+    "text": null,
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "tag": null,
+    "text": "因为爱情 (Live)",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "tag": null,
+    "text": "周杰伦 / 那英",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "tag": "artist-song-more-490595315",
+    "text": null,
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "tag": null,
+    "text": "布拉格广场",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "tag": null,
+    "text": "蔡依林 / 周杰伦",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "tag": "artist-song-more-5234479",
+    "text": null,
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      20,
+      269,
+      65,
+      298
+    ],
+    "tag": null,
+    "text": "专辑",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      20,
+      306,
+      136,
+      481
+    ],
+    "tag": "artist-album-147779282",
+    "text": null,
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": "最伟大的作品",
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      20,
+      306,
+      136,
+      422
+    ],
+    "tag": null,
+    "text": null,
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      20,
+      429,
+      122,
+      465
+    ],
+    "tag": null,
+    "text": "最伟大的作品",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      20,
+      465,
+      55,
+      481
+    ],
+    "tag": null,
+    "text": "周杰伦",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      148,
+      306,
+      264,
+      481
+    ],
+    "tag": "artist-album-34720827",
+    "text": null,
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": "周杰伦的床边故事",
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      148,
+      306,
+      264,
+      422
+    ],
+    "tag": null,
+    "text": null,
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      148,
+      429,
+      264,
+      465
+    ],
+    "tag": null,
+    "text": "周杰伦的床边故事",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      148,
+      465,
+      183,
+      481
+    ],
+    "tag": null,
+    "text": "周杰伦",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      276,
+      306,
+      392,
+      481
+    ],
+    "tag": "artist-album-3084335",
+    "text": null,
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": "哎呦，不错哦",
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      276,
+      306,
+      392,
+      422
+    ],
+    "tag": null,
+    "text": null,
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      276,
+      429,
+      374,
+      465
+    ],
+    "tag": null,
+    "text": "哎呦，不错哦",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      276,
+      465,
+      311,
+      481
+    ],
+    "tag": null,
+    "text": "周杰伦",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      404,
+      306,
+      427,
+      481
+    ],
+    "tag": "artist-album-2489195",
+    "text": null,
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": "天台 电影原声带",
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      404,
+      306,
+      427,
+      422
+    ],
+    "tag": null,
+    "text": null,
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      404,
+      429,
+      427,
+      465
+    ],
+    "tag": null,
+    "text": "天台 电影原声带",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      404,
+      465,
+      427,
+      481
+    ],
+    "tag": null,
+    "text": "周杰伦",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      20,
+      521,
+      121,
+      550
+    ],
+    "tag": null,
+    "text": "单曲与 EP",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      20,
+      558,
+      136,
+      733
+    ],
+    "tag": "artist-album-274336916",
+    "text": null,
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": "即兴曲",
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      20,
+      558,
+      136,
+      674
+    ],
+    "tag": null,
+    "text": null,
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      20,
+      681,
+      71,
+      717
+    ],
+    "tag": null,
+    "text": "即兴曲",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      20,
+      717,
+      55,
+      733
+    ],
+    "tag": null,
+    "text": "周杰伦",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      148,
+      558,
+      264,
+      733
+    ],
+    "tag": "artist-album-241205548",
+    "text": null,
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": "稻香 (Remix摇滚版)",
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      148,
+      558,
+      264,
+      674
+    ],
+    "tag": null,
+    "text": null,
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      148,
+      681,
+      264,
+      717
+    ],
+    "tag": null,
+    "text": "稻香 (Remix摇滚版)",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      148,
+      717,
+      183,
+      733
+    ],
+    "tag": null,
+    "text": "周杰伦",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      276,
+      558,
+      392,
+      733
+    ],
+    "tag": "artist-album-181638865",
+    "text": null,
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": "圣诞星 (feat. 杨瑞代)",
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      276,
+      558,
+      392,
+      674
+    ],
+    "tag": null,
+    "text": null,
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      276,
+      681,
+      392,
+      717
+    ],
+    "tag": null,
+    "text": "圣诞星 (feat. 杨瑞代)",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      276,
+      717,
+      311,
+      733
+    ],
+    "tag": null,
+    "text": "周杰伦",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      404,
+      558,
+      427,
+      733
+    ],
+    "tag": "artist-album-90743831",
+    "text": null,
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": "Mojito",
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      404,
+      558,
+      427,
+      674
+    ],
+    "tag": null,
+    "text": null,
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      404,
+      681,
+      427,
+      717
+    ],
+    "tag": null,
+    "text": "Mojito",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      404,
+      717,
+      427,
+      733
+    ],
+    "tag": null,
+    "text": "周杰伦",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      20,
+      773,
+      153,
+      802
+    ],
+    "tag": null,
+    "text": "多人合作专辑",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      20,
+      810,
+      136,
+      924
+    ],
+    "tag": "artist-album-3154731",
+    "text": null,
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": "黄俊郎的黑",
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      20,
+      810,
+      136,
+      924
+    ],
+    "tag": null,
+    "text": null,
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "tag": null,
+    "text": "黄俊郎的黑",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "tag": null,
+    "text": "杨瑞代 / 周杰伦",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      148,
+      810,
+      264,
+      924
+    ],
+    "tag": "artist-album-18909",
+    "text": null,
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": "Partners 拍档",
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      148,
+      810,
+      264,
+      924
+    ],
+    "tag": null,
+    "text": null,
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "tag": null,
+    "text": "Partners 拍档",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "tag": null,
+    "text": "周杰伦 / 方文山",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "description": "返回",
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      20,
+      9,
+      64,
+      53
+    ],
+    "tag": "artist-back",
+    "text": null,
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "description": "歌手资料",
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      363,
+      9,
+      407,
+      53
+    ],
+    "tag": "artist-info",
+    "text": null,
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  }
+]

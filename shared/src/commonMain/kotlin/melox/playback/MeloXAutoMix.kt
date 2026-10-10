@@ -125,6 +125,7 @@ data class MeloXAutoMixTrackAnalysis(
         val index = frames.binarySearchBy(timeMs) { it.timeMs }
         return frames[if (index >= 0) index else (-index - 1).coerceIn(0, frames.lastIndex)]
     }
+    fun plannerAnalysis() = MeloXAutoMixAnalysis(bpm, confidence, firstAudibleMs, lastAudibleMs)
 }
 
 data class MeloXAutoMixAnalysis(

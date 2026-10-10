@@ -411,6 +411,11 @@ class MeloXDesktopPlayer internal constructor(
         currentPosition = startPositionMs.coerceAtLeast(0L)
         pendingSeekMs = currentPosition
         if (_shuffleEnabled.value) reorderFuture(shuffle = true)
+        if (this.items.isEmpty()) {
+            if (PlaybackCommands.playerController() == this) AudioPlayer.stop()
+            playWhenReady = false
+            MeloXPlaybackQueueStore.clear()
+        }
     }
 
     fun addMediaItem(index: Int, song: SearchSong) {
@@ -461,8 +466,10 @@ class MeloXDesktopPlayer internal constructor(
         val track = song.providerTrack ?: MusicTrack(
             id = melox.music.model.MusicResourceId(MusicSource.Netease, song.id.toString()),
             title = song.name,
-            artists = listOf(melox.music.model.MusicArtistRef(name = song.artists)),
-            album = song.album.takeIf { it.isNotBlank() }?.let { melox.music.model.MusicAlbumRef(name = it) },
+            artists = listOf(melox.music.model.MusicArtistRef(name = song.artists,
+                id = song.artistId?.let { melox.music.model.MusicResourceId(MusicSource.Netease, it.toString()) })),
+            album = song.album.takeIf { it.isNotBlank() }?.let { melox.music.model.MusicAlbumRef(name = it,
+                id = song.albumId?.let { id -> melox.music.model.MusicResourceId(MusicSource.Netease, id.toString()) }) },
             artworkUrl = song.artworkUrl,
             durationMs = song.durationMs.takeIf { it > 0L },
         )
@@ -542,6 +549,23 @@ class MeloXDesktopPlayer internal constructor(
         playWhenReady = false
         pendingSeekMs = 0L
         if (PlaybackCommands.playerController() == this) PlaybackCommands.activeController = null
+    }
+
+    fun clearQueue() {
+        generation += 1
+        resolveJob?.cancel()
+        autoplay.cancel()
+        resetFailureRecovery()
+        awaitingAutoplay = false
+        if (PlaybackCommands.playerController() == this) AudioPlayer.stop()
+        items.clear()
+        mediaItemCount = 0
+        currentMediaItemIndex = -1
+        currentPosition = 0L
+        pendingSeekMs = 0L
+        playWhenReady = false
+        MeloXPlaybackQueueStore.clear()
+        PlaybackCommands.publishQueue(this)
     }
 
     fun next() {

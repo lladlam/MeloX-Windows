@@ -70,7 +70,7 @@ internal class NeteaseAuthenticatedEapi(
                 throw IOException("网易云返回了空响应")
             }
             return NeteaseEapiResponse(
-                body = JSONObject(body),
+                body = parseNeteaseResponseJson(body),
                 setCookieHeaders = response.headers.values("Set-Cookie"),
                 httpCode = response.code,
             )

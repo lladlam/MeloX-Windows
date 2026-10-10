@@ -311,6 +311,10 @@ object MeloXSettingsRuntime {
         internal set
     var rememberLibraryPage by mutableStateOf(true)
         internal set
+    var playlistShowArtwork by mutableStateOf(false)
+        internal set
+    var playlistSearchBarHidden by mutableStateOf(false)
+        internal set
     var defaultLibraryPage by mutableStateOf("Songs")
         internal set
     var downloadLyricsEnabled by mutableStateOf(true)
@@ -365,6 +369,8 @@ object MeloXSettingsRuntime {
             .let { order -> (order + listOf("Home", "Explore", "Library", "Podcasts", "Downloads", "Cloud", "Settings")).distinct() }
         defaultTab = (prefs().getString("general_default_tab", "Home") ?: "Home")
         rememberLibraryPage = prefs().getBoolean("library_remember_page", true)
+        playlistShowArtwork = prefs().getBoolean("playlist_show_artwork", false)
+        playlistSearchBarHidden = prefs().getBoolean("playlist_search_bar_hidden", false)
         defaultLibraryPage = (prefs().getString("library_default_page", "Songs") ?: "Songs")
         clipboardLinksEnabled = prefs().getBoolean("general_clipboard_links", true)
         systemFontEnabled = prefs().getBoolean("system_font", false)
@@ -564,6 +570,8 @@ object MeloXSettingsRuntime {
             .let { order -> (order + listOf("Home", "Explore", "Library", "Podcasts", "Downloads", "Cloud", "Settings")).distinct() }
         defaultTab = (prefs().getString("general_default_tab", "Home") ?: "Home")
         rememberLibraryPage = prefs().getBoolean("library_remember_page", true)
+        playlistShowArtwork = prefs().getBoolean("playlist_show_artwork", false)
+        playlistSearchBarHidden = prefs().getBoolean("playlist_search_bar_hidden", false)
         defaultLibraryPage = (prefs().getString("library_default_page", "Songs") ?: "Songs")
         downloadLyricsEnabled = prefs().getBoolean("download_lyrics", true)
         musicArea = (prefs().getString("music_area", "全部") ?: "全部")

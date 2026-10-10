@@ -51,7 +51,10 @@ class SecurePreferenceFileTest {
                 override fun protect(plain: ByteArray): ByteArray = error("DPAPI unavailable")
                 override fun unprotect(encrypted: ByteArray): ByteArray = error("DPAPI unavailable")
             }
-            assertFails { PreferenceFile.secure(root, "account", failing) }
+            val memory = PreferenceFile.secure(root, "account", failing)
+            assertEquals("original", memory.get("token"))
+            memory.put("token", "process-only")
+            assertEquals("process-only", memory.get("token"))
             assertTrue(legacy.isFile)
             assertFalse(File(root, "prefs_account.dpapi").exists())
             val protection = TestProtection()
@@ -75,6 +78,38 @@ class SecurePreferenceFileTest {
             store.put("token", "memory-only")
             assertEquals("memory-only", store.get("token"))
             assertTrue(root.listFiles().orEmpty().isEmpty())
+        } finally { root.deleteRecursively() }
+    }
+
+    @Test fun corruptCiphertextRecoversAnEmptyVerifiedStoreAndDoesNotReviveStaleLegacy() {
+        val root = Files.createTempDirectory("melox-corrupt-session-test").toFile()
+        try {
+            val cipher = File(root, "prefs_account.dpapi").apply { writeBytes(byteArrayOf(1, 2, 3)) }
+            val original = cipher.readBytes()
+            File(root, "prefs_account.properties").writeText("token=stale\n")
+            val protection = TestProtection()
+            val recovered = PreferenceFile.secure(root, "account", protection)
+            assertNull(recovered.get("token"))
+            assertContentEquals(original, root.listFiles()!!.single { it.name.startsWith(".account.corrupt-") }.readBytes())
+            recovered.put("token", "fresh")
+            assertEquals("fresh", PreferenceFile.secure(root, "account", protection).get("token"))
+            assertFalse(File(root, "prefs_account.properties").exists())
+        } finally { root.deleteRecursively() }
+    }
+
+    @Test fun unusableProtectionAndCiphertextFallBackToMemoryWithoutWritingSecrets() {
+        val root = Files.createTempDirectory("melox-unavailable-session-test").toFile()
+        try {
+            File(root, "prefs_account.dpapi").writeBytes(byteArrayOf(1, 2, 3))
+            val failing = object : SecretProtection {
+                override fun protect(plain: ByteArray): ByteArray = error("DPAPI unavailable")
+                override fun unprotect(encrypted: ByteArray): ByteArray = error("DPAPI unavailable")
+            }
+            val memory = PreferenceFile.secure(root, "account", failing)
+            memory.put("token", "memory-secret")
+            assertEquals("memory-secret", memory.get("token"))
+            assertFalse(File(root, "prefs_account.dpapi").exists())
+            assertTrue(root.listFiles()!!.none { it.readBytes().toString(Charsets.ISO_8859_1).contains("memory-secret") })
         } finally { root.deleteRecursively() }
     }
 }

@@ -317,7 +317,7 @@ class NeteaseQualityClient(
                 throw IOException("网易云请求失败：HTTP ${response.code}")
             }
             if (body.isBlank()) throw IOException("网易云返回了空响应")
-            val result = JSONObject(body)
+            val result = melox.network.parseNeteaseResponseJson(body)
             val code = result.optInt("code", response.code)
             if (code !in 200..299) {
                 val message = result.optString("message")

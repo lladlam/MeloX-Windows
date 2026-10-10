@@ -13,6 +13,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -66,7 +67,7 @@ fun AlbumDetailScreen(
     val artistName = album?.artistText?.ifBlank { null } ?: "未知歌手"
     val totalMinutes = (songs.sumOf { it.durationMs } / 1000 / 60).toInt()
 
-    Column(modifier = Modifier.fillMaxSize().background(MeloXColors.pageBackground())) {
+    Column(modifier = Modifier.fillMaxSize().background(MeloXColors.pageBackground()).testTag("album-detail")) {
         Row(
             modifier = Modifier.fillMaxWidth().height(48.dp).padding(horizontal = 16.dp),
             verticalAlignment = Alignment.CenterVertically
@@ -98,7 +99,7 @@ fun AlbumDetailScreen(
         LazyColumn(modifier = Modifier.fillMaxSize()) {
             item {
                 Box(
-                    modifier = Modifier.fillMaxWidth().height(200.dp),
+                    modifier = Modifier.fillMaxWidth().height(200.dp).then(if (detail != null) Modifier.testTag("album-loaded") else Modifier),
                     contentAlignment = Alignment.Center
                 ) {
                     MeloXArtworkImage(

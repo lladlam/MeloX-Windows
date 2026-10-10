@@ -72,15 +72,42 @@ internal class PreferenceFile(
     }
 
     private fun removeLegacy() {
-        legacy.forEach { Files.deleteIfExists(it.toPath()) }
+        legacy.forEach { path ->
+            runCatching { Files.deleteIfExists(path.toPath()) }.onFailure {
+                logWarn("MeloXSecurePrefs", "Verified encrypted store is authoritative; legacy cleanup deferred")
+            }
+        }
     }
 
     companion object {
-        fun secure(root: File, name: String, protection: SecretProtection?): PreferenceFile = PreferenceFile(
-            file = if (protection != null) File(root, "prefs_$name.dpapi") else null,
-            protection = protection,
-            legacy = listOf(File(root, "prefs_$name.properties"), File(root, "prefs_${name}_encrypted_v1.properties")),
-        )
+        fun secure(root: File, name: String, protection: SecretProtection?): PreferenceFile {
+            val legacy = listOf(File(root, "prefs_$name.properties"), File(root, "prefs_${name}_encrypted_v1.properties"))
+            if (protection == null) return runCatching { PreferenceFile(null, legacy = legacy) }.getOrElse { PreferenceFile(null) }
+            val file = File(root, "prefs_$name.dpapi")
+            val hadCiphertext = file.isFile
+            try { return PreferenceFile(file, protection, legacy) }
+            catch (error: Exception) {
+                logWarn("MeloXSecurePrefs", "Secure store $name could not open (${error.javaClass.simpleName}); recovering")
+            }
+            if (hadCiphertext) {
+                // DPAPI has no app-owned master key to reset. Keep unreadable
+                // ciphertext private on disk while rebuilding with the current user.
+                try {
+                    Files.move(file.toPath(), File(root, ".$name.corrupt-${java.util.UUID.randomUUID()}.dpapi").toPath())
+                } catch (_: Exception) {
+                    return PreferenceFile(null)
+                }
+                try {
+                    PreferenceFile(file, protection).clear() // protect + decrypt verify + atomic commit
+                    return PreferenceFile(file, protection, legacy)
+                } catch (_: Exception) {
+                    return PreferenceFile(null)
+                }
+            }
+            // A failed first migration must leave the original store recoverable;
+            // use it in memory for this process, never persist plaintext sessions.
+            return runCatching { PreferenceFile(null, legacy = legacy) }.getOrElse { PreferenceFile(null) }
+        }
     }
 }
 

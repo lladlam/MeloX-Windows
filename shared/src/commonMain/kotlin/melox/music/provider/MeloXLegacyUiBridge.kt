@@ -23,6 +23,8 @@ object MeloXLegacyUiBridge {
         name = track.title,
         artists = track.artistText,
         album = track.album?.name.orEmpty(),
+        albumId = track.album?.id?.value?.toLongOrNull(),
+        artistId = track.artists.firstOrNull()?.id?.value?.toLongOrNull(),
         artworkUrl = track.artworkUrl,
         durationMs = track.durationMs ?: 0L,
         providerTrack = track,

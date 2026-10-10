@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="DesktopAudioSessionTest[desktop]" tests="7" skipped="0" failures="0" errors="0" timestamp="2026-10-10T02:52:10.462Z" hostname="lladlam-arch" time="0.821">
+  <properties/>
+  <testcase name="realFfmpegNonzeroExitAfterPcmIsContentFailureRatherThanNaturalEnd[desktop]" classname="melox.player.DesktopAudioSessionTest" time="0.099"/>
+  <testcase name="unavailableDeviceReportsOutputFailureWithoutProducingAnEndEvent[desktop]" classname="melox.player.DesktopAudioSessionTest" time="0.064"/>
+  <testcase name="seekingToTheDecoderOriginalZeroPositionActuallyRestartsIt[desktop]" classname="melox.player.DesktopAudioSessionTest" time="0.167"/>
+  <testcase name="seekingToKnownTrackEndAcceptsAZeroPcmSuccessfulDecoderExit[desktop]" classname="melox.player.DesktopAudioSessionTest" time="0.072"/>
+  <testcase name="replacingTheSameUriKeepsEndCallbacksOwnedByTheNewRequest[desktop]" classname="melox.player.DesktopAudioSessionTest" time="0.167"/>
+  <testcase name="aDeviceStartFailureIsOutputFailureRatherThanCorruptContent[desktop]" classname="melox.player.DesktopAudioSessionTest" time="0.077"/>
+  <testcase name="decoderEofWaitsForBufferedFramesAndPauseResumePreserveTheTail[desktop]" classname="melox.player.DesktopAudioSessionTest" time="0.175"/>
+  <system-out><![CDATA[[AudioPlayer] decode /home/lladlam/项目/MeloX-Windows/shared/build/parity/test-home/audio-session-0f80e385-bc8e-4a28-bd3a-f7544784e2c1/corrupt.wav at 0ms
+[AudioPlayer] decode /home/lladlam/项目/MeloX-Windows/shared/build/parity/test-home/audio-session-9c0a2353-8cda-438b-be95-f640fd426ae5/tone.wav at 0ms
+[AudioPlayer] decode /home/lladlam/项目/MeloX-Windows/shared/build/parity/test-home/audio-session-2b94d467-0616-4ef6-9732-326472daf765/tone.wav at 0ms
+[AudioPlayer] decode /home/lladlam/项目/MeloX-Windows/shared/build/parity/test-home/audio-session-2b94d467-0616-4ef6-9732-326472daf765/tone.wav at 0ms
+[AudioPlayer] decode /home/lladlam/项目/MeloX-Windows/shared/build/parity/test-home/audio-session-355fc3e3-1ecc-4bd7-8dde-73f2e5744f7a/tone.wav at 500ms
+[AudioPlayer] decode /home/lladlam/项目/MeloX-Windows/shared/build/parity/test-home/audio-session-6f5851f6-0d7b-40c7-a551-147026a59be4/tone.wav at 0ms
+[AudioPlayer] decode /home/lladlam/项目/MeloX-Windows/shared/build/parity/test-home/audio-session-6f5851f6-0d7b-40c7-a551-147026a59be4/tone.wav at 0ms
+[AudioPlayer] decode /home/lladlam/项目/MeloX-Windows/shared/build/parity/test-home/audio-session-88ae937f-a1a1-4d5f-bd51-7c8e6aecd586/tone.wav at 0ms
+[AudioPlayer] decode /home/lladlam/项目/MeloX-Windows/shared/build/parity/test-home/audio-session-3406e01b-ccf0-425c-933e-e52b6439ab34/tone.wav at 0ms
+]]></system-out>
+  <system-err><![CDATA[[AudioPlayer] 播放失败: [in#0/wav @ 0x561884099a00] corrupt input packet in stream 0
+[in#0/wav @ 0x561884099a00] Task finished with error: Invalid data found when processing input
+[in#0/wav @ 0x561884099a00] Terminating thread with error: Invalid data found when processing input
+[AudioPlayer] 播放失败: test device unavailable
+[AudioPlayer] 播放失败: device start failed
+]]></system-err>
+</testsuite>

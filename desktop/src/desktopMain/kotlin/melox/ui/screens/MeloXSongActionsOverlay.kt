@@ -92,6 +92,22 @@ fun MeloXSongActionsOverlay(
             when (page) {
                 SongActionPage.Main -> {
                     Text("更多操作", Modifier.padding(horizontal = 16.dp, vertical = 10.dp), fontSize = 22.sp, fontWeight = FontWeight.Bold, color = MeloXColors.OnSurface)
+                    if (song.album.isNotBlank()) {
+                        ActionRow("查看专辑", MeloXSymbol.Library) {
+                            val id = (song.albumId ?: provider?.album?.id?.value?.toLongOrNull())?.takeIf { neteaseSongId != null && it > 0L }
+                            onDismiss()
+                            if (id != null) melox.ui.navigation.MeloXCollectionLaunchBus.open(melox.ui.navigation.MeloXCollectionTarget.Album(id, song.album))
+                            else melox.ui.navigation.MeloXSearchLaunchBus.post(song.album, melox.network.MeloXSearchKind.Albums, provider?.id?.source ?: MusicSource.Netease)
+                        }
+                    }
+                    if (song.artists.isNotBlank()) {
+                        ActionRow("查看歌手", MeloXSymbol.Person) {
+                            val id = (song.artistId ?: provider?.artists?.firstOrNull()?.id?.value?.toLongOrNull())?.takeIf { neteaseSongId != null && it > 0L }
+                            onDismiss()
+                            if (id != null) melox.ui.navigation.MeloXCollectionLaunchBus.open(melox.ui.navigation.MeloXCollectionTarget.Artist(id))
+                            else melox.ui.navigation.MeloXSearchLaunchBus.post(provider?.artists?.firstOrNull()?.name ?: song.artists, melox.network.MeloXSearchKind.Artists, provider?.id?.source ?: MusicSource.Netease)
+                        }
+                    }
                     ActionRow("下一首播放", MeloXSymbol.NextTrack) {
                         PlaybackCommands.playNext(song)
                         onDismiss()
@@ -157,6 +173,7 @@ fun MeloXSongActionsOverlay(
 @Composable
 private fun ActionRow(title: String, symbol: MeloXSymbol, enabled: Boolean = true, onClick: () -> Unit) {
     MeloXIosListRow(
+        modifier = Modifier.testTag("song-action-$title"),
         title = title,
         leadingIcon = symbol,
         showChevron = false,

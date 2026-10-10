@@ -11,6 +11,8 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          lfs: true
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
@@ -18,8 +20,12 @@ jobs:
           distribution: 'temurin'
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '9.5.1'
+      - name: Verify LFS binaries and native decoder
+        run: python tools/verify_decoder_bundle.py --sources --run --output desktop/build/verification/source-decoder.json
       - name: Build uber jar
-        run: gradle :desktop:packageUberJarForCurrentOS
+        run: gradle :shared:desktopTest :desktop:packageUberJarForCurrentOS
       - name: Get jar info
         id: jar
         shell: pwsh
@@ -30,6 +36,8 @@ jobs:
           echo "jar_dir=$($jar.DirectoryName)" >> $env:GITHUB_OUTPUT
           echo "jar_size=$($jar.Length)" >> $env:GITHUB_OUTPUT
           echo "Found: $($jar.Name) ($($jar.Length) bytes)"
+      - name: Verify packaged JAR decoder
+        run: python tools/verify_decoder_bundle.py --artifact "${{ steps.jar.outputs.jar_path }}" --run --output desktop/build/verification/jar-decoder.json
       - name: Create app-image with jpackage
         shell: pwsh
         run: |
@@ -42,12 +50,24 @@ jobs:
             --name MeloX-Desktop `
             --dest desktop/build/releases `
             --java-options "-Xmx1g -Dfile.encoding=UTF-8"
+      - name: Verify app-image decoder
+        run: python tools/verify_decoder_bundle.py --artifact desktop/build/releases/MeloX-Desktop --run --output desktop/build/verification/image-decoder.json
       - name: Zip the app-image
         shell: pwsh
         run: |
           Compress-Archive -Path "desktop/build/releases/MeloX-Desktop/*" -DestinationPath "desktop/build/releases/MeloX-Desktop-Windows.zip"
           $zip = Get-Item "desktop/build/releases/MeloX-Desktop-Windows.zip"
           Write-Output "Zip: $($zip.FullName) ($($zip.Length) bytes)"
+      - name: Verify final distribution decoder
+        run: python tools/verify_decoder_bundle.py --artifact desktop/build/releases/MeloX-Desktop-Windows.zip --run --output desktop/build/verification/zip-decoder.json
+      - name: Upload verification evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Verification-${{ runner.os }}
+          path: |
+            desktop/build/verification/*.json
+            shared/build/test-results/desktopTest/*.xml
       - name: Upload zip artifact
         uses: actions/upload-artifact@v4
         with:

@@ -1,0 +1,141 @@
+{
+  "recorded_utc": "2026-10-10T02:51:52.015745+00:00",
+  "android_local_head": "94e17c920bf554966584955afa2bd2ee92580a8b",
+  "android_pinned": "3f877eaffe30c82eb6d24eb3647702f5bc554dd3",
+  "android_previous": "94e17c920bf554966584955afa2bd2ee92580a8b",
+  "windows_baseline": "24eb7fffb7f5c01d17baca5b68674bc33b11be86",
+  "commits": [
+    "fb8e2d20fad4d0e98e93302f54e16bd9bd3745d2 fix(session): stop encrypted stores from crashing on a broken keystore",
+    "74d5d2197e0b8e0fa4b18c60529ff68725ad2467 Merge pull request #69 from qianqianhhh2/main",
+    "aa9b23d103e8a05495c5ec059db7a5cdf3732bfa chore: sync main into contributor",
+    "79a4bc2aaa671e50355f4f0ac23d901fd606940f 1.优化了歌手界面，并确保可以直接跳转至专辑和歌手界面。 2.给歌单排布样式新增了专辑封面显示和搜索栏隐藏（可在顶部下拉划出），都可以通过设置开关（默认为原样式）",
+    "e9c681fd598c0aa60dd7bd11da308ac0f35197b7 chore: sync main into contributor",
+    "33b446c562cdcfbdfd93ef1b905bf93d95316e56 Merge pull request #72 from Makubes333/contributor",
+    "3f877eaffe30c82eb6d24eb3647702f5bc554dd3 Merge pull request #73 from lladlam/contributor"
+  ],
+  "delta_files": [
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/core/account/SecureSessionPreferences.kt",
+      "previous_sha256": "eeb89ebd1957c5f434b2abf05ea93cca4769342d6249a72862db40547168e2df",
+      "pinned_sha256": "c6facd612e7c440b3ff937facb2fe716b823c0610a056e6e71c612037600ece7"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/core/download/MeloXDownloadStore.kt",
+      "previous_sha256": "ddbef21dd0a42e91d959d16bb465f0a605dc9a25805ddf7d81c9147810b220b9",
+      "pinned_sha256": "6c9a732c26515e19acc160ed416aea4ce30d139ab1b966ede944def8a6787dc7"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/core/library/NeteaseHomeBlockParser.kt",
+      "previous_sha256": "029779b1b529a982a8dc8727f8e2a5dca324d40e70e8ce90841249199ffbcff9",
+      "pinned_sha256": "678336f0df82a43b96854f453f3a80a8c85766c133ed22ce774c86f468fe6cce"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/core/library/NeteaseLibraryCache.kt",
+      "previous_sha256": "f3129d6d83042f9a13ed70fa0ce537f76613dbccf5e2dc72f46d2b1c1f7d09c2",
+      "pinned_sha256": "cff76ae7b210297f8d3c1993150a5d6e780236e33d73bb3a751f2b19452cf8e3"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/core/library/NeteaseLibraryClient.kt",
+      "previous_sha256": "4c1555aa47a840da184e489f686e025b18bf44ddfd0ca8d20fb1b41d6bf4afc3",
+      "pinned_sha256": "16dd05379dc5dcf4f7ce9a3fd60a72f3ab3779c456f81bf513cfade74398c72d"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/core/model/SearchSong.kt",
+      "previous_sha256": "0a73f3891f280a286a882418b790359cd3afd2b081819797d4e7d2e13f2311e9",
+      "pinned_sha256": "45745e4986829b89ea3d865d226bcf466daac6dde7467eff2172c99f375fced3"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/core/music/provider/MeloXLegacyUiBridge.kt",
+      "previous_sha256": "d1ffb5928f837e63d7e17d26624ea270e9ee2cb0ac6563e028ae81f269af4ff8",
+      "pinned_sha256": "1a45832f84a7d1737f1bece31ac790b4b58e31f1a85ffc3bf7d2d5eb5f0da75e"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/core/network/NeteaseCollectionDetailsClient.kt",
+      "previous_sha256": "26f2234166e2ae8c1a81302579ad108b9f37af228bb0ea7cdd753081112065fc",
+      "pinned_sha256": "0d66e6047b1b33f2e559fe90dae1817cd5de783b714a315d0b4c155d82e5c973"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/core/network/NeteaseSearchClient.kt",
+      "previous_sha256": "bef45e9907cec92dc470813639500a4aa888d6dfa5e95616a38a3875db910455",
+      "pinned_sha256": "9c768a39532b221e71b509734b6dac2d18bf333fa9f89ac48ed61bf0646df35b"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/core/network/NeteaseSocialExtrasClient.kt",
+      "previous_sha256": "6407e9001f066aac7f5c3f3f96ff58f5d4bc04f10ec1055e08b3d782b375dbda",
+      "pinned_sha256": "abf3ffa6dad4bb2664e6ebea2551a476efb4ff7a29cbb85a700881ef4ccf4185"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/core/network/NeteaseUniversalSearchClient.kt",
+      "previous_sha256": "5d16adec6f69f6d8726d52f126d412b92b761d19780b9e527c2f7381ee4010e1",
+      "pinned_sha256": "89377b1ec578bd3a5b069b76689c54b8becccac0c24ed4ea439ecdeba3989cce"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/core/provider/youtubemusic/YouTubeSessionStore.kt",
+      "previous_sha256": "86ed9fbe57fef71e374c250b216f89027d3b58dec6698111961ba893af2fda50",
+      "pinned_sha256": "1c75585867198777e35c943e068fd9f6ee734ef92f7bfcbb2229808dcd30e509"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/core/recognition/SongRecognitionClient.kt",
+      "previous_sha256": "aa9994e5d2f87c51c9be0da955b27d618e3d4a18f3d4d6350a938ff299cfc00e",
+      "pinned_sha256": "21491b988f40225e373e6072d85d283b4f2d3e70257484c7c49bf0f937157644"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/playback/MeloXPlaybackQueueStore.kt",
+      "previous_sha256": "16981066395ca01b7720541de5ba143a2ac209ffa536366bb48002b9e4dd79e8",
+      "pinned_sha256": "31bffb239e59abe1c6f97a7aaf0e7a49c1dce66efefe4a6a137b87483ed024b2"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/playback/PlaybackCommands.kt",
+      "previous_sha256": "586dc78b81fce6368b14b7bbd33d1147f063cdec0c5fa56b3df7dad4b32a3aea",
+      "pinned_sha256": "8264ac9d171159f180f9051d03c6c5bbba0897d27601f2453c3af198e83633c1"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/MeloXApp.kt",
+      "previous_sha256": "64e93a7ae2425af2716d2f8157563a85964e01b689677ea7bf5f69c813fe139a",
+      "pinned_sha256": "78e861d6d4f412da3d8e1111ecb75aa5fdc08b5e8fc6ecfb418be519114ce24f"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/collection/MeloXArtistDetailScreen.kt",
+      "previous_sha256": "d79970385841e2c130619b3e7ff7d4b13d4d31e99e814a281ecef70a36e4bc92",
+      "pinned_sha256": "195f42df367439007fb9d422b8f80c94117c1a2cac47408249b82d5ecb4633d8"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/library/LibraryScreen.kt",
+      "previous_sha256": "ac68312db25311cad0c38d3531739452086cd483a732c16b97a1e08851362293",
+      "pinned_sha256": "cb599e0084eacd2743a1783f7076ca30829850a557d7b61e11dc4f4a69ec9ed1"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXIOSNowPlayingSharedHost.kt",
+      "previous_sha256": "0f5e8828eac9d80af3be6c4d14fe168b565e2d3cc4968384eaca76e609b05c5e",
+      "pinned_sha256": "e6274924dc7c5fd12420bccb57499a20db7d806574ca8c90dc9a5e9bb6f2801d"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXNowPlayingActionsSheet.kt",
+      "previous_sha256": "1964e38966acb28b47d3e794c0d1d982b50157b1f22b68232a98253d42d530da",
+      "pinned_sha256": "54a0f304b5ed3054456832e213966c65e2fce6a136070cf4bef0397dfb46cbcb"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXPlayerUi.kt",
+      "previous_sha256": "c94327ce77f73257f4b9136d861e22258d1dd7bdb48c32fc1f1d39825f33f8a7",
+      "pinned_sha256": "03c38f12917bf9c647d8bb0cce2371f5f90a4074f9059a225bfebe9f7ba2c2d0"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXSongActionsOverlay.kt",
+      "previous_sha256": "5ea1119384fe2132f7e32f1cc2ebc5ca427445b8208a848f6aba79017cb2009a",
+      "pinned_sha256": "f45585fd155244278d79e2c2f92b0df660c7325d1faa2d0c638d949d41689a82"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/settings/MeloXSettingsPreferences.kt",
+      "previous_sha256": "71e66e19c8478c6a7f56e35084a5794549a3718134cff87f9dafe48fafc41ddb",
+      "pinned_sha256": "94067aa9ade88e69f2fcd4a78d919475e87fa4bee1b04c12287d026f44f62411"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/settings/SettingsScreen.kt",
+      "previous_sha256": "7c0dd8729db461bf05728bb27468a6f89951f837eb580aa0d5931eedb3d68d17",
+      "pinned_sha256": "5325c809720af94a15034e615714a003a8c48dfe6b8dee771ff1c4d2292b22c3"
+    }
+  ],
+  "android_devices": [],
+  "windows_physical_audio": "BLOCKED",
+  "same_content_current_android_reference": "BLOCKED"
+}

@@ -131,7 +131,13 @@ class NeteaseUniversalSearchClient(
         return MusicTrack(
             id = MusicResourceId(MusicSource.Netease, id.toString()),
             title = name,
-            artists = artistNames.map { MusicArtistRef(name = it) },
+            artists = buildList {
+                for (index in 0 until (artists?.length() ?: 0)) {
+                    val value = artists?.optJSONObject(index) ?: continue
+                    add(MusicArtistRef(name = value.optString("name"),
+                        id = value.optLong("id").takeIf { it > 0L }?.let { MusicResourceId(MusicSource.Netease, it.toString()) }))
+                }
+            }.ifEmpty { artistNames.map { MusicArtistRef(name = it) } },
             album = albumName?.takeIf(String::isNotBlank)?.let {
                 melox.music.model.MusicAlbumRef(
                     id = albumId?.let { value -> MusicResourceId(MusicSource.Netease, value) },
@@ -246,6 +252,8 @@ class NeteaseUniversalSearchClient(
             name = value.optString("name").ifBlank { "未知歌曲" },
             artists = artists.ifBlank { "未知歌手" },
             album = album?.optString("name").orEmpty(),
+            albumId = album?.optLong("id")?.takeIf { it > 0L },
+            artistId = artistArray.optJSONObject(0)?.optLong("id")?.takeIf { it > 0L },
             artworkUrl = secureUrl(album?.optString("picUrl")?.takeIf(String::isNotBlank) ?: album?.optString("blurPicUrl")?.takeIf(String::isNotBlank)),
             durationMs = value.optLong("dt", value.optLong("duration", 0L)).coerceAtLeast(0L),
         )
@@ -434,7 +442,7 @@ class NeteaseUniversalSearchClient(
             val body = response.body?.string() ?: throw IOException("响应体为空")
             if (!response.isSuccessful) throw IOException("网易云请求失败：HTTP ${response.code}")
             if (body.isBlank()) throw IOException("网易云返回了空响应")
-            val result = JSONObject(body)
+            val result = parseNeteaseResponseJson(body)
             val code = result.optInt("code", response.code)
             if (code !in 200..299) {
                 val message = (result.opt("message") as? String)?.ifBlank { (result.opt("msg") as? String) } ?: "请求失败"

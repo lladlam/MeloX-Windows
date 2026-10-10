@@ -204,6 +204,8 @@ class NeteaseCollectionDetailsClient(
             name = value.optString("name").ifBlank { "未知歌曲" },
             artists = artists.ifBlank { "未知歌手" },
             album = album?.optString("name").orEmpty(),
+            albumId = album?.optLong("id")?.takeIf { it > 0L },
+            artistId = artistsJson.optJSONObject(0)?.optLong("id")?.takeIf { it > 0L },
             artworkUrl = secure(
                 album?.optString("picUrl")?.takeIf(String::isNotBlank)
                     ?: album?.optString("blurPicUrl")?.takeIf(String::isNotBlank),

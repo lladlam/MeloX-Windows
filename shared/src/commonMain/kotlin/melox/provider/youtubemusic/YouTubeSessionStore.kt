@@ -1,6 +1,6 @@
 package melox.provider.youtubemusic
 
-import melox.platform.getSecurePreferences as getPreferences
+import melox.account.SecureSessionPreferences
 import java.security.MessageDigest
 import com.metrolist.innertube.YouTube
 
@@ -27,7 +27,7 @@ object YouTubeSessionStore {
 
     @Volatile private var appliedFingerprint: String? = null
 
-    private fun preferences() = getPreferences(PreferencesName)
+    private fun preferences() = SecureSessionPreferences.open(PreferencesName)
 
     fun read(): YouTubeSession = preferences().let {
         YouTubeSession(

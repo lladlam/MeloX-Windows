@@ -105,6 +105,9 @@ fun MeloXApp() {
     val backDispatchers = remember { AppTab.entries.associateWith { MeloXBackDispatcher() } }
     val playerBackDispatcher = remember { MeloXBackDispatcher() }
     var settingsRouteRequest by remember { mutableStateOf<String?>(null) }
+    val collectionTarget by melox.ui.navigation.MeloXCollectionLaunchBus.target.collectAsState()
+    val collectionBackDispatcher = remember { MeloXBackDispatcher() }
+    val searchLaunch = melox.ui.navigation.MeloXSearchLaunchBus.request
 
     LaunchedEffect(Unit) {
         MeloXSettingsPreferences.initialize()
@@ -157,6 +160,15 @@ fun MeloXApp() {
     }
 
     val playerOpen = playerTransitionState.currentState || playerTransitionState.targetState
+    LaunchedEffect(searchLaunch) {
+        if (searchLaunch != null) {
+            closePlayer()
+            searchLaunch.source?.let { MusicProviderSelectionStore.setSelectedSource(it); selectedSource = it }
+            melox.ui.navigation.MeloXCollectionLaunchBus.dismiss()
+            selectedTab = AppTab.Search
+        }
+    }
+    LaunchedEffect(collectionTarget) { if (collectionTarget != null) closePlayer() }
     val rootFocus = remember { FocusRequester() }
     LaunchedEffect(Unit) { rootFocus.requestFocus() }
     LaunchedEffect(playerOpen, currentTrack?.id) {
@@ -252,6 +264,7 @@ fun MeloXApp() {
                     .onPreviewKeyEvent { event ->
                         if (event.type != KeyEventType.KeyUp || event.key != Key.Escape) return@onPreviewKeyEvent false
                         when {
+                            collectionTarget != null -> if (!collectionBackDispatcher.dispatch()) melox.ui.navigation.MeloXCollectionLaunchBus.dismiss()
                             playerOpen -> if (!playerBackDispatcher.dispatch()) closePlayer()
                             messagesVisible -> messagesVisible = false
                             backDispatchers.getValue(selectedTab).dispatch() -> Unit
@@ -399,6 +412,26 @@ fun MeloXApp() {
                                 )
                             },
                         )
+                        }
+                    }
+                }
+                AnimatedContent(
+                    targetState = collectionTarget,
+                    transitionSpec = {
+                        (slideInHorizontally(tween(280, easing = FastOutSlowInEasing)) { it } + fadeIn(tween(280))) togetherWith
+                            (slideOutHorizontally(tween(220, easing = FastOutSlowInEasing)) { it / 4 } + fadeOut(tween(220)))
+                    },
+                    modifier = Modifier.fillMaxSize().zIndex(30f),
+                    label = "collection-overlay",
+                ) { target ->
+                    CompositionLocalProvider(LocalMeloXBackDispatcher provides collectionBackDispatcher,
+                        melox.ui.glass.LocalMeloXLayerBackdrop provides null) {
+                        when (target) {
+                            is melox.ui.navigation.MeloXCollectionTarget.Artist -> melox.ui.screens.ArtistDetailScreen(target.id,
+                                onBack = melox.ui.navigation.MeloXCollectionLaunchBus::dismiss)
+                            is melox.ui.navigation.MeloXCollectionTarget.Album -> AlbumDetailScreen(target.id.toString(), target.name,
+                                onBack = melox.ui.navigation.MeloXCollectionLaunchBus::dismiss)
+                            null -> Unit
                         }
                     }
                 }

@@ -91,6 +91,8 @@ object MeloXSettingsPreferences {
             "general_remember_tab" -> MeloXSettingsRuntime.rememberLastTab = value
             "general_disable_auto_tabbar_shrink" -> MeloXSettingsRuntime.disableAutomaticTabBarShrink = value
             "library_remember_page" -> MeloXSettingsRuntime.rememberLibraryPage = value
+            "playlist_show_artwork" -> MeloXSettingsRuntime.playlistShowArtwork = value
+            "playlist_search_bar_hidden" -> MeloXSettingsRuntime.playlistSearchBarHidden = value
             "download_lyrics" -> MeloXSettingsRuntime.downloadLyricsEnabled = value
             "content_playlist_play_count" -> MeloXSettingsRuntime.showPlaylistPlayCount = value
             "content_high_quality_playlist" -> MeloXSettingsRuntime.showHighQualityPlaylists = value

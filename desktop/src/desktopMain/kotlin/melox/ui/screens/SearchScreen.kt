@@ -135,6 +135,18 @@ fun SearchScreen(
     var loading by remember(source) { mutableStateOf(false) }
     var error by remember(source) { mutableStateOf<String?>(null) }
     var selectedActionSong by remember(source) { mutableStateOf<SearchSong?>(null) }
+    val launch = melox.ui.navigation.MeloXSearchLaunchBus.request
+    LaunchedEffect(launch, source) {
+        if (launch == null || launch.source != null && launch.source != source) return@LaunchedEffect
+        query = launch.query
+        kind = launch.kind.takeIf { it in availableKinds } ?: MeloXSearchKind.Songs
+        skipSearchDebounce = true
+        searchTrigger += 1
+        selectedDetail = null
+        selectedProviderPlaylist = null; selectedProviderAlbum = null; selectedProviderArtist = null
+        categoryTitle = null
+        melox.ui.navigation.MeloXSearchLaunchBus.consume(launch)
+    }
 
     LaunchedEffect(source, availableKinds) {
         if (kind !in availableKinds) kind = MeloXSearchKind.Songs
@@ -285,7 +297,9 @@ fun SearchScreen(
                 load = { (currentProvider as? ArtistCapability)?.artistDetail(selectedProviderArtist!!)?.tracks.orEmpty() },
                 onBack = { selectedProviderArtist = null },
             )
-            selectedDetail != null -> SearchCollectionDetail(
+             selectedDetail?.kind == MeloXSearchKind.Artists -> ArtistDetailScreen(selectedDetail!!.id, onBack = { selectedDetail = null })
+             selectedDetail?.kind == MeloXSearchKind.Albums -> AlbumDetailScreen(selectedDetail!!.id.toString(), selectedDetail!!.title, onBack = { selectedDetail = null })
+             selectedDetail != null -> SearchCollectionDetail(
                 item = selectedDetail!!,
                 universal = universal,
                 onBack = { selectedDetail = null },
@@ -408,15 +422,7 @@ private fun NeteasePlaylistSummary.asSearchItem() = MeloXSearchMediaItem(
     trackCount = trackCount,
 )
 
-private fun MusicTrack.toSearchSong() = SearchSong(
-    id = id.value.toLongOrNull() ?: id.value.hashCode().toLong(),
-    name = title,
-    artists = artistText,
-    album = album?.name.orEmpty(),
-    artworkUrl = artworkUrl,
-    durationMs = durationMs ?: 0L,
-    providerTrack = this,
-)
+private fun MusicTrack.toSearchSong() = MeloXLegacyUiBridge.track(this)
 
 private fun parseSongLink(value: String): Long? {
     val match = Regex("""(?:id=|/song/|song\?id=)(\d{3,})""").find(value) ?: return null

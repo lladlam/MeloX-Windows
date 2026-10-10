@@ -75,7 +75,7 @@ internal class NeteaseAuthenticatedWeapi(
             val body = response.body?.string() ?: throw IOException("网易云返回了空响应")
             if (!response.isSuccessful) throw IOException("网易云请求失败：HTTP ${response.code}")
             if (body.isBlank()) throw IOException("网易云返回了空响应")
-            val result = JSONObject(body)
+            val result = parseNeteaseResponseJson(body)
             val code = result.optInt("code", response.code)
             if (code !in 200..299) {
                 throw IOException(

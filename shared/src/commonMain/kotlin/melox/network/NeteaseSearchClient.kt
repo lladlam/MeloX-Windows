@@ -105,6 +105,8 @@ class NeteaseSearchClient(
                         name = song.optString("name", "未知歌曲"),
                         artists = artists.ifBlank { "未知歌手" },
                         album = album,
+                        albumId = albumObject?.optLong("id")?.takeIf { it > 0L },
+                        artistId = artistsArray.optJSONObject(0)?.optLong("id")?.takeIf { it > 0L },
                         artworkUrl = artwork,
                         durationMs = neteaseSearchDurationMs(song),
                     ),
@@ -315,7 +317,7 @@ class NeteaseSearchClient(
             }
             if (body.isBlank()) throw IOException("网易云返回了空响应")
 
-            val jsonObject = JSONObject(body)
+            val jsonObject = parseNeteaseResponseJson(body)
             val code = jsonObject.optInt("code", response.code)
             if (code !in 200..299) {
                 val message = jsonObject.optString("message")

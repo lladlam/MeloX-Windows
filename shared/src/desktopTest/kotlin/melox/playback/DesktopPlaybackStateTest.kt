@@ -44,6 +44,40 @@ class DesktopPlaybackStateTest {
 
     @BeforeTest fun resetModes() { MeloXPlaybackModePreferences.reset() }
 
+    @Test fun collectionIdsSurviveQueuePersistenceAndBecomePlaybackMetadata() = runTest {
+        val player = player({ DesktopPlaybackRequest("unused") })
+        PlaybackCommands.adoptController(player)
+        val selected = song(1).copy(albumId = 32311, artistId = 6452)
+        player.setMediaItems(listOf(selected), 0, 42_000)
+        MeloXPlaybackQueueStore.save(player)
+        val saved = assertNotNull(MeloXPlaybackQueueStore.read())
+        assertEquals(32311L, saved.items.single().song.albumId)
+        assertEquals(6452L, saved.items.single().song.artistId)
+        player.restore(saved.items, 0, saved.positionMs)
+        player.prepare()
+        assertEquals("32311", AudioPlayer.currentTrack.value?.album?.id?.value)
+        assertEquals("6452", AudioPlayer.currentTrack.value?.artists?.single()?.id?.value)
+    }
+
+    @Test fun explicitClearStopsAudioAndCannotRestoreStaleQueueOrAcceptLateCallbacks() = runTest {
+        val starts = mutableListOf<DesktopPlaybackStart>()
+        val player = player({ DesktopPlaybackRequest("unused") }, starts)
+        PlaybackCommands.adoptController(player)
+        player.setMediaItems(listOf(song(1), song(2)), 0, 0)
+        player.prepare(); player.play(); runCurrent()
+        MeloXPlaybackQueueStore.save(player)
+        player.clearQueue()
+        starts.single().onEnded()
+        starts.single().onFailure(AudioPlaybackFailure(AudioFailureKind.Content, java.io.IOException("old")))
+        runCurrent()
+        assertNull(MeloXPlaybackQueueStore.read())
+        assertNull(AudioPlayer.currentTrack.value)
+        assertEquals(-1, PlaybackCommands.queue.value.index)
+        assertTrue(PlaybackCommands.queue.value.songs.isEmpty())
+        assertFalse(player.playWhenReady)
+        assertEquals(1, starts.size)
+    }
+
     @AfterTest fun cleanup() {
         PlaybackCommands.playerController()?.release()
         PlaybackCommands.activeController = null

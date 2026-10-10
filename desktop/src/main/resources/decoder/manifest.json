@@ -1,0 +1,12 @@
+{
+  "ffmpeg": {
+    "size": 172690600,
+    "sha256": "ee930e8def21a993f4b8c680757df15054da1c8f2698da0fdf87f1f3b15bd633",
+    "magic": "ELF"
+  },
+  "ffmpeg.exe": {
+    "size": 164352000,
+    "sha256": "af7913b7ddc324bf02b8af72fe8612b1471455ef8d9e04e45466510742abcff9",
+    "magic": "PE"
+  }
+}

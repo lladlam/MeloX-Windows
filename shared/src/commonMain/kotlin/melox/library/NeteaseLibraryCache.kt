@@ -188,6 +188,8 @@ private fun encodeSongs(values: List<SearchSong>) = JSONArray().apply {
                 .put("name", song.name)
                 .put("artists", song.artists)
                 .put("album", song.album)
+                .put("albumId", song.albumId ?: JSONObject.NULL)
+                .put("artistId", song.artistId ?: JSONObject.NULL)
                 .put("artworkUrl", song.artworkUrl)
                 .put("durationMs", song.durationMs),
         )
@@ -203,6 +205,8 @@ private fun decodeSongs(values: JSONArray) = buildList {
                 name = song.optString("name"),
                 artists = song.optString("artists"),
                 album = song.optString("album"),
+                albumId = song.optLong("albumId").takeIf { it > 0L },
+                artistId = song.optLong("artistId").takeIf { it > 0L },
                 artworkUrl = song.optNullableString("artworkUrl"),
                 durationMs = song.optLong("durationMs"),
             ),

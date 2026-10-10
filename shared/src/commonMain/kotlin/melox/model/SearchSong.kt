@@ -18,6 +18,8 @@ data class SearchSong(
      * and data loading are dispatched by the bridge/data layer.
      */
     val providerTrack: MusicTrack? = null,
+    val albumId: Long? = null,
+    val artistId: Long? = null,
 ) {
     val playbackUrl: String
         get() = "https://music.163.com/song/media/outer/url?id=$id"
