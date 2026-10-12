@@ -23,6 +23,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -43,12 +44,15 @@ import androidx.compose.ui.input.key.type
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.stateDescription
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.ensureActive
 import melox.account.NeteaseSessionStore
 import melox.library.NeteaseLibraryClient
 import melox.library.NeteasePlaylistSummary
@@ -99,6 +103,11 @@ fun SearchScreen(
     val universal = remember { NeteaseUniversalSearchClient(cookieProvider = cookie) }
     val library = remember { NeteaseLibraryClient(cookie) }
     val providerRegistry = remember { MeloXMusicProviders.create() }
+    val unifiedService = remember(providerRegistry) { melox.music.provider.UnifiedMusicService(providerRegistry) }
+    val selectionRevision by melox.music.provider.MusicProviderSelectionStore.revision.collectAsState()
+    val unifiedEnabled = remember(selectionRevision) { melox.music.provider.MusicProviderSelectionStore.unifiedEnabled() }
+    val unifiedSources = remember(selectionRevision) { melox.music.provider.MusicProviderSelectionStore.unifiedSources() }
+    var unifiedFailures by remember(source) { mutableStateOf<List<melox.music.provider.UnifiedMusicService.SearchFailure>>(emptyList()) }
     val currentProvider = remember(source) { runCatching { providerRegistry.require(source) }.getOrNull() }
     val providerSongSearch = currentProvider as? SearchCapability
     val providerCatalog = currentProvider as? CatalogSearchCapability
@@ -135,6 +144,7 @@ fun SearchScreen(
     var loading by remember(source) { mutableStateOf(false) }
     var error by remember(source) { mutableStateOf<String?>(null) }
     var selectedActionSong by remember(source) { mutableStateOf<SearchSong?>(null) }
+    var songLinkResult by remember(source) { mutableStateOf(false) }
     val launch = melox.ui.navigation.MeloXSearchLaunchBus.request
     LaunchedEffect(launch, source) {
         if (launch == null || launch.source != null && launch.source != source) return@LaunchedEffect
@@ -157,7 +167,9 @@ fun SearchScreen(
                 .onSuccess { recommendations = it }
         }
     }
-    LaunchedEffect(query, kind, source, searchTrigger) {
+    LaunchedEffect(query, kind, source, searchTrigger, unifiedEnabled, unifiedSources) {
+        unifiedFailures = emptyList()
+        songLinkResult = false
         val keyword = query.trim()
         if (keyword.isBlank()) {
             songs = emptyList()
@@ -170,26 +182,44 @@ fun SearchScreen(
             loading = false
             return@LaunchedEffect
         }
-        if (!skipSearchDebounce) delay(1500)
-        skipSearchDebounce = false
         loading = true
         error = null
+        if (!skipSearchDebounce) delay(1500)
+        skipSearchDebounce = false
         val linkedId = if (source == MusicSource.Netease) parseSongLink(keyword) else null
         if (linkedId != null) {
             runCatching { universal.songDetail(linkedId) }
-                .onSuccess { songs = listOfNotNull(it); media = emptyList(); kind = MeloXSearchKind.Songs }
-                .onFailure { error = it.message ?: "无法读取歌曲链接" }
+                .onSuccess {
+                    songs = listOfNotNull(it)
+                    providerSongs = emptyList()
+                    media = emptyList()
+                    songLinkResult = true
+                    kind = MeloXSearchKind.Songs
+                }
+                .onFailure { if (it is kotlinx.coroutines.CancellationException) throw it; error = it.message ?: "无法读取歌曲链接" }
             loading = false
             return@LaunchedEffect
         }
         when (kind) {
             MeloXSearchKind.Songs -> {
                 media = emptyList()
-                if (source == MusicSource.Netease) {
+                if (unifiedEnabled) {
+                    songs = emptyList()
+                    providerSongs = emptyList()
+                    runCatching { unifiedService.searchSongs(keyword, unifiedSources, pageSizePerProvider = 25) }
+                        .onSuccess { result ->
+                            kotlinx.coroutines.currentCoroutineContext().ensureActive()
+                            providerSongs = result.aggregated.mapNotNull { it.recommendation?.track }.ifEmpty { result.tracks }
+                            unifiedFailures = result.failures
+                        }.onFailure { failure ->
+                            if (failure is kotlinx.coroutines.CancellationException) throw failure
+                            error = failure.message ?: "聚合搜索失败"
+                        }
+                } else if (source == MusicSource.Netease) {
                     providerSongs = emptyList()
                     runCatching { universal.searchSongs(keyword, page = 1, pageSize = 50) }
                         .onSuccess { songs = it.items.map { track -> track.toSearchSong() } }
-                        .onFailure { error = it.message ?: "搜索失败" }
+                        .onFailure { if (it is kotlinx.coroutines.CancellationException) throw it; error = it.message ?: "搜索失败" }
                 } else {
                     songs = emptyList()
                     val capability = providerSongSearch
@@ -199,7 +229,7 @@ fun SearchScreen(
                     } else {
                         runCatching { capability.searchSongs(keyword, page = 1, pageSize = 50).items }
                             .onSuccess { providerSongs = it }
-                            .onFailure { error = it.message ?: "搜索失败" }
+                            .onFailure { if (it is kotlinx.coroutines.CancellationException) throw it; error = it.message ?: "搜索失败" }
                     }
                 }
             }
@@ -209,18 +239,18 @@ fun SearchScreen(
                 if (source == MusicSource.Netease) {
                     runCatching { universal.searchMedia(keyword, kind) }
                         .onSuccess { media = it }
-                        .onFailure { error = it.message ?: "搜索失败" }
+                        .onFailure { if (it is kotlinx.coroutines.CancellationException) throw it; error = it.message ?: "搜索失败" }
                 } else {
                     media = emptyList()
                     val capability = providerCatalog
                     if (capability == null) error = "${source.displayName} 当前没有${kind.title}搜索"
                     else when (kind) {
                         MeloXSearchKind.Playlists -> runCatching { capability.searchPlaylists(keyword, page = 1, pageSize = 40).items }
-                            .onSuccess { providerPlaylists = it }.onFailure { error = it.message ?: "搜索失败" }
+                            .onSuccess { providerPlaylists = it }.onFailure { if (it is kotlinx.coroutines.CancellationException) throw it; error = it.message ?: "搜索失败" }
                         MeloXSearchKind.Albums -> runCatching { capability.searchAlbums(keyword, page = 1, pageSize = 40).items }
-                            .onSuccess { providerAlbums = it }.onFailure { error = it.message ?: "搜索失败" }
+                            .onSuccess { providerAlbums = it }.onFailure { if (it is kotlinx.coroutines.CancellationException) throw it; error = it.message ?: "搜索失败" }
                         MeloXSearchKind.Artists -> runCatching { capability.searchArtists(keyword, page = 1, pageSize = 40).items }
-                            .onSuccess { providerArtists = it }.onFailure { error = it.message ?: "搜索失败" }
+                            .onSuccess { providerArtists = it }.onFailure { if (it is kotlinx.coroutines.CancellationException) throw it; error = it.message ?: "搜索失败" }
                         else -> Unit
                     }
                 }
@@ -232,7 +262,7 @@ fun SearchScreen(
                 } else {
                     runCatching { universal.searchMedia(keyword, kind) }
                         .onSuccess { media = it; songs = emptyList() }
-                        .onFailure { error = it.message ?: "搜索失败" }
+                        .onFailure { if (it is kotlinx.coroutines.CancellationException) throw it; error = it.message ?: "搜索失败" }
                 }
             }
         }
@@ -312,7 +342,9 @@ fun SearchScreen(
                 onBack = { categoryTitle = null; categoryPlaylists = emptyList(); error = null },
                 onPlaylist = { selectedDetail = it.asSearchItem() },
             )
-            else -> Column(Modifier.fillMaxSize().padding(top = 26.dp)) {
+            else -> Column(Modifier.fillMaxSize().padding(top = 26.dp).testTag("search-state").semantics {
+                stateDescription = if (unifiedEnabled) "Unified>${unifiedSources.sortedBy { it.storageValue }.joinToString(">") { it.storageValue }}" else "Provider>${source.storageValue}"
+            }) {
                 MeloXIosTopBar(title = "搜索")
                 Spacer(Modifier.height(16.dp))
                 SearchField(
@@ -362,13 +394,15 @@ fun SearchScreen(
                             )
                         }
                         loading -> Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                            CircularProgressIndicator(color = SearchAccent)
+                             CircularProgressIndicator(color = SearchAccent, modifier = Modifier.testTag("search-loading"))
                         }
                         error != null -> Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                            Text(error.orEmpty(), color = MaterialTheme.colorScheme.error)
+                             Text(error.orEmpty(), modifier = Modifier.testTag("search-error"), color = MaterialTheme.colorScheme.error)
                         }
-                        kind == MeloXSearchKind.Songs && source != MusicSource.Netease -> ProviderSearchSongResults(
-                            values = providerSongs,
+                         kind == MeloXSearchKind.Songs && !songLinkResult && (unifiedEnabled || source != MusicSource.Netease) -> ProviderSearchSongResults(
+                             values = providerSongs,
+                             failures = unifiedFailures,
+                             showSource = unifiedEnabled,
                             onPlay = { track ->
                                 ProviderPlaybackCommands.playQueue(
                                     tracks = providerSongs,
@@ -440,7 +474,7 @@ private fun SearchField(
     MeloXGlassTextField(
         value = value,
         onValueChange = onValueChange,
-        modifier = Modifier.padding(horizontal = 20.dp),
+        modifier = Modifier.padding(horizontal = 20.dp).testTag("search-query"),
         leadingContent = {
             MeloXSearchBackMorphIcon(
                 focused = focused,
@@ -611,6 +645,7 @@ private fun SearchSongResults(
     onMore: ((SearchSong) -> Unit)? = null,
 ) {
     LazyColumn(Modifier.fillMaxSize(), contentPadding = PaddingValues(bottom = 140.dp)) {
+        if (values.isEmpty()) item { Text("没有找到歌曲", Modifier.padding(20.dp).testTag("search-empty"), color = MaterialTheme.colorScheme.onSurface.copy(alpha = .46f)) }
         items(values, key = { it.id }) { song ->
             MeloXSwipeActionRow(
                 startActions = listOf(
@@ -645,17 +680,32 @@ private fun SearchSongResults(
 }
 
 @Composable
-private fun ProviderSearchSongResults(values: List<MusicTrack>, onPlay: (MusicTrack) -> Unit) {
-    LazyColumn(Modifier.fillMaxSize(), contentPadding = PaddingValues(bottom = 140.dp)) {
+private fun ProviderSearchSongResults(
+    values: List<MusicTrack>,
+    failures: List<melox.music.provider.UnifiedMusicService.SearchFailure> = emptyList(),
+    showSource: Boolean = false,
+    onPlay: (MusicTrack) -> Unit,
+) {
+    LazyColumn(Modifier.fillMaxSize().testTag("search-provider-results").semantics {
+        stateDescription = values.joinToString(">") { "${it.id.source.storageValue}:${it.id.value}" }
+    }, contentPadding = PaddingValues(bottom = 140.dp)) {
+        if (failures.isNotEmpty()) item {
+            Text(failures.joinToString("；") { "${it.source.displayName}：${it.message}" },
+                Modifier.padding(horizontal = 20.dp, vertical = 8.dp).testTag("search-provider-failures"),
+                color = MaterialTheme.colorScheme.onSurface.copy(alpha = .46f), fontSize = 12.sp, lineHeight = 17.sp)
+        }
+        if (values.isEmpty()) item { Text("没有找到歌曲", Modifier.padding(20.dp).testTag("search-empty"), color = MaterialTheme.colorScheme.onSurface.copy(alpha = .46f)) }
         items(values, key = { "${it.id.source.storageValue}:${it.id.value}" }) { track ->
             Row(
-                Modifier.fillMaxWidth().clickable { onPlay(track) }.padding(horizontal = 20.dp, vertical = 8.dp),
+                Modifier.fillMaxWidth().testTag("search-track-${track.id.source.storageValue}-${track.id.value}")
+                    .clickable { onPlay(track) }.padding(horizontal = 20.dp, vertical = 8.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 MeloXArtworkImage(track.artworkUrl, MeloXColors.SurfaceVariant, Modifier.size(52.dp).clip(RoundedCornerShape(8.dp)))
                 Column(Modifier.padding(start = 12.dp).weight(1f)) {
                     Text(track.title, maxLines = 1, overflow = TextOverflow.Ellipsis, color = MeloXColors.pageOnSurface(), fontWeight = FontWeight.Medium)
                     Text(track.artistText, maxLines = 1, overflow = TextOverflow.Ellipsis, color = MeloXColors.pageOnSurfaceVariant(), fontSize = 13.sp)
+                    if (showSource) Text(track.id.source.displayName, fontSize = 11.sp, color = MaterialTheme.colorScheme.onSurface.copy(alpha = .46f))
                 }
             }
         }

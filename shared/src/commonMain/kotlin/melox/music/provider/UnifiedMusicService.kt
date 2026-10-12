@@ -5,6 +5,11 @@ import melox.music.model.MusicTrack
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.TimeoutCancellationException
+import kotlinx.coroutines.ensureActive
+import kotlinx.coroutines.withTimeout
+import kotlinx.coroutines.currentCoroutineContext
 
 /**
  * Explicit opt-in cross-provider search.
@@ -16,6 +21,7 @@ import kotlinx.coroutines.coroutineScope
  */
 class UnifiedMusicService(
     private val registry: MusicProviderRegistry,
+    private val providerTimeoutMs: Long = 12_000L,
 ) {
     data class SearchFailure(
         val source: MusicSource,
@@ -41,7 +47,7 @@ class UnifiedMusicService(
         val requests = orderedSources.map { source ->
             async {
                 val provider = registry[source]
-                val search = provider as? SearchCapability
+                val search = (provider as? SearchCapability)?.takeIf { provider.supports(MusicCapability.Search) }
                 if (search == null) {
                     ProviderResult(
                         source = source,
@@ -50,20 +56,26 @@ class UnifiedMusicService(
                     )
                 } else {
                     runCatching {
-                        search.searchSongs(
+                        withTimeout(providerTimeoutMs) { search.searchSongs(
                             query = normalized,
                             page = page.coerceAtLeast(1),
                             pageSize = pageSizePerProvider.coerceIn(1, 50),
-                        ).items
+                        ).items }
                     }.fold(
-                        onSuccess = { tracks -> ProviderResult(source, tracks, null) },
+                        onSuccess = { tracks ->
+                            val valid = tracks.filter { it.id.source == source }.distinctBy { it.id }
+                            ProviderResult(source, valid, if (valid.size < tracks.distinctBy { it.id }.size)
+                                SearchFailure(source, "来源返回的歌曲身份不匹配") else null)
+                        },
                         onFailure = { error ->
+                            if (error is CancellationException && error !is TimeoutCancellationException) throw error
+                            currentCoroutineContext().ensureActive()
                             ProviderResult(
                                 source = source,
                                 tracks = emptyList(),
                                 failure = SearchFailure(
                                     source,
-                                    error.message ?: "${source.displayName} 搜索失败",
+                                    if (error is TimeoutCancellationException) "${source.displayName} 搜索超时" else error.message ?: "${source.displayName} 搜索失败",
                                 ),
                             )
                         },
@@ -98,7 +110,10 @@ class UnifiedMusicService(
                     ProviderResult(source, emptyList(), null)
                 } else {
                     runCatching { capability.aggregationTracks(page = 1, pageSize = pageSizePerProvider.coerceIn(1, 200)).items }
-                        .fold({ ProviderResult(source, it, null) }, { ProviderResult(source, emptyList(), SearchFailure(source, it.message ?: "${source.displayName} 聚合数据读取失败")) })
+                        .fold({ ProviderResult(source, it, null) }, {
+                            if (it is CancellationException) throw it
+                            ProviderResult(source, emptyList(), SearchFailure(source, it.message ?: "${source.displayName} 聚合数据读取失败"))
+                        })
                 }
             }
         }.awaitAll()
@@ -119,7 +134,7 @@ class UnifiedMusicService(
                         rankingLimit = 4,
                     )
                     home.newSongs + home.rankings.flatMap { it.previewTracks }
-                }.getOrDefault(emptyList())
+                }.onFailure { if (it is CancellationException) throw it }.getOrDefault(emptyList())
             }
         }.awaitAll().flatten().distinctBy { "${it.id.source.storageValue}:${it.id.value}" }
     }

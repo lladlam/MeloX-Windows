@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="DesktopPcmAnalysisTest[desktop]" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-10-12T04:00:31.880Z" hostname="lladlam-arch" time="0.375">
+  <properties/>
+  <testcase name="malformedAndShortAudioAreRejectedRatherThanReturningDefaults[desktop]" classname="melox.playback.DesktopPcmAnalysisTest" time="0.067"/>
+  <testcase name="knownBeatRatesAndSilentBoundariesAreMeasuredFromSignedPcm[desktop]" classname="melox.playback.DesktopPcmAnalysisTest" time="0.116"/>
+  <testcase name="fftBandsDistinguishBassMidAndTrebleWithoutUnsignedByteEnergy[desktop]" classname="melox.playback.DesktopPcmAnalysisTest" time="0.029"/>
+  <testcase name="silenceHasNoBpmOrSyntheticBeatTimeline[desktop]" classname="melox.playback.DesktopPcmAnalysisTest" time="0.004"/>
+  <testcase name="bundledFfmpegAnalysisAgreesWithRawPcmAndConcurrentWaiters[desktop]" classname="melox.playback.DesktopPcmAnalysisTest" time="0.159"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

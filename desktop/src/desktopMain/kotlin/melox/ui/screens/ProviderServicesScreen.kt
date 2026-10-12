@@ -19,6 +19,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.PointerIcon
@@ -248,6 +249,7 @@ private fun ProviderRow(
 
             // Toggle
             Switch(
+                modifier = Modifier.testTag("provider-scope-${provider.id}"),
                 checked = isEnabled,
                 onCheckedChange = onToggle,
                 colors = SwitchDefaults.colors(
@@ -299,6 +301,7 @@ private fun SearchScopeItem(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Checkbox(
+            modifier = Modifier.testTag("provider-search-scope-${provider.id}"),
             checked = checked,
             onCheckedChange = onCheckedChange,
             colors = CheckboxDefaults.colors(
@@ -337,6 +340,7 @@ private fun SearchScopeItem(
 @Composable
 fun ProviderServicesScreen(navState: MeloXNavState) {
     val state = remember { ServiceState() }
+    val visibleProviders = allProviders.filter { it.musicSource() in MusicProviderSelectionStore.visibleSources() }
 
     Column(
         modifier = Modifier
@@ -357,7 +361,7 @@ fun ProviderServicesScreen(navState: MeloXNavState) {
                 Column(
                     modifier = Modifier.padding(horizontal = 20.dp),
                 ) {
-                    allProviders.forEachIndexed { index, provider ->
+                    visibleProviders.forEachIndexed { index, provider ->
                         val source = provider.musicSource()
                         Column {
                             ProviderRow(
@@ -369,7 +373,7 @@ fun ProviderServicesScreen(navState: MeloXNavState) {
                                 onLoginClick = { navState.navigateTo(Route.Login) },
                                 onLogoutClick = { state.logout(source) },
                             )
-                            if (index < allProviders.size - 1) {
+                            if (index < visibleProviders.size - 1) {
                                 HorizontalDivider(
                                     modifier = Modifier.padding(start = 72.dp),
                                     color = MeloXColors.Outline.copy(alpha = 0.2f),
@@ -405,6 +409,7 @@ fun ProviderServicesScreen(navState: MeloXNavState) {
                             modifier = Modifier.weight(1f),
                         )
                         Switch(
+                            modifier = Modifier.testTag("provider-unified-search"),
                             checked = state.aggregatedSearch,
                             onCheckedChange = { state.setAggregated(it) },
                             colors = SwitchDefaults.colors(
@@ -436,7 +441,7 @@ fun ProviderServicesScreen(navState: MeloXNavState) {
                     }
 
                     // Search scope checkboxes
-                    allProviders.forEach { provider ->
+                    visibleProviders.forEach { provider ->
                         val source = provider.musicSource()
                         SearchScopeItem(
                             provider = provider,

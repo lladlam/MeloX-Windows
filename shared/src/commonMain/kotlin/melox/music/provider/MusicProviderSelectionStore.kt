@@ -4,6 +4,9 @@ import melox.MeloXBuildConfig
 import melox.platform.MeloXPreferences
 import melox.platform.getPreferences
 import melox.music.model.MusicSource
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 
 /**
  * Provider selection is local-only. Cross-provider aggregation is deliberately
@@ -12,6 +15,8 @@ import melox.music.model.MusicSource
  * never silently fans a request out to every installed provider.
  */
 object MusicProviderSelectionStore {
+    private val mutableRevision = MutableStateFlow(0L)
+    val revision = mutableRevision.asStateFlow()
     private const val PreferencesName = "melox_music_providers"
     private const val KeySelectedSource = "selected_source"
     private const val KeyUnifiedEnabled = "unified_enabled"
@@ -36,6 +41,7 @@ object MusicProviderSelectionStore {
 
     fun setSelectedSource(source: MusicSource) {
         prefs().putString(KeySelectedSource, source.storageValue)
+        mutableRevision.update { it + 1 }
     }
 
     fun unifiedEnabled(): Boolean = prefs().getBoolean(KeyUnifiedEnabled, false)
@@ -53,6 +59,7 @@ object MusicProviderSelectionStore {
             // Automatic fallback must never remain active when aggregation is off.
             preferences.putBoolean(KeyAutomaticFallback, false)
         }
+        mutableRevision.update { it + 1 }
     }
 
     fun automaticFallbackEnabled(): Boolean =
@@ -61,6 +68,7 @@ object MusicProviderSelectionStore {
     fun setAutomaticFallbackEnabled(enabled: Boolean) {
         val safeEnabled = enabled && unifiedEnabled()
         prefs().putBoolean(KeyAutomaticFallback, safeEnabled)
+        mutableRevision.update { it + 1 }
     }
 
     fun unifiedSources(): Set<MusicSource> {
@@ -77,6 +85,7 @@ object MusicProviderSelectionStore {
         // single switch can never accidentally turn into an "all providers" request.
         val safeSources = sources.ifEmpty { setOf(selectedSource()) }
         prefs().putStringSet(KeyUnifiedSources, safeSources.mapTo(linkedSetOf()) { it.storageValue })
+        mutableRevision.update { it + 1 }
     }
 
     fun setUnifiedSourceEnabled(source: MusicSource, enabled: Boolean): Set<MusicSource> {

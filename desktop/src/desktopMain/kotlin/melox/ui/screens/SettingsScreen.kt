@@ -188,6 +188,7 @@ private fun SettingsAccountCard(onOpenLogin: () -> Unit, onOpenServices: () -> U
     MeloXIosListRow(
         title = "音乐服务",
         subtitle = "切换音乐源、登录账号与聚合设置",
+        modifier = Modifier.testTag("settings-open-services"),
         leading = { MeloXSymbolIcon(MeloXSymbol.MusicNote, size = 30, iconSize = 24, color = accent) },
         showTopSeparator = true,
         onClick = onOpenServices,

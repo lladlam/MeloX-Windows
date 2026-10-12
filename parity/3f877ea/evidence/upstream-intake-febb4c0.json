@@ -821,5 +821,20 @@
     "Playback/lyrics/display/mainline fixes and contributor merge",
     "Provider/playback/Library/Settings/UI changes"
   ],
-  "policy": "Evidence under parity/3f877ea continues to verify only the pinned source. New upstream delta requires independent source export, implementation and acceptance."
+  "policy": "Evidence under parity/3f877ea continues to verify only the pinned source. New upstream delta requires independent source export, implementation and acceptance.",
+  "pure_export": {
+    "directory": "/tmp/opencode/melox-android-febb4c0",
+    "commit": "febb4c0534787e040a89df8457e630d067f44b80",
+    "archive_sha256": "36c65b814717b508e4f1b706da986fe7c4490af6fb0f800fee0788219a676cf9",
+    "source_files_sha256": {
+      "android/app/build.gradle.kts": "7080aeb1b9d6c271278738a380acec2c6db764db748aa7824fb0391e85691b42",
+      "android/app/src/main/kotlin/com/lladlam/melox/core/remoteconfig/MeloXRemoteConfigModels.kt": "b26c1e33bd882d6c649f5c7e22844ad3488e3a20a093542301c15d60303fed23",
+      "android/app/src/main/kotlin/com/lladlam/melox/core/autosync/AutoSyncCoordinator.kt": "467d424382c53b04f463d4c4497e047a0d92cf79874a37ad61b74f371e741a6e",
+      "android/app/src/main/kotlin/com/lladlam/melox/core/autosync/AutoSyncModelRepository.kt": "6f04e593248dcb4ccc8e7dbe54b5a63b866715afd78c300b36b9248fa898cdae",
+      "android/app/src/main/kotlin/com/lladlam/melox/playback/MeloXSmartQueueBuilder.kt": "e08a499fc9ef70eef160192cd3bf0f0c938c127664cdb66d663cac9fdf906a44",
+      "android/app/src/main/kotlin/com/lladlam/melox/playback/MeloXAutoMix.kt": "4c279bd3574b2190aaf2f9b160187126c530141aec26bb9dcb02994c367512c4",
+      "android/app/src/main/kotlin/com/lladlam/melox/ui/search/SearchScreen.kt": "8f0c4006e1751423eb28a31dcf0dc6cfb2f7f5dd21ffc0aae8c4e397580ac892",
+      "android/app/src/main/kotlin/com/lladlam/melox/ui/settings/SettingsScreen.kt": "d1a4cff248d62947bceb82b441848cb5c055e3b0fbc414112defb19dc729b352"
+    }
+  }
 }

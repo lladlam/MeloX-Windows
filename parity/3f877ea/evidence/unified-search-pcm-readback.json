@@ -1,0 +1,15 @@
+{
+  "pipeline": "production real LocalMediaScanner -> LocalProvider -> UnifiedMusicService -> original Local track -> ProviderPlaybackCommands -> native FFmpeg -> software PCM endpoint",
+  "pcm_file": "pcm-output-0.s16le",
+  "sha256": "99a2dcfaf5faf28709c7388aa4c4abbd025d5ce834e9879e7073135d9a96d19c",
+  "frames": 207777,
+  "sample_rate": 44100,
+  "stereo_rms_s16": 4242.215115259181,
+  "frequency_amplitudes": {
+    "1000Hz_selected_primary": 5999.395961457159,
+    "2000Hz_other_indexed_track": 0.013557090319064118
+  },
+  "status": "PASSED",
+  "physical_audible_acceptance": "BLOCKED",
+  "android_pixels": "BLOCKED"
+}

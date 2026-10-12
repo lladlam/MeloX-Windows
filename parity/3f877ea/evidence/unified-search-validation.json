@@ -1,0 +1,75 @@
+{
+  "android_sha": "3f877eaffe30c82eb6d24eb3647702f5bc554dd3",
+  "windows_parent_sha": "5f2d149945774805956a92cc81e7c1ce017d9003",
+  "tests": {
+    "tests": 130,
+    "errors": 0,
+    "failures": 0,
+    "skipped": 0
+  },
+  "suites": 22,
+  "unified_lifecycle_cases": 6,
+  "ui": {
+    "unified-search-local-ui": {
+      "renderer": "production ImageComposeScene",
+      "audio_endpoint": "VALIDATION_SOFTWARE_PCM_OUTPUT",
+      "scenes": 6,
+      "assertions": 11,
+      "dynamic_frames": 15,
+      "all_assertions_passed": true
+    },
+    "unified-search-scope-ui": {
+      "renderer": "production ImageComposeScene",
+      "audio_endpoint": "Java Sound physical output",
+      "scenes": 13,
+      "assertions": 13,
+      "dynamic_frames": 0,
+      "all_assertions_passed": true
+    },
+    "unified-search-online-ui": {
+      "renderer": "production ImageComposeScene",
+      "scenes": 4,
+      "assertions": 8,
+      "all_assertions_passed": true,
+      "source_code": "final batch source",
+      "approved_sources": [
+        "Local",
+        "Netease"
+      ],
+      "network": "Real existing NetEase provider methods and fixed endpoints; generated query returned no online rows/error. No packet-level instrumentation or authenticated online playback acceptance.",
+      "audio_endpoint": "VALIDATION_SOFTWARE_PCM_OUTPUT"
+    }
+  },
+  "local_capture_timing": "Local playback/query replay preceded the final undeclared-search capability filter and Services test tags; SearchScreen code itself is the final version. Scope replay uses final source.",
+  "fixture_files": [
+    {
+      "file": "/tmp/opencode/sol3-search-fixtures/Generated Artist - SolSearchPrimary.wav",
+      "file_key": "a3cb26faa405be4e40ecc249",
+      "bytes": 1411244,
+      "sha256": "b9858db26d79561a344402ae23d9013e669506f66aade6ffd9ddd763ea8969cb",
+      "source": "legally generated stereo PCM"
+    },
+    {
+      "file": "/tmp/opencode/sol3-search-fixtures/Generated Artist - SolSearchSecond.wav",
+      "file_key": "65f667a8ceff826eb674eefe",
+      "bytes": 1411244,
+      "sha256": "f09b8920bf613dab0376404caa56a6bf8dad446061dfd04d5dacb088b03668da",
+      "source": "legally generated stereo PCM"
+    }
+  ],
+  "jar": {
+    "bytes": 221577654,
+    "sha256": "c6b047872f551e29006dd81d496b027eaedeb5a59ec30ef1ff4cce0c4f42d3a4"
+  },
+  "source_sha256": {
+    "shared/src/desktopTest/kotlin/melox/music/UnifiedSearchLifecycleTest.kt": "60380a355e0ccaa0fef02bf363e7f3d36a9d7895e4f9cf4c1db0d401da73282f",
+    "desktop/src/desktopMain/kotlin/melox/ui/screens/ProviderServicesScreen.kt": "b4f54f17b98db77e7f4dccb953f3958a4b23b69b287e624069e1ef99e1a21ca8",
+    "desktop/src/desktopMain/kotlin/melox/ui/screens/SearchScreen.kt": "3a4e5595e1d3df1151e87a87fee5866be078e43d7f0ed1c6a24d42306c9799ae",
+    "desktop/src/desktopMain/kotlin/melox/ui/screens/SettingsScreen.kt": "5ee796c74c984260f9a39aecc5cc20b311997580e48d0dabd290690c735afdab",
+    "desktop/src/desktopMain/kotlin/melox/validation/MeloXVisualCapture.kt": "cd1b17b952f4c2b1bc98946da1c66b111fded44aa151dbd4514913a758a963cb",
+    "shared/src/commonMain/kotlin/melox/music/provider/MusicProviderSelectionStore.kt": "28f4541d9a14af03574935b3f0d573e0c4d201b4218684bfe84d1c850c5c0621",
+    "shared/src/commonMain/kotlin/melox/music/provider/UnifiedMusicService.kt": "14d76454450525db7666fde76c85ce7264d016aa52ff865b5a9d6bd833d86e63"
+  },
+  "physical_audible_output": "BLOCKED",
+  "android_pixel_and_motion_parity": "BLOCKED"
+}

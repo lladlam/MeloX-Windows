@@ -1,0 +1,182 @@
+{
+  "renderer": "production ImageComposeScene",
+  "start_tab": "Search",
+  "density": 1,
+  "frames": [],
+  "physical_audible_acceptance": "BLOCKED",
+  "steps": [
+    "play:tap@search-track-local-a3cb26faa405be4e40ecc249",
+    "output:wait@1200",
+    "clear:escape"
+  ],
+  "home": "/home/lladlam/项目/MeloX-Windows/desktop/build/parity/sol3-search-online-home-v1",
+  "enabled_start_tab": false,
+  "play_id": null,
+  "play_query": "",
+  "pcm_outputs": [{
+    "file": "pcm-output-0.s16le",
+    "written_frames": 173295,
+    "hardware_output": false,
+    "closed": true,
+    "consumed_frames": 164540
+  }],
+  "width": 427,
+  "scenes": [
+    {
+      "title": null,
+      "error": null,
+      "automix_status": "idle",
+      "file": "00-search.png",
+      "is_playing": false,
+      "play_when_ready": false,
+      "selected_quality": "standard",
+      "is_loading": false,
+      "assertions": [
+        {
+          "expected": "state:search-state:Unified>local>netease",
+          "passed": true
+        },
+        {
+          "expected": "tag:search-track-local-a3cb26faa405be4e40ecc249",
+          "passed": true
+        },
+        {
+          "expected": "absent:search-loading",
+          "passed": true
+        }
+      ],
+      "track": null,
+      "queue_count": 0,
+      "error_kind": null,
+      "queue_tracks": [],
+      "lyric_document": null,
+      "automix_progress": 0,
+      "automix_active": false,
+      "duration_ms": 0,
+      "position_ms": 0,
+      "is_paused": false,
+      "captured_elapsed_ms": 20064.701338,
+      "page": null,
+      "queue_entry_ids": [],
+      "lyric_word_lines": null,
+      "queue_index": -1,
+      "controls_visible": false,
+      "autoplay_enabled": false
+    },
+    {
+      "title": "SolSearchPrimary",
+      "error": null,
+      "automix_status": "idle",
+      "file": "01-play.png",
+      "is_playing": true,
+      "play_when_ready": true,
+      "selected_quality": "standard",
+      "is_loading": false,
+      "assertions": [
+        {
+          "expected": "playing:true",
+          "passed": true
+        },
+        {
+          "expected": "title:SolSearchPrimary",
+          "passed": true
+        },
+        {
+          "expected": "track:local:a3cb26faa405be4e40ecc249",
+          "passed": true
+        }
+      ],
+      "track": "local:a3cb26faa405be4e40ecc249",
+      "queue_count": 1,
+      "error_kind": null,
+      "queue_tracks": ["local:a3cb26faa405be4e40ecc249"],
+      "lyric_document": null,
+      "automix_progress": 0,
+      "automix_active": false,
+      "duration_ms": 0,
+      "position_ms": 702,
+      "repeat_mode": 0,
+      "shuffle_enabled": false,
+      "is_paused": false,
+      "captured_elapsed_ms": 21056.965101,
+      "page": null,
+      "queue_entry_ids": ["d466026b-02b5-43e7-b9b7-c443b6bcb1fb"],
+      "lyric_word_lines": null,
+      "queue_index": 0,
+      "controls_visible": false,
+      "autoplay_enabled": false,
+      "action_elapsed_ms": 989.989717
+    },
+    {
+      "title": "SolSearchPrimary",
+      "error": null,
+      "automix_status": "idle",
+      "file": "02-output.png",
+      "is_playing": true,
+      "play_when_ready": true,
+      "selected_quality": "standard",
+      "is_loading": false,
+      "assertions": [{
+        "expected": "playing:true",
+        "passed": true
+      }],
+      "track": "local:a3cb26faa405be4e40ecc249",
+      "queue_count": 1,
+      "error_kind": null,
+      "queue_tracks": ["local:a3cb26faa405be4e40ecc249"],
+      "lyric_document": null,
+      "automix_progress": 0,
+      "automix_active": false,
+      "duration_ms": 0,
+      "position_ms": 2706,
+      "repeat_mode": 0,
+      "shuffle_enabled": false,
+      "is_paused": false,
+      "captured_elapsed_ms": 23141.686837,
+      "page": null,
+      "queue_entry_ids": ["d466026b-02b5-43e7-b9b7-c443b6bcb1fb"],
+      "lyric_word_lines": null,
+      "queue_index": 0,
+      "controls_visible": false,
+      "autoplay_enabled": false,
+      "action_elapsed_ms": 2084.264886
+    },
+    {
+      "title": "SolSearchPrimary",
+      "error": null,
+      "automix_status": "idle",
+      "file": "03-clear.png",
+      "is_playing": true,
+      "play_when_ready": true,
+      "selected_quality": "standard",
+      "is_loading": false,
+      "assertions": [{
+        "expected": "absent:search-track-local-a3cb26faa405be4e40ecc249",
+        "passed": true
+      }],
+      "track": "local:a3cb26faa405be4e40ecc249",
+      "queue_count": 1,
+      "error_kind": null,
+      "queue_tracks": ["local:a3cb26faa405be4e40ecc249"],
+      "lyric_document": null,
+      "automix_progress": 0,
+      "automix_active": false,
+      "duration_ms": 0,
+      "position_ms": 3608,
+      "repeat_mode": 0,
+      "shuffle_enabled": false,
+      "is_paused": false,
+      "captured_elapsed_ms": 24038.686552,
+      "page": null,
+      "queue_entry_ids": ["d466026b-02b5-43e7-b9b7-c443b6bcb1fb"],
+      "lyric_word_lines": null,
+      "queue_index": 0,
+      "controls_visible": false,
+      "autoplay_enabled": false,
+      "action_elapsed_ms": 896.737406
+    }
+  ],
+  "theme": "Dark",
+  "audio_endpoint": "VALIDATION_SOFTWARE_PCM_OUTPUT",
+  "height": 924
+}

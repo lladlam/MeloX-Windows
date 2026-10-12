@@ -22,6 +22,7 @@ Follow-up upstream fetch (2026-10-12): `febb4c0534787e040a89df8457e630d067f44b80
 - Smart Queue regression discovered during this batch: disabling now restores analysis-failed unconsumed original tracks too; selection and disable queue mutation are serialized. A direct failed-analysis regression protects this alongside real PCM candidate selection.
 - Remote compatibility: first-frame runtime startup, minimized-window periodic gating/resume refresh, real Settings route/consent/withdrawal/cache clear, DNSPod DoH, bounded owned HTTP, atomic cache and anti-rollback retention/invalid-ETag repair. Actual subsequent login/playback/fallback gates and once/daily notices are wired; local fallback opt-in stays independent. See `parity/3f877ea/REMOTE_CONFIG.md`.
 - Glass Toggle now renders confirmed controlled state after a pending confirmation/rejected change, rather than leaving a green resting knob after rejection. Drag feedback remains transient and theme tone is observed.
+- Unified song Search now consumes the existing global opt-in/approved source set, observes Settings changes, performs actual concurrent provider aggregation with inline partial failures and plays original resource IDs. Obsolete-query cancellation, duplicate/foreign identities and single-source whitelist semantics are corrected. See `UNIFIED_SEARCH.md`; complete provider/account/action/catalog/pixel acceptance remains partial.
 
 ## Still required
 
@@ -29,9 +30,10 @@ Follow-up upstream fetch (2026-10-12): `febb4c0534787e040a89df8457e630d067f44b80
 2. Complete behavioral upstream-delta acceptance, including Library's complete source layout and App Shell combined backdrop/shared transitions.
 3. Windows account/native DPAPI, physical speaker/device-switch/sleep, continuous audio and dual-track transitions. Current environment is Linux; do not convert controlled SourceDataLine tests into physical acceptance.
 4. Current pinned Android reference screenshots/frames. Device enumeration returned zero. Artist/album and remaining pages still need same-content comparison; historical Settings SSIM is not a new complete parity result.
-5. Remaining settings routes, Unified Search aggregation, live Cloud account/chooser acceptance, podcasts/library Provider acceptance, Classic/alternate lyric shell/settings and refraction/dynamic-tone verification.
+5. Remaining settings routes, Unified Search authenticated-provider/catalog/download/alternate-candidate acceptance, live Cloud account/chooser acceptance, podcasts/library Provider acceptance, Classic/alternate lyric shell/settings and refraction/dynamic-tone verification.
 6. Desktop SongRecognitionClient is an existing empty-result stub; the new Android ID fields do not solve its missing native recognition path.
 7. Independently migrate and accept the newly fetched `3f877ea..febb4c0` increment after completing the pinned batch. Preserve actual models/providers and signed-config scope; do not label pre-AutoSync frames/tests as new upstream parity.
+8. Jellyfin desktop adapter and login are still unimplemented; its AES wrapper currently generates a new key every operation and therefore cannot restore a genuine server session. Replace this with actual pinned protocols and stable secure-key persistence, preserving the existing session name/ciphertext format and explicitly documenting unrecoverable legacy random-key ciphertext. Unified Search now exposes its unavailable capability honestly.
 
 ## Execute physical Windows acceptance
 
@@ -55,6 +57,7 @@ Detailed observable-state matrix and evidence: `parity/3f877ea/`.
 - `evidence/windows-ci-3ac97e0/`: production AutoMix run 38025529598 passed **102 tests / 18 suites** and native source/JAR/app-image/final ZIP verification; downloadable Windows artifact is attached to that exact run.
 - `evidence/windows-ci-d1426b5/`: Cloud run 38034442939 passed **108 tests / 19 suites** plus native source/JAR/app-image/final ZIP checks. Exact-SHA downloadable artifact is attached to that run.
 - `evidence/windows-ci-693f3d2/`: content-layout run 38197452357 passed **114 tests / 20 suites** plus native source/JAR/app-image/final ZIP checks. Exact-SHA downloadable `MeloX-Desktop-Windows` artifact is attached to that run.
+- `evidence/windows-ci-5f2d149/`: remote compatibility run 38200697967 passed **124 tests / 21 suites** and native source/JAR/app-image/final ZIP checks; downloadable exact-SHA Windows artifact is attached to that run.
 - `evidence/automix-validation.json` and `automix-tests/`: latest 102 tests / 18 suites, zero failures/errors/skipped; source and Linux uber JAR hashes.
 - `evidence/automix-ui-v3/`: 7 production UI scenes / 8 state assertions plus captured frames and compressed generated PCM. Explicit software endpoint label; requested/actual capture timing is recorded separately.
 - `evidence/automix-pcm-readback.json`: independent consumed-PCM readback finds primary-only, actual 1000/4000Hz simultaneous overlap and incoming-only on one output; `automix-linux-packaged-decoder.json` verifies latest packaged decoder.
@@ -64,4 +67,5 @@ Detailed observable-state matrix and evidence: `parity/3f877ea/`.
 - `evidence/remote-config-tests/`: **124 tests / 21 suites**, zero failures/errors/skipped, including ten native P-256/actual HTTP/cache/cancellation/policy/foreground/login-breaker regressions. No production signing key, URL or account transport is replaced by test fixtures.
 - `evidence/remote-config-ui-dark/`: 20 production state scenes / 25 assertions / 57 dynamic frames. Both actual knob progress and controlled switch state are verified after consent rejection, fallback cancellation, acceptance and withdrawal. The final Linux uber JAR and its decoder pass native format/authorized HTTP verification; SHA/source hashes are in `remote-config-validation.json`.
 - `evidence/remote-config-ui-light-live/`: 15 production scenes / 14 assertions; actual public signed config **v6** through GhFast accepted by the production pinned key. Once notice, manual refresh, clear, withdrawal and Escape return pass with no signed-in account. Public-server 304 and the other network routes are not inferred from this replay.
+- `evidence/unified-search-tests/`: **130 tests / 22 suites**, zero failures/errors/skipped, including six concurrency/timeout/cancellation/native-identity/capability regressions. Local UI: 6 scenes / 11 assertions / 15 frames and independently verified native 1000Hz PCM. Services scope UI: 13 scenes / 13 assertions. Final Linux package native decode passes; source/JAR/generated-fixture hashes are in `unified-search-validation.json`.
 - Physical Windows audio and current pinned Android pixel/motion capture remain BLOCKED. See `parity/3f877ea/AUTOMIX.md` for implementation and reproducible generated-source replay.

@@ -53,6 +53,22 @@ fun main(args: Array<String>) = runBlocking {
     }
     withContext(Dispatchers.Main) {
         melox.settings.MeloXSettingsPreferences.initialize()
+        option("--source", "").takeIf(String::isNotBlank)?.let { value ->
+            melox.music.provider.MusicProviderSelectionStore.setSelectedSource(melox.music.model.MusicSource.valueOf(value))
+        }
+        option("--unified-sources", "").takeIf(String::isNotBlank)?.let { value ->
+            melox.music.provider.MusicProviderSelectionStore.setUnifiedSources(value.split(',').map { melox.music.model.MusicSource.valueOf(it) }.toSet())
+            melox.music.provider.MusicProviderSelectionStore.setUnifiedEnabled(true)
+        }
+        option("--scan-local-dir", "").takeIf(String::isNotBlank)?.let { path ->
+            val directory = File(path).canonicalFile
+            require(directory.isDirectory) { "Local validation source directory is missing" }
+            val repository = melox.provider.local.LocalMusicRepository()
+            repository.addScanRoot(melox.provider.local.LocalScanRoot(directory.path, 0))
+            val scanned = melox.provider.local.LocalMediaScanner(repository).scanAll()
+            check(scanned.isNotEmpty()) { "Production Local scanner found no real audio files" }
+            println("Production Local scanner indexed ${scanned.size} real files")
+        }
         val theme = option("--theme", "")
         val startTab = option("--start-tab", "Home")
         require(melox.ui.navigation.AppTab.entries.any { it.name == startTab })
@@ -141,6 +157,9 @@ fun main(args: Array<String>) = runBlocking {
                 "browsing" -> semantics.tagged("player-lyrics")?.config?.getOrNull(melox.ui.screens.MeloXLyricBrowsingKey) == expected.toBooleanStrict()
                 "word-lines-min" -> (semantics.tagged("player-lyrics")?.config?.getOrNull(melox.ui.screens.MeloXLyricWordLinesKey) ?: 0) >= expected.toInt()
                 "play-ready" -> melox.playback.PlaybackCommands.playerController()?.playWhenReady == expected.toBooleanStrict()
+                "playing" -> melox.player.AudioPlayer.state.value.isPlaying == expected.toBooleanStrict()
+                "title" -> melox.player.AudioPlayer.currentTrack.value?.title == expected
+                "track" -> melox.player.AudioPlayer.currentTrack.value?.id?.let { "${it.source.storageValue}:${it.value}" } == expected
                 "error-kind" -> melox.player.AudioPlayer.state.value.errorKind?.name == expected
                 "mix-active" -> melox.playback.MeloXAutoMixTransitionRuntime.state.value.active == expected.toBooleanStrict()
                 "focus-anchor" -> {

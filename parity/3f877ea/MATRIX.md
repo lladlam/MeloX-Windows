@@ -5,7 +5,7 @@ Windows starting point: `24eb7fffb7f5c01d17baca5b68674bc33b11be86`.
 Previous Android comparison point: `94e17c920bf554966584955afa2bd2ee92580a8b`.
 The initial upstream delta contains **7 commits / 24 files**. Android's dirty local tree is not a source for this migration.
 
-The 2026-10-12 follow-up fetch found origin/main at `febb4c0534787e040a89df8457e630d067f44b80`, an additional **9 commits / 154 files** after this pinned acceptance source. Raw file/commit intake is retained in `evidence/upstream-intake-febb4c0.json`. AutoSync/model alignment and signed hot-update text overrides in that new source are **not yet migrated or accepted**; evidence below continues to refer to `3f877ea`.
+The 2026-10-12 follow-up fetch found origin/main at `febb4c0534787e040a89df8457e630d067f44b80`, an additional **9 commits / 154 files** after this pinned acceptance source. Raw file/commit intake and pure-export hashes are retained in `evidence/upstream-intake-febb4c0.json`; `UPSTREAM_INTAKE.md` records the reviewed major functional/schema/platform delta. AutoSync/model alignment, Smart Queue analysis budget and signed hot-update text overrides in that new source are **not yet migrated or accepted**; evidence below continues to refer to `3f877ea`.
 
 Historical `parity/94e17c9/` evidence is reference material, not new acceptance.
 
@@ -19,8 +19,8 @@ Historical `parity/94e17c9/` evidence is reference material, not new acceptance.
 | Artist hero / hot-song columns / classified albums / expanded grid / information / follow / nested back | `ui/collection/MeloXArtistDetailScreen.kt` | `screens/ArtistDetailScreen.kt`: source dimensions and structure, real API, 160ms back transforms, state/error/return layering | `evidence/artist-live-v7`: 7 production scenes / 8 assertions; real artist 6452 → album 147779282 → scroll-preserving back, info → Escape → root. Follow requires real account; no pinned Android pixels | PARTIAL |
 | Playlist album artwork toggle and hidden search | `LibraryScreen`, `MeloXSettingsPreferences`, `SettingsScreen` | Runtime persistence + live settings + artwork rows + pull-at-top search/filter | Desktop playlist layout still differs; precise reveal gesture/animation not yet accepted | PARTIAL |
 | Song-recognition identity additions | `core/recognition/SongRecognitionClient.kt` | Existing Windows recognition client is still an empty-result stub | Requires actual desktop fingerprint/capture implementation; no fabricated matches | MISSING |
-| Search launch request and provider-aware routing | `ui/search/SearchScreen.kt` (`MeloXSearchLaunchBus`) | `navigation/MeloXSearchLaunchBus.kt`, App Shell, SearchScreen, album/artist fallback requests | Unified aggregation and provider account replay remain outstanding | PARTIAL |
-| FFmpeg source and packaged executable integrity | `.github/workflows/build.yml`, decoder resources | Explicit LFS checkout; manifest size/SHA-256/x64 ELF+PE; source/JAR/app-image/final-ZIP native decode checks | Windows run 38197452357 at 693f3d2 passed 114 tests plus source/JAR/app-image/final-ZIP native checks; evidence/windows-ci-693f3d2. Previous runs remain archived | PLATFORM_EQUIVALENT |
+| Search launch request and provider-aware/approved unified search | `ui/search/SearchScreen.kt` (`MeloXSearchLaunchBus`, UnifiedMusicService) | App Shell launch bus, existing-key observable approval scope, actual concurrent aggregation/partial errors/native identity and provider playback; cancellation is retained | UNIFIED_SEARCH.md; account/catalog/download/alternate-candidate acceptance and pinned pixels remain outstanding | PARTIAL |
+| FFmpeg source and packaged executable integrity | `.github/workflows/build.yml`, decoder resources | Explicit LFS checkout; manifest size/SHA-256/x64 ELF+PE; source/JAR/app-image/final-ZIP native decode checks | Windows run 38200697967 at 5f2d149 passed 124 tests plus source/JAR/app-image/final-ZIP native checks; evidence/windows-ci-5f2d149. Previous runs remain archived | PLATFORM_EQUIVALENT |
 | Real PCM beat/energy/FFT/audible/phrase analysis | `playback/MeloXAutoMixAudioAnalyzer.kt` | Real independent FFmpeg decoder + 11025Hz/1024 FFT/512 hop, signed PCM, source-keyed cache, cancellable native ownership | Generated 90/105/140 BPM, silence, FFT bands, malformed data and real WAV decode tests; no claim of production AutoMix | PARTIAL |
 | Primary/incoming mixing, tempo, EQ, SmartQueue, dual-cover handoff | `MeloXPlaybackService`, `MeloXAutoMixTransitionRuntime`, `MeloXSmartQueueBuilder`, bass envelope | Production AudioPlayer continuous dual-native-decode/PCM mix; controller scored/fallback plans/preload; native pitch-preserving tempo; real RBJ bass exchange; analyzed candidate queue; clock-driven dual covers and settings/buttons | AUTOMIX.md; real two-frequency kernel/controller tests and independent capture PCM readback; 7 production UI scenes / 8 assertions. Source cover-shadow artifact fixed from screenshot. Authenticated streams/Windows hardware/Android pixels outstanding | PARTIAL |
 | Local source playback and search preserve file identity | `core/provider/local/LocalProvider.kt`, provider resolver | Real indexed Local search and readable-file resolution; encoded track metadata/URI, no online fallback; bridge preserves collection identity | Production Local provider/controller AutoMix tests, Unicode/plus/ampersand path regression and generated-source UI replay | PARTIAL |
@@ -39,7 +39,7 @@ Historical `parity/94e17c9/` evidence is reference material, not new acceptance.
 4. Windows physical audible playback (currently BLOCKED).
 5. Same-content pinned Android/Windows pixels and dynamic frame acceptance (currently BLOCKED).
 
-Latest remote-config batch automated results: **124 tests / 21 suites / 0 failures, errors or skipped**;
+Latest Unified Search batch automated results: **130 tests / 22 suites / 0 failures, errors or skipped**;
 desktopJar + Linux uber JAR successful. Source and final Linux uber JAR were
 verified independently (size/SHA-256/magic, native WAV/MP3/FLAC/AAC, required HTTP
 authorization headers). See `evidence/upstream-validation.json` and native
@@ -62,7 +62,11 @@ verifies the final packaged Linux decoder.
 public GhFast-routed signed config v6 and the production pinned key, including
 once notice, manual refresh, clear, withdrawal and return. This proves real
 public config retrieval, not authenticated Provider acceptance or all-route reachability.
-Previous 81/102/108/114-test batches remain archived.
+Unified Search: `unified-search-validation.json`, `unified-search-tests/`,
+`unified-search-local-ui/` (6 scenes / 11 assertions / 15 frames),
+`unified-search-scope-ui/` (13 scenes / 13 assertions), real generated PCM
+readback and final Linux package verification. See `UNIFIED_SEARCH.md`.
+Previous 81/102/108/114/124-test batches remain archived.
 This is not Windows physical playback or Android pixel acceptance.
 
 Each level is reported independently. No `MATCH` entry is introduced solely by compilation, an existing file, or unit-test success.
