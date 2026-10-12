@@ -3,6 +3,7 @@ package melox.player
 import java.io.Closeable
 import java.io.IOException
 import java.util.concurrent.ArrayBlockingQueue
+import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicBoolean
 import kotlin.concurrent.thread
 
@@ -27,13 +28,20 @@ internal class MeloXBufferedPcmDeck(source: MeloXDeckSource, filters: String? = 
         } catch (interrupted: InterruptedException) { Thread.currentThread().interrupt() }
         catch (failure: Throwable) { if (!closed.get()) runCatching { packets.put(Packet(failure = failure)) } }
     }
-    fun read(bytes: ByteArray, length: Int = bytes.size, wait: Boolean = true): Int {
+    fun read(bytes: ByteArray, length: Int = bytes.size, wait: Boolean = true, waitBudgetMs: Long = 0): Int {
         require(length in 0..bytes.size && length % 4 == 0)
+        require(waitBudgetMs >= 0)
+        val deadline = System.nanoTime() + TimeUnit.MILLISECONDS.toNanos(waitBudgetMs)
         var copied = 0
         while (copied < length && !ended) {
             if (closed.get()) throw IOException("PCM deck released")
             if (offset == current.size) {
-                val packet = if (wait) packets.take() else packets.poll() ?: throw IOException("Incoming PCM preload underrun")
+                // Empty right now is not EOF. A mixed block may borrow a bounded
+                // part of the output buffer's headroom for decoder scheduling jitter.
+                val packet = if (wait) packets.take() else {
+                    packets.poll() ?: packets.poll((deadline - System.nanoTime()).coerceAtLeast(0), TimeUnit.NANOSECONDS)
+                        ?: throw IOException("Incoming PCM preload underrun after ${waitBudgetMs}ms budget")
+                }
                 packet.failure?.let { throw IOException(it.message ?: "Native PCM decode failed", it) }
                 if (packet.pcm == null) { ended = true; break }
                 current = packet.pcm; offset = 0

@@ -193,7 +193,7 @@ internal class MeloXDualDecodeSession(
                             try {
                                 // A native short primary tail may be padded only while the real incoming is ready.
                                 if (count < length) blockA.fill(0, count, length)
-                                val received = currentMix.incoming.read(blockB, length, wait = false)
+                                val received = currentMix.incoming.read(blockB, length, wait = false, waitBudgetMs = 100)
                                 if (received != length) throw IOException("Incoming audio ended during AutoMix")
                                 primaryFrames += count / 4; incomingFrames += received / 4
                                 count = length

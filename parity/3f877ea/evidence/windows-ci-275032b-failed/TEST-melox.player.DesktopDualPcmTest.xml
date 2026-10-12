@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="DesktopDualPcmTest[desktop]" tests="6" skipped="0" failures="1" errors="0" timestamp="2026-10-12T04:07:18.843Z" hostname="runnervmfi6oq" time="31.872">
+  <properties/>
+  <testcase name="nativeTempoRampChangesDurationWhilePreservingPitch[desktop]" classname="melox.player.DesktopDualPcmTest" time="0.217"/>
+  <testcase name="softwareBassSwapActuallyAttenuatesLowEnergyWithoutCuttingTrebleOrWrappingPcm[desktop]" classname="melox.player.DesktopDualPcmTest" time="0.035"/>
+  <testcase name="cancellationReleasesBothNativeProcessesAndSuppressesLateHandoff[desktop]" classname="melox.player.DesktopDualPcmTest" time="0.409"/>
+  <testcase name="invalidIncomingFileFallsBackToActualPrimaryPcmAndNeverHandsOff[desktop]" classname="melox.player.DesktopDualPcmTest" time="0.421"/>
+  <testcase name="twoDecodedFrequencyComponentsCrossfadeAndHandoffOnlyAfterRenderedFrames[desktop]" classname="melox.player.DesktopDualPcmTest" time="30.011">
+    <failure message="kotlinx.coroutines.TimeoutCancellationException: Timed out waiting for 30000 ms" type="kotlinx.coroutines.TimeoutCancellationException">kotlinx.coroutines.TimeoutCancellationException: Timed out waiting for 30000 ms
+	at _COROUTINE._BOUNDARY._(CoroutineDebugging.kt:42)
+	at melox.player.DesktopDualPcmTest$until$2.invokeSuspend(DesktopDualPcmTest.kt:37)
+	at melox.player.DesktopDualPcmTest$twoDecodedFrequencyComponentsCrossfadeAndHandoffOnlyAfterRenderedFrames$1.invokeSuspend(DesktopDualPcmTest.kt:58)
+Caused by: kotlinx.coroutines.TimeoutCancellationException: Timed out waiting for 30000 ms
+	at kotlinx.coroutines.TimeoutKt.TimeoutCancellationException(Timeout.kt:281)
+	at kotlinx.coroutines.TimeoutCoroutine.run(Timeout.kt:243)
+	at kotlinx.coroutines.EventLoopImplBase$DelayedRunnableTask.run(EventLoop.common.kt:498)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:256)
+	at kotlinx.coroutines.DefaultExecutor.run(DefaultExecutor.kt:105)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+</failure>
+  </testcase>
+  <testcase name="pauseSeekZeroFlushesBothOldDecksAndRestartsSelectedAudioWithPauseIntent[desktop]" classname="melox.player.DesktopDualPcmTest" time="0.779"/>
+  <system-out><![CDATA[Native pitch-preserving tempo ramp duration_ms=2943.310657596372
+Real software shelf: bass_ratio=0.3534666811136285 treble_ratio=0.9999719981065996
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

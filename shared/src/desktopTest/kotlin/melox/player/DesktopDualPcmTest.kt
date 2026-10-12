@@ -53,9 +53,13 @@ class DesktopDualPcmTest {
         val a = wave("primary.wav", 220, 2600, 6000)
         val b = wave("incoming.wav", 880, 2200, 8000)
         val handoffs = AtomicLong()
-        val engine = session(a, b, { handoffs.incrementAndGet() })
+        val failures = CopyOnWriteArrayList<Throwable>()
+        val engine = session(a, b, { handoffs.incrementAndGet() }, failures::add)
         val run = async(Dispatchers.IO) { engine.run() }
-        until { outputs.firstOrNull()?.accepted?.get() == 3200L * 44100 * 4 / 1000 }
+        until {
+            assertTrue(failures.isEmpty(), "Valid decoded incoming fell back: ${failures.map { it.message }}; accepted=${outputs.firstOrNull()?.accepted?.get()}")
+            outputs.firstOrNull()?.accepted?.get() == 3200L * 44100 * 4 / 1000
+        }
         val output = outputs.single()
         assertFalse(run.isCompleted)
         assertEquals(0L, engine.clock().renderedFrames)
