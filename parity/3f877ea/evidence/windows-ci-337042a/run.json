@@ -1,0 +1,20 @@
+{
+  "run": 38224003236,
+  "url": "https://github.com/lladlam/MeloX-Windows/actions/runs/38224003236",
+  "commit": "337042a266b07e9c8b8bbe9c4e5740f48d038f29",
+  "conclusion": "success",
+  "suites": 24,
+  "tests": 144,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "decoder_checks": [
+    "source",
+    "JAR",
+    "app-image",
+    "final ZIP"
+  ],
+  "physical_windows_audio_dpapi": "BLOCKED",
+  "live_jellyfin_user_server": "BLOCKED",
+  "android_pixel_motion": "BLOCKED"
+}

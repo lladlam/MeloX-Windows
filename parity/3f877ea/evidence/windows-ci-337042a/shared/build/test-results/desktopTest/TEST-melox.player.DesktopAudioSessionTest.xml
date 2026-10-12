@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="DesktopAudioSessionTest[desktop]" tests="7" skipped="0" failures="0" errors="0" timestamp="2026-10-12T08:34:00.218Z" hostname="runnervmfi6oq" time="2.134">
+  <properties/>
+  <testcase name="realFfmpegNonzeroExitAfterPcmIsContentFailureRatherThanNaturalEnd[desktop]" classname="melox.player.DesktopAudioSessionTest" time="0.264"/>
+  <testcase name="unavailableDeviceReportsOutputFailureWithoutProducingAnEndEvent[desktop]" classname="melox.player.DesktopAudioSessionTest" time="0.191"/>
+  <testcase name="seekingToTheDecoderOriginalZeroPositionActuallyRestartsIt[desktop]" classname="melox.player.DesktopAudioSessionTest" time="0.447"/>
+  <testcase name="seekingToKnownTrackEndAcceptsAZeroPcmSuccessfulDecoderExit[desktop]" classname="melox.player.DesktopAudioSessionTest" time="0.213"/>
+  <testcase name="replacingTheSameUriKeepsEndCallbacksOwnedByTheNewRequest[desktop]" classname="melox.player.DesktopAudioSessionTest" time="0.444"/>
+  <testcase name="aDeviceStartFailureIsOutputFailureRatherThanCorruptContent[desktop]" classname="melox.player.DesktopAudioSessionTest" time="0.221"/>
+  <testcase name="decoderEofWaitsForBufferedFramesAndPauseResumePreserveTheTail[desktop]" classname="melox.player.DesktopAudioSessionTest" time="0.353"/>
+  <system-out><![CDATA[[AudioPlayer] decode local source at 0ms
+[AudioPlayer] decode local source at 0ms
+[AudioPlayer] decode local source at 0ms
+[AudioPlayer] decode local source at 0ms
+[AudioPlayer] decode local source at 500ms
+[AudioPlayer] decode local source at 0ms
+[AudioPlayer] decode local source at 0ms
+[AudioPlayer] decode local source at 0ms
+[AudioPlayer] decode local source at 0ms
+]]></system-out>
+  <system-err><![CDATA[[AudioPlayer] ????: [in#0/wav @ 000002516ced6c80] corrupt input packet in stream 0
+[in#0/wav @ 000002516ced6c80] Task finished with error: Invalid data found when processing input
+[in#0/wav @ 000002516ced6c80] Terminating thread with error: Invalid data found when processing input
+[AudioPlayer] ????: test device unavailable
+[AudioPlayer] ????: device start failed
+]]></system-err>
+</testsuite>
