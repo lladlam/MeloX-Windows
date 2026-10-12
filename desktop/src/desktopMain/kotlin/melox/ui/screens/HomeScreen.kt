@@ -18,6 +18,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -102,7 +105,7 @@ fun HomeScreen(
     }
 }
 
-private data class NeteaseBlock(val title: String, val trailing: String, val songs: List<melox.model.SearchSong> = emptyList(), val playlists: List<melox.library.NeteasePlaylistSummary> = emptyList())
+private data class NeteaseBlock(val title: String, val trailing: String, val songs: List<melox.model.SearchSong> = emptyList(), val playlists: List<melox.library.NeteasePlaylistSummary> = emptyList(), val section: String? = null)
 
 @Composable
 private fun NeteaseHome(
@@ -155,12 +158,13 @@ private fun NeteaseHome(
 
     val blocks = content?.let { value ->
         buildList {
-            melox.settings.MeloXSettingsRuntime.homeSectionOrder.forEach { section ->
+            melox.settings.MeloXContentLayout.visibleHomeSections().forEach { section ->
                 when (section) {
-                    "Playlists" -> if (melox.settings.MeloXSettingsRuntime.homePlaylistsEnabled && value.playlists.isNotEmpty())
-                        add(NeteaseBlock("每日推荐", "下拉刷新", playlists = value.playlists))
-                    "NewSongs" -> if (melox.settings.MeloXSettingsRuntime.homeNewSongsEnabled && value.newSongs.isNotEmpty())
-                        add(NeteaseBlock("为你推荐", "新歌", songs = value.newSongs))
+                    "QuickActions" -> add(NeteaseBlock("", "", section = section))
+                    "Playlists" -> if (value.playlists.isNotEmpty())
+                        add(NeteaseBlock("每日推荐", "下拉刷新", playlists = value.playlists, section = section))
+                    "NewSongs" -> if (value.newSongs.isNotEmpty())
+                        add(NeteaseBlock("为你推荐", "新歌", songs = value.newSongs, section = section))
                 }
             }
             if (value.recentlyTrending.isNotEmpty()) add(NeteaseBlock("近期云村热播", "来自网易云首页", songs = value.recentlyTrending))
@@ -172,7 +176,9 @@ private fun NeteaseHome(
             if (value.roamingSongs.isNotEmpty()) add(NeteaseBlock("私人漫游", "探索更多", songs = value.roamingSongs))
             if (value.similarSongs.isNotEmpty()) add(NeteaseBlock("相似歌曲", "根据当前播放", songs = value.similarSongs))
         }
-    }
+    } ?: listOfNotNull(NeteaseBlock("", "", section = "QuickActions").takeIf {
+        melox.settings.MeloXSettingsRuntime.homeQuickActionsEnabled
+    })
 
     if (content == null && refreshing) {
         Box(Modifier.fillMaxSize().background(MeloXColors.pageBackground()), contentAlignment = Alignment.Center) { CircularProgressIndicator(color = HomeAccent) }
@@ -180,7 +186,9 @@ private fun NeteaseHome(
     }
 
     LazyColumn(
-        modifier = Modifier.fillMaxSize().background(MeloXColors.pageBackground()),
+        modifier = Modifier.fillMaxSize().testTag("home-sections")
+            .semantics { stateDescription = blocks.mapNotNull { it.section }.joinToString(",") }
+            .background(MeloXColors.pageBackground()),
         contentPadding = PaddingValues(top = 18.dp, bottom = 146.dp),
         verticalArrangement = Arrangement.spacedBy(22.dp),
     ) {
@@ -197,7 +205,8 @@ private fun NeteaseHome(
                 color = MeloXColors.pageOnBackground().copy(alpha = 0.58f),
             )
         }
-        if (melox.settings.MeloXSettingsRuntime.homeQuickActionsEnabled) {
+        blocks.forEach { block ->
+        if (block.section == "QuickActions") {
             item {
                 HomeQuickActionsRow(activeAction, neteaseActions()) { action ->
                     if (action.tool != null) { onOpenTool(action.tool); return@HomeQuickActionsRow }
@@ -214,13 +223,13 @@ private fun NeteaseHome(
                     }
                 }
             }
-        }
-        blocks.orEmpty().forEach { block ->
+        } else {
             item { SectionTitle(block.title, block.trailing) }
             if (block.playlists.isNotEmpty()) item { NeteaseCollectionRow(block.playlists, onOpenPlaylist) }
             if (block.songs.isNotEmpty()) item { NeteaseSongCarousel(block.songs) { song -> melox.playback.PlaybackCommands.playQueue(block.songs, song.id) } }
         }
-        if (blocks != null && blocks.isEmpty() && error == null) {
+        }
+        if (content != null && blocks.none { it.section != "QuickActions" } && error == null) {
             item { Text("网易云音乐当前没有返回可展示内容", Modifier.padding(horizontal = 20.dp), color = MeloXColors.pageOnBackground().copy(alpha = .5f)) }
         }
         error?.let { message -> item { Text(message, Modifier.padding(horizontal = 20.dp), color = MeloXColors.Error, fontSize = 13.sp) } }
@@ -374,6 +383,7 @@ private fun HomeQuickActionsRow(
     perform: (NeteaseAction) -> Unit,
 ) {
     LazyRow(
+        modifier = Modifier.testTag("home-quick-actions"),
         contentPadding = PaddingValues(horizontal = 20.dp),
         horizontalArrangement = Arrangement.spacedBy(16.dp),
     ) {
@@ -381,6 +391,7 @@ private fun HomeQuickActionsRow(
             Column(
                 Modifier
                     .width(310.dp)
+                    .then(if (action.tool != null) Modifier.testTag("home-tool-${action.tool.lowercase()}") else Modifier)
                     .clickable(enabled = active == null) { perform(action) },
             ) {
                 Text(

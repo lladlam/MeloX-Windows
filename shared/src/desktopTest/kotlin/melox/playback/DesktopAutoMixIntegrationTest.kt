@@ -155,6 +155,17 @@ class DesktopAutoMixIntegrationTest {
         assertEquals(listOf(1L, 3L, 2L), PlaybackCommands.queue.value.songs.map { it.id })
         println("Real analyzed Smart Queue: selected 92 BPM candidate over original 140 BPM candidate for 90 BPM source; unconsumed candidate restored on disable")
     }
+    @Test fun disablingSmartQueueRetainsOriginalUnconsumedTrackEvenWhenItsAnalysisFailed() {
+        val entries = listOf(song(1, 130, 16000, 90.0), song(2, 130, 16000, 140.0)).mapIndexed { index, song ->
+            QueueEntry(song, PlaybackCommands.QUEUE_ORIGIN_BASE, index, "failed-analysis-$index")
+        }
+        val builder = MeloXSmartQueueBuilder()
+        builder.begin(entries, 0)
+        val token = builder.snapshot().generation
+        builder.failure(token, entries[1])
+        assertTrue(builder.snapshot().items.isEmpty(), "Failed analysis must not be selected as an analyzed match")
+        assertEquals(listOf(entries[1]), builder.takeRemaining(), "Disabling Smart Queue must restore all unconsumed user entries")
+    }
     @Test fun threeRealTracksPerformTwoConsecutiveHandoffsWithoutReopeningTheOutput() = runBlocking<Unit> {
         install(listOf(song(1, 1000, 8000), song(2, 2000, 10000), song(3, 4000, 6000)))
         until { MeloXAutoMixTransitionRuntime.state.value.status == "prepared" }

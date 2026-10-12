@@ -1,0 +1,1602 @@
+[
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      0,
+      0,
+      427,
+      924
+    ],
+    "tag": "settings-tablayout",
+    "text": null,
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      72,
+      24,
+      407,
+      69
+    ],
+    "tag": null,
+    "text": "页面与标签栏",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "tag": null,
+    "text": "首页",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "tag": "setting-tab_home",
+    "text": null,
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "tag": null,
+    "text": "发现",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "tag": "setting-tab_explore",
+    "text": null,
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "tag": null,
+    "text": "音乐库",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "tag": "setting-tab_library",
+    "text": null,
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "tag": null,
+    "text": "播客",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "tag": null,
+    "text": "首页快捷入口",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      327,
+      74,
+      391,
+      75
+    ],
+    "tag": "setting-placement_podcasts_home",
+    "text": null,
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      36,
+      106,
+      121,
+      129
+    ],
+    "tag": null,
+    "text": "音乐库子页",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      327,
+      103,
+      391,
+      131
+    ],
+    "tag": "setting-placement_podcasts_library",
+    "text": null,
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      36,
+      162,
+      121,
+      185
+    ],
+    "tag": null,
+    "text": "独立标签页",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      327,
+      159,
+      391,
+      187
+    ],
+    "tag": "setting-placement_podcasts_tab",
+    "text": null,
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      38,
+      219,
+      65,
+      241
+    ],
+    "tag": null,
+    "text": "下载",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      36,
+      266,
+      138,
+      289
+    ],
+    "tag": null,
+    "text": "首页快捷入口",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      327,
+      263,
+      391,
+      291
+    ],
+    "tag": "setting-placement_downloads_home",
+    "text": null,
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      36,
+      322,
+      121,
+      345
+    ],
+    "tag": null,
+    "text": "音乐库子页",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      327,
+      319,
+      391,
+      347
+    ],
+    "tag": "setting-placement_downloads_library",
+    "text": null,
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      36,
+      378,
+      121,
+      401
+    ],
+    "tag": null,
+    "text": "独立标签页",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      327,
+      375,
+      391,
+      403
+    ],
+    "tag": "setting-placement_downloads_tab",
+    "text": null,
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      38,
+      435,
+      65,
+      457
+    ],
+    "tag": null,
+    "text": "云盘",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      36,
+      482,
+      138,
+      505
+    ],
+    "tag": null,
+    "text": "首页快捷入口",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      327,
+      479,
+      391,
+      507
+    ],
+    "tag": "setting-placement_cloud_home",
+    "text": null,
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      36,
+      538,
+      121,
+      561
+    ],
+    "tag": null,
+    "text": "音乐库子页",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      327,
+      535,
+      391,
+      563
+    ],
+    "tag": "setting-placement_cloud_library",
+    "text": null,
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      36,
+      594,
+      121,
+      617
+    ],
+    "tag": null,
+    "text": "独立标签页",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      327,
+      591,
+      391,
+      619
+    ],
+    "tag": "setting-placement_cloud_tab",
+    "text": null,
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      20,
+      643,
+      407,
+      924
+    ],
+    "tag": "layout-tab_order",
+    "text": null,
+    "state": "Home>Explore>Library>Podcasts>Downloads>Cloud>Settings",
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      38,
+      651,
+      104,
+      673
+    ],
+    "tag": null,
+    "text": "标签栏顺序",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      34,
+      693,
+      311,
+      715
+    ],
+    "tag": null,
+    "text": "首页",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "description": "首页上移",
+    "lyric_document": null,
+    "enabled": false,
+    "lyric_time_ms": null,
+    "bounds": [
+      311,
+      683,
+      352,
+      725
+    ],
+    "tag": "layout-tab_order-Home-up",
+    "text": "↑",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "description": "首页下移",
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      352,
+      683,
+      393,
+      725
+    ],
+    "tag": "layout-tab_order-Home-down",
+    "text": "↓",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      34,
+      739,
+      311,
+      761
+    ],
+    "tag": null,
+    "text": "发现",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "description": "发现上移",
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      311,
+      729,
+      352,
+      771
+    ],
+    "tag": "layout-tab_order-Explore-up",
+    "text": "↑",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "description": "发现下移",
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      352,
+      729,
+      393,
+      771
+    ],
+    "tag": "layout-tab_order-Explore-down",
+    "text": "↓",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      34,
+      785,
+      311,
+      807
+    ],
+    "tag": null,
+    "text": "音乐库",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "description": "音乐库上移",
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      311,
+      775,
+      352,
+      817
+    ],
+    "tag": "layout-tab_order-Library-up",
+    "text": "↑",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "description": "音乐库下移",
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      352,
+      775,
+      393,
+      817
+    ],
+    "tag": "layout-tab_order-Library-down",
+    "text": "↓",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      34,
+      831,
+      311,
+      853
+    ],
+    "tag": null,
+    "text": "播客",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "description": "播客上移",
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      311,
+      821,
+      352,
+      863
+    ],
+    "tag": "layout-tab_order-Podcasts-up",
+    "text": "↑",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "description": "播客下移",
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      352,
+      821,
+      393,
+      863
+    ],
+    "tag": "layout-tab_order-Podcasts-down",
+    "text": "↓",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      34,
+      877,
+      311,
+      899
+    ],
+    "tag": null,
+    "text": "下载",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "description": "下载上移",
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      311,
+      867,
+      352,
+      909
+    ],
+    "tag": "layout-tab_order-Downloads-up",
+    "text": "↑",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "description": "下载下移",
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      352,
+      867,
+      393,
+      909
+    ],
+    "tag": "layout-tab_order-Downloads-down",
+    "text": "↓",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      34,
+      923,
+      311,
+      924
+    ],
+    "tag": null,
+    "text": "云盘",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "description": "云盘上移",
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      311,
+      913,
+      352,
+      924
+    ],
+    "tag": "layout-tab_order-Cloud-up",
+    "text": "↑",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "description": "云盘下移",
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      352,
+      913,
+      393,
+      924
+    ],
+    "tag": "layout-tab_order-Cloud-down",
+    "text": "↓",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "tag": null,
+    "text": "设置",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "description": "设置上移",
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "tag": "layout-tab_order-Settings-up",
+    "text": "↑",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "description": "设置下移",
+    "lyric_document": null,
+    "enabled": false,
+    "lyric_time_ms": null,
+    "bounds": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "tag": "layout-tab_order-Settings-down",
+    "text": "↓",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "tag": "layout-home_section_order",
+    "text": null,
+    "state": "Playlists>QuickActions>NewSongs",
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "tag": null,
+    "text": "首页区块",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "tag": null,
+    "text": "快捷入口",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "tag": "setting-home_quick_actions",
+    "text": null,
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "tag": null,
+    "text": "推荐歌单",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "tag": "setting-home_playlists",
+    "text": null,
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "tag": null,
+    "text": "推荐新歌",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "tag": "setting-home_new_songs",
+    "text": null,
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "tag": null,
+    "text": "记住音乐库子页面",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "tag": "setting-library_remember_page",
+    "text": null,
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "tag": null,
+    "text": "推荐歌单",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "description": "歌单上移",
+    "lyric_document": null,
+    "enabled": false,
+    "lyric_time_ms": null,
+    "bounds": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "tag": "layout-home_section_order-Playlists-up",
+    "text": "↑",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "description": "歌单下移",
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "tag": "layout-home_section_order-Playlists-down",
+    "text": "↓",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "tag": null,
+    "text": "快捷入口",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "description": "快捷入口上移",
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "tag": "layout-home_section_order-QuickActions-up",
+    "text": "↑",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "description": "快捷入口下移",
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "tag": "layout-home_section_order-QuickActions-down",
+    "text": "↓",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "tag": null,
+    "text": "推荐新歌",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "description": "推荐新歌上移",
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "tag": "layout-home_section_order-NewSongs-up",
+    "text": "↑",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "description": "推荐新歌下移",
+    "lyric_document": null,
+    "enabled": false,
+    "lyric_time_ms": null,
+    "bounds": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "tag": "layout-home_section_order-NewSongs-down",
+    "text": "↓",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "tag": null,
+    "text": "音乐库默认页",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": true,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "tag": "settings-selector:音乐库默认页",
+    "text": null,
+    "state": "歌单",
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "tag": null,
+    "text": "歌单",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "tag": null,
+    "text": "搜索保持为独立的右侧 Liquid Glass 按钮。\n关闭记住子页面时，音乐库使用默认页。",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      0,
+      860,
+      427,
+      924
+    ],
+    "tag": "bottom-root-tabs",
+    "text": null,
+    "state": "Home>Explore>Library>Settings",
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "tag": null,
+    "text": "首页",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "tag": null,
+    "text": "发现",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "tag": null,
+    "text": "音乐库",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  },
+  {
+    "clickable": false,
+    "description": null,
+    "lyric_document": null,
+    "enabled": true,
+    "lyric_time_ms": null,
+    "bounds": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "tag": null,
+    "text": "设置",
+    "state": null,
+    "lyric_word_lines": null,
+    "lyric_browsing": null,
+    "selected": null,
+    "long_clickable": false
+  }
+]

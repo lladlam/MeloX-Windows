@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="SecurePreferenceFileTest[desktop]" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-10-12T02:37:28.167Z" hostname="lladlam-arch" time="0.031">
+  <properties/>
+  <testcase name="protectionFailurePreservesLegacyAndCommittedState[desktop]" classname="melox.platform.SecurePreferenceFileTest" time="0.019"/>
+  <testcase name="migratesBothLegacyNamesAndPersistsOnlyProtectedPayload[desktop]" classname="melox.platform.SecurePreferenceFileTest" time="0.006"/>
+  <testcase name="unusableProtectionAndCiphertextFallBackToMemoryWithoutWritingSecrets[desktop]" classname="melox.platform.SecurePreferenceFileTest" time="0.002"/>
+  <testcase name="nonWindowsDevelopmentNeverWritesPlaintextSessions[desktop]" classname="melox.platform.SecurePreferenceFileTest" time="0.0"/>
+  <testcase name="corruptCiphertextRecoversAnEmptyVerifiedStoreAndDoesNotReviveStaleLegacy[desktop]" classname="melox.platform.SecurePreferenceFileTest" time="0.003"/>
+  <system-out><![CDATA[[WARN MeloXSecurePrefs] Secure store account could not open (IllegalStateException); recovering
+[WARN MeloXSecurePrefs] Secure store account could not open (IllegalStateException); recovering
+[WARN MeloXSecurePrefs] Secure store account could not open (IndexOutOfBoundsException); recovering
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,169 @@
+{
+  "renderer": "production ImageComposeScene",
+  "start_tab": "Home",
+  "density": 1,
+  "frames": [],
+  "physical_audible_acceptance": "BLOCKED",
+  "steps": [
+    "scroll-tool:scroll-x@220,370,120",
+    "cloud:tap@home-tool-cloud",
+    "back:escape"
+  ],
+  "home": "/home/lladlam/项目/MeloX-Windows/desktop/build/parity/sol3-layout-home-v2",
+  "enabled_start_tab": false,
+  "play_id": null,
+  "play_query": "",
+  "pcm_outputs": [],
+  "width": 427,
+  "scenes": [
+    {
+      "title": null,
+      "error": null,
+      "automix_status": "idle",
+      "file": "00-home.png",
+      "is_playing": false,
+      "play_when_ready": false,
+      "selected_quality": "standard",
+      "is_loading": false,
+      "assertions": [
+        {
+          "expected": "tag:home-quick-actions",
+          "passed": true
+        },
+        {
+          "expected": "state:bottom-root-tabs:Home>Explore>Library>Settings",
+          "passed": true
+        }
+      ],
+      "track": null,
+      "queue_count": 0,
+      "error_kind": null,
+      "queue_tracks": [],
+      "lyric_document": null,
+      "automix_progress": 0,
+      "automix_active": false,
+      "duration_ms": 0,
+      "position_ms": 0,
+      "is_paused": false,
+      "captured_elapsed_ms": 35153.601436,
+      "page": null,
+      "queue_entry_ids": [],
+      "lyric_word_lines": null,
+      "queue_index": -1,
+      "controls_visible": false,
+      "autoplay_enabled": false
+    },
+    {
+      "title": null,
+      "error": null,
+      "automix_status": "idle",
+      "file": "01-scroll-tool.png",
+      "is_playing": false,
+      "play_when_ready": false,
+      "selected_quality": "standard",
+      "is_loading": false,
+      "assertions": [],
+      "track": null,
+      "queue_count": 0,
+      "error_kind": null,
+      "queue_tracks": [],
+      "lyric_document": null,
+      "automix_progress": 0,
+      "automix_active": false,
+      "duration_ms": 0,
+      "position_ms": 0,
+      "is_paused": false,
+      "captured_elapsed_ms": 36200.353446,
+      "page": null,
+      "queue_entry_ids": [],
+      "lyric_word_lines": null,
+      "queue_index": -1,
+      "controls_visible": false,
+      "autoplay_enabled": false,
+      "action_elapsed_ms": 1045.040825
+    },
+    {
+      "title": null,
+      "error": null,
+      "automix_status": "idle",
+      "file": "02-cloud.png",
+      "is_playing": false,
+      "play_when_ready": false,
+      "selected_quality": "standard",
+      "is_loading": false,
+      "assertions": [
+        {
+          "expected": "tag:cloud-upload",
+          "passed": true
+        },
+        {
+          "expected": "tag:cloud-error",
+          "passed": true
+        },
+        {
+          "expected": "state:bottom-root-tabs:Home>Explore>Library>Settings",
+          "passed": true
+        }
+      ],
+      "track": null,
+      "queue_count": 0,
+      "error_kind": null,
+      "queue_tracks": [],
+      "lyric_document": null,
+      "automix_progress": 0,
+      "automix_active": false,
+      "duration_ms": 0,
+      "position_ms": 0,
+      "is_paused": false,
+      "captured_elapsed_ms": 37164.249586,
+      "page": null,
+      "queue_entry_ids": [],
+      "lyric_word_lines": null,
+      "queue_index": -1,
+      "controls_visible": false,
+      "autoplay_enabled": false,
+      "action_elapsed_ms": 963.849367
+    },
+    {
+      "title": null,
+      "error": null,
+      "automix_status": "idle",
+      "file": "03-back.png",
+      "is_playing": false,
+      "play_when_ready": false,
+      "selected_quality": "standard",
+      "is_loading": false,
+      "assertions": [
+        {
+          "expected": "tag:home-quick-actions",
+          "passed": true
+        },
+        {
+          "expected": "absent:cloud-upload",
+          "passed": true
+        }
+      ],
+      "track": null,
+      "queue_count": 0,
+      "error_kind": null,
+      "queue_tracks": [],
+      "lyric_document": null,
+      "automix_progress": 0,
+      "automix_active": false,
+      "duration_ms": 0,
+      "position_ms": 0,
+      "is_paused": false,
+      "captured_elapsed_ms": 38187.787947,
+      "page": null,
+      "queue_entry_ids": [],
+      "lyric_word_lines": null,
+      "queue_index": -1,
+      "controls_visible": false,
+      "autoplay_enabled": false,
+      "action_elapsed_ms": 1023.048678
+    }
+  ],
+  "theme": "Dark",
+  "audio_endpoint": "Java Sound physical output",
+  "height": 924
+}

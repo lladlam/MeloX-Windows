@@ -1,0 +1,66 @@
+{
+  "android_sha": "3f877eaffe30c82eb6d24eb3647702f5bc554dd3",
+  "windows_parent_sha": "d1426b57572bdbd448e722783082f4134af178b2",
+  "tests": {
+    "tests": 114,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "suites": 20,
+  "layout_regression_cases": 5,
+  "smart_queue_failed_analysis_regression_cases": 1,
+  "ui": {
+    "renderer": "production ImageComposeScene",
+    "environment": "isolated unauthenticated home; production pointer/wheel operations and search accessibility SetText",
+    "scenes": 15,
+    "total_captures": 57,
+    "assertions": 14,
+    "assertions_passed": true,
+    "dynamic_frames": 42,
+    "restart": "initial dock order restored from earlier physical UI run in the same isolated home"
+  },
+  "jar": {
+    "bytes": 221467528,
+    "sha256": "87c94f8477e08e2714015c4e9fd3969fc51740225c77eeac70fc77227e61d340"
+  },
+  "source_sha256": {
+    "desktop/src/desktopMain/kotlin/melox/ui/screens/TabLayoutSettings.kt": "372077137c0e0bd85b97afe85dca7b3b162efd277532136e51c409ac5d26a052",
+    "shared/src/commonMain/kotlin/melox/settings/MeloXContentLayout.kt": "285c50fd7cf9f589c5b0efcc4f3029b759e4c7e4012e7c5d3e6ad8ecba449ff0",
+    "shared/src/desktopTest/kotlin/melox/settings/ContentLayoutRestorationTest.kt": "96c2d72d1abe7ac5a43479ac2685e2fce92311efbe5f47de0605a6a881ffc312",
+    "desktop/src/desktopMain/kotlin/melox/ui/MeloXApp.kt": "4e5a4e15d9feac16532203a4edf3937d270ae3a53df61836ab3af1b457116c8a",
+    "desktop/src/desktopMain/kotlin/melox/ui/glass/MeloXSettingsDropdown.kt": "1616a328731a55865cfd62c2d423f7874e668306674cda2aaf6a489905780980",
+    "desktop/src/desktopMain/kotlin/melox/ui/navigation/MeloXBottomChrome.kt": "03613ca6f6c30ea0aa71969711de4fa22a90c409712a0ad5364fd83755bab0f2",
+    "desktop/src/desktopMain/kotlin/melox/ui/screens/HomeScreen.kt": "4e63a19126e5d1d569753264559e3062cf733be48d34b797ab7a0ca7a3fb28a8",
+    "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXLibraryScreen.kt": "7f7080fbdea1085ec6fde69f88142b3a4a1050675a49b958529bb093c138283d",
+    "desktop/src/desktopMain/kotlin/melox/ui/screens/SettingsScreen.kt": "a6e90fa4ce85406639020166c1c95ea28ba605cd605cb8d818ac366850d70282",
+    "desktop/src/desktopMain/kotlin/melox/validation/MeloXVisualCapture.kt": "358102338b3450078e84ad05cb35c31d82d3b4c5c8874dee81575bb754dd4e5e",
+    "shared/src/commonMain/kotlin/melox/playback/MeloXSmartQueueBuilder.kt": "e087563458092cff1c50f14bcaa7c7d65a87c095a81a6867570f8a993caaaf4a",
+    "shared/src/commonMain/kotlin/melox/playback/PlaybackCommands.kt": "887c2362079caf78a51efd101c4df9fdbbcad6b29c9e7aeb5946ac5d3403702b",
+    "shared/src/desktopTest/kotlin/melox/playback/DesktopAutoMixIntegrationTest.kt": "b54716bee66f4f9a214b7d8854bd2f326966d8dcea90d0e1805fccd9c4494211"
+  },
+  "windows_physical_audio": "BLOCKED",
+  "authenticated_provider_library": "BLOCKED",
+  "android_pixels_and_dynamic_parity": "BLOCKED",
+  "home_shortcut": {
+    "scenes": 4,
+    "assertions": 7,
+    "result": "production Home card -> real missing-login Cloud page while Cloud dock placement stays off -> Escape returns to Home"
+  },
+  "settings_ui_source_sha256": {
+    "desktop/src/desktopMain/kotlin/melox/ui/screens/TabLayoutSettings.kt": "372077137c0e0bd85b97afe85dca7b3b162efd277532136e51c409ac5d26a052",
+    "shared/src/commonMain/kotlin/melox/settings/MeloXContentLayout.kt": "285c50fd7cf9f589c5b0efcc4f3029b759e4c7e4012e7c5d3e6ad8ecba449ff0",
+    "shared/src/desktopTest/kotlin/melox/settings/ContentLayoutRestorationTest.kt": "96c2d72d1abe7ac5a43479ac2685e2fce92311efbe5f47de0605a6a881ffc312",
+    "desktop/src/desktopMain/kotlin/melox/ui/MeloXApp.kt": "fc2098ab99ebd7b47e995052e5ee2ce3236262a2fc5264ac0ec9ac5f3eac2a2a",
+    "desktop/src/desktopMain/kotlin/melox/ui/glass/MeloXSettingsDropdown.kt": "1616a328731a55865cfd62c2d423f7874e668306674cda2aaf6a489905780980",
+    "desktop/src/desktopMain/kotlin/melox/ui/navigation/MeloXBottomChrome.kt": "03613ca6f6c30ea0aa71969711de4fa22a90c409712a0ad5364fd83755bab0f2",
+    "desktop/src/desktopMain/kotlin/melox/ui/screens/HomeScreen.kt": "4e63a19126e5d1d569753264559e3062cf733be48d34b797ab7a0ca7a3fb28a8",
+    "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXLibraryScreen.kt": "7f7080fbdea1085ec6fde69f88142b3a4a1050675a49b958529bb093c138283d",
+    "desktop/src/desktopMain/kotlin/melox/ui/screens/SettingsScreen.kt": "a6e90fa4ce85406639020166c1c95ea28ba605cd605cb8d818ac366850d70282",
+    "desktop/src/desktopMain/kotlin/melox/validation/MeloXVisualCapture.kt": "358102338b3450078e84ad05cb35c31d82d3b4c5c8874dee81575bb754dd4e5e",
+    "shared/src/commonMain/kotlin/melox/playback/MeloXSmartQueueBuilder.kt": "e087563458092cff1c50f14bcaa7c7d65a87c095a81a6867570f8a993caaaf4a",
+    "shared/src/commonMain/kotlin/melox/playback/PlaybackCommands.kt": "887c2362079caf78a51efd101c4df9fdbbcad6b29c9e7aeb5946ac5d3403702b",
+    "shared/src/desktopTest/kotlin/melox/playback/DesktopAutoMixIntegrationTest.kt": "b54716bee66f4f9a214b7d8854bd2f326966d8dcea90d0e1805fccd9c4494211"
+  },
+  "settings_ui_source_difference": "Final App Shell adds resident Escape-focus restoration on non-Search root switches; settings layout/control source is identical to its captured version."
+}

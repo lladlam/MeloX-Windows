@@ -38,6 +38,7 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -52,7 +53,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -77,6 +82,7 @@ import melox.music.provider.MusicProviderSelectionStore
 import melox.music.provider.PlaylistCapability
 import melox.music.provider.UserLibraryCapability
 import melox.playback.PlaybackCommands
+import melox.settings.MeloXContentLayout
 import melox.ui.foundation.MeloXMotion
 import melox.ui.foundation.MeloXSymbolIcon
 import melox.ui.foundation.MeloXIosTopBar
@@ -116,11 +122,7 @@ fun LibraryScreen(
     val providerLibrary = provider as? UserLibraryCapability
     val cache = remember { NeteaseLibraryCache() }
 
-    val initialPage = if (source == MusicSource.Netease || source == MusicSource.Local) {
-        MeloXLibraryPage.Songs
-    } else {
-        MeloXLibraryPage.Playlists
-    }
+    val initialPage = MeloXLibraryPage.valueOf(MeloXContentLayout.initialLibraryPage(source))
     var selectedPage by rememberSaveable(source) { mutableStateOf(initialPage) }
     var selectedPlaylist by remember(source, session.cookie) { mutableStateOf<NeteasePlaylistSummary?>(null) }
     var snapshot by remember(source, session.cookie) { mutableStateOf<NeteaseLibrarySnapshot?>(null) }
@@ -225,14 +227,14 @@ fun LibraryScreen(
         if (!session.isLoggedIn) loading = false
     }
 
-    LaunchedEffect(source) {
+    val availablePages = MeloXContentLayout.libraryPages(source)
+    LaunchedEffect(source, availablePages) {
         if (!selectedPage.isEnabled(source)) {
-            selectedPage = if (source == MusicSource.Netease || source == MusicSource.Local) {
-                MeloXLibraryPage.Songs
-            } else {
-                MeloXLibraryPage.Playlists
-            }
+            selectedPage = MeloXLibraryPage.valueOf(MeloXContentLayout.initialLibraryPage(source))
         }
+    }
+    LaunchedEffect(source, selectedPage, melox.settings.MeloXSettingsRuntime.rememberLibraryPage) {
+        MeloXContentLayout.rememberLibraryPage(source, selectedPage.name)
     }
 
     if (source == MusicSource.Netease && !session.isLoggedIn) {
@@ -454,12 +456,7 @@ private enum class MeloXLibraryPage(val title: String) {
  * of the renderer: unsupported product sections are simply absent while the
  * same MeloX transitions/backgrounds remain active.
  */
-private fun MeloXLibraryPage.isEnabled(source: MusicSource): Boolean = when {
-    source == MusicSource.Bilibili -> this == MeloXLibraryPage.Playlists || this == MeloXLibraryPage.Downloads
-    source == MusicSource.Local -> this == MeloXLibraryPage.Songs
-    source != MusicSource.Netease -> this == MeloXLibraryPage.Playlists
-    else -> true
-}
+private fun MeloXLibraryPage.isEnabled(source: MusicSource): Boolean = name in MeloXContentLayout.libraryPages(source)
 
 @Composable
 private fun MeloXLibraryLoginUnavailable(
@@ -535,7 +532,7 @@ private fun MeloXLibrarySegmentedPicker(
     val pages = MeloXLibraryPage.entries.filter { it.isEnabled(source) }
     val panelShape = MeloXShapes.compact
     val lensShape = RoundedCornerShape(15.dp)
-    val dark = true // MeloX is always dark on desktop
+    val dark = MaterialTheme.colorScheme.background.luminance() < .5f
     val selectedIndex = pages.indexOf(selected).coerceAtLeast(0)
     val lensPosition by animateFloatAsState(
         targetValue = selectedIndex.toFloat(),
@@ -556,6 +553,7 @@ private fun MeloXLibrarySegmentedPicker(
 
     BoxWithConstraints(
         modifier = modifier
+            .testTag("library-pages").semantics { stateDescription = selected.name }
             .fillMaxWidth()
             .height(30.dp)
             .meloXLiquidBottomBar(

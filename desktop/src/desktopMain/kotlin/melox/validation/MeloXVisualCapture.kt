@@ -12,7 +12,10 @@ import androidx.compose.ui.input.key.KeyEventType
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.semantics.SemanticsProperties
+import androidx.compose.ui.semantics.SemanticsNode
 import androidx.compose.ui.semantics.getOrNull
+import androidx.compose.ui.state.ToggleableState
+import androidx.compose.ui.text.AnnotatedString
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
@@ -116,13 +119,15 @@ fun main(args: Array<String>) = runBlocking {
             val semantics = scene.captureSemantics()
             return when (kind) {
                 "page" -> semantics.tagged("now-playing")?.config?.getOrNull(SemanticsProperties.StateDescription) == expected
-                "state" -> expected.split(':', limit = 2).let { (tag, value) -> semantics.tagged(tag)?.config?.getOrNull(SemanticsProperties.StateDescription) == value }
+                "state" -> semantics.tagged(expected.substringBeforeLast(':'))?.config?.getOrNull(SemanticsProperties.StateDescription) == expected.substringAfterLast(':')
                 "index" -> melox.playback.PlaybackCommands.queue.value.index == expected.toInt()
                 "tag" -> semantics.tagged(expected) != null
                 "full-tag" -> semantics.tagged(expected)?.boundsInWindow?.let { it.width >= width * .97f && it.height >= height * .97f } == true
                 "absent" -> semantics.tagged(expected) == null
                 "selected" -> semantics.tagged(expected)?.config?.getOrNull(SemanticsProperties.Selected) == true
                 "unselected" -> semantics.tagged(expected)?.config?.getOrNull(SemanticsProperties.Selected) == false
+                "checked" -> semantics.tagged(expected)?.config?.getOrNull(SemanticsProperties.ToggleableState) == ToggleableState.On
+                "unchecked" -> semantics.tagged(expected)?.config?.getOrNull(SemanticsProperties.ToggleableState) == ToggleableState.Off
                 "quality" -> melox.audio.MusicQualityPreferences.read().apiLevel == expected
                 "queue-min" -> melox.playback.PlaybackCommands.queue.value.songs.size >= expected.toInt()
                 "repeat" -> melox.playback.PlaybackCommands.playerController()?.repeatMode?.value == expected.toInt()
@@ -222,9 +227,17 @@ fun main(args: Array<String>) = runBlocking {
                     scene.sendPointerEvent(PointerEventType.Release, point, button = PointerButton.Primary)
                 } else if (coordinates.startsWith("wait@")) {
                     settle(coordinates.removePrefix("wait@").toLong())
-                } else if (coordinates.startsWith("scroll@")) {
-                    val (x, y, delta) = coordinates.removePrefix("scroll@").split(',').map(String::toFloat)
-                    scene.sendPointerEvent(PointerEventType.Scroll, Offset(x, y), scrollDelta = Offset(0f, delta))
+                } else if (coordinates.startsWith("text@")) {
+                    val (tag, text) = coordinates.substringAfter('@').split(',', limit = 2)
+                    val node = requireNotNull(scene.captureSemantics().tagged(tag)) { "Missing editable production node $tag" }
+                    fun edit(candidate: SemanticsNode): Boolean =
+                        candidate.config.getOrNull(SemanticsActions.SetText)?.action?.invoke(AnnotatedString(text))
+                            ?: candidate.children.any(::edit)
+                    check(edit(node)) { "Production field $tag has no enabled editable child" }
+                } else if (coordinates.startsWith("scroll@") || coordinates.startsWith("scroll-x@")) {
+                    val (x, y, delta) = coordinates.substringAfter('@').split(',').map(String::toFloat)
+                    scene.sendPointerEvent(PointerEventType.Scroll, Offset(x, y),
+                        scrollDelta = if (coordinates.startsWith("scroll-x@")) Offset(delta, 0f) else Offset(0f, delta))
                 } else if (coordinates.startsWith("slider@")) {
                     val (tag, fraction) = coordinates.substringAfter('@').split(',')
                     val bounds = requireNotNull(scene.captureSemantics().tagged(tag)) { "Missing slider node $tag" }.boundsInWindow

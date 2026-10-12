@@ -221,8 +221,9 @@ fun MeloXApp() {
         }
     }
 
-    LaunchedEffect(visibleTabs, selectedTab) {
-        if (selectedTab !in visibleTabs && selectedTab != AppTab.Search) {
+    val selectedPageAvailable = melox.settings.MeloXContentLayout.rootPageAvailable(selectedSource, selectedTab.name)
+    LaunchedEffect(visibleTabs, selectedTab, selectedPageAvailable) {
+        if (!selectedPageAvailable) {
             selectedTab = visibleTabs.first()
         }
     }
@@ -231,6 +232,8 @@ fun MeloXApp() {
     LaunchedEffect(selectedTab) {
         tabBarMinimized = false
         scrollAccumulator = 0f
+        // A shortcut's focused card can disappear with its page. Keep Escape reachable.
+        if (selectedTab != AppTab.Search) rootFocus.requestFocus()
     }
 
     // Media disappeared → snap player closed (Android lines 350–354)
@@ -444,23 +447,7 @@ fun MeloXApp() {
 
 @Composable
 private fun visibleTabsFor(source: MusicSource): List<AppTab> {
-    val ordered = if (source == MusicSource.Bilibili) {
-        listOf(AppTab.Library, AppTab.Settings)
-    } else {
-        MeloXSettingsRuntime.tabOrder.mapNotNull { runCatching { AppTab.valueOf(it) }.getOrNull() }
-    }
-    return ordered.filter {
-        when (it) {
-            AppTab.Home -> MeloXSettingsRuntime.homeTabEnabled
-            AppTab.Explore -> MeloXSettingsRuntime.exploreTabEnabled
-            AppTab.Library -> MeloXSettingsRuntime.libraryTabEnabled
-            AppTab.Podcasts -> MeloXSettingsRuntime.podcastsEnabled && MeloXSettingsRuntime.podcastsTabPlacement
-            AppTab.Downloads -> MeloXSettingsRuntime.downloadsEnabled && MeloXSettingsRuntime.downloadsTabPlacement
-            AppTab.Cloud -> MeloXSettingsRuntime.cloudMusicEnabled && MeloXSettingsRuntime.cloudTabPlacement
-            AppTab.Settings -> true
-            AppTab.Search -> false
-        }
-    }.let { if (AppTab.Settings in it) it else it + AppTab.Settings }
+    return melox.settings.MeloXContentLayout.visibleTabs(source).map(AppTab::valueOf)
 }
 
 @Composable

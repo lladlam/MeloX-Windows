@@ -630,18 +630,20 @@ class MeloXDesktopPlayer internal constructor(
         }
     }
 
-    private fun ensureSmartNext(emergency: Boolean = false) {
-        if (!MeloXPlaybackModeRuntime.smartQueueEnabled || currentMediaItemIndex < items.lastIndex) return
-        val source = items.getOrNull(currentMediaItemIndex) ?: return
+    private val smartQueueMutationLock = Any()
+
+    private fun ensureSmartNext(emergency: Boolean = false) = synchronized(smartQueueMutationLock) {
+        if (!MeloXPlaybackModeRuntime.smartQueueEnabled || currentMediaItemIndex < items.lastIndex) return@synchronized
+        val source = items.getOrNull(currentMediaItemIndex) ?: return@synchronized
         val snapshot = smartQueue.snapshot()
         val match = smartQueue.best(snapshot.generation, source) ?: if (emergency) smartQueue.emergency(snapshot.generation) else null
-        val selected = match?.let { smartQueue.consume(snapshot.generation, it) } ?: return
+        val selected = match?.let { smartQueue.consume(snapshot.generation, it) } ?: return@synchronized
         items += selected; mediaItemCount = items.size
         PlaybackCommands.publishQueue(this)
         if (awaitingAutoplay) { playWhenReady = true; selectIndex(currentMediaItemIndex + 1, automatic = true) }
     }
 
-    fun setSmartQueueEnabled(enabled: Boolean) {
+    fun setSmartQueueEnabled(enabled: Boolean) = synchronized(smartQueueMutationLock) {
         cancelMix(); smartJob?.cancel()
         MeloXPlaybackModePreferences.setSmartQueue(enabled)
         if (enabled && currentMediaItemIndex in items.indices) {
@@ -650,7 +652,7 @@ class MeloXDesktopPlayer internal constructor(
             items.clear(); items += head; mediaItemCount = items.size
             val current = items[currentMediaItemIndex]
             currentResolved?.let { analyzeSmartCandidates(current, it) }
-        } else { items += smartQueue.snapshot().items; smartQueue.reset(); mediaItemCount = items.size }
+        } else { items += smartQueue.takeRemaining(); mediaItemCount = items.size }
         PlaybackCommands.publishQueue(this)
     }
 

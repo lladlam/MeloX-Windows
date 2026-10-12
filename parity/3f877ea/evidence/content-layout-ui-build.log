@@ -1,0 +1,133 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.5.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build
+> Task :desktop:kmpPartiallyResolvedDependenciesChecker
+> Task :desktop:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :desktop:convertXmlValueResourcesForCommonMain NO-SOURCE
+> Task :desktop:copyNonXmlValueResourcesForCommonMain NO-SOURCE
+> Task :desktop:prepareComposeResourcesTaskForCommonMain NO-SOURCE
+> Task :desktop:generateResourceAccessorsForCommonMain SKIPPED
+> Task :desktop:convertXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :desktop:copyNonXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :desktop:prepareComposeResourcesTaskForDesktopMain NO-SOURCE
+> Task :desktop:generateResourceAccessorsForDesktopMain SKIPPED
+> Task :desktop:generateActualResourceCollectorsForDesktopMain SKIPPED
+> Task :desktop:generateComposeResClass SKIPPED
+> Task :desktop:generateExpectResourceCollectorsForCommonMain SKIPPED
+> Task :innertube:kmpPartiallyResolvedDependenciesChecker
+> Task :innertube:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :innertube:extractAndroidInnerTube UP-TO-DATE
+> Task :innertube:compileKotlinDesktop UP-TO-DATE
+> Task :innertube:compileDesktopMainJava NO-SOURCE
+> Task :innertube:desktopProcessResources NO-SOURCE
+> Task :innertube:processDesktopMainResources SKIPPED
+> Task :innertube:desktopMainClasses UP-TO-DATE
+> Task :innertube:desktopJar UP-TO-DATE
+> Task :shared:kmpPartiallyResolvedDependenciesChecker
+> Task :shared:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :shared:convertXmlValueResourcesForCommonMain NO-SOURCE
+> Task :shared:copyNonXmlValueResourcesForCommonMain NO-SOURCE
+> Task :shared:prepareComposeResourcesTaskForCommonMain NO-SOURCE
+> Task :shared:generateResourceAccessorsForCommonMain SKIPPED
+> Task :shared:convertXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :shared:copyNonXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :shared:prepareComposeResourcesTaskForDesktopMain NO-SOURCE
+> Task :shared:generateResourceAccessorsForDesktopMain SKIPPED
+> Task :shared:generateActualResourceCollectorsForDesktopMain SKIPPED
+> Task :shared:generateComposeResClass SKIPPED
+> Task :shared:generateExpectResourceCollectorsForCommonMain SKIPPED
+> Task :shared:compileKotlinDesktop UP-TO-DATE
+> Task :shared:compileDesktopMainJava NO-SOURCE
+> Task :shared:assembleDesktopMainResources UP-TO-DATE
+> Task :shared:desktopProcessResources UP-TO-DATE
+> Task :shared:processDesktopMainResources SKIPPED
+> Task :shared:desktopMainClasses UP-TO-DATE
+> Task :shared:desktopJar UP-TO-DATE
+> Task :desktop:compileKotlinDesktop
+> Task :desktop:compileDesktopMainJava NO-SOURCE
+> Task :desktop:assembleDesktopMainResources UP-TO-DATE
+> Task :desktop:desktopProcessResources UP-TO-DATE
+> Task :desktop:processDesktopMainResources SKIPPED
+> Task :desktop:desktopMainClasses
+> Task :desktop:desktopJar
+
+> Task :desktop:captureUi
+Captured 00-settings: 427x924 density=1.0
+Verified 00-settings: state:bottom-root-tabs:Explore>Home>Library>Settings
+Captured 01-filter-frame-0: 427x924 density=1.0
+Captured 01-filter-frame-100: 427x924 density=1.0
+Captured 01-filter-frame-300: 427x924 density=1.0
+Captured 01-filter: 427x924 density=1.0
+Captured 02-open-frame-0: 427x924 density=1.0
+Captured 02-open-frame-100: 427x924 density=1.0
+Captured 02-open-frame-300: 427x924 density=1.0
+Captured 02-open: 427x924 density=1.0
+Verified open: tag:settings-tablayout
+Captured 03-scroll-cloud-frame-0: 427x924 density=1.0
+Captured 03-scroll-cloud-frame-100: 427x924 density=1.0
+Captured 03-scroll-cloud-frame-300: 427x924 density=1.0
+Captured 03-scroll-cloud: 427x924 density=1.0
+Captured 04-enable-cloud-frame-0: 427x924 density=1.0
+Captured 04-enable-cloud-frame-100: 427x924 density=1.0
+Captured 04-enable-cloud-frame-300: 427x924 density=1.0
+Captured 04-enable-cloud: 427x924 density=1.0
+Verified enable-cloud: checked:setting-placement_cloud_tab
+Verified enable-cloud: state:bottom-root-tabs:Explore>Home>Library>Cloud>Settings
+Captured 05-disable-cloud-frame-0: 427x924 density=1.0
+Captured 05-disable-cloud-frame-100: 427x924 density=1.0
+Captured 05-disable-cloud-frame-300: 427x924 density=1.0
+Captured 05-disable-cloud: 427x924 density=1.0
+Verified disable-cloud: unchecked:setting-placement_cloud_tab
+Verified disable-cloud: state:bottom-root-tabs:Explore>Home>Library>Settings
+Captured 06-library-cloud-frame-0: 427x924 density=1.0
+Captured 06-library-cloud-frame-100: 427x924 density=1.0
+Captured 06-library-cloud-frame-300: 427x924 density=1.0
+Captured 06-library-cloud: 427x924 density=1.0
+Verified library-cloud: checked:setting-placement_cloud_library
+Captured 07-scroll-order-frame-0: 427x924 density=1.0
+Captured 07-scroll-order-frame-100: 427x924 density=1.0
+Captured 07-scroll-order-frame-300: 427x924 density=1.0
+Captured 07-scroll-order: 427x924 density=1.0
+Captured 08-move-home-frame-0: 427x924 density=1.0
+Captured 08-move-home-frame-100: 427x924 density=1.0
+Captured 08-move-home-frame-300: 427x924 density=1.0
+Captured 08-move-home: 427x924 density=1.0
+Verified move-home: state:layout-tab_order:Home>Explore>Library>Podcasts>Downloads>Cloud>Settings
+Verified move-home: state:bottom-root-tabs:Home>Explore>Library>Settings
+Captured 09-scroll-sections-frame-0: 427x924 density=1.0
+Captured 09-scroll-sections-frame-100: 427x924 density=1.0
+Captured 09-scroll-sections-frame-300: 427x924 density=1.0
+Captured 09-scroll-sections: 427x924 density=1.0
+Captured 10-move-quick-frame-0: 427x924 density=1.0
+Captured 10-move-quick-frame-100: 427x924 density=1.0
+Captured 10-move-quick-frame-300: 427x924 density=1.0
+Captured 10-move-quick: 427x924 density=1.0
+Verified move-quick: state:layout-home_section_order:QuickActions>Playlists>NewSongs
+Captured 11-remember-frame-0: 427x924 density=1.0
+Captured 11-remember-frame-100: 427x924 density=1.0
+Captured 11-remember-frame-300: 427x924 density=1.0
+Captured 11-remember: 427x924 density=1.0
+Verified remember: checked:setting-library_remember_page
+Captured 12-default-menu-frame-0: 427x924 density=1.0
+Captured 12-default-menu-frame-100: 427x924 density=1.0
+Captured 12-default-menu-frame-300: 427x924 density=1.0
+Captured 12-default-menu: 427x924 density=1.0
+Captured 13-default-songs-frame-0: 427x924 density=1.0
+Captured 13-default-songs-frame-100: 427x924 density=1.0
+Captured 13-default-songs-frame-300: 427x924 density=1.0
+Captured 13-default-songs: 427x924 density=1.0
+Verified default-songs: state:settings-selector:音乐库默认页:歌曲
+Captured 14-back-frame-0: 427x924 density=1.0
+Captured 14-back-frame-100: 427x924 density=1.0
+Captured 14-back-frame-300: 427x924 density=1.0
+Captured 14-back: 427x924 density=1.0
+Verified back: absent:settings-tablayout
+Verified back: tag:settings-open-tablayout
+
+> Task :desktop:flattenJars
+
+> Task :desktop:packageUberJarForCurrentOS
+The jar is written to /home/lladlam/项目/MeloX-Windows/desktop/build/compose/jars/MeloX-Desktop-linux-x64-1.0.0.jar
+
+BUILD SUCCESSFUL in 1m 37s
+17 actionable tasks: 8 executed, 9 up-to-date
+Consider enabling configuration cache to speed up this build: https://docs.gradle.org/9.5.1/userguide/configuration_cache_enabling.html

@@ -41,6 +41,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.selected
+import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
@@ -221,6 +222,7 @@ private fun <T> MeloXPopupSelector(
         Row(
             Modifier
                 .testTag("settings-selector:$title")
+                .semantics { stateDescription = value }
                 .graphicsLayer { alpha = if (expanded) 0f else 1f }
                 .clickable(
                     enabled = enabled,

@@ -67,6 +67,7 @@ private enum class SettingsRoute(val title: String, val subtitle: String, val sy
     General("通用", "主题、启动行为与链接处理", MeloXSymbol.Settings),
     Appearance("外观", "背景、封面动画与屏幕常亮", MeloXSymbol.Sparkles),
     Content("内容", "地区、歌单信息和发现内容", MeloXSymbol.Grid),
+    TabLayout("页面与标签栏", "首页、标签栏与音乐库页面", MeloXSymbol.Grid),
     Playback("播放", "音质、播放行为与自动混音", MeloXSymbol.MusicNote),
     Lyrics("歌词", "翻译、罗马音、逐字与歌词交互", MeloXSymbol.Lyrics),
     Storage("存储管理", "空间统计、下载与缓存清理", MeloXSymbol.Drive),
@@ -76,7 +77,7 @@ private enum class SettingsRoute(val title: String, val subtitle: String, val sy
 }
 
 private val SettingsSections = listOf(
-    "应用" to listOf(SettingsRoute.General, SettingsRoute.Appearance, SettingsRoute.Content, SettingsRoute.Playback, SettingsRoute.Lyrics, SettingsRoute.Storage),
+    "应用" to listOf(SettingsRoute.General, SettingsRoute.Appearance, SettingsRoute.Content, SettingsRoute.TabLayout, SettingsRoute.Playback, SettingsRoute.Lyrics, SettingsRoute.Storage),
     "扩展" to listOf(SettingsRoute.Features, SettingsRoute.Messages),
     "关于" to listOf(SettingsRoute.About),
 )
@@ -114,7 +115,7 @@ fun SettingsScreen(
         MeloXGlassTextField(
             value = search,
             onValueChange = { search = it },
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth().testTag("settings-search"),
             leadingContent = { MeloXSymbolIcon(MeloXSymbol.Search, size = 20, iconSize = 24, color = MaterialTheme.colorScheme.onSurface.copy(alpha = .55f)) },
             placeholder = { Text("搜索设置", color = MaterialTheme.colorScheme.onSurface.copy(alpha = .42f), fontSize = 16.sp) },
             textStyle = androidx.compose.ui.text.TextStyle(color = MaterialTheme.colorScheme.onSurface, fontSize = 16.sp, lineHeight = 21.sp),
@@ -133,6 +134,7 @@ fun SettingsScreen(
             MeloXIosGroupedList {
             visible.forEachIndexed { index, item ->
                 MeloXIosListRow(
+                    modifier = Modifier.testTag("settings-open-${item.name.lowercase()}"),
                     title = item.title,
                     leading = { Box(Modifier.size(28.dp), contentAlignment = Alignment.Center) {
                         MeloXSymbolIcon(item.symbol, size = 22, iconSize = 24, color = melox.ui.glass.MeloXSystemColors.Red)
@@ -156,7 +158,7 @@ fun SettingsScreen(
         exit = meloXPageExit(toRight = true),
         modifier = Modifier.fillMaxSize().zIndex(1f),
     ) {
-        detailRoute?.let { SettingsDetail(it, currentSource, onSourceSelected, onBack = { route = null }) }
+        detailRoute?.let { SettingsDetail(it, currentSource, onSourceSelected, onOpenMessages, onBack = { route = null }) }
     }
     }
 }
@@ -197,21 +199,23 @@ private fun SettingsDetail(
     route: SettingsRoute,
     currentSource: MusicSource,
     onSourceSelected: (MusicSource) -> Unit,
+    onOpenMessages: () -> Unit,
     onBack: () -> Unit,
 ) {
     Column(Modifier.fillMaxSize().testTag("settings-${route.name.lowercase()}")
         .background(MeloXColors.pageBackground()).padding(top = 18.dp)) {
         MeloXIosTopBar(title = route.title, onBack = onBack)
-        Column(Modifier.verticalScroll(rememberScrollState()).padding(bottom = 48.dp)) {
+        Column(Modifier.verticalScroll(rememberScrollState()).padding(bottom = MeloXBottomContentClearanceDp)) {
             when (route) {
                 SettingsRoute.General -> GeneralSettings()
                 SettingsRoute.Appearance -> AppearanceSettings()
                 SettingsRoute.Content -> ContentSettings()
+                SettingsRoute.TabLayout -> TabLayoutSettings(currentSource)
                 SettingsRoute.Playback -> PlaybackSettings()
                 SettingsRoute.Lyrics -> LyricsSettings()
                 SettingsRoute.Storage -> StorageSettings()
                 SettingsRoute.Features -> FeatureSettings()
-                SettingsRoute.Messages -> MessagesSettings()
+                SettingsRoute.Messages -> MessagesSettings(onOpenMessages)
                 SettingsRoute.About -> AboutSettings()
             }
         }
@@ -234,6 +238,14 @@ private fun GeneralSettings() {
     )
     Spacer(Modifier.height(12.dp))
     PreferenceToggle("记住上次标签页", MeloXSettingsRuntime.rememberLastTab, "general_remember_tab")
+    MeloXSettingsDropdown("启动页面", MeloXSettingsRuntime.defaultTab,
+        listOf("Home" to "首页", "Explore" to "发现", "Library" to "音乐库", "Settings" to "设置"),
+        onSelected = { MeloXSettingsPreferences.setString("general_default_tab", it) },
+        modifier = Modifier.padding(horizontal = 20.dp))
+    MeloXSettingsDropdown("歌曲完整侧滑操作", MeloXSettingsRuntime.swipeFullAction,
+        listOf(melox.settings.MeloXSwipeFullAction.PlayNext to "下一首播放", melox.settings.MeloXSwipeFullAction.AddToQueue to "添加到队列"),
+        onSelected = { MeloXSettingsPreferences.setString("general_swipe_full_action", it.name) },
+        modifier = Modifier.padding(horizontal = 20.dp, vertical = 8.dp))
     PreferenceToggle("不自动缩小底栏", MeloXSettingsRuntime.disableAutomaticTabBarShrink, "general_disable_auto_tabbar_shrink")
 }
 
@@ -315,7 +327,7 @@ private fun PlaybackSettings() {
 }
 
 @Composable
-private fun PreferenceToggle(title: String, checked: Boolean, key: String, subtitle: String? = null, showTopSeparator: Boolean = false) {
+internal fun PreferenceToggle(title: String, checked: Boolean, key: String, subtitle: String? = null, showTopSeparator: Boolean = false) {
     MeloXIosListRow(
         title = title,
         subtitle = subtitle,
@@ -384,18 +396,6 @@ private fun FeatureSettings() {
     PreferenceToggle("最近播放", MeloXSettingsRuntime.listeningHistoryEnabled, "feature_history")
     PreferenceToggle("下载", MeloXSettingsRuntime.downloadsEnabled, "feature_downloads")
     PreferenceToggle("音乐云盘", MeloXSettingsRuntime.cloudMusicEnabled, "feature_cloud_music")
-    SectionLabel("播客位置")
-    PreferenceToggle("首页", MeloXSettingsRuntime.podcastsHomePlacement, "placement_podcasts_home")
-    PreferenceToggle("独立标签页", MeloXSettingsRuntime.podcastsTabPlacement, "placement_podcasts_tab")
-    PreferenceToggle("音乐库", MeloXSettingsRuntime.podcastsLibraryPlacement, "placement_podcasts_library")
-    SectionLabel("下载位置")
-    PreferenceToggle("首页", MeloXSettingsRuntime.downloadsHomePlacement, "placement_downloads_home")
-    PreferenceToggle("独立标签页", MeloXSettingsRuntime.downloadsTabPlacement, "placement_downloads_tab")
-    PreferenceToggle("音乐库", MeloXSettingsRuntime.downloadsLibraryPlacement, "placement_downloads_library")
-    SectionLabel("云盘位置")
-    PreferenceToggle("首页", MeloXSettingsRuntime.cloudHomePlacement, "placement_cloud_home")
-    PreferenceToggle("独立标签页", MeloXSettingsRuntime.cloudTabPlacement, "placement_cloud_tab")
-    PreferenceToggle("音乐库", MeloXSettingsRuntime.cloudLibraryPlacement, "placement_cloud_library")
 }
 
 @Composable
@@ -434,12 +434,12 @@ private fun StorageSettings() {
 }
 
 @Composable
-private fun MessagesSettings() {
+private fun MessagesSettings(onOpenMessages: () -> Unit) {
     MeloXIosListRow(
         title = "私信",
-        subtitle = "桌面版暂不提供站内私信",
+        subtitle = "查看联系人、会话详情并发送文字私信",
         leadingIcon = MeloXSymbol.Message,
-        showChevron = false,
+        onClick = onOpenMessages,
     )
 }
 

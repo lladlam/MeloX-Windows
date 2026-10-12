@@ -48,6 +48,9 @@ import melox.ui.glass.meloXLiquidCaptureLayer
 import melox.ui.glass.rememberMeloXLayerBackdrop
 import melox.ui.glass.meloXRecordBackdrop
 import androidx.compose.ui.semantics.clearAndSetSemantics
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.stateDescription
 import melox.ui.glass.publicdemo.PublicDampedDragAnimation
 import melox.ui.glass.publicdemo.PublicInteractiveHighlight
 import melox.ui.theme.MeloXColors
@@ -92,6 +95,7 @@ fun MeloXBottomChrome(
 
     Column(
         modifier = modifier
+            .testTag("bottom-root-tabs").semantics { stateDescription = visibleRootTabs.joinToString(">") { it.name } }
             .fillMaxWidth()
             // Mei keeps the navigation capsule 8dp above the bottom edge.
             .padding(bottom = 8.dp),

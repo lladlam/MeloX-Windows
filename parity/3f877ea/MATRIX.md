@@ -18,11 +18,12 @@ Historical `parity/94e17c9/` evidence is reference material, not new acceptance.
 | Playlist album artwork toggle and hidden search | `LibraryScreen`, `MeloXSettingsPreferences`, `SettingsScreen` | Runtime persistence + live settings + artwork rows + pull-at-top search/filter | Desktop playlist layout still differs; precise reveal gesture/animation not yet accepted | PARTIAL |
 | Song-recognition identity additions | `core/recognition/SongRecognitionClient.kt` | Existing Windows recognition client is still an empty-result stub | Requires actual desktop fingerprint/capture implementation; no fabricated matches | MISSING |
 | Search launch request and provider-aware routing | `ui/search/SearchScreen.kt` (`MeloXSearchLaunchBus`) | `navigation/MeloXSearchLaunchBus.kt`, App Shell, SearchScreen, album/artist fallback requests | Unified aggregation and provider account replay remain outstanding | PARTIAL |
-| FFmpeg source and packaged executable integrity | `.github/workflows/build.yml`, decoder resources | Explicit LFS checkout; manifest size/SHA-256/x64 ELF+PE; source/JAR/app-image/final-ZIP native decode checks | Windows run 38025529598 at 3ac97e0 passed 102 tests plus source/JAR/app-image/final-ZIP native checks; evidence/windows-ci-3ac97e0. Previous run remains archived | PLATFORM_EQUIVALENT |
+| FFmpeg source and packaged executable integrity | `.github/workflows/build.yml`, decoder resources | Explicit LFS checkout; manifest size/SHA-256/x64 ELF+PE; source/JAR/app-image/final-ZIP native decode checks | Windows run 38034442939 at d1426b5 passed 108 tests plus source/JAR/app-image/final-ZIP native checks; evidence/windows-ci-d1426b5. Previous runs remain archived | PLATFORM_EQUIVALENT |
 | Real PCM beat/energy/FFT/audible/phrase analysis | `playback/MeloXAutoMixAudioAnalyzer.kt` | Real independent FFmpeg decoder + 11025Hz/1024 FFT/512 hop, signed PCM, source-keyed cache, cancellable native ownership | Generated 90/105/140 BPM, silence, FFT bands, malformed data and real WAV decode tests; no claim of production AutoMix | PARTIAL |
 | Primary/incoming mixing, tempo, EQ, SmartQueue, dual-cover handoff | `MeloXPlaybackService`, `MeloXAutoMixTransitionRuntime`, `MeloXSmartQueueBuilder`, bass envelope | Production AudioPlayer continuous dual-native-decode/PCM mix; controller scored/fallback plans/preload; native pitch-preserving tempo; real RBJ bass exchange; analyzed candidate queue; clock-driven dual covers and settings/buttons | AUTOMIX.md; real two-frequency kernel/controller tests and independent capture PCM readback; 7 production UI scenes / 8 assertions. Source cover-shadow artifact fixed from screenshot. Authenticated streams/Windows hardware/Android pixels outstanding | PARTIAL |
 | Local source playback and search preserve file identity | `core/provider/local/LocalProvider.kt`, provider resolver | Real indexed Local search and readable-file resolution; encoded track metadata/URI, no online fallback; bridge preserves collection identity | Production Local provider/controller AutoMix tests, Unicode/plus/ampersand path regression and generated-source UI replay | PARTIAL |
 | Cloud file upload, cancellation and refresh | `NeteaseUniversalSearchClient.uploadCloudSong`, `ui/cloud/MeloXCloudMusicScreen` | Actual desktop file picker and FFmpeg metadata/MD5; upload-check/token/LBS/NOS streaming PUT/info fallback/pub; request ownership, snapshot cleanup and successful refresh; embedded Library cloud actions | CLOUD_UPLOAD.md; six real-file/encrypted-HTTP protocol fixture tests. Desktop chooser/live authenticated remote upload not available in this environment | PARTIAL |
+| Settings TabLayout, persisted Library page, ordered home blocks and reachable shortcuts | `ui/settings/SettingsScreen.kt:2588–2737`, `ui/library/LibraryScreen.kt:227–241,374–389`, `MeloXDiscoveryScreens.kt:338–346` | Dedicated business-wired TabLayout route, existing keys, shared layout policy, saved source-specific Library pages, feature/placement gates and configured default; QuickActions joins saved home order; shortcuts reach enabled modules without dock placement | CONTENT_LAYOUT.md; persisted-state regression and production settings replay. Authenticated Library and pinned Android pixels remain blocked | PARTIAL |
 | Windows sustained audible playback / AutoMix | Physical output requirement | `tools/windows_audio_acceptance.ps1` checks final app-image and captures explicit user observations | No Windows 10/11 device or audio hardware in this Linux session | BLOCKED |
 | Android/Windows same-content pixel and dynamic frames | All named UI pages and player scenes | Production ImageComposeScene capture retained; old reference evidence preserved | Connected Android devices = 0; missing current pinned reference frames. No new MATCH from unrelated feed SSIM | BLOCKED |
 | Remaining settings, Classic/alternate lyric shells, Glass refraction, podcast/provider acceptance | Source paths specified by task | Existing implementations retained; confirmed gaps require subsequent batches | Not accepted by build or old matrix inventory | PARTIAL |
@@ -35,7 +36,7 @@ Historical `parity/94e17c9/` evidence is reference material, not new acceptance.
 4. Windows physical audible playback (currently BLOCKED).
 5. Same-content pinned Android/Windows pixels and dynamic frame acceptance (currently BLOCKED).
 
-Latest Cloud batch results: **108 tests / 19 suites / 0 failures, errors or skipped**;
+Latest content-layout batch results: **114 tests / 20 suites / 0 failures, errors or skipped**;
 desktopJar + Linux uber JAR successful. Source and final Linux uber JAR were
 verified independently (size/SHA-256/magic, native WAV/MP3/FLAC/AAC, required HTTP
 authorization headers). See `evidence/upstream-validation.json` and native
@@ -44,6 +45,11 @@ decoder JSON. Latest implementation: `evidence/automix-validation.json`,
 `automix-linux-packaged-decoder.json`. Cloud: `cloud-validation.json`,
 `cloud-ui-v3/` (3 scenes / 7 missing-login refresh/retry assertions),
 `cloud-tests/` and `cloud-linux-packaged-decoder.json`.
+Content layout: `content-layout-validation.json`, `content-layout-tests/`,
+`content-layout-ui-final/` (15 state scenes / 14 assertions / 42 dynamic frame
+captures with requested and actual times) and `content-layout-linux-packaged-decoder.json`.
+`content-layout-home-shortcut/` adds 4 scenes / 7 assertions with genuine Home
+entry, hidden dock placement, missing-login Cloud and Escape-return behavior.
 Previous 81/102-test batches remain archived.
 This is not Windows physical playback or Android pixel acceptance.
 

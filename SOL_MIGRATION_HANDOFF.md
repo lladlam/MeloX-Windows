@@ -17,6 +17,8 @@ Starting Windows: `24eb7fffb7f5c01d17baca5b68674bc33b11be86`.
 - Controller scored/fallback planning, real Provider/download resolution, real analyzed Smart Queue, transition runtime, persistent source settings and queue AutoMix button; paired-cover split and handoff. Fixed the full-cover shadow artifact found in the actual screenshot replay.
 - Real Local provider readable-file playback/indexed search, encoded URI/metadata and identity-preserving provider bridge; no Local masquerading as online music.
 - Cloud upload desktop picker, genuine FFmpeg metadata/MD5, source upload-check/token/LBS/NOS/info/pub protocol, successful refresh, actual byte progress and cancellation/snapshot cleanup. Six encrypted-HTTP/real-file protocol integration tests; live account/Windows chooser acceptance still blocked.
+- Content layout: dedicated wired TabLayout settings route, dock/home reorder and placement controls, existing-key per-provider Library page persistence/default/visibility, and home module shortcut reachability independent of dock placement. Launch/full-swipe settings exposed; Messages deep-link misinformation removed. See `parity/3f877ea/CONTENT_LAYOUT.md`.
+- Smart Queue regression discovered during this batch: disabling now restores analysis-failed unconsumed original tracks too; selection and disable queue mutation are serialized. A direct failed-analysis regression protects this alongside real PCM candidate selection.
 
 ## Still required
 
@@ -47,8 +49,11 @@ Detailed observable-state matrix and evidence: `parity/3f877ea/`.
 - Initial error-only/tag-only artist capture was rejected. Actual screenshots found duplicate `followed` JSON keys and modal Escape focus failure; both were repaired and replayed.
 - `evidence/windows-ci-9328f78/`: exact run 38019093278 passed 81 tests and native source/JAR/app-image/final ZIP decoder checks. That run predates production AutoMix changes.
 - `evidence/windows-ci-3ac97e0/`: production AutoMix run 38025529598 passed **102 tests / 18 suites** and native source/JAR/app-image/final ZIP verification; downloadable Windows artifact is attached to that exact run.
+- `evidence/windows-ci-d1426b5/`: Cloud run 38034442939 passed **108 tests / 19 suites** plus native source/JAR/app-image/final ZIP checks. Exact-SHA downloadable artifact is attached to that run.
 - `evidence/automix-validation.json` and `automix-tests/`: latest 102 tests / 18 suites, zero failures/errors/skipped; source and Linux uber JAR hashes.
 - `evidence/automix-ui-v3/`: 7 production UI scenes / 8 state assertions plus captured frames and compressed generated PCM. Explicit software endpoint label; requested/actual capture timing is recorded separately.
 - `evidence/automix-pcm-readback.json`: independent consumed-PCM readback finds primary-only, actual 1000/4000Hz simultaneous overlap and incoming-only on one output; `automix-linux-packaged-decoder.json` verifies latest packaged decoder.
 - `evidence/cloud-validation.json`, `cloud-tests/`: **108 tests / 19 suites**, zero failures/errors/skipped, including six encrypted-HTTP/real-file upload cases. `cloud-ui-v3/` has 3 genuine unauthenticated UI scenes / 7 refresh/retry/entry assertions; `cloud-linux-packaged-decoder.json` verifies its final Linux JAR.
+- `evidence/content-layout-validation.json`, `content-layout-tests/`: **114 tests / 20 suites**, zero failures/errors/skipped. `content-layout-ui-final/` captures 15 genuine settings state scenes / 14 assertions plus 42 dynamic frames; startup reuses the earlier UI-written isolated preferences. Packaged Linux decoder checks also pass. These frames are not pinned Android dynamic parity.
+- `evidence/content-layout-home-shortcut/`: 4 genuine production scenes / 7 assertions for Home Cloud entry with its dock placement disabled and Escape return. This replay verifies the App Shell root-switch focus fix; earlier settings source hashes and final artifact source hashes are kept separate.
 - Physical Windows audio and current pinned Android pixel/motion capture remain BLOCKED. See `parity/3f877ea/AUTOMIX.md` for implementation and reproducible generated-source replay.

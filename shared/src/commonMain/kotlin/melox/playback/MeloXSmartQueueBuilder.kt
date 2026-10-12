@@ -38,6 +38,12 @@ internal class MeloXSmartQueueBuilder {
         if (token != generation) null else candidates.filterNot { it.entryId in consumed || it.entryId in failed }
             .maxByOrNull { analysis[it.entryId]?.confidence ?: -1.0 }
     }
+    /** Analysis failure removes eligibility, not the user's unconsumed queue entry. */
+    fun takeRemaining(): List<QueueEntry> = synchronized(lock) {
+        val remaining = candidates.filterNot { it.entryId in consumed }
+        reset()
+        remaining
+    }
     fun reset() = synchronized(lock) { generation++; candidates.clear(); consumed.clear(); failed.clear(); analysis.clear() }
     companion object { fun distance(a: Double, b: Double) = listOf(b / 2, b, b * 2).minOf { kotlin.math.abs(a - it) } }
 }
