@@ -73,13 +73,14 @@ private enum class SettingsRoute(val title: String, val subtitle: String, val sy
     Storage("存储管理", "空间统计、下载与缓存清理", MeloXSymbol.Drive),
     Features("功能模块", "播客、云盘、最近播放等模块", MeloXSymbol.ListBullet),
     Messages("私信与站内分享", "联系人、会话历史与文字私信", MeloXSymbol.Message),
+    RemoteConfig("远程兼容性配置", "签名配置状态、平台熔断声明与本地缓存", MeloXSymbol.Cloud),
     About("关于 MeloX", "版本、项目主页与开源信息", MeloXSymbol.Info),
 }
 
 private val SettingsSections = listOf(
     "应用" to listOf(SettingsRoute.General, SettingsRoute.Appearance, SettingsRoute.Content, SettingsRoute.TabLayout, SettingsRoute.Playback, SettingsRoute.Lyrics, SettingsRoute.Storage),
     "扩展" to listOf(SettingsRoute.Features, SettingsRoute.Messages),
-    "关于" to listOf(SettingsRoute.About),
+    "关于" to listOf(SettingsRoute.RemoteConfig, SettingsRoute.About),
 )
 
 @Composable
@@ -216,6 +217,7 @@ private fun SettingsDetail(
                 SettingsRoute.Storage -> StorageSettings()
                 SettingsRoute.Features -> FeatureSettings()
                 SettingsRoute.Messages -> MessagesSettings(onOpenMessages)
+                SettingsRoute.RemoteConfig -> RemoteConfigSettings()
                 SettingsRoute.About -> AboutSettings()
             }
         }
@@ -293,6 +295,7 @@ private fun ContentSettings() {
     Spacer(Modifier.height(12.dp))
     PreferenceToggle("显示歌单播放量", MeloXSettingsRuntime.showPlaylistPlayCount, "content_playlist_play_count")
     PreferenceToggle("发现页显示精品歌单", MeloXSettingsRuntime.showHighQualityPlaylists, "content_high_quality_playlist")
+    CrossProviderFallbackSetting()
 }
 
 @Composable

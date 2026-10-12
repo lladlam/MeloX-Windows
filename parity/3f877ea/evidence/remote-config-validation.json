@@ -1,0 +1,72 @@
+{
+  "android_sha": "3f877eaffe30c82eb6d24eb3647702f5bc554dd3",
+  "windows_parent_sha": "693f3d22cdb563e4bc21d557d5e3046e9f927832",
+  "tests": {
+    "tests": 124,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "suites": 21,
+  "remote_protocol_regression_cases": 10,
+  "ui_dark": {
+    "renderer": "production ImageComposeScene",
+    "scenes": 20,
+    "total_captures": 77,
+    "assertions": 25,
+    "assertions_passed": true,
+    "dynamic_frames": 57,
+    "interaction": "real production pointer/wheel and editable-field accessibility action; isolated unauthenticated home",
+    "checked_visual_state": "rendered switch progress and controlled accessibility state both asserted for reject/cancel/accept/withdraw"
+  },
+  "jar": {
+    "bytes": 221562229,
+    "sha256": "856bcd8f47d9701310717f09a4f490c87c8cd269db66df4814ad58ede43ab129"
+  },
+  "legal_asset_sha256": "7030f44dda89b27357ba4b960562d5eae98d9b5ae451a8a398e4fb6cc68f5793",
+  "source_sha256": {
+    "desktop/src/desktopMain/kotlin/melox/ui/screens/CrossProviderFallbackSetting.kt": "edcec3e3af02009001bdd236382b5a1084dbf809c0e7521633a31e7b93910116",
+    "desktop/src/desktopMain/kotlin/melox/ui/screens/RemoteCompatibilityNotice.kt": "8c0299f7ef017e1f32beacfb23e9c930be46e7bbda0c7e7f99df5b6e1656a5c3",
+    "desktop/src/desktopMain/kotlin/melox/ui/screens/RemoteConfigSettings.kt": "f6ac8f1ce2fada17ea5c7c40e2ab89f67be08162bae6ea605c5316ca80e65dc4",
+    "shared/src/desktopTest/kotlin/melox/remoteconfig/RemoteConfigProtocolTest.kt": "bd3a2a5308be425d0976b300fd75950c90847cb36a15c3ee3a76aa139a52a6d2",
+    "desktop/src/desktopMain/kotlin/melox/Main.kt": "e60ffc8a46c5084c6975ce22589c49508aba35e007639082e451836e8cfd25c7",
+    "desktop/src/desktopMain/kotlin/melox/ui/MeloXApp.kt": "01840f890323f15f637ddca8baf4287404dad9650954c7b98b711795d6b875e3",
+    "desktop/src/desktopMain/kotlin/melox/ui/glass/MeloXNativeGlassComponents.kt": "80a1335353deadff48e58d82f8a1e8c8a724df03288fab3188ee6043b4d34432",
+    "desktop/src/desktopMain/kotlin/melox/ui/screens/LoginScreen.kt": "02dadf8ac97404a10293098119b3415a4e848c49487ca3ce497cb69bdcaf862a",
+    "desktop/src/desktopMain/kotlin/melox/ui/screens/SettingsScreen.kt": "a6f94da399e328eb78aefc238a4ef4acf0068a59a67931087c058ca3f0048b75",
+    "desktop/src/desktopMain/kotlin/melox/validation/MeloXSceneSemantics.kt": "e9835d05638a90631893a782f6b74185bce516dc2f224789eea370303d93bbfa",
+    "desktop/src/desktopMain/kotlin/melox/validation/MeloXVisualCapture.kt": "7e14d15b42bec84a279f80b056c47c222ce3c123fee422dc506cd95f1c83a5cc",
+    "shared/src/commonMain/kotlin/melox/network/MeloXGitHubRouting.kt": "e0c9d10d4171c709c35420d0637e760f9f1026cd15a6e3f38e56503ec2844a8c",
+    "shared/src/commonMain/kotlin/melox/network/NeteasePhoneAuthClient.kt": "70aa7d2c1d6398337f635a7b1bcabeb10ee6d4729d8228ab201b562ecf855baa",
+    "shared/src/commonMain/kotlin/melox/playback/CrossProviderPlaybackFallback.kt": "a167c5d86d053c0d511341a3a9aa98961f1073abc9feab6f00944c6f465a9b34",
+    "shared/src/commonMain/kotlin/melox/playback/PlaybackCommands.kt": "40bed717c47182a63783264a72075948aaa58d117d052c516550e6ef1b9143ca",
+    "shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicPhoneAuthClient.kt": "136d72e1a7328f99ca64af18f0845584d5b0e14e92cc328e23ec55961720d27a",
+    "shared/src/commonMain/kotlin/melox/provider/spotify/SpotifyDesktopLogin.kt": "4784e7bcb23134e72e9ca8eb4fcf4956b061a635bbf9224c54635a5b89771fe5",
+    "shared/src/commonMain/kotlin/melox/remoteconfig/MeloXRemoteConfigClient.kt": "9bc51131ce41c8a2af6168c0b2da4c6d7f6de5c5d1941bdf809d5d31ac31b387",
+    "shared/src/commonMain/kotlin/melox/remoteconfig/MeloXRemoteConfigRuntime.kt": "ce7bb2fa3be88de656297a8739cd842de974975a2d759cb3b3a4bd06da7575cf",
+    "shared/src/commonMain/kotlin/melox/remoteconfig/MeloXRemoteConfigStore.kt": "5fa98e21edcbb6db5c38cc81494d01945e2e825c2ba75341bd1a07ba42e1e1b0",
+    "shared/src/desktopTest/kotlin/melox/network/CloudUploadProtocolTest.kt": "b1da0fb836c5b71e3228c4626ed3126c771b293de8a30d11e3cb64f546686a8f"
+  },
+  "initial_regression_failure": {
+    "test": "CloudUploadProtocolTest.rejectedNosUploadNeverRegistersPublishesOrReportsCompletion",
+    "failed_assertion": "IOException message did not contain expected 503; original assertion lacked actual error diagnostics",
+    "action": "Added actual exception/routes diagnostics without weakening the 503 assertion; final full suite passes",
+    "root_cause": "NOT_ESTABLISHED",
+    "raw_log": "remote-config-initial-full-regression-failure.log"
+  },
+  "windows_physical_audio": "BLOCKED",
+  "windows_window_lifecycle": "BLOCKED",
+  "android_pixels_and_dynamic_parity": "BLOCKED",
+  "ui_light_live": {
+    "renderer": "production ImageComposeScene",
+    "scenes": 15,
+    "assertions": 14,
+    "assertions_passed": true,
+    "route": "GhFast",
+    "remote_config_version": 6,
+    "key_id": "melox-remote-config-2026-01",
+    "result": "real fixed public signed endpoint -> pinned production verifier -> notice acknowledgement -> manual refresh without repeated once notice -> cache clear -> withdrawal -> Escape return",
+    "http_304_on_public_server": "NOT_MEASURED; real conditional-HTTP protocol covered by separate socket integration test",
+    "account_data": "No signed-in account or private user content in the isolated capture home"
+  }
+}

@@ -74,10 +74,12 @@ class CrossProviderPlaybackFallbackResolver(
     private val fallbackConfigProvider: () -> MeloXRemoteFallbackConfig = {
         MeloXRemoteConfigDefaults.Config.fallback
     },
+    private val providerPlaybackEnabled: (MusicSource) -> Boolean = { true },
 ) {
     fun cacheIdentity(): String = if (enabledProvider()) {
         val fallback = fallbackConfigProvider()
-        "enabled:${fallback.order.joinToString(",")}:${fallback.disabledProviders.sorted().joinToString(",")}:" +
+        "enabled:${fallback.enabled}:${fallback.order.joinToString(",")}:${fallback.disabledProviders.sorted().joinToString(",")}:" +
+            "${EligibleSources.filter(providerPlaybackEnabled).map { it.storageValue }.sorted().joinToString(",")}:" +
             "${fallback.timeoutMs}:${cacheIdentityProvider()}"
     } else {
         "disabled"
@@ -96,6 +98,8 @@ class CrossProviderPlaybackFallbackResolver(
         val order = fallbackConfig.order.withIndex().associate { (index, source) -> source to index }
         val providers = registryProvider()?.providers.orEmpty()
             .filter(::isEligibleFallbackProvider)
+            .filter { it.source.storageValue in fallbackConfig.order }
+            .filter { providerPlaybackEnabled(it.source) }
             .filterNot { it.source.storageValue in fallbackConfig.disabledProviders }
             .sortedBy { order[it.source.storageValue] ?: Int.MAX_VALUE }
         if (providers.isEmpty()) {

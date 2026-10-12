@@ -19,6 +19,7 @@ class SpotifyDesktopLogin(private val httpClient: OkHttpClient = MeloXHttpClient
         clientId: String = SpotifyClientConfig.effective(),
         openBrowser: (URI) -> Unit = { Desktop.getDesktop().browse(it) },
     ): SpotifySession = withContext(Dispatchers.IO) {
+        check(melox.remoteconfig.MeloXRemoteConfigPolicy.capabilityEnabled("spotify_oauth")) { "Spotify OAuth 登录暂时停用，请稍后重试" }
         require(clientId.isNotBlank()) { "请先配置 Spotify Client ID" }
         check(loginLock.tryLock()) { "Spotify 登录已在进行中" }
         var server: HttpServer? = null

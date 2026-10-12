@@ -383,7 +383,9 @@ private fun LoginDialog(
 
 @Composable
 private fun NeteaseLoginForm(state: LoginScreenState, onLoginSuccess: (String) -> Unit) {
+    val phoneEnabled = remoteLoginCapability("netease_phone_login")
     Column {
+        if (!phoneEnabled) Text("网易云手机号登录暂时停用，请稍后重试", color = MeloXColors.TextSecondary, fontSize = 13.sp)
         // Tab row
         TabRow(
             selectedTabIndex = state.dialogTab,
@@ -470,7 +472,7 @@ private fun NeteaseLoginForm(state: LoginScreenState, onLoginSuccess: (String) -
             LoginButton(
                 text = "获取验证码",
                 color = Color(0xFFFF2442),
-                enabled = state.dialogInput.isNotBlank() && !state.dialogLoading,
+                enabled = phoneEnabled && state.dialogInput.isNotBlank() && !state.dialogLoading,
             ) {
                 val phone = state.dialogInput.trim()
                 state.dialogLoading = true
@@ -486,7 +488,7 @@ private fun NeteaseLoginForm(state: LoginScreenState, onLoginSuccess: (String) -
             Spacer(modifier = Modifier.height(8.dp))
             LoginButton(
                 color = Color(0xFFFF2442),
-                enabled = state.dialogInput.isNotBlank() &&
+                enabled = phoneEnabled && state.dialogInput.isNotBlank() &&
                     state.dialogPassword.isNotBlank() &&
                     !state.dialogLoading,
             ) {
@@ -750,7 +752,9 @@ private fun QrStatusColumn(statusText: String, content: @Composable ColumnScope.
 
 @Composable
 private fun PhoneCodeLoginForm(provider: LoginProvider, state: LoginScreenState, onLoginSuccess: (String) -> Unit) {
+    val phoneEnabled = remoteLoginCapability("netease_phone_login")
     Column {
+        if (provider.id == "netease" && !phoneEnabled) Text("网易云手机号登录暂时停用，请稍后重试", color = MeloXColors.TextSecondary, fontSize = 13.sp)
         OutlinedTextField(
             value = state.dialogInput,
             onValueChange = { state.dialogInput = it },
@@ -803,7 +807,7 @@ private fun PhoneCodeLoginForm(provider: LoginProvider, state: LoginScreenState,
             LoginButton(
                 text = "获取验证码",
                 color = provider.color,
-                enabled = state.dialogInput.isNotBlank() && !state.dialogLoading,
+                enabled = phoneEnabled && state.dialogInput.isNotBlank() && !state.dialogLoading,
             ) {
                 val phone = state.dialogInput.trim()
                 state.dialogLoading = true
@@ -819,7 +823,7 @@ private fun PhoneCodeLoginForm(provider: LoginProvider, state: LoginScreenState,
             Spacer(modifier = Modifier.height(8.dp))
             LoginButton(
                 color = provider.color,
-                enabled = state.dialogInput.isNotBlank() &&
+                enabled = phoneEnabled && state.dialogInput.isNotBlank() &&
                     state.dialogPassword.isNotBlank() &&
                     !state.dialogLoading,
             ) {
@@ -948,6 +952,7 @@ private fun YouTubeLoginForm(provider: LoginProvider, state: LoginScreenState, o
 @Composable
 private fun OAuthLoginForm(provider: LoginProvider, state: LoginScreenState, onLoginSuccess: (String) -> Unit) {
     val scope = rememberCoroutineScope()
+    val oauthEnabled = remoteLoginCapability("spotify_oauth")
     var clientId by remember { mutableStateOf(melox.provider.spotify.SpotifyClientConfig.effective()) }
     Column(
         modifier = Modifier.fillMaxWidth(),
@@ -979,7 +984,7 @@ private fun OAuthLoginForm(provider: LoginProvider, state: LoginScreenState, onL
         ) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Text(
-                    text = "即将跳转至${provider.name}授权页面",
+                    text = if (oauthEnabled) "即将跳转至${provider.name}授权页面" else "Spotify OAuth 登录暂时停用，请稍后重试",
                     color = MeloXColors.TextSecondary,
                     fontFamily = MeloXLanTingProFontFamily,
                     fontSize = 13.sp,
@@ -989,7 +994,7 @@ private fun OAuthLoginForm(provider: LoginProvider, state: LoginScreenState, onL
         Spacer(modifier = Modifier.height(12.dp))
         LoginButton(
             color = provider.color,
-            enabled = !state.dialogLoading && clientId.isNotBlank(),
+            enabled = oauthEnabled && !state.dialogLoading && clientId.isNotBlank(),
         ) {
             scope.launch {
                 state.dialogLoading = true
@@ -1012,6 +1017,13 @@ private fun OAuthLoginForm(provider: LoginProvider, state: LoginScreenState, onL
 }
 
 // ── Token input form ──
+
+@Composable
+private fun remoteLoginCapability(capability: String): Boolean {
+    val status by melox.remoteconfig.MeloXRemoteConfigRuntime.status.collectAsState()
+    val enabled by melox.remoteconfig.MeloXRemoteConfigRuntime.enabled.collectAsState()
+    return !enabled || status.source != melox.remoteconfig.MeloXRemoteConfigSource.VerifiedRemote || capability !in status.config.disabledCapabilities
+}
 
 @Composable
 private fun TokenInputForm(provider: LoginProvider, state: LoginScreenState, onLoginSuccess: (String) -> Unit) {

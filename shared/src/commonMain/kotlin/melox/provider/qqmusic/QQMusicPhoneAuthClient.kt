@@ -26,6 +26,7 @@ class QQMusicPhoneAuthClient(
     private var requestCookie = ""
 
     suspend fun sendCode(countryCode: String, phone: String) = withContext(Dispatchers.IO) {
+        check(melox.remoteconfig.MeloXRemoteConfigPolicy.capabilityEnabled("qq_phone_login")) { "QQ音乐手机号登录暂时停用，请使用二维码登录" }
         require(countryCode == "86") { "QQ音乐手机号登录目前仅支持中国大陆号码" }
         val response = post(buildQQMusicSendCodePayload(phone))
         requestCookie = mergeQQMusicResponseCookies(requestCookie, response.setCookieHeaders)
@@ -37,6 +38,7 @@ class QQMusicPhoneAuthClient(
     }
 
     suspend fun login(countryCode: String, phone: String, code: String): String = withContext(Dispatchers.IO) {
+        check(melox.remoteconfig.MeloXRemoteConfigPolicy.capabilityEnabled("qq_phone_login")) { "QQ音乐手机号登录暂时停用，请使用二维码登录" }
         require(countryCode == "86") { "QQ音乐手机号登录目前仅支持中国大陆号码" }
         val response = post(buildQQMusicPhoneLoginPayload(phone, code))
         requestCookie = mergeQQMusicResponseCookies(requestCookie, response.setCookieHeaders)

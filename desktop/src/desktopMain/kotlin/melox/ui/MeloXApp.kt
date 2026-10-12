@@ -98,6 +98,13 @@ private fun playerAutomaticFractionSpec() = tween<Float>(
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun MeloXApp() {
+    LaunchedEffect(Unit) {
+        androidx.compose.runtime.withFrameNanos { }
+        melox.remoteconfig.MeloXRemoteConfigRuntime.initializeAndRefresh()
+    }
+    androidx.compose.runtime.DisposableEffect(Unit) {
+        onDispose { melox.remoteconfig.MeloXRemoteConfigRuntime.stop() }
+    }
     var selectedTab by remember { mutableStateOf(AppTab.Home) }
     var selectedSource by remember { mutableStateOf(MusicProviderSelectionStore.selectedSource()) }
     var messagesVisible by remember { mutableStateOf(false) }
@@ -258,6 +265,7 @@ fun MeloXApp() {
         shapes = melox.ui.theme.MeloXMaterialShapes,
     ) {
         CompositionLocalProvider(androidx.compose.material3.LocalContentColor provides MaterialTheme.colorScheme.onBackground) {
+        melox.ui.screens.RemoteCompatibilityNotice()
         SharedTransitionLayout(modifier = Modifier.fillMaxSize()) {
             val sharedScope = this
             Box(

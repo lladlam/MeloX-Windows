@@ -47,6 +47,9 @@ fun main() {
                 height = 924.dp,
                 position = WindowPosition.PlatformDefault,
             )
+            androidx.compose.runtime.LaunchedEffect(windowState.isMinimized) {
+                melox.remoteconfig.MeloXRemoteConfigRuntime.setForeground(!windowState.isMinimized)
+            }
             Window(
                 title = "MeloX",
                 state = windowState,

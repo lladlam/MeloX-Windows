@@ -29,7 +29,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -43,10 +43,12 @@ import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.graphics.lerp as colorLerp
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.SemanticsPropertyKey
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.disabled
 import androidx.compose.ui.semantics.onClick
@@ -160,6 +162,8 @@ fun MeloXGlassIconButton(
 }
 
 /** Compact iOS-style switch used by settings and provider controls. */
+val MeloXToggleVisualProgressKey = SemanticsPropertyKey<Float>("MeloXToggleVisualProgress")
+
 @Composable
 fun MeloXGlassToggle(
     checked: Boolean,
@@ -167,7 +171,7 @@ fun MeloXGlassToggle(
     enabled: Boolean = true,
     modifier: Modifier = Modifier,
 ) {
-    val dark = true
+    val dark = MaterialTheme.colorScheme.background.luminance() < 0.5f
     val accent = if (dark) Color(0xFF30D158) else Color(0xFF34C759)
     val track = if (dark) Color(0xFF787880).copy(alpha = 0.36f) else Color(0xFF787878).copy(alpha = 0.20f)
     val density = LocalDensity.current
@@ -175,25 +179,25 @@ fun MeloXGlassToggle(
     val tapThresholdPx = with(density) { 2.dp.toPx() }
     val scope = rememberCoroutineScope()
     var didDrag by remember { mutableStateOf(false) }
-    var fraction by remember { mutableFloatStateOf(if (checked) 1f else 0f) }
+    var dragDistance by remember { mutableStateOf(0f) }
+    var settleRevision by remember { mutableIntStateOf(0) }
     val animated = remember { Animatable(if (checked) 1f else 0f) }
     val currentChecked by rememberUpdatedState(checked)
     val currentOnChange by rememberUpdatedState(onCheckedChange)
 
-    androidx.compose.runtime.LaunchedEffect(checked) {
+    androidx.compose.runtime.LaunchedEffect(checked, didDrag, settleRevision) {
         val target = if (checked) 1f else 0f
         if (kotlin.math.abs(animated.value - target) > 0.01f && !didDrag) {
             animated.animateTo(target, spring(dampingRatio = 0.86f, stiffness = 480f))
-            fraction = target
         }
     }
 
     fun settle(target: Float) {
-        scope.launch {
-            animated.animateTo(target, spring(dampingRatio = 0.86f, stiffness = 480f))
-        }
-        fraction = target
         currentOnChange(target == 1f)
+        // Callers may require confirmation or reject the change. Only checked owns
+        // the resting appearance; drag position is transient until the release.
+        didDrag = false
+        settleRevision++
     }
 
     Box(
@@ -203,6 +207,7 @@ fun MeloXGlassToggle(
             .semantics {
                 role = Role.Switch
                 toggleableState = ToggleableState(checked)
+                this[MeloXToggleVisualProgressKey] = animated.value
                 if (!enabled) disabled()
                 onClick {
                     if (enabled) onCheckedChange(!checked)
@@ -219,18 +224,19 @@ fun MeloXGlassToggle(
             .pointerInput(enabled, travelPx) {
                 if (!enabled) return@pointerInput
                 detectHorizontalDragGestures(
-                    onDragStart = { didDrag = false },
+                    onDragStart = { didDrag = false; dragDistance = 0f },
                     onHorizontalDrag = { _, dragAmount ->
-                        if (kotlin.math.abs(dragAmount) > tapThresholdPx) didDrag = true
+                        dragDistance += kotlin.math.abs(dragAmount)
+                        if (dragDistance > tapThresholdPx) didDrag = true
                         val next = (animated.value + dragAmount / travelPx).coerceIn(0f, 1f)
-                        fraction = next
                         scope.launch { animated.snapTo(next) }
                     },
                     onDragEnd = {
                         if (didDrag) settle(if (animated.value >= 0.5f) 1f else 0f)
+                        else settleRevision++
                         didDrag = false
                     },
-                    onDragCancel = { didDrag = false },
+                    onDragCancel = { didDrag = false; settleRevision++ },
                 )
             },
         contentAlignment = Alignment.CenterStart,

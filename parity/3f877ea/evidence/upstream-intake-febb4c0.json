@@ -1,0 +1,825 @@
+{
+  "audit_date": "2026-10-12",
+  "pinned_acceptance_sha": "3f877eaffe30c82eb6d24eb3647702f5bc554dd3",
+  "fetched_origin_main_sha": "febb4c0534787e040a89df8457e630d067f44b80",
+  "commit_count": 9,
+  "changed_file_count": 154,
+  "commits": [
+    {
+      "sha": "febb4c0534787e040a89df8457e630d067f44b80",
+      "subject": "feat: signed hot-update text overrides"
+    },
+    {
+      "sha": "526f30a530d960324e5172736aa056c0547ff364",
+      "subject": "docs: research on-device hot update options"
+    },
+    {
+      "sha": "3ebe22b6d2b3d0d3f2b93ed7c99035f6f26427e1",
+      "subject": "fix: restore mainline fixes reverted by the 0.6.3 contributor merge"
+    },
+    {
+      "sha": "df2c599179bda0b2ce047b7d70df515fbdd4ee5e",
+      "subject": "Merge branch 'main' into contributor"
+    },
+    {
+      "sha": "06bcae3060f624a6da73f1d22936673cba1cf736",
+      "subject": "Merge remote-tracking branch 'origin/main'"
+    },
+    {
+      "sha": "8189d19c8f5bb0544530f54d4adb16e2b6c1aa45",
+      "subject": "feat: sync autosync models to beta.2"
+    },
+    {
+      "sha": "09501b526bd9e12f6e9f23bcdfd097b76f57a7dc",
+      "subject": "feat: add on-device AutoSync word lyrics"
+    },
+    {
+      "sha": "757017f25927972458416a3010380075854bce96",
+      "subject": "docs: sync README.md with upstream/main (0.6.2)"
+    },
+    {
+      "sha": "c8465c23efba4f9f40b40052c2ae4afb3215976f",
+      "subject": "feat: MeloX fork public upload — merge upstream + fork features (vivo OneShot/keystore stripped)"
+    }
+  ],
+  "files": [
+    {
+      "path": ".gitignore",
+      "added": "5",
+      "removed": "0"
+    },
+    {
+      "path": "AGENT.md",
+      "added": "115",
+      "removed": "0"
+    },
+    {
+      "path": "CHANGELOG.md",
+      "added": "62",
+      "removed": "0"
+    },
+    {
+      "path": "README.en.md",
+      "added": "311",
+      "removed": "0"
+    },
+    {
+      "path": "README.md",
+      "added": "3",
+      "removed": "3"
+    },
+    {
+      "path": "README.zh-Hans.md",
+      "added": "4",
+      "removed": "31"
+    },
+    {
+      "path": "android/README.md",
+      "added": "1",
+      "removed": "1"
+    },
+    {
+      "path": "android/app/build.gradle.kts",
+      "added": "172",
+      "removed": "13"
+    },
+    {
+      "path": "android/app/src/androidTest/kotlin/com/lladlam/melox/core/autosync/AutoSyncDeviceRunner.kt",
+      "added": "159",
+      "removed": "0"
+    },
+    {
+      "path": "android/app/src/main/AndroidManifest.xml",
+      "added": "50",
+      "removed": "12"
+    },
+    {
+      "path": "android/app/src/main/baselineProfiles/baseline-prof.txt",
+      "added": "11981",
+      "removed": "0"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/MainActivity.kt",
+      "added": "106",
+      "removed": "3"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/MeloXApplication.kt",
+      "added": "40",
+      "removed": "2"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/core/audio/MeloXPlaybackUnavailableException.kt",
+      "added": "24",
+      "removed": "0"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/core/audio/NeteaseQualityClient.kt",
+      "added": "1",
+      "removed": "1"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/core/autosync/AutoSyncAudioDecoder.kt",
+      "added": "322",
+      "removed": "0"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/core/autosync/AutoSyncCoordinator.kt",
+      "added": "538",
+      "removed": "0"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/core/autosync/AutoSyncModelRepository.kt",
+      "added": "513",
+      "removed": "0"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/core/autosync/AutoSyncModelStore.kt",
+      "added": "136",
+      "removed": "0"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/core/autosync/AutoSyncPcmFile.kt",
+      "added": "42",
+      "removed": "0"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/core/autosync/AutoSyncStreamingResampler.kt",
+      "added": "107",
+      "removed": "0"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/core/autosync/AutoSyncText.kt",
+      "added": "162",
+      "removed": "0"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/core/autosync/AutoSyncTimelineStore.kt",
+      "added": "59",
+      "removed": "0"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/core/autosync/AutoSyncTypes.kt",
+      "added": "195",
+      "removed": "0"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/core/autosync/CtcForcedAligner.kt",
+      "added": "253",
+      "removed": "0"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/core/autosync/OnnxCtcEngine.kt",
+      "added": "174",
+      "removed": "0"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/core/autosync/ZhAlignmentEngine.kt",
+      "added": "180",
+      "removed": "0"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/core/autosync/ZhCifPostprocess.kt",
+      "added": "144",
+      "removed": "0"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/core/diagnostics/MeloXCrashRecorder.kt",
+      "added": "157",
+      "removed": "0"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/core/diagnostics/MeloXLogExporter.kt",
+      "added": "14",
+      "removed": "36"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/core/display/MeloXFrameRateController.kt",
+      "added": "350",
+      "removed": "0"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/core/library/NeteaseLibraryCache.kt",
+      "added": "26",
+      "removed": "17"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/core/lyrics/LyricModels.kt",
+      "added": "2",
+      "removed": "0"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/core/network/MeloXHttpClient.kt",
+      "added": "2",
+      "removed": "0"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/core/network/NeteaseAuthenticatedWeapi.kt",
+      "added": "5",
+      "removed": "1"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/core/network/NeteaseMusicOperationsClient.kt",
+      "added": "72",
+      "removed": "5"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/core/network/NeteaseQrDiag.kt",
+      "added": "43",
+      "removed": "0"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/core/network/NeteaseSearchClient.kt",
+      "added": "9",
+      "removed": "5"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/core/network/RetryInterceptor.kt",
+      "added": "90",
+      "removed": "0"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/core/provider/jellyfin/JellyfinApiClient.kt",
+      "added": "14",
+      "removed": "11"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/core/provider/local/LocalMusicRepository.kt",
+      "added": "1",
+      "removed": "0"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/core/provider/qqmusic/QQMusicApiClient.kt",
+      "added": "21",
+      "removed": "0"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/core/provider/qqmusic/QQMusicCatalogClient.kt",
+      "added": "66",
+      "removed": "11"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/core/provider/qqmusic/QQMusicProvider.kt",
+      "added": "1",
+      "removed": "1"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/core/recommendation/LocalRecommendationStore.kt",
+      "added": "3",
+      "removed": "0"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/core/remoteconfig/MeloXHotStrings.kt",
+      "added": "44",
+      "removed": "0"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/core/remoteconfig/MeloXRemoteConfigDefaults.kt",
+      "added": "1",
+      "removed": "0"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/core/remoteconfig/MeloXRemoteConfigModels.kt",
+      "added": "44",
+      "removed": "0"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/core/remoteconfig/MeloXRemoteConfigRuntime.kt",
+      "added": "17",
+      "removed": "0"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/platform/MeloXVolumeKeyBridge.kt",
+      "added": "95",
+      "removed": "0"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/platform/floating/MeloXFloatingLyricsService.kt",
+      "added": "5",
+      "removed": "0"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/platform/vivo/VivoAtomicIslandBridge.kt",
+      "added": "1",
+      "removed": "0"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/playback/MeloXAutoMix.kt",
+      "added": "9",
+      "removed": "0"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/playback/MeloXPlaybackNotice.kt",
+      "added": "84",
+      "removed": "0"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/playback/MeloXPlaybackQueueStore.kt",
+      "added": "31",
+      "removed": "51"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/playback/MeloXPlaybackService.kt",
+      "added": "422",
+      "removed": "56"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/playback/MeloXSmartQueueBuilder.kt",
+      "added": "35",
+      "removed": "3"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/playback/NeteasePlaybackResolver.kt",
+      "added": "61",
+      "removed": "28"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/playback/PlaybackCommands.kt",
+      "added": "83",
+      "removed": "65"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/playback/PlaybackTrackIdentity.kt",
+      "added": "1",
+      "removed": "0"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/playback/ProviderPlaybackCommands.kt",
+      "added": "52",
+      "removed": "13"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/playback/ProviderPlaybackResolver.kt",
+      "added": "36",
+      "removed": "61"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/MeloXApp.kt",
+      "added": "867",
+      "removed": "369"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/MeloXHaptics.kt",
+      "added": "161",
+      "removed": "0"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/MeloXHotText.kt",
+      "added": "50",
+      "removed": "0"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/MeloXPageTransitions.kt",
+      "added": "393",
+      "removed": "50"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/account/MeloXAccountActivity.kt",
+      "added": "4",
+      "removed": "4"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/account/MeloXNeteaseLoginActivity.kt",
+      "added": "109",
+      "removed": "0"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/account/MeloXPhoneCodeLoginScreen.kt",
+      "added": "34",
+      "removed": "20"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/account/NeteaseLoginScreen.kt",
+      "added": "140",
+      "removed": "39"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/account/NeteaseQrBridge.kt",
+      "added": "181",
+      "removed": "0"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/account/NeteaseQrLoginScreen.kt",
+      "added": "1094",
+      "removed": "0"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/account/QQMusicLoginScreen.kt",
+      "added": "19",
+      "removed": "7"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/account/SpotifyLoginScreen.kt",
+      "added": "15",
+      "removed": "14"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/animation/MeloXMotion.kt",
+      "added": "460",
+      "removed": "11"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/animation/MeloXMotionClock.kt",
+      "added": "4",
+      "removed": "5"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/animation/MeloXSystemScale.kt",
+      "added": "156",
+      "removed": "0"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/cloud/MeloXCloudMusicScreen.kt",
+      "added": "6",
+      "removed": "0"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/collection/MeloXCollectionDetailActivity.kt",
+      "added": "27",
+      "removed": "9"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/discovery/MeloXDiscoveryScreens.kt",
+      "added": "599",
+      "removed": "374"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/glass/BottomBarToneSampler.kt",
+      "added": "56",
+      "removed": "37"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/glass/MeloXBackdropComponents.kt",
+      "added": "93",
+      "removed": "69"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/glass/MeloXGlassSafety.kt",
+      "added": "27",
+      "removed": "11"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/glass/MeloXGlassSheet.kt",
+      "added": "19",
+      "removed": "2"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/glass/MeloXGlassTokens.kt",
+      "added": "8",
+      "removed": "9"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/glass/MeloXIosComponents.kt",
+      "added": "10",
+      "removed": "2"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/glass/MeloXNativeGlassComponents.kt",
+      "added": "33",
+      "removed": "4"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/glass/MeloXPinnedListPage.kt",
+      "added": "11",
+      "removed": "7"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/glass/MeloXSymbol.kt",
+      "added": "242",
+      "removed": "12"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/glass/MeloXTransformedBackdrop.kt",
+      "added": "47",
+      "removed": "0"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/glass/publicdemo/PublicDampedDragAnimation.kt",
+      "added": "3",
+      "removed": "3"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/glass/publicdemo/PublicInteractiveHighlight.kt",
+      "added": "7",
+      "removed": "3"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/layout/MeloXAdaptiveLayout.kt",
+      "added": "26",
+      "removed": "3"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/layout/MeloXWindowInsets.kt",
+      "added": "42",
+      "removed": "0"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/legal/MeloXLegalDocuments.kt",
+      "added": "34",
+      "removed": "2"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/library/LibraryScreen.kt",
+      "added": "491",
+      "removed": "539"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/library/MeloXPlaylistActionsOverlay.kt",
+      "added": "14",
+      "removed": "4"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXAlternativeLyricsPanels.kt",
+      "added": "52",
+      "removed": "16"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXDisplayCorner.kt",
+      "added": "142",
+      "removed": "0"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXFlowingLightBackdrop.kt",
+      "added": "5",
+      "removed": "4"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXIOSLyricsPanel.kt",
+      "added": "352",
+      "removed": "65"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXIOSMiniPlayer.kt",
+      "added": "379",
+      "removed": "60"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXIOSNowPlayingScene.kt",
+      "added": "1326",
+      "removed": "173"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXIOSNowPlayingSharedHost.kt",
+      "added": "1083",
+      "removed": "75"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXIOSNowPlayingV2.kt",
+      "added": "4",
+      "removed": "1"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXImmersivePlaybackEffect.kt",
+      "added": "56",
+      "removed": "11"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXListenTogetherInviteActivity.kt",
+      "added": "2",
+      "removed": "3"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXNowPlayingActionsSheet.kt",
+      "added": "6",
+      "removed": "8"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXNowPlayingCoreControls.kt",
+      "added": "1240",
+      "removed": "99"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXPlayerInsets.kt",
+      "added": "250",
+      "removed": "17"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXPlayerTransitionSpec.kt",
+      "added": "977",
+      "removed": "3"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXPlayerUi.kt",
+      "added": "345",
+      "removed": "160"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXProviderLyricsLoader.kt",
+      "added": "115",
+      "removed": "6"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXProviderSongActionsOverlay.kt",
+      "added": "14",
+      "removed": "0"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXQueuePanel.kt",
+      "added": "3",
+      "removed": "1"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXSmoothCorner.kt",
+      "added": "194",
+      "removed": "0"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXSongActionsOverlay.kt",
+      "added": "106",
+      "removed": "107"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/podcast/MeloXPodcastScreens.kt",
+      "added": "381",
+      "removed": "92"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/provider/MeloXProviderServicesActivity.kt",
+      "added": "7",
+      "removed": "15"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/provider/ProviderSettingsHub.kt",
+      "added": "0",
+      "removed": "4"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/recognition/MeloXRecognitionOverlay.kt",
+      "added": "68",
+      "removed": "0"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/search/SearchScreen.kt",
+      "added": "371",
+      "removed": "210"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/settings/AutoSyncModelPanel.kt",
+      "added": "205",
+      "removed": "0"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/settings/MeloXSettingsDetailActivity.kt",
+      "added": "115",
+      "removed": "0"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/settings/MeloXSettingsPreferences.kt",
+      "added": "104",
+      "removed": "15"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/settings/SettingsScreen.kt",
+      "added": "697",
+      "removed": "835"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/sharing/MeloXNeteaseResourceShareActivity.kt",
+      "added": "4",
+      "removed": "4"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/song/MeloXSongWikiActivity.kt",
+      "added": "4",
+      "removed": "4"
+    },
+    {
+      "path": "android/app/src/main/res/drawable/ic_melox_mic.xml",
+      "added": "37",
+      "removed": "0"
+    },
+    {
+      "path": "android/app/src/main/res/drawable/ic_melox_plus.xml",
+      "added": "37",
+      "removed": "0"
+    },
+    {
+      "path": "android/app/src/main/res/values-ja/strings.xml",
+      "added": "16",
+      "removed": "12"
+    },
+    {
+      "path": "android/app/src/main/res/values-night/colors.xml",
+      "added": "8",
+      "removed": "0"
+    },
+    {
+      "path": "android/app/src/main/res/values-zh-rCN/strings.xml",
+      "added": "383",
+      "removed": "548"
+    },
+    {
+      "path": "android/app/src/main/res/values-zh-rTW/strings.xml",
+      "added": "366",
+      "removed": "548"
+    },
+    {
+      "path": "android/app/src/main/res/values/colors.xml",
+      "added": "7",
+      "removed": "0"
+    },
+    {
+      "path": "android/app/src/main/res/values/strings.xml",
+      "added": "407",
+      "removed": "375"
+    },
+    {
+      "path": "android/app/src/main/res/values/styles.xml",
+      "added": "27",
+      "removed": "0"
+    },
+    {
+      "path": "android/app/src/test/kotlin/com/lladlam/melox/core/autosync/AutoSyncRoutingTest.kt",
+      "added": "28",
+      "removed": "0"
+    },
+    {
+      "path": "android/app/src/test/kotlin/com/lladlam/melox/core/autosync/AutoSyncStreamingResamplerTest.kt",
+      "added": "104",
+      "removed": "0"
+    },
+    {
+      "path": "android/app/src/test/kotlin/com/lladlam/melox/core/autosync/CtcForcedAlignerTest.kt",
+      "added": "103",
+      "removed": "0"
+    },
+    {
+      "path": "android/app/src/test/kotlin/com/lladlam/melox/core/autosync/ZhCifPostprocessTest.kt",
+      "added": "54",
+      "removed": "0"
+    },
+    {
+      "path": "android/app/src/test/kotlin/com/lladlam/melox/core/remoteconfig/MeloXHotStringsTest.kt",
+      "added": "42",
+      "removed": "0"
+    },
+    {
+      "path": "android/app/src/test/kotlin/com/lladlam/melox/core/remoteconfig/MeloXRemoteConfigModelsTest.kt",
+      "added": "56",
+      "removed": "0"
+    },
+    {
+      "path": "android/app/src/test/kotlin/com/lladlam/melox/ui/MeloXMeiScreenMigrationTest.kt",
+      "added": "3",
+      "removed": "3"
+    },
+    {
+      "path": "android/app/src/test/kotlin/com/lladlam/melox/ui/discovery/MeloXHomeFullBleedTest.kt",
+      "added": "1",
+      "removed": "1"
+    },
+    {
+      "path": "android/app/src/test/resources/autosync/ctc_vectors.json",
+      "added": "1",
+      "removed": "0"
+    },
+    {
+      "path": "android/app/src/test/resources/autosync/zh_cif_vectors.json",
+      "added": "1",
+      "removed": "0"
+    },
+    {
+      "path": "android/hidden-api/build.gradle.kts",
+      "added": "1",
+      "removed": "1"
+    },
+    {
+      "path": "android/innertube/build.gradle.kts",
+      "added": "1",
+      "removed": "1"
+    },
+    {
+      "path": "docs/AUTOSYNC_DEVICE_REGRESSION.md",
+      "added": "43",
+      "removed": "0"
+    },
+    {
+      "path": "docs/HOT_UPDATE_RESEARCH.md",
+      "added": "137",
+      "removed": "0"
+    },
+    {
+      "path": "docs/icon-resize-requirement.md",
+      "added": "99",
+      "removed": "0"
+    },
+    {
+      "path": "docs/media/shared-element-demo.mp4",
+      "added": "-",
+      "removed": "-"
+    },
+    {
+      "path": "docs/shared-element-transition-pr.md",
+      "added": "2",
+      "removed": "6"
+    }
+  ],
+  "acceptance": "NOT_MIGRATED_TO_NEW_SHA",
+  "areas": [
+    "AutoSync models, native/ONNX alignment and cache",
+    "Signed hot-update text overrides and remote config schema",
+    "Playback/lyrics/display/mainline fixes and contributor merge",
+    "Provider/playback/Library/Settings/UI changes"
+  ],
+  "policy": "Evidence under parity/3f877ea continues to verify only the pinned source. New upstream delta requires independent source export, implementation and acceptance."
+}

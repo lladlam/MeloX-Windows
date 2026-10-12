@@ -320,6 +320,15 @@ class MeloXDesktopPlayer internal constructor(
     private val neteaseResolver = NeteasePlaybackResolver(
         cookieProvider = { PlaybackAccountStore.neteaseCookie() },
         localSourceProvider = { songId -> MeloXDownloadStore.instance().localPlaybackString(songId) },
+        providerPlaybackEnabled = melox.remoteconfig.MeloXRemoteConfigPolicy::providerPlaybackEnabled,
+        crossProviderFallback = CrossProviderPlaybackFallbackResolver(
+            enabledProvider = { CrossProviderPlaybackPreferences.enabled() && melox.remoteconfig.MeloXRemoteConfigPolicy.capabilityEnabled("cross_provider_fallback") },
+            registryProvider = { ProviderPlaybackRuntime.initialize(); ProviderPlaybackRuntime.registryOrNull() },
+            cacheIdentityProvider = { CrossProviderPlaybackFallbackResolver.EligibleSources
+                .sortedBy { it.storageValue }.joinToString(":") { ProviderPlaybackRuntime.authKey(it) } },
+            fallbackConfigProvider = { melox.remoteconfig.MeloXRemoteConfigPolicy.activeConfig().fallback },
+            providerPlaybackEnabled = melox.remoteconfig.MeloXRemoteConfigPolicy::providerPlaybackEnabled,
+        ),
     )
     private var providerResolver: ProviderPlaybackResolver? = null
     private val autoplay = DesktopAutoplayCoordinator(scope, recommendationSource,
@@ -990,6 +999,7 @@ class MeloXDesktopPlayer internal constructor(
                 neteaseResolver = neteaseResolver,
                 providers = registry,
                 authKeyProvider = ProviderPlaybackRuntime::authKey,
+                providerPlaybackEnabled = melox.remoteconfig.MeloXRemoteConfigPolicy::providerPlaybackEnabled,
             ).also { providerResolver = it }
             val uri = ProviderPlaybackResolver.uriForTrack(track, MusicQualityRuntime.selected.toCommonTier())
             val request = resolver.resolveProviderRequest(uri)

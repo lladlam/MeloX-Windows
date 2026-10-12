@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="LocalProviderPlaybackTest[desktop]" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-10-12T02:54:53.643Z" hostname="runnervmfi6oq" time="0.006">
+  <properties/>
+  <testcase name="realLocalProviderResolvesEncodedUnicodePathsAndMetadataThroughProductionUri[desktop]" classname="melox.playback.LocalProviderPlaybackTest" time="0.004"/>
+  <testcase name="missingOrForeignLocalLocationsAreUnavailableRatherThanImpersonatingOnlineMusic[desktop]" classname="melox.playback.LocalProviderPlaybackTest" time="0.002"/>
+  <system-out><![CDATA[[MeloXThirdParty] resolve detail source=local id=folder/k title=?? & + # % artists=?? & + durationMs=null metadata=Local
+[MeloXThirdParty] Resolve start source=local quality=Standard thirdParty=true
+[MeloXThirdParty] Resolve fallback source=local stage=provider chksz=unavailable
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

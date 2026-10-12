@@ -41,6 +41,7 @@ kotlin {
                 implementation(libs.kotlinx.coroutines)
                 implementation(libs.okhttp)
                 implementation(libs.org.json)
+                implementation(libs.okhttp.dnsoverhttps)
                 implementation("com.ibm.icu:icu4j:77.1")
                 implementation("xyz.gianlu.librespot:librespot-lib:1.6.5")
             }

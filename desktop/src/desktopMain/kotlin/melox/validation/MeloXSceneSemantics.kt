@@ -13,6 +13,7 @@ import melox.ui.screens.MeloXLyricTimeMsKey
 import melox.ui.screens.MeloXLyricBrowsingKey
 import melox.ui.screens.MeloXLyricWordLinesKey
 import melox.ui.screens.MeloXLyricDocumentKey
+import melox.ui.glass.MeloXToggleVisualProgressKey
 
 /** Read-only inspection of the pinned Compose 1.8.1 offscreen scene, including modal layers. */
 @OptIn(ExperimentalComposeUiApi::class)
@@ -48,6 +49,7 @@ internal fun List<SemanticsNode>.toEvidence(): JSONArray = JSONArray().apply {
         put(JSONObject().put("tag", tag ?: JSONObject.NULL).put("text", text ?: JSONObject.NULL)
             .put("description", description ?: JSONObject.NULL)
             .put("state", config.getOrNull(SemanticsProperties.StateDescription) ?: JSONObject.NULL)
+            .put("toggle_visual_progress", config.getOrNull(MeloXToggleVisualProgressKey) ?: JSONObject.NULL)
             .put("lyric_time_ms", config.getOrNull(MeloXLyricTimeMsKey) ?: JSONObject.NULL)
             .put("lyric_browsing", config.getOrNull(MeloXLyricBrowsingKey) ?: JSONObject.NULL)
             .put("lyric_word_lines", config.getOrNull(MeloXLyricWordLinesKey) ?: JSONObject.NULL)

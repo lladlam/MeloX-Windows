@@ -147,7 +147,7 @@ class CloudUploadProtocolTest {
     @Test fun rejectedNosUploadNeverRegistersPublishesOrReportsCompletion() = runBlocking<Unit> {
         rejectUpload = true; val client = client()
         val error = assertFailsWith<java.io.IOException> { client.uploadCloudSong(wave(), progress::add) }
-        assertTrue(error.message.orEmpty().contains("503"))
+        assertTrue(error.message.orEmpty().contains("503"), "Unexpected rejected-upload failure: ${error.message}; reached routes=$paths")
         assertFalse(paths.contains("/eapi/upload/cloud/info/v2")); assertFalse(published)
         assertFalse(progress.any { it.stage == "上传完成" })
         assertTrue(client.cloudSongs().values.isEmpty())

@@ -14,6 +14,7 @@ internal class NeteasePhoneAuthClient(
     private val eapi = NeteaseAuthenticatedEapi(cookieProvider = { requestCookie }, httpClient = httpClient)
 
     suspend fun sendCode(countryCode: String, phone: String) = withContext(Dispatchers.IO) {
+        check(melox.remoteconfig.MeloXRemoteConfigPolicy.capabilityEnabled("netease_phone_login")) { "网易云手机号登录暂时停用，请稍后重试" }
         val response = eapi.postWithResponseCookies(
             uri = "/api/sms/captcha/sent",
             data = JSONObject().put("cellphone", phone).put("ctcode", countryCode),
@@ -24,6 +25,7 @@ internal class NeteasePhoneAuthClient(
     }
 
     suspend fun login(countryCode: String, phone: String, code: String): String = withContext(Dispatchers.IO) {
+        check(melox.remoteconfig.MeloXRemoteConfigPolicy.capabilityEnabled("netease_phone_login")) { "网易云手机号登录暂时停用，请稍后重试" }
         val response = eapi.postWithResponseCookies(
             uri = "/api/w/login/cellphone",
             data = JSONObject()

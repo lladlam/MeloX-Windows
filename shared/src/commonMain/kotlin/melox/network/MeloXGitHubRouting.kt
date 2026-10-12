@@ -8,10 +8,14 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.currentCoroutineContext
+import kotlinx.coroutines.job
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import okhttp3.OkHttpClient
 import okhttp3.Request
+import okhttp3.HttpUrl.Companion.toHttpUrl
+import okhttp3.dnsoverhttps.DnsOverHttps
 
 enum class MeloXGitHubSource(val label: String) {
     Auto("自动选择"),
@@ -33,7 +37,12 @@ class MeloXGitHubRouting(
     private val preferences = getPreferences(PreferencesName)
     private val legacyPreferences = getPreferences(LegacyPreferencesName)
     private val dohClient: OkHttpClient by lazy {
-        baseClient.newBuilder().cache(null).build()
+        val bootstrap = baseClient.newBuilder().cache(null).callTimeout(6, TimeUnit.SECONDS).build()
+        val dns = DnsOverHttps.Builder().client(bootstrap)
+            .url("https://doh.pub/dns-query".toHttpUrl())
+            .bootstrapDnsHosts(listOf(InetAddress.getByName("1.12.12.12"), InetAddress.getByName("120.53.53.53")))
+            .includeIPv6(false).resolvePrivateAddresses(false).resolvePublicAddresses(true).build()
+        baseClient.newBuilder().dns(dns).build()
     }
 
     fun selectedSource(): MeloXGitHubSource = parseSource(
@@ -72,7 +81,7 @@ class MeloXGitHubRouting(
             }
             val results = coroutineScope {
                 ConcreteSources.map { source ->
-                    async(Dispatchers.IO) { benchmark(source) }
+                    async(Dispatchers.IO) { benchmark(source, currentCoroutineContext().job) }
                 }.awaitAll().filterNotNull().sortedBy(MeloXGitHubRouteResult::latencyMs)
             }
             val winner = results.firstOrNull()
@@ -97,7 +106,7 @@ class MeloXGitHubRouting(
         else -> baseClient
     }
 
-    private fun benchmark(source: MeloXGitHubSource): MeloXGitHubRouteResult? {
+    private fun benchmark(source: MeloXGitHubSource, owner: kotlinx.coroutines.Job): MeloXGitHubRouteResult? {
         val client = client(source).newBuilder()
             .cache(null)
             .connectTimeout(6, TimeUnit.SECONDS)
@@ -112,13 +121,13 @@ class MeloXGitHubRouting(
             .build()
         val startedAt = System.nanoTime()
         return runCatching {
-            client.newCall(request).execute().use { response ->
-                if (!response.isSuccessful) return@use null
-                val body = response.body?.string() ?: return@use null
-                if (!body.contains("\"version\"")) return@use null
+            client.executeOwned(request, owner) { response ->
+                if (!response.isSuccessful) return@executeOwned null
+                val body = String(response.body.byteStream().use { it.readNBytes(4096) }, Charsets.UTF_8)
+                if (!body.contains("\"version\"")) return@executeOwned null
                 MeloXGitHubRouteResult(source, TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startedAt))
             }
-        }.getOrNull()
+        }.onFailure { if (it is kotlinx.coroutines.CancellationException) throw it }.getOrNull()
     }
 
     companion object {

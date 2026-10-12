@@ -2,6 +2,9 @@ package melox.remoteconfig
 
 import melox.platform.meloXDataDir
 import java.io.File
+import java.nio.file.Files
+import java.nio.file.StandardCopyOption
+import java.nio.file.AtomicMoveNotSupportedException
 import org.json.JSONObject
 
 internal data class MeloXStoredRemoteConfig(
@@ -12,8 +15,7 @@ internal data class MeloXStoredRemoteConfig(
     val highestConfigVersion: Int,
 )
 
-internal class MeloXRemoteConfigStore {
-    private val file = File(meloXDataDir(), "remote_config/state.json")
+internal class MeloXRemoteConfigStore(private val file: File = File(meloXDataDir(), "remote_config/state.json")) {
 
     fun read(): MeloXStoredRemoteConfig = runCatching {
         if (!file.isFile) return@runCatching Empty
@@ -38,11 +40,13 @@ internal class MeloXRemoteConfigStore {
             .toString()
             .toByteArray()
         val temporary = File(file.parentFile, file.name + ".part")
-        temporary.writeBytes(bytes)
-        if (!temporary.renameTo(file)) {
-            file.delete()
-            check(temporary.renameTo(file)) { "Unable to persist remote config state" }
-        }
+        try {
+            temporary.writeBytes(bytes)
+            try { Files.move(temporary.toPath(), file.toPath(), StandardCopyOption.ATOMIC_MOVE, StandardCopyOption.REPLACE_EXISTING) }
+            catch (_: AtomicMoveNotSupportedException) {
+                Files.move(temporary.toPath(), file.toPath(), StandardCopyOption.REPLACE_EXISTING)
+            }
+        } finally { temporary.delete() }
     }
 
     fun clearEnvelope() {

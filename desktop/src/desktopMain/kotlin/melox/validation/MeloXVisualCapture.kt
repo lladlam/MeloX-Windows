@@ -128,6 +128,10 @@ fun main(args: Array<String>) = runBlocking {
                 "unselected" -> semantics.tagged(expected)?.config?.getOrNull(SemanticsProperties.Selected) == false
                 "checked" -> semantics.tagged(expected)?.config?.getOrNull(SemanticsProperties.ToggleableState) == ToggleableState.On
                 "unchecked" -> semantics.tagged(expected)?.config?.getOrNull(SemanticsProperties.ToggleableState) == ToggleableState.Off
+                "toggle-position" -> expected.split(':', limit = 2).let { (tag, value) ->
+                    semantics.tagged(tag)?.config?.getOrNull(melox.ui.glass.MeloXToggleVisualProgressKey)
+                        ?.let { kotlin.math.abs(it - value.toFloat()) <= .01f } == true
+                }
                 "quality" -> melox.audio.MusicQualityPreferences.read().apiLevel == expected
                 "queue-min" -> melox.playback.PlaybackCommands.queue.value.songs.size >= expected.toInt()
                 "repeat" -> melox.playback.PlaybackCommands.playerController()?.repeatMode?.value == expected.toInt()

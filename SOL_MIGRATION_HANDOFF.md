@@ -2,6 +2,7 @@
 
 Pinned Android: `3f877eaffe30c82eb6d24eb3647702f5bc554dd3`.
 Starting Windows: `24eb7fffb7f5c01d17baca5b68674bc33b11be86`.
+Follow-up upstream fetch (2026-10-12): `febb4c0534787e040a89df8457e630d067f44b80`, 9 further commits / 154 changed files. `evidence/upstream-intake-febb4c0.json` records the exact increment. AutoSync/model alignment and signed hot-update text overrides remain a new unimplemented increment; the pinned matrix is not implicitly upgraded.
 
 ## Landed in this batch
 
@@ -19,6 +20,8 @@ Starting Windows: `24eb7fffb7f5c01d17baca5b68674bc33b11be86`.
 - Cloud upload desktop picker, genuine FFmpeg metadata/MD5, source upload-check/token/LBS/NOS/info/pub protocol, successful refresh, actual byte progress and cancellation/snapshot cleanup. Six encrypted-HTTP/real-file protocol integration tests; live account/Windows chooser acceptance still blocked.
 - Content layout: dedicated wired TabLayout settings route, dock/home reorder and placement controls, existing-key per-provider Library page persistence/default/visibility, and home module shortcut reachability independent of dock placement. Launch/full-swipe settings exposed; Messages deep-link misinformation removed. See `parity/3f877ea/CONTENT_LAYOUT.md`.
 - Smart Queue regression discovered during this batch: disabling now restores analysis-failed unconsumed original tracks too; selection and disable queue mutation are serialized. A direct failed-analysis regression protects this alongside real PCM candidate selection.
+- Remote compatibility: first-frame runtime startup, minimized-window periodic gating/resume refresh, real Settings route/consent/withdrawal/cache clear, DNSPod DoH, bounded owned HTTP, atomic cache and anti-rollback retention/invalid-ETag repair. Actual subsequent login/playback/fallback gates and once/daily notices are wired; local fallback opt-in stays independent. See `parity/3f877ea/REMOTE_CONFIG.md`.
+- Glass Toggle now renders confirmed controlled state after a pending confirmation/rejected change, rather than leaving a green resting knob after rejection. Drag feedback remains transient and theme tone is observed.
 
 ## Still required
 
@@ -28,6 +31,7 @@ Starting Windows: `24eb7fffb7f5c01d17baca5b68674bc33b11be86`.
 4. Current pinned Android reference screenshots/frames. Device enumeration returned zero. Artist/album and remaining pages still need same-content comparison; historical Settings SSIM is not a new complete parity result.
 5. Remaining settings routes, Unified Search aggregation, live Cloud account/chooser acceptance, podcasts/library Provider acceptance, Classic/alternate lyric shell/settings and refraction/dynamic-tone verification.
 6. Desktop SongRecognitionClient is an existing empty-result stub; the new Android ID fields do not solve its missing native recognition path.
+7. Independently migrate and accept the newly fetched `3f877ea..febb4c0` increment after completing the pinned batch. Preserve actual models/providers and signed-config scope; do not label pre-AutoSync frames/tests as new upstream parity.
 
 ## Execute physical Windows acceptance
 
@@ -50,10 +54,14 @@ Detailed observable-state matrix and evidence: `parity/3f877ea/`.
 - `evidence/windows-ci-9328f78/`: exact run 38019093278 passed 81 tests and native source/JAR/app-image/final ZIP decoder checks. That run predates production AutoMix changes.
 - `evidence/windows-ci-3ac97e0/`: production AutoMix run 38025529598 passed **102 tests / 18 suites** and native source/JAR/app-image/final ZIP verification; downloadable Windows artifact is attached to that exact run.
 - `evidence/windows-ci-d1426b5/`: Cloud run 38034442939 passed **108 tests / 19 suites** plus native source/JAR/app-image/final ZIP checks. Exact-SHA downloadable artifact is attached to that run.
+- `evidence/windows-ci-693f3d2/`: content-layout run 38197452357 passed **114 tests / 20 suites** plus native source/JAR/app-image/final ZIP checks. Exact-SHA downloadable `MeloX-Desktop-Windows` artifact is attached to that run.
 - `evidence/automix-validation.json` and `automix-tests/`: latest 102 tests / 18 suites, zero failures/errors/skipped; source and Linux uber JAR hashes.
 - `evidence/automix-ui-v3/`: 7 production UI scenes / 8 state assertions plus captured frames and compressed generated PCM. Explicit software endpoint label; requested/actual capture timing is recorded separately.
 - `evidence/automix-pcm-readback.json`: independent consumed-PCM readback finds primary-only, actual 1000/4000Hz simultaneous overlap and incoming-only on one output; `automix-linux-packaged-decoder.json` verifies latest packaged decoder.
 - `evidence/cloud-validation.json`, `cloud-tests/`: **108 tests / 19 suites**, zero failures/errors/skipped, including six encrypted-HTTP/real-file upload cases. `cloud-ui-v3/` has 3 genuine unauthenticated UI scenes / 7 refresh/retry/entry assertions; `cloud-linux-packaged-decoder.json` verifies its final Linux JAR.
 - `evidence/content-layout-validation.json`, `content-layout-tests/`: **114 tests / 20 suites**, zero failures/errors/skipped. `content-layout-ui-final/` captures 15 genuine settings state scenes / 14 assertions plus 42 dynamic frames; startup reuses the earlier UI-written isolated preferences. Packaged Linux decoder checks also pass. These frames are not pinned Android dynamic parity.
 - `evidence/content-layout-home-shortcut/`: 4 genuine production scenes / 7 assertions for Home Cloud entry with its dock placement disabled and Escape return. This replay verifies the App Shell root-switch focus fix; earlier settings source hashes and final artifact source hashes are kept separate.
+- `evidence/remote-config-tests/`: **124 tests / 21 suites**, zero failures/errors/skipped, including ten native P-256/actual HTTP/cache/cancellation/policy/foreground/login-breaker regressions. No production signing key, URL or account transport is replaced by test fixtures.
+- `evidence/remote-config-ui-dark/`: 20 production state scenes / 25 assertions / 57 dynamic frames. Both actual knob progress and controlled switch state are verified after consent rejection, fallback cancellation, acceptance and withdrawal. The final Linux uber JAR and its decoder pass native format/authorized HTTP verification; SHA/source hashes are in `remote-config-validation.json`.
+- `evidence/remote-config-ui-light-live/`: 15 production scenes / 14 assertions; actual public signed config **v6** through GhFast accepted by the production pinned key. Once notice, manual refresh, clear, withdrawal and Escape return pass with no signed-in account. Public-server 304 and the other network routes are not inferred from this replay.
 - Physical Windows audio and current pinned Android pixel/motion capture remain BLOCKED. See `parity/3f877ea/AUTOMIX.md` for implementation and reproducible generated-source replay.
