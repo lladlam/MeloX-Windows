@@ -2,6 +2,8 @@
 
 package melox.ui.screens
 
+import androidx.compose.ui.platform.testTag
+
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -238,6 +240,7 @@ private fun ProviderCard(
             // Action button
             Surface(
                 modifier = Modifier
+                    .testTag("account-${provider.id}")
                     .clip(RoundedCornerShape(20.dp))
                     .clickable {
                         if (isLoggedIn) onLogoutClick() else onLoginClick()
@@ -270,7 +273,7 @@ private fun LoginDialog(
 ) {
     AlertDialog(
         onDismissRequest = {
-            if (!state.dialogLoading) onDismiss()
+            if (!state.dialogLoading || provider.id == "jellyfin") onDismiss()
         },
         containerColor = MeloXColors.pageSurface(),
         shape = RoundedCornerShape(20.dp),
@@ -354,7 +357,7 @@ private fun LoginDialog(
                     ) {
                         Text(
                             text = msg,
-                            modifier = Modifier.padding(12.dp),
+                            modifier = Modifier.padding(12.dp).testTag("account-login-feedback"),
                             color = if (msg.contains("成功")) MeloXColors.Success else MeloXColors.Error,
                             fontFamily = MeloXLanTingProFontFamily,
                             fontSize = 13.sp,
@@ -367,7 +370,8 @@ private fun LoginDialog(
         dismissButton = {
             TextButton(
                 onClick = onDismiss,
-                enabled = !state.dialogLoading,
+                enabled = !state.dialogLoading || provider.id == "jellyfin",
+                modifier = Modifier.testTag("account-dialog-close"),
             ) {
                 Text(
                     text = "关闭",
@@ -1097,11 +1101,13 @@ private fun TokenInputForm(provider: LoginProvider, state: LoginScreenState, onL
 
 @Composable
 private fun ServerLoginForm(provider: LoginProvider, state: LoginScreenState, onLoginSuccess: (String) -> Unit) {
+    val scope = rememberCoroutineScope()
     Column {
         OutlinedTextField(
             value = state.dialogServerUrl,
             onValueChange = { state.dialogServerUrl = it },
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth().testTag("jellyfin-server"),
+            enabled = !state.dialogLoading,
             placeholder = {
                 Text("服务器地址", color = MeloXColors.TextTertiary, fontFamily = MeloXLanTingProFontFamily, fontSize = 14.sp)
             },
@@ -1124,7 +1130,8 @@ private fun ServerLoginForm(provider: LoginProvider, state: LoginScreenState, on
         OutlinedTextField(
             value = state.dialogInput,
             onValueChange = { state.dialogInput = it },
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth().testTag("jellyfin-username"),
+            enabled = !state.dialogLoading,
             placeholder = {
                 Text("用户名", color = MeloXColors.TextTertiary, fontFamily = MeloXLanTingProFontFamily, fontSize = 14.sp)
             },
@@ -1147,7 +1154,9 @@ private fun ServerLoginForm(provider: LoginProvider, state: LoginScreenState, on
         OutlinedTextField(
             value = state.dialogPassword,
             onValueChange = { state.dialogPassword = it },
-            modifier = Modifier.fillMaxWidth(),
+            visualTransformation = androidx.compose.ui.text.input.PasswordVisualTransformation(),
+            modifier = Modifier.fillMaxWidth().testTag("jellyfin-password"),
+            enabled = !state.dialogLoading,
             placeholder = {
                 Text("密码", color = MeloXColors.TextTertiary, fontFamily = MeloXLanTingProFontFamily, fontSize = 14.sp)
             },
@@ -1173,11 +1182,28 @@ private fun ServerLoginForm(provider: LoginProvider, state: LoginScreenState, on
                     state.dialogInput.isNotBlank() &&
                     state.dialogPassword.isNotBlank() &&
                     !state.dialogLoading,
+            modifier = Modifier.testTag("jellyfin-submit"),
         ) {
             state.dialogLoading = true
             state.dialogMessage = null
-            state.dialogLoading = false
-            state.dialogMessage = "Jellyfin 服务器登录尚未接入，不会假装登录成功"
+            val url = state.dialogServerUrl.trim()
+            val username = state.dialogInput.trim()
+            val password = state.dialogPassword
+            scope.launch {
+                try {
+                    val session = melox.provider.jellyfin.JellyfinApiClient(melox.network.MeloXHttpClient.shared)
+                        .authenticate(url, username, password)
+                    withContext(Dispatchers.IO) { melox.provider.jellyfin.JellyfinSessionStore.write(session) }
+                    state.dialogPassword = ""
+                    onLoginSuccess(session.userName)
+                } catch (cancelled: kotlinx.coroutines.CancellationException) {
+                    throw cancelled
+                } catch (failure: Exception) {
+                    state.dialogMessage = failure.message ?: "Jellyfin 登录失败"
+                } finally {
+                    state.dialogLoading = false
+                }
+            }
         }
     }
 }
@@ -1275,10 +1301,11 @@ private fun LoginButton(
     color: Color,
     enabled: Boolean,
     text: String = "登录",
+    modifier: Modifier = Modifier,
     onClick: () -> Unit,
 ) {
     Surface(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .height(44.dp)
             .clip(RoundedCornerShape(12.dp))
@@ -1345,7 +1372,11 @@ fun LoginScreen(navState: MeloXNavState) {
         LoginDialog(
             provider = provider,
             state = state,
-            onDismiss = { state.dialogTarget = null },
+            onDismiss = {
+                state.dialogTarget = null
+                state.dialogPassword = ""
+                state.dialogLoading = false
+            },
             onLoginSuccess = { username ->
                 state.loggedInProviders[provider.id] = true
                 state.usernames[provider.id] = username

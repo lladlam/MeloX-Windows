@@ -1,0 +1,67 @@
+{
+  "acceptance_android": "3f877eaffe30c82eb6d24eb3647702f5bc554dd3",
+  "windows_parent": "50bd383f8c02b90d4c9f1783140459347215559f",
+  "source_sha256": {
+    "desktop/src/desktopMain/kotlin/melox/ui/player/MeloXFlowingLightBackdrop.kt": "c8aa2b03dcf5657e5d2ab77696eecf808516d4af10bafced34e8ba8772154c63",
+    "desktop/src/desktopMain/kotlin/melox/ui/screens/LoginScreen.kt": "c96b31234d38714483c56a61baa474e0dfa3695300afd8ec42bebc704cd9ea62",
+    "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXArtwork.kt": "918b8f00ee8f6cdd608ca626e2a666bcd0f1277e8a1eb03362cbb4e8284ecbfc",
+    "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXDetailPalette.kt": "8183f631119786090b84738cd546bf684cd6ccb4fc00d523d6c7622f90bd8a38",
+    "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXLibraryScreen.kt": "b50e906786bac313e8f7f49f0d83790cd26f55a190c48e59bda40c5086e2b771",
+    "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerQuality.kt": "b9e20e52a90a0cceae86a8233af62b6778366e03687238372095881ef778b967",
+    "desktop/src/desktopMain/kotlin/melox/ui/screens/SettingsScreen.kt": "1f261905c3c238e5156b29120e004a80c8ed41024c385e68035827991147a244",
+    "shared/src/commonMain/kotlin/melox/music/model/MusicModels.kt": "5c1e781d2dd35ec8f674444d35e9b8e1acd5c1c609a962b522a3b67d77be2147",
+    "shared/src/commonMain/kotlin/melox/playback/MeloXPlaybackQueueStore.kt": "fc04994c79eb924cde4afc8ceb0d22333fdab09d92c6f14443e96e9135e8612e",
+    "shared/src/commonMain/kotlin/melox/playback/ProviderPlaybackResolver.kt": "27f23919da4f1d3044c1cddec0698e15cefb44ba2b3e0af34aabeb0a9c1cee1b",
+    "shared/src/commonMain/kotlin/melox/playback/ProviderPlaybackRuntime.kt": "ff0d078b99a4690f715c53de52e756f3181a58c040fa36c5ec69e6a5ab0da6c7",
+    "shared/src/commonMain/kotlin/melox/provider/jellyfin/JellyfinApiClient.kt": "e11d68a56c66e519e2faab351d66855bc0df450d2c25e046a1be5ae1a9ffc06e",
+    "shared/src/commonMain/kotlin/melox/provider/jellyfin/JellyfinArtworkAccess.kt": "e1768b053cf96671b9f03e2e66a00adaa8ff5be3c0c1133255573531e70dc344",
+    "shared/src/commonMain/kotlin/melox/provider/jellyfin/JellyfinProvider.kt": "cc802d294e13409b2a49b4fc2f101b3ec664cc0e23def7b825c5b52400df4d95",
+    "shared/src/commonMain/kotlin/melox/provider/jellyfin/JellyfinSessionStore.kt": "fd1c6714c1b0f0a829ed4f776b89c332b24661a37c3402d6f28be1c8aa65e7e3",
+    "shared/src/desktopTest/kotlin/melox/platform/JellyfinSessionPersistenceTest.kt": "c4da9c2664e421da702ba3c0fc65c535736ee8f4548af5b31e5b7702e0fbb9d2",
+    "shared/src/desktopTest/kotlin/melox/playback/DesktopPlaybackStateTest.kt": "64c91c9178c5a6dce6c01b3e1b7d1a9a83e07d5479d2dfa005d1a1beea85d172",
+    "shared/src/desktopTest/kotlin/melox/provider/jellyfin/JellyfinProtocolTest.kt": "98cfaa3c7fa6c37b2d09f692ab1d6edd874f91d641230e786730a53b7513a250"
+  },
+  "automated": {
+    "suites": 24,
+    "tests": 144,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "production_ui": {
+    "capture": "jellyfin-ui-final/capture.json",
+    "scene_count": 15,
+    "assertions": 12,
+    "passing_assertions": 12,
+    "frames": 42,
+    "surface": "production ImageComposeScene, isolated home",
+    "account_input": "synthetic; no provider replacement",
+    "android_pixel_motion": "BLOCKED"
+  },
+  "linux_final_jar": {
+    "path": "desktop/build/compose/jars/MeloX-Desktop-linux-x64-1.0.0.jar",
+    "bytes": 221645466,
+    "sha256": "dd025d9f2bc3e2c6cdc557002da41f8b744388ae64bda81caec4e06150b22adb"
+  },
+  "protocol_pcm": {
+    "test": "nativeDecoderConsumesActualAuthorizedUniversalStreamPcm",
+    "real_decoded_frames": 11025,
+    "sample_rate": 44100,
+    "channels": 2,
+    "rms_expected_range_s16": [
+      4200,
+      4280
+    ],
+    "source": "legally generated 1000Hz WAV via actual production resolved HTTP URL with required token header; test-only local protocol fixture"
+  },
+  "latest_prior_windows_ci": {
+    "commit": "50bd383f8c02b90d4c9f1783140459347215559f",
+    "run": 38222348899,
+    "conclusion": "success",
+    "tests": 130
+  },
+  "jellyfin_windows_ci": "PENDING_EXACT_COMMIT",
+  "live_jellyfin_user_server": "BLOCKED",
+  "physical_windows_audio_dpapi": "BLOCKED",
+  "android_pixel_motion": "BLOCKED"
+}

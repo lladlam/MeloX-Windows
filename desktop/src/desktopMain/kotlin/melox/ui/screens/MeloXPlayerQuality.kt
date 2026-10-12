@@ -42,7 +42,7 @@ import melox.ui.glass.*
 import melox.ui.navigation.MeloXBackHandler
 
 private data class ActiveQuality(
-    val actual: MusicQuality,
+    val actual: MusicQuality?,
     val title: String,
     val downloaded: Boolean,
     val fallbackSource: MusicSource?,
@@ -54,8 +54,10 @@ private fun activeQuality(track: MusicTrack): ActiveQuality {
     val providerActual = ProviderPlaybackQualityRuntime.actualFor(track.id)
     val actual = downloaded ?: if (track.id.source == MusicSource.Netease) {
         MusicQualityRuntime.actualFor(neteaseId) ?: MusicQualityRuntime.selected
-    } else providerActual?.toMusicQuality() ?: MusicQualityRuntime.selected
-    val title = if (downloaded != null || track.id.source == MusicSource.Netease) actual.title
+    } else if (track.id.source == MusicSource.Jellyfin) providerActual?.toMusicQuality()
+        else providerActual?.toMusicQuality() ?: MusicQualityRuntime.selected
+    val title = if (actual == null) "服务器音质"
+        else if (downloaded != null || track.id.source == MusicSource.Netease) actual.title
         else providerActual?.sceneTitle() ?: actual.title
     return ActiveQuality(actual, title, downloaded != null, CrossProviderPlaybackRuntime.sourceFor(neteaseId))
 }
@@ -117,8 +119,9 @@ internal fun MeloXPlayerQualityOverlay(
         track.id.source != MusicSource.Netease -> "${track.id.source.displayName} 音源"
         else -> "当前播放"
     }
-    val resource = availability.resourceFor(quality.actual)
-    val details = if (quality.downloaded) "本地文件 · 参数以下载音频为准" else buildList {
+    val resource = quality.actual?.let(availability::resourceFor)
+    val details = if (quality.actual == null) "由服务器选择 · 尚未测得音频参数"
+        else if (quality.downloaded) "本地文件 · 参数以下载音频为准" else buildList {
         resource?.bitrate?.let { add("${it / 1000} kbps") }
         resource?.sampleRate?.let { add("${it / 1_000.0} kHz") }
         if (quality.actual in listOf(MusicQuality.HighDefinitionSurround, MusicQuality.ImmersiveSurround)) add("5.1 声道")
@@ -126,7 +129,7 @@ internal fun MeloXPlayerQualityOverlay(
     }.joinToString(" · ").ifBlank { "${track.id.source.displayName} 未提供音频参数" }
     MeloXInlinePlayerDialog(visible, onDismiss, "quality-dialog") {
         Text("音质", style = MaterialTheme.typography.titleLarge)
-        Text("当前音质：${quality.actual.title}", Modifier.padding(top = 9.dp), color = foreground.copy(alpha = .68f), fontSize = 14.sp)
+        Text("当前音质：${quality.actual?.title ?: "由服务器选择"}", Modifier.padding(top = 9.dp), color = foreground.copy(alpha = .68f), fontSize = 14.sp)
         Text(details, Modifier.padding(top = 4.dp), color = foreground.copy(alpha = .68f), fontSize = 14.sp)
         Text(sourceLabel, Modifier.padding(top = 4.dp), color = foreground.copy(alpha = .54f), fontSize = 12.sp)
         Row(Modifier.fillMaxWidth().padding(top = 12.dp), horizontalArrangement = Arrangement.spacedBy(10.dp)) {

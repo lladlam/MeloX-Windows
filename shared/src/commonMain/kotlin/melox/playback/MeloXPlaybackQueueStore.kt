@@ -58,6 +58,11 @@ internal object MeloXPlaybackQueueStore {
                     (track.providerMetadata as? ProviderTrackMetadata.YouTube)?.let {
                         put("youtubeSetVideoId", it.setVideoId)
                     }
+                    (track.providerMetadata as? ProviderTrackMetadata.Jellyfin)?.let {
+                        put("jellyfinServer", it.serverIdentity)
+                        put("jellyfinPlaylist", it.playlistId)
+                        put("jellyfinEntry", it.playlistEntryId)
+                    }
                 }
             })
         }
@@ -112,6 +117,10 @@ internal object MeloXPlaybackQueueStore {
                         durationMs = value.optLong("durationMs", 0L).takeIf { it > 0L },
                         providerMetadata = if (source == MusicSource.YouTubeMusic) ProviderTrackMetadata.YouTube(
                             providerId, value.optString("youtubeSetVideoId").takeIf { it.isNotBlank() && it != "null" },
+                        ) else if (source == MusicSource.Jellyfin && value.optString("jellyfinServer").isNotBlank()) ProviderTrackMetadata.Jellyfin(
+                            value.optString("jellyfinServer"),
+                            value.optString("jellyfinPlaylist").takeIf { it.isNotBlank() && it != "null" },
+                            value.optString("jellyfinEntry").takeIf { it.isNotBlank() && it != "null" },
                         ) else ProviderTrackMetadata.Empty,
                     )
                 } else {

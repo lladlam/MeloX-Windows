@@ -1,5 +1,7 @@
 package melox.ui.screens
 
+import androidx.compose.runtime.collectAsState
+
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
@@ -121,14 +123,16 @@ fun LibraryScreen(
     }
     val providerLibrary = provider as? UserLibraryCapability
     val cache = remember { NeteaseLibraryCache() }
+    val jellyfinRevision by melox.provider.jellyfin.JellyfinSessionStore.revision.collectAsState()
+    val accountRevision = if (source == MusicSource.Jellyfin) jellyfinRevision else 0L
 
     val initialPage = MeloXLibraryPage.valueOf(MeloXContentLayout.initialLibraryPage(source))
     var selectedPage by rememberSaveable(source) { mutableStateOf(initialPage) }
-    var selectedPlaylist by remember(source, session.cookie) { mutableStateOf<NeteasePlaylistSummary?>(null) }
-    var snapshot by remember(source, session.cookie) { mutableStateOf<NeteaseLibrarySnapshot?>(null) }
-    var providerAccount by remember(source) { mutableStateOf<MusicAccountSummary?>(null) }
-    var loading by remember(source, session.cookie) { mutableStateOf(source != MusicSource.Netease) }
-    var errorMessage by remember(source, session.cookie) { mutableStateOf<String?>(null) }
+    var selectedPlaylist by remember(source, session.cookie, accountRevision) { mutableStateOf<NeteasePlaylistSummary?>(null) }
+    var snapshot by remember(source, session.cookie, accountRevision) { mutableStateOf<NeteaseLibrarySnapshot?>(null) }
+    var providerAccount by remember(source, accountRevision) { mutableStateOf<MusicAccountSummary?>(null) }
+    var loading by remember(source, session.cookie, accountRevision) { mutableStateOf(source != MusicSource.Netease) }
+    var errorMessage by remember(source, session.cookie, accountRevision) { mutableStateOf<String?>(null) }
     val playlistListState = rememberLazyListState()
 
     suspend fun refreshLibrary() {
@@ -195,9 +199,13 @@ fun LibraryScreen(
                     account to playlists
                 }
             }.onSuccess { (account, playlists) ->
+                if (source == MusicSource.Jellyfin && melox.provider.jellyfin.JellyfinSessionStore.revision.value != accountRevision) {
+                    throw kotlinx.coroutines.CancellationException("Jellyfin 登录会话已变更")
+                }
                 providerAccount = account
                 snapshot = if (account == null) null else MeloXLegacyUiBridge.library(playlists)
             }.onFailure { failure ->
+                if (failure is kotlinx.coroutines.CancellationException) throw failure
                 providerAccount = null
                 snapshot = null
                 errorMessage = failure.message ?: "${source.displayName} 音乐库加载失败"
@@ -206,7 +214,8 @@ fun LibraryScreen(
         loading = false
     }
 
-    LaunchedEffect(source, session.cookie, session.profile?.userId) {
+    LaunchedEffect(source, session.cookie, session.profile?.userId, accountRevision) {
+        selectedPlaylist = null
         if (source == MusicSource.Netease) {
             val userId = session.profile?.userId ?: return@LaunchedEffect
             cache.loadSnapshot(userId)?.let { snapshot = it }
@@ -466,6 +475,7 @@ private fun MeloXLibraryLoginUnavailable(
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .testTag("library-login-required").semantics { stateDescription = sourceName }
             .background(MeloXColors.pageBackground())
             .statusBarsPadding()
             .padding(horizontal = 20.dp),
@@ -491,6 +501,7 @@ private fun MeloXLibraryLoginUnavailable(
                     val interaction = rememberMeloXLiquidInteraction()
                     Box(
                         modifier = Modifier
+                            .testTag("library-open-login")
                             .padding(top = 18.dp)
                             .meloXLiquidButton(
                                 shape = RoundedCornerShape(18.dp),

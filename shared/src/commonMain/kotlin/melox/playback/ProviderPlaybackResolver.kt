@@ -145,7 +145,9 @@ class ResolvedRequest(
             }
             val result = when (resolution) {
                 is PlaybackResolution.Playable -> {
-                    ProviderPlaybackQualityRuntime.recordActual(
+                    if (source == MusicSource.Jellyfin && resolution.actualQuality == null) {
+                        ProviderPlaybackQualityRuntime.clear(id)
+                    } else ProviderPlaybackQualityRuntime.recordActual(
                         id = id,
                         requested = quality,
                         actual = resolution.actualQuality ?: resolution.requestedQuality,
@@ -250,7 +252,9 @@ class ResolvedRequest(
             queryParam(uri, SpotifyIsrcQuery)?.takeIf(String::isNotBlank),
         )
         MusicSource.YouTubeMusic -> ProviderTrackMetadata.Empty
-        MusicSource.Jellyfin -> ProviderTrackMetadata.Empty
+        MusicSource.Jellyfin -> queryParam(uri, "jellyfinServer")?.takeIf(String::isNotBlank)?.let {
+            ProviderTrackMetadata.Jellyfin(it, queryParam(uri, "jellyfinPlaylist"), queryParam(uri, "jellyfinEntry"))
+        } ?: ProviderTrackMetadata.Empty
         MusicSource.Local -> ProviderTrackMetadata.Local(
             contentUri = queryParam(uri, "localContentUri").orEmpty(),
             fileKey = id.value,
@@ -291,6 +295,11 @@ class ResolvedRequest(
                 TrackArtistsQuery to track.artists.joinToString("\u001f") { it.name })
             track.durationMs?.let { fields[TrackDurationQuery] = it.toString() }
             when (val metadata = track.providerMetadata) {
+                is ProviderTrackMetadata.Jellyfin -> {
+                    fields["jellyfinServer"] = metadata.serverIdentity
+                    metadata.playlistId?.let { fields["jellyfinPlaylist"] = it }
+                    metadata.playlistEntryId?.let { fields["jellyfinEntry"] = it }
+                }
                 is ProviderTrackMetadata.Local -> fields["localContentUri"] = metadata.contentUri
                 is ProviderTrackMetadata.QQMusic -> {
                     metadata.mediaMid?.let { fields[QQMediaMidQuery] = it }

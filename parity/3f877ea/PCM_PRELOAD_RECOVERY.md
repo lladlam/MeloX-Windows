@@ -9,3 +9,5 @@ The real native two-tone integration test now records fallback exceptions and fa
 The initial Linux full suite passed all existing **130 tests / 22 suites** after the PCM change. Its desktop UI compilation then exposed missing imports in the concurrent uncommitted Jellyfin work; that build is not labelled a complete Jellyfin success. A fresh exact-SHA Windows CI run is required. Real Windows output-buffer scheduling/audible transitions and pinned Android motion remain **BLOCKED**.
 
 Evidence: `evidence/windows-ci-275032b-failed/TEST-melox.player.DesktopDualPcmTest.xml` and `evidence/pcm-preload-linux/TEST-melox.player.DesktopDualPcmTest.xml`.
+
+Follow-up exact-SHA Windows result: run **38222348899**, commit **50bd383f8c02b90d4c9f1783140459347215559f**, **SUCCESS**, 130 tests / 22 suites / zero failures/errors/skipped plus source/JAR/app-image/final ZIP native decoder verification. All XML/native JSON is retained in `evidence/windows-ci-50bd383/`. This establishes CI recovery, not physical audio acceptance.

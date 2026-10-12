@@ -59,6 +59,21 @@ class DesktopPlaybackStateTest {
         assertEquals("6452", AudioPlayer.currentTrack.value?.artists?.single()?.id?.value)
     }
 
+    @Test fun jellyfinServerAndDuplicateMembershipIdsSurviveQueuePersistence() = runTest {
+        val player = player({ DesktopPlaybackRequest("unused") })
+        PlaybackCommands.adoptController(player)
+        val tracks = listOf("entry-one", "entry-two").map { entry ->
+            MusicTrack(MusicResourceId(MusicSource.Jellyfin, "same-audio"), "generated", emptyList(),
+                providerMetadata = ProviderTrackMetadata.Jellyfin("server-one", "playlist-one", entry))
+        }
+        player.setMediaItems(tracks.mapIndexed { index, track -> song(index.toLong() + 1).copy(providerTrack = track) }, 1, 2400)
+        MeloXPlaybackQueueStore.save(player)
+        val saved = assertNotNull(MeloXPlaybackQueueStore.read())
+        assertEquals(tracks.map { it.providerMetadata }, saved.items.map { it.song.providerTrack!!.providerMetadata })
+        assertEquals(1, saved.index)
+        assertEquals(2400L, saved.positionMs)
+    }
+
     @Test fun explicitClearStopsAudioAndCannotRestoreStaleQueueOrAcceptLateCallbacks() = runTest {
         val starts = mutableListOf<DesktopPlaybackStart>()
         val player = player({ DesktopPlaybackRequest("unused") }, starts)

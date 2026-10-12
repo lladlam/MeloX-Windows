@@ -1,0 +1,13 @@
+{
+  "run": 38222348899,
+  "url": "https://github.com/lladlam/MeloX-Windows/actions/runs/38222348899",
+  "commit": "50bd383f8c02b90d4c9f1783140459347215559f",
+  "conclusion": "success",
+  "suites": 22,
+  "tests": 130,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "physical_windows_audio": "BLOCKED",
+  "android_pixel_motion": "BLOCKED"
+}

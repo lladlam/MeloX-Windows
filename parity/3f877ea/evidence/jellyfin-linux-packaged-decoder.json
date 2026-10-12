@@ -1,0 +1,57 @@
+{
+  "check": "source/packaged decoder integrity",
+  "resources": [
+    {
+      "location": "desktop/src/main/resources/decoder/ffmpeg",
+      "bytes": 172690600,
+      "sha256": "ee930e8def21a993f4b8c680757df15054da1c8f2698da0fdf87f1f3b15bd633",
+      "magic": "ELF",
+      "verified": true
+    },
+    {
+      "location": "desktop/src/main/resources/decoder/ffmpeg.exe",
+      "bytes": 164352000,
+      "sha256": "af7913b7ddc324bf02b8af72fe8612b1471455ef8d9e04e45466510742abcff9",
+      "magic": "PE",
+      "verified": true
+    },
+    {
+      "location": "desktop/build/compose/jars/MeloX-Desktop-linux-x64-1.0.0.jar!/decoder/ffmpeg",
+      "bytes": 172690600,
+      "sha256": "ee930e8def21a993f4b8c680757df15054da1c8f2698da0fdf87f1f3b15bd633",
+      "magic": "ELF",
+      "verified": true
+    }
+  ],
+  "native": {
+    "os": "posix",
+    "version": "ffmpeg version N-126782-gdc52424419-20260923 Copyright (c) 2000-2026 the FFmpeg developers",
+    "pcm_bytes": 44100,
+    "pcm_sha256": "51fc6ca2956572bd37fde551bd2eeec2975e100b5d0b87535b9946f143f2d275",
+    "decoder_native_run": "PASSED",
+    "formats": [
+      {
+        "format": "mp3",
+        "decoded_bytes": 44100,
+        "rms_s16": 949.110656258336,
+        "status": "PASSED"
+      },
+      {
+        "format": "flac",
+        "decoded_bytes": 44100,
+        "rms_s16": 1000.0,
+        "status": "PASSED"
+      },
+      {
+        "format": "m4a",
+        "decoded_bytes": 44100,
+        "rms_s16": 997.4532804658162,
+        "status": "PASSED"
+      }
+    ],
+    "authorized_http_pcm": "PASSED",
+    "physical_audible_output": "BLOCKED",
+    "physical_audible_reason": "No hardware/loopback listening test in this packaging check"
+  },
+  "audible_acceptance": "BLOCKED"
+}

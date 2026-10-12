@@ -19,3 +19,17 @@ Fetched source: `febb4c0534787e040a89df8457e630d067f44b80`. This is **9 commits 
 ## Acceptance decision
 
 The active migration matrix stays locked to `3f877eaffe30c82eb6d24eb3647702f5bc554dd3` while the pinned business gaps are being completed. The new source is now separately exported and its major functional/schema/platform changes are recorded; it is **not claimed synchronized or validated**. The eventual increment must receive its own matrix/evidence namespace and exact source SHA, with real inference, Windows lifecycle/audio and same-content UI results reported separately.
+
+## Closing fetch: febb4c0 → f14a1c1
+
+The subsequent 2026-10-12 fetch resolves `origin/main` to **`f14a1c1f5400664d07575a113469f41ee3b70572`**: another **3 commits / 28 files** after `febb4c0` (12 commits after the pinned source). Pure commit export: `/tmp/opencode/melox-android-f14a1c1`. Raw inventory and export hashes: `evidence/upstream-intake-f14a1c1.json`.
+
+| Additional source | Reviewed behavior | Windows disposition |
+|---|---|---|
+| `deb7308` signed hot scripts / 0.6.5 | New QuickJS Android wrapper 3.2.3. Fresh JSON-transform context with 8MiB memory, 256KiB stack and a caller wait of 600ms; timeout disables that payload's process channel. The submitted future is not interrupted/cancelled in the timeout catch, so the caller timeout alone is not proof the executing script terminated. | **MISSING new increment.** Need genuine desktop runtime/owned native release and real bounded-execution regressions; existing LX user-script support is a distinct local-consent feature, not this signed hook protocol. |
+| `ee10d11` signed theme overrides | Verified optional light/dark or shared role overrides, validated ARGB and allowlisted theme roles; reactive effective-state publication and Compose theme lookup. | **NOT MIGRATED.** Current pinned theme picker is not signed remote theme consumption. Same-content color/dynamic acceptance required independently. |
+| `f14a1c1` rules/strategies | Literal bounded title suffix stripping, bounded original/version lyric-match tolerances, allowlisted NetEase `compat` strategy selecting safe quality, wired into actual search/quality/lyric consumers. | **NOT MIGRATED.** Preserve pinned Provider/quality identity until the new schema and consumers are migrated together; do not call signed-config retrieval rule support. |
+| `f14a1c1` incremental APK update | BSDIFF40/bzip2 patch, installed APK SHA, reconstructed target SHA, deletion/full-download fallback and Android package installer/signature enforcement; at most four patch descriptors with bounded bytes. | **ANDROID-ONLY mechanism; Windows updater equivalence outstanding.** Never apply APK patches to the Windows distribution or equate package installer trust to Windows update acceptance. |
+| Version/schema | Android `versionCode = 23`, `versionName = 0.6.5`; new optional scripts/colors/rules/patch descriptors. | Windows compatibility remains pinned **20**, not automatically 23. The old evidence/matrix remains locked to `3f877ea`. |
+
+This intake records source changes only. It does not upgrade any UI, AutoSync, hot-update or updater acceptance conclusion.

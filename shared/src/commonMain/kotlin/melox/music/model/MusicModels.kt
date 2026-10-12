@@ -137,6 +137,13 @@ sealed interface ProviderTrackMetadata {
         val contentUri: String,
         val fileKey: String,
     ) : ProviderTrackMetadata
+
+    /** Original item identity is distinct from its membership in a server playlist. No token is carried. */
+    data class Jellyfin(
+        val serverIdentity: String,
+        val playlistId: String? = null,
+        val playlistEntryId: String? = null,
+    ) : ProviderTrackMetadata
 }
 
 data class MusicTrack(

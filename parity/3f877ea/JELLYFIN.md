@@ -1,0 +1,30 @@
+# Jellyfin — real desktop server protocols and protected sessions
+
+Acceptance source remains Android `3f877eaffe30c82eb6d24eb3647702f5bc554dd3`, `core/provider/jellyfin/*`. Overall status is **PARTIAL**: production functionality is implemented, but a real authorized user server and pinned Android/Windows pixels still need acceptance.
+
+## Implemented path
+
+- The account dialog now authenticates against the entered server's `Users/AuthenticateByName`, reads public server identity and saves the actual returned session before reporting login success. Password input is masked and cleared on success/dismissal. Closing a pending Jellyfin dialog cancels its composition-owned request; it no longer requires waiting for the network deadline.
+- Requests identify `MeloX-Desktop`, the actual desktop OS and a persisted installation UUID. Provider-neutral models and URIs carry original Jellyfin item IDs, never another service's identity.
+- Actual song/album/artist/playlist search, album/artist/playlist detail and account Library use user-scoped server endpoints with encoded query/path components and explicit pagination. The existing capability-based Library UI is reused. Login/logout revisions clear retained account/detail state and trigger a genuine refresh.
+- Playback uses the pinned `/Audio/{id}/universal` endpoint with `UserId`, passing the actual token in `X-Emby-Token`. The URL and persisted queue contain no token. The server chooses its stream: no requested tier is labelled measured quality. The resolver clears unknown Jellyfin actual quality; the player chip/overlay say server-selected quality rather than claiming a selected lossless/master tier.
+- Favorites, playlist create/rename/add/remove/move use actual server operations. Duplicate song membership is retained separately as `PlaylistItemId`; delete passes `EntryIds`, and move uses the entry ID in the native endpoint. Missing membership is an explicit refresh error, never guessed from the audio item ID. Rename sends only `Name`.
+- Original server identity and playlist membership survive provider URIs and queue persistence. Foreign source/server resources are rejected. Stale asynchronous catalog responses after a login change are cancelled before mapping/publication. Mutations use a single captured session for identity checks and their request.
+- API HTTP/body reads are IO-dispatched, owned by their coroutine through response consumption, bounded to 4MiB and cancel the socket during a blocked body read. HTTP errors expose only status, 204 succeeds, and authenticated JSON requests do not follow redirects.
+- Artwork URLs stay token-free. Header authentication is limited to the current server origin/base path and its primary item image endpoint; authenticated image requests disable redirects. Image/palette/flowing-background caches use a hash-derived account key. Each fetch captures the same session used to build its cache key, preventing an account change from caching another account's bytes under the old key.
+
+## Compatible session recovery
+
+`melox_jellyfin_session` and `encrypted_session` retain their names and Base64 IV+ciphertext encoding. The AES-256 key is saved as `melox_jellyfin_session_key` **inside the same DPAPI-protected store**, atomically with ciphertext, then decrypted/read back for verification. Windows uses its existing current-user native DPAPI implementation; Linux account sessions remain process memory, not plaintext persistence.
+
+Older desktop code generated an unpersisted random key on every operation, making those old session bytes unrecoverable. Reading such a session returns logged-out state without inventing a new key or deleting ciphertext. Only a successful new login replaces it. Failed durable writes preserve the previous key/session. Explicit logout clears both.
+
+## Evidence boundaries
+
+`JellyfinProtocolTest` uses a clearly labelled local HTTP protocol fixture in the test source set, invoking the production client/provider. It covers desktop authentication/device identity, encoded query/pagination/native mapping, catalogs/Library, real mutation endpoints/204, duplicate membership, source/server/session boundaries, response limits, redirect rejection and prompt cancellation during body consumption. A generated stereo 1000Hz WAV is served through the genuine resolved universal URL; the bundled native decoder consumes the actual header-authorized bytes and verifies PCM frame count/RMS. This is client protocol/native decode evidence, **not a live Jellyfin server success**.
+
+`JellyfinSessionPersistenceTest` reopens real protected files using test-only AES protection, verifies durable key reuse, replacement/logout, unreadable legacy retention and failed-commit preservation. This does not replace native Windows DPAPI acceptance. `DesktopPlaybackStateTest` verifies duplicate Jellyfin membership/server metadata across the real queue store.
+
+Production UI captures exercise the actual missing-account gate and real editable login/error/close/reopen controls using an isolated home and synthetic input. No production provider is substituted. Automated test counts, exact source/final JAR hashes, UI assertion/frame counts and packaged decoder verification are recorded in the associated evidence after completion. Windows CI, Windows physical audio/DPAPI and same-content pinned Android pixels are reported independently.
+
+Final Linux result: **144 tests / 24 suites / zero failures, errors or skipped** (`evidence/jellyfin-tests/`). The production dark-theme replay has **15 state scenes / 12 passing assertions / 42 dynamic frames** at 427×1100 (`evidence/jellyfin-ui-final/`), including a real refused TCP connection to the entered loopback address, not a substituted provider. Password masking was inspected in the actual rendered image. The source/LFS resources and final Linux uber JAR pass native WAV/MP3/FLAC/AAC/required-header HTTP decode (`jellyfin-linux-packaged-decoder.json`). Source/JAR hashes and separate blocked acceptance levels are in `jellyfin-validation.json`.

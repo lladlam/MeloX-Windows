@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.background
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -37,11 +38,14 @@ fun MeloXArtworkImage(
     modifier: Modifier = Modifier,
     contentDescription: String? = null,
 ) {
-    var bitmap by remember(url) { mutableStateOf(url?.let(artworkCache::get)) }
+    val revision by melox.provider.jellyfin.JellyfinSessionStore.revision.collectAsState()
+    val session = remember(revision) { melox.provider.jellyfin.JellyfinSessionStore.read() }
+    val cacheKey = remember(url, session) { url?.let { melox.provider.jellyfin.JellyfinArtworkAccess.cacheKey(it, session) } }
+    var bitmap by remember(cacheKey) { mutableStateOf(cacheKey?.let(artworkCache::get)) }
 
-    LaunchedEffect(url) {
+    LaunchedEffect(url, cacheKey) {
         if (url.isNullOrBlank()) return@LaunchedEffect
-        artworkCache[url]?.let {
+        artworkCache[cacheKey]?.let {
             bitmap = it
             return@LaunchedEffect
         }
@@ -50,7 +54,7 @@ fun MeloXArtworkImage(
         // is propagated by withContext before publishing the result.
         val loaded: ImageBitmap? = withContext(Dispatchers.IO) {
             runCatching {
-                val connection = URL(url).openConnection().apply {
+                val connection = melox.provider.jellyfin.JellyfinArtworkAccess.openConnection(url, session).apply {
                     connectTimeout = 10_000
                     readTimeout = 10_000
                 }
@@ -58,7 +62,7 @@ fun MeloXArtworkImage(
             }.getOrNull()
         }
         if (loaded != null) {
-            artworkCache[url] = loaded
+            artworkCache[checkNotNull(cacheKey)] = loaded
             bitmap = loaded
         } else {
             logDebug("MeloXArtwork", "artwork load failed: $url")

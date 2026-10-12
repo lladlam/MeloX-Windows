@@ -181,6 +181,7 @@ private fun SettingsAccountCard(onOpenLogin: () -> Unit, onOpenServices: () -> U
     MeloXIosGroupedList {
     MeloXIosListRow(
         title = nickname ?: if (loggedIn) "网易云账号" else "登录网易云音乐",
+        modifier = Modifier.testTag("settings-open-login"),
         detail = if (loggedIn) "已登录" else null,
         leading = { MeloXSymbolIcon(MeloXSymbol.Person, size = 30, iconSize = 24, weight = FontWeight.Medium, color = accent) },
         onClick = onOpenLogin,

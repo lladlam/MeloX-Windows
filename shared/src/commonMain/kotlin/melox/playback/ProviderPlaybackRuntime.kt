@@ -47,7 +47,7 @@ object ProviderPlaybackRuntime {
             MusicSource.Kuwo -> ""
             MusicSource.YouTubeMusic -> ""
             MusicSource.Jellyfin -> melox.provider.jellyfin.JellyfinSessionStore.read().let { session ->
-                listOf(session.userName).joinToString("|")
+                listOf(session.baseUrl, session.serverId, session.userId, session.accessToken).joinToString("|")
             }
             MusicSource.Local -> "local"
         }
