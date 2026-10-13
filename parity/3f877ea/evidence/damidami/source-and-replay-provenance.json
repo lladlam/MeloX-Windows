@@ -1,0 +1,37 @@
+{
+  "pinned_android": "3f877eaffe30c82eb6d24eb3647702f5bc554dd3",
+  "source_sha256": {
+    "shared/src/commonMain/kotlin/melox/player/AudioPlayer.kt": "c82c71505ba70b3003fc404a8dadaf5c2b7eabadbbe6f4e5b8ef901265056694",
+    "shared/src/commonMain/kotlin/melox/player/MeloXPcmOutput.kt": "1321f934d2d42a456f949f661a74842cbeaa10b607398e372be460dfe5fb7c49",
+    "shared/src/commonMain/kotlin/melox/diagnostics/MeloXProcessLogs.kt": "833dfa34e39a0a9db7105e2c293a58ca3564f16594691870c69ee7fdc95903c9",
+    "shared/src/commonMain/kotlin/melox/diagnostics/MeloXLogExporter.kt": "f3c458e5e379bb29b71f0d459ff85980d07483536a7cb6bdec4a2f38c84aacd0",
+    "shared/src/desktopMain/kotlin/melox/platform/MeloXPlatform.kt": "ff5f436352f1056900e9cd622360e3d635c2469dcc88f6539b0e90ff5472977b",
+    "desktop/src/desktopMain/kotlin/melox/ui/theme/MeloXFont.kt": "fe1e88dbfde0c7ea9de573595f12517c4c1087863987528d4bfcd3930d0b1025",
+    "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerLyrics.kt": "e731ad21b55194d7a57220e51f074be3d96a26048042f8df2c9a31c45cfff4ee",
+    "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXGlyphLyricText.kt": "ee571303b15dbd84246ed06fb2ca6d7eeb3ac0fb38dec6df945183c3d7a442c9",
+    "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerQuality.kt": "3265bad14951b6f3ea4c086b3acd2ea9ef1c13fc53b0a1d443b549e461897eb3",
+    "tools/capture_damidami.py": "42e3f4f12763345712d3093b6820b2c3698513a06862f187b255925f3dcf7ed8"
+  },
+  "replays": {
+    "search": {
+      "capture_sha256": "2a6bb70897d098ffb7037dd5346fd0d37495c3a6658ef3fd69664a7bde54fb85",
+      "pcm_published": false,
+      "hardware_acceptance": "BLOCKED"
+    },
+    "unified": {
+      "capture_sha256": "9f0803cb572164e9d7c2ce1b7df276075f2c2084c9ab052860e448c8e7edcde6",
+      "pcm_published": false,
+      "hardware_acceptance": "BLOCKED"
+    },
+    "lyrics": {
+      "capture_sha256": "f854079d1745d1ef0b73d19b3be3a6a8a1c0778e76bc5343cbb2ba5617da98c4",
+      "pcm_published": false,
+      "hardware_acceptance": "BLOCKED"
+    },
+    "output-error": {
+      "capture_sha256": "b65846eccbda3d3336e01c69791919c1d01fd2dd688c94d9af9fd4bcf3c9f3d6",
+      "pcm_published": false,
+      "hardware_acceptance": "BLOCKED"
+    }
+  }
+}

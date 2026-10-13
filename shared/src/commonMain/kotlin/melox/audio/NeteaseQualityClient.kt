@@ -71,6 +71,7 @@ class NeteaseQualityClient(
         var lastError: Throwable? = null
         var serverReportedUnavailable = false
         val candidates = requestedQuality.playbackCandidates(availability)
+        logDebug(TAG, "Resolving playback: song=$songId requested=${requestedQuality.apiLevel} loggedIn=$loggedIn candidates=${candidates.joinToString { it.apiLevel }}")
         if (availability.isKnown && candidates.isEmpty()) {
             serverReportedUnavailable = true
         }
@@ -131,6 +132,7 @@ class NeteaseQualityClient(
                 )
             } catch (error: Throwable) {
                 lastError = error
+                logWarn(TAG, "Playback candidate rejected: song=$songId quality=${candidate.apiLevel}; ${melox.diagnostics.MeloXProcessLogs.describe(error)}")
             }
         }
 

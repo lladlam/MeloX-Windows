@@ -3,6 +3,12 @@
 Pinned acceptance base remains `3f877eaffe30c82eb6d24eb3647702f5bc554dd3`.
 These are inspected gaps, not new acceptance results.
 
+Current priority is the user's anonymous DAMIDAMI playback failure and scrambled
+lyrics report. See `DAMIDAMI_WINDOWS.md` for real diagnostic/cache fixes,
+same-track replay evidence, font provenance and remaining Windows/Android blocks.
+Advanced lyrics controls are preserved in a local WIP stash pending their failed
+pointer replay; the inventory below is not superseded by an accepted release.
+
 ## Confirmed production settings exposure gap
 
 Pinned `ui/settings/SettingsScreen.kt:1700–1897` has **60 distinct lyrics setting

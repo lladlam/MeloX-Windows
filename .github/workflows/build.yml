@@ -22,6 +22,10 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '9.5.1'
+      - name: Stamp exact package source revision
+        shell: pwsh
+        run: |
+          [System.IO.File]::WriteAllText("$pwd/desktop/src/main/resources/parity/build-info.properties", "commit=$env:GITHUB_SHA`n", [System.Text.UTF8Encoding]::new($false))
       - name: Verify LFS binaries and native decoder
         run: python tools/verify_decoder_bundle.py --sources --run --output desktop/build/verification/source-decoder.json
       - name: Verify pinned source resource bytes

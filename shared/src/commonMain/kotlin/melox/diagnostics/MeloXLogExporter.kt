@@ -44,11 +44,12 @@ object MeloXLogExporter {
         val logcat = readProcessLogs()
         val content = buildString {
             appendLine("MeloX Desktop 日志")
-            appendLine("日志范围：当前 MeloX 进程可读取的全部日志")
+            appendLine("日志范围：当前 MeloX 进程最近 400 条应用日志（凭证及音源 URL 已脱敏）")
             appendLine("导出时间：${System.currentTimeMillis()}")
             appendLine("进程：${ProcessBuilder().command().firstOrNull() ?: "melox"}")
             appendLine("应用包名：melox")
-            appendLine("应用版本：${systemProperty("melox.version") ?: "未知"}")
+            appendLine("应用版本：${systemProperty("melox.version").ifBlank { systemProperty("jpackage.app-version").ifBlank { "未知" } }}")
+            appendLine("源码提交：${MeloXBuildConfig.BUILD_COMMIT}")
             appendLine("构建类型：${if (MeloXBuildConfig.DEBUG) "Debug" else "Release"}")
             appendLine("Android 版本：${deviceInfo.androidVersion}")
             appendLine("手机型号：${deviceInfo.phoneModel}")
@@ -67,9 +68,8 @@ object MeloXLogExporter {
     }
 
     private fun readProcessLogs(): ProcessLogResult {
-        // Desktop JVM has no logcat. Return empty logs; the export still produces
-        // a valid file with device info and an explicit "no logs" notice.
-        return ProcessLogResult(text = "", lineCount = 0)
+        val lines = MeloXProcessLogs.snapshot()
+        return ProcessLogResult(text = lines.joinToString("\n", postfix = if (lines.isEmpty()) "" else "\n"), lineCount = lines.size)
     }
 
     private fun detectSystemVersion(): String {

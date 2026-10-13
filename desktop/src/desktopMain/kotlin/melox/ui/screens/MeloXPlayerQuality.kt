@@ -9,6 +9,8 @@ import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.*
@@ -138,6 +140,47 @@ internal fun MeloXPlayerQualityOverlay(
             MeloXGlassButton(onClick = onDismiss, modifier = Modifier.weight(1f).testTag("quality-confirm"),
                 style = MeloXGlassButtonStyle.BorderedProminent) { Text("确认") }
         }
+    }
+}
+
+@Composable
+internal fun MeloXPlayerPlaybackError(state: melox.player.PlayerState, onRetry: () -> Unit) {
+    var dismissed by remember(state.error, state.errorKind) { mutableStateOf(false) }
+    var copyStatus by remember(state.error) { mutableStateOf<String?>(null) }
+    val visible = state.error != null && !dismissed
+    val dismiss = { dismissed = true }
+    MeloXBackHandler(visible, priority = 125, onBack = dismiss)
+    var retained by remember { mutableStateOf(state) }
+    if (state.error != null) retained = state
+    MeloXInlinePlayerDialog(visible, dismiss, "playback-error") {
+        val title = when (retained.errorKind) {
+            melox.player.AudioFailureKind.Output -> "声音设备输出失败"
+            melox.player.AudioFailureKind.Configuration -> "FFmpeg 无法启动"
+            melox.player.AudioFailureKind.Content -> "音频读取或解码失败"
+            null -> "音源解析失败"
+        }
+        Text(title, style = MaterialTheme.typography.titleLarge)
+        Text(melox.diagnostics.MeloXProcessLogs.redact(retained.error.orEmpty()),
+            modifier = Modifier.fillMaxWidth().heightIn(max = 220.dp).padding(top = 9.dp)
+                .verticalScroll(rememberScrollState())
+                .testTag("playback-error-details"), fontSize = 14.sp,
+            color = MaterialTheme.colorScheme.onSurface.copy(alpha = .68f))
+        Text("调试日志：${melox.diagnostics.MeloXProcessLogs.file.absolutePath}",
+            modifier = Modifier.padding(top = 8.dp), fontSize = 12.sp,
+            color = MaterialTheme.colorScheme.onSurface.copy(alpha = .48f))
+        copyStatus?.let { Text(it, fontSize = 12.sp, modifier = Modifier.padding(top = 6.dp)) }
+        Row(Modifier.fillMaxWidth().padding(top = 12.dp), horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+            MeloXGlassButton(onClick = {
+                val text = "$title\ncommit=${melox.MeloXBuildConfig.BUILD_COMMIT}\nos=${System.getProperty("os.name")} ${System.getProperty("os.version")} ${System.getProperty("os.arch")}\n${melox.diagnostics.MeloXProcessLogs.redact(retained.error.orEmpty())}\n\n" +
+                    melox.diagnostics.MeloXProcessLogs.snapshot().joinToString("\n")
+                runCatching { java.awt.Toolkit.getDefaultToolkit().systemClipboard.setContents(java.awt.datatransfer.StringSelection(text), null) }
+                    .onSuccess { copyStatus = "错误和调试日志已复制" }
+                    .onFailure { copyStatus = "复制失败：${it.message}" }
+            }, modifier = Modifier.weight(1f).testTag("playback-error-copy")) { Text("复制诊断") }
+            MeloXGlassButton(onClick = { dismissed = true; onRetry() }, modifier = Modifier.weight(1f).testTag("playback-error-retry"),
+                style = MeloXGlassButtonStyle.BorderedProminent) { Text("重试") }
+        }
+        MeloXGlassButton(dismiss, modifier = Modifier.fillMaxWidth().padding(top = 8.dp).testTag("playback-error-close")) { Text("关闭") }
     }
 }
 

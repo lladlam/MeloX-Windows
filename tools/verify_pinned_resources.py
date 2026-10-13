@@ -36,6 +36,9 @@ def main():
     expected = dict(baseline['packaged_legal_sha256'])
     strings = 'parity/pinned-settings-strings.properties'
     expected[strings] = baseline['source_sha256']['desktop/src/main/resources/' + strings]
+    font = json.loads((repo / 'parity/3f877ea/evidence/lyrics-font-source-audit.json').read_text())
+    assert font['pinned_android'] == baseline['pinned_android'] and font['verified_against_pure_git_blob']
+    expected[font['resource']] = font['sha256']
     records = []
     archive = zipfile.ZipFile(io.BytesIO(packaged_bytes(args.artifact))) if args.artifact else None
     try:
@@ -52,7 +55,7 @@ def main():
         args.output.parent.mkdir(parents=True, exist_ok=True)
         args.output.write_text(json.dumps(result, indent=2) + '\n')
         assert result['status'] == 'PASSED', 'Pinned resource bytes changed: ' + ', '.join(record['resource'] for record in records if not record['verified'])
-        print('PASS: five pinned legal/default-string resources match exact source bytes')
+        print(f'PASS: {len(expected)} pinned resources match exact source bytes, including Android MiLan Pro')
     finally:
         if archive is not None:
             archive.close()

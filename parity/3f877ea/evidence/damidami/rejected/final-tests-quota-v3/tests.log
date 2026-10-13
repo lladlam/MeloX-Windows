@@ -1,0 +1,119 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.5.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :innertube:kmpPartiallyResolvedDependenciesChecker
+> Task :innertube:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :innertube:extractAndroidInnerTube UP-TO-DATE
+> Task :innertube:compileKotlinDesktop UP-TO-DATE
+> Task :innertube:compileDesktopMainJava NO-SOURCE
+> Task :innertube:desktopProcessResources NO-SOURCE
+> Task :innertube:processDesktopMainResources SKIPPED
+> Task :innertube:desktopMainClasses UP-TO-DATE
+> Task :innertube:desktopJar UP-TO-DATE
+> Task :shared:kmpPartiallyResolvedDependenciesChecker
+> Task :shared:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :shared:convertXmlValueResourcesForCommonMain NO-SOURCE
+> Task :shared:copyNonXmlValueResourcesForCommonMain NO-SOURCE
+> Task :shared:prepareComposeResourcesTaskForCommonMain NO-SOURCE
+> Task :shared:generateResourceAccessorsForCommonMain SKIPPED
+> Task :shared:convertXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :shared:copyNonXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :shared:prepareComposeResourcesTaskForDesktopMain NO-SOURCE
+> Task :shared:generateResourceAccessorsForDesktopMain SKIPPED
+> Task :shared:generateActualResourceCollectorsForDesktopMain SKIPPED
+> Task :shared:generateComposeResClass SKIPPED
+> Task :shared:generateExpectResourceCollectorsForCommonMain SKIPPED
+> Task :shared:compileKotlinDesktop UP-TO-DATE
+> Task :shared:compileDesktopMainJava NO-SOURCE
+> Task :shared:assembleDesktopMainResources UP-TO-DATE
+> Task :shared:desktopProcessResources UP-TO-DATE
+> Task :shared:processDesktopMainResources SKIPPED
+> Task :shared:desktopMainClasses UP-TO-DATE
+> Task :shared:desktopJar UP-TO-DATE
+> Task :shared:convertXmlValueResourcesForCommonTest NO-SOURCE
+> Task :shared:copyNonXmlValueResourcesForCommonTest NO-SOURCE
+> Task :shared:prepareComposeResourcesTaskForCommonTest NO-SOURCE
+> Task :shared:generateResourceAccessorsForCommonTest SKIPPED
+> Task :shared:convertXmlValueResourcesForDesktopTest NO-SOURCE
+> Task :shared:copyNonXmlValueResourcesForDesktopTest NO-SOURCE
+> Task :shared:prepareComposeResourcesTaskForDesktopTest NO-SOURCE
+> Task :shared:generateResourceAccessorsForDesktopTest SKIPPED
+> Task :shared:compileTestKotlinDesktop
+> Task :shared:compileDesktopTestJava NO-SOURCE
+> Task :shared:assembleDesktopTestResources UP-TO-DATE
+> Task :shared:desktopTestProcessResources UP-TO-DATE
+> Task :shared:processDesktopTestResources SKIPPED
+> Task :shared:desktopTestClasses
+
+> Task :shared:desktopTest
+
+PlaybackLinkTest[desktop] > bundledDecoderEmitsPcmAndIsResolvedAgain[desktop] FAILED
+    java.io.IOException at PlaybackLinkTest.kt:203
+
+PlaybackLinkTest[desktop] > locatorUsesContextClassLoaderAndReportsMissingBundle[desktop] FAILED
+    java.io.IOException at PlaybackLinkTest.kt:169
+
+RemoteConfigProtocolTest[desktop] > signedLoginBreakersPreventActualPhoneRequestsAndBrowserOpeningWhileLocalStillResolves[desktop] FAILED
+    kotlinx.coroutines.TimeoutCancellationException at CoroutineDebugging.kt:42
+        Caused by: kotlinx.coroutines.TimeoutCancellationException at Timeout.kt:281
+    java.io.IOException at RemoteConfigProtocolTest.kt:51
+
+RemoteConfigProtocolTest[desktop] > foregroundResumeRefreshesSignedPolicyAndStopPreventsLaterAutomaticRequests[desktop] FAILED
+    kotlinx.coroutines.TimeoutCancellationException at CoroutineDebugging.kt:42
+        Caused by: kotlinx.coroutines.TimeoutCancellationException at Timeout.kt:281
+    java.io.IOException at RemoteConfigProtocolTest.kt:51
+
+RemoteConfigProtocolTest[desktop] > disabledRuntimeMakesNoRequestAndExplicitConsentPerformsGenuineSignedRefresh[desktop] FAILED
+    kotlinx.coroutines.TimeoutCancellationException at CoroutineDebugging.kt:42
+        Caused by: kotlinx.coroutines.TimeoutCancellationException at Timeout.kt:281
+    java.io.IOException at RemoteConfigProtocolTest.kt:51
+
+RemoteConfigProtocolTest[desktop] > tamperedSignatureRetainsLastValidCacheAndReturnsActualVerificationError[desktop] FAILED
+    java.io.IOException at FileOutputStream.java:-2
+        Caused by: java.io.IOException at FileOutputStream.java:-2
+    java.io.IOException at RemoteConfigProtocolTest.kt:51
+
+RemoteConfigProtocolTest[desktop] > corruptCachedEnvelopeDropsConditionalEtagAndRefetchesWithoutLosingRollbackFloor[desktop] FAILED
+    java.io.IOException at FileOutputStream.java:-2
+        Caused by: java.io.IOException at FileOutputStream.java:-2
+    java.io.IOException at RemoteConfigProtocolTest.kt:51
+
+RemoteConfigProtocolTest[desktop] > clearingCachePreservesRollbackFloorAndRejectsOlderEvenCorrectlySignedEnvelope[desktop] FAILED
+    java.io.IOException at FileOutputStream.java:-2
+        Caused by: java.io.IOException at FileOutputStream.java:-2
+    java.io.IOException at RemoteConfigProtocolTest.kt:51
+
+RemoteConfigProtocolTest[desktop] > oversizedChunkedBodyIsBoundedAndNeverBecomesCachedConfiguration[desktop] FAILED
+    java.io.IOException at FileOutputStream.java:-2
+        Caused by: java.io.IOException at FileOutputStream.java:-2
+    java.io.IOException at RemoteConfigProtocolTest.kt:51
+
+RemoteConfigProtocolTest[desktop] > withdrawingDuringBlockedResponseCancelsSocketClearsCacheAndRestoresBuiltinPolicyPromptly[desktop] FAILED
+    java.io.IOException at FileOutputStream.java:-2
+        Caused by: java.io.IOException at RemoteConfigProtocolTest.kt:153
+    java.io.IOException at RemoteConfigProtocolTest.kt:51
+
+RemoteConfigProtocolTest[desktop] > versionAndConsentGateTheActualPolicyAndNeverDisableUserAddedOrLocalSources[desktop] FAILED
+    java.io.IOException at FileOutputStream.java:-2
+        Caused by: java.io.IOException at FileOutputStream.java:-2
+    java.io.IOException at RemoteConfigProtocolTest.kt:51
+
+RemoteConfigProtocolTest[desktop] > realSignedHttpPersistsEtagAnd304KeepsVerifiedConfigWithoutAccountHeaders[desktop] FAILED
+    java.io.IOException at FileOutputStream.java:-2
+        Caused by: java.io.IOException at FileOutputStream.java:-2
+    java.io.IOException at RemoteConfigProtocolTest.kt:51
+
+182 tests completed, 12 failed
+
+> Task :shared:desktopTest FAILED
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':shared:desktopTest'.
+> There were failing tests. See the report at: file:///home/lladlam/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/build/reports/tests/desktopTest/index.html
+
+* Try:
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+
+BUILD FAILED in 58s
+13 actionable tasks: 4 executed, 9 up-to-date

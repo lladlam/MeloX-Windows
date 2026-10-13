@@ -1,0 +1,116 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.5.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :desktop:kmpPartiallyResolvedDependenciesChecker
+> Task :desktop:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :desktop:convertXmlValueResourcesForCommonMain NO-SOURCE
+> Task :desktop:copyNonXmlValueResourcesForCommonMain NO-SOURCE
+> Task :desktop:prepareComposeResourcesTaskForCommonMain NO-SOURCE
+> Task :desktop:generateResourceAccessorsForCommonMain SKIPPED
+> Task :desktop:convertXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :desktop:copyNonXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :desktop:prepareComposeResourcesTaskForDesktopMain NO-SOURCE
+> Task :desktop:generateResourceAccessorsForDesktopMain SKIPPED
+> Task :desktop:generateActualResourceCollectorsForDesktopMain SKIPPED
+> Task :desktop:generateComposeResClass SKIPPED
+> Task :desktop:generateExpectResourceCollectorsForCommonMain SKIPPED
+> Task :innertube:kmpPartiallyResolvedDependenciesChecker
+> Task :innertube:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :innertube:extractAndroidInnerTube UP-TO-DATE
+> Task :innertube:compileKotlinDesktop UP-TO-DATE
+> Task :innertube:compileDesktopMainJava NO-SOURCE
+> Task :innertube:desktopProcessResources NO-SOURCE
+> Task :innertube:processDesktopMainResources SKIPPED
+> Task :innertube:desktopMainClasses UP-TO-DATE
+> Task :innertube:desktopJar UP-TO-DATE
+> Task :shared:kmpPartiallyResolvedDependenciesChecker
+> Task :shared:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :shared:convertXmlValueResourcesForCommonMain NO-SOURCE
+> Task :shared:copyNonXmlValueResourcesForCommonMain NO-SOURCE
+> Task :shared:prepareComposeResourcesTaskForCommonMain NO-SOURCE
+> Task :shared:generateResourceAccessorsForCommonMain SKIPPED
+> Task :shared:convertXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :shared:copyNonXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :shared:prepareComposeResourcesTaskForDesktopMain NO-SOURCE
+> Task :shared:generateResourceAccessorsForDesktopMain SKIPPED
+> Task :shared:generateActualResourceCollectorsForDesktopMain SKIPPED
+> Task :shared:generateComposeResClass SKIPPED
+> Task :shared:generateExpectResourceCollectorsForCommonMain SKIPPED
+> Task :shared:compileKotlinDesktop UP-TO-DATE
+> Task :shared:compileDesktopMainJava NO-SOURCE
+> Task :shared:assembleDesktopMainResources UP-TO-DATE
+> Task :shared:desktopProcessResources UP-TO-DATE
+> Task :shared:processDesktopMainResources SKIPPED
+> Task :shared:desktopMainClasses UP-TO-DATE
+> Task :shared:desktopJar UP-TO-DATE
+> Task :desktop:compileKotlinDesktop UP-TO-DATE
+> Task :desktop:compileDesktopMainJava NO-SOURCE
+> Task :desktop:assembleDesktopMainResources UP-TO-DATE
+> Task :desktop:desktopProcessResources UP-TO-DATE
+> Task :desktop:processDesktopMainResources SKIPPED
+> Task :desktop:desktopMainClasses UP-TO-DATE
+
+> Task :desktop:captureUi
+[DEBUG MeloXPlayback] Playback queue dispatched: size=1, start=0, offline=false, quality=standard
+Live playback queue: 1 tracks, selected Netease:2755332551 DAMIDAMI
+[DEBUG MeloXQuality] Resolving playback: song=2755332551 requested=standard loggedIn=false candidates=standard
+[INFO MeloXQuality] Playback quality resolved: song=2755332551 requested=standard candidate=standard actual=standard bitrate=128002
+[INFO MeloXFont] Android MiLan Pro loaded: fonts/mi_lan_pro_vf.ttf; CSS/axis weights=[(100, 150), (200, 200), (300, 250), (400, 340), (500, 400), (600, 540), (700, 630), (800, 700), (900, 700)]
+SLF4J(W): No SLF4J providers were found.
+SLF4J(W): Defaulting to no-operation (NOP) logger implementation
+SLF4J(W): See https://www.slf4j.org/codes.html#noProviders for further details.
+[DEBUG AudioPlayer] Bundled FFmpeg verified: sha256=ee930e8def21a993f4b8c680757df15054da1c8f2698da0fdf87f1f3b15bd633 bytes=172690600
+[DEBUG AudioPlayer] FFmpeg binary=/tmp/melox-decoder-ffmpeg os=Linux sourceHost=m701.music.126.net
+[DEBUG AudioPlayer] decode HTTP source at 0ms
+Captured 00-search: 1100x780 density=1.0
+Physical click remote-reject: remote-reject at Offset(295.5, 468.0)
+Captured 01-remote-reject-frame-0: 1100x780 density=1.0
+Captured 01-remote-reject-frame-160: 1100x780 density=1.0
+Captured 01-remote-reject-frame-400: 1100x780 density=1.0
+Captured 01-remote-reject: 1100x780 density=1.0
+Verified remote-reject: cloud-choice:true
+Verified remote-reject: cloud-enabled:false
+Physical click player: mini-player-expand at Offset(502.5, 682.0)
+Captured 02-player-frame-0: 1100x780 density=1.0
+Captured 02-player-frame-160: 1100x780 density=1.0
+Captured 02-player-frame-400: 1100x780 density=1.0
+Captured 02-player: 1100x780 density=1.0
+Verified player: page:Artwork
+Verified player: playing:true
+Verified player: no-playback-error:true
+Physical click pause: player-play-pause at Offset(784.0, 410.0)
+Captured 03-pause-frame-0: 1100x780 density=1.0
+Captured 03-pause-frame-160: 1100x780 density=1.0
+Captured 03-pause-frame-400: 1100x780 density=1.0
+Captured 03-pause: 1100x780 density=1.0
+Verified pause: playing:false
+[DEBUG AudioPlayer] FFmpeg binary=/tmp/melox-decoder-ffmpeg os=Linux sourceHost=m701.music.126.net
+[DEBUG AudioPlayer] decode HTTP source at 16514ms
+Captured 04-seek-frame-0: 1100x780 density=1.0
+Captured 04-seek-frame-160: 1100x780 density=1.0
+Captured 04-seek-frame-400: 1100x780 density=1.0
+Captured 04-seek: 1100x780 density=1.0
+Verified seek: position-min:10000
+Physical click lyrics: player-show-lyrics at Offset(545.0, 552.0)
+[INFO MeloXFont] Native lyric typeface loaded: family=MI Lan Pro VF; bytes=19646728
+Captured 05-lyrics-frame-0: 1100x780 density=1.0
+Captured 05-lyrics-frame-160: 1100x780 density=1.0
+Captured 05-lyrics-frame-400: 1100x780 density=1.0
+Captured 05-lyrics: 1100x780 density=1.0
+Captured 06-lyrics-loaded-frame-0: 1100x780 density=1.0
+Captured 06-lyrics-loaded-frame-160: 1100x780 density=1.0
+Captured 06-lyrics-loaded-frame-400: 1100x780 density=1.0
+Captured 06-lyrics-loaded: 1100x780 density=1.0
+Verified lyrics-loaded: page:Lyrics
+Verified lyrics-loaded: word-lines-min:1
+Verified lyrics-loaded: playing:false
+Verified lyrics-loaded: no-playback-error:true
+Physical click collapse: player-collapse at Offset(550.0, 17.0)
+Captured 07-collapse-frame-0: 1100x780 density=1.0
+Captured 07-collapse-frame-160: 1100x780 density=1.0
+Captured 07-collapse-frame-400: 1100x780 density=1.0
+Captured 07-collapse: 1100x780 density=1.0
+Verified collapse: absent:now-playing
+
+BUILD SUCCESSFUL in 22s
+14 actionable tasks: 4 executed, 10 up-to-date
+Consider enabling configuration cache to speed up this build: https://docs.gradle.org/9.5.1/userguide/configuration_cache_enabling.html

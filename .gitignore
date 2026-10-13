@@ -25,3 +25,6 @@ local.properties
 # Python audit caches
 __pycache__/
 *.pyc
+
+# CI package provenance (generated from the exact checked-out GITHUB_SHA).
+desktop/src/main/resources/parity/build-info.properties

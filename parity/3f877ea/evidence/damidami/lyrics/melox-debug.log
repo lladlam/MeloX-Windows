@@ -1,0 +1,10 @@
+1791902474742 [DEBUG MeloXPlayback] Playback queue dispatched: size=1, start=0, offline=false, quality=standard
+1791902474776 [DEBUG MeloXQuality] Resolving playback: song=2755332551 requested=standard loggedIn=false candidates=standard
+1791902474803 [INFO MeloXQuality] Playback quality resolved: song=2755332551 requested=standard candidate=standard actual=standard bitrate=128002
+1791902475097 [INFO MeloXFont] Android MiLan Pro loaded: fonts/mi_lan_pro_vf.ttf; CSS/axis weights=[(100, 150), (200, 200), (300, 250), (400, 340), (500, 400), (600, 540), (700, 630), (800, 700), (900, 700)]
+1791902476115 [DEBUG AudioPlayer] Bundled FFmpeg verified: sha256=ee930e8def21a993f4b8c680757df15054da1c8f2698da0fdf87f1f3b15bd633 bytes=172690600
+1791902476116 [DEBUG AudioPlayer] FFmpeg binary=/tmp/melox-decoder-ffmpeg os=Linux sourceHost=m701.music.126.net
+1791902476116 [DEBUG AudioPlayer] decode HTTP source at 0ms
+1791902481722 [DEBUG AudioPlayer] FFmpeg binary=/tmp/melox-decoder-ffmpeg os=Linux sourceHost=m701.music.126.net
+1791902481722 [DEBUG AudioPlayer] decode HTTP source at 16514ms
+1791902483457 [INFO MeloXFont] Native lyric typeface loaded: family=MI Lan Pro VF; bytes=19646728

@@ -520,7 +520,7 @@ class MeloXDesktopPlayer internal constructor(
                 throw cancelled
             } catch (error: Exception) {
                 if (token != generation || items.getOrNull(currentMediaItemIndex)?.entryId != entry.entryId) return@launch
-                logError("MeloXPlayback", "resolve failed: ${error.message}")
+                logError("MeloXPlayback", "resolve failed: ${melox.diagnostics.MeloXProcessLogs.describe(error)}")
                 playWhenReady = false
                 AudioPlayer.reportFailure(error)
                 persistSnapshot()
@@ -894,7 +894,7 @@ class MeloXDesktopPlayer internal constructor(
     private fun onAudioFailure(token: Int, entryId: String, failure: AudioPlaybackFailure) {
         scope.launch {
             if (!ownsEvent(token, entryId)) return@launch
-            logError("MeloXPlayback", "decoder failed (${failure.kind}): ${failure.message}")
+            logError("MeloXPlayback", "decoder failed (${failure.kind}): ${melox.diagnostics.MeloXProcessLogs.describe(failure)}")
             currentPosition = AudioPlayer.getCurrentPositionMs().coerceAtLeast(0L)
             if (failure.kind == AudioFailureKind.Content) {
                 failedEntries += entryId

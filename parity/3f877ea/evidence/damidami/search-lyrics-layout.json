@@ -1,0 +1,100 @@
+{
+  "status": "PASSED",
+  "check": "settled production lyric rows do not overlap",
+  "viewport": [
+    427,
+    924
+  ],
+  "scenes": [
+    {
+      "file": "09-lyrics.png",
+      "position_ms": 6489,
+      "rows": [
+        {
+          "tag": "lyric-line-0",
+          "bounds": [
+            32,
+            346,
+            395,
+            465.34
+          ]
+        },
+        {
+          "tag": "lyric-line-1",
+          "bounds": [
+            32,
+            493.34,
+            395,
+            610.33997
+          ]
+        },
+        {
+          "tag": "lyric-line-2",
+          "bounds": [
+            32,
+            638.34,
+            395,
+            796.33997
+          ]
+        },
+        {
+          "tag": "lyric-line-3",
+          "bounds": [
+            32,
+            824.34,
+            395,
+            924
+          ]
+        }
+      ],
+      "minimum_row_gap_px": 28.0,
+      "semantics_sha256": "229e05d3f5f9ab38d2c1e9c6dbba84fa00dfb3d79d7bb30151fc23a57452edb4"
+    },
+    {
+      "file": "10-lyrics-loaded.png",
+      "position_ms": 6489,
+      "rows": [
+        {
+          "tag": "lyric-line-0",
+          "bounds": [
+            32,
+            346,
+            395,
+            465.34
+          ]
+        },
+        {
+          "tag": "lyric-line-1",
+          "bounds": [
+            32,
+            493.34,
+            395,
+            610.33997
+          ]
+        },
+        {
+          "tag": "lyric-line-2",
+          "bounds": [
+            32,
+            638.34,
+            395,
+            796.33997
+          ]
+        },
+        {
+          "tag": "lyric-line-3",
+          "bounds": [
+            32,
+            824.34,
+            395,
+            924
+          ]
+        }
+      ],
+      "minimum_row_gap_px": 28.0,
+      "semantics_sha256": "229e05d3f5f9ab38d2c1e9c6dbba84fa00dfb3d79d7bb30151fc23a57452edb4"
+    }
+  ],
+  "android_pixel_acceptance": "BLOCKED",
+  "user_scrambled_lyrics_report": "UNRESOLVED_WITHOUT_USER_REFERENCE"
+}

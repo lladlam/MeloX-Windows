@@ -1,0 +1,11 @@
+{
+  "pinned_android": "3f877eaffe30c82eb6d24eb3647702f5bc554dd3",
+  "source": "android/app/src/main/res/font/mi_lan_pro_vf.ttf",
+  "resource": "fonts/mi_lan_pro_vf.ttf",
+  "bytes": 19646728,
+  "sha256": "15fc7accb0afcbb7cf3bbf776536a37398e552f082bb13af70602bf1d7ed676f",
+  "font_xml_sha256": "e66c7085c091a599049188fdb7f18ee43039c7918a0ecb7d90cd39459e8488a6",
+  "css_to_wght_axis": [[100, 150], [200, 200], [300, 250], [400, 340], [500, 400], [600, 540], [700, 630], [800, 700], [900, 700]],
+  "verified_against_pure_git_blob": true,
+  "check": "git show of the pinned TTF exactly equals desktop resource bytes. Both Compose and native timed glyph fonts use these source weights. This is a font provenance audit, not an Android pixel MATCH."
+}

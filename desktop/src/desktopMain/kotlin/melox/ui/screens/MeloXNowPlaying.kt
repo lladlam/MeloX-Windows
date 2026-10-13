@@ -262,6 +262,7 @@ fun MeloXNowPlayingScreen(
             MeloXPlayerQualityOverlay(track, showQuality, onDismiss = { showQuality = false },
                 onOpenPlaybackSettings = onOpenPlaybackSettings)
             MeloXPlayerOutputError(outputError, onDismiss = { outputError = null })
+            MeloXPlayerPlaybackError(playerState, onRetry = { player?.play() })
         }
         lyrics.shareIndex?.let { initial ->
             MeloXLyricSharePanel(track, sourceColor, lyrics.document?.lines.orEmpty(), initial,

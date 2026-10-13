@@ -13,10 +13,12 @@ import java.text.SimpleDateFormat
 import java.util.Date
 
 fun main() {
+    melox.platform.logInfo("MeloXStartup", "commit=${MeloXBuildConfig.BUILD_COMMIT} pid=${ProcessHandle.current().pid()} os=${System.getProperty("os.name")} ${System.getProperty("os.version")} arch=${System.getProperty("os.arch")} java=${System.getProperty("java.version")}")
     Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
         val sw = StringWriter()
         throwable.printStackTrace(PrintWriter(sw))
-        val stackTrace = sw.toString()
+        val stackTrace = melox.diagnostics.MeloXProcessLogs.redact(sw.toString())
+        melox.platform.logError("MeloXCrash", "thread=${thread.name}\n$stackTrace")
         val timestamp = SimpleDateFormat("yyyy-MM-dd_HH-mm-ss").format(Date())
         val logFile = File(System.getProperty("user.home"), "MeloX-crash-$timestamp.log")
         try {
@@ -25,8 +27,8 @@ fun main() {
                 |MeloX Desktop Crash Log
                 |========================
                 |Time: ${Date()}
-                |Thread: ${thread.name}
-                |Exception: ${throwable.javaClass.name}: ${throwable.message}
+                |Thread: ${melox.diagnostics.MeloXProcessLogs.redact(thread.name)}
+                |Exception: ${throwable.javaClass.name}: ${melox.diagnostics.MeloXProcessLogs.redact(throwable.message.orEmpty())}
                 |
                 |Stack Trace:
                 |$stackTrace
@@ -64,7 +66,8 @@ fun main() {
     } catch (e: Exception) {
         val sw = StringWriter()
         e.printStackTrace(PrintWriter(sw))
-        val stackTrace = sw.toString()
+        val stackTrace = melox.diagnostics.MeloXProcessLogs.redact(sw.toString())
+        melox.platform.logError("MeloXStartup", stackTrace)
         val logFile = File(System.getProperty("user.home"), "MeloX-startup-error.log")
         try {
             logFile.writeText("Startup Error:\n$stackTrace")

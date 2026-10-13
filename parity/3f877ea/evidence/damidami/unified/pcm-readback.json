@@ -1,0 +1,26 @@
+{
+  "status": "PASSED",
+  "track": "netease:2755332551",
+  "endpoint": "VALIDATION_SOFTWARE_PCM_OUTPUT",
+  "pcm_format": "stereo S16LE / 44100 Hz",
+  "physical_audible_acceptance": "BLOCKED",
+  "capture_sha256": "9f0803cb572164e9d7c2ce1b7df276075f2c2084c9ab052860e448c8e7edcde6",
+  "live_audio_published": false,
+  "outputs": [
+    {
+      "file": "pcm-output-0.s16le",
+      "written_frames": 385833,
+      "hardware_output": false,
+      "closed": true,
+      "consumed_frames": 377083,
+      "bytes": 1543332,
+      "sha256": "5b30b75d59b09b423fe75ca1530702d51c0ac3063a971f3c64e051f3efa6437b",
+      "rms_s16": 3100.10670256036,
+      "peak_s16": 31322,
+      "nonzero_samples": 768002,
+      "consumed_seconds": 8.55063492063492
+    }
+  ],
+  "advancing_scenes": 9,
+  "maximum_observed_position_ms": 8522
+}

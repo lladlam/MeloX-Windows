@@ -69,7 +69,7 @@ object AudioPlayer {
     val currentTrack: StateFlow<MusicTrack?> = _currentTrack.asStateFlow()
 
     // Tests replace only the physical device; production always opens Java Sound.
-    @Volatile internal var outputLineFactory: () -> SourceDataLine = ::openSystemLine
+    @Volatile internal var outputLineFactory: () -> SourceDataLine = MeloXPcmOutput::open
 
     @Volatile
     var decoderCommand: List<String> = emptyList() // Bundled extraction belongs to startDecoder's IO worker.
@@ -120,7 +120,7 @@ object AudioPlayer {
                 val failure = e as? AudioPlaybackFailure ?: AudioPlaybackFailure(AudioFailureKind.Content, e)
                 val notify = synchronized(playbackLock) {
                     if (session.get() !== request) return@launch
-                    logError("AudioPlayer", "播放失败: ${e.message}")
+                    logError("AudioPlayer", "播放失败 (${failure.kind}): ${melox.diagnostics.MeloXProcessLogs.describe(e)}")
                     reportFailure(failure)
                     currentProcess?.let { process ->
                         runCatching { process.destroyForcibly() }
@@ -419,16 +419,9 @@ object AudioPlayer {
         decoderCommand = FfmpegLocator.command()
         if (decoderCommand.isEmpty()) throw IllegalStateException("bundled ffmpeg missing")
         val command = decoderArgs(request, startAtMs)
+        logDebug("AudioPlayer", "FFmpeg binary=${decoderCommand.first()} os=${System.getProperty("os.name")} sourceHost=${if (request.url.startsWith("http")) runCatching { java.net.URI(request.url).host }.getOrNull() else "local"}")
         logDebug("AudioPlayer", "decode ${if (request.url.startsWith("http")) "HTTP source" else "local source"} at ${startAtMs}ms")
         return ProcessBuilder(command).redirectErrorStream(false).start()
-    }
-
-    private fun openSystemLine(): SourceDataLine {
-        val format = AudioFormat(PCM_SAMPLE_RATE.toFloat(), 16, PCM_CHANNELS, true, false)
-        val line = AudioSystem.getSourceDataLine(format)
-        try { line.open(format, PCM_SAMPLE_RATE * PCM_BYTES_PER_FRAME) }
-        catch (error: Exception) { runCatching { line.close() }; throw error }
-        return line
     }
 
     private fun closeDecoder(process: Process, line: SourceDataLine) {
@@ -584,6 +577,8 @@ internal sealed class FfmpegLocation {
 }
 
 internal object FfmpegLocator {
+    private data class VerifiedDecoder(val file: File, val bytes: Long, val modified: Long)
+    private val verified = java.util.WeakHashMap<ClassLoader, MutableMap<String, VerifiedDecoder>>()
     internal fun resourceName(): String {
         val os = System.getProperty("os.name").orEmpty().lowercase()
         return if (os.contains("win")) "decoder/ffmpeg.exe" else "decoder/ffmpeg"
@@ -603,23 +598,50 @@ internal object FfmpegLocator {
     @Synchronized
     internal fun extract(name: String, loader: ClassLoader): File? {
         val input = loader.getResourceAsStream(name) ?: return null
-        val target = File(System.getProperty("java.io.tmpdir"), "melox-" + name.replace('/', '-'))
-        val part = File(target.path + ".part")
-        input.use { stream -> part.outputStream().use { stream.copyTo(it) } }
-        val replace = !target.exists() || !target.canExecute() || target.length() != part.length()
-        if (replace) {
-            if (target.exists()) target.delete()
-            if (!part.renameTo(target)) {
-                part.copyTo(target, overwrite = true)
-                part.delete()
+        val root = File(System.getProperty("java.io.tmpdir")).canonicalFile
+        val key = "${root.path}:$name"
+        val cache = verified.getOrPut(loader) { mutableMapOf() }
+        cache[key]?.let { previous ->
+            if (previous.file.isFile && previous.file.canExecute() && previous.file.length() == previous.bytes &&
+                previous.file.lastModified() == previous.modified) {
+                input.close()
+                return previous.file
             }
-        } else {
-            part.delete()
         }
-        if (!target.setExecutable(true) || !target.canExecute()) {
-            target.delete()
-            return null
+        val digest = java.security.MessageDigest.getInstance("SHA-256")
+        input.use { stream -> java.security.DigestInputStream(stream, digest).use { it.copyTo(java.io.OutputStream.nullOutputStream()) } }
+        val hash = digest.digest()
+        fun matches(file: File): Boolean = file.isFile && file.inputStream().use { stream ->
+            val check = java.security.MessageDigest.getInstance("SHA-256")
+            java.security.DigestInputStream(stream, check).use { it.copyTo(java.io.OutputStream.nullOutputStream()) }
+            java.security.MessageDigest.isEqual(hash, check.digest())
         }
+        // Accept an existing legacy extraction only after checking its actual content,
+        // never merely its length. No second 80+ MB file is required for a valid cache.
+        val legacy = File(root, "melox-" + name.replace('/', '-'))
+        val extension = if (name.endsWith(".exe")) ".exe" else ""
+        val hex = hash.joinToString("") { "%02x".format(it) }
+        val target = if (legacy.canExecute() && matches(legacy)) legacy else
+            File(root, "melox-${name.replace('/', '-').removeSuffix(extension)}-${hex.take(16)}$extension")
+        if (!matches(target)) {
+            val part = File.createTempFile(target.name + ".", ".part", root)
+            try {
+                checkNotNull(loader.getResourceAsStream(name)).use { stream -> part.outputStream().use { stream.copyTo(it) } }
+                check(matches(part)) { "Bundled FFmpeg changed during extraction" }
+                try {
+                    java.nio.file.Files.move(part.toPath(), target.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING)
+                } catch (error: java.io.IOException) {
+                    // Another process may have installed and started this same version on Windows.
+                    if (!matches(target)) throw error
+                }
+            } finally { part.delete() }
+        }
+        // Windows uses executable file ACLs, not POSIX chmod; a redundant chmod
+        // must not delete a valid executable that Windows can already launch.
+        if (!target.canExecute() && !System.getProperty("os.name").orEmpty().lowercase().contains("win")) target.setExecutable(true)
+        if (!target.canExecute()) return null
+        cache[key] = VerifiedDecoder(target, target.length(), target.lastModified())
+        logDebug("AudioPlayer", "Bundled FFmpeg verified: sha256=$hex bytes=${target.length()}")
         return target
     }
 }

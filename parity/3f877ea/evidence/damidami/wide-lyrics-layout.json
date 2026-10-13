@@ -1,0 +1,118 @@
+{
+  "status": "PASSED",
+  "check": "settled production lyric rows do not overlap",
+  "viewport": [
+    1100,
+    780
+  ],
+  "scenes": [
+    {
+      "file": "05-lyrics.png",
+      "position_ms": 16514,
+      "rows": [
+        {
+          "tag": "lyric-line-3",
+          "bounds": [
+            489,
+            121,
+            1080,
+            197
+          ]
+        },
+        {
+          "tag": "lyric-line-4",
+          "bounds": [
+            489,
+            225,
+            1080,
+            344.34
+          ]
+        },
+        {
+          "tag": "lyric-line-5",
+          "bounds": [
+            489,
+            372.34,
+            1080,
+            489.34
+          ]
+        },
+        {
+          "tag": "lyric-line-6",
+          "bounds": [
+            489,
+            517.33997,
+            1080,
+            603.33997
+          ]
+        },
+        {
+          "tag": "lyric-line-7",
+          "bounds": [
+            489,
+            631.34,
+            1080,
+            707.33997
+          ]
+        }
+      ],
+      "minimum_row_gap_px": 27.99997000000002,
+      "semantics_sha256": "d0b11882594d0938ecdfe2589aa1b3aa1ccdaf8ceed53d2500b03ad39e891f3a"
+    },
+    {
+      "file": "06-lyrics-loaded.png",
+      "position_ms": 16514,
+      "rows": [
+        {
+          "tag": "lyric-line-3",
+          "bounds": [
+            489,
+            121,
+            1080,
+            197
+          ]
+        },
+        {
+          "tag": "lyric-line-4",
+          "bounds": [
+            489,
+            225,
+            1080,
+            344.34
+          ]
+        },
+        {
+          "tag": "lyric-line-5",
+          "bounds": [
+            489,
+            372.34,
+            1080,
+            489.34
+          ]
+        },
+        {
+          "tag": "lyric-line-6",
+          "bounds": [
+            489,
+            517.33997,
+            1080,
+            603.33997
+          ]
+        },
+        {
+          "tag": "lyric-line-7",
+          "bounds": [
+            489,
+            631.34,
+            1080,
+            707.33997
+          ]
+        }
+      ],
+      "minimum_row_gap_px": 27.99997000000002,
+      "semantics_sha256": "d0b11882594d0938ecdfe2589aa1b3aa1ccdaf8ceed53d2500b03ad39e891f3a"
+    }
+  ],
+  "android_pixel_acceptance": "BLOCKED",
+  "user_scrambled_lyrics_report": "UNRESOLVED_WITHOUT_USER_REFERENCE"
+}

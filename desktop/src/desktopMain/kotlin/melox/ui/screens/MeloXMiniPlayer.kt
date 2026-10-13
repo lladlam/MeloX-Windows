@@ -292,7 +292,7 @@ fun MeloXMiniPlayer(
                                 color = MeloXColors.pageOnSurface(),
                             )
                             Text(
-                                text = shown?.artists ?: track.artistText,
+                                text = if (playerState.error != null && shown == null) "播放失败 · 点击查看" else shown?.artists ?: track.artistText,
                                 modifier = Modifier.height(15.dp),
                                 maxLines = 1,
                                 overflow = TextOverflow.Ellipsis,
