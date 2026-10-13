@@ -3,6 +3,9 @@
 
 MELOX_GRADLE selects Gradle; MELOX_FIXTURES selects generated WAV/artwork/TTML;
 MELOX_CAPTURE_JVMARGS optionally supplies the local JVM/proxy configuration.
+MELOX_SEARCH_PLAY_ID selects a native NetEase song for the search-play scenarios;
+MELOX_SEARCH_PLAY_QUERY optionally replays typed song-name search instead of its link;
+MELOX_CAPTURE_OUTPUT preserves separate attempts instead of overwriting evidence.
 Actual network failures remain failures unless the explicit unavailable scenario is selected.
 """
 import os
@@ -17,7 +20,7 @@ if not gradle:
     raise SystemExit('Set MELOX_GRADLE to Gradle 9.5.1')
 name, home = sys.argv[1:3]
 fixtures = Path(os.environ.get('MELOX_FIXTURES', '/tmp/opencode/melox-search-player-fixtures')).resolve()
-output = repo / f'parity/3f877ea/evidence/search-player-{name}-ui'
+output = Path(os.environ.get('MELOX_CAPTURE_OUTPUT', str(repo / f'parity/3f877ea/evidence/search-player-{name}-ui'))).resolve()
 output.mkdir(parents=True, exist_ok=True)
 args = ['--source', 'Local', '--start-tab', 'Settings', '--theme', 'Dark', '--output', str(output), '--wait-ms', '650', '--startup-wait-ms', '1000', '--frames-ms', '0,160,400']
 if name == 'eq':
@@ -31,10 +34,26 @@ elif name == 'classic':
     args += ['--local-wavs', f'{fixtures}/generated-1000hz.wav,{fixtures}/generated-4000hz.wav', '--capture-pcm', '--width', '1100', '--height', '780']
     steps = 'appearance:tap@settings-open-appearance;classic:tap@player-shell-1;back:escape;player:tap@mini-player-expand;pause:tap@player-play-pause;quality:tap@player-quality;quality-close:escape;lyrics:tap@player-show-lyrics;actions:tap@player-actions;actions-close:escape;queue:tap@player-show-queue;next:tap@player-next;previous:tap@player-previous;collapse:tap@player-collapse'
     expect = 'appearance=tag:settings-appearance;classic=player-shell:Classic,selected:player-shell-1;player=page:Artwork,tag:player-controls,player-shell:Classic;pause=playing:false;quality=tag:quality-dialog;lyrics=page:Lyrics;actions=tag:song-actions;actions-close=absent:song-actions;queue=page:Queue;collapse=absent:now-playing'
-elif name in ['search-play', 'search-play-unavailable']:
+elif name in ['search-play', 'search-play-unavailable', 'search-play-unified']:
+    song_id = int(os.environ.get('MELOX_SEARCH_PLAY_ID', '185670'))
+    if song_id <= 0:
+        raise ValueError('MELOX_SEARCH_PLAY_ID must be a positive native NetEase ID')
     args += ['--source', 'Netease', '--start-tab', 'Search', '--capture-pcm', '--wait-ms', '1200']
     steps = 'query:text@search-query,https://music.163.com/song?id=185670;submit:tap@search-submit;result:wait@4000;actions:hold-tag@search-song-185670;queue-add:tap@song-action-添加到播放队列;actions2:hold-tag@search-song-185670;play-next:tap@song-action-下一首播放;play:tap@search-song-185670;playing:wait@5000;player:tap@mini-player-expand;pause:tap@player-play-pause;quality:tap@player-quality;quality-back:escape;collapse:tap@player-collapse'
     expect = 'result=tag:search-song-185670,absent:search-empty,absent:search-error;actions=tag:song-actions;queue-add=queue-min:1,absent:song-actions;play-next=queue-min:2,absent:song-actions;playing=track:netease:185670,playing:true,position-min:500,no-playback-error:true;player=page:Artwork;pause=playing:false;quality=tag:quality-dialog;collapse=absent:now-playing'
+    steps = steps.replace('185670', str(song_id))
+    expect = expect.replace('185670', str(song_id))
+    query = os.environ.get('MELOX_SEARCH_PLAY_QUERY', f'https://music.163.com/song?id={song_id}')
+    if ';' in query:
+        raise ValueError('Search replay query cannot contain a step separator')
+    steps = steps.replace(f'https://music.163.com/song?id={song_id}', query)
+    if name == 'search-play-unified':
+        if not os.environ.get('MELOX_SEARCH_PLAY_QUERY'):
+            raise ValueError('Unified replay requires MELOX_SEARCH_PLAY_QUERY song-name search')
+        args += ['--unified-sources', 'Netease']
+        tag = f'search-track-netease-{song_id}'
+        steps = f'query:text@search-query,{query};submit:tap@search-submit;result:wait@6000;play:tap@{tag};playing:wait@5000;player:tap@mini-player-expand;pause:tap@player-play-pause;collapse:tap@player-collapse'
+        expect = f'result=tag:{tag},absent:search-empty,absent:search-error;playing=track:netease:{song_id},playing:true,position-min:500,no-playback-error:true;player=page:Artwork;pause=playing:false;collapse=absent:now-playing'
     if name == 'search-play-unavailable':
         steps = steps.replace(';pause:tap@player-play-pause', '')
         expect = expect.replace('playing:true,position-min:500,no-playback-error:true', 'playing:false,no-playback-error:false').replace(';pause=playing:false', '')

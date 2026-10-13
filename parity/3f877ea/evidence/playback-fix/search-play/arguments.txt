@@ -1,0 +1,19 @@
+--source
+Netease
+--start-tab
+Search
+--theme
+Dark
+--output
+/tmp/opencode/melox-playback-fix-search-play-v2
+--wait-ms
+1200
+--startup-wait-ms
+1000
+--frames-ms
+0,160,400
+--capture-pcm
+--steps
+query:text@search-query,The truth that you leave;submit:tap@search-submit;result:wait@4000;actions:hold-tag@search-song-139774;queue-add:tap@song-action-添加到播放队列;actions2:hold-tag@search-song-139774;play-next:tap@song-action-下一首播放;play:tap@search-song-139774;playing:wait@5000;player:tap@mini-player-expand;pause:tap@player-play-pause;quality:tap@player-quality;quality-back:escape;collapse:tap@player-collapse
+--expect
+result=tag:search-song-139774,absent:search-empty,absent:search-error;actions=tag:song-actions;queue-add=queue-min:1,absent:song-actions;play-next=queue-min:2,absent:song-actions;playing=track:netease:139774,playing:true,position-min:500,no-playback-error:true;player=page:Artwork;pause=playing:false;quality=tag:quality-dialog;collapse=absent:now-playing

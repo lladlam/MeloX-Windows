@@ -8,6 +8,14 @@ Settings/legal closing fetch (2026-10-13): `5b52a92022a5943e238ffc5d3121c536b2f2
 
 ## Landed in this batch
 
+User-reported “search works, anonymous playback fails” repair is tracked in
+`parity/3f877ea/PLAYBACK_BUGFIX.md`: real song 139774 reproduced an unencoded
+NBSP query failure before any audio request. Old package 47542d8 predates the
+repair. URI encoding/raw-query decoding, unified native NetEase delegation,
+third-party resolver wiring and actual pinned CHKSZ requests are repaired;
+final acceptance lives in `evidence/playback-fix/validation.json`. Existing LX
+script runtime is still empty/unaccepted, and physical audio remains separate.
+
 - Fault-tolerant DPAPI preference open/recovery, ciphertext quarantine, verified rebuild and memory fallback; YouTube uses recovered session abstraction.
 - Nullable album/artist IDs in song model, real Netease source parsers, shared bridge, queue/cache/download records, and selected playback metadata.
 - Explicit queue clearing and late-callback isolation regression.

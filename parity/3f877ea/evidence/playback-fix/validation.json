@@ -1,0 +1,64 @@
+{
+  "pinned_android": "3f877eaffe30c82eb6d24eb3647702f5bc554dd3",
+  "old_package_predates_fix": "47542d8401ed626e7fff87444499729a0f3c369b",
+  "tests": {
+    "tests": 174,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "suites": 33
+  },
+  "replays": [
+    {
+      "name": "search-play",
+      "status": "PASSED",
+      "renderer": "production ImageComposeScene",
+      "endpoint": "VALIDATION_SOFTWARE_PCM_OUTPUT",
+      "state_scenes": 15,
+      "dynamic_frames": 42,
+      "assertions": 16,
+      "pcm_readback": "search-play-pcm.json"
+    },
+    {
+      "name": "search-play-unified",
+      "status": "PASSED",
+      "renderer": "production ImageComposeScene",
+      "endpoint": "VALIDATION_SOFTWARE_PCM_OUTPUT",
+      "state_scenes": 9,
+      "dynamic_frames": 24,
+      "assertions": 10,
+      "pcm_readback": "search-play-unified-pcm.json"
+    }
+  ],
+  "linux_package": {
+    "path": "desktop/build/compose/jars/MeloX-Desktop-linux-x64-1.0.0.jar",
+    "bytes": 222007032,
+    "sha256": "a46cb3e3f07657bb30d3af0f447b1fa7c3abfde30cc262886b2d9fbdd7e78c46",
+    "native_decoder": "PASSED",
+    "pinned_resource_bytes": "PASSED"
+  },
+  "native_equalizer_readback": "PASSED",
+  "source_checks": "PASSED",
+  "source_sha256": {
+    "shared/src/commonMain/kotlin/melox/playback/NeteasePlaybackResolver.kt": "d1e55199c1559968e672b80843ac569d0608791df55021af35c4c6a760692569",
+    "shared/src/commonMain/kotlin/melox/playback/ProviderPlaybackResolver.kt": "e698712f762493e0b9d5107167754072fd077b5274c73f585d91e8edb720ba3a",
+    "shared/src/commonMain/kotlin/melox/playback/PlaybackCommands.kt": "355f8bc5b8027938998a63ada96fbf333d2f9488ce9622d4dc281d780bc67424",
+    "shared/src/commonMain/kotlin/melox/provider/lxuser/ChkszApiClient.kt": "16d90a7149b24be420f6fcc1a5783beb8c0da4a41599c6facca5c92be39ded11",
+    "desktop/src/desktopMain/kotlin/melox/validation/MeloXVisualCapture.kt": "d0eaa818ae54dd4ef8ec355014da5522ab86be06284711875cde958723bfd217",
+    "tools/capture_search_player.py": "07ef5ccecb3b7c27aedc28c0704557cf87df030846f5654f78b873a28a7bb9ca",
+    "tools/verify_online_playback_capture.py": "d4a4e3df8cdc45b3fd2c272fe716ace3ed710d78319c6fc40abac069b37d1dbd"
+  },
+  "acceptance": {
+    "anonymous_official_song_139774_software_pcm": "PASSED",
+    "anonymous_unified_song_139774_software_pcm": "PASSED",
+    "song_185670": "BLOCKED_NO_FULL_SOURCE",
+    "chksz_protocol": "PASSED",
+    "chksz_live": "BLOCKED_NO_AUTHORIZED_API_KEY",
+    "lx_javascript_runtime": "UNIMPLEMENTED",
+    "windows_ci": "PENDING_EXACT_FIX_COMMIT",
+    "physical_windows_audio": "BLOCKED",
+    "real_user_dpapi": "BLOCKED",
+    "android_pixels_motion": "BLOCKED"
+  },
+  "live_music_recordings_published": false
+}

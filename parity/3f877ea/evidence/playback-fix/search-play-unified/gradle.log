@@ -1,0 +1,109 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.5.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :desktop:kmpPartiallyResolvedDependenciesChecker
+> Task :desktop:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :desktop:convertXmlValueResourcesForCommonMain NO-SOURCE
+> Task :desktop:copyNonXmlValueResourcesForCommonMain NO-SOURCE
+> Task :desktop:prepareComposeResourcesTaskForCommonMain NO-SOURCE
+> Task :desktop:generateResourceAccessorsForCommonMain SKIPPED
+> Task :desktop:convertXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :desktop:copyNonXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :desktop:prepareComposeResourcesTaskForDesktopMain NO-SOURCE
+> Task :desktop:generateResourceAccessorsForDesktopMain SKIPPED
+> Task :desktop:generateActualResourceCollectorsForDesktopMain SKIPPED
+> Task :desktop:generateComposeResClass SKIPPED
+> Task :desktop:generateExpectResourceCollectorsForCommonMain SKIPPED
+> Task :innertube:kmpPartiallyResolvedDependenciesChecker
+> Task :innertube:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :innertube:extractAndroidInnerTube UP-TO-DATE
+> Task :innertube:compileKotlinDesktop UP-TO-DATE
+> Task :innertube:compileDesktopMainJava NO-SOURCE
+> Task :innertube:desktopProcessResources NO-SOURCE
+> Task :innertube:processDesktopMainResources SKIPPED
+> Task :innertube:desktopMainClasses UP-TO-DATE
+> Task :innertube:desktopJar UP-TO-DATE
+> Task :shared:kmpPartiallyResolvedDependenciesChecker
+> Task :shared:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :shared:convertXmlValueResourcesForCommonMain NO-SOURCE
+> Task :shared:copyNonXmlValueResourcesForCommonMain NO-SOURCE
+> Task :shared:prepareComposeResourcesTaskForCommonMain NO-SOURCE
+> Task :shared:generateResourceAccessorsForCommonMain SKIPPED
+> Task :shared:convertXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :shared:copyNonXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :shared:prepareComposeResourcesTaskForDesktopMain NO-SOURCE
+> Task :shared:generateResourceAccessorsForDesktopMain SKIPPED
+> Task :shared:generateActualResourceCollectorsForDesktopMain SKIPPED
+> Task :shared:generateComposeResClass SKIPPED
+> Task :shared:generateExpectResourceCollectorsForCommonMain SKIPPED
+> Task :shared:compileKotlinDesktop UP-TO-DATE
+> Task :shared:compileDesktopMainJava NO-SOURCE
+> Task :shared:assembleDesktopMainResources UP-TO-DATE
+> Task :shared:desktopProcessResources UP-TO-DATE
+> Task :shared:processDesktopMainResources SKIPPED
+> Task :shared:desktopMainClasses UP-TO-DATE
+> Task :shared:desktopJar UP-TO-DATE
+> Task :desktop:compileKotlinDesktop UP-TO-DATE
+> Task :desktop:compileDesktopMainJava NO-SOURCE
+> Task :desktop:assembleDesktopMainResources UP-TO-DATE
+> Task :desktop:desktopProcessResources UP-TO-DATE
+> Task :desktop:processDesktopMainResources SKIPPED
+> Task :desktop:desktopMainClasses UP-TO-DATE
+
+> Task :desktop:captureUi
+SLF4J(W): No SLF4J providers were found.
+SLF4J(W): Defaulting to no-operation (NOP) logger implementation
+SLF4J(W): See https://www.slf4j.org/codes.html#noProviders for further details.
+Captured 00-search: 427x924 density=1.0
+Captured 01-query-frame-0: 427x924 density=1.0
+Captured 01-query-frame-160: 427x924 density=1.0
+Captured 01-query-frame-400: 427x924 density=1.0
+Captured 01-query: 427x924 density=1.0
+Physical click submit: search-submit at Offset(327.0, 161.0)
+Captured 02-submit-frame-0: 427x924 density=1.0
+Captured 02-submit-frame-160: 427x924 density=1.0
+Captured 02-submit-frame-400: 427x924 density=1.0
+Captured 02-submit: 427x924 density=1.0
+Captured 03-result-frame-0: 427x924 density=1.0
+Captured 03-result-frame-160: 427x924 density=1.0
+Captured 03-result-frame-400: 427x924 density=1.0
+Captured 03-result: 427x924 density=1.0
+Verified result: tag:search-track-netease-139774
+Verified result: absent:search-empty
+Verified result: absent:search-error
+Physical click play: search-track-netease-139774 at Offset(213.5, 294.0)
+[MeloXQuality] Playback quality resolved: song=139774 requested=standard candidate=standard actual=standard bitrate=128000
+Captured 04-play-frame-0: 427x924 density=1.0
+Captured 04-play-frame-160: 427x924 density=1.0
+[AudioPlayer] decode HTTP source at 0ms
+Captured 04-play-frame-400: 427x924 density=1.0
+Captured 04-play: 427x924 density=1.0
+Captured 05-playing-frame-0: 427x924 density=1.0
+Captured 05-playing-frame-160: 427x924 density=1.0
+Captured 05-playing-frame-400: 427x924 density=1.0
+Captured 05-playing: 427x924 density=1.0
+Verified playing: track:netease:139774
+Verified playing: playing:true
+Verified playing: position-min:500
+Verified playing: no-playback-error:true
+Physical click player: mini-player-expand at Offset(166.0, 826.0)
+Captured 06-player-frame-0: 427x924 density=1.0
+Captured 06-player-frame-160: 427x924 density=1.0
+Captured 06-player-frame-400: 427x924 density=1.0
+Captured 06-player: 427x924 density=1.0
+Verified player: page:Artwork
+Physical click pause: player-play-pause at Offset(213.0, 757.0)
+Captured 07-pause-frame-0: 427x924 density=1.0
+Captured 07-pause-frame-160: 427x924 density=1.0
+Captured 07-pause-frame-400: 427x924 density=1.0
+Captured 07-pause: 427x924 density=1.0
+Verified pause: playing:false
+Physical click collapse: player-collapse at Offset(213.5, 15.0)
+Captured 08-collapse-frame-0: 427x924 density=1.0
+Captured 08-collapse-frame-160: 427x924 density=1.0
+Captured 08-collapse-frame-400: 427x924 density=1.0
+Captured 08-collapse: 427x924 density=1.0
+Verified collapse: absent:now-playing
+
+BUILD SUCCESSFUL in 44s
+14 actionable tasks: 4 executed, 10 up-to-date
+Consider enabling configuration cache to speed up this build: https://docs.gradle.org/9.5.1/userguide/configuration_cache_enabling.html

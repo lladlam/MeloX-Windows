@@ -41,6 +41,7 @@ class ProviderPlaybackResolver(
         val requestUri: String,
         val authKey: String,
         val quality: AudioQualityTier,
+        val sourceIdentity: String,
     )
 class ResolvedRequest(
         val uri: String,
@@ -87,7 +88,24 @@ class ResolvedRequest(
         val resourceValue = parsed.path.substringAfter('/').substringAfter('/').takeIf(String::isNotBlank)
             ?: throw IOException("Invalid MeloX provider track ID: $uri")
         val quality = currentQuality(parsed)
-        val key = ResolveKey(uri, authKeyProvider(source), quality)
+        // Unified/provider search must share the authenticated, downloaded and
+        // unavailable-source fallback chain with legacy NetEase song search.
+        // Delegate before this provider cache so fallback/account changes stay live.
+        if (source == MusicSource.Netease) {
+            val numericId = resourceValue.toLongOrNull()?.takeIf { it > 0L }
+                ?: throw IOException("Invalid NetEase track ID: $resourceValue")
+            val netease = neteaseResolver.resolveUri(NeteasePlaybackResolver.uriForSong(
+                songId = numericId,
+                quality = MusicQualityRuntime.selected,
+                title = queryParam(parsed, TrackTitleQuery),
+                artist = queryParam(parsed, TrackArtistsQuery)?.split('\u001f')?.joinToString(" / "),
+                durationMs = queryParam(parsed, TrackDurationQuery)?.toLongOrNull(),
+            ))
+            return ResolvedRequest(netease.uri, netease.headers, netease.expiresAtEpochMs)
+        }
+        val key = ResolveKey(uri, authKeyProvider(source), quality,
+            "${thirdPartySourcesEnabled()}:${thirdPartyOnlyForMembership()}:" +
+                "${chkszPlayback?.cacheIdentity().orEmpty()}:${lxUserPlayback?.cacheIdentity().orEmpty()}")
         cached(key)?.let { return it }
         val pending = CompletableFuture<ResolvedRequest>()
         val existing = inFlight.putIfAbsent(key, pending)

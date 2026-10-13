@@ -1,0 +1,246 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.5.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :innertube:kmpPartiallyResolvedDependenciesChecker
+> Task :innertube:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :innertube:extractAndroidInnerTube UP-TO-DATE
+> Task :innertube:compileKotlinDesktop UP-TO-DATE
+> Task :innertube:compileDesktopMainJava NO-SOURCE
+> Task :innertube:desktopProcessResources NO-SOURCE
+> Task :innertube:processDesktopMainResources SKIPPED
+> Task :innertube:desktopMainClasses UP-TO-DATE
+> Task :innertube:desktopJar UP-TO-DATE
+> Task :shared:kmpPartiallyResolvedDependenciesChecker
+> Task :shared:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :shared:convertXmlValueResourcesForCommonMain NO-SOURCE
+> Task :shared:copyNonXmlValueResourcesForCommonMain NO-SOURCE
+> Task :shared:prepareComposeResourcesTaskForCommonMain NO-SOURCE
+> Task :shared:generateResourceAccessorsForCommonMain SKIPPED
+> Task :shared:convertXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :shared:copyNonXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :shared:prepareComposeResourcesTaskForDesktopMain NO-SOURCE
+> Task :shared:generateResourceAccessorsForDesktopMain SKIPPED
+> Task :shared:generateActualResourceCollectorsForDesktopMain SKIPPED
+> Task :shared:generateComposeResClass SKIPPED
+> Task :shared:generateExpectResourceCollectorsForCommonMain SKIPPED
+> Task :shared:compileKotlinDesktop
+w: file:///home/lladlam/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/audio/NeteaseQualityClient.kt:315:37 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///home/lladlam/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/diagnostics/MeloXLogExporter.kt:51:64 Elvis operator (?:) always returns the left operand of non-nullable type 'String'.
+w: file:///home/lladlam/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/download/MeloXDownloadStore.kt:372:46 Elvis operator (?:) always returns the left operand of non-nullable type 'ResponseBody'.
+w: file:///home/lladlam/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/download/MeloXDownloadStore.kt:508:46 Elvis operator (?:) always returns the left operand of non-nullable type 'ResponseBody'.
+w: file:///home/lladlam/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/library/NeteaseLibraryClient.kt:473:37 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///home/lladlam/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/lyrics/AmlldbLyricsClient.kt:78:75 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///home/lladlam/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/lyrics/LrcLibLyricsClient.kt:44:64 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///home/lladlam/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/network/NeteaseAuthenticatedEapi.kt:30:36 Elvis operator (?:) always returns the left operand of non-nullable type 'JSONObject'.
+w: file:///home/lladlam/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/network/NeteaseAuthenticatedEapi.kt:67:37 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///home/lladlam/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/network/NeteaseAuthenticatedWeapi.kt:77:37 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///home/lladlam/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/network/NeteaseCloudUploadClient.kt:95:70 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///home/lladlam/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/network/NeteaseCloudUploadClient.kt:124:34 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///home/lladlam/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/network/NeteaseMusicOperationsClient.kt:572:35 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///home/lladlam/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/network/NeteaseSearchClient.kt:319:37 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///home/lladlam/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/network/NeteaseUniversalSearchClient.kt:175:17 'when' is exhaustive so 'else' is redundant here.
+w: file:///home/lladlam/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/network/NeteaseUniversalSearchClient.kt:208:25 'when' is exhaustive so 'else' is redundant here.
+w: file:///home/lladlam/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/network/NeteaseUniversalSearchClient.kt:454:37 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///home/lladlam/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/platform/MeloXPreferences.kt:10:1 'expect'/'actual' classes (including interfaces, objects, annotations, enums, and 'actual' typealiases) are in Beta. Consider using the '-Xexpect-actual-classes' flag to suppress this warning. Also see: https://youtrack.jetbrains.com/issue/KT-61573
+w: file:///home/lladlam/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/playback/PlaybackCommands.kt:263:43 Unnecessary safe call on a non-null receiver of type 'MusicTrack'.
+w: file:///home/lladlam/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/playback/ProviderPlaybackResolver.kt:235:69 Elvis operator (?:) always returns the left operand of non-nullable type 'String'.
+w: file:///home/lladlam/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/playback/ProviderPlaybackResolver.kt:265:17 Elvis operator (?:) always returns the left operand of non-nullable type 'Pair<String, Long>'.
+w: file:///home/lladlam/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/player/MeloXDualDecodeSession.kt:128:68 Return in function with expression body and without explicit return type. Use block body '{...}' or add an explicit return type. This will become an error in language version 2.5. See https://youtrack.jetbrains.com/issue/KTLC-288.
+w: file:///home/lladlam/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/player/MeloXDualDecodeSession.kt:129:44 Return in function with expression body and without explicit return type. Use block body '{...}' or add an explicit return type. This will become an error in language version 2.5. See https://youtrack.jetbrains.com/issue/KTLC-288.
+w: file:///home/lladlam/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/player/MeloXDualDecodeSession.kt:147:72 Return in function with expression body and without explicit return type. Use block body '{...}' or add an explicit return type. This will become an error in language version 2.5. See https://youtrack.jetbrains.com/issue/KTLC-288.
+w: file:///home/lladlam/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/player/MeloXDualDecodeSession.kt:206:34 Unnecessary safe call on a non-null receiver of type 'MeloXBufferedPcmDeck'.
+w: file:///home/lladlam/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/player/MeloXDualDecodeSession.kt:240:51 Condition is always 'true'.
+w: file:///home/lladlam/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/player/MeloXDualDecodeSession.kt:241:30 Unnecessary safe call on a non-null receiver of type 'MeloXBufferedPcmDeck'.
+w: file:///home/lladlam/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/jellyfin/JellyfinApiClient.kt:89:17 Condition is always 'true'.
+w: file:///home/lladlam/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/jellyfin/JellyfinApiClient.kt:90:29 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///home/lladlam/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/kugou/KugouApiClient.kt:337:62 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///home/lladlam/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/kugou/KugouLoginClient.kt:129:37 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///home/lladlam/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/kugou/KugouRequestClient.kt:113:45 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///home/lladlam/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/kuwo/KuwoPhoneAuthClient.kt:95:38 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///home/lladlam/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/kuwo/KuwoRequestClient.kt:36:42 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///home/lladlam/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/kuwo/KuwoRequestClient.kt:63:33 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///home/lladlam/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/lxuser/ChkszApiClient.kt:40:59 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///home/lladlam/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicApiClient.kt:380:37 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///home/lladlam/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicApiClient.kt:555:37 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///home/lladlam/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicCatalogClient.kt:331:37 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///home/lladlam/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicFavoriteClient.kt:111:62 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///home/lladlam/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicFavoriteClient.kt:182:37 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///home/lladlam/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicFavoriteClient.kt:252:38 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///home/lladlam/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicPhoneAuthClient.kt:62:41 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///home/lladlam/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicPlaybackVkeyClient.kt:126:37 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///home/lladlam/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicPlaylistClient.kt:158:37 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///home/lladlam/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicQrLoginClient.kt:137:38 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///home/lladlam/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicQrLoginClient.kt:170:51 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///home/lladlam/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicQrLoginClient.kt:182:38 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///home/lladlam/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicQrLoginClient.kt:247:51 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///home/lladlam/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicQrLoginClient.kt:264:53 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///home/lladlam/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicQrLoginClient.kt:381:62 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///home/lladlam/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicQrLoginClient.kt:411:62 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///home/lladlam/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicRankingClient.kt:151:37 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///home/lladlam/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicRichLyricsClient.kt:140:38 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///home/lladlam/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicRichLyricsClient.kt:254:37 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///home/lladlam/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicRichLyricsClient.kt:303:67 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///home/lladlam/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/spotify/SpotifyApiClient.kt:371:45 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///home/lladlam/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/spotify/SpotifyOAuth.kt:169:45 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///home/lladlam/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/youtubemusic/YouTubeMusicProvider.kt:247:106 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///home/lladlam/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/update/MeloXUpdateClient.kt:42:48 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///home/lladlam/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/update/MeloXUpdateClient.kt:58:48 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///home/lladlam/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/update/UpdateChecker.kt:51:37 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///home/lladlam/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/update/UpdateChecker.kt:102:46 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///home/lladlam/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/update/UpdateChecker.kt:105:26 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///home/lladlam/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/desktopMain/kotlin/melox/platform/MeloXPreferences.kt:7:1 'expect'/'actual' classes (including interfaces, objects, annotations, enums, and 'actual' typealiases) are in Beta. Consider using the '-Xexpect-actual-classes' flag to suppress this warning. Also see: https://youtrack.jetbrains.com/issue/KT-61573
+
+> Task :shared:compileDesktopMainJava NO-SOURCE
+> Task :shared:assembleDesktopMainResources UP-TO-DATE
+> Task :shared:desktopProcessResources UP-TO-DATE
+> Task :shared:processDesktopMainResources SKIPPED
+> Task :shared:desktopMainClasses
+> Task :shared:desktopJar
+> Task :shared:convertXmlValueResourcesForCommonTest NO-SOURCE
+> Task :shared:copyNonXmlValueResourcesForCommonTest NO-SOURCE
+> Task :shared:prepareComposeResourcesTaskForCommonTest NO-SOURCE
+> Task :shared:generateResourceAccessorsForCommonTest SKIPPED
+> Task :shared:convertXmlValueResourcesForDesktopTest NO-SOURCE
+> Task :shared:copyNonXmlValueResourcesForDesktopTest NO-SOURCE
+> Task :shared:prepareComposeResourcesTaskForDesktopTest NO-SOURCE
+> Task :shared:generateResourceAccessorsForDesktopTest SKIPPED
+
+> Task :shared:compileTestKotlinDesktop
+e: Incremental compilation failed: The following FqNames can't be derived from DirtyData.dirtyLookupSymbols: melox.playback.NeteasePlaybackResolver.
+DirtyData = DirtyData(dirtyLookupSymbols=[LookupSymbol(name=CrossProviderFallbackRequest, scope=melox.playback), LookupSymbol(name=uriForSong, scope=melox.playback.NeteasePlaybackResolver.Companion), LookupSymbol(name=<SAM-CONSTRUCTOR>, scope=melox.playback.NeteasePlaybackResolver.Companion), LookupSymbol(name=ChkszPlaybackResult, scope=melox.provider.lxuser), LookupSymbol(name=<SAM-CONSTRUCTOR>, scope=melox.audio.NeteaseQualityClient.Companion), LookupSymbol(name=ResolvedRequest, scope=melox.playback.NeteasePlaybackResolver), LookupSymbol(name=NeteasePlaybackSource, scope=melox.audio), LookupSymbol(name=<SAM-CONSTRUCTOR>, scope=melox.audio.NeteaseQualityClient), LookupSymbol(name=NeteaseQualityClient, scope=melox.audio), LookupSymbol(name=CrossProviderPlaybackRuntime, scope=melox.playback), LookupSymbol(name=TAG, scope=melox.audio.NeteaseQualityClient.Companion), LookupSymbol(name=MeloXDesktopPlayer, scope=melox.playback), LookupSymbol(name=Kugou, scope=melox.music.model.ProviderTrackMetadata), LookupSymbol(name=NeteasePlaybackUnavailableException, scope=melox.audio), LookupSymbol(name=CrossProviderPlaybackFallbackResolver, scope=melox.playback), LookupSymbol(name=QQMusic, scope=melox.music.model.ProviderTrackMetadata), LookupSymbol(name=Companion, scope=melox.playback.NeteasePlaybackResolver), LookupSymbol(name=ChkszApiClient, scope=melox.provider.lxuser), LookupSymbol(name=TAG, scope=melox.audio.NeteaseQualityClient), LookupSymbol(name=<SAM-CONSTRUCTOR>, scope=melox.playback.NeteasePlaybackResolver)], dirtyClassesFqNames=[melox.music.model.ProviderTrackMetadata.QQMusic, melox.audio.NeteaseQualityClient, melox.audio.NeteasePlaybackUnavailableException, melox.playback.CrossProviderPlaybackRuntime, melox.playback.CrossProviderPlaybackFallbackResolver, melox.provider.lxuser.ChkszApiClient, melox.music.model.ProviderTrackMetadata.Kugou, melox.playback.NeteasePlaybackResolver, melox.playback.CrossProviderFallbackRequest, melox.playback.NeteasePlaybackResolver.ResolvedRequest, melox.provider.lxuser.ChkszPlaybackResult, melox.playback.NeteasePlaybackResolver.Companion, melox.playback.MeloXDesktopPlayer, melox.audio.NeteaseQualityClient.Companion, melox.audio.NeteasePlaybackSource], dirtyClassesFqNamesForceRecompile=[])
+java.lang.IllegalStateException: The following FqNames can't be derived from DirtyData.dirtyLookupSymbols: melox.playback.NeteasePlaybackResolver.
+DirtyData = DirtyData(dirtyLookupSymbols=[LookupSymbol(name=CrossProviderFallbackRequest, scope=melox.playback), LookupSymbol(name=uriForSong, scope=melox.playback.NeteasePlaybackResolver.Companion), LookupSymbol(name=<SAM-CONSTRUCTOR>, scope=melox.playback.NeteasePlaybackResolver.Companion), LookupSymbol(name=ChkszPlaybackResult, scope=melox.provider.lxuser), LookupSymbol(name=<SAM-CONSTRUCTOR>, scope=melox.audio.NeteaseQualityClient.Companion), LookupSymbol(name=ResolvedRequest, scope=melox.playback.NeteasePlaybackResolver), LookupSymbol(name=NeteasePlaybackSource, scope=melox.audio), LookupSymbol(name=<SAM-CONSTRUCTOR>, scope=melox.audio.NeteaseQualityClient), LookupSymbol(name=NeteaseQualityClient, scope=melox.audio), LookupSymbol(name=CrossProviderPlaybackRuntime, scope=melox.playback), LookupSymbol(name=TAG, scope=melox.audio.NeteaseQualityClient.Companion), LookupSymbol(name=MeloXDesktopPlayer, scope=melox.playback), LookupSymbol(name=Kugou, scope=melox.music.model.ProviderTrackMetadata), LookupSymbol(name=NeteasePlaybackUnavailableException, scope=melox.audio), LookupSymbol(name=CrossProviderPlaybackFallbackResolver, scope=melox.playback), LookupSymbol(name=QQMusic, scope=melox.music.model.ProviderTrackMetadata), LookupSymbol(name=Companion, scope=melox.playback.NeteasePlaybackResolver), LookupSymbol(name=ChkszApiClient, scope=melox.provider.lxuser), LookupSymbol(name=TAG, scope=melox.audio.NeteaseQualityClient), LookupSymbol(name=<SAM-CONSTRUCTOR>, scope=melox.playback.NeteasePlaybackResolver)], dirtyClassesFqNames=[melox.music.model.ProviderTrackMetadata.QQMusic, melox.audio.NeteaseQualityClient, melox.audio.NeteasePlaybackUnavailableException, melox.playback.CrossProviderPlaybackRuntime, melox.playback.CrossProviderPlaybackFallbackResolver, melox.provider.lxuser.ChkszApiClient, melox.music.model.ProviderTrackMetadata.Kugou, melox.playback.NeteasePlaybackResolver, melox.playback.CrossProviderFallbackRequest, melox.playback.NeteasePlaybackResolver.ResolvedRequest, melox.provider.lxuser.ChkszPlaybackResult, melox.playback.NeteasePlaybackResolver.Companion, melox.playback.MeloXDesktopPlayer, melox.audio.NeteaseQualityClient.Companion, melox.audio.NeteasePlaybackSource], dirtyClassesFqNamesForceRecompile=[])
+	at org.jetbrains.kotlin.incremental.classpathDiff.ClasspathChangesComputer.toProgramSymbols(ClasspathChangesComputer.kt:362)
+	at org.jetbrains.kotlin.incremental.classpathDiff.ClasspathChangesComputer.computeFineGrainedKotlinClassChanges(ClasspathChangesComputer.kt:262)
+	at org.jetbrains.kotlin.incremental.classpathDiff.ClasspathChangesComputer.computeKotlinClassChanges(ClasspathChangesComputer.kt:162)
+	at org.jetbrains.kotlin.incremental.classpathDiff.ClasspathChangesComputer.computeClassChanges(ClasspathChangesComputer.kt:135)
+	at org.jetbrains.kotlin.incremental.classpathDiff.ClasspathChangesComputer.computeChangedAndImpactedSet(ClasspathChangesComputer.kt:85)
+	at org.jetbrains.kotlin.incremental.classpathDiff.ClasspathChangesComputer.computeClasspathChanges(ClasspathChangesComputer.kt:53)
+	at org.jetbrains.kotlin.incremental.dirtyFiles.ClasspathSnapshotBasedImpactDeterminer.determineChangedAndImpactedSymbols(ClasspathSnapshotBasedImpactDeterminer.kt:40)
+	at org.jetbrains.kotlin.incremental.dirtyFiles.JvmSourcesToCompileCalculator.calculateSourcesToCompileImpl(JvmSourcesToCompileCalculator.kt:40)
+	at org.jetbrains.kotlin.incremental.dirtyFiles.JvmSourcesToCompileCalculator.calculateWithClasspathSnapshot(JvmSourcesToCompileCalculator.kt:96)
+	at org.jetbrains.kotlin.incremental.IncrementalJvmCompilerRunner.calculateSourcesToCompile(IncrementalJvmCompilerRunner.kt:68)
+	at org.jetbrains.kotlin.incremental.IncrementalJvmCompilerRunner.calculateSourcesToCompile(IncrementalJvmCompilerRunner.kt:26)
+	at org.jetbrains.kotlin.incremental.IncrementalCompilerRunner.tryCompileIncrementally$lambda$0$compile(IncrementalCompilerRunner.kt:228)
+	at org.jetbrains.kotlin.incremental.IncrementalCompilerRunner.tryCompileIncrementally(IncrementalCompilerRunner.kt:270)
+	at org.jetbrains.kotlin.incremental.IncrementalCompilerRunner.compile(IncrementalCompilerRunner.kt:122)
+	at org.jetbrains.kotlin.buildtools.internal.jvm.operations.JvmCompilationOperationImpl.compileInProcess(JvmCompilationOperationImpl.kt:423)
+	at org.jetbrains.kotlin.buildtools.internal.jvm.operations.JvmCompilationOperationImpl.compileInProcess(JvmCompilationOperationImpl.kt:337)
+	at org.jetbrains.kotlin.buildtools.internal.jvm.operations.JvmCompilationOperationImpl.executeCancellableImpl(JvmCompilationOperationImpl.kt:149)
+	at org.jetbrains.kotlin.buildtools.internal.jvm.operations.JvmCompilationOperationImpl.executeCancellableImpl(JvmCompilationOperationImpl.kt:69)
+	at org.jetbrains.kotlin.buildtools.internal.CancellableBuildOperationImpl.executeImpl(CancellableBuildOperationImpl.kt:58)
+	at org.jetbrains.kotlin.buildtools.internal.BuildOperationImpl.execute(BuildOperationImpl.kt:34)
+	at org.jetbrains.kotlin.buildtools.internal.KotlinToolchainsImpl$BuildSessionImpl.executeOperation$lambda$1(KotlinToolchainsImpl.kt:70)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+
+java.lang.RuntimeException: Incremental compilation failed: The following FqNames can't be derived from DirtyData.dirtyLookupSymbols: melox.playback.NeteasePlaybackResolver.
+DirtyData = DirtyData(dirtyLookupSymbols=[LookupSymbol(name=CrossProviderFallbackRequest, scope=melox.playback), LookupSymbol(name=uriForSong, scope=melox.playback.NeteasePlaybackResolver.Companion), LookupSymbol(name=<SAM-CONSTRUCTOR>, scope=melox.playback.NeteasePlaybackResolver.Companion), LookupSymbol(name=ChkszPlaybackResult, scope=melox.provider.lxuser), LookupSymbol(name=<SAM-CONSTRUCTOR>, scope=melox.audio.NeteaseQualityClient.Companion), LookupSymbol(name=ResolvedRequest, scope=melox.playback.NeteasePlaybackResolver), LookupSymbol(name=NeteasePlaybackSource, scope=melox.audio), LookupSymbol(name=<SAM-CONSTRUCTOR>, scope=melox.audio.NeteaseQualityClient), LookupSymbol(name=NeteaseQualityClient, scope=melox.audio), LookupSymbol(name=CrossProviderPlaybackRuntime, scope=melox.playback), LookupSymbol(name=TAG, scope=melox.audio.NeteaseQualityClient.Companion), LookupSymbol(name=MeloXDesktopPlayer, scope=melox.playback), LookupSymbol(name=Kugou, scope=melox.music.model.ProviderTrackMetadata), LookupSymbol(name=NeteasePlaybackUnavailableException, scope=melox.audio), LookupSymbol(name=CrossProviderPlaybackFallbackResolver, scope=melox.playback), LookupSymbol(name=QQMusic, scope=melox.music.model.ProviderTrackMetadata), LookupSymbol(name=Companion, scope=melox.playback.NeteasePlaybackResolver), LookupSymbol(name=ChkszApiClient, scope=melox.provider.lxuser), LookupSymbol(name=TAG, scope=melox.audio.NeteaseQualityClient), LookupSymbol(name=<SAM-CONSTRUCTOR>, scope=melox.playback.NeteasePlaybackResolver)], dirtyClassesFqNames=[melox.music.model.ProviderTrackMetadata.QQMusic, melox.audio.NeteaseQualityClient, melox.audio.NeteasePlaybackUnavailableException, melox.playback.CrossProviderPlaybackRuntime, melox.playback.CrossProviderPlaybackFallbackResolver, melox.provider.lxuser.ChkszApiClient, melox.music.model.ProviderTrackMetadata.Kugou, melox.playback.NeteasePlaybackResolver, melox.playback.CrossProviderFallbackRequest, melox.playback.NeteasePlaybackResolver.ResolvedRequest, melox.provider.lxuser.ChkszPlaybackResult, melox.playback.NeteasePlaybackResolver.Companion, melox.playback.MeloXDesktopPlayer, melox.audio.NeteaseQualityClient.Companion, melox.audio.NeteasePlaybackSource], dirtyClassesFqNamesForceRecompile=[])
+java.lang.IllegalStateException: The following FqNames can't be derived from DirtyData.dirtyLookupSymbols: melox.playback.NeteasePlaybackResolver.
+DirtyData = DirtyData(dirtyLookupSymbols=[LookupSymbol(name=CrossProviderFallbackRequest, scope=melox.playback), LookupSymbol(name=uriForSong, scope=melox.playback.NeteasePlaybackResolver.Companion), LookupSymbol(name=<SAM-CONSTRUCTOR>, scope=melox.playback.NeteasePlaybackResolver.Companion), LookupSymbol(name=ChkszPlaybackResult, scope=melox.provider.lxuser), LookupSymbol(name=<SAM-CONSTRUCTOR>, scope=melox.audio.NeteaseQualityClient.Companion), LookupSymbol(name=ResolvedRequest, scope=melox.playback.NeteasePlaybackResolver), LookupSymbol(name=NeteasePlaybackSource, scope=melox.audio), LookupSymbol(name=<SAM-CONSTRUCTOR>, scope=melox.audio.NeteaseQualityClient), LookupSymbol(name=NeteaseQualityClient, scope=melox.audio), LookupSymbol(name=CrossProviderPlaybackRuntime, scope=melox.playback), LookupSymbol(name=TAG, scope=melox.audio.NeteaseQualityClient.Companion), LookupSymbol(name=MeloXDesktopPlayer, scope=melox.playback), LookupSymbol(name=Kugou, scope=melox.music.model.ProviderTrackMetadata), LookupSymbol(name=NeteasePlaybackUnavailableException, scope=melox.audio), LookupSymbol(name=CrossProviderPlaybackFallbackResolver, scope=melox.playback), LookupSymbol(name=QQMusic, scope=melox.music.model.ProviderTrackMetadata), LookupSymbol(name=Companion, scope=melox.playback.NeteasePlaybackResolver), LookupSymbol(name=ChkszApiClient, scope=melox.provider.lxuser), LookupSymbol(name=TAG, scope=melox.audio.NeteaseQualityClient), LookupSymbol(name=<SAM-CONSTRUCTOR>, scope=melox.playback.NeteasePlaybackResolver)], dirtyClassesFqNames=[melox.music.model.ProviderTrackMetadata.QQMusic, melox.audio.NeteaseQualityClient, melox.audio.NeteasePlaybackUnavailableException, melox.playback.CrossProviderPlaybackRuntime, melox.playback.CrossProviderPlaybackFallbackResolver, melox.provider.lxuser.ChkszApiClient, melox.music.model.ProviderTrackMetadata.Kugou, melox.playback.NeteasePlaybackResolver, melox.playback.CrossProviderFallbackRequest, melox.playback.NeteasePlaybackResolver.ResolvedRequest, melox.provider.lxuser.ChkszPlaybackResult, melox.playback.NeteasePlaybackResolver.Companion, melox.playback.MeloXDesktopPlayer, melox.audio.NeteaseQualityClient.Companion, melox.audio.NeteasePlaybackSource], dirtyClassesFqNamesForceRecompile=[])
+	at org.jetbrains.kotlin.incremental.classpathDiff.ClasspathChangesComputer.toProgramSymbols(ClasspathChangesComputer.kt:362)
+	at org.jetbrains.kotlin.incremental.classpathDiff.ClasspathChangesComputer.computeFineGrainedKotlinClassChanges(ClasspathChangesComputer.kt:262)
+	at org.jetbrains.kotlin.incremental.classpathDiff.ClasspathChangesComputer.computeKotlinClassChanges(ClasspathChangesComputer.kt:162)
+	at org.jetbrains.kotlin.incremental.classpathDiff.ClasspathChangesComputer.computeClassChanges(ClasspathChangesComputer.kt:135)
+	at org.jetbrains.kotlin.incremental.classpathDiff.ClasspathChangesComputer.computeChangedAndImpactedSet(ClasspathChangesComputer.kt:85)
+	at org.jetbrains.kotlin.incremental.classpathDiff.ClasspathChangesComputer.computeClasspathChanges(ClasspathChangesComputer.kt:53)
+	at org.jetbrains.kotlin.incremental.dirtyFiles.ClasspathSnapshotBasedImpactDeterminer.determineChangedAndImpactedSymbols(ClasspathSnapshotBasedImpactDeterminer.kt:40)
+	at org.jetbrains.kotlin.incremental.dirtyFiles.JvmSourcesToCompileCalculator.calculateSourcesToCompileImpl(JvmSourcesToCompileCalculator.kt:40)
+	at org.jetbrains.kotlin.incremental.dirtyFiles.JvmSourcesToCompileCalculator.calculateWithClasspathSnapshot(JvmSourcesToCompileCalculator.kt:96)
+	at org.jetbrains.kotlin.incremental.IncrementalJvmCompilerRunner.calculateSourcesToCompile(IncrementalJvmCompilerRunner.kt:68)
+	at org.jetbrains.kotlin.incremental.IncrementalJvmCompilerRunner.calculateSourcesToCompile(IncrementalJvmCompilerRunner.kt:26)
+	at org.jetbrains.kotlin.incremental.IncrementalCompilerRunner.tryCompileIncrementally$lambda$0$compile(IncrementalCompilerRunner.kt:228)
+	at org.jetbrains.kotlin.incremental.IncrementalCompilerRunner.tryCompileIncrementally(IncrementalCompilerRunner.kt:270)
+	at org.jetbrains.kotlin.incremental.IncrementalCompilerRunner.compile(IncrementalCompilerRunner.kt:122)
+	at org.jetbrains.kotlin.buildtools.internal.jvm.operations.JvmCompilationOperationImpl.compileInProcess(JvmCompilationOperationImpl.kt:423)
+	at org.jetbrains.kotlin.buildtools.internal.jvm.operations.JvmCompilationOperationImpl.compileInProcess(JvmCompilationOperationImpl.kt:337)
+	at org.jetbrains.kotlin.buildtools.internal.jvm.operations.JvmCompilationOperationImpl.executeCancellableImpl(JvmCompilationOperationImpl.kt:149)
+	at org.jetbrains.kotlin.buildtools.internal.jvm.operations.JvmCompilationOperationImpl.executeCancellableImpl(JvmCompilationOperationImpl.kt:69)
+	at org.jetbrains.kotlin.buildtools.internal.CancellableBuildOperationImpl.executeImpl(CancellableBuildOperationImpl.kt:58)
+	at org.jetbrains.kotlin.buildtools.internal.BuildOperationImpl.execute(BuildOperationImpl.kt:34)
+	at org.jetbrains.kotlin.buildtools.internal.KotlinToolchainsImpl$BuildSessionImpl.executeOperation$lambda$1(KotlinToolchainsImpl.kt:70)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+
+	at org.jetbrains.kotlin.buildtools.internal.KotlinLoggerMessageCollectorAdapter.report(KotlinLoggerMessageCollectorAdapter.kt:19)
+	at org.jetbrains.kotlin.cli.common.messages.MessageCollector.report$default(MessageCollector.kt:12)
+	at org.jetbrains.kotlin.incremental.util.MessageCollectorUtilKt.reportException(messageCollectorUtil.kt:11)
+	at org.jetbrains.kotlin.incremental.IncrementalCompilerRunner.compile(IncrementalCompilerRunner.kt:136)
+	at org.jetbrains.kotlin.buildtools.internal.jvm.operations.JvmCompilationOperationImpl.compileInProcess(JvmCompilationOperationImpl.kt:423)
+	at org.jetbrains.kotlin.buildtools.internal.jvm.operations.JvmCompilationOperationImpl.compileInProcess(JvmCompilationOperationImpl.kt:337)
+	at org.jetbrains.kotlin.buildtools.internal.jvm.operations.JvmCompilationOperationImpl.executeCancellableImpl(JvmCompilationOperationImpl.kt:149)
+	at org.jetbrains.kotlin.buildtools.internal.jvm.operations.JvmCompilationOperationImpl.executeCancellableImpl(JvmCompilationOperationImpl.kt:69)
+	at org.jetbrains.kotlin.buildtools.internal.CancellableBuildOperationImpl.executeImpl(CancellableBuildOperationImpl.kt:58)
+	at org.jetbrains.kotlin.buildtools.internal.BuildOperationImpl.execute(BuildOperationImpl.kt:34)
+	at org.jetbrains.kotlin.buildtools.internal.KotlinToolchainsImpl$BuildSessionImpl.executeOperation$lambda$1(KotlinToolchainsImpl.kt:70)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+w: Incremental compilation was attempted but failed:
+    Failed to compute files to recompile: java.lang.IllegalStateException: The following FqNames can't be derived from DirtyData.dirtyLookupSymbols: melox.playback.NeteasePlaybackResolver.
+DirtyData = DirtyData(dirtyLookupSymbols=[LookupSymbol(name=CrossProviderFallbackRequest, scope=melox.playback), LookupSymbol(name=uriForSong, scope=melox.playback.NeteasePlaybackResolver.Companion), LookupSymbol(name=<SAM-CONSTRUCTOR>, scope=melox.playback.NeteasePlaybackResolver.Companion), LookupSymbol(name=ChkszPlaybackResult, scope=melox.provider.lxuser), LookupSymbol(name=<SAM-CONSTRUCTOR>, scope=melox.audio.NeteaseQualityClient.Companion), LookupSymbol(name=ResolvedRequest, scope=melox.playback.NeteasePlaybackResolver), LookupSymbol(name=NeteasePlaybackSource, scope=melox.audio), LookupSymbol(name=<SAM-CONSTRUCTOR>, scope=melox.audio.NeteaseQualityClient), LookupSymbol(name=NeteaseQualityClient, scope=melox.audio), LookupSymbol(name=CrossProviderPlaybackRuntime, scope=melox.playback), LookupSymbol(name=TAG, scope=melox.audio.NeteaseQualityClient.Companion), LookupSymbol(name=MeloXDesktopPlayer, scope=melox.playback), LookupSymbol(name=Kugou, scope=melox.music.model.ProviderTrackMetadata), LookupSymbol(name=NeteasePlaybackUnavailableException, scope=melox.audio), LookupSymbol(name=CrossProviderPlaybackFallbackResolver, scope=melox.playback), LookupSymbol(name=QQMusic, scope=melox.music.model.ProviderTrackMetadata), LookupSymbol(name=Companion, scope=melox.playback.NeteasePlaybackResolver), LookupSymbol(name=ChkszApiClient, scope=melox.provider.lxuser), LookupSymbol(name=TAG, scope=melox.audio.NeteaseQualityClient), LookupSymbol(name=<SAM-CONSTRUCTOR>, scope=melox.playback.NeteasePlaybackResolver)], dirtyClassesFqNames=[melox.music.model.ProviderTrackMetadata.QQMusic, melox.audio.NeteaseQualityClient, melox.audio.NeteasePlaybackUnavailableException, melox.playback.CrossProviderPlaybackRuntime, melox.playback.CrossProviderPlaybackFallbackResolver, melox.provider.lxuser.ChkszApiClient, melox.music.model.ProviderTrackMetadata.Kugou, melox.playback.NeteasePlaybackResolver, melox.playback.CrossProviderFallbackRequest, melox.playback.NeteasePlaybackResolver.ResolvedRequest, melox.provider.lxuser.ChkszPlaybackResult, melox.playback.NeteasePlaybackResolver.Companion, melox.playback.MeloXDesktopPlayer, melox.audio.NeteaseQualityClient.Companion, melox.audio.NeteasePlaybackSource], dirtyClassesFqNamesForceRecompile=[])
+	at org.jetbrains.kotlin.incremental.classpathDiff.ClasspathChangesComputer.toProgramSymbols(ClasspathChangesComputer.kt:362)
+	at org.jetbrains.kotlin.incremental.classpathDiff.ClasspathChangesComputer.computeFineGrainedKotlinClassChanges(ClasspathChangesComputer.kt:262)
+	at org.jetbrains.kotlin.incremental.classpathDiff.ClasspathChangesComputer.computeKotlinClassChanges(ClasspathChangesComputer.kt:162)
+	at org.jetbrains.kotlin.incremental.classpathDiff.ClasspathChangesComputer.computeClassChanges(ClasspathChangesComputer.kt:135)
+	at org.jetbrains.kotlin.incremental.classpathDiff.ClasspathChangesComputer.computeChangedAndImpactedSet(ClasspathChangesComputer.kt:85)
+	at org.jetbrains.kotlin.incremental.classpathDiff.ClasspathChangesComputer.computeClasspathChanges(ClasspathChangesComputer.kt:53)
+	at org.jetbrains.kotlin.incremental.dirtyFiles.ClasspathSnapshotBasedImpactDeterminer.determineChangedAndImpactedSymbols(ClasspathSnapshotBasedImpactDeterminer.kt:40)
+	at org.jetbrains.kotlin.incremental.dirtyFiles.JvmSourcesToCompileCalculator.calculateSourcesToCompileImpl(JvmSourcesToCompileCalculator.kt:40)
+	at org.jetbrains.kotlin.incremental.dirtyFiles.JvmSourcesToCompileCalculator.calculateWithClasspathSnapshot(JvmSourcesToCompileCalculator.kt:96)
+	at org.jetbrains.kotlin.incremental.IncrementalJvmCompilerRunner.calculateSourcesToCompile(IncrementalJvmCompilerRunner.kt:68)
+	at org.jetbrains.kotlin.incremental.IncrementalJvmCompilerRunner.calculateSourcesToCompile(IncrementalJvmCompilerRunner.kt:26)
+	at org.jetbrains.kotlin.incremental.IncrementalCompilerRunner.tryCompileIncrementally$lambda$0$compile(IncrementalCompilerRunner.kt:228)
+	at org.jetbrains.kotlin.incremental.IncrementalCompilerRunner.tryCompileIncrementally(IncrementalCompilerRunner.kt:270)
+	at org.jetbrains.kotlin.incremental.IncrementalCompilerRunner.compile(IncrementalCompilerRunner.kt:122)
+	at org.jetbrains.kotlin.buildtools.internal.jvm.operations.JvmCompilationOperationImpl.compileInProcess(JvmCompilationOperationImpl.kt:423)
+	at org.jetbrains.kotlin.buildtools.internal.jvm.operations.JvmCompilationOperationImpl.compileInProcess(JvmCompilationOperationImpl.kt:337)
+	at org.jetbrains.kotlin.buildtools.internal.jvm.operations.JvmCompilationOperationImpl.executeCancellableImpl(JvmCompilationOperationImpl.kt:149)
+	at org.jetbrains.kotlin.buildtools.internal.jvm.operations.JvmCompilationOperationImpl.executeCancellableImpl(JvmCompilationOperationImpl.kt:69)
+	at org.jetbrains.kotlin.buildtools.internal.CancellableBuildOperationImpl.executeImpl(CancellableBuildOperationImpl.kt:58)
+	at org.jetbrains.kotlin.buildtools.internal.BuildOperationImpl.execute(BuildOperationImpl.kt:34)
+	at org.jetbrains.kotlin.buildtools.internal.KotlinToolchainsImpl$BuildSessionImpl.executeOperation$lambda$1(KotlinToolchainsImpl.kt:70)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+    Falling back to non-incremental compilation (reason = IC_FAILED_TO_COMPUTE_FILES_TO_RECOMPILE)
+    To help us fix this issue, please file a bug at https://youtrack.jetbrains.com/issues/KT with the above stack trace.
+    (Be sure to search for the above exception in existing issues first to avoid filing duplicated bugs.)             
+w: file:///home/lladlam/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonTest/kotlin/melox/player/PlaybackLinkTest.kt:175:33 No cast needed.
+w: file:///home/lladlam/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/desktopTest/kotlin/melox/playback/DesktopAutoMixIntegrationTest.kt:202:72 This class is not recommended for use in Kotlin. Use 'kotlin.Any' instead.
+
+> Task :shared:compileDesktopTestJava NO-SOURCE
+> Task :shared:assembleDesktopTestResources UP-TO-DATE
+> Task :shared:desktopTestProcessResources UP-TO-DATE
+> Task :shared:processDesktopTestResources SKIPPED
+> Task :shared:desktopTestClasses
+
+> Task :shared:desktopTest
+
+NeteasePlaybackRequestTest[desktop] > providerAndLegacySearchShareOptInFallbackWithExactDecodedMetadataAndHeaders[desktop] FAILED
+    melox.audio.NeteasePlaybackUnavailableException at NeteasePlaybackRequestTest.kt:111
+        Caused by: java.io.IOException at NeteasePlaybackRequestTest.kt:111
+
+PlaybackLinkTest[desktop] > bundledDecoderEmitsPcmAndIsResolvedAgain[desktop] FAILED
+    java.io.IOException at PlaybackLinkTest.kt:218
+
+174 tests completed, 2 failed
+
+> Task :shared:desktopTest FAILED
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':shared:desktopTest'.
+> There were failing tests. See the report at: file:///home/lladlam/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/build/reports/tests/desktopTest/index.html
+
+* Try:
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+
+BUILD FAILED in 3m 36s
+13 actionable tasks: 6 executed, 7 up-to-date

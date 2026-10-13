@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="UnifiedSearchLifecycleTest[desktop]" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-10-13T10:18:42.165Z" hostname="lladlam-arch" time="0.077">
+  <properties/>
+  <testcase name="studioAndLiveResultsKeepTheirDistinctVersionsAndOriginalResourceIds[desktop]" classname="melox.music.UnifiedSearchLifecycleTest" time="0.005"/>
+  <testcase name="anUndeclaredSearchMethodIsUnavailableRatherThanAReportedEmptySuccess[desktop]" classname="melox.music.UnifiedSearchLifecycleTest" time="0.013"/>
+  <testcase name="concurrentWhitelistSearchPreservesHealthyNativeIdentityWhenAnotherProviderFails[desktop]" classname="melox.music.UnifiedSearchLifecycleTest" time="0.003"/>
+  <testcase name="nativeDuplicatesAreRemovedAndForeignIdentityCannotMasqueradeAsTheQueriedProvider[desktop]" classname="melox.music.UnifiedSearchLifecycleTest" time="0.001"/>
+  <testcase name="cancellingObsoleteSearchCancelsAllChildrenInsteadOfPublishingFailureResults[desktop]" classname="melox.music.UnifiedSearchLifecycleTest" time="0.002"/>
+  <testcase name="timedOutSourceReportsItsOwnFailureWhileOtherApprovedResultsRemainUsable[desktop]" classname="melox.music.UnifiedSearchLifecycleTest" time="0.052"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

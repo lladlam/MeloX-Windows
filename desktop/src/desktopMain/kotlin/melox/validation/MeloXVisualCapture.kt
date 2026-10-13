@@ -386,6 +386,13 @@ fun main(args: Array<String>) = runBlocking {
                 .put("play_query", playQuery).put("scenes", sceneEvidence)
                 .put("steps", JSONArray(steps)).put("frames", frameEvidence).toString(2))
             scene.close()
+            // This process is finished. Real async lyric/artwork HTTP workers can
+            // otherwise keep JavaExec alive after every scene/assertion was saved.
+            melox.network.MeloXHttpClient.shared.let { http ->
+                http.dispatcher.cancelAll()
+                http.connectionPool.evictAll()
+                http.dispatcher.executorService.shutdown()
+            }
         }
     }
 }

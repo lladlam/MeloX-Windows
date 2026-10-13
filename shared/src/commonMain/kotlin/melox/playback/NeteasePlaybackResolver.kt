@@ -30,12 +30,14 @@ class NeteasePlaybackResolver(
     private val providerPlaybackEnabled: (melox.music.model.MusicSource) -> Boolean = { true },
     private val thirdPartySourcesEnabled: () -> Boolean = { true },
     private val thirdPartyOnlyForMembership: () -> Boolean = { false },
+    private val qualityClient: NeteaseQualityClient = NeteaseQualityClient(cookieProvider = cookieProvider),
 ) {
     private data class ResolveKey(
         val songId: Long,
         val quality: MusicQuality,
         val cookieHeader: String,
         val fallbackIdentity: String,
+        val sourceIdentity: String,
         val metadataIdentity: String,
     )
     class ResolvedRequest(
@@ -51,7 +53,6 @@ class NeteasePlaybackResolver(
             size > MAX_RESOLVED_URIS
     }
     private val inFlight = ConcurrentHashMap<ResolveKey, CompletableFuture<ResolvedRequest>>()
-    private val qualityClient = NeteaseQualityClient(cookieProvider = cookieProvider)
 
     @Volatile
     private var providerDelegate: ProviderPlaybackResolver? = null
@@ -76,6 +77,8 @@ class NeteasePlaybackResolver(
             quality = quality,
             cookieHeader = cookieHeader,
             fallbackIdentity = crossProviderFallback?.cacheIdentity().orEmpty(),
+            sourceIdentity = "${thirdPartySourcesEnabled()}:${thirdPartyOnlyForMembership()}:" +
+                "${chkszPlayback?.cacheIdentity().orEmpty()}:${lxUserPlayback?.cacheIdentity().orEmpty()}",
             metadataIdentity = fallbackRequest?.let {
                 "${it.title}\u001f${it.artist}\u001f${it.durationMs.orZero()}"
             }.orEmpty(),
@@ -169,10 +172,7 @@ class NeteasePlaybackResolver(
         val songId = parsed.path.substringAfterLast('/').toLongOrNull()
             ?: throw IOException("Invalid MeloX song URI: $uri")
         localSourceProvider(songId)?.let { return ResolvedRequest(it) }
-        val queryParams = parsed.query?.split("&")?.associate { param ->
-            val (key, value) = param.split("=", limit = 2)
-            key to value
-        }.orEmpty()
+        val queryParams = queryParams(parsed)
         val requestedQuality = MusicQuality.fromApiLevel(queryParams[QUALITY_QUERY])
             ?: MusicQualityRuntime.selected
         val fallbackRequest = fallbackRequest(parsed, songId, requestedQuality)
@@ -183,24 +183,18 @@ class NeteasePlaybackResolver(
         val parsed = java.net.URI(uri)
         if (parsed.scheme != MELOX_SCHEME || parsed.host != SONG_HOST) return
         val songId = parsed.path.substringAfterLast('/').toLongOrNull() ?: return
-        val queryParams = parsed.query?.split("&")?.associate { param ->
-            val (key, value) = param.split("=", limit = 2)
-            key to value
-        }.orEmpty()
+        val queryParams = queryParams(parsed)
         val quality = MusicQuality.fromApiLevel(queryParams[QUALITY_QUERY])
             ?: MusicQualityRuntime.selected
         resolveSongRequest(songId, quality, fallbackRequest(parsed, songId, quality))
     }
 
-    private fun fallbackRequest(
+    internal fun fallbackRequest(
         uri: java.net.URI,
         songId: Long,
         quality: MusicQuality,
     ): CrossProviderFallbackRequest? {
-        val queryParams = uri.query?.split("&")?.associate { param ->
-            val (key, value) = param.split("=", limit = 2)
-            key to value
-        }.orEmpty()
+        val queryParams = queryParams(uri)
         val title = queryParams[TITLE_QUERY]?.takeIf(String::isNotBlank) ?: return null
         val artist = queryParams[ARTIST_QUERY]?.takeIf(String::isNotBlank) ?: return null
         return CrossProviderFallbackRequest(
@@ -211,6 +205,12 @@ class NeteasePlaybackResolver(
             quality = quality.toCommonTier(),
         )
     }
+
+    private fun queryParams(uri: java.net.URI): Map<String, String> = uri.rawQuery
+        ?.split("&")?.mapNotNull { param ->
+            val parts = param.split("=", limit = 2)
+            if (parts.size != 2) null else parts[0] to java.net.URLDecoder.decode(parts[1], "UTF-8")
+        }?.toMap().orEmpty()
 
     private fun cached(key: ResolveKey): ResolvedRequest? = synchronized(cacheLock) {
         resolvedUris[key]?.also { cached ->
@@ -258,10 +258,13 @@ class NeteasePlaybackResolver(
             append("$MELOX_SCHEME://$SONG_HOST/")
             append(songId)
             append("?$QUALITY_QUERY=${quality.apiLevel}")
-            title?.takeIf(String::isNotBlank)?.let { append("&$TITLE_QUERY=$it") }
-            artist?.takeIf(String::isNotBlank)?.let { append("&$ARTIST_QUERY=$it") }
+            title?.takeIf(String::isNotBlank)?.let { append("&$TITLE_QUERY=${encodeQueryValue(it)}") }
+            artist?.takeIf(String::isNotBlank)?.let { append("&$ARTIST_QUERY=${encodeQueryValue(it)}") }
             durationMs?.takeIf { it > 0L }?.let { append("&$DURATION_QUERY=$it") }
         }
+
+        private fun encodeQueryValue(value: String): String =
+            java.net.URLEncoder.encode(value, "UTF-8").replace("+", "%20")
     }
 }
 

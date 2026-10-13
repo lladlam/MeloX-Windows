@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="DesktopPlaybackStateTest[desktop]" tests="23" skipped="0" failures="0" errors="0" timestamp="2026-10-13T10:18:55.955Z" hostname="lladlam-arch" time="2.414">
+  <properties/>
+  <testcase name="recommendationArrivingAfterNaturalEndAppendsAndResumesTheNewEntry[desktop]" classname="melox.playback.DesktopPlaybackStateTest" time="0.158"/>
+  <testcase name="qualityChangePreservesQueueEntryIdentityAndPausedZeroPosition[desktop]" classname="melox.playback.DesktopPlaybackStateTest" time="0.183"/>
+  <testcase name="tailRecoveryRepreparesPausedPositionOnceAndExplicitPlayCanRetryAgain[desktop]" classname="melox.playback.DesktopPlaybackStateTest" time="0.107"/>
+  <testcase name="periodicPositionUsesTheAndroidTwoSecondIntervalAndStopsOnRelease[desktop]" classname="melox.playback.DesktopPlaybackStateTest" time="0.062"/>
+  <testcase name="decoderFailureSkipsToNextEntryEvenInRepeatOneMode[desktop]" classname="melox.playback.DesktopPlaybackStateTest" time="0.056"/>
+  <testcase name="releasingAnOldControllerCannotStopTheNewControllersSelectedAudio[desktop]" classname="melox.playback.DesktopPlaybackStateTest" time="0.067"/>
+  <testcase name="exhaustedRepeatAllQueueStopsInsteadOfSpinningOnBrokenEntries[desktop]" classname="melox.playback.DesktopPlaybackStateTest" time="0.055"/>
+  <testcase name="missingOutputDoesNotConsumeTheWholeQueue[desktop]" classname="melox.playback.DesktopPlaybackStateTest" time="0.084"/>
+  <testcase name="queueReorderDuringResolutionKeepsTheSelectedEntryPlayable[desktop]" classname="melox.playback.DesktopPlaybackStateTest" time="0.066"/>
+  <testcase name="collectionIdsSurviveQueuePersistenceAndBecomePlaybackMetadata[desktop]" classname="melox.playback.DesktopPlaybackStateTest" time="0.133"/>
+  <testcase name="resolutionFailurePublishesTheNewTrackAndCanBeRetried[desktop]" classname="melox.playback.DesktopPlaybackStateTest" time="0.068"/>
+  <testcase name="userSeekBeforeQueuedEndDispatchKeepsTheCurrentTrackAndNewPosition[desktop]" classname="melox.playback.DesktopPlaybackStateTest" time="0.064"/>
+  <testcase name="pauseAndSeekDuringResolutionAreAppliedToTheDecoderStart[desktop]" classname="melox.playback.DesktopPlaybackStateTest" time="0.068"/>
+  <testcase name="callbacksFromAnOlderPlayOfTheSameTrackCannotAdvanceOrFailTheNewSelection[desktop]" classname="melox.playback.DesktopPlaybackStateTest" time="0.055"/>
+  <testcase name="shuffleOnlyReordersTheFutureAndKeepsManualEntriesAheadOfBaseTracks[desktop]" classname="melox.playback.DesktopPlaybackStateTest" time="0.302"/>
+  <testcase name="persistedProviderQueueRestoresIndexPositionIdentityAndStartsPaused[desktop]" classname="melox.playback.DesktopPlaybackStateTest" time="0.254"/>
+  <testcase name="jellyfinServerAndDuplicateMembershipIdsSurviveQueuePersistence[desktop]" classname="melox.playback.DesktopPlaybackStateTest" time="0.117"/>
+  <testcase name="offlineFailureAndNaturalEndPreferDownloadedFutureEntries[desktop]" classname="melox.playback.DesktopPlaybackStateTest" time="0.048"/>
+  <testcase name="explicitClearStopsAudioAndCannotRestoreStaleQueueOrAcceptLateCallbacks[desktop]" classname="melox.playback.DesktopPlaybackStateTest" time="0.17"/>
+  <testcase name="userPauseBeforeQueuedEndDispatchPreventsAutomaticAdvance[desktop]" classname="melox.playback.DesktopPlaybackStateTest" time="0.059"/>
+  <testcase name="aLateCancelledResolverCannotStartThePreviousTrack[desktop]" classname="melox.playback.DesktopPlaybackStateTest" time="0.072"/>
+  <testcase name="explicitPauseAfterNaturalEndPreventsLateRecommendationsFromRestartingAudio[desktop]" classname="melox.playback.DesktopPlaybackStateTest" time="0.104"/>
+  <testcase name="repeatAllRestartsASingleItemInsteadOfLeavingItFinished[desktop]" classname="melox.playback.DesktopPlaybackStateTest" time="0.058"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[[MeloXPlayback] decoder failed (Content): decoder failure
+[MeloXPlayback] decoder failed (Content): decoder failure
+[MeloXPlayback] decoder failed (Content): decoder failure
+[MeloXPlayback] decoder failed (Content): decoder failure
+[MeloXPlayback] decoder failed (Content): decoder failure
+[MeloXPlayback] decoder failed (Content): decoder failure
+[MeloXPlayback] decoder failed (Output): decoder failure
+[MeloXPlayback] resolve failed: provider unavailable
+[MeloXPlayback] decoder failed (Content): decoder failure
+]]></system-err>
+</testsuite>
