@@ -1,0 +1,154 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.5.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :desktop:kmpPartiallyResolvedDependenciesChecker
+> Task :desktop:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :desktop:convertXmlValueResourcesForCommonMain NO-SOURCE
+> Task :desktop:copyNonXmlValueResourcesForCommonMain NO-SOURCE
+> Task :desktop:prepareComposeResourcesTaskForCommonMain NO-SOURCE
+> Task :desktop:generateResourceAccessorsForCommonMain SKIPPED
+> Task :desktop:convertXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :desktop:copyNonXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :desktop:prepareComposeResourcesTaskForDesktopMain NO-SOURCE
+> Task :desktop:generateResourceAccessorsForDesktopMain SKIPPED
+> Task :desktop:generateActualResourceCollectorsForDesktopMain SKIPPED
+> Task :desktop:generateComposeResClass SKIPPED
+> Task :desktop:generateExpectResourceCollectorsForCommonMain SKIPPED
+> Task :innertube:kmpPartiallyResolvedDependenciesChecker
+> Task :innertube:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :innertube:extractAndroidInnerTube UP-TO-DATE
+> Task :innertube:compileKotlinDesktop UP-TO-DATE
+> Task :innertube:compileDesktopMainJava NO-SOURCE
+> Task :innertube:desktopProcessResources NO-SOURCE
+> Task :innertube:processDesktopMainResources SKIPPED
+> Task :innertube:desktopMainClasses UP-TO-DATE
+> Task :innertube:desktopJar UP-TO-DATE
+> Task :shared:kmpPartiallyResolvedDependenciesChecker
+> Task :shared:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :shared:convertXmlValueResourcesForCommonMain NO-SOURCE
+> Task :shared:copyNonXmlValueResourcesForCommonMain NO-SOURCE
+> Task :shared:prepareComposeResourcesTaskForCommonMain NO-SOURCE
+> Task :shared:generateResourceAccessorsForCommonMain SKIPPED
+> Task :shared:convertXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :shared:copyNonXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :shared:prepareComposeResourcesTaskForDesktopMain NO-SOURCE
+> Task :shared:generateResourceAccessorsForDesktopMain SKIPPED
+> Task :shared:generateActualResourceCollectorsForDesktopMain SKIPPED
+> Task :shared:generateComposeResClass SKIPPED
+> Task :shared:generateExpectResourceCollectorsForCommonMain SKIPPED
+> Task :shared:compileKotlinDesktop UP-TO-DATE
+> Task :shared:compileDesktopMainJava NO-SOURCE
+> Task :shared:assembleDesktopMainResources UP-TO-DATE
+> Task :shared:desktopProcessResources UP-TO-DATE
+> Task :shared:processDesktopMainResources SKIPPED
+> Task :shared:desktopMainClasses UP-TO-DATE
+> Task :shared:desktopJar UP-TO-DATE
+> Task :desktop:compileKotlinDesktop
+> Task :desktop:compileDesktopMainJava NO-SOURCE
+> Task :desktop:assembleDesktopMainResources UP-TO-DATE
+> Task :desktop:desktopProcessResources UP-TO-DATE
+> Task :desktop:processDesktopMainResources SKIPPED
+> Task :desktop:desktopMainClasses
+
+> Task :desktop:captureUi
+SLF4J(W): No SLF4J providers were found.
+SLF4J(W): Defaulting to no-operation (NOP) logger implementation
+SLF4J(W): See https://www.slf4j.org/codes.html#noProviders for further details.
+Captured 00-search: 427x924 density=1.0
+Captured 01-query-frame-0: 427x924 density=1.0
+Captured 01-query-frame-160: 427x924 density=1.0
+Captured 01-query-frame-400: 427x924 density=1.0
+Captured 01-query: 427x924 density=1.0
+Physical click submit: search-submit at Offset(327.0, 161.0)
+Captured 02-submit-frame-0: 427x924 density=1.0
+Captured 02-submit-frame-160: 427x924 density=1.0
+Captured 02-submit-frame-400: 427x924 density=1.0
+Captured 02-submit: 427x924 density=1.0
+Captured 03-result-frame-0: 427x924 density=1.0
+Captured 03-result-frame-160: 427x924 density=1.0
+Captured 03-result-frame-400: 427x924 density=1.0
+Captured 03-result: 427x924 density=1.0
+Verified result: tag:search-song-185670
+Verified result: absent:search-empty
+Verified result: absent:search-error
+Physical click actions: search-song-185670 at Offset(213.5, 294.0)
+Captured 04-actions-frame-0: 427x924 density=1.0
+Captured 04-actions-frame-160: 427x924 density=1.0
+Captured 04-actions-frame-400: 427x924 density=1.0
+Captured 04-actions: 427x924 density=1.0
+Verified actions: tag:song-actions
+Physical click queue-add: song-action-添加到播放队列 at Offset(213.5, 692.0)
+[MeloXPlayback] Playback queue dispatched: size=1, start=0, offline=false, quality=standard
+Captured 05-queue-add-frame-0: 427x924 density=1.0
+[MeloXPlayback] resolve failed: 网易云未返回可播放的 标准 音源，且 MeloX 降级链路也没有可用资源
+Captured 05-queue-add-frame-160: 427x924 density=1.0
+Captured 05-queue-add-frame-400: 427x924 density=1.0
+Captured 05-queue-add: 427x924 density=1.0
+Verified queue-add: queue-min:1
+Verified queue-add: absent:song-actions
+Physical click actions2: search-song-185670 at Offset(213.5, 294.0)
+Captured 06-actions2-frame-0: 427x924 density=1.0
+Captured 06-actions2-frame-160: 427x924 density=1.0
+Captured 06-actions2-frame-400: 427x924 density=1.0
+Captured 06-actions2: 427x924 density=1.0
+Physical click play-next: song-action-下一首播放 at Offset(213.5, 636.0)
+Captured 07-play-next-frame-0: 427x924 density=1.0
+Captured 07-play-next-frame-160: 427x924 density=1.0
+Captured 07-play-next-frame-400: 427x924 density=1.0
+Captured 07-play-next: 427x924 density=1.0
+Verified play-next: queue-min:2
+Verified play-next: absent:song-actions
+Physical click play: search-song-185670 at Offset(213.5, 294.0)
+[MeloXPlayback] Playback queue dispatched: size=1, start=0, offline=false, quality=standard
+Captured 08-play-frame-0: 427x924 density=1.0
+[MeloXPlayback] resolve failed: 网易云未返回可播放的 标准 音源，且 MeloX 降级链路也没有可用资源
+Captured 08-play-frame-160: 427x924 density=1.0
+Captured 08-play-frame-400: 427x924 density=1.0
+Captured 08-play: 427x924 density=1.0
+Captured 09-playing-frame-0: 427x924 density=1.0
+Captured 09-playing-frame-160: 427x924 density=1.0
+Captured 09-playing-frame-400: 427x924 density=1.0
+Captured 09-playing: 427x924 density=1.0
+Verified playing: track:netease:185670
+Exception in thread "main" java.lang.IllegalStateException: Production UI assertion failed at playing: playing:true
+	at melox.validation.MeloXVisualCaptureKt$main$1$4.invokeSuspend$assertScene(MeloXVisualCapture.kt:262)
+	at melox.validation.MeloXVisualCaptureKt$main$1$4.invokeSuspend(MeloXVisualCapture.kt:372)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTaskKt.resume(DispatchedTask.kt:233)
+	at kotlinx.coroutines.DispatchedTaskKt.dispatch(DispatchedTask.kt:152)
+	at kotlinx.coroutines.CancellableContinuationImpl.dispatchResume(CancellableContinuationImpl.kt:470)
+	at kotlinx.coroutines.CancellableContinuationImpl.resumeImpl$kotlinx_coroutines_core(CancellableContinuationImpl.kt:504)
+	at kotlinx.coroutines.CancellableContinuationImpl.resumeImpl$kotlinx_coroutines_core$default(CancellableContinuationImpl.kt:493)
+	at kotlinx.coroutines.CancellableContinuationImpl.resumeUndispatched(CancellableContinuationImpl.kt:596)
+	at kotlinx.coroutines.swing.SwingDispatcher.scheduleResumeAfterDelay$lambda$0(SwingDispatcher.kt:28)
+	at java.desktop/javax.swing.Timer.fireActionPerformed(Timer.java:311)
+	at java.desktop/javax.swing.Timer$DoPostEvent.run(Timer.java:243)
+	at java.desktop/java.awt.event.InvocationEvent.dispatch(InvocationEvent.java:318)
+	at java.desktop/java.awt.EventQueue.dispatchEventImpl(EventQueue.java:773)
+	at java.desktop/java.awt.EventQueue$4.run(EventQueue.java:720)
+	at java.desktop/java.awt.EventQueue$4.run(EventQueue.java:714)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
+	at java.base/java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:86)
+	at java.desktop/java.awt.EventQueue.dispatchEvent(EventQueue.java:742)
+	at java.desktop/java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:203)
+	at java.desktop/java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:124)
+	at java.desktop/java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:113)
+	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:109)
+	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:101)
+	at java.desktop/java.awt.EventDispatchThread.run(EventDispatchThread.java:90)
+
+> Task :desktop:captureUi FAILED
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':desktop:captureUi' (registered in build file 'desktop/build.gradle.kts').
+> Process 'command '/usr/lib/jvm/java-17-openjdk/bin/java'' finished with non-zero exit value 1
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 44s
+14 actionable tasks: 5 executed, 9 up-to-date

@@ -14,6 +14,7 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.focusable
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.draggable
 import androidx.compose.foundation.gestures.rememberDraggableState
@@ -27,6 +28,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
@@ -82,6 +85,7 @@ internal fun MeloXIOSPlayerScene(
 ) {
     var showsLyricsControls by remember(track.id) { mutableStateOf(true) }
     var activityGeneration by remember(track.id) { mutableIntStateOf(0) }
+    var showSkyline by remember { mutableStateOf(false) }
     fun revealControls() { showsLyricsControls = true; activityGeneration += 1 }
     LaunchedEffect(page) { revealControls() }
     LaunchedEffect(page, track.id, showsLyricsControls, activityGeneration, MeloXSettingsRuntime.lyricInterfaceAutoHideDelayMs) {
@@ -102,8 +106,13 @@ internal fun MeloXIOSPlayerScene(
     val headerAlpha by transition.animateFloat({ spring(.7f, 300f) }, "scene-header-alpha") { if (it == 0) 0f else 1f }
     val headerOffset by transition.animateDp({ spring(.7f, 300f) }, "scene-header-offset") { if (it == 0) 40.dp else 0.dp }
 
-    BoxWithConstraints(Modifier.fillMaxSize()) {
+    val sceneFocus = remember { FocusRequester() }
+    LaunchedEffect(page, showSkyline, showsLyricsControls) { sceneFocus.requestFocus() }
+    BoxWithConstraints(Modifier.fillMaxSize().focusRequester(sceneFocus).focusable()) {
         val isLandscape = maxWidth > maxHeight
+        LaunchedEffect(isLandscape) { if (!isLandscape) showSkyline = false }
+        val skylineVisible = isLandscape && page == 1 && showSkyline
+        melox.ui.navigation.MeloXBackHandler(skylineVisible, priority = 60) { showSkyline = false }
         val dragRangePx = (constraints.maxHeight * .86f).coerceAtLeast(1f)
         var collapseProgress by remember { mutableFloatStateOf(0f) }
         var seekJob by remember { mutableStateOf<Job?>(null) }
@@ -177,6 +186,7 @@ internal fun MeloXIOSPlayerScene(
                     onDismiss, onShowActions, onShowQuality, onShowOutput,
                     onInterfaceInteraction = ::revealControls,
                     onInterfaceVisibilityChange = { if (it) revealControls() else showsLyricsControls = false },
+                    showSkyline = skylineVisible, onShowSkyline = { showSkyline = true }, onHideSkyline = { showSkyline = false },
                     grabberDragModifier = Modifier.draggable(dragState, Orientation.Vertical,
                         onDragStarted = { beginCollapse() }, onDragStopped = { settle(it) }))
             } else Column(Modifier.fillMaxSize().padding(horizontal = 32.dp)) {
@@ -236,7 +246,7 @@ internal fun MeloXIOSPlayerScene(
                         onPage, onShowQuality, onShowOutput, ::revealControls, Modifier.padding(horizontal = 32.dp))
                 }
             }
-            PersistentPlayerArtwork(track, sourceColor, isPlaying, page, expansion, sharedArtworkModifier, isLandscape)
+            if (!skylineVisible) PersistentPlayerArtwork(track, sourceColor, isPlaying, page, expansion, sharedArtworkModifier, isLandscape)
         }
     }
 }

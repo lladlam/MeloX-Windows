@@ -83,20 +83,23 @@ class NeteaseUniversalSearchClient(
         query: String,
         page: Int = 1,
         pageSize: Int = 30,
-    ): MusicPage<MusicTrack> {
+    ): MusicPage<MusicTrack> = withContext(Dispatchers.IO) {
         val normalized = query.trim()
-        if (normalized.isBlank()) return MusicPage(emptyList(), page, pageSize, 0)
-        return runCatching {
+        val size = pageSize.coerceIn(1, 50)
+        if (normalized.isBlank()) return@withContext MusicPage(emptyList(), page, size, 0)
+        run {
             val response = eapi(
-                uri = "/api/v1/search",
+                uri = "/api/search/get",
                 data = JSONObject()
                     .put("s", normalized)
-                    .put("offset", (page - 1).coerceAtLeast(0) * pageSize)
-                    .put("limit", pageSize),
+                    .put("type", 1)
+                    .put("offset", (page - 1).coerceAtLeast(0) * size)
+                    .put("limit", size),
+                owner = kotlinx.coroutines.currentCoroutineContext()[kotlinx.coroutines.Job],
             )
             val result = response.optJSONObject("result")
                 ?: response.optJSONObject("data")
-                ?: return@runCatching MusicPage(emptyList(), page, pageSize, 0)
+                ?: return@run MusicPage(emptyList(), page, size, 0)
             val songs = result.optJSONArray("songs")
                 ?: result.optJSONArray("list")
                 ?: JSONArray()
@@ -107,26 +110,26 @@ class NeteaseUniversalSearchClient(
                 }
             }
             val total = result.optInt("songCount", result.optInt("total", tracks.size))
-            MusicPage(tracks, page, pageSize, total.toLong())
-        }.getOrDefault(MusicPage(emptyList(), page, pageSize, 0))
+            MusicPage(tracks, page, size, total.toLong())
+        }
     }
 
     private fun parseSearchTrack(item: JSONObject): MusicTrack? {
         val id = item.optLong("id").takeIf { it > 0L } ?: return null
-        val name = item.getString("name")
+        val name = item.optString("name").ifBlank { "未知歌曲" }
         val artists = item.optJSONArray("artists") ?: item.optJSONArray("ar")
         val artistNames = buildList {
             for (index in 0 until (artists?.length() ?: 0)) {
                 val artist = artists?.optJSONObject(index) ?: continue
-                artist.getString("name")?.takeIf(String::isNotBlank)?.let(::add)
+                artist.optString("name").takeIf(String::isNotBlank)?.let(::add)
             }
         }.ifEmpty { listOf("未知歌手") }
         val album = item.optJSONObject("al") ?: item.optJSONObject("album")
-        val albumName = album?.getString("name")
+        val albumName = album?.optString("name")
         val albumId = album?.optLong("id")?.takeIf { it > 0L }?.toString()
-        val artworkUrl = album?.getString("picUrl")
-            ?: album?.optJSONObject("pic")?.getString("url")
-        val durationMs = item.optLong("dt").takeIf { it > 0L }
+        val artworkUrl = secureUrl(album?.optString("picUrl")?.takeIf(String::isNotBlank)
+            ?: album?.optJSONObject("pic")?.optString("url")?.takeIf(String::isNotBlank))
+        val durationMs = neteaseSearchDurationMs(item).takeIf { it > 0L }
         val status = item.optInt("status", 0)
         return MusicTrack(
             id = MusicResourceId(MusicSource.Netease, id.toString()),

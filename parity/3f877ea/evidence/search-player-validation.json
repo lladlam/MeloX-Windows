@@ -1,0 +1,203 @@
+{
+  "pinned_android": "3f877eaffe30c82eb6d24eb3647702f5bc554dd3",
+  "windows_parent": "5a8f24829d3d2cdcddcf2f9f3e700aa8765ba9dc",
+  "automated": {
+    "suites": 31,
+    "tests": 166,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "build": "PASSED desktopTest/desktopMainClasses/desktopJar/packageUberJarForCurrentOS",
+  "native_source": "search-player-source-decoder.json",
+  "native_packaged": "search-player-linux-packaged-decoder.json",
+  "independent_equalizer_readback": "search-player-equalizer-readback.json",
+  "final_linux_jar": {
+    "file": "desktop/build/compose/jars/MeloX-Desktop-linux-x64-1.0.0.jar",
+    "bytes": 221994378,
+    "sha256": "038815dd488e74cbb125a2e79e184bb73d59e15be791c64fbce9189ea7b5cd28"
+  },
+  "source_sha256": {
+    ".github/workflows/build.yml": "b36742203a0346b2f0933660279365c08fc1325ee7b9b59631ba349649163271",
+    "desktop/build.gradle.kts": "6ab406bf360e5a5a83385fba959cc36e593c918edd2f1556adfbd1bb6a15f52b",
+    "desktop/src/desktopMain/kotlin/melox/ui/glass/MeloXLiquidSlider.kt": "82732300874bfbafb3186367815ad949b887d2b826fee288ef77d5e55eccc07f",
+    "desktop/src/desktopMain/kotlin/melox/ui/glass/MeloXNativeGlassComponents.kt": "8b76217a4f0509ec5454d35b266168409599fd183b0578664b190326488f8096",
+    "desktop/src/desktopMain/kotlin/melox/ui/layout/MeloXAdaptiveLayout.kt": "e666b94fffc02cd4c6164a0b04d6d4b68b4e1298354c38f8356566c449fbdef1",
+    "desktop/src/desktopMain/kotlin/melox/ui/screens/AccountProfileScreen.kt": "e7f37cedbae0a900b8fbce612aa47c146a5ddf051b72f415ab7aae0fa4eca10e",
+    "desktop/src/desktopMain/kotlin/melox/ui/screens/AlternativeLyricsSettings.kt": "f943c4f800f881ad41b5965593190663037c482d473f7254de6404c36e8267e0",
+    "desktop/src/desktopMain/kotlin/melox/ui/screens/BilibiliLyricOffset.kt": "1ce468a41d7446cac9574822cf2e14915f75a679c306c134eb8332392ad2cc8e",
+    "desktop/src/desktopMain/kotlin/melox/ui/screens/EqualizerSettings.kt": "5550e12b4f87675f6856f670be6a2a73c3c7047ebf524bbc1e9b1c86830fc860",
+    "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXAlternativeLyricsPanels.kt": "15231504d90421c5a5da6b5fcdc93ca8f5c39b51aafa7acafe8074d2fade2fb6",
+    "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXIOSLandscapePlayerScene.kt": "3bc899638b03f610cd8532ce7ac08bcfefe871496631a280e41ee68345a5b7e5",
+    "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXIOSPlayerScene.kt": "dc33cbd1d2b50c45bfd72d7612380abc39e5ab0c5350e12871e5746e6e741e55",
+    "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXNowPlaying.kt": "a2d24cf74e23a7df2a9f52e41747d1048dcc63eab924b5e0f1c7514b765decc0",
+    "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerLyrics.kt": "e731ad21b55194d7a57220e51f074be3d96a26048042f8df2c9a31c45cfff4ee",
+    "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXSongActionsOverlay.kt": "a5d69119678d4a760e0bc20723665cfd3f47b1eebc1cb973135922ef07c8a95e",
+    "desktop/src/desktopMain/kotlin/melox/ui/screens/PlaylistDetailScreen.kt": "91eba13f4934af8cb6d4850aff17666834e2a7a82b2ab406748d34baa12cd939",
+    "desktop/src/desktopMain/kotlin/melox/ui/screens/PodcastsScreen.kt": "5b89b37dee182cc3d9b6074b1d209bc74d4d6826230764285ff457f3c9406172",
+    "desktop/src/desktopMain/kotlin/melox/ui/screens/SearchScreen.kt": "470203ff572207cf9a3728dd327f9f50d5abb92f557f1d10834e792959c250ba",
+    "desktop/src/desktopMain/kotlin/melox/ui/screens/SettingsScreen.kt": "53d81f3038407970293da6604384b7cab813644fc13c3b1a9171d38bc4502434",
+    "desktop/src/desktopMain/kotlin/melox/validation/MeloXVisualCapture.kt": "fa26b37fa0b7f641c54a89b83f49bd67aeb0c11378b58e72ac9f907cb0199a86",
+    "desktop/src/main/resources/parity/pinned-settings-strings.properties": "649df6af06ded94e91b6f4c728aafe2e29c76ba981097503f869e3fd8144fbc4",
+    "shared/src/commonMain/kotlin/melox/model/SearchSong.kt": "a37401b6e24ce79ad449cf6ad2f4c5aa5c6971dd72557e2b8aba9a7d373f9b99",
+    "shared/src/commonMain/kotlin/melox/network/NeteaseSearchClient.kt": "b3897614594243474e60d01156f53eb4bdc29d15f8f132c614515d87b1d623b5",
+    "shared/src/commonMain/kotlin/melox/network/NeteaseUniversalSearchClient.kt": "d46079e3da3ac7987b974c93ca1f04483520257ac008dc32be3887e7b675fc08",
+    "shared/src/commonMain/kotlin/melox/playback/MeloXEqualizerController.kt": "46c022ecfdc174f04ee3b27ab58f729d160209664445c199e4a2e8241b121cb9",
+    "shared/src/commonMain/kotlin/melox/playback/MeloXEqualizerSettings.kt": "8865961feb5a2393d4542131946fe453011b5efc0d58b09259771288e076fefb",
+    "shared/src/commonMain/kotlin/melox/player/AudioPlayer.kt": "aa98b81697cd6e824ca875c868454f47f10396283d5906a9a459137cf14c21f8",
+    "shared/src/commonMain/kotlin/melox/player/MeloXDualDecodeSession.kt": "c0a0c311dd55687d71977b2a992328fc478193d9508273c7b3e772313e306424",
+    "shared/src/commonMain/kotlin/melox/player/MeloXPcmMix.kt": "9f38653fec6bfe693b4e721d38ac58211dea87ad807e724e27b8ddce150d274e",
+    "shared/src/commonMain/kotlin/melox/provider/local/LocalMediaScanner.kt": "8df0f2125102ced58f66e8d028daa9e6ef9e83e18c20237b9276c60b631052a7",
+    "shared/src/commonMain/kotlin/melox/provider/local/LocalMusicRepository.kt": "45483bcc22817fd9f473220315278b76ff2abd553727c779a00748ba6bd1eb2c",
+    "shared/src/commonMain/kotlin/melox/provider/local/LocalProvider.kt": "d5a87ee44b19b6a6fde19610bf1c4aae32daac157b22f4cfcd096b283ee86f9f",
+    "shared/src/commonMain/kotlin/melox/provider/netease/NeteaseProvider.kt": "0cf697046cbabc7e63b91d5e28c87cb3bbf9d144c0260a5efcbbefe634d1b737",
+    "shared/src/commonMain/kotlin/melox/settings/MeloXSettingsPreferences.kt": "0f1db541c348be72acfca35b462805c726b42eec600ef55218e4f1745f1e7e65",
+    "shared/src/desktopTest/kotlin/melox/network/DesktopSearchProtocolTest.kt": "e86b256331f7ca34c3ccb04d8abd21ad664b65749d426214ae895d7388735d6c",
+    "shared/src/desktopTest/kotlin/melox/playback/DesktopEqualizerDspTest.kt": "542f7b19500e32e7b81b79196c96e87791075b9afbbec82fb5cf5bfbcc4633b6",
+    "shared/src/desktopTest/kotlin/melox/playback/DesktopLocalLyricsPersistenceTest.kt": "0da43314c6a7cff1477392046c111af944c5e59384e13d51cbeb77a387e409ab",
+    "shared/src/desktopTest/kotlin/melox/playback/DesktopSongOperationIdentityTest.kt": "e1e04e966b15cead17ae1c61b297e63b41e557d4b590b915b7d7a8e6b73b2f19",
+    "shared/src/desktopTest/kotlin/melox/player/DesktopAudioSessionTest.kt": "f3dd04b0d132744683d40b1cf3983c3cf23fc0bf005b09e6d69bc6252cab3764",
+    "shared/src/desktopTest/kotlin/melox/player/DesktopDualPcmTest.kt": "f20942b9df14fe7ce6d56edfb97f02c5a580e68bfcebaafb26a5f2680784628e",
+    "shared/src/desktopTest/kotlin/melox/player/NativePcmEvidence.kt": "d8eefe2de0b1d0b0dfdf0251eee97757a20d5056bca422a1bfeeba2928531b66",
+    "tools/capture_search_player.py": "dad7d5fd8e9c2fa2e2d35c5840e57856762525761447095aa5bf3201e3fee4c6",
+    "tools/generate_pcm_fixtures.py": "124647f57f7b80008ffbe8b7b6ab5b3cf6f3ef660f27db489c9d84f52cbe066f",
+    "tools/verify_native_equalizer.py": "3071170a572a82f99bd2879074ec03b8a97b72dbf0dced8896bc118ad2deb4cc"
+  },
+  "textpv": {
+    "pinned_visual_specs_exact": 18,
+    "production_styles_replayed": [
+      "BlueBold",
+      "KineticSplit",
+      "BluePlane",
+      "CyberGrunge",
+      "Geometric",
+      "RainCity",
+      "CyberpunkHUD",
+      "EmotionCinema",
+      "HystericNight",
+      "SpiderWeb",
+      "StaggeredText",
+      "CalmVillain",
+      "GirlyClouds",
+      "SweetPink",
+      "FlyMeToTheMoon",
+      "KawaiiPixel",
+      "CrimeScene",
+      "Haruhikage"
+    ]
+  },
+  "packaged_legal_sha256": {
+    "legal/cloud-control-privacy-zh-CN.md": "7030f44dda89b27357ba4b960562d5eae98d9b5ae451a8a398e4fb6cc68f5793",
+    "legal/disclaimer-zh-CN.md": "4c6e212bb6c78bd2fa6e45a76136cba6a5cfd82c1321dfdf27d727df2a50c44e",
+    "legal/privacy-policy-zh-CN.md": "fdf41c3aea883220ba8070823b1a35d1156869117ed607f6b5c2769997ceb097",
+    "legal/third-party-music-sources-zh-CN.md": "4aefd5137ea6e9a2da335671753dca4d8aebcdcf0ddc903c00a03bc89ef62c38"
+  },
+  "production_replays": [
+    {
+      "directory": "search-player-eq-ui",
+      "renderer": "production ImageComposeScene",
+      "audio_endpoint": "Java Sound physical output",
+      "state_scenes": 15,
+      "dynamic_frames": 42,
+      "assertions": 12,
+      "status": "PASSED_FOR_DECLARED_ASSERTIONS",
+      "limits": "No pinned Android reference/physical audio acceptance"
+    },
+    {
+      "directory": "search-player-search-ui",
+      "renderer": "production ImageComposeScene",
+      "audio_endpoint": "Java Sound physical output",
+      "state_scenes": 20,
+      "dynamic_frames": 57,
+      "assertions": 15,
+      "status": "PASSED_FOR_DECLARED_ASSERTIONS",
+      "limits": "No pinned Android reference/physical audio acceptance"
+    },
+    {
+      "directory": "search-player-classic-ui",
+      "renderer": "production ImageComposeScene",
+      "audio_endpoint": "VALIDATION_SOFTWARE_PCM_OUTPUT",
+      "state_scenes": 15,
+      "dynamic_frames": 42,
+      "assertions": 13,
+      "status": "PASSED_FOR_DECLARED_ASSERTIONS",
+      "limits": "No pinned Android reference/physical audio acceptance"
+    },
+    {
+      "directory": "search-player-lyrics-ui",
+      "renderer": "production ImageComposeScene",
+      "audio_endpoint": "Java Sound physical output",
+      "state_scenes": 11,
+      "dynamic_frames": 30,
+      "assertions": 8,
+      "status": "PASSED_FOR_DECLARED_ASSERTIONS",
+      "limits": "Public lyrics and mode UI only; native playback unavailable for tested online track"
+    },
+    {
+      "directory": "search-player-textpv-ui",
+      "renderer": "production ImageComposeScene",
+      "audio_endpoint": "VALIDATION_SOFTWARE_PCM_OUTPUT",
+      "state_scenes": 36,
+      "dynamic_frames": 105,
+      "assertions": 21,
+      "status": "PASSED_FOR_DECLARED_ASSERTIONS",
+      "limits": "No pinned Android reference/physical audio acceptance"
+    },
+    {
+      "directory": "search-player-textpv-all-ui",
+      "renderer": "production ImageComposeScene",
+      "audio_endpoint": "VALIDATION_SOFTWARE_PCM_OUTPUT",
+      "state_scenes": 117,
+      "dynamic_frames": 348,
+      "assertions": 112,
+      "status": "PASSED_FOR_DECLARED_ASSERTIONS",
+      "limits": "No pinned Android reference/physical audio acceptance"
+    },
+    {
+      "directory": "search-player-search-catalog-ui",
+      "renderer": "production ImageComposeScene",
+      "audio_endpoint": "Java Sound physical output",
+      "state_scenes": 20,
+      "dynamic_frames": 57,
+      "assertions": 8,
+      "status": "PASSED_FOR_DECLARED_ASSERTIONS",
+      "limits": "Artist/playlist reads pass; podcast programs returned -462 login-required, not accepted"
+    },
+    {
+      "directory": "search-player-search-play-unavailable-ui",
+      "renderer": "production ImageComposeScene",
+      "audio_endpoint": "VALIDATION_SOFTWARE_PCM_OUTPUT",
+      "state_scenes": 14,
+      "dynamic_frames": 39,
+      "assertions": 14,
+      "status": "PASSED_FOR_DECLARED_ASSERTIONS",
+      "limits": "Queue identity/actions and genuine unavailable state only; online playback BLOCKED"
+    },
+    {
+      "directory": "search-player-eva-local-ui",
+      "renderer": "production ImageComposeScene",
+      "audio_endpoint": "VALIDATION_SOFTWARE_PCM_OUTPUT",
+      "state_scenes": 10,
+      "dynamic_frames": 27,
+      "assertions": 12,
+      "status": "PASSED_FOR_DECLARED_ASSERTIONS",
+      "limits": "No pinned Android reference/physical audio acceptance"
+    }
+  ],
+  "production_totals": {
+    "state_scenes": 258,
+    "dynamic_frames": 747,
+    "assertions": 215
+  },
+  "capture_revision_note": "Replays were collected sequentially during this working-tree batch. Final source digests are recorded separately; older captures are not exact-final-artifact pixel evidence. All-18, live catalog/unavailable and generated EVA runs follow the final production-source changes.",
+  "acceptance": {
+    "windows_ci": "PENDING_EXACT_FEATURE_SHA",
+    "windows_physical_audio": "BLOCKED",
+    "windows_real_account_DPAPI": "BLOCKED",
+    "authenticated_provider_reads_writes": "BLOCKED",
+    "tested_netease_online_playback": "BLOCKED_NO_PLAYABLE_NONPREVIEW_SOURCE",
+    "podcast_programs": "BLOCKED_LOGIN_REQUIRED_-462",
+    "pinned_android_pixels_motion": "BLOCKED_NO_DEVICE_REFERENCE",
+    "overall_search_player_playback_parity": "PARTIAL"
+  }
+}

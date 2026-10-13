@@ -131,6 +131,10 @@ internal fun LyricsPage(
     onInterfaceVisibilityChange: (Boolean) -> Unit = {},
     modifier: Modifier = Modifier,
 ) {
+    if (MeloXSettingsRuntime.lyricsStyle != melox.settings.MeloXLyricsStyle.AppleMusic) {
+        MeloXAlternativeLyricsPanel(track, modifier, onInterfaceInteraction, interactive)
+        return
+    }
     val state = LocalMeloXPlayerLyrics.current ?: rememberMeloXPlayerLyrics(track)
     val playback by AudioPlayer.state.collectAsState()
     val renderedPosition = remember(track.id) { mutableLongStateOf(AudioPlayer.positionMs.value) }
@@ -162,8 +166,9 @@ internal fun LyricsPage(
     val lines = document?.lines.orEmpty()
     val wordByWord = MeloXSettingsRuntime.lyricWordByWordEnabled
     val usesWordTiming = wordByWord && lines.any { it.syllables.isNotEmpty() }
-    val timedAdvance = if (MeloXSettingsRuntime.lyricAdvanceAppliesToWordByWord) MeloXSettingsRuntime.lyricAdvanceMs.toLong() else 0L
-    val lineAdvance = if (usesWordTiming) timedAdvance else MeloXSettingsRuntime.lyricAdvanceMs.toLong()
+    val lyricAdvance = effectiveBilibiliLyricAdvance(MeloXSettingsRuntime.lyricAdvanceMs, rememberBilibiliLyricOffset(track))
+    val timedAdvance = if (track.id.source == melox.music.model.MusicSource.Bilibili || MeloXSettingsRuntime.lyricAdvanceAppliesToWordByWord) lyricAdvance else 0L
+    val lineAdvance = if (usesWordTiming) timedAdvance else lyricAdvance
     val interludes = remember(lines) { MeloXLyricPresentation.interludes(lines) }
     val interludeByIndex = remember(interludes) { interludes.associateBy { it.followingLyricIndex } }
     val countdownEnabled = MeloXSettingsRuntime.lyricInterludeCountdownEnabled

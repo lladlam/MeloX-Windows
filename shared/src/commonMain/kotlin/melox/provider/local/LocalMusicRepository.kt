@@ -22,9 +22,13 @@ class LocalMusicRepository {
     @Synchronized
     fun replaceTracks(value: List<LocalTrackRecord>) {
         val oldFavorites = tracks().associate { it.fileKey to it.isFavorite }
+        writeTracks(value.map { track -> track.copy(isFavorite = oldFavorites[track.fileKey] ?: track.isFavorite) })
+    }
+
+    private fun writeTracks(value: List<LocalTrackRecord>) {
         val array = JSONArray()
         value.distinctBy(LocalTrackRecord::fileKey).forEach { track ->
-            array.put(encodeTrack(track.copy(isFavorite = oldFavorites[track.fileKey] ?: track.isFavorite)))
+            array.put(encodeTrack(track))
         }
         preferences.putString("tracks", array.toString())
     }
@@ -34,7 +38,7 @@ class LocalMusicRepository {
 
     @Synchronized
     fun setFavorite(fileKey: String, favorite: Boolean) {
-        replaceTracks(tracks().map { if (it.fileKey == fileKey) it.copy(isFavorite = favorite) else it })
+        writeTracks(tracks().map { if (it.fileKey == fileKey) it.copy(isFavorite = favorite) else it })
     }
 
     @Synchronized

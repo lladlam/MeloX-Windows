@@ -7,6 +7,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Text
@@ -36,7 +37,19 @@ internal fun MeloXIOSLandscapePlayerScene(
     onPage: (Int) -> Unit, onDismiss: () -> Unit, onShowActions: () -> Unit,
     onShowQuality: () -> Unit, onShowOutput: () -> Unit, onInterfaceInteraction: () -> Unit,
     onInterfaceVisibilityChange: (Boolean) -> Unit, grabberDragModifier: Modifier,
+    showSkyline: Boolean = false, onShowSkyline: () -> Unit = {}, onHideSkyline: () -> Unit = {},
 ) {
+    if (showSkyline && page == 1) {
+        Box(Modifier.fillMaxSize()) {
+            MeloXSkylineLyricsPanel(track, Modifier.fillMaxSize(), onInterfaceInteraction)
+            Box(Modifier.align(Alignment.TopEnd).padding(top = 12.dp, end = 20.dp).testTag("player-skyline-exit")
+                .clip(CircleShape).background(Color.Black.copy(alpha = .24f)).clickable(onClick = onHideSkyline)
+                .padding(horizontal = 16.dp, vertical = 10.dp)) {
+                Text("退出天际歌词", color = Color.White.copy(alpha = .86f), fontSize = 13.sp, fontWeight = FontWeight.SemiBold)
+            }
+        }
+        return
+    }
     BoxWithConstraints(Modifier.fillMaxSize().testTag("player-landscape").padding(horizontal = 20.dp, vertical = 2.dp)) {
         val contentWidth = when {
             maxWidth >= 840.dp -> 1180.dp
@@ -58,6 +71,11 @@ internal fun MeloXIOSLandscapePlayerScene(
                                 fontWeight = FontWeight.SemiBold, maxLines = 1, overflow = TextOverflow.Ellipsis)
                             Text(track.artistText, color = Color.White.copy(alpha = .58f), fontSize = 15.sp,
                                 lineHeight = 19.sp, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                        }
+                        if (page == 1 && MeloXSettingsRuntime.skylineEnabled) {
+                            Box(Modifier.size(40.dp).testTag("player-skyline-open").clip(CircleShape).clickable(onClick = onShowSkyline), Alignment.Center) {
+                                Text("↗", fontSize = 19.sp, color = Color.White.copy(alpha = .84f))
+                            }
                         }
                         Box(Modifier.size(40.dp).testTag("player-actions").clip(CircleShape).clickable(onClick = onShowActions), Alignment.Center) {
                             MeloXSymbolIcon(MeloXSymbol.Ellipsis, size = 22, color = Color.White)

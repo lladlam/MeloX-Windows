@@ -32,6 +32,12 @@ def main():
             draw.ellipse((256-radius, 256-radius, 256+radius, 256+radius), outline="white", width=4)
         draw.text((30, 30), f"GENERATED {hz} Hz", fill="white")
         image.save(args.directory / f"{name}.png")
+        paragraphs = []
+        for second in range(seconds):
+            words = ['Generated', str(hz), 'Hz', f'line {second + 1}']
+            spans = ' '.join(f'<span begin="00:00:{second + index * .2:06.3f}" end="00:00:{second + (index + 1) * .2:06.3f}">{word}</span>' for index, word in enumerate(words))
+            paragraphs.append(f'<p begin="00:00:{second:06.3f}" end="00:00:{second + 1:06.3f}">{spans}</p>')
+        (args.directory / f"{name}.ttml").write_text('<tt xmlns="http://www.w3.org/ns/ttml"><body><div>' + ''.join(paragraphs) + '</div></body></tt>\n')
         records.append({"file": file.name, "frequency_hz": hz, "duration_ms": seconds * 1000, "channels": 2,
                         "sample_rate": 44100, "pcm_amplitude": 6000, "wav_sha256": hashlib.sha256(file.read_bytes()).hexdigest()})
     (args.directory / "fixtures.json").write_text(json.dumps({"origin": "generated sine PCM, no private audio", "tracks": records}, indent=2)+"\n")

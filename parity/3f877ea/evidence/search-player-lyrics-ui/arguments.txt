@@ -1,0 +1,24 @@
+--source
+Local
+--start-tab
+Settings
+--theme
+Dark
+--output
+/home/lladlam/项目/MeloX-Windows/parity/3f877ea/evidence/search-player-lyrics-ui
+--wait-ms
+1500
+--startup-wait-ms
+1000
+--frames-ms
+0,160,400
+--play-id
+185670
+--width
+1100
+--height
+780
+--steps
+lyric-settings:tap@settings-open-lyrics;style:tap@settings-selector:Lyrics style;eva:tap@settings-option:EVA kinetic type;back:escape;player:tap@mini-player-expand;lyrics:tap@player-show-lyrics;loaded:wait@6000;skyline:tap@player-skyline-open;skyline-exit:tap@player-skyline-exit;collapse:tap@player-collapse
+--expect
+lyric-settings=tag:settings-lyrics;player=page:Artwork;lyrics=page:Lyrics,state:player-lyrics:Eva;skyline=tag:player-skyline,absent:player-controls;skyline-exit=absent:player-skyline,state:player-lyrics:Eva

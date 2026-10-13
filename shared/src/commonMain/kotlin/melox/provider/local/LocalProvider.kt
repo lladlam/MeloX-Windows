@@ -17,14 +17,17 @@ import melox.music.provider.MusicCapability
 import melox.music.provider.MusicProvider
 import melox.music.provider.PlaybackCapability
 import melox.music.provider.SearchCapability
+import melox.music.provider.LyricsCapability
+import melox.lyrics.LyricsDocument
+import melox.lyrics.AmlldbLyricsClient
 
 class LocalProvider(
     context: Any? = null,
     private val repository: LocalMusicRepository = LocalMusicRepository(),
-) : MusicProvider, SearchCapability, PlaybackCapability {
+) : MusicProvider, SearchCapability, PlaybackCapability, LyricsCapability {
     override val source: MusicSource = MusicSource.Local
     override val displayName: String = source.displayName
-    override val capabilities: Set<MusicCapability> = setOf(MusicCapability.Playback, MusicCapability.Library, MusicCapability.Search)
+    override val capabilities: Set<MusicCapability> = setOf(MusicCapability.Playback, MusicCapability.Library, MusicCapability.Search, MusicCapability.Lyrics)
 
     override suspend fun searchSongs(query: String, page: Int, pageSize: Int): MusicPage<MusicTrack> = withContext(Dispatchers.IO) {
         val all = repository.tracks().filter { record ->
@@ -49,5 +52,14 @@ class LocalProvider(
         }.getOrNull()
         if (file == null || !file.isFile || !file.canRead()) PlaybackResolution.Unavailable("本地文件不存在或无法读取")
         else PlaybackResolution.Playable(file.canonicalPath, requestedQuality = quality, format = file.extension.lowercase())
+    }
+
+    override suspend fun lyrics(track: MusicTrack): LyricsDocument = withContext(Dispatchers.IO) {
+        val local = repository.track(track.id.value) ?: return@withContext LyricsDocument(emptyList())
+        local.cachedLyrics?.let { return@withContext it }
+        val id = local.recognizedNeteaseId ?: return@withContext LyricsDocument(emptyList())
+        AmlldbLyricsClient().lyrics(id).also { document ->
+            if (document.lines.isNotEmpty()) repository.updateLyrics(track.id.value, document)
+        }
     }
 }

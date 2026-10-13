@@ -165,7 +165,7 @@ object AudioPlayer {
         val engine = MeloXDualDecodeSession(
             primarySource = MeloXDeckSource(request.url, request.headers, startAtMs, trackKey(track), _durationMs.value),
             outputFactory = { outputLineFactory() },
-            bassSwap = !melox.platform.getPreferences("melox_playback").getBoolean("equalizer_enabled", false),
+            bassSwap = true,
             onClock = { clock ->
                 synchronized(playbackLock) {
                     if (session.get() === request) {
@@ -271,6 +271,7 @@ object AudioPlayer {
                 currentLine = line
             }
             val buffer = ByteArray(PCM_SAMPLE_RATE * PCM_BYTES_PER_FRAME / 5)
+            val equalizer = melox.playback.MeloXEqualizerController()
             var started = false
             var endedNaturally = false
             var requestedEnd = false
@@ -343,7 +344,7 @@ object AudioPlayer {
                         }
                         progressJob = startProgress(request)
                     }
-                    MeloXPcmMix.scale(buffer, read, volumeLinear)
+                    equalizer.process(buffer, read, volumeLinear)
                     var written = 0
                     while (written < read && session.get() === request && seekRevision.get() == launchedRevision) {
                         val accepted = try { line.write(buffer, written, read - written) }
@@ -366,6 +367,7 @@ object AudioPlayer {
                 else if (error is AudioPlaybackFailure || error is CancellationException) throw error
                 else throw AudioPlaybackFailure(if (error is IOException) AudioFailureKind.Content else AudioFailureKind.Output, error)
             } finally {
+                equalizer.release()
                 progressJob?.cancel()
                 closeDecoder(process, line)
                 stderrJob.cancel()

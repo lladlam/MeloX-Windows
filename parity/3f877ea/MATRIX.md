@@ -39,6 +39,20 @@ Historical `parity/94e17c9/` evidence is reference material, not new acceptance.
 
 ## Evidence levels
 
+Search/player/output: `SEARCH_PLAYER_PLAYBACK.md`, `search-player-validation.json`,
+`search-player-tests/`, `search-player-native-pcm/` and independent
+`search-player-equalizer-readback.json`. **166 tests / 31 suites / zero failures,
+errors or skipped**, **9 production replays / 258 states / 747 frames / 215
+assertions**, all 18 TextPV styles. Real single/post-mix dual user EQ, native
+Songs/artwork/operation IDs, profile/catalog routing, adaptive Classic controls,
+EVA/TextPV/Skyline, observed Bilibili offsets and Local persistence are implemented.
+Their overall parity remains **PARTIAL**; advanced player/lyrics controls, full
+search animations and provider-account acceptance remain outstanding. Tested
+online song has no playable non-preview source, and podcast programs require
+login (-462); neither is successful playback/catalog acceptance. New Windows CI
+must reference the published feature SHA. Hardware/native accounts and pinned
+Android pixels/motion remain separately **BLOCKED**.
+
 1. Automated unit/state tests.
 2. Linux native FFmpeg / PCM and offscreen production UI simulation.
 3. Windows CI build / packaged native decoder (must reference actual run SHA).

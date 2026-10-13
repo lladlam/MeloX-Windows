@@ -28,6 +28,7 @@ object MeloXSettingsPreferences {
 
     fun setBoolean(key: String, value: Boolean) {
         prefs().putBoolean(key, value)
+        if (key.startsWith("equalizer_")) melox.playback.MeloXEqualizerSettings.refresh()
         if (key == "lyrics_auto_select" && !value) {
             prefs().putBoolean("experimental_lyric_strong_binding", false)
             MeloXSettingsRuntime.lyricStrongBindingEnabled = false
@@ -131,6 +132,7 @@ object MeloXSettingsPreferences {
 
     fun setFloat(key: String, value: Float) {
         prefs().putFloat(key, value)
+        if (key.startsWith("equalizer_")) melox.playback.MeloXEqualizerSettings.refresh()
         when (key) {
             "lyrics_font_scale" -> MeloXSettingsRuntime.lyricFontScale = value.coerceIn(.8f, 1.25f)
             "lyrics_focus_position" -> MeloXSettingsRuntime.lyricFocusPosition = value.coerceIn(.05f, .8f)
@@ -177,6 +179,7 @@ object MeloXSettingsPreferences {
 
     fun setString(key: String, value: String) {
         prefs().putString(key, value)
+        if (key.startsWith("equalizer_")) melox.playback.MeloXEqualizerSettings.refresh()
         when (key) {
             "theme_mode" -> MeloXSettingsRuntime.themeMode = runCatching {
                 MeloXThemeMode.valueOf(value)
@@ -251,6 +254,7 @@ object MeloXSettingsPreferences {
 
     fun reset() {
         prefs().clear()
+        melox.playback.MeloXEqualizerSettings.resetLegacyOverrides()
         MeloXSettingsRuntime.initialize(force = true)
     }
 

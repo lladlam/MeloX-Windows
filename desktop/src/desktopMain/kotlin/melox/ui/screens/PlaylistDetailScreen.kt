@@ -107,7 +107,7 @@ fun PlaylistDetailScreen(
     val filtered = songs.filter { filter.isBlank() || it.name.contains(filter, true) || it.artists.contains(filter, true) || it.album.contains(filter, true) }
     val totalDurationMs = songs.sumOf { it.durationMs }
 
-    Column(modifier = Modifier.fillMaxSize().background(MeloXColors.pageBackground())) {
+    Column(modifier = Modifier.fillMaxSize().testTag("playlist-detail").background(MeloXColors.pageBackground())) {
         Row(
             modifier = Modifier.fillMaxWidth().height(48.dp).padding(horizontal = 16.dp),
             verticalAlignment = Alignment.CenterVertically

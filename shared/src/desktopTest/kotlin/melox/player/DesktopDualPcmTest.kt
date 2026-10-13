@@ -111,6 +111,31 @@ class DesktopDualPcmTest {
         assertEquals(2600L, engine.clock().positionMs)
         assertEquals(0, FfmpegPcmDecoder.activeProcesses())
     }
+    @Test fun genuineDualDecodeAppliesUserEqualizerToPrimaryOverlapAndIncomingOnSameClock() = runBlocking<Unit> {
+        val preferences = melox.platform.getPreferences("melox_app_settings")
+        val keys = listOf("equalizer_enabled", "equalizer_preset", "equalizer_custom_band_5", "equalizer_preamp_db")
+        val before = keys.associateWith { preferences.getString(it, null) }
+        try {
+            preferences.putValues(mapOf("equalizer_enabled" to "true", "equalizer_preset" to "Custom", "equalizer_custom_band_5" to "-6.0", "equalizer_preamp_db" to "0.0"))
+            melox.playback.MeloXEqualizerSettings.refresh()
+            val engine = session(wave("eq-primary.wav", 1000, 2600, 6000), wave("eq-incoming.wav", 4000, 2200, 8000))
+            val run = async(Dispatchers.IO) { engine.run() }
+            until { outputs.firstOrNull()?.accepted?.get() == 564480L }
+            val bytes = outputs.single().bytes()
+            assertTrue(magnitude(bytes, 1000, 100, 100) in 2980.0..3040.0)
+            assertTrue(magnitude(bytes, 1000, 1750, 100) in 1450.0..1580.0)
+            assertTrue(magnitude(bytes, 4000, 1750, 100) in 3650.0..4050.0)
+            assertTrue(magnitude(bytes, 4000, 2800, 100) in 7500.0..8010.0)
+            outputs.single().consume()
+            val result = withTimeout(30_000) { run.await() }
+            assertEquals(result.writtenFrames, result.renderedFrames)
+            assertEquals(70560L, result.overlapFrames)
+            assertEquals(0L, result.clippedSamples)
+            retainNativePcmEvidence("dual-eq-band5-cut", bytes, "generated primary 1000Hz amplitude 6000 / incoming 4000Hz amplitude 8000; linear overlap 1600ms at primary 1000ms; band 5 -6dB; preamp 0")
+            assertTrue(outputs.single().closed.get())
+            assertEquals(0, FfmpegPcmDecoder.activeProcesses())
+        } finally { preferences.putValues(before); melox.playback.MeloXEqualizerSettings.refresh() }
+    }
     @Test fun invalidIncomingFileFallsBackToActualPrimaryPcmAndNeverHandsOff() = runBlocking<Unit> {
         val a = wave("fallback.wav", 220, 2600, 6000)
         val b = File(root, "invalid.wav").apply { writeText("invalid audio") }

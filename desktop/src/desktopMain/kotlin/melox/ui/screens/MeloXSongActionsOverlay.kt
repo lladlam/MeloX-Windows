@@ -36,6 +36,7 @@ import melox.ui.foundation.MeloXIosListRow
 import melox.ui.foundation.MeloXSymbol
 import melox.ui.theme.MeloXColors
 import melox.ui.navigation.MeloXBackHandler
+import melox.ui.legal.pinnedString
 
 private enum class SongActionPage { Main, Comments }
 
@@ -48,9 +49,7 @@ fun MeloXSongActionsOverlay(
 ) {
     val scope = rememberCoroutineScope()
     val provider = song.providerTrack
-    val neteaseSongId = song.id.takeIf {
-        it > 0L && (provider == null || provider.id.source == MusicSource.Netease)
-    }
+    val neteaseSongId = song.neteaseSongId
     val ops = remember { NeteaseMusicOperationsClient(cookieProvider = { NeteaseSessionStore.readCookie() }) }
     var page by remember(song.id, visible) { mutableStateOf(SongActionPage.Main) }
     var message by remember(song.id, visible) { mutableStateOf<String?>(null) }
@@ -91,6 +90,25 @@ fun MeloXSongActionsOverlay(
             message?.let { Text(it, color = Color(0xFFFF8A90), fontSize = 12.sp, modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp)) }
             when (page) {
                 SongActionPage.Main -> {
+                    if (provider?.id?.source == MusicSource.Bilibili) {
+                        val persistedOffset by melox.provider.bilibili.BilibiliLyricOffsetStore.state(provider.id.value)
+                        var displayedOffset by remember(provider.id.value, persistedOffset) { mutableStateOf(persistedOffset) }
+                        Column(Modifier.fillMaxWidth().padding(horizontal = 8.dp, vertical = 12.dp)) {
+                            Text(pinnedString("player_lyric_offset"), fontWeight = FontWeight.SemiBold)
+                            Text(when {
+                                displayedOffset == 0 -> pinnedString("player_lyric_sync")
+                                displayedOffset > 0 -> pinnedString("player_lyric_ahead", displayedOffset)
+                                else -> pinnedString("player_lyric_behind", displayedOffset)
+                            }, color = MeloXColors.OnSurfaceVariant, fontSize = 12.sp)
+                            melox.ui.glass.MeloXLiquidSlider(
+                                value = displayedOffset.toFloat(),
+                                onTransientValueChange = { displayedOffset = it.toInt() },
+                                onValueChange = { displayedOffset = it.toInt(); melox.provider.bilibili.BilibiliLyricOffsetStore.write(provider.id.value, displayedOffset) },
+                                valueRange = -5_000f..5_000f, stepSize = 100f, visibilityThreshold = 1f,
+                                contentDescription = pinnedString("player_lyric_offset"), modifier = Modifier.testTag("bilibili-lyric-offset"),
+                            )
+                        }
+                    }
                     Text("更多操作", Modifier.padding(horizontal = 16.dp, vertical = 10.dp), fontSize = 22.sp, fontWeight = FontWeight.Bold, color = MeloXColors.OnSurface)
                     if (song.album.isNotBlank()) {
                         ActionRow("查看专辑", MeloXSymbol.Library) {

@@ -1,6 +1,7 @@
 package melox.player
 
 import java.io.File
+import java.io.ByteArrayOutputStream
 import java.lang.reflect.Proxy
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
@@ -161,7 +162,38 @@ open class DesktopAudioSessionTest {
         assertFalse(AudioPlayer.state.value.isFinished)
     }
 
+    @Test fun realOutputConsumesEqualizerPreampAndSeekingRebuildsDspWithCurrentSettings() = runBlocking<Unit> {
+        val prefs = melox.platform.getPreferences("melox_app_settings")
+        val keys = listOf("equalizer_enabled", "equalizer_preset", "equalizer_preamp_db")
+        val before = keys.associateWith { prefs.getString(it, null) }
+        try {
+            prefs.putValues(mapOf("equalizer_enabled" to "true", "equalizer_preset" to "Flat", "equalizer_preamp_db" to "6.0"))
+            melox.playback.MeloXEqualizerSettings.refresh()
+            val ended = CompletableDeferred<Unit>()
+            AudioPlayer.play(wav().absolutePath, track, onEnded = { ended.complete(Unit) })
+            awaitCondition { outputs.firstOrNull()?.acceptedBytes?.get() == 88_200L }
+            val first = outputs.single().pcm()
+            assertEquals(1995, kotlin.math.abs(MeloXPcmMix.sample(first, 44_100)))
+            assertFalse(ended.isCompleted)
+            prefs.putValues(mapOf("equalizer_preamp_db" to "-6.0"))
+            melox.playback.MeloXEqualizerSettings.refresh()
+            AudioPlayer.seekTo(0)
+            awaitCondition { outputs.size == 2 && outputs.last().acceptedBytes.get() == 88_200L }
+            val second = outputs.last().pcm()
+            assertEquals(501, kotlin.math.abs(MeloXPcmMix.sample(second, 44_100)))
+            assertTrue(outputs.first().closed.get())
+            outputs.last().consumeAll()
+            withTimeout(15_000) { ended.await() }
+            assertTrue(AudioPlayer.state.value.isFinished)
+            assertEquals(500L, AudioPlayer.getCurrentPositionMs())
+            retainNativePcmEvidence("single-eq-boost-automix-$autoMix", first, "generated square ±1000; Flat preamp +6 dB")
+            retainNativePcmEvidence("single-eq-cut-after-seek-automix-$autoMix", second, "seek 0 rebuild; generated square ±1000; Flat preamp -6 dB")
+        } finally { AudioPlayer.stop(); prefs.putValues(before); melox.playback.MeloXEqualizerSettings.refresh() }
+    }
+
     private class ControlledOutput(private val failOnStart: Boolean = false) {
+        private val captured = ByteArrayOutputStream()
+        fun pcm(): ByteArray = synchronized(captured) { captured.toByteArray() }
         val acceptedBytes = AtomicLong()
         val playedFrames = AtomicLong()
         val running = AtomicBoolean(false)
@@ -172,6 +204,7 @@ open class DesktopAudioSessionTest {
                 "write" -> {
                     check(!closed.get()) { "device closed" }
                     val accepted = minOf(args!![2] as Int, 4096) // legal short device write
+                    synchronized(captured) { captured.write(args[0] as ByteArray, args[1] as Int, accepted) }
                     acceptedBytes.addAndGet(accepted.toLong())
                     accepted
                 }

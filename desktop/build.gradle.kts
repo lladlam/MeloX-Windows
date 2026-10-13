@@ -71,5 +71,7 @@ tasks.register<JavaExec>("captureUi") {
     mainClass.set("melox.validation.MeloXVisualCaptureKt")
     systemProperty("java.awt.headless", "true")
     systemProperty("user.home", providers.gradleProperty("captureHome").getOrElse(layout.buildDirectory.dir("parity/home").get().asFile.absolutePath))
-    args(providers.gradleProperty("captureArgs").getOrElse("").split(' ').filter { it.isNotBlank() })
+    val argumentFile = providers.gradleProperty("captureArgsFile").orNull
+    args(if (argumentFile != null) file(argumentFile).readLines(Charsets.UTF_8)
+        else providers.gradleProperty("captureArgs").getOrElse("").split(' ').filter { it.isNotBlank() })
 }

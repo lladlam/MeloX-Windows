@@ -37,6 +37,7 @@ class NeteaseSearchClient(
             data = JSONObject(),
             authenticated = true,
             cookieHeaderOverride = cookieHeader,
+            owner = kotlinx.coroutines.currentCoroutineContext()[kotlinx.coroutines.Job],
         )
         val profile = response.optJSONObject("profile")
             ?: throw IOException("网易云登录状态无效")
@@ -72,6 +73,7 @@ class NeteaseSearchClient(
         val response = eapi(
             uri = "/api/search/get",
             data = payload,
+            owner = kotlinx.coroutines.currentCoroutineContext()[kotlinx.coroutines.Job],
         )
 
         val result = response.optJSONObject("result") ?: return@withContext emptyList()
@@ -136,6 +138,7 @@ class NeteaseSearchClient(
                 val response = eapi(
                     uri = "/api/v3/song/detail",
                     data = JSONObject().put("c", songDescriptors.toString()),
+                    owner = kotlinx.coroutines.currentCoroutineContext()[kotlinx.coroutines.Job],
                 )
                 val details = response.optJSONArray("songs") ?: return@runCatching songs
                 val artworkById = buildMap<Long, String> {
@@ -155,7 +158,7 @@ class NeteaseSearchClient(
                         ?.let { artwork -> song.copy(artworkUrl = artwork) }
                         ?: song
                 }
-            }.getOrDefault(songs)
+            }.onFailure { if (it is kotlinx.coroutines.CancellationException) throw it }.getOrDefault(songs)
         }
 
     suspend fun ensureArtwork(song: SearchSong): SearchSong =
@@ -174,6 +177,7 @@ class NeteaseSearchClient(
                 .put("yv", 0)
                 .put("ytv", 0)
                 .put("yrv", 0),
+            owner = kotlinx.coroutines.currentCoroutineContext()[kotlinx.coroutines.Job],
         )
 
         NeteaseLyricParser.parse(
@@ -255,6 +259,7 @@ class NeteaseSearchClient(
         data: JSONObject,
         authenticated: Boolean? = null,
         cookieHeaderOverride: String? = null,
+        owner: kotlinx.coroutines.Job? = null,
     ): JSONObject {
         val timestampMillis = System.currentTimeMillis()
         val cookieHeader = cookieHeaderOverride ?: cookieProvider()
@@ -310,7 +315,7 @@ class NeteaseSearchClient(
             .post(FormBody.Builder().add("params", params).build())
             .build()
 
-        httpClient.newCall(request).execute().use { response ->
+        return httpClient.executeOwned(request, owner) { response ->
             val body = response.body?.string() ?: throw IOException("网易云返回了空响应")
             if (!response.isSuccessful) {
                 throw IOException("网易云请求失败：HTTP ${response.code}")
@@ -325,7 +330,7 @@ class NeteaseSearchClient(
                     .ifBlank { "请求失败" }
                 throw IOException("网易云请求失败（$code）：$message")
             }
-            return jsonObject
+            jsonObject
         }
     }
 

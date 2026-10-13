@@ -37,6 +37,8 @@ import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.draw.drawBehind
@@ -372,6 +374,7 @@ fun MeloXGlassSegmentedControl(
     selectedIndex: Int,
     onSelected: (Int) -> Unit,
     modifier: Modifier = Modifier,
+    tagPrefix: String? = null,
 ) {
     Row(
         modifier = modifier
@@ -386,7 +389,8 @@ fun MeloXGlassSegmentedControl(
         items.forEachIndexed { index, item ->
             MeloXGlassButton(
                 onClick = { onSelected(index) },
-                modifier = Modifier.weight(1f),
+                modifier = Modifier.weight(1f).semantics { selected = index == selectedIndex }
+                    .then(tagPrefix?.let { Modifier.testTag("$it-$index") } ?: Modifier),
                 style = if (index == selectedIndex) MeloXGlassButtonStyle.BorderedProminent
                 else MeloXGlassButtonStyle.Plain,
                 shape = MeloXShapes.capsule,

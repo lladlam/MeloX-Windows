@@ -1,0 +1,159 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.5.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :desktop:kmpPartiallyResolvedDependenciesChecker
+> Task :desktop:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :desktop:convertXmlValueResourcesForCommonMain NO-SOURCE
+> Task :desktop:copyNonXmlValueResourcesForCommonMain NO-SOURCE
+> Task :desktop:prepareComposeResourcesTaskForCommonMain NO-SOURCE
+> Task :desktop:generateResourceAccessorsForCommonMain SKIPPED
+> Task :desktop:convertXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :desktop:copyNonXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :desktop:prepareComposeResourcesTaskForDesktopMain NO-SOURCE
+> Task :desktop:generateResourceAccessorsForDesktopMain SKIPPED
+> Task :desktop:generateActualResourceCollectorsForDesktopMain SKIPPED
+> Task :desktop:generateComposeResClass SKIPPED
+> Task :desktop:generateExpectResourceCollectorsForCommonMain SKIPPED
+> Task :innertube:kmpPartiallyResolvedDependenciesChecker
+> Task :innertube:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :innertube:extractAndroidInnerTube UP-TO-DATE
+> Task :innertube:compileKotlinDesktop UP-TO-DATE
+> Task :innertube:compileDesktopMainJava NO-SOURCE
+> Task :innertube:desktopProcessResources NO-SOURCE
+> Task :innertube:processDesktopMainResources SKIPPED
+> Task :innertube:desktopMainClasses UP-TO-DATE
+> Task :innertube:desktopJar UP-TO-DATE
+> Task :shared:kmpPartiallyResolvedDependenciesChecker
+> Task :shared:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :shared:convertXmlValueResourcesForCommonMain NO-SOURCE
+> Task :shared:copyNonXmlValueResourcesForCommonMain NO-SOURCE
+> Task :shared:prepareComposeResourcesTaskForCommonMain NO-SOURCE
+> Task :shared:generateResourceAccessorsForCommonMain SKIPPED
+> Task :shared:convertXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :shared:copyNonXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :shared:prepareComposeResourcesTaskForDesktopMain NO-SOURCE
+> Task :shared:generateResourceAccessorsForDesktopMain SKIPPED
+> Task :shared:generateActualResourceCollectorsForDesktopMain SKIPPED
+> Task :shared:generateComposeResClass SKIPPED
+> Task :shared:generateExpectResourceCollectorsForCommonMain SKIPPED
+> Task :shared:compileKotlinDesktop UP-TO-DATE
+> Task :shared:compileDesktopMainJava NO-SOURCE
+> Task :shared:assembleDesktopMainResources UP-TO-DATE
+> Task :shared:desktopProcessResources UP-TO-DATE
+> Task :shared:processDesktopMainResources SKIPPED
+> Task :shared:desktopMainClasses UP-TO-DATE
+> Task :shared:desktopJar UP-TO-DATE
+> Task :desktop:compileKotlinDesktop
+> Task :desktop:compileDesktopMainJava NO-SOURCE
+> Task :desktop:assembleDesktopMainResources UP-TO-DATE
+> Task :desktop:desktopProcessResources UP-TO-DATE
+> Task :desktop:processDesktopMainResources SKIPPED
+> Task :desktop:desktopMainClasses
+
+> Task :desktop:captureUi
+SLF4J(W): No SLF4J providers were found.
+SLF4J(W): Defaulting to no-operation (NOP) logger implementation
+SLF4J(W): See https://www.slf4j.org/codes.html#noProviders for further details.
+Captured 00-settings: 427x924 density=1.0
+Verified 00-settings: tag:settings-root
+Captured 01-open-frame-0: 427x924 density=1.0
+Captured 01-open-frame-160: 427x924 density=1.0
+Captured 01-open-frame-400: 427x924 density=1.0
+Captured 01-open: 427x924 density=1.0
+Verified open: tag:settings-playback
+Captured 02-reveal-enable-frame-0: 427x924 density=1.0
+Captured 02-reveal-enable-frame-160: 427x924 density=1.0
+Captured 02-reveal-enable-frame-400: 427x924 density=1.0
+Captured 02-reveal-enable: 427x924 density=1.0
+Captured 03-enable-frame-0: 427x924 density=1.0
+Captured 03-enable-frame-160: 427x924 density=1.0
+Captured 03-enable-frame-400: 427x924 density=1.0
+Captured 03-enable: 427x924 density=1.0
+Verified enable: checked:equalizer-enabled
+Verified enable: eq-enabled:true
+Captured 04-reveal-rock-frame-0: 427x924 density=1.0
+Captured 04-reveal-rock-frame-160: 427x924 density=1.0
+Captured 04-reveal-rock-frame-400: 427x924 density=1.0
+Captured 04-reveal-rock: 427x924 density=1.0
+Captured 05-rock-frame-0: 427x924 density=1.0
+Captured 05-rock-frame-160: 427x924 density=1.0
+Captured 05-rock-frame-400: 427x924 density=1.0
+Captured 05-rock: 427x924 density=1.0
+Verified rock: selected:equalizer-preset-rock
+Verified rock: eq-preset:Rock
+Captured 06-reveal-custom-frame-0: 427x924 density=1.0
+Captured 06-reveal-custom-frame-160: 427x924 density=1.0
+Captured 06-reveal-custom-frame-400: 427x924 density=1.0
+Captured 06-reveal-custom: 427x924 density=1.0
+Captured 07-custom-frame-0: 427x924 density=1.0
+Captured 07-custom-frame-160: 427x924 density=1.0
+Captured 07-custom-frame-400: 427x924 density=1.0
+Captured 07-custom: 427x924 density=1.0
+Verified custom: selected:equalizer-preset-custom
+Verified custom: eq-preset:Custom
+Captured 08-reveal-band-frame-0: 427x924 density=1.0
+Captured 08-reveal-band-frame-160: 427x924 density=1.0
+Captured 08-reveal-band-frame-400: 427x924 density=1.0
+Captured 08-reveal-band: 427x924 density=1.0
+Captured 09-gain-frame-0: 427x924 density=1.0
+Captured 09-gain-frame-160: 427x924 density=1.0
+Captured 09-gain-frame-400: 427x924 density=1.0
+Captured 09-gain: 427x924 density=1.0
+Captured 10-reveal-preamp-frame-0: 427x924 density=1.0
+Captured 10-reveal-preamp-frame-160: 427x924 density=1.0
+Captured 10-reveal-preamp-frame-400: 427x924 density=1.0
+Captured 10-reveal-preamp: 427x924 density=1.0
+Captured 11-preamp-frame-0: 427x924 density=1.0
+Captured 11-preamp-frame-160: 427x924 density=1.0
+Captured 11-preamp-frame-400: 427x924 density=1.0
+Captured 11-preamp: 427x924 density=1.0
+Captured 12-reveal-disable-frame-0: 427x924 density=1.0
+Captured 12-reveal-disable-frame-160: 427x924 density=1.0
+Captured 12-reveal-disable-frame-400: 427x924 density=1.0
+Captured 12-reveal-disable: 427x924 density=1.0
+Captured 13-disable-frame-0: 427x924 density=1.0
+Captured 13-disable-frame-160: 427x924 density=1.0
+Captured 13-disable-frame-400: 427x924 density=1.0
+Captured 13-disable: 427x924 density=1.0
+Verified disable: eq-enabled:false
+Exception in thread "main" java.lang.IllegalStateException: Escape was not handled at back
+	at melox.validation.MeloXVisualCaptureKt$main$1$4.invokeSuspend(MeloXVisualCapture.kt:256)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTaskKt.resume(DispatchedTask.kt:233)
+	at kotlinx.coroutines.DispatchedTaskKt.dispatch(DispatchedTask.kt:152)
+	at kotlinx.coroutines.CancellableContinuationImpl.dispatchResume(CancellableContinuationImpl.kt:470)
+	at kotlinx.coroutines.CancellableContinuationImpl.resumeImpl$kotlinx_coroutines_core(CancellableContinuationImpl.kt:504)
+	at kotlinx.coroutines.CancellableContinuationImpl.resumeImpl$kotlinx_coroutines_core$default(CancellableContinuationImpl.kt:493)
+	at kotlinx.coroutines.CancellableContinuationImpl.resumeUndispatched(CancellableContinuationImpl.kt:596)
+	at kotlinx.coroutines.swing.SwingDispatcher.scheduleResumeAfterDelay$lambda$0(SwingDispatcher.kt:28)
+	at java.desktop/javax.swing.Timer.fireActionPerformed(Timer.java:311)
+	at java.desktop/javax.swing.Timer$DoPostEvent.run(Timer.java:243)
+	at java.desktop/java.awt.event.InvocationEvent.dispatch(InvocationEvent.java:318)
+	at java.desktop/java.awt.EventQueue.dispatchEventImpl(EventQueue.java:773)
+	at java.desktop/java.awt.EventQueue$4.run(EventQueue.java:720)
+	at java.desktop/java.awt.EventQueue$4.run(EventQueue.java:714)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
+	at java.base/java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:86)
+	at java.desktop/java.awt.EventQueue.dispatchEvent(EventQueue.java:742)
+	at java.desktop/java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:203)
+	at java.desktop/java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:124)
+	at java.desktop/java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:113)
+	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:109)
+	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:101)
+	at java.desktop/java.awt.EventDispatchThread.run(EventDispatchThread.java:90)
+
+> Task :desktop:captureUi FAILED
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':desktop:captureUi' (registered in build file 'desktop/build.gradle.kts').
+> Process 'command '/usr/lib/jvm/java-17-openjdk/bin/java'' finished with non-zero exit value 1
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 47s
+14 actionable tasks: 5 executed, 9 up-to-date

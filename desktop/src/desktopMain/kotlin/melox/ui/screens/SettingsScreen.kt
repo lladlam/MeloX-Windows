@@ -3,6 +3,7 @@ package melox.ui.screens
 import androidx.compose.foundation.background
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -17,6 +18,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -25,6 +27,7 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.platform.testTag
@@ -104,6 +107,9 @@ fun SettingsScreen(
     onOpenLogin: () -> Unit = {},
 ) {
     var route by remember { mutableStateOf<SettingsRoute?>(null) }
+    val detailFocus = remember { androidx.compose.ui.focus.FocusRequester() }
+    val equalizer by melox.playback.MeloXEqualizerSettings.current.collectAsState()
+    LaunchedEffect(route, equalizer.enabled, MeloXSettingsRuntime.lyricsStyle) { detailFocus.requestFocus() }
     val session = rememberNeteaseSessionStore()
     LaunchedEffect(session.cookie) { if (session.isLoggedIn) session.refreshProfile() }
     LaunchedEffect(routeRequest) {
@@ -116,7 +122,7 @@ fun SettingsScreen(
     var detailRoute by remember { mutableStateOf<SettingsRoute?>(null) }
     if (route != null) detailRoute = route
     MeloXBackHandler(enabled = route != null) { route = null }
-    Box(Modifier.fillMaxSize()) {
+    Box(Modifier.fillMaxSize().focusRequester(detailFocus).focusable()) {
     val normalized = search.trim().lowercase()
     val visibleSections = SettingsSections.mapNotNull { (title, items) ->
         items.filter { normalized.isBlank() || "${it.title} ${it.subtitle} ${it.keywords}".lowercase().contains(normalized) }
@@ -306,6 +312,7 @@ private fun AppearanceSettings() {
     MeloXGlassSegmentedControl(
         items = shellLabels,
         selectedIndex = shells.indexOf(MeloXSettingsRuntime.playerShell).coerceAtLeast(0),
+        tagPrefix = "player-shell",
         onSelected = { MeloXSettingsPreferences.setString("player_shell", shells[it].name) },
         modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp),
     )
@@ -363,6 +370,8 @@ private fun PlaybackSettings() {
         }
     }
     AutoMixPlaybackSettings()
+    Spacer(Modifier.height(12.dp))
+    EqualizerSettings()
 }
 
 @Composable
@@ -422,6 +431,7 @@ private fun AutoMixPlaybackSettings() {
 
 @Composable
 private fun LyricsSettings() {
+    AlternativeLyricsSettings()
     PreferenceToggle("显示翻译", MeloXSettingsRuntime.showLyricTranslation, "lyrics_translation")
     PreferenceToggle("显示罗马音", MeloXSettingsRuntime.showLyricRomanization, "lyrics_romanization")
     PreferenceToggle("逐字歌词", MeloXSettingsRuntime.lyricWordByWordEnabled, "lyrics_word_by_word")

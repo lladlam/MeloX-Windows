@@ -1,0 +1,160 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.5.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :desktop:kmpPartiallyResolvedDependenciesChecker
+> Task :desktop:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :desktop:convertXmlValueResourcesForCommonMain NO-SOURCE
+> Task :desktop:copyNonXmlValueResourcesForCommonMain NO-SOURCE
+> Task :desktop:prepareComposeResourcesTaskForCommonMain NO-SOURCE
+> Task :desktop:generateResourceAccessorsForCommonMain SKIPPED
+> Task :desktop:convertXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :desktop:copyNonXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :desktop:prepareComposeResourcesTaskForDesktopMain NO-SOURCE
+> Task :desktop:generateResourceAccessorsForDesktopMain SKIPPED
+> Task :desktop:generateActualResourceCollectorsForDesktopMain SKIPPED
+> Task :desktop:generateComposeResClass SKIPPED
+> Task :desktop:generateExpectResourceCollectorsForCommonMain SKIPPED
+> Task :innertube:kmpPartiallyResolvedDependenciesChecker
+> Task :innertube:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :innertube:extractAndroidInnerTube UP-TO-DATE
+> Task :innertube:compileKotlinDesktop UP-TO-DATE
+> Task :innertube:compileDesktopMainJava NO-SOURCE
+> Task :innertube:desktopProcessResources NO-SOURCE
+> Task :innertube:processDesktopMainResources SKIPPED
+> Task :innertube:desktopMainClasses UP-TO-DATE
+> Task :innertube:desktopJar UP-TO-DATE
+> Task :shared:kmpPartiallyResolvedDependenciesChecker
+> Task :shared:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :shared:convertXmlValueResourcesForCommonMain NO-SOURCE
+> Task :shared:copyNonXmlValueResourcesForCommonMain NO-SOURCE
+> Task :shared:prepareComposeResourcesTaskForCommonMain NO-SOURCE
+> Task :shared:generateResourceAccessorsForCommonMain SKIPPED
+> Task :shared:convertXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :shared:copyNonXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :shared:prepareComposeResourcesTaskForDesktopMain NO-SOURCE
+> Task :shared:generateResourceAccessorsForDesktopMain SKIPPED
+> Task :shared:generateActualResourceCollectorsForDesktopMain SKIPPED
+> Task :shared:generateComposeResClass SKIPPED
+> Task :shared:generateExpectResourceCollectorsForCommonMain SKIPPED
+> Task :shared:compileKotlinDesktop UP-TO-DATE
+> Task :shared:compileDesktopMainJava NO-SOURCE
+> Task :shared:assembleDesktopMainResources UP-TO-DATE
+> Task :shared:desktopProcessResources UP-TO-DATE
+> Task :shared:processDesktopMainResources SKIPPED
+> Task :shared:desktopMainClasses UP-TO-DATE
+> Task :shared:desktopJar UP-TO-DATE
+> Task :desktop:compileKotlinDesktop
+> Task :desktop:compileDesktopMainJava NO-SOURCE
+> Task :desktop:assembleDesktopMainResources UP-TO-DATE
+> Task :desktop:desktopProcessResources UP-TO-DATE
+> Task :desktop:processDesktopMainResources SKIPPED
+> Task :desktop:desktopMainClasses
+
+> Task :desktop:captureUi
+SLF4J(W): No SLF4J providers were found.
+SLF4J(W): Defaulting to no-operation (NOP) logger implementation
+SLF4J(W): See https://www.slf4j.org/codes.html#noProviders for further details.
+Captured 00-search: 427x924 density=1.0
+Verified 00-search: tag:search-query
+Captured 01-query-frame-0: 427x924 density=1.0
+Captured 01-query-frame-160: 427x924 density=1.0
+Captured 01-query-frame-400: 427x924 density=1.0
+Captured 01-query: 427x924 density=1.0
+Physical click submit: search-submit at Offset(327.0, 161.0)
+Captured 02-submit-frame-0: 427x924 density=1.0
+Captured 02-submit-frame-160: 427x924 density=1.0
+Captured 02-submit-frame-400: 427x924 density=1.0
+Captured 02-submit: 427x924 density=1.0
+Verified submit: selected:search-kind-songs
+Captured 03-songs-frame-0: 427x924 density=1.0
+Captured 03-songs-frame-160: 427x924 density=1.0
+Captured 03-songs-frame-400: 427x924 density=1.0
+Captured 03-songs: 427x924 density=1.0
+Verified songs: absent:search-empty
+Verified songs: absent:search-error
+Physical click albums: search-kind-albums at Offset(124.0, 225.0)
+Captured 04-albums-frame-0: 427x924 density=1.0
+Captured 04-albums-frame-160: 427x924 density=1.0
+Captured 04-albums-frame-400: 427x924 density=1.0
+Captured 04-albums: 427x924 density=1.0
+Verified albums: selected:search-kind-albums
+Captured 05-album-load-frame-0: 427x924 density=1.0
+Captured 05-album-load-frame-160: 427x924 density=1.0
+Captured 05-album-load-frame-400: 427x924 density=1.0
+Captured 05-album-load: 427x924 density=1.0
+Physical click album-open: search-media-albums-18909 at Offset(213.5, 295.0)
+Captured 06-album-open-frame-0: 427x924 density=1.0
+Captured 06-album-open-frame-160: 427x924 density=1.0
+Captured 06-album-open-frame-400: 427x924 density=1.0
+Captured 06-album-open: 427x924 density=1.0
+Captured 07-album-back-frame-0: 427x924 density=1.0
+Captured 07-album-back-frame-160: 427x924 density=1.0
+Captured 07-album-back-frame-400: 427x924 density=1.0
+Captured 07-album-back: 427x924 density=1.0
+Physical click artists: search-kind-artists at Offset(196.0, 225.0)
+Captured 08-artists-frame-0: 427x924 density=1.0
+Captured 08-artists-frame-160: 427x924 density=1.0
+Captured 08-artists-frame-400: 427x924 density=1.0
+Captured 08-artists: 427x924 density=1.0
+Verified artists: selected:search-kind-artists
+Captured 09-artist-load-frame-0: 427x924 density=1.0
+Captured 09-artist-load-frame-160: 427x924 density=1.0
+Captured 09-artist-load-frame-400: 427x924 density=1.0
+Captured 09-artist-load: 427x924 density=1.0
+Physical click playlists: search-kind-playlists at Offset(268.0, 225.0)
+Captured 10-playlists-frame-0: 427x924 density=1.0
+Captured 10-playlists-frame-160: 427x924 density=1.0
+Captured 10-playlists-frame-400: 427x924 density=1.0
+Captured 10-playlists: 427x924 density=1.0
+Verified playlists: selected:search-kind-playlists
+Captured 11-playlist-load-frame-0: 427x924 density=1.0
+Captured 11-playlist-load-frame-160: 427x924 density=1.0
+Captured 11-playlist-load-frame-400: 427x924 density=1.0
+Captured 11-playlist-load: 427x924 density=1.0
+Captured 12-more-scopes-frame-0: 427x924 density=1.0
+Captured 12-more-scopes-frame-160: 427x924 density=1.0
+Captured 12-more-scopes-frame-400: 427x924 density=1.0
+Captured 12-more-scopes: 427x924 density=1.0
+Physical click users: search-kind-users at Offset(375.0, 225.0)
+Captured 13-users-frame-0: 427x924 density=1.0
+Captured 13-users-frame-160: 427x924 density=1.0
+Captured 13-users-frame-400: 427x924 density=1.0
+Captured 13-users: 427x924 density=1.0
+Verified users: selected:search-kind-users
+Captured 14-user-load-frame-0: 427x924 density=1.0
+Captured 14-user-load-frame-160: 427x924 density=1.0
+Captured 14-user-load-frame-400: 427x924 density=1.0
+Captured 14-user-load: 427x924 density=1.0
+Physical click profile: search-media-users-639943 at Offset(213.5, 295.0)
+Captured 15-profile-frame-0: 427x924 density=1.0
+Captured 15-profile-frame-160: 427x924 density=1.0
+Captured 15-profile-frame-400: 427x924 density=1.0
+Captured 15-profile: 427x924 density=1.0
+Verified profile: tag:search-account-profile
+Captured 16-profile-load-frame-0: 427x924 density=1.0
+Captured 16-profile-load-frame-160: 427x924 density=1.0
+Captured 16-profile-load-frame-400: 427x924 density=1.0
+Captured 16-profile-load: 427x924 density=1.0
+Verified profile-load: tag:search-account-hero
+Verified profile-load: absent:search-account-error
+Captured 17-profile-back-frame-0: 427x924 density=1.0
+Captured 17-profile-back-frame-160: 427x924 density=1.0
+Captured 17-profile-back-frame-400: 427x924 density=1.0
+Captured 17-profile-back: 427x924 density=1.0
+Verified profile-back: selected:search-kind-users
+Physical click clear: search-clear at Offset(371.0, 161.0)
+Captured 18-clear-frame-0: 427x924 density=1.0
+Captured 18-clear-frame-160: 427x924 density=1.0
+Captured 18-clear-frame-400: 427x924 density=1.0
+Captured 18-clear: 427x924 density=1.0
+Verified clear: tag:search-history-clear
+Physical click clear-history: search-history-clear at Offset(367.5, 210.0)
+Captured 19-clear-history-frame-0: 427x924 density=1.0
+Captured 19-clear-history-frame-160: 427x924 density=1.0
+Captured 19-clear-history-frame-400: 427x924 density=1.0
+Captured 19-clear-history: 427x924 density=1.0
+Verified clear-history: absent:search-history-clear
+Verified clear-history: tag:search-category-0
+
+BUILD SUCCESSFUL in 1m 45s
+14 actionable tasks: 5 executed, 9 up-to-date
+Consider enabling configuration cache to speed up this build: https://docs.gradle.org/9.5.1/userguide/configuration_cache_enabling.html

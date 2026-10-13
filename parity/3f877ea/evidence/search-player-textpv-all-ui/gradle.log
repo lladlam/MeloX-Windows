@@ -1,0 +1,723 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.5.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :desktop:kmpPartiallyResolvedDependenciesChecker
+> Task :desktop:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :desktop:convertXmlValueResourcesForCommonMain NO-SOURCE
+> Task :desktop:copyNonXmlValueResourcesForCommonMain NO-SOURCE
+> Task :desktop:prepareComposeResourcesTaskForCommonMain NO-SOURCE
+> Task :desktop:generateResourceAccessorsForCommonMain SKIPPED
+> Task :desktop:convertXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :desktop:copyNonXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :desktop:prepareComposeResourcesTaskForDesktopMain NO-SOURCE
+> Task :desktop:generateResourceAccessorsForDesktopMain SKIPPED
+> Task :desktop:generateActualResourceCollectorsForDesktopMain SKIPPED
+> Task :desktop:generateComposeResClass SKIPPED
+> Task :desktop:generateExpectResourceCollectorsForCommonMain SKIPPED
+> Task :innertube:kmpPartiallyResolvedDependenciesChecker
+> Task :innertube:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :innertube:extractAndroidInnerTube UP-TO-DATE
+> Task :innertube:compileKotlinDesktop UP-TO-DATE
+> Task :innertube:compileDesktopMainJava NO-SOURCE
+> Task :innertube:desktopProcessResources NO-SOURCE
+> Task :innertube:processDesktopMainResources SKIPPED
+> Task :innertube:desktopMainClasses UP-TO-DATE
+> Task :innertube:desktopJar UP-TO-DATE
+> Task :shared:kmpPartiallyResolvedDependenciesChecker
+> Task :shared:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :shared:convertXmlValueResourcesForCommonMain NO-SOURCE
+> Task :shared:copyNonXmlValueResourcesForCommonMain NO-SOURCE
+> Task :shared:prepareComposeResourcesTaskForCommonMain NO-SOURCE
+> Task :shared:generateResourceAccessorsForCommonMain SKIPPED
+> Task :shared:convertXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :shared:copyNonXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :shared:prepareComposeResourcesTaskForDesktopMain NO-SOURCE
+> Task :shared:generateResourceAccessorsForDesktopMain SKIPPED
+> Task :shared:generateActualResourceCollectorsForDesktopMain SKIPPED
+> Task :shared:generateComposeResClass SKIPPED
+> Task :shared:generateExpectResourceCollectorsForCommonMain SKIPPED
+> Task :shared:compileKotlinDesktop UP-TO-DATE
+> Task :shared:compileDesktopMainJava NO-SOURCE
+> Task :shared:assembleDesktopMainResources UP-TO-DATE
+> Task :shared:desktopProcessResources UP-TO-DATE
+> Task :shared:processDesktopMainResources SKIPPED
+> Task :shared:desktopMainClasses UP-TO-DATE
+> Task :shared:desktopJar UP-TO-DATE
+
+> Task :desktop:compileKotlinDesktop
+w: file:///home/lladlam/%E9%A1%B9%E7%9B%AE/MeloX-Windows/desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXSongActionsOverlay.kt:162:35 Elvis operator (?:) always returns the left operand of non-nullable type 'Int'.
+
+> Task :desktop:compileDesktopMainJava NO-SOURCE
+> Task :desktop:assembleDesktopMainResources UP-TO-DATE
+> Task :desktop:desktopProcessResources
+> Task :desktop:processDesktopMainResources SKIPPED
+> Task :desktop:desktopMainClasses
+
+> Task :desktop:captureUi
+Production Local scanner indexed 2 real files
+SLF4J(W): No SLF4J providers were found.
+SLF4J(W): Defaulting to no-operation (NOP) logger implementation
+SLF4J(W): See https://www.slf4j.org/codes.html#noProviders for further details.
+[MeloXThirdParty] resolve detail source=local id=3b56d87b title=generated-1000hz artists=Generated PCM fixture durationMs=20000 metadata=Local
+[MeloXThirdParty] Resolve start source=local quality=Standard thirdParty=true
+[MeloXThirdParty] Resolve fallback source=local stage=provider chksz=unavailable
+[AudioPlayer] decode local source at 0ms
+Captured 00-settings: 1100x780 density=1.0
+Physical click lyric-settings: settings-open-lyrics at Offset(550.0, 659.0)
+Captured 01-lyric-settings-frame-0: 1100x780 density=1.0
+Captured 01-lyric-settings-frame-160: 1100x780 density=1.0
+Captured 01-lyric-settings-frame-400: 1100x780 density=1.0
+Captured 01-lyric-settings: 1100x780 density=1.0
+Physical click style: settings-selector:Lyrics style at Offset(1004.5, 102.5)
+Captured 02-style-frame-0: 1100x780 density=1.0
+Captured 02-style-frame-160: 1100x780 density=1.0
+Captured 02-style-frame-400: 1100x780 density=1.0
+Captured 02-style: 1100x780 density=1.0
+Physical click textpv: settings-option:Text PV at Offset(945.0, 203.0)
+Captured 03-textpv-frame-0: 1100x780 density=1.0
+Captured 03-textpv-frame-160: 1100x780 density=1.0
+Captured 03-textpv-frame-400: 1100x780 density=1.0
+Captured 03-textpv: 1100x780 density=1.0
+Captured 04-back-frame-0: 1100x780 density=1.0
+Captured 04-back-frame-160: 1100x780 density=1.0
+Captured 04-back-frame-400: 1100x780 density=1.0
+Captured 04-back: 1100x780 density=1.0
+Physical click player: mini-player-expand at Offset(502.5, 682.0)
+Captured 05-player-frame-0: 1100x780 density=1.0
+Captured 05-player-frame-160: 1100x780 density=1.0
+Captured 05-player-frame-400: 1100x780 density=1.0
+Captured 05-player: 1100x780 density=1.0
+Physical click pause: player-play-pause at Offset(784.0, 410.0)
+Captured 06-pause-frame-0: 1100x780 density=1.0
+Captured 06-pause-frame-160: 1100x780 density=1.0
+Captured 06-pause-frame-400: 1100x780 density=1.0
+Captured 06-pause: 1100x780 density=1.0
+Verified pause: playing:false
+Physical click lyrics: player-show-lyrics at Offset(545.0, 552.0)
+Captured 07-lyrics-frame-0: 1100x780 density=1.0
+Captured 07-lyrics-frame-160: 1100x780 density=1.0
+Captured 07-lyrics-frame-400: 1100x780 density=1.0
+Captured 07-lyrics: 1100x780 density=1.0
+Verified lyrics: page:Lyrics
+Verified lyrics: state:player-lyrics:TextPV
+Verified lyrics: word-lines-min:20
+Physical click collapse: player-collapse at Offset(550.0, 17.0)
+Captured 08-collapse-frame-0: 1100x780 density=1.0
+Captured 08-collapse-frame-160: 1100x780 density=1.0
+Captured 08-collapse-frame-400: 1100x780 density=1.0
+Captured 08-collapse: 1100x780 density=1.0
+Physical click settings-BlueBold: settings-open-lyrics at Offset(550.0, 659.0)
+Captured 09-settings-BlueBold-frame-0: 1100x780 density=1.0
+Captured 09-settings-BlueBold-frame-160: 1100x780 density=1.0
+Captured 09-settings-BlueBold-frame-400: 1100x780 density=1.0
+Captured 09-settings-BlueBold: 1100x780 density=1.0
+Captured 10-reveal-BlueBold-frame-0: 1100x780 density=1.0
+Captured 10-reveal-BlueBold-frame-160: 1100x780 density=1.0
+Captured 10-reveal-BlueBold-frame-400: 1100x780 density=1.0
+Captured 10-reveal-BlueBold: 1100x780 density=1.0
+Physical click select-BlueBold: lyrics-pv-bluebold at Offset(550.0, 193.0)
+Captured 11-select-BlueBold-frame-0: 1100x780 density=1.0
+Captured 11-select-BlueBold-frame-160: 1100x780 density=1.0
+Captured 11-select-BlueBold-frame-400: 1100x780 density=1.0
+Captured 11-select-BlueBold: 1100x780 density=1.0
+Verified select-BlueBold: selected:lyrics-pv-bluebold
+Verified select-BlueBold: pv-style:BlueBold
+Captured 12-back-BlueBold-frame-0: 1100x780 density=1.0
+Captured 12-back-BlueBold-frame-160: 1100x780 density=1.0
+Captured 12-back-BlueBold-frame-400: 1100x780 density=1.0
+Captured 12-back-BlueBold: 1100x780 density=1.0
+Physical click player-BlueBold: mini-player-expand at Offset(502.5, 682.0)
+Captured 13-player-BlueBold-frame-0: 1100x780 density=1.0
+Captured 13-player-BlueBold-frame-160: 1100x780 density=1.0
+Captured 13-player-BlueBold-frame-400: 1100x780 density=1.0
+Captured 13-player-BlueBold: 1100x780 density=1.0
+Verified player-BlueBold: page:Lyrics
+Verified player-BlueBold: state:player-lyrics:TextPV
+Verified player-BlueBold: pv-style:BlueBold
+Verified player-BlueBold: word-lines-min:20
+Physical click collapse-BlueBold: player-collapse at Offset(550.0, 17.0)
+Captured 14-collapse-BlueBold-frame-0: 1100x780 density=1.0
+Captured 14-collapse-BlueBold-frame-160: 1100x780 density=1.0
+Captured 14-collapse-BlueBold-frame-400: 1100x780 density=1.0
+Captured 14-collapse-BlueBold: 1100x780 density=1.0
+Physical click settings-KineticSplit: settings-open-lyrics at Offset(550.0, 659.0)
+Captured 15-settings-KineticSplit-frame-0: 1100x780 density=1.0
+Captured 15-settings-KineticSplit-frame-160: 1100x780 density=1.0
+Captured 15-settings-KineticSplit-frame-400: 1100x780 density=1.0
+Captured 15-settings-KineticSplit: 1100x780 density=1.0
+Captured 16-reveal-KineticSplit-frame-0: 1100x780 density=1.0
+Captured 16-reveal-KineticSplit-frame-160: 1100x780 density=1.0
+Captured 16-reveal-KineticSplit-frame-400: 1100x780 density=1.0
+Captured 16-reveal-KineticSplit: 1100x780 density=1.0
+Physical click select-KineticSplit: lyrics-pv-kineticsplit at Offset(550.0, 239.0)
+Captured 17-select-KineticSplit-frame-0: 1100x780 density=1.0
+Captured 17-select-KineticSplit-frame-160: 1100x780 density=1.0
+Captured 17-select-KineticSplit-frame-400: 1100x780 density=1.0
+Captured 17-select-KineticSplit: 1100x780 density=1.0
+Verified select-KineticSplit: selected:lyrics-pv-kineticsplit
+Verified select-KineticSplit: pv-style:KineticSplit
+Captured 18-back-KineticSplit-frame-0: 1100x780 density=1.0
+Captured 18-back-KineticSplit-frame-160: 1100x780 density=1.0
+Captured 18-back-KineticSplit-frame-400: 1100x780 density=1.0
+Captured 18-back-KineticSplit: 1100x780 density=1.0
+Physical click player-KineticSplit: mini-player-expand at Offset(502.5, 682.0)
+Captured 19-player-KineticSplit-frame-0: 1100x780 density=1.0
+Captured 19-player-KineticSplit-frame-160: 1100x780 density=1.0
+Captured 19-player-KineticSplit-frame-400: 1100x780 density=1.0
+Captured 19-player-KineticSplit: 1100x780 density=1.0
+Verified player-KineticSplit: page:Lyrics
+Verified player-KineticSplit: state:player-lyrics:TextPV
+Verified player-KineticSplit: pv-style:KineticSplit
+Verified player-KineticSplit: word-lines-min:20
+Physical click collapse-KineticSplit: player-collapse at Offset(550.0, 17.0)
+Captured 20-collapse-KineticSplit-frame-0: 1100x780 density=1.0
+Captured 20-collapse-KineticSplit-frame-160: 1100x780 density=1.0
+Captured 20-collapse-KineticSplit-frame-400: 1100x780 density=1.0
+Captured 20-collapse-KineticSplit: 1100x780 density=1.0
+Physical click settings-BluePlane: settings-open-lyrics at Offset(550.0, 659.0)
+Captured 21-settings-BluePlane-frame-0: 1100x780 density=1.0
+Captured 21-settings-BluePlane-frame-160: 1100x780 density=1.0
+Captured 21-settings-BluePlane-frame-400: 1100x780 density=1.0
+Captured 21-settings-BluePlane: 1100x780 density=1.0
+Captured 22-reveal-BluePlane-frame-0: 1100x780 density=1.0
+Captured 22-reveal-BluePlane-frame-160: 1100x780 density=1.0
+Captured 22-reveal-BluePlane-frame-400: 1100x780 density=1.0
+Captured 22-reveal-BluePlane: 1100x780 density=1.0
+Physical click select-BluePlane: lyrics-pv-blueplane at Offset(550.0, 285.0)
+Captured 23-select-BluePlane-frame-0: 1100x780 density=1.0
+Captured 23-select-BluePlane-frame-160: 1100x780 density=1.0
+Captured 23-select-BluePlane-frame-400: 1100x780 density=1.0
+Captured 23-select-BluePlane: 1100x780 density=1.0
+Verified select-BluePlane: selected:lyrics-pv-blueplane
+Verified select-BluePlane: pv-style:BluePlane
+Captured 24-back-BluePlane-frame-0: 1100x780 density=1.0
+Captured 24-back-BluePlane-frame-160: 1100x780 density=1.0
+Captured 24-back-BluePlane-frame-400: 1100x780 density=1.0
+Captured 24-back-BluePlane: 1100x780 density=1.0
+Physical click player-BluePlane: mini-player-expand at Offset(502.5, 682.0)
+Captured 25-player-BluePlane-frame-0: 1100x780 density=1.0
+Captured 25-player-BluePlane-frame-160: 1100x780 density=1.0
+Captured 25-player-BluePlane-frame-400: 1100x780 density=1.0
+Captured 25-player-BluePlane: 1100x780 density=1.0
+Verified player-BluePlane: page:Lyrics
+Verified player-BluePlane: state:player-lyrics:TextPV
+Verified player-BluePlane: pv-style:BluePlane
+Verified player-BluePlane: word-lines-min:20
+Physical click collapse-BluePlane: player-collapse at Offset(550.0, 17.0)
+Captured 26-collapse-BluePlane-frame-0: 1100x780 density=1.0
+Captured 26-collapse-BluePlane-frame-160: 1100x780 density=1.0
+Captured 26-collapse-BluePlane-frame-400: 1100x780 density=1.0
+Captured 26-collapse-BluePlane: 1100x780 density=1.0
+Physical click settings-CyberGrunge: settings-open-lyrics at Offset(550.0, 659.0)
+Captured 27-settings-CyberGrunge-frame-0: 1100x780 density=1.0
+Captured 27-settings-CyberGrunge-frame-160: 1100x780 density=1.0
+Captured 27-settings-CyberGrunge-frame-400: 1100x780 density=1.0
+Captured 27-settings-CyberGrunge: 1100x780 density=1.0
+Captured 28-reveal-CyberGrunge-frame-0: 1100x780 density=1.0
+Captured 28-reveal-CyberGrunge-frame-160: 1100x780 density=1.0
+Captured 28-reveal-CyberGrunge-frame-400: 1100x780 density=1.0
+Captured 28-reveal-CyberGrunge: 1100x780 density=1.0
+Physical click select-CyberGrunge: lyrics-pv-cybergrunge at Offset(550.0, 331.0)
+Captured 29-select-CyberGrunge-frame-0: 1100x780 density=1.0
+Captured 29-select-CyberGrunge-frame-160: 1100x780 density=1.0
+Captured 29-select-CyberGrunge-frame-400: 1100x780 density=1.0
+Captured 29-select-CyberGrunge: 1100x780 density=1.0
+Verified select-CyberGrunge: selected:lyrics-pv-cybergrunge
+Verified select-CyberGrunge: pv-style:CyberGrunge
+Captured 30-back-CyberGrunge-frame-0: 1100x780 density=1.0
+Captured 30-back-CyberGrunge-frame-160: 1100x780 density=1.0
+Captured 30-back-CyberGrunge-frame-400: 1100x780 density=1.0
+Captured 30-back-CyberGrunge: 1100x780 density=1.0
+Physical click player-CyberGrunge: mini-player-expand at Offset(502.5, 682.0)
+Captured 31-player-CyberGrunge-frame-0: 1100x780 density=1.0
+Captured 31-player-CyberGrunge-frame-160: 1100x780 density=1.0
+Captured 31-player-CyberGrunge-frame-400: 1100x780 density=1.0
+Captured 31-player-CyberGrunge: 1100x780 density=1.0
+Verified player-CyberGrunge: page:Lyrics
+Verified player-CyberGrunge: state:player-lyrics:TextPV
+Verified player-CyberGrunge: pv-style:CyberGrunge
+Verified player-CyberGrunge: word-lines-min:20
+Physical click collapse-CyberGrunge: player-collapse at Offset(550.0, 17.0)
+Captured 32-collapse-CyberGrunge-frame-0: 1100x780 density=1.0
+Captured 32-collapse-CyberGrunge-frame-160: 1100x780 density=1.0
+Captured 32-collapse-CyberGrunge-frame-400: 1100x780 density=1.0
+Captured 32-collapse-CyberGrunge: 1100x780 density=1.0
+Physical click settings-Geometric: settings-open-lyrics at Offset(550.0, 659.0)
+Captured 33-settings-Geometric-frame-0: 1100x780 density=1.0
+Captured 33-settings-Geometric-frame-160: 1100x780 density=1.0
+Captured 33-settings-Geometric-frame-400: 1100x780 density=1.0
+Captured 33-settings-Geometric: 1100x780 density=1.0
+Captured 34-reveal-Geometric-frame-0: 1100x780 density=1.0
+Captured 34-reveal-Geometric-frame-160: 1100x780 density=1.0
+Captured 34-reveal-Geometric-frame-400: 1100x780 density=1.0
+Captured 34-reveal-Geometric: 1100x780 density=1.0
+Physical click select-Geometric: lyrics-pv-geometric at Offset(550.0, 377.0)
+Captured 35-select-Geometric-frame-0: 1100x780 density=1.0
+Captured 35-select-Geometric-frame-160: 1100x780 density=1.0
+Captured 35-select-Geometric-frame-400: 1100x780 density=1.0
+Captured 35-select-Geometric: 1100x780 density=1.0
+Verified select-Geometric: selected:lyrics-pv-geometric
+Verified select-Geometric: pv-style:Geometric
+Captured 36-back-Geometric-frame-0: 1100x780 density=1.0
+Captured 36-back-Geometric-frame-160: 1100x780 density=1.0
+Captured 36-back-Geometric-frame-400: 1100x780 density=1.0
+Captured 36-back-Geometric: 1100x780 density=1.0
+Physical click player-Geometric: mini-player-expand at Offset(502.5, 682.0)
+Captured 37-player-Geometric-frame-0: 1100x780 density=1.0
+Captured 37-player-Geometric-frame-160: 1100x780 density=1.0
+Captured 37-player-Geometric-frame-400: 1100x780 density=1.0
+Captured 37-player-Geometric: 1100x780 density=1.0
+Verified player-Geometric: page:Lyrics
+Verified player-Geometric: state:player-lyrics:TextPV
+Verified player-Geometric: pv-style:Geometric
+Verified player-Geometric: word-lines-min:20
+Physical click collapse-Geometric: player-collapse at Offset(550.0, 17.0)
+Captured 38-collapse-Geometric-frame-0: 1100x780 density=1.0
+Captured 38-collapse-Geometric-frame-160: 1100x780 density=1.0
+Captured 38-collapse-Geometric-frame-400: 1100x780 density=1.0
+Captured 38-collapse-Geometric: 1100x780 density=1.0
+Physical click settings-RainCity: settings-open-lyrics at Offset(550.0, 659.0)
+Captured 39-settings-RainCity-frame-0: 1100x780 density=1.0
+Captured 39-settings-RainCity-frame-160: 1100x780 density=1.0
+Captured 39-settings-RainCity-frame-400: 1100x780 density=1.0
+Captured 39-settings-RainCity: 1100x780 density=1.0
+Captured 40-reveal-RainCity-frame-0: 1100x780 density=1.0
+Captured 40-reveal-RainCity-frame-160: 1100x780 density=1.0
+Captured 40-reveal-RainCity-frame-400: 1100x780 density=1.0
+Captured 40-reveal-RainCity: 1100x780 density=1.0
+Physical click select-RainCity: lyrics-pv-raincity at Offset(550.0, 423.0)
+Captured 41-select-RainCity-frame-0: 1100x780 density=1.0
+Captured 41-select-RainCity-frame-160: 1100x780 density=1.0
+Captured 41-select-RainCity-frame-400: 1100x780 density=1.0
+Captured 41-select-RainCity: 1100x780 density=1.0
+Verified select-RainCity: selected:lyrics-pv-raincity
+Verified select-RainCity: pv-style:RainCity
+Captured 42-back-RainCity-frame-0: 1100x780 density=1.0
+Captured 42-back-RainCity-frame-160: 1100x780 density=1.0
+Captured 42-back-RainCity-frame-400: 1100x780 density=1.0
+Captured 42-back-RainCity: 1100x780 density=1.0
+Physical click player-RainCity: mini-player-expand at Offset(502.5, 682.0)
+Captured 43-player-RainCity-frame-0: 1100x780 density=1.0
+Captured 43-player-RainCity-frame-160: 1100x780 density=1.0
+Captured 43-player-RainCity-frame-400: 1100x780 density=1.0
+Captured 43-player-RainCity: 1100x780 density=1.0
+Verified player-RainCity: page:Lyrics
+Verified player-RainCity: state:player-lyrics:TextPV
+Verified player-RainCity: pv-style:RainCity
+Verified player-RainCity: word-lines-min:20
+Physical click collapse-RainCity: player-collapse at Offset(550.0, 17.0)
+Captured 44-collapse-RainCity-frame-0: 1100x780 density=1.0
+Captured 44-collapse-RainCity-frame-160: 1100x780 density=1.0
+Captured 44-collapse-RainCity-frame-400: 1100x780 density=1.0
+Captured 44-collapse-RainCity: 1100x780 density=1.0
+Physical click settings-CyberpunkHUD: settings-open-lyrics at Offset(550.0, 659.0)
+Captured 45-settings-CyberpunkHUD-frame-0: 1100x780 density=1.0
+Captured 45-settings-CyberpunkHUD-frame-160: 1100x780 density=1.0
+Captured 45-settings-CyberpunkHUD-frame-400: 1100x780 density=1.0
+Captured 45-settings-CyberpunkHUD: 1100x780 density=1.0
+Captured 46-reveal-CyberpunkHUD-frame-0: 1100x780 density=1.0
+Captured 46-reveal-CyberpunkHUD-frame-160: 1100x780 density=1.0
+Captured 46-reveal-CyberpunkHUD-frame-400: 1100x780 density=1.0
+Captured 46-reveal-CyberpunkHUD: 1100x780 density=1.0
+Physical click select-CyberpunkHUD: lyrics-pv-cyberpunkhud at Offset(550.0, 469.0)
+Captured 47-select-CyberpunkHUD-frame-0: 1100x780 density=1.0
+Captured 47-select-CyberpunkHUD-frame-160: 1100x780 density=1.0
+Captured 47-select-CyberpunkHUD-frame-400: 1100x780 density=1.0
+Captured 47-select-CyberpunkHUD: 1100x780 density=1.0
+Verified select-CyberpunkHUD: selected:lyrics-pv-cyberpunkhud
+Verified select-CyberpunkHUD: pv-style:CyberpunkHUD
+Captured 48-back-CyberpunkHUD-frame-0: 1100x780 density=1.0
+Captured 48-back-CyberpunkHUD-frame-160: 1100x780 density=1.0
+Captured 48-back-CyberpunkHUD-frame-400: 1100x780 density=1.0
+Captured 48-back-CyberpunkHUD: 1100x780 density=1.0
+Physical click player-CyberpunkHUD: mini-player-expand at Offset(502.5, 682.0)
+Captured 49-player-CyberpunkHUD-frame-0: 1100x780 density=1.0
+Captured 49-player-CyberpunkHUD-frame-160: 1100x780 density=1.0
+Captured 49-player-CyberpunkHUD-frame-400: 1100x780 density=1.0
+Captured 49-player-CyberpunkHUD: 1100x780 density=1.0
+Verified player-CyberpunkHUD: page:Lyrics
+Verified player-CyberpunkHUD: state:player-lyrics:TextPV
+Verified player-CyberpunkHUD: pv-style:CyberpunkHUD
+Verified player-CyberpunkHUD: word-lines-min:20
+Physical click collapse-CyberpunkHUD: player-collapse at Offset(550.0, 17.0)
+Captured 50-collapse-CyberpunkHUD-frame-0: 1100x780 density=1.0
+Captured 50-collapse-CyberpunkHUD-frame-160: 1100x780 density=1.0
+Captured 50-collapse-CyberpunkHUD-frame-400: 1100x780 density=1.0
+Captured 50-collapse-CyberpunkHUD: 1100x780 density=1.0
+Physical click settings-EmotionCinema: settings-open-lyrics at Offset(550.0, 659.0)
+Captured 51-settings-EmotionCinema-frame-0: 1100x780 density=1.0
+Captured 51-settings-EmotionCinema-frame-160: 1100x780 density=1.0
+Captured 51-settings-EmotionCinema-frame-400: 1100x780 density=1.0
+Captured 51-settings-EmotionCinema: 1100x780 density=1.0
+Captured 52-reveal-EmotionCinema-frame-0: 1100x780 density=1.0
+Captured 52-reveal-EmotionCinema-frame-160: 1100x780 density=1.0
+Captured 52-reveal-EmotionCinema-frame-400: 1100x780 density=1.0
+Captured 52-reveal-EmotionCinema: 1100x780 density=1.0
+Physical click select-EmotionCinema: lyrics-pv-emotioncinema at Offset(550.0, 515.0)
+Captured 53-select-EmotionCinema-frame-0: 1100x780 density=1.0
+Captured 53-select-EmotionCinema-frame-160: 1100x780 density=1.0
+Captured 53-select-EmotionCinema-frame-400: 1100x780 density=1.0
+Captured 53-select-EmotionCinema: 1100x780 density=1.0
+Verified select-EmotionCinema: selected:lyrics-pv-emotioncinema
+Verified select-EmotionCinema: pv-style:EmotionCinema
+Captured 54-back-EmotionCinema-frame-0: 1100x780 density=1.0
+Captured 54-back-EmotionCinema-frame-160: 1100x780 density=1.0
+Captured 54-back-EmotionCinema-frame-400: 1100x780 density=1.0
+Captured 54-back-EmotionCinema: 1100x780 density=1.0
+Physical click player-EmotionCinema: mini-player-expand at Offset(502.5, 682.0)
+Captured 55-player-EmotionCinema-frame-0: 1100x780 density=1.0
+Captured 55-player-EmotionCinema-frame-160: 1100x780 density=1.0
+Captured 55-player-EmotionCinema-frame-400: 1100x780 density=1.0
+Captured 55-player-EmotionCinema: 1100x780 density=1.0
+Verified player-EmotionCinema: page:Lyrics
+Verified player-EmotionCinema: state:player-lyrics:TextPV
+Verified player-EmotionCinema: pv-style:EmotionCinema
+Verified player-EmotionCinema: word-lines-min:20
+Physical click collapse-EmotionCinema: player-collapse at Offset(550.0, 17.0)
+Captured 56-collapse-EmotionCinema-frame-0: 1100x780 density=1.0
+Captured 56-collapse-EmotionCinema-frame-160: 1100x780 density=1.0
+Captured 56-collapse-EmotionCinema-frame-400: 1100x780 density=1.0
+Captured 56-collapse-EmotionCinema: 1100x780 density=1.0
+Physical click settings-HystericNight: settings-open-lyrics at Offset(550.0, 659.0)
+Captured 57-settings-HystericNight-frame-0: 1100x780 density=1.0
+Captured 57-settings-HystericNight-frame-160: 1100x780 density=1.0
+Captured 57-settings-HystericNight-frame-400: 1100x780 density=1.0
+Captured 57-settings-HystericNight: 1100x780 density=1.0
+Captured 58-reveal-HystericNight-frame-0: 1100x780 density=1.0
+Captured 58-reveal-HystericNight-frame-160: 1100x780 density=1.0
+Captured 58-reveal-HystericNight-frame-400: 1100x780 density=1.0
+Captured 58-reveal-HystericNight: 1100x780 density=1.0
+Physical click select-HystericNight: lyrics-pv-hystericnight at Offset(550.0, 561.0)
+Captured 59-select-HystericNight-frame-0: 1100x780 density=1.0
+Captured 59-select-HystericNight-frame-160: 1100x780 density=1.0
+Captured 59-select-HystericNight-frame-400: 1100x780 density=1.0
+Captured 59-select-HystericNight: 1100x780 density=1.0
+Verified select-HystericNight: selected:lyrics-pv-hystericnight
+Verified select-HystericNight: pv-style:HystericNight
+Captured 60-back-HystericNight-frame-0: 1100x780 density=1.0
+Captured 60-back-HystericNight-frame-160: 1100x780 density=1.0
+Captured 60-back-HystericNight-frame-400: 1100x780 density=1.0
+Captured 60-back-HystericNight: 1100x780 density=1.0
+Physical click player-HystericNight: mini-player-expand at Offset(502.5, 682.0)
+Captured 61-player-HystericNight-frame-0: 1100x780 density=1.0
+Captured 61-player-HystericNight-frame-160: 1100x780 density=1.0
+Captured 61-player-HystericNight-frame-400: 1100x780 density=1.0
+Captured 61-player-HystericNight: 1100x780 density=1.0
+Verified player-HystericNight: page:Lyrics
+Verified player-HystericNight: state:player-lyrics:TextPV
+Verified player-HystericNight: pv-style:HystericNight
+Verified player-HystericNight: word-lines-min:20
+Physical click collapse-HystericNight: player-collapse at Offset(550.0, 17.0)
+Captured 62-collapse-HystericNight-frame-0: 1100x780 density=1.0
+Captured 62-collapse-HystericNight-frame-160: 1100x780 density=1.0
+Captured 62-collapse-HystericNight-frame-400: 1100x780 density=1.0
+Captured 62-collapse-HystericNight: 1100x780 density=1.0
+Physical click settings-SpiderWeb: settings-open-lyrics at Offset(550.0, 659.0)
+Captured 63-settings-SpiderWeb-frame-0: 1100x780 density=1.0
+Captured 63-settings-SpiderWeb-frame-160: 1100x780 density=1.0
+Captured 63-settings-SpiderWeb-frame-400: 1100x780 density=1.0
+Captured 63-settings-SpiderWeb: 1100x780 density=1.0
+Captured 64-reveal-SpiderWeb-frame-0: 1100x780 density=1.0
+Captured 64-reveal-SpiderWeb-frame-160: 1100x780 density=1.0
+Captured 64-reveal-SpiderWeb-frame-400: 1100x780 density=1.0
+Captured 64-reveal-SpiderWeb: 1100x780 density=1.0
+Physical click select-SpiderWeb: lyrics-pv-spiderweb at Offset(550.0, 607.0)
+Captured 65-select-SpiderWeb-frame-0: 1100x780 density=1.0
+Captured 65-select-SpiderWeb-frame-160: 1100x780 density=1.0
+Captured 65-select-SpiderWeb-frame-400: 1100x780 density=1.0
+Captured 65-select-SpiderWeb: 1100x780 density=1.0
+Verified select-SpiderWeb: selected:lyrics-pv-spiderweb
+Verified select-SpiderWeb: pv-style:SpiderWeb
+Captured 66-back-SpiderWeb-frame-0: 1100x780 density=1.0
+Captured 66-back-SpiderWeb-frame-160: 1100x780 density=1.0
+Captured 66-back-SpiderWeb-frame-400: 1100x780 density=1.0
+Captured 66-back-SpiderWeb: 1100x780 density=1.0
+Physical click player-SpiderWeb: mini-player-expand at Offset(502.5, 682.0)
+Captured 67-player-SpiderWeb-frame-0: 1100x780 density=1.0
+Captured 67-player-SpiderWeb-frame-160: 1100x780 density=1.0
+Captured 67-player-SpiderWeb-frame-400: 1100x780 density=1.0
+Captured 67-player-SpiderWeb: 1100x780 density=1.0
+Verified player-SpiderWeb: page:Lyrics
+Verified player-SpiderWeb: state:player-lyrics:TextPV
+Verified player-SpiderWeb: pv-style:SpiderWeb
+Verified player-SpiderWeb: word-lines-min:20
+Physical click collapse-SpiderWeb: player-collapse at Offset(550.0, 17.0)
+Captured 68-collapse-SpiderWeb-frame-0: 1100x780 density=1.0
+Captured 68-collapse-SpiderWeb-frame-160: 1100x780 density=1.0
+Captured 68-collapse-SpiderWeb-frame-400: 1100x780 density=1.0
+Captured 68-collapse-SpiderWeb: 1100x780 density=1.0
+Physical click settings-StaggeredText: settings-open-lyrics at Offset(550.0, 659.0)
+Captured 69-settings-StaggeredText-frame-0: 1100x780 density=1.0
+Captured 69-settings-StaggeredText-frame-160: 1100x780 density=1.0
+Captured 69-settings-StaggeredText-frame-400: 1100x780 density=1.0
+Captured 69-settings-StaggeredText: 1100x780 density=1.0
+Captured 70-reveal-StaggeredText-frame-0: 1100x780 density=1.0
+Captured 70-reveal-StaggeredText-frame-160: 1100x780 density=1.0
+Captured 70-reveal-StaggeredText-frame-400: 1100x780 density=1.0
+Captured 70-reveal-StaggeredText: 1100x780 density=1.0
+Physical click select-StaggeredText: lyrics-pv-staggeredtext at Offset(550.0, 573.0)
+Captured 71-select-StaggeredText-frame-0: 1100x780 density=1.0
+Captured 71-select-StaggeredText-frame-160: 1100x780 density=1.0
+Captured 71-select-StaggeredText-frame-400: 1100x780 density=1.0
+Captured 71-select-StaggeredText: 1100x780 density=1.0
+Verified select-StaggeredText: selected:lyrics-pv-staggeredtext
+Verified select-StaggeredText: pv-style:StaggeredText
+Captured 72-back-StaggeredText-frame-0: 1100x780 density=1.0
+Captured 72-back-StaggeredText-frame-160: 1100x780 density=1.0
+Captured 72-back-StaggeredText-frame-400: 1100x780 density=1.0
+Captured 72-back-StaggeredText: 1100x780 density=1.0
+Physical click player-StaggeredText: mini-player-expand at Offset(514.5, 749.0)
+Captured 73-player-StaggeredText-frame-0: 1100x780 density=1.0
+Captured 73-player-StaggeredText-frame-160: 1100x780 density=1.0
+Captured 73-player-StaggeredText-frame-400: 1100x780 density=1.0
+Captured 73-player-StaggeredText: 1100x780 density=1.0
+Verified player-StaggeredText: page:Lyrics
+Verified player-StaggeredText: state:player-lyrics:TextPV
+Verified player-StaggeredText: pv-style:StaggeredText
+Verified player-StaggeredText: word-lines-min:20
+Physical click collapse-StaggeredText: player-collapse at Offset(550.0, 17.0)
+Captured 74-collapse-StaggeredText-frame-0: 1100x780 density=1.0
+Captured 74-collapse-StaggeredText-frame-160: 1100x780 density=1.0
+Captured 74-collapse-StaggeredText-frame-400: 1100x780 density=1.0
+Captured 74-collapse-StaggeredText: 1100x780 density=1.0
+Physical click settings-CalmVillain: settings-open-lyrics at Offset(550.0, 659.0)
+Captured 75-settings-CalmVillain-frame-0: 1100x780 density=1.0
+Captured 75-settings-CalmVillain-frame-160: 1100x780 density=1.0
+Captured 75-settings-CalmVillain-frame-400: 1100x780 density=1.0
+Captured 75-settings-CalmVillain: 1100x780 density=1.0
+Captured 76-reveal-CalmVillain-frame-0: 1100x780 density=1.0
+Captured 76-reveal-CalmVillain-frame-160: 1100x780 density=1.0
+Captured 76-reveal-CalmVillain-frame-400: 1100x780 density=1.0
+Captured 76-reveal-CalmVillain: 1100x780 density=1.0
+Physical click select-CalmVillain: lyrics-pv-calmvillain at Offset(550.0, 540.0)
+Captured 77-select-CalmVillain-frame-0: 1100x780 density=1.0
+Captured 77-select-CalmVillain-frame-160: 1100x780 density=1.0
+Captured 77-select-CalmVillain-frame-400: 1100x780 density=1.0
+Captured 77-select-CalmVillain: 1100x780 density=1.0
+Verified select-CalmVillain: selected:lyrics-pv-calmvillain
+Verified select-CalmVillain: pv-style:CalmVillain
+Captured 78-back-CalmVillain-frame-0: 1100x780 density=1.0
+Captured 78-back-CalmVillain-frame-160: 1100x780 density=1.0
+Captured 78-back-CalmVillain-frame-400: 1100x780 density=1.0
+Captured 78-back-CalmVillain: 1100x780 density=1.0
+Physical click player-CalmVillain: mini-player-expand at Offset(514.5, 749.0)
+Captured 79-player-CalmVillain-frame-0: 1100x780 density=1.0
+Captured 79-player-CalmVillain-frame-160: 1100x780 density=1.0
+Captured 79-player-CalmVillain-frame-400: 1100x780 density=1.0
+Captured 79-player-CalmVillain: 1100x780 density=1.0
+Verified player-CalmVillain: page:Lyrics
+Verified player-CalmVillain: state:player-lyrics:TextPV
+Verified player-CalmVillain: pv-style:CalmVillain
+Verified player-CalmVillain: word-lines-min:20
+Physical click collapse-CalmVillain: player-collapse at Offset(550.0, 17.0)
+Captured 80-collapse-CalmVillain-frame-0: 1100x780 density=1.0
+Captured 80-collapse-CalmVillain-frame-160: 1100x780 density=1.0
+Captured 80-collapse-CalmVillain-frame-400: 1100x780 density=1.0
+Captured 80-collapse-CalmVillain: 1100x780 density=1.0
+Physical click settings-GirlyClouds: settings-open-lyrics at Offset(550.0, 659.0)
+Captured 81-settings-GirlyClouds-frame-0: 1100x780 density=1.0
+Captured 81-settings-GirlyClouds-frame-160: 1100x780 density=1.0
+Captured 81-settings-GirlyClouds-frame-400: 1100x780 density=1.0
+Captured 81-settings-GirlyClouds: 1100x780 density=1.0
+Captured 82-reveal-GirlyClouds-frame-0: 1100x780 density=1.0
+Captured 82-reveal-GirlyClouds-frame-160: 1100x780 density=1.0
+Captured 82-reveal-GirlyClouds-frame-400: 1100x780 density=1.0
+Captured 82-reveal-GirlyClouds: 1100x780 density=1.0
+Physical click select-GirlyClouds: lyrics-pv-girlyclouds at Offset(550.0, 586.0)
+Captured 83-select-GirlyClouds-frame-0: 1100x780 density=1.0
+Captured 83-select-GirlyClouds-frame-160: 1100x780 density=1.0
+Captured 83-select-GirlyClouds-frame-400: 1100x780 density=1.0
+Captured 83-select-GirlyClouds: 1100x780 density=1.0
+Verified select-GirlyClouds: selected:lyrics-pv-girlyclouds
+Verified select-GirlyClouds: pv-style:GirlyClouds
+Captured 84-back-GirlyClouds-frame-0: 1100x780 density=1.0
+Captured 84-back-GirlyClouds-frame-160: 1100x780 density=1.0
+Captured 84-back-GirlyClouds-frame-400: 1100x780 density=1.0
+Captured 84-back-GirlyClouds: 1100x780 density=1.0
+Physical click player-GirlyClouds: mini-player-expand at Offset(514.5, 749.0)
+Captured 85-player-GirlyClouds-frame-0: 1100x780 density=1.0
+Captured 85-player-GirlyClouds-frame-160: 1100x780 density=1.0
+Captured 85-player-GirlyClouds-frame-400: 1100x780 density=1.0
+Captured 85-player-GirlyClouds: 1100x780 density=1.0
+Verified player-GirlyClouds: page:Lyrics
+Verified player-GirlyClouds: state:player-lyrics:TextPV
+Verified player-GirlyClouds: pv-style:GirlyClouds
+Verified player-GirlyClouds: word-lines-min:20
+Physical click collapse-GirlyClouds: player-collapse at Offset(550.0, 17.0)
+Captured 86-collapse-GirlyClouds-frame-0: 1100x780 density=1.0
+Captured 86-collapse-GirlyClouds-frame-160: 1100x780 density=1.0
+Captured 86-collapse-GirlyClouds-frame-400: 1100x780 density=1.0
+Captured 86-collapse-GirlyClouds: 1100x780 density=1.0
+Physical click settings-SweetPink: settings-open-lyrics at Offset(550.0, 659.0)
+Captured 87-settings-SweetPink-frame-0: 1100x780 density=1.0
+Captured 87-settings-SweetPink-frame-160: 1100x780 density=1.0
+Captured 87-settings-SweetPink-frame-400: 1100x780 density=1.0
+Captured 87-settings-SweetPink: 1100x780 density=1.0
+Captured 88-reveal-SweetPink-frame-0: 1100x780 density=1.0
+Captured 88-reveal-SweetPink-frame-160: 1100x780 density=1.0
+Captured 88-reveal-SweetPink-frame-400: 1100x780 density=1.0
+Captured 88-reveal-SweetPink: 1100x780 density=1.0
+Physical click select-SweetPink: lyrics-pv-sweetpink at Offset(550.0, 552.0)
+Captured 89-select-SweetPink-frame-0: 1100x780 density=1.0
+Captured 89-select-SweetPink-frame-160: 1100x780 density=1.0
+Captured 89-select-SweetPink-frame-400: 1100x780 density=1.0
+Captured 89-select-SweetPink: 1100x780 density=1.0
+Verified select-SweetPink: selected:lyrics-pv-sweetpink
+Verified select-SweetPink: pv-style:SweetPink
+Captured 90-back-SweetPink-frame-0: 1100x780 density=1.0
+Captured 90-back-SweetPink-frame-160: 1100x780 density=1.0
+Captured 90-back-SweetPink-frame-400: 1100x780 density=1.0
+Captured 90-back-SweetPink: 1100x780 density=1.0
+Physical click player-SweetPink: mini-player-expand at Offset(514.5, 749.0)
+Captured 91-player-SweetPink-frame-0: 1100x780 density=1.0
+Captured 91-player-SweetPink-frame-160: 1100x780 density=1.0
+Captured 91-player-SweetPink-frame-400: 1100x780 density=1.0
+Captured 91-player-SweetPink: 1100x780 density=1.0
+Verified player-SweetPink: page:Lyrics
+Verified player-SweetPink: state:player-lyrics:TextPV
+Verified player-SweetPink: pv-style:SweetPink
+Verified player-SweetPink: word-lines-min:20
+Physical click collapse-SweetPink: player-collapse at Offset(550.0, 17.0)
+Captured 92-collapse-SweetPink-frame-0: 1100x780 density=1.0
+Captured 92-collapse-SweetPink-frame-160: 1100x780 density=1.0
+Captured 92-collapse-SweetPink-frame-400: 1100x780 density=1.0
+Captured 92-collapse-SweetPink: 1100x780 density=1.0
+Physical click settings-FlyMeToTheMoon: settings-open-lyrics at Offset(550.0, 659.0)
+Captured 93-settings-FlyMeToTheMoon-frame-0: 1100x780 density=1.0
+Captured 93-settings-FlyMeToTheMoon-frame-160: 1100x780 density=1.0
+Captured 93-settings-FlyMeToTheMoon-frame-400: 1100x780 density=1.0
+Captured 93-settings-FlyMeToTheMoon: 1100x780 density=1.0
+Captured 94-reveal-FlyMeToTheMoon-frame-0: 1100x780 density=1.0
+Captured 94-reveal-FlyMeToTheMoon-frame-160: 1100x780 density=1.0
+Captured 94-reveal-FlyMeToTheMoon-frame-400: 1100x780 density=1.0
+Captured 94-reveal-FlyMeToTheMoon: 1100x780 density=1.0
+Physical click select-FlyMeToTheMoon: lyrics-pv-flymetothemoon at Offset(550.0, 598.0)
+Captured 95-select-FlyMeToTheMoon-frame-0: 1100x780 density=1.0
+Captured 95-select-FlyMeToTheMoon-frame-160: 1100x780 density=1.0
+Captured 95-select-FlyMeToTheMoon-frame-400: 1100x780 density=1.0
+Captured 95-select-FlyMeToTheMoon: 1100x780 density=1.0
+Verified select-FlyMeToTheMoon: selected:lyrics-pv-flymetothemoon
+Verified select-FlyMeToTheMoon: pv-style:FlyMeToTheMoon
+Captured 96-back-FlyMeToTheMoon-frame-0: 1100x780 density=1.0
+Captured 96-back-FlyMeToTheMoon-frame-160: 1100x780 density=1.0
+Captured 96-back-FlyMeToTheMoon-frame-400: 1100x780 density=1.0
+Captured 96-back-FlyMeToTheMoon: 1100x780 density=1.0
+Physical click player-FlyMeToTheMoon: mini-player-expand at Offset(514.5, 749.0)
+Captured 97-player-FlyMeToTheMoon-frame-0: 1100x780 density=1.0
+Captured 97-player-FlyMeToTheMoon-frame-160: 1100x780 density=1.0
+Captured 97-player-FlyMeToTheMoon-frame-400: 1100x780 density=1.0
+Captured 97-player-FlyMeToTheMoon: 1100x780 density=1.0
+Verified player-FlyMeToTheMoon: page:Lyrics
+Verified player-FlyMeToTheMoon: state:player-lyrics:TextPV
+Verified player-FlyMeToTheMoon: pv-style:FlyMeToTheMoon
+Verified player-FlyMeToTheMoon: word-lines-min:20
+Physical click collapse-FlyMeToTheMoon: player-collapse at Offset(550.0, 17.0)
+Captured 98-collapse-FlyMeToTheMoon-frame-0: 1100x780 density=1.0
+Captured 98-collapse-FlyMeToTheMoon-frame-160: 1100x780 density=1.0
+Captured 98-collapse-FlyMeToTheMoon-frame-400: 1100x780 density=1.0
+Captured 98-collapse-FlyMeToTheMoon: 1100x780 density=1.0
+Physical click settings-KawaiiPixel: settings-open-lyrics at Offset(550.0, 659.0)
+Captured 99-settings-KawaiiPixel-frame-0: 1100x780 density=1.0
+Captured 99-settings-KawaiiPixel-frame-160: 1100x780 density=1.0
+Captured 99-settings-KawaiiPixel-frame-400: 1100x780 density=1.0
+Captured 99-settings-KawaiiPixel: 1100x780 density=1.0
+Captured 100-reveal-KawaiiPixel-frame-0: 1100x780 density=1.0
+Captured 100-reveal-KawaiiPixel-frame-160: 1100x780 density=1.0
+Captured 100-reveal-KawaiiPixel-frame-400: 1100x780 density=1.0
+Captured 100-reveal-KawaiiPixel: 1100x780 density=1.0
+Physical click select-KawaiiPixel: lyrics-pv-kawaiipixel at Offset(550.0, 564.0)
+Captured 101-select-KawaiiPixel-frame-0: 1100x780 density=1.0
+Captured 101-select-KawaiiPixel-frame-160: 1100x780 density=1.0
+Captured 101-select-KawaiiPixel-frame-400: 1100x780 density=1.0
+Captured 101-select-KawaiiPixel: 1100x780 density=1.0
+Verified select-KawaiiPixel: selected:lyrics-pv-kawaiipixel
+Verified select-KawaiiPixel: pv-style:KawaiiPixel
+Captured 102-back-KawaiiPixel-frame-0: 1100x780 density=1.0
+Captured 102-back-KawaiiPixel-frame-160: 1100x780 density=1.0
+Captured 102-back-KawaiiPixel-frame-400: 1100x780 density=1.0
+Captured 102-back-KawaiiPixel: 1100x780 density=1.0
+Physical click player-KawaiiPixel: mini-player-expand at Offset(514.5, 749.0)
+Captured 103-player-KawaiiPixel-frame-0: 1100x780 density=1.0
+Captured 103-player-KawaiiPixel-frame-160: 1100x780 density=1.0
+Captured 103-player-KawaiiPixel-frame-400: 1100x780 density=1.0
+Captured 103-player-KawaiiPixel: 1100x780 density=1.0
+Verified player-KawaiiPixel: page:Lyrics
+Verified player-KawaiiPixel: state:player-lyrics:TextPV
+Verified player-KawaiiPixel: pv-style:KawaiiPixel
+Verified player-KawaiiPixel: word-lines-min:20
+Physical click collapse-KawaiiPixel: player-collapse at Offset(550.0, 17.0)
+Captured 104-collapse-KawaiiPixel-frame-0: 1100x780 density=1.0
+Captured 104-collapse-KawaiiPixel-frame-160: 1100x780 density=1.0
+Captured 104-collapse-KawaiiPixel-frame-400: 1100x780 density=1.0
+Captured 104-collapse-KawaiiPixel: 1100x780 density=1.0
+Physical click settings-CrimeScene: settings-open-lyrics at Offset(550.0, 659.0)
+Captured 105-settings-CrimeScene-frame-0: 1100x780 density=1.0
+Captured 105-settings-CrimeScene-frame-160: 1100x780 density=1.0
+Captured 105-settings-CrimeScene-frame-400: 1100x780 density=1.0
+Captured 105-settings-CrimeScene: 1100x780 density=1.0
+Captured 106-reveal-CrimeScene-frame-0: 1100x780 density=1.0
+Captured 106-reveal-CrimeScene-frame-160: 1100x780 density=1.0
+Captured 106-reveal-CrimeScene-frame-400: 1100x780 density=1.0
+Captured 106-reveal-CrimeScene: 1100x780 density=1.0
+Physical click select-CrimeScene: lyrics-pv-crimescene at Offset(550.0, 610.0)
+Captured 107-select-CrimeScene-frame-0: 1100x780 density=1.0
+Captured 107-select-CrimeScene-frame-160: 1100x780 density=1.0
+Captured 107-select-CrimeScene-frame-400: 1100x780 density=1.0
+Captured 107-select-CrimeScene: 1100x780 density=1.0
+Verified select-CrimeScene: selected:lyrics-pv-crimescene
+Verified select-CrimeScene: pv-style:CrimeScene
+Captured 108-back-CrimeScene-frame-0: 1100x780 density=1.0
+Captured 108-back-CrimeScene-frame-160: 1100x780 density=1.0
+Captured 108-back-CrimeScene-frame-400: 1100x780 density=1.0
+Captured 108-back-CrimeScene: 1100x780 density=1.0
+Physical click player-CrimeScene: mini-player-expand at Offset(514.5, 749.0)
+Captured 109-player-CrimeScene-frame-0: 1100x780 density=1.0
+Captured 109-player-CrimeScene-frame-160: 1100x780 density=1.0
+Captured 109-player-CrimeScene-frame-400: 1100x780 density=1.0
+Captured 109-player-CrimeScene: 1100x780 density=1.0
+Verified player-CrimeScene: page:Lyrics
+Verified player-CrimeScene: state:player-lyrics:TextPV
+Verified player-CrimeScene: pv-style:CrimeScene
+Verified player-CrimeScene: word-lines-min:20
+Physical click collapse-CrimeScene: player-collapse at Offset(550.0, 17.0)
+Captured 110-collapse-CrimeScene-frame-0: 1100x780 density=1.0
+Captured 110-collapse-CrimeScene-frame-160: 1100x780 density=1.0
+Captured 110-collapse-CrimeScene-frame-400: 1100x780 density=1.0
+Captured 110-collapse-CrimeScene: 1100x780 density=1.0
+Physical click settings-Haruhikage: settings-open-lyrics at Offset(550.0, 659.0)
+Captured 111-settings-Haruhikage-frame-0: 1100x780 density=1.0
+Captured 111-settings-Haruhikage-frame-160: 1100x780 density=1.0
+Captured 111-settings-Haruhikage-frame-400: 1100x780 density=1.0
+Captured 111-settings-Haruhikage: 1100x780 density=1.0
+Captured 112-reveal-Haruhikage-frame-0: 1100x780 density=1.0
+Captured 112-reveal-Haruhikage-frame-160: 1100x780 density=1.0
+Captured 112-reveal-Haruhikage-frame-400: 1100x780 density=1.0
+Captured 112-reveal-Haruhikage: 1100x780 density=1.0
+Physical click select-Haruhikage: lyrics-pv-haruhikage at Offset(550.0, 576.0)
+Captured 113-select-Haruhikage-frame-0: 1100x780 density=1.0
+Captured 113-select-Haruhikage-frame-160: 1100x780 density=1.0
+Captured 113-select-Haruhikage-frame-400: 1100x780 density=1.0
+Captured 113-select-Haruhikage: 1100x780 density=1.0
+Verified select-Haruhikage: selected:lyrics-pv-haruhikage
+Verified select-Haruhikage: pv-style:Haruhikage
+Captured 114-back-Haruhikage-frame-0: 1100x780 density=1.0
+Captured 114-back-Haruhikage-frame-160: 1100x780 density=1.0
+Captured 114-back-Haruhikage-frame-400: 1100x780 density=1.0
+Captured 114-back-Haruhikage: 1100x780 density=1.0
+Physical click player-Haruhikage: mini-player-expand at Offset(514.5, 749.0)
+Captured 115-player-Haruhikage-frame-0: 1100x780 density=1.0
+Captured 115-player-Haruhikage-frame-160: 1100x780 density=1.0
+Captured 115-player-Haruhikage-frame-400: 1100x780 density=1.0
+Captured 115-player-Haruhikage: 1100x780 density=1.0
+Verified player-Haruhikage: page:Lyrics
+Verified player-Haruhikage: state:player-lyrics:TextPV
+Verified player-Haruhikage: pv-style:Haruhikage
+Verified player-Haruhikage: word-lines-min:20
+Physical click collapse-Haruhikage: player-collapse at Offset(550.0, 17.0)
+Captured 116-collapse-Haruhikage-frame-0: 1100x780 density=1.0
+Captured 116-collapse-Haruhikage-frame-160: 1100x780 density=1.0
+Captured 116-collapse-Haruhikage-frame-400: 1100x780 density=1.0
+Captured 116-collapse-Haruhikage: 1100x780 density=1.0
+
+BUILD SUCCESSFUL in 4m 40s
+14 actionable tasks: 6 executed, 8 up-to-date
+Consider enabling configuration cache to speed up this build: https://docs.gradle.org/9.5.1/userguide/configuration_cache_enabling.html

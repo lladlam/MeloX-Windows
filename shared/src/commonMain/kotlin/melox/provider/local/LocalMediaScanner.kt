@@ -15,7 +15,15 @@ class LocalMediaScanner(
         val roots = repository.scanRoots().mapNotNull { root ->
             File(root.uri.removePrefix("file://")).takeIf(File::isDirectory)
         } + listOf(defaultMusicDirectory())
-        val records = roots.flatMap { scanDirectory(it) }.distinctBy(LocalTrackRecord::fileKey)
+        val existing = repository.tracks().associateBy(LocalTrackRecord::fileKey)
+        val records = roots.flatMap { scanDirectory(it) }.distinctBy(LocalTrackRecord::fileKey).map { scanned ->
+            existing[scanned.fileKey]?.let { old -> scanned.copy(
+                isFavorite = old.isFavorite, artworkUri = scanned.artworkUri ?: old.artworkUri,
+                recognizedNeteaseId = old.recognizedNeteaseId, recognizedTitle = old.recognizedTitle,
+                recognizedArtist = old.recognizedArtist, recognizedAlbum = old.recognizedAlbum,
+                recognizedArtworkUrl = old.recognizedArtworkUrl, cachedLyrics = old.cachedLyrics,
+            ) } ?: scanned
+        }
         repository.replaceTracks(records)
         records
     }

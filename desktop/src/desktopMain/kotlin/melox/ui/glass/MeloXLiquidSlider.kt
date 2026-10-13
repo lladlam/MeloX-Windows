@@ -47,6 +47,7 @@ fun MeloXLiquidSlider(
     visibilityThreshold: Float = 0.01f,
     modifier: Modifier = Modifier,
     contentDescription: String,
+    onValueChangeFinished: () -> Unit = {},
 ) {
     require(valueRange.endInclusive > valueRange.start) { "valueRange must not be empty" }
     require(stepSize >= 0f) { "stepSize must be non-negative" }
@@ -55,6 +56,7 @@ fun MeloXLiquidSlider(
     var interacting by remember { mutableStateOf(false) }
     val latestOnValueChange by rememberUpdatedState(onValueChange)
     val latestOnTransientValueChange by rememberUpdatedState(onTransientValueChange)
+    val latestOnFinished by rememberUpdatedState(onValueChangeFinished)
     val steps = if (stepSize > 0f) {
         (((valueRange.endInclusive - valueRange.start) / stepSize).roundToInt() - 1).coerceAtLeast(0)
     } else 0
@@ -68,6 +70,7 @@ fun MeloXLiquidSlider(
         transientValue = settled
         interacting = false
         if (settled != externalValue) latestOnValueChange(settled)
+        latestOnFinished()
     }
 
     val semantics = Modifier.semantics(mergeDescendants = true) {

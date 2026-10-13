@@ -1,0 +1,151 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.5.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :desktop:kmpPartiallyResolvedDependenciesChecker
+> Task :desktop:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :desktop:convertXmlValueResourcesForCommonMain NO-SOURCE
+> Task :desktop:copyNonXmlValueResourcesForCommonMain NO-SOURCE
+> Task :desktop:prepareComposeResourcesTaskForCommonMain NO-SOURCE
+> Task :desktop:generateResourceAccessorsForCommonMain SKIPPED
+> Task :desktop:convertXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :desktop:copyNonXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :desktop:prepareComposeResourcesTaskForDesktopMain NO-SOURCE
+> Task :desktop:generateResourceAccessorsForDesktopMain SKIPPED
+> Task :desktop:generateActualResourceCollectorsForDesktopMain SKIPPED
+> Task :desktop:generateComposeResClass SKIPPED
+> Task :desktop:generateExpectResourceCollectorsForCommonMain SKIPPED
+> Task :innertube:kmpPartiallyResolvedDependenciesChecker
+> Task :innertube:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :innertube:extractAndroidInnerTube UP-TO-DATE
+> Task :innertube:compileKotlinDesktop UP-TO-DATE
+> Task :innertube:compileDesktopMainJava NO-SOURCE
+> Task :innertube:desktopProcessResources NO-SOURCE
+> Task :innertube:processDesktopMainResources SKIPPED
+> Task :innertube:desktopMainClasses UP-TO-DATE
+> Task :innertube:desktopJar UP-TO-DATE
+> Task :shared:kmpPartiallyResolvedDependenciesChecker
+> Task :shared:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :shared:convertXmlValueResourcesForCommonMain NO-SOURCE
+> Task :shared:copyNonXmlValueResourcesForCommonMain NO-SOURCE
+> Task :shared:prepareComposeResourcesTaskForCommonMain NO-SOURCE
+> Task :shared:generateResourceAccessorsForCommonMain SKIPPED
+> Task :shared:convertXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :shared:copyNonXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :shared:prepareComposeResourcesTaskForDesktopMain NO-SOURCE
+> Task :shared:generateResourceAccessorsForDesktopMain SKIPPED
+> Task :shared:generateActualResourceCollectorsForDesktopMain SKIPPED
+> Task :shared:generateComposeResClass SKIPPED
+> Task :shared:generateExpectResourceCollectorsForCommonMain SKIPPED
+> Task :shared:compileKotlinDesktop UP-TO-DATE
+> Task :shared:compileDesktopMainJava NO-SOURCE
+> Task :shared:assembleDesktopMainResources UP-TO-DATE
+> Task :shared:desktopProcessResources UP-TO-DATE
+> Task :shared:processDesktopMainResources SKIPPED
+> Task :shared:desktopMainClasses UP-TO-DATE
+> Task :shared:desktopJar UP-TO-DATE
+> Task :desktop:compileKotlinDesktop UP-TO-DATE
+> Task :desktop:compileDesktopMainJava NO-SOURCE
+> Task :desktop:assembleDesktopMainResources UP-TO-DATE
+> Task :desktop:desktopProcessResources UP-TO-DATE
+> Task :desktop:processDesktopMainResources SKIPPED
+> Task :desktop:desktopMainClasses UP-TO-DATE
+
+> Task :desktop:captureUi
+SLF4J(W): No SLF4J providers were found.
+SLF4J(W): Defaulting to no-operation (NOP) logger implementation
+SLF4J(W): See https://www.slf4j.org/codes.html#noProviders for further details.
+Captured 00-search: 427x924 density=1.0
+Captured 01-query-frame-0: 427x924 density=1.0
+Captured 01-query-frame-160: 427x924 density=1.0
+Captured 01-query-frame-400: 427x924 density=1.0
+Captured 01-query: 427x924 density=1.0
+Physical click submit: search-submit at Offset(327.0, 161.0)
+Captured 02-submit-frame-0: 427x924 density=1.0
+Captured 02-submit-frame-160: 427x924 density=1.0
+Captured 02-submit-frame-400: 427x924 density=1.0
+Captured 02-submit: 427x924 density=1.0
+Captured 03-songs-frame-0: 427x924 density=1.0
+Captured 03-songs-frame-160: 427x924 density=1.0
+Captured 03-songs-frame-400: 427x924 density=1.0
+Captured 03-songs: 427x924 density=1.0
+Verified songs: tag-prefix:search-song-
+Physical click artists: search-kind-artists at Offset(196.0, 225.0)
+Captured 04-artists-frame-0: 427x924 density=1.0
+Captured 04-artists-frame-160: 427x924 density=1.0
+Captured 04-artists-frame-400: 427x924 density=1.0
+Captured 04-artists: 427x924 density=1.0
+Captured 05-artist-load-frame-0: 427x924 density=1.0
+Captured 05-artist-load-frame-160: 427x924 density=1.0
+Captured 05-artist-load-frame-400: 427x924 density=1.0
+Captured 05-artist-load: 427x924 density=1.0
+Physical click artist-open: search-media-artists-6452 at Offset(213.5, 295.0)
+Captured 06-artist-open-frame-0: 427x924 density=1.0
+Captured 06-artist-open-frame-160: 427x924 density=1.0
+Captured 06-artist-open-frame-400: 427x924 density=1.0
+Captured 06-artist-open: 427x924 density=1.0
+Captured 07-artist-detail-frame-0: 427x924 density=1.0
+Captured 07-artist-detail-frame-160: 427x924 density=1.0
+Captured 07-artist-detail-frame-400: 427x924 density=1.0
+Captured 07-artist-detail: 427x924 density=1.0
+Verified artist-detail: tag:artist-detail
+Captured 08-artist-back-frame-0: 427x924 density=1.0
+Captured 08-artist-back-frame-160: 427x924 density=1.0
+Captured 08-artist-back-frame-400: 427x924 density=1.0
+Captured 08-artist-back: 427x924 density=1.0
+Verified artist-back: selected:search-kind-artists
+Physical click playlists: search-kind-playlists at Offset(268.0, 225.0)
+Captured 09-playlists-frame-0: 427x924 density=1.0
+Captured 09-playlists-frame-160: 427x924 density=1.0
+Captured 09-playlists-frame-400: 427x924 density=1.0
+Captured 09-playlists: 427x924 density=1.0
+Captured 10-playlist-load-frame-0: 427x924 density=1.0
+Captured 10-playlist-load-frame-160: 427x924 density=1.0
+Captured 10-playlist-load-frame-400: 427x924 density=1.0
+Captured 10-playlist-load: 427x924 density=1.0
+Physical click playlist-open: search-media-playlists-6792103822 at Offset(213.5, 295.0)
+Captured 11-playlist-open-frame-0: 427x924 density=1.0
+Captured 11-playlist-open-frame-160: 427x924 density=1.0
+Captured 11-playlist-open-frame-400: 427x924 density=1.0
+Captured 11-playlist-open: 427x924 density=1.0
+Captured 12-playlist-detail-frame-0: 427x924 density=1.0
+Captured 12-playlist-detail-frame-160: 427x924 density=1.0
+Captured 12-playlist-detail-frame-400: 427x924 density=1.0
+Captured 12-playlist-detail: 427x924 density=1.0
+Verified playlist-detail: tag:playlist-detail
+Captured 13-playlist-back-frame-0: 427x924 density=1.0
+Captured 13-playlist-back-frame-160: 427x924 density=1.0
+Captured 13-playlist-back-frame-400: 427x924 density=1.0
+Captured 13-playlist-back: 427x924 density=1.0
+Verified playlist-back: selected:search-kind-playlists
+Captured 14-more-scopes-frame-0: 427x924 density=1.0
+Captured 14-more-scopes-frame-160: 427x924 density=1.0
+Captured 14-more-scopes-frame-400: 427x924 density=1.0
+Captured 14-more-scopes: 427x924 density=1.0
+Physical click podcasts: search-kind-podcasts at Offset(303.0, 225.0)
+Captured 15-podcasts-frame-0: 427x924 density=1.0
+Captured 15-podcasts-frame-160: 427x924 density=1.0
+Captured 15-podcasts-frame-400: 427x924 density=1.0
+Captured 15-podcasts: 427x924 density=1.0
+Captured 16-podcast-load-frame-0: 427x924 density=1.0
+Captured 16-podcast-load-frame-160: 427x924 density=1.0
+Captured 16-podcast-load-frame-400: 427x924 density=1.0
+Captured 16-podcast-load: 427x924 density=1.0
+Physical click podcast-open: search-media-podcasts-992626291 at Offset(213.5, 295.0)
+Captured 17-podcast-open-frame-0: 427x924 density=1.0
+Captured 17-podcast-open-frame-160: 427x924 density=1.0
+Captured 17-podcast-open-frame-400: 427x924 density=1.0
+Captured 17-podcast-open: 427x924 density=1.0
+Captured 18-podcast-detail-frame-0: 427x924 density=1.0
+Captured 18-podcast-detail-frame-160: 427x924 density=1.0
+Captured 18-podcast-detail-frame-400: 427x924 density=1.0
+Captured 18-podcast-detail: 427x924 density=1.0
+Verified podcast-detail: tag:podcast-detail
+Verified podcast-detail: tag:podcast-detail-error
+Captured 19-podcast-back-frame-0: 427x924 density=1.0
+Captured 19-podcast-back-frame-160: 427x924 density=1.0
+Captured 19-podcast-back-frame-400: 427x924 density=1.0
+Captured 19-podcast-back: 427x924 density=1.0
+Verified podcast-back: selected:search-kind-podcasts
+
+BUILD SUCCESSFUL in 1m 26s
+14 actionable tasks: 4 executed, 10 up-to-date
+Consider enabling configuration cache to speed up this build: https://docs.gradle.org/9.5.1/userguide/configuration_cache_enabling.html

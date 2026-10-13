@@ -21,6 +21,13 @@ data class SearchSong(
     val albumId: Long? = null,
     val artistId: Long? = null,
 ) {
+    /** Only provider-native NetEase IDs may reach its write/comment endpoints. */
+    val neteaseSongId: Long?
+        get() = providerTrack?.let { track ->
+            if (track.id.source == melox.music.model.MusicSource.Netease) track.id.value.toLongOrNull()?.takeIf { it > 0 }
+            else null
+        } ?: id.takeIf { providerTrack == null && it > 0 }
+
     val playbackUrl: String
         get() = "https://music.163.com/song/media/outer/url?id=$id"
 }

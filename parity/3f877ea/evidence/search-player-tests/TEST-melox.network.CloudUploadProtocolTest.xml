@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="CloudUploadProtocolTest[desktop]" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-10-13T08:09:48.193Z" hostname="lladlam-arch" time="1.85">
+  <properties/>
+  <testcase name="encryptedProtocolUploadsExactRealBytesPublishesAndRefreshesOnlyAfterSuccess[desktop]" classname="melox.network.CloudUploadProtocolTest" time="0.516"/>
+  <testcase name="cancellingBlockedNosResponsePromptlyReleasesSnapshotWithoutPublishing[desktop]" classname="melox.network.CloudUploadProtocolTest" time="0.288"/>
+  <testcase name="rejectedNosUploadNeverRegistersPublishesOrReportsCompletion[desktop]" classname="melox.network.CloudUploadProtocolTest" time="0.264"/>
+  <testcase name="existingRemoteFileSkipsNosAndRealWeapiFallbackCanRegisterIt[desktop]" classname="melox.network.CloudUploadProtocolTest" time="0.273"/>
+  <testcase name="nativeTagsAndUnicodeFilenameSurviveCloudRegistration[desktop]" classname="melox.network.CloudUploadProtocolTest" time="0.412"/>
+  <testcase name="absentAccountEmptyAndInvalidAudioMakeNoCloudRequests[desktop]" classname="melox.network.CloudUploadProtocolTest" time="0.093"/>
+  <system-out><![CDATA[Cloud protocol: real native WAV metadata, exact 44144 upload bytes/MD5, encrypted EAPI, NOS token without Cookie, publish then cloud-list refresh
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -123,6 +123,7 @@ internal class MeloXDualDecodeSession(
                 val publishLock = Any()
                 var handedOff = -1L
                 val mixer = MeloXPcmMix(bassSwap)
+                val equalizer = melox.playback.MeloXEqualizerController()
                 fun publish() = synchronized(publishLock) {
                     if (closed.get() || revision.get() != version) return
                     val endpoint = line ?: return
@@ -197,7 +198,8 @@ internal class MeloXDualDecodeSession(
                                 if (received != length) throw IOException("Incoming audio ended during AutoMix")
                                 primaryFrames += count / 4; incomingFrames += received / 4
                                 count = length
-                                mixer.mix(blockA, blockB, count, mixed, currentMix.plan.durationMs * AudioPlayer.PCM_SAMPLE_RATE / 1000, currentMix.curve)
+                                mixer.mix(blockA, blockB, count, mixed, currentMix.plan.durationMs * AudioPlayer.PCM_SAMPLE_RATE / 1000, currentMix.curve,
+                                    bassSwapEnabled = !melox.playback.MeloXEqualizerSettings.current.value.enabled)
                                 mixed += count / 4; overlapFrames += count / 4
                             } catch (failure: Exception) {
                                 currentMix.close(); active.compareAndSet(currentMix, null); mixing = null; pendingHandoff.set(false)
@@ -217,7 +219,7 @@ internal class MeloXDualDecodeSession(
                                 publish(); delay(10)
                             }
                             publish()
-                            totalWritten += written; totalRendered += line.longFramePosition.coerceIn(0, written); clipped += mixer.clippedSamples
+                            totalWritten += written; totalRendered += line.longFramePosition.coerceIn(0, written); clipped += mixer.clippedSamples + equalizer.clippedSamples
                             if (!closed.get() && revision.get() == version) {
                                 if (!started) synchronized(lock) { clock = clock.copy(positionMs = selected.startMs) }
                                 return@withContext MeloXDualPcmResult(primaryFrames, incomingFrames, overlapFrames, totalWritten, totalRendered, clipped)
@@ -228,7 +230,7 @@ internal class MeloXDualDecodeSession(
                         if (closed.get() || revision.get() != version) break
                         if (!started) { started = true; onReady() }
                         if (!line.isRunning) try { line.start() } catch (failure: Exception) { throw AudioPlaybackFailure(AudioFailureKind.Output, failure) }
-                        MeloXPcmMix.scale(blockA, count, volume)
+                        equalizer.process(blockA, count, volume)
                         var offset = 0
                         while (offset < count && !closed.get() && revision.get() == version) {
                             val accepted = try { line.write(blockA, offset, count - offset) } catch (failure: Exception) { throw AudioPlaybackFailure(AudioFailureKind.Output, failure) }
@@ -248,6 +250,7 @@ internal class MeloXDualDecodeSession(
                 } catch (cancelled: CancellationException) { throw cancelled }
                 catch (failure: Exception) { if (!closed.get() && revision.get() == version) throw failure }
                 finally {
+                    equalizer.release()
                     withContext(NonCancellable) { monitor?.cancelAndJoin() }
                     line?.let { output.compareAndSet(it, null); runCatching { it.stop(); it.close() } }
                     a?.close()

@@ -13,10 +13,12 @@ internal class MeloXPcmMix(private val bassSwap: Boolean = true) {
     var clippedSamples = 0L
         private set
 
-    fun mix(a: ByteArray, b: ByteArray, count: Int, frameOffset: Long, totalFrames: Long, curve: MeloXAutoMixFadeCurve) {
+    fun mix(a: ByteArray, b: ByteArray, count: Int, frameOffset: Long, totalFrames: Long, curve: MeloXAutoMixFadeCurve,
+        bassSwapEnabled: Boolean = bassSwap) {
         require(count % 4 == 0 && count <= min(a.size, b.size) && totalFrames > 0)
         val blockProgress = (frameOffset.toDouble() / totalFrames).coerceIn(0.0, 1.0)
-        if (bassSwap) {
+        val exchange = bassSwap && bassSwapEnabled
+        if (exchange) {
             equalizer.apply(blockProgress)
             outgoing.cut(equalizer.outgoingCutDb)
             incoming.cut(equalizer.incomingCutDb)
@@ -28,8 +30,8 @@ internal class MeloXPcmMix(private val bassSwap: Boolean = true) {
                 val index = frame * 4 + channel * 2
                 val av = sample(a, index).toDouble()
                 val bv = sample(b, index).toDouble()
-                val sum = (if (bassSwap) outgoing.filter(av, channel) else av) * gain.outgoing +
-                    (if (bassSwap) incoming.filter(bv, channel) else bv) * gain.incoming
+                val sum = (if (exchange) outgoing.filter(av, channel) else av) * gain.outgoing +
+                    (if (exchange) incoming.filter(bv, channel) else bv) * gain.incoming
                 if (sum > Short.MAX_VALUE || sum < Short.MIN_VALUE) clippedSamples++
                 val value = sum.roundToInt().coerceIn(Short.MIN_VALUE.toInt(), Short.MAX_VALUE.toInt())
                 a[index] = value.toByte(); a[index + 1] = (value shr 8).toByte()

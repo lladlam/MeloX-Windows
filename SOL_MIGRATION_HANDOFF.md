@@ -31,6 +31,8 @@ Settings/legal closing fetch (2026-10-13): `5b52a92022a5943e238ffc5d3121c536b2f2
 
 ## Still required
 
+Search/player/output batch now implements pinned native Songs/artwork and owned cancellation, actual profile/podcast/playlist routes, native operation IDs and queue/swipes, functional adaptive Classic, real-clock EVA/TextPV/explicit Skyline and all 18 styles, plus Bilibili per-resource offsets. Real ten-band stereo user EQ/preamp consumes single and post-mix dual PCM with canonical/legacy/reset compatibility and source controls. Local lyric/recognition/favorite persistence is corrected. See `parity/3f877ea/SEARCH_PLAYER_PLAYBACK.md`; overall parity remains PARTIAL.
+
 1. AutoMix streaming-provider account acceptance and remaining settings/candidate/transport edge cases; physical Windows audible transitions and Android dynamic cover parity. Production dual PCM/tempo/EQ/Smart Queue/UI are now implemented and tested, but overall AutoMix remains **PARTIAL**.
 2. Complete behavioral upstream-delta acceptance, including Library's complete source layout and App Shell combined backdrop/shared transitions.
 3. Windows account/native DPAPI, physical speaker/device-switch/sleep, continuous audio and dual-track transitions. Current environment is Linux; do not convert controlled SourceDataLine tests into physical acceptance.
@@ -39,7 +41,7 @@ Settings/legal closing fetch (2026-10-13): `5b52a92022a5943e238ffc5d3121c536b2f2
 6. Desktop SongRecognitionClient is an existing empty-result stub; the new Android ID fields do not solve its missing native recognition path.
 7. Independently migrate and accept the newly fetched `3f877ea..febb4c0` increment after completing the pinned batch. Preserve actual models/providers and signed-config scope; do not label pre-AutoSync frames/tests as new upstream parity.
 8. Jellyfin real user-server acceptance: authenticate and reopen the exact Windows distribution, read/search real Library, inspect authenticated cover, play native universal audio, favorite and create/rename/add/duplicate-remove/move on an authorized server. Client protocol fixtures and Linux protected-file tests do not prove native Windows DPAPI, server-version compatibility or audible output. Old unpersisted-random-key ciphertext cannot be recovered; keep it until successful genuine re-login.
-9. Next confirmed Settings/audio gap: pinned `SettingsScreen.kt:1332–1383` exposes real Equalizer enable/preset/custom ten-band/preamp controls. Desktop `MeloXEqualizerController.kt` has no consumers, reads `melox_playback` instead of pinned app-settings storage, and only logs a skipped effect. Implement genuine PCM DSP on the production single/dual output with source settings; preserve any legacy desktop keys via explicit compatibility handling. Do not count AutoMix's separate low-shelf envelope as this user equalizer.
+9. Search/player/output remaining: complete shared-element/back animation, Provider catalog/action and advanced lyrics/player controls, system keep-awake and physical platform behavior. User EQ is now a genuine single/dual PCM consumer; desktop RBJ does not prove Android device-specific hardware response equivalence. Online song 185670 returned no playable non-preview source and podcast programs returned -462/login-required without an authorized account; those remain BLOCKED.
 
 ## Execute physical Windows acceptance
 
@@ -54,6 +56,8 @@ The runner verifies final packaged FFmpeg, enumerates Windows sound devices, ope
 Detailed observable-state matrix and evidence: `parity/3f877ea/`.
 
 ## Verified batch evidence
+
+- Latest Linux search/player/output: **166 tests / 31 suites / zero failures, errors or skipped**, **9 production replays / 258 state scenes / 747 dynamic frames / 215 assertions**, including all 18 TextPV styles and generated EVA. Independent native single/dual EQ PCM readback, source/final-JAR decode and unchanged legal files pass. `search-player-validation.json`, `search-player-tests/`, `search-player-native-pcm/`, `search-player-equalizer-readback.json`. Final Linux JAR SHA-256 `038815dd488e74cbb125a2e79e184bb73d59e15be791c64fbce9189ea7b5cd28`. New exact feature-SHA Windows CI is pending publication; old 2181ba4 CI does not cover these changes.
 
 - `parity/3f877ea/evidence/upstream-validation.json`: 81 automated tests / 14 suites, zero failures/errors/skipped, source digests and final Linux uber-JAR SHA-256.
 - `parity/3f877ea/evidence/artist-live-v7/`: 7 production UI scenes / 8 physical-input assertions; real artist and album API content, info/album return and preserved artist scroll.

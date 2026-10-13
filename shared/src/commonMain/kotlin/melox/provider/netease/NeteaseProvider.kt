@@ -89,9 +89,9 @@ class NeteaseProvider(
                     .split(" / ")
                     .map(String::trim)
                     .filter(String::isNotBlank)
-                    .map { MusicArtistRef(name = it) },
+                    .mapIndexed { index, name -> MusicArtistRef(name = name, id = song.artistId?.takeIf { index == 0 && it > 0L }?.let { MusicResourceId(MusicSource.Netease, it.toString()) }) },
                 album = song.album.takeIf(String::isNotBlank)?.let {
-                    MusicAlbumRef(name = it, artworkUrl = song.artworkUrl)
+                    MusicAlbumRef(name = it, artworkUrl = song.artworkUrl, id = song.albumId?.takeIf { id -> id > 0L }?.let { id -> MusicResourceId(MusicSource.Netease, id.toString()) })
                 },
                 artworkUrl = song.artworkUrl,
                 durationMs = song.durationMs.takeIf { it > 0L },

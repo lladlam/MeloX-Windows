@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="DesktopStreamingAudioSessionTest[desktop]" tests="8" skipped="0" failures="0" errors="0" timestamp="2026-10-13T08:10:06.337Z" hostname="lladlam-arch" time="2.649">
+  <properties/>
+  <testcase name="realFfmpegNonzeroExitAfterPcmIsContentFailureRatherThanNaturalEnd[desktop]" classname="melox.player.DesktopStreamingAudioSessionTest" time="0.179"/>
+  <testcase name="unavailableDeviceReportsOutputFailureWithoutProducingAnEndEvent[desktop]" classname="melox.player.DesktopStreamingAudioSessionTest" time="0.16"/>
+  <testcase name="seekingToTheDecoderOriginalZeroPositionActuallyRestartsIt[desktop]" classname="melox.player.DesktopStreamingAudioSessionTest" time="0.785"/>
+  <testcase name="seekingToKnownTrackEndAcceptsAZeroPcmSuccessfulDecoderExit[desktop]" classname="melox.player.DesktopStreamingAudioSessionTest" time="0.409"/>
+  <testcase name="realOutputConsumesEqualizerPreampAndSeekingRebuildsDspWithCurrentSettings[desktop]" classname="melox.player.DesktopStreamingAudioSessionTest" time="0.38"/>
+  <testcase name="replacingTheSameUriKeepsEndCallbacksOwnedByTheNewRequest[desktop]" classname="melox.player.DesktopStreamingAudioSessionTest" time="0.267"/>
+  <testcase name="aDeviceStartFailureIsOutputFailureRatherThanCorruptContent[desktop]" classname="melox.player.DesktopStreamingAudioSessionTest" time="0.184"/>
+  <testcase name="decoderEofWaitsForBufferedFramesAndPauseResumePreserveTheTail[desktop]" classname="melox.player.DesktopStreamingAudioSessionTest" time="0.285"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[[AudioPlayer] 播放失败: [in#0/wav @ 0x562dc9cddac0] corrupt input packet in stream 0
+[in#0/wav @ 0x562dc9cddac0] Task finished with error: Invalid data found when processing input
+[in#0/wav @ 0x562dc9cddac0] Terminating thread with error: Invalid data found when processing input
+[AudioPlayer] 播放失败: test device unavailable
+[AudioPlayer] 播放失败: device start failed
+]]></system-err>
+</testsuite>

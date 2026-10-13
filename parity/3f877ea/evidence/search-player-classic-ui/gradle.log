@@ -1,0 +1,149 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.5.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :desktop:kmpPartiallyResolvedDependenciesChecker
+> Task :desktop:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :desktop:convertXmlValueResourcesForCommonMain NO-SOURCE
+> Task :desktop:copyNonXmlValueResourcesForCommonMain NO-SOURCE
+> Task :desktop:prepareComposeResourcesTaskForCommonMain NO-SOURCE
+> Task :desktop:generateResourceAccessorsForCommonMain SKIPPED
+> Task :desktop:convertXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :desktop:copyNonXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :desktop:prepareComposeResourcesTaskForDesktopMain NO-SOURCE
+> Task :desktop:generateResourceAccessorsForDesktopMain SKIPPED
+> Task :desktop:generateActualResourceCollectorsForDesktopMain SKIPPED
+> Task :desktop:generateComposeResClass SKIPPED
+> Task :desktop:generateExpectResourceCollectorsForCommonMain SKIPPED
+> Task :innertube:kmpPartiallyResolvedDependenciesChecker
+> Task :innertube:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :innertube:extractAndroidInnerTube UP-TO-DATE
+> Task :innertube:compileKotlinDesktop UP-TO-DATE
+> Task :innertube:compileDesktopMainJava NO-SOURCE
+> Task :innertube:desktopProcessResources NO-SOURCE
+> Task :innertube:processDesktopMainResources SKIPPED
+> Task :innertube:desktopMainClasses UP-TO-DATE
+> Task :innertube:desktopJar UP-TO-DATE
+> Task :shared:kmpPartiallyResolvedDependenciesChecker
+> Task :shared:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :shared:convertXmlValueResourcesForCommonMain NO-SOURCE
+> Task :shared:copyNonXmlValueResourcesForCommonMain NO-SOURCE
+> Task :shared:prepareComposeResourcesTaskForCommonMain NO-SOURCE
+> Task :shared:generateResourceAccessorsForCommonMain SKIPPED
+> Task :shared:convertXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :shared:copyNonXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :shared:prepareComposeResourcesTaskForDesktopMain NO-SOURCE
+> Task :shared:generateResourceAccessorsForDesktopMain SKIPPED
+> Task :shared:generateActualResourceCollectorsForDesktopMain SKIPPED
+> Task :shared:generateComposeResClass SKIPPED
+> Task :shared:generateExpectResourceCollectorsForCommonMain SKIPPED
+> Task :shared:compileKotlinDesktop UP-TO-DATE
+> Task :shared:compileDesktopMainJava NO-SOURCE
+> Task :shared:assembleDesktopMainResources UP-TO-DATE
+> Task :shared:desktopProcessResources UP-TO-DATE
+> Task :shared:processDesktopMainResources SKIPPED
+> Task :shared:desktopMainClasses UP-TO-DATE
+> Task :shared:desktopJar UP-TO-DATE
+> Task :desktop:compileKotlinDesktop
+> Task :desktop:compileDesktopMainJava NO-SOURCE
+> Task :desktop:assembleDesktopMainResources UP-TO-DATE
+> Task :desktop:desktopProcessResources UP-TO-DATE
+> Task :desktop:processDesktopMainResources SKIPPED
+> Task :desktop:desktopMainClasses
+
+> Task :desktop:captureUi
+SLF4J(W): No SLF4J providers were found.
+SLF4J(W): Defaulting to no-operation (NOP) logger implementation
+SLF4J(W): See https://www.slf4j.org/codes.html#noProviders for further details.
+[MeloXThirdParty] resolve detail source=local id=d762e4df title=generated-1000hz artists=Generated PCM fixture durationMs=20000 metadata=Local
+[MeloXThirdParty] Resolve start source=local quality=Standard thirdParty=true
+[MeloXThirdParty] Resolve fallback source=local stage=provider chksz=unavailable
+Captured 00-settings: 1100x780 density=1.0
+Physical click appearance: settings-open-appearance at Offset(550.0, 491.0)
+Captured 01-appearance-frame-0: 1100x780 density=1.0
+Captured 01-appearance-frame-160: 1100x780 density=1.0
+Captured 01-appearance-frame-400: 1100x780 density=1.0
+[AudioPlayer] decode local source at 0ms
+Captured 01-appearance: 1100x780 density=1.0
+Verified appearance: tag:settings-appearance
+Physical click classic: player-shell-1 at Offset(814.0, 244.0)
+Captured 02-classic-frame-0: 1100x780 density=1.0
+Captured 02-classic-frame-160: 1100x780 density=1.0
+Captured 02-classic-frame-400: 1100x780 density=1.0
+Captured 02-classic: 1100x780 density=1.0
+Verified classic: player-shell:Classic
+Verified classic: selected:player-shell-1
+Captured 03-back-frame-0: 1100x780 density=1.0
+Captured 03-back-frame-160: 1100x780 density=1.0
+Captured 03-back-frame-400: 1100x780 density=1.0
+Captured 03-back: 1100x780 density=1.0
+Physical click player: mini-player-expand at Offset(502.5, 682.0)
+Captured 04-player-frame-0: 1100x780 density=1.0
+Captured 04-player-frame-160: 1100x780 density=1.0
+Captured 04-player-frame-400: 1100x780 density=1.0
+Captured 04-player: 1100x780 density=1.0
+Verified player: page:Artwork
+Verified player: tag:player-controls
+Verified player: player-shell:Classic
+Physical click pause: player-play-pause at Offset(796.0, 425.0)
+Captured 05-pause-frame-0: 1100x780 density=1.0
+Captured 05-pause-frame-160: 1100x780 density=1.0
+Captured 05-pause-frame-400: 1100x780 density=1.0
+Captured 05-pause: 1100x780 density=1.0
+Verified pause: playing:false
+Physical click quality: player-quality at Offset(796.5, 349.0)
+Captured 06-quality-frame-0: 1100x780 density=1.0
+Captured 06-quality-frame-160: 1100x780 density=1.0
+Captured 06-quality-frame-400: 1100x780 density=1.0
+Captured 06-quality: 1100x780 density=1.0
+Verified quality: tag:quality-dialog
+Captured 07-quality-close-frame-0: 1100x780 density=1.0
+Captured 07-quality-close-frame-160: 1100x780 density=1.0
+Captured 07-quality-close-frame-400: 1100x780 density=1.0
+Captured 07-quality-close: 1100x780 density=1.0
+Physical click lyrics: player-show-lyrics at Offset(585.0, 567.0)
+Captured 08-lyrics-frame-0: 1100x780 density=1.0
+Captured 08-lyrics-frame-160: 1100x780 density=1.0
+Captured 08-lyrics-frame-400: 1100x780 density=1.0
+Captured 08-lyrics: 1100x780 density=1.0
+Verified lyrics: page:Lyrics
+Physical click actions: player-actions at Offset(1042.0, 32.0)
+Captured 09-actions-frame-0: 1100x780 density=1.0
+Captured 09-actions-frame-160: 1100x780 density=1.0
+Captured 09-actions-frame-400: 1100x780 density=1.0
+Captured 09-actions: 1100x780 density=1.0
+Verified actions: tag:song-actions
+Captured 10-actions-close-frame-0: 1100x780 density=1.0
+Captured 10-actions-close-frame-160: 1100x780 density=1.0
+Captured 10-actions-close-frame-400: 1100x780 density=1.0
+Captured 10-actions-close: 1100x780 density=1.0
+Verified actions-close: absent:song-actions
+Physical click queue: player-show-queue at Offset(1008.0, 743.0)
+Captured 11-queue-frame-0: 1100x780 density=1.0
+Captured 11-queue-frame-160: 1100x780 density=1.0
+Captured 11-queue-frame-400: 1100x780 density=1.0
+Captured 11-queue: 1100x780 density=1.0
+Verified queue: page:Queue
+Physical click next: player-next at Offset(930.0, 601.0)
+[MeloXThirdParty] resolve detail source=local id=88bbee96 title=generated-4000hz artists=Generated PCM fixture durationMs=16000 metadata=Local
+[MeloXThirdParty] Resolve start source=local quality=Standard thirdParty=true
+[MeloXThirdParty] Resolve fallback source=local stage=provider chksz=unavailable
+Captured 12-next-frame-0: 1100x780 density=1.0
+Captured 12-next-frame-160: 1100x780 density=1.0
+[AudioPlayer] decode local source at 0ms
+Captured 12-next-frame-400: 1100x780 density=1.0
+Captured 12-next: 1100x780 density=1.0
+Physical click previous: player-previous at Offset(599.0, 601.0)
+Captured 13-previous-frame-0: 1100x780 density=1.0
+Captured 13-previous-frame-160: 1100x780 density=1.0
+[AudioPlayer] decode local source at 0ms
+Captured 13-previous-frame-400: 1100x780 density=1.0
+Captured 13-previous: 1100x780 density=1.0
+Physical click collapse: player-collapse at Offset(58.0, 32.0)
+Captured 14-collapse-frame-0: 1100x780 density=1.0
+Captured 14-collapse-frame-160: 1100x780 density=1.0
+Captured 14-collapse-frame-400: 1100x780 density=1.0
+Captured 14-collapse: 1100x780 density=1.0
+Verified collapse: absent:now-playing
+
+BUILD SUCCESSFUL in 49s
+14 actionable tasks: 5 executed, 9 up-to-date
+Consider enabling configuration cache to speed up this build: https://docs.gradle.org/9.5.1/userguide/configuration_cache_enabling.html

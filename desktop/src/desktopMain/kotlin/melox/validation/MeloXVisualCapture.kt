@@ -68,6 +68,15 @@ fun main(args: Array<String>) = runBlocking {
             val scanned = melox.provider.local.LocalMediaScanner(repository).scanAll()
             check(scanned.isNotEmpty()) { "Production Local scanner found no real audio files" }
             println("Production Local scanner indexed ${scanned.size} real files")
+            option("--local-lyrics-file", "").takeIf(String::isNotBlank)?.let { lyricPath ->
+                val lyricFile = File(lyricPath)
+                require(lyricFile.isFile)
+                val document = if (lyricFile.extension.lowercase() in listOf("ttml", "xml")) melox.lyrics.TtmlLyricsParser.parse(lyricFile.readText())
+                    else melox.lyrics.NeteaseLyricParser.parse(yrc = "", lrc = lyricFile.readText())
+                check(document.lines.isNotEmpty())
+                // Explicit generated-file validation input into the genuine persistent Local lyrics path.
+                scanned.forEach { check(repository.updateLyrics(it.fileKey, document.copy(source = melox.lyrics.LyricSource.Local))) }
+            }
         }
         val theme = option("--theme", "")
         val startTab = option("--start-tab", "Home")
@@ -94,7 +103,8 @@ fun main(args: Array<String>) = runBlocking {
             val tracks = paths.split(',').map { path ->
                 val file = File(path).canonicalFile
                 val duration = javax.sound.sampled.AudioSystem.getAudioInputStream(file).use { it.frameLength * 1000 / it.format.frameRate.toLong() }
-                val key = java.security.MessageDigest.getInstance("SHA-256").digest(file.path.toByteArray()).joinToString("") { "%02x".format(it) }.take(24)
+                val key = melox.provider.local.LocalMusicRepository().tracks().firstOrNull { it.contentUri == file.toURI().toString() }?.fileKey
+                    ?: java.security.MessageDigest.getInstance("SHA-256").digest(file.path.toByteArray()).joinToString("") { "%02x".format(it) }.take(24)
                 melox.music.model.MusicTrack(melox.music.model.MusicResourceId(melox.music.model.MusicSource.Local, key), file.nameWithoutExtension,
                     listOf(melox.music.model.MusicArtistRef(name = "Generated PCM fixture")), durationMs = duration,
                     artworkUrl = File(file.parentFile, "${file.nameWithoutExtension}.png").takeIf(File::isFile)?.toURI()?.toString(),
@@ -155,7 +165,18 @@ fun main(args: Array<String>) = runBlocking {
                         ?.let { kotlin.math.abs(it - value.toFloat()) <= .01f } == true
                 }
                 "quality" -> melox.audio.MusicQualityPreferences.read().apiLevel == expected
+                "eq-enabled" -> melox.playback.MeloXEqualizerSettings.current.value.enabled == expected.toBooleanStrict()
+                "eq-preset" -> melox.playback.MeloXEqualizerSettings.current.value.preset == expected
+                "player-shell" -> melox.settings.MeloXSettingsRuntime.playerShell.name == expected
+                "pv-style" -> melox.settings.MeloXSettingsRuntime.textPVStyle.name == expected
+                "pv-speed" -> melox.settings.MeloXSettingsRuntime.textPVAnimationSpeed == expected.toFloat()
+                "pv-intensity" -> melox.settings.MeloXSettingsRuntime.textPVMotionIntensity == expected.toFloat()
+                "eq-preamp" -> melox.playback.MeloXEqualizerSettings.current.value.preampDb == expected.toFloat()
+                "eq-band" -> expected.split(':').let { (index, gain) -> melox.playback.MeloXEqualizerSettings.current.value.gainsDb[index.toInt()] == gain.toFloat() }
                 "queue-min" -> melox.playback.PlaybackCommands.queue.value.songs.size >= expected.toInt()
+                "tag-prefix" -> semantics.any { it.config.getOrNull(SemanticsProperties.TestTag)?.startsWith(expected) == true && !it.boundsInWindow.isEmpty }
+                "position-min" -> melox.player.AudioPlayer.positionMs.value >= expected.toLong()
+                "no-playback-error" -> (melox.player.AudioPlayer.state.value.error == null) == expected.toBooleanStrict()
                 "repeat" -> melox.playback.PlaybackCommands.playerController()?.repeatMode?.value == expected.toInt()
                 "seek-line" -> semantics.tagged("lyric-line-$expected")?.config?.getOrNull(melox.ui.screens.MeloXLyricTimeMsKey)?.let {
                     melox.player.AudioPlayer.positionMs.value == it
@@ -223,6 +244,12 @@ fun main(args: Array<String>) = runBlocking {
                  .put("personalization_consent", melox.recommendation.LocalRecommendationStore.hasPersonalizationConsent())
                 .put("shuffle_enabled", melox.playback.PlaybackCommands.playerController()?.shuffleEnabled?.value)
                 .put("autoplay_enabled", melox.playback.MeloXPlaybackModeRuntime.autoplayEnabled)
+                .put("equalizer", melox.playback.MeloXEqualizerSettings.current.value.let { eq -> JSONObject()
+                    .put("enabled", eq.enabled).put("preset", eq.preset).put("preamp_db", eq.preampDb).put("bands_db", JSONArray(eq.gainsDb)) })
+                .put("lyric_style", melox.settings.MeloXSettingsRuntime.lyricsStyle.name)
+                .put("text_pv_style", melox.settings.MeloXSettingsRuntime.textPVStyle.name)
+                .put("text_pv_speed", melox.settings.MeloXSettingsRuntime.textPVAnimationSpeed)
+                .put("text_pv_intensity", melox.settings.MeloXSettingsRuntime.textPVMotionIntensity)
                 .put("lyric_document", semantics.tagged("player-lyrics")?.config?.getOrNull(melox.ui.screens.MeloXLyricDocumentKey) ?: JSONObject.NULL)
                 .put("lyric_word_lines", semantics.tagged("player-lyrics")?.config?.getOrNull(melox.ui.screens.MeloXLyricWordLinesKey) ?: JSONObject.NULL)
         }
@@ -248,17 +275,41 @@ fun main(args: Array<String>) = runBlocking {
                     // Synthetic input is confined to this version-pinned capture harness.
                     scene.sendKeyEvent(KeyEvent(key = Key.Escape, type = KeyEventType.KeyDown))
                     check(scene.sendKeyEvent(KeyEvent(key = Key.Escape, type = KeyEventType.KeyUp))) { "Escape was not handled at $name" }
-                } else if (coordinates.startsWith("tap@") || coordinates.startsWith("hold-tag@")) {
-                    val tag = coordinates.substringAfter('@')
+                } else if (coordinates.startsWith("tap@") || coordinates.startsWith("tap-first@") || coordinates.startsWith("hold-tag@")) {
+                    val requested = coordinates.substringAfter('@')
+                    val prefix = coordinates.startsWith("tap-first@")
+                    fun matchingTag() = if (!prefix) requested else scene.captureSemantics().firstOrNull {
+                        it.config.getOrNull(SemanticsProperties.TestTag)?.startsWith(requested) == true && !it.boundsInWindow.isEmpty &&
+                            it.config.contains(SemanticsActions.OnClick)
+                    }?.config?.getOrNull(SemanticsProperties.TestTag)
+                    awaitUi { matchingTag()?.let { scene.captureSemantics().tagged(it) != null } == true }
+                    val tag = checkNotNull(matchingTag()) { "No visible clickable production result for $requested" }
                     awaitUi { scene.captureSemantics().tagged(tag) != null }
                     val node = requireNotNull(scene.captureSemantics().tagged(tag)) { "No visible production node $tag at $name" }
                     check(!node.config.contains(SemanticsProperties.Disabled)) { "$tag is disabled at $name" }
                     val hold = coordinates.startsWith("hold-tag@")
-                    check(node.config.contains(if (hold) SemanticsActions.OnLongClick else SemanticsActions.OnClick)) { "$tag has no matching pointer action" }
-                    val point = node.boundsInWindow.center
+                    fun pointerTarget(candidate: SemanticsNode): SemanticsNode? =
+                        if (candidate.config.contains(if (hold) SemanticsActions.OnLongClick else SemanticsActions.OnClick)) candidate
+                        else candidate.children.firstNotNullOfOrNull(::pointerTarget)
+                    val target = checkNotNull(pointerTarget(node)) { "$tag has no matching pointer action" }
+                    check(!target.config.contains(SemanticsProperties.Disabled)) { "$tag pointer target is disabled at $name" }
+                    val point = target.boundsInWindow.center
+                    println("Physical click $name: $tag at $point")
                     scene.sendPointerEvent(PointerEventType.Press, point, button = PointerButton.Primary)
                     if (hold) settle(700)
                     scene.sendPointerEvent(PointerEventType.Release, point, button = PointerButton.Primary)
+                } else if (coordinates.startsWith("reveal@")) {
+                    val tag = coordinates.substringAfter('@')
+                    var revealed = false
+                    for (attempt in 0 until 80) {
+                        val node = scene.captureSemantics().lastOrNull { it.config.getOrNull(SemanticsProperties.TestTag) == tag }
+                        val centerY = node?.let { it.positionInWindow.y + it.size.height / 2f }
+                        if (centerY != null && centerY in height * .18f..height - 170f && !node.boundsInWindow.isEmpty) { revealed = true; break }
+                        val direction = if (centerY != null && centerY < height * .18f) -1f else 1f
+                        scene.sendPointerEvent(PointerEventType.Scroll, Offset(width * .5f, height * .55f), scrollDelta = Offset(0f, direction * 3f))
+                        settle(120)
+                    }
+                    check(revealed) { "Could not reveal production node $tag using mouse wheel at $name" }
                 } else if (coordinates.startsWith("wait@")) {
                     settle(coordinates.removePrefix("wait@").toLong())
                 } else if (coordinates.startsWith("text@")) {

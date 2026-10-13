@@ -51,6 +51,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -237,13 +238,14 @@ fun MeloXNowPlayingScreen(
                     onTogglePlay = { player?.togglePlay() },
                     onNext = { player?.next() },
                     player = player,
-                    modifier = Modifier.fillMaxSize().padding(horizontal = 32.dp),
+                    modifier = Modifier.fillMaxSize(),
                     actionSong = actionSong,
                     actionQueue = actionQueue,
                     showActions = showActions,
                     onShowActions = { showActions = true },
                     onDismissActions = { showActions = false },
                     onShowOutput = showOutputSwitcher,
+                    onShowQuality = { showActions = false; showQuality = true },
                 )
             }
 
@@ -450,23 +452,20 @@ private fun ClassicPlayerScene(
     onShowActions: () -> Unit,
     onDismissActions: () -> Unit,
     onShowOutput: () -> Unit,
+    onShowQuality: () -> Unit,
 ) {
+    val window = melox.ui.layout.rememberMeloXWindowInfo()
     BoxWithConstraints(modifier) {
-        val wide = maxWidth >= 720.dp
+        val wide = window.isLandscape || window.supportsTwoPane
         val narrowArtwork = minOf(maxWidth - 38.dp, maxHeight * 0.43f)
-        Box(Modifier.fillMaxSize()) {
-        Column(Modifier.fillMaxSize()) {
+        Box(Modifier.fillMaxSize().testTag("now-playing").semantics { stateDescription = listOf("Artwork", "Lyrics", "Queue")[currentPage] }) {
+        Column(Modifier.fillMaxSize().widthIn(max = window.maxContentWidth).padding(horizontal = window.gutter)) {
             Row(
                 Modifier.fillMaxWidth().padding(top = 10.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                Text(
-                    "收起",
-                    modifier = Modifier.clickable(onClick = onDismiss).padding(8.dp),
-                    color = Color.White,
-                    fontSize = 15.sp,
-                )
+                melox.ui.glass.MeloXGlassIconButton(MeloXSymbol.XMark, onDismiss, modifier = Modifier.testTag("player-collapse"), contentDescription = "收起播放器")
                 Text(
                     "正在播放",
                     fontFamily = MeloXLanTingProFontFamily,
@@ -474,12 +473,7 @@ private fun ClassicPlayerScene(
                     fontSize = 13.sp,
                     color = Color.White.copy(alpha = 0.58f),
                 )
-                Text(
-                    "更多",
-                    modifier = Modifier.clickable(onClick = onShowActions).padding(8.dp),
-                    color = Color.White,
-                    fontSize = 15.sp,
-                )
+                melox.ui.glass.MeloXGlassIconButton(MeloXSymbol.Ellipsis, onShowActions, modifier = Modifier.testTag("player-actions"), contentDescription = "播放操作")
             }
             if (wide && currentPage == 0) {
                 Row(
@@ -495,7 +489,7 @@ private fun ClassicPlayerScene(
                     Column(Modifier.weight(0.54f)) {
                         ClassicMetadata(track)
                         Spacer(Modifier.height(20.dp))
-                        ClassicControls(isPlaying, playerProgress, durationMs, currentPage, onPage, onSeek, onPrevious, onTogglePlay, onNext, player, onShowOutput)
+                        MeloXPlayerCoreControls(track, isPlaying, playerProgress, durationMs, currentPage, player, onPage, onShowQuality, onShowOutput, {})
                     }
                 }
             } else if (currentPage == 0) {
@@ -508,7 +502,7 @@ private fun ClassicPlayerScene(
                 }
                 ClassicMetadata(track)
                 Spacer(Modifier.height(8.dp))
-                ClassicControls(isPlaying, playerProgress, durationMs, currentPage, onPage, onSeek, onPrevious, onTogglePlay, onNext, player, onShowOutput)
+                MeloXPlayerCoreControls(track, isPlaying, playerProgress, durationMs, currentPage, player, onPage, onShowQuality, onShowOutput, {})
             } else if (wide) {
                 Row(
                     Modifier.weight(1f).fillMaxWidth().padding(vertical = 12.dp),
@@ -525,7 +519,8 @@ private fun ClassicPlayerScene(
                         Box(Modifier.weight(1f).fillMaxWidth()) {
                             if (currentPage == 1) LyricsPage(track, sourceColor) else QueuePage(sourceColor)
                         }
-                        ClassicControls(isPlaying, playerProgress, durationMs, currentPage, onPage, onSeek, onPrevious, onTogglePlay, onNext, player, onShowOutput)
+                        Spacer(Modifier.height(8.dp))
+                        MeloXPlayerCoreControls(track, isPlaying, playerProgress, durationMs, currentPage, player, onPage, onShowQuality, onShowOutput, {})
                     }
                 }
             } else {
@@ -533,17 +528,16 @@ private fun ClassicPlayerScene(
                 Box(Modifier.weight(1f).fillMaxWidth().padding(top = 16.dp)) {
                     if (currentPage == 1) LyricsPage(track, sourceColor) else QueuePage(sourceColor)
                 }
-                ClassicControls(isPlaying, playerProgress, durationMs, currentPage, onPage, onSeek, onPrevious, onTogglePlay, onNext, player, onShowOutput)
+                Spacer(Modifier.height(8.dp))
+                MeloXPlayerCoreControls(track, isPlaying, playerProgress, durationMs, currentPage, player, onPage, onShowQuality, onShowOutput, {})
             }
         }
-        if (currentPage == 0) {
             MeloXSongActionsOverlay(
                 song = actionSong,
                 queue = actionQueue,
                 visible = showActions,
                 onDismiss = onDismissActions,
             )
-        }
         }
     }
 }

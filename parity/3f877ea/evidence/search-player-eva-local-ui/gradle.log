@@ -1,0 +1,125 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.5.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :desktop:kmpPartiallyResolvedDependenciesChecker
+> Task :desktop:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :desktop:convertXmlValueResourcesForCommonMain NO-SOURCE
+> Task :desktop:copyNonXmlValueResourcesForCommonMain NO-SOURCE
+> Task :desktop:prepareComposeResourcesTaskForCommonMain NO-SOURCE
+> Task :desktop:generateResourceAccessorsForCommonMain SKIPPED
+> Task :desktop:convertXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :desktop:copyNonXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :desktop:prepareComposeResourcesTaskForDesktopMain NO-SOURCE
+> Task :desktop:generateResourceAccessorsForDesktopMain SKIPPED
+> Task :desktop:generateActualResourceCollectorsForDesktopMain SKIPPED
+> Task :desktop:generateComposeResClass SKIPPED
+> Task :desktop:generateExpectResourceCollectorsForCommonMain SKIPPED
+> Task :innertube:kmpPartiallyResolvedDependenciesChecker
+> Task :innertube:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :innertube:extractAndroidInnerTube UP-TO-DATE
+> Task :innertube:compileKotlinDesktop UP-TO-DATE
+> Task :innertube:compileDesktopMainJava NO-SOURCE
+> Task :innertube:desktopProcessResources NO-SOURCE
+> Task :innertube:processDesktopMainResources SKIPPED
+> Task :innertube:desktopMainClasses UP-TO-DATE
+> Task :innertube:desktopJar UP-TO-DATE
+> Task :shared:kmpPartiallyResolvedDependenciesChecker
+> Task :shared:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :shared:convertXmlValueResourcesForCommonMain NO-SOURCE
+> Task :shared:copyNonXmlValueResourcesForCommonMain NO-SOURCE
+> Task :shared:prepareComposeResourcesTaskForCommonMain NO-SOURCE
+> Task :shared:generateResourceAccessorsForCommonMain SKIPPED
+> Task :shared:convertXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :shared:copyNonXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :shared:prepareComposeResourcesTaskForDesktopMain NO-SOURCE
+> Task :shared:generateResourceAccessorsForDesktopMain SKIPPED
+> Task :shared:generateActualResourceCollectorsForDesktopMain SKIPPED
+> Task :shared:generateComposeResClass SKIPPED
+> Task :shared:generateExpectResourceCollectorsForCommonMain SKIPPED
+> Task :shared:compileKotlinDesktop UP-TO-DATE
+> Task :shared:compileDesktopMainJava NO-SOURCE
+> Task :shared:assembleDesktopMainResources UP-TO-DATE
+> Task :shared:desktopProcessResources UP-TO-DATE
+> Task :shared:processDesktopMainResources SKIPPED
+> Task :shared:desktopMainClasses UP-TO-DATE
+> Task :shared:desktopJar UP-TO-DATE
+> Task :desktop:compileKotlinDesktop UP-TO-DATE
+> Task :desktop:compileDesktopMainJava NO-SOURCE
+> Task :desktop:assembleDesktopMainResources UP-TO-DATE
+> Task :desktop:desktopProcessResources UP-TO-DATE
+> Task :desktop:processDesktopMainResources SKIPPED
+> Task :desktop:desktopMainClasses UP-TO-DATE
+
+> Task :desktop:captureUi
+Production Local scanner indexed 2 real files
+SLF4J(W): No SLF4J providers were found.
+SLF4J(W): Defaulting to no-operation (NOP) logger implementation
+SLF4J(W): See https://www.slf4j.org/codes.html#noProviders for further details.
+[MeloXThirdParty] resolve detail source=local id=3b56d87b title=generated-1000hz artists=Generated PCM fixture durationMs=20000 metadata=Local
+[MeloXThirdParty] Resolve start source=local quality=Standard thirdParty=true
+[MeloXThirdParty] Resolve fallback source=local stage=provider chksz=unavailable
+[AudioPlayer] decode local source at 0ms
+Captured 00-settings: 1100x780 density=1.0
+Physical click lyric-settings: settings-open-lyrics at Offset(550.0, 659.0)
+Captured 01-lyric-settings-frame-0: 1100x780 density=1.0
+Captured 01-lyric-settings-frame-160: 1100x780 density=1.0
+Captured 01-lyric-settings-frame-400: 1100x780 density=1.0
+Captured 01-lyric-settings: 1100x780 density=1.0
+Verified lyric-settings: tag:settings-lyrics
+Physical click style: settings-selector:Lyrics style at Offset(1004.5, 102.5)
+Captured 02-style-frame-0: 1100x780 density=1.0
+Captured 02-style-frame-160: 1100x780 density=1.0
+Captured 02-style-frame-400: 1100x780 density=1.0
+Captured 02-style: 1100x780 density=1.0
+Physical click eva: settings-option:EVA kinetic type at Offset(945.0, 159.0)
+Captured 03-eva-frame-0: 1100x780 density=1.0
+Captured 03-eva-frame-160: 1100x780 density=1.0
+Captured 03-eva-frame-400: 1100x780 density=1.0
+Captured 03-eva: 1100x780 density=1.0
+Captured 04-back-frame-0: 1100x780 density=1.0
+Captured 04-back-frame-160: 1100x780 density=1.0
+Captured 04-back-frame-400: 1100x780 density=1.0
+Captured 04-back: 1100x780 density=1.0
+Physical click player: mini-player-expand at Offset(502.5, 682.0)
+Captured 05-player-frame-0: 1100x780 density=1.0
+Captured 05-player-frame-160: 1100x780 density=1.0
+Captured 05-player-frame-400: 1100x780 density=1.0
+Captured 05-player: 1100x780 density=1.0
+Verified player: page:Artwork
+Physical click lyrics: player-show-lyrics at Offset(545.0, 552.0)
+Captured 06-lyrics-frame-0: 1100x780 density=1.0
+Captured 06-lyrics-frame-160: 1100x780 density=1.0
+Captured 06-lyrics-frame-400: 1100x780 density=1.0
+Captured 06-lyrics: 1100x780 density=1.0
+Verified lyrics: page:Lyrics
+Verified lyrics: state:player-lyrics:Eva
+Verified lyrics: word-lines-min:20
+Verified lyrics: playing:true
+Verified lyrics: position-min:500
+Verified lyrics: no-playback-error:true
+Physical click skyline: player-skyline-open at Offset(1020.0, 64.0)
+Captured 07-skyline-frame-0: 1100x780 density=1.0
+Captured 07-skyline-frame-160: 1100x780 density=1.0
+Captured 07-skyline-frame-400: 1100x780 density=1.0
+Captured 07-skyline: 1100x780 density=1.0
+Verified skyline: tag:player-skyline
+Verified skyline: absent:player-controls
+Physical click skyline-exit: player-skyline-exit at Offset(1024.5, 33.0)
+Captured 08-skyline-exit-frame-0: 1100x780 density=1.0
+Captured 08-skyline-exit-frame-160: 1100x780 density=1.0
+Captured 08-skyline-exit-frame-400: 1100x780 density=1.0
+Captured 08-skyline-exit: 1100x780 density=1.0
+Verified skyline-exit: absent:player-skyline
+Verified skyline-exit: state:player-lyrics:Eva
+Physical click collapse: player-collapse at Offset(550.0, 17.0)
+Captured 09-collapse-frame-0: 1100x780 density=1.0
+Captured 09-collapse-frame-160: 1100x780 density=1.0
+Captured 09-collapse-frame-400: 1100x780 density=1.0
+[MeloXThirdParty] resolve detail source=local id=de6ba01f title=generated-4000hz artists=Generated PCM fixture durationMs=16000 metadata=Local
+[MeloXThirdParty] Resolve start source=local quality=Standard thirdParty=true
+[MeloXThirdParty] Resolve fallback source=local stage=provider chksz=unavailable
+[AudioPlayer] decode local source at 0ms
+Captured 09-collapse: 1100x780 density=1.0
+
+BUILD SUCCESSFUL in 29s
+14 actionable tasks: 4 executed, 10 up-to-date
+Consider enabling configuration cache to speed up this build: https://docs.gradle.org/9.5.1/userguide/configuration_cache_enabling.html

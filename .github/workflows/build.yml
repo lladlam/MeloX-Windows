@@ -26,6 +26,8 @@ jobs:
         run: python tools/verify_decoder_bundle.py --sources --run --output desktop/build/verification/source-decoder.json
       - name: Build uber jar
         run: gradle :shared:desktopTest :desktop:packageUberJarForCurrentOS
+      - name: Verify native equalizer PCM
+        run: python tools/verify_native_equalizer.py shared/build/parity/test-home/native-pcm-evidence --output desktop/build/verification/equalizer-pcm.json
       - name: Get jar info
         id: jar
         shell: pwsh
@@ -68,6 +70,7 @@ jobs:
           path: |
             desktop/build/verification/*.json
             shared/build/test-results/desktopTest/*.xml
+            shared/build/parity/test-home/native-pcm-evidence/*
       - name: Upload zip artifact
         uses: actions/upload-artifact@v4
         with:

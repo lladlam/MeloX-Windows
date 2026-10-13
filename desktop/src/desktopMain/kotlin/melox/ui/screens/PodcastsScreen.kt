@@ -21,6 +21,8 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.key
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -30,6 +32,7 @@ import androidx.compose.runtime.setValue
 import kotlinx.coroutines.launch
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -52,12 +55,16 @@ fun PodcastsScreen(
     navState: MeloXNavState,
     modifier: Modifier = Modifier,
 ) {
-    val client = remember { NeteaseUniversalSearchClient(cookieProvider = { NeteaseSessionStore.readCookie() }) }
+    val revision by NeteaseSessionStore.revision.collectAsState()
+    val cookie = remember(revision) { NeteaseSessionStore.readCookie() }
+    val client = remember(cookie) { NeteaseUniversalSearchClient(cookieProvider = { cookie }) }
+    key(client) {
     var selected by remember { mutableStateOf<MeloXPodcast?>(null) }
     if (selected != null) {
         PodcastDetail(client, selected!!, onBack = { selected = null })
     } else {
         PodcastHome(client, modifier, onPodcast = { selected = it })
+    }
     }
 }
 
@@ -81,14 +88,14 @@ private fun PodcastHome(
             categories = client.podcastCategories()
             featured = client.featuredPodcasts()
             personalized = client.personalizedPodcasts()
-        }.onFailure { error = it.message ?: "播客加载失败" }
+        }.onFailure { if (it is kotlinx.coroutines.CancellationException) throw it; error = it.message ?: "播客加载失败" }
         loading = false
     }
     LaunchedEffect(selectedCategory?.id) {
         val category = selectedCategory ?: run { categoryPodcasts = emptyList(); return@LaunchedEffect }
         runCatching { client.podcastsByCategory(category.id).values }
             .onSuccess { categoryPodcasts = it }
-            .onFailure { error = it.message ?: "分类加载失败" }
+            .onFailure { if (it is kotlinx.coroutines.CancellationException) throw it; error = it.message ?: "分类加载失败" }
     }
 
     when {
@@ -145,7 +152,12 @@ private fun PodcastRow(title: String, values: List<MeloXPodcast>, onPodcast: (Me
 }
 
 @Composable
-private fun PodcastDetail(client: NeteaseUniversalSearchClient, initial: MeloXPodcast, onBack: () -> Unit) {
+internal fun PodcastDetail(client: NeteaseUniversalSearchClient, initial: MeloXPodcast, onBack: () -> Unit) {
+    key(client, initial.id) { PodcastDetailContent(client, initial, onBack) }
+}
+
+@Composable
+private fun PodcastDetailContent(client: NeteaseUniversalSearchClient, initial: MeloXPodcast, onBack: () -> Unit) {
     val scope = rememberCoroutineScope()
     var podcast by remember(initial.id) { mutableStateOf(initial) }
     var programs by remember(podcast.id) { mutableStateOf<List<MeloXPodcastProgram>>(emptyList()) }
@@ -157,10 +169,10 @@ private fun PodcastDetail(client: NeteaseUniversalSearchClient, initial: MeloXPo
             client.podcastDetail(podcast.id)?.let { podcast = it }
             client.podcastPrograms(podcast.id, limit = 100).values
         }.onSuccess { programs = it }
-            .onFailure { error = it.message ?: "节目加载失败" }
+            .onFailure { if (it is kotlinx.coroutines.CancellationException) throw it; error = it.message ?: "节目加载失败" }
         loading = false
     }
-    Column(Modifier.fillMaxSize().background(MeloXColors.pageBackground()).padding(top = 18.dp)) {
+    Column(Modifier.fillMaxSize().testTag("podcast-detail").background(MeloXColors.pageBackground()).padding(top = 18.dp)) {
         MeloXIosTopBar(title = podcast.name, onBack = onBack)
         Row(Modifier.padding(20.dp), verticalAlignment = Alignment.CenterVertically) {
             MeloXArtworkImage(podcast.artworkUrl, MeloXColors.SurfaceVariant, Modifier.size(96.dp).clip(RoundedCornerShape(16.dp)))
@@ -180,7 +192,7 @@ private fun PodcastDetail(client: NeteaseUniversalSearchClient, initial: MeloXPo
                     scope.launch {
                         runCatching { client.setPodcastSubscribed(podcast.id, desired) }
                             .onSuccess { podcast = podcast.copy(subscribed = desired) }
-                            .onFailure { error = it.message ?: "订阅失败" }
+                            .onFailure { if (it is kotlinx.coroutines.CancellationException) throw it; error = it.message ?: "订阅失败" }
                         subscribing = false
                     }
                 },
@@ -192,11 +204,11 @@ private fun PodcastDetail(client: NeteaseUniversalSearchClient, initial: MeloXPo
         }
         when {
             loading -> Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) { CircularProgressIndicator(color = MeloXColors.Primary) }
-            error != null -> Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) { Text(error.orEmpty(), color = MaterialTheme.colorScheme.error) }
+            error != null -> Box(Modifier.fillMaxSize().testTag("podcast-detail-error"), contentAlignment = Alignment.Center) { Text(error.orEmpty(), color = MaterialTheme.colorScheme.error) }
             else -> LazyColumn(contentPadding = PaddingValues(bottom = 140.dp)) {
                 items(programs, key = { it.id }) { program ->
                     Row(
-                        Modifier.fillMaxWidth().clickable {
+                        Modifier.fillMaxWidth().testTag("podcast-program-${program.id}").clickable(enabled = program.playbackSong != null) {
                             val playable = programs.mapNotNull(MeloXPodcastProgram::playbackSong)
                             val selected = program.playbackSong ?: return@clickable
                             val start = playable.indexOfFirst { it.id == selected.id }.coerceAtLeast(0)
