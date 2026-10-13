@@ -1,0 +1,12 @@
+{
+  "output": "CONTROLLED_SOFTWARE_SOURCE_DATA_LINE",
+  "pcm_sha256": "d2f33d14018fe25973f5ffcae05690242da00b1d14ed3140b050d1c030d37a6d",
+  "file": "dual-eq-band5-cut.s16le.gz",
+  "sample_rate": 44100,
+  "channels": 2,
+  "scenario": "generated primary 1000Hz amplitude 6000 / incoming 4000Hz amplitude 8000; linear overlap 1600ms at primary 1000ms; band 5 -6dB; preamp 0",
+  "bytes": 564480,
+  "origin": "GENERATED_AUDIO_PRODUCTION_NATIVE_DECODER",
+  "format": "S16LE",
+  "physical_audible_acceptance": "BLOCKED"
+}

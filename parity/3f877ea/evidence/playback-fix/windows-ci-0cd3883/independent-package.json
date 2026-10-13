@@ -1,0 +1,78 @@
+{
+  "status": "PASSED",
+  "head_sha": "0cd3883e0ae4a210c7e5e2a03fa7e4f52f0e0dd6",
+  "run_id": 38383921705,
+  "tests": {
+    "tests": 174,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "suites": 33
+  },
+  "artifact_id": 11805120983,
+  "download_url": "https://github.com/lladlam/MeloX-Windows/actions/runs/38383921705/artifacts/11805120983",
+  "outer_artifact": {
+    "bytes": 263784117,
+    "sha256": "9464049ba9eb63e4c266d87b5d5d36f8d7e56d9a3d9d519818adbc5cca367f7e",
+    "github_digest_match": true
+  },
+  "final_zip": {
+    "bytes": 264515014,
+    "sha256": "8d8cc6c5e7bd06b3e94cd5c3e5357d4f057d5432b5aa5adbe96edd965c34e7a4",
+    "crc_verified": true
+  },
+  "jar": {
+    "bytes": 219406791,
+    "sha256": "3fd63282e87aad7b6e5fbae293c5886a0ca6b020bb2a458759d57fa3e042ab81",
+    "feature_classes": [
+      "melox/playback/NeteasePlaybackResolver.class",
+      "melox/playback/ProviderPlaybackResolver.class",
+      "melox/provider/lxuser/ChkszApiClient.class"
+    ]
+  },
+  "windows_decoder": {
+    "location": "final ZIP!/app JAR!/decoder/ffmpeg.exe",
+    "bytes": 164352000,
+    "sha256": "af7913b7ddc324bf02b8af72fe8612b1471455ef8d9e04e45466510742abcff9",
+    "magic": "PE",
+    "verified": true
+  },
+  "pinned_resources": [
+    {
+      "resource": "legal/cloud-control-privacy-zh-CN.md",
+      "bytes": 5020,
+      "sha256": "7030f44dda89b27357ba4b960562d5eae98d9b5ae451a8a398e4fb6cc68f5793",
+      "crlf_count": 0,
+      "verified": true
+    },
+    {
+      "resource": "legal/disclaimer-zh-CN.md",
+      "bytes": 5015,
+      "sha256": "4c6e212bb6c78bd2fa6e45a76136cba6a5cfd82c1321dfdf27d727df2a50c44e",
+      "crlf_count": 0,
+      "verified": true
+    },
+    {
+      "resource": "legal/privacy-policy-zh-CN.md",
+      "bytes": 7233,
+      "sha256": "fdf41c3aea883220ba8070823b1a35d1156869117ed607f6b5c2769997ceb097",
+      "crlf_count": 0,
+      "verified": true
+    },
+    {
+      "resource": "legal/third-party-music-sources-zh-CN.md",
+      "bytes": 3167,
+      "sha256": "4aefd5137ea6e9a2da335671753dca4d8aebcdcf0ddc903c00a03bc89ef62c38",
+      "crlf_count": 0,
+      "verified": true
+    },
+    {
+      "resource": "parity/pinned-settings-strings.properties",
+      "bytes": 17451,
+      "sha256": "649df6af06ded94e91b6f4c728aafe2e29c76ba981097503f869e3fd8144fbc4",
+      "crlf_count": 0,
+      "verified": true
+    }
+  ],
+  "physical_audible_acceptance": "BLOCKED"
+}

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="NeteasePlaybackRequestTest[desktop]" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-10-13T10:34:44.046Z" hostname="runnervmfi6oq" time="0.073">
+  <properties/>
+  <testcase name="providerSearchUsesNativeDownloadedNeteaseIdAndSeesLocalSourceChanges[desktop]" classname="melox.playback.NeteasePlaybackRequestTest" time="0.004"/>
+  <testcase name="encodedSearchActuallyResolvesOfficialFullAudioAndKeepsLegacyBareUriWorking[desktop]" classname="melox.playback.NeteasePlaybackRequestTest" time="0.03"/>
+  <testcase name="anonymousPreviewAndNoUrlDoNotBecomeFalseFullPlaybackSuccess[desktop]" classname="melox.playback.NeteasePlaybackRequestTest" time="0.011"/>
+  <testcase name="searchMetadataRoundTripsWithoutSpacesQueryInjectionOrDoubleDecoding[desktop]" classname="melox.playback.NeteasePlaybackRequestTest" time="0.002"/>
+  <testcase name="providerAndLegacySearchShareOptInFallbackWithExactDecodedMetadataAndHeaders[desktop]" classname="melox.playback.NeteasePlaybackRequestTest" time="0.026"/>
+  <system-out><![CDATA[[MeloXQuality] Playback quality resolved: song=139774 requested=standard candidate=standard actual=standard bitrate=128000
+[MeloXQuality] Playback quality resolved: song=139774 requested=standard candidate=standard actual=standard bitrate=128000
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

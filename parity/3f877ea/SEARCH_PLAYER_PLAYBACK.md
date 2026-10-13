@@ -1,10 +1,14 @@
 # Search, player and real output — pinned 3f877ea
 
 User-reported anonymous playback repair is tracked in [`PLAYBACK_BUGFIX.md`](PLAYBACK_BUGFIX.md).
+Latest fix/package **0cd3883**, Windows run **38383921705 / SUCCESS**:
+**174 tests / 33 suites**, real ordinary/unified anonymous song 139774 software
+PCM, native Windows EQ and four-layer decoder/resource checks all pass.
+[Download fixed Windows package](https://github.com/lladlam/MeloX-Windows/actions/runs/38383921705/artifacts/11805120983).
 The old accepted package below predates that repair; its passing decoder tests
 did not cover song metadata containing spaces in the production song URI.
 
-**Corrected Windows distribution verified:** package commit
+**Previous corrected Windows distribution verified:** package commit
 `47542d8401ed626e7fff87444499729a0f3c369b`, run **38372169489**, **SUCCESS**,
 **166 tests / 31 suites / zero failures, errors or skipped**. Source/JAR/app-image/
 final ZIP native decode, EQ PCM and all five pinned-resource byte checks pass.

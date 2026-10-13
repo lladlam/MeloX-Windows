@@ -64,7 +64,28 @@ The official endpoint independently returned a full, non-preview standard source
   rather than a player deadlock. Validation teardown now closes the scene and
   cancels/shuts down its process's shared HTTP dispatcher; both replays exit 0.
 
-Exact-fix-SHA Windows CI/package verification is pending publication.
+## Verified Windows distribution
+
+Feature and actual package SHA:
+**`0cd3883e0ae4a210c7e5e2a03fa7e4f52f0e0dd6`**, Windows run
+**38383921705 / SUCCESS**, **174 tests / 33 suites / zero failures, errors or
+skipped**. Real native EQ and source/JAR/app-image/final ZIP native formats,
+required-header HTTP and all five immutable resource-byte checks pass.
+Downloaded artifact matches GitHub's SHA-256 digest; final ZIP CRC, actual
+PE/x64 FFmpeg, feature classes and resource bytes independently verify.
+Downloaded Windows generated-EQ PCM also passes independent readback.
+
+[Download this exact Windows fix](https://github.com/lladlam/MeloX-Windows/actions/runs/38383921705/artifacts/11805120983).
+Final distribution ZIP: **264,515,014 bytes**, SHA-256
+`8d8cc6c5e7bd06b3e94cd5c3e5357d4f057d5432b5aa5adbe96edd965c34e7a4`.
+GitHub artifact wrapper: **263,784,117 bytes**, SHA-256
+`9464049ba9eb63e4c266d87b5d5d36f8d7e56d9a3d9d519818adbc5cca367f7e`.
+Raw CI reports and independent checks are in `evidence/playback-fix/windows-ci-0cd3883/`.
+
+An additional final-source production replay verifies song **185670** produces
+the genuine unavailable-source error and **zero PCM outputs**: 14 state scenes,
+39 frames and 14 error/queue/quality/back assertions. It is not successful audio.
+
 Before-fix/fixture failures are retained and are not successful playback evidence.
 Live-song recordings are not published: archive only output metrics/hashes,
 public UI/semantics and sanitized logs. Generated PCM remains separate.

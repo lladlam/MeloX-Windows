@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="PlaybackLinkTest[desktop]" tests="9" skipped="0" failures="0" errors="0" timestamp="2026-10-13T10:34:53.487Z" hostname="runnervmfi6oq" time="4.762">
+  <properties/>
+  <testcase name="miniBarsFollowPcmEnergyAndIdleIsNotFixedPulse[desktop]" classname="melox.player.PlaybackLinkTest" time="0.002"/>
+  <testcase name="positionIncludesDecoderOffset[desktop]" classname="melox.player.PlaybackLinkTest" time="0.0"/>
+  <testcase name="previousRestartsOnlyWhenSettingEnabled[desktop]" classname="melox.player.PlaybackLinkTest" time="0.619"/>
+  <testcase name="bundledDecoderEmitsPcmAndIsResolvedAgain[desktop]" classname="melox.player.PlaybackLinkTest" time="4.116"/>
+  <testcase name="classicQueueKeepsPlainNeteaseSongsAndDoesNotRestartCurrent[desktop]" classname="melox.player.PlaybackLinkTest" time="0.005"/>
+  <testcase name="providerTrackSurvivesQueueItem[desktop]" classname="melox.player.PlaybackLinkTest" time="0.001"/>
+  <testcase name="decoderArgsMatchTheProcessCommand[desktop]" classname="melox.player.PlaybackLinkTest" time="0.001"/>
+  <testcase name="locatorUsesContextClassLoaderAndReportsMissingBundle[desktop]" classname="melox.player.PlaybackLinkTest" time="0.004"/>
+  <testcase name="playNextPrecedesManualQueueAndManualQueuePrecedesBaseTracks[desktop]" classname="melox.player.PlaybackLinkTest" time="0.013"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

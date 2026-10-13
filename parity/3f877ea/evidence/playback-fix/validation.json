@@ -55,10 +55,42 @@
     "chksz_protocol": "PASSED",
     "chksz_live": "BLOCKED_NO_AUTHORIZED_API_KEY",
     "lx_javascript_runtime": "UNIMPLEMENTED",
-    "windows_ci": "PENDING_EXACT_FIX_COMMIT",
+    "windows_ci": "PASSED_EXACT_FIX_SHA",
     "physical_windows_audio": "BLOCKED",
     "real_user_dpapi": "BLOCKED",
     "android_pixels_motion": "BLOCKED"
   },
-  "live_music_recordings_published": false
+  "live_music_recordings_published": false,
+  "feature_and_package_sha": "0cd3883e0ae4a210c7e5e2a03fa7e4f52f0e0dd6",
+  "windows_ci": {
+    "status": "SUCCESS",
+    "run_id": 38383921705,
+    "tests": {
+      "tests": 174,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "suites": 33
+    },
+    "download_url": "https://github.com/lladlam/MeloX-Windows/actions/runs/38383921705/artifacts/11805120983",
+    "artifact_id": 11805120983,
+    "outer_digest_verified": true,
+    "final_zip": {
+      "bytes": 264515014,
+      "sha256": "8d8cc6c5e7bd06b3e94cd5c3e5357d4f057d5432b5aa5adbe96edd965c34e7a4",
+      "crc_verified": true
+    },
+    "four_layer_native_and_resource_checks": "PASSED",
+    "independent_equalizer_readback": "PASSED",
+    "independent_pe_x64_and_resource_bytes": "PASSED"
+  },
+  "unavailable_source_replay": {
+    "track": "netease:185670",
+    "status": "PASSED_GENUINE_ERROR_ONLY",
+    "pcm_outputs": 0,
+    "full_audio": "BLOCKED_NO_FULL_SOURCE",
+    "state_scenes": 14,
+    "dynamic_frames": 39,
+    "assertions": 14
+  }
 }

@@ -1,0 +1,103 @@
+{
+  "check": "independent native single/dual user-EQ PCM readback",
+  "status": "PASSED",
+  "physical_audible_acceptance": "BLOCKED",
+  "records": [
+    {
+      "output": "CONTROLLED_SOFTWARE_SOURCE_DATA_LINE",
+      "pcm_sha256": "d2f33d14018fe25973f5ffcae05690242da00b1d14ed3140b050d1c030d37a6d",
+      "file": "dual-eq-band5-cut.s16le.gz",
+      "sample_rate": 44100,
+      "channels": 2,
+      "scenario": "generated primary 1000Hz amplitude 6000 / incoming 4000Hz amplitude 8000; linear overlap 1600ms at primary 1000ms; band 5 -6dB; preamp 0",
+      "bytes": 564480,
+      "origin": "GENERATED_AUDIO_PRODUCTION_NATIVE_DECODER",
+      "format": "S16LE",
+      "physical_audible_acceptance": "BLOCKED",
+      "status": "PASSED",
+      "peak_s16": 7810,
+      "windows": [
+        {
+          "output_ms": 100,
+          "primary_1000hz": 3007.084279017615,
+          "incoming_4000hz": 0.010014694230667247
+        },
+        {
+          "output_ms": 1750,
+          "primary_1000hz": 1502.9873443420388,
+          "incoming_4000hz": 3904.8852406859264
+        },
+        {
+          "output_ms": 2800,
+          "primary_1000hz": 0.013281143354057936,
+          "incoming_4000hz": 7809.903532071564
+        }
+      ],
+      "primary_center_gain_db": -6.000113004363101
+    },
+    {
+      "output": "CONTROLLED_SOFTWARE_SOURCE_DATA_LINE",
+      "pcm_sha256": "67b593160d3014fea4c2e5d57b129b7872267914537dc1847565c2b8d8284a0e",
+      "file": "single-eq-boost-automix-false.s16le.gz",
+      "sample_rate": 44100,
+      "channels": 2,
+      "scenario": "generated square \u00b11000; Flat preamp +6 dB",
+      "bytes": 88200,
+      "origin": "GENERATED_AUDIO_PRODUCTION_NATIVE_DECODER",
+      "format": "S16LE",
+      "physical_audible_acceptance": "BLOCKED",
+      "status": "PASSED",
+      "peak_s16": 1995,
+      "measured_gain_db": 5.998858000455342,
+      "expected_preamp_db": 6
+    },
+    {
+      "output": "CONTROLLED_SOFTWARE_SOURCE_DATA_LINE",
+      "pcm_sha256": "67b593160d3014fea4c2e5d57b129b7872267914537dc1847565c2b8d8284a0e",
+      "file": "single-eq-boost-automix-true.s16le.gz",
+      "sample_rate": 44100,
+      "channels": 2,
+      "scenario": "generated square \u00b11000; Flat preamp +6 dB",
+      "bytes": 88200,
+      "origin": "GENERATED_AUDIO_PRODUCTION_NATIVE_DECODER",
+      "format": "S16LE",
+      "physical_audible_acceptance": "BLOCKED",
+      "status": "PASSED",
+      "peak_s16": 1995,
+      "measured_gain_db": 5.998858000455342,
+      "expected_preamp_db": 6
+    },
+    {
+      "output": "CONTROLLED_SOFTWARE_SOURCE_DATA_LINE",
+      "pcm_sha256": "68a448fa54371a78837b0e4dfa0e1f370a618620c464a2b7c1c1797d6208e937",
+      "file": "single-eq-cut-after-seek-automix-false.s16le.gz",
+      "sample_rate": 44100,
+      "channels": 2,
+      "scenario": "seek 0 rebuild; generated square \u00b11000; Flat preamp -6 dB",
+      "bytes": 88200,
+      "origin": "GENERATED_AUDIO_PRODUCTION_NATIVE_DECODER",
+      "format": "S16LE",
+      "physical_audible_acceptance": "BLOCKED",
+      "status": "PASSED",
+      "peak_s16": 501,
+      "measured_gain_db": -6.003245482655085,
+      "expected_preamp_db": -6
+    },
+    {
+      "output": "CONTROLLED_SOFTWARE_SOURCE_DATA_LINE",
+      "pcm_sha256": "68a448fa54371a78837b0e4dfa0e1f370a618620c464a2b7c1c1797d6208e937",
+      "file": "single-eq-cut-after-seek-automix-true.s16le.gz",
+      "sample_rate": 44100,
+      "channels": 2,
+      "scenario": "seek 0 rebuild; generated square \u00b11000; Flat preamp -6 dB",
+      "bytes": 88200,
+      "origin": "GENERATED_AUDIO_PRODUCTION_NATIVE_DECODER",
+      "format": "S16LE",
+      "physical_audible_acceptance": "BLOCKED",
+      "status": "PASSED",
+      "peak_s16": 501,
+      "measured_gain_db": -6.003245482655085,
+      "expected_preamp_db": -6
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="DesktopAudioSessionTest[desktop]" tests="8" skipped="0" failures="0" errors="0" timestamp="2026-10-13T10:34:44.122Z" hostname="runnervmfi6oq" time="2.615">
+  <properties/>
+  <testcase name="realFfmpegNonzeroExitAfterPcmIsContentFailureRatherThanNaturalEnd[desktop]" classname="melox.player.DesktopAudioSessionTest" time="0.282"/>
+  <testcase name="unavailableDeviceReportsOutputFailureWithoutProducingAnEndEvent[desktop]" classname="melox.player.DesktopAudioSessionTest" time="0.197"/>
+  <testcase name="seekingToTheDecoderOriginalZeroPositionActuallyRestartsIt[desktop]" classname="melox.player.DesktopAudioSessionTest" time="0.48"/>
+  <testcase name="seekingToKnownTrackEndAcceptsAZeroPcmSuccessfulDecoderExit[desktop]" classname="melox.player.DesktopAudioSessionTest" time="0.225"/>
+  <testcase name="realOutputConsumesEqualizerPreampAndSeekingRebuildsDspWithCurrentSettings[desktop]" classname="melox.player.DesktopAudioSessionTest" time="0.454"/>
+  <testcase name="replacingTheSameUriKeepsEndCallbacksOwnedByTheNewRequest[desktop]" classname="melox.player.DesktopAudioSessionTest" time="0.441"/>
+  <testcase name="aDeviceStartFailureIsOutputFailureRatherThanCorruptContent[desktop]" classname="melox.player.DesktopAudioSessionTest" time="0.208"/>
+  <testcase name="decoderEofWaitsForBufferedFramesAndPauseResumePreserveTheTail[desktop]" classname="melox.player.DesktopAudioSessionTest" time="0.327"/>
+  <system-out><![CDATA[[AudioPlayer] decode local source at 0ms
+[AudioPlayer] decode local source at 0ms
+[AudioPlayer] decode local source at 0ms
+[AudioPlayer] decode local source at 0ms
+[AudioPlayer] decode local source at 500ms
+[AudioPlayer] decode local source at 0ms
+[AudioPlayer] decode local source at 0ms
+[AudioPlayer] decode local source at 0ms
+[AudioPlayer] decode local source at 0ms
+[AudioPlayer] decode local source at 0ms
+[AudioPlayer] decode local source at 0ms
+]]></system-out>
+  <system-err><![CDATA[[AudioPlayer] ????: [in#0/wav @ 000001a5e4cb6040] corrupt input packet in stream 0
+[in#0/wav @ 000001a5e4cb6040] Task finished with error: Invalid data found when processing input
+[in#0/wav @ 000001a5e4cb6040] Terminating thread with error: Invalid data found when processing input
+[AudioPlayer] ????: test device unavailable
+[AudioPlayer] ????: device start failed
+]]></system-err>
+</testsuite>
