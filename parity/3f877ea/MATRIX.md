@@ -24,7 +24,7 @@ Historical `parity/94e17c9/` evidence is reference material, not new acceptance.
 | Playlist album artwork toggle and hidden search | `LibraryScreen`, `MeloXSettingsPreferences`, `SettingsScreen` | Runtime persistence + live settings + artwork rows + pull-at-top search/filter | Desktop playlist layout still differs; precise reveal gesture/animation not yet accepted | PARTIAL |
 | Song-recognition identity additions | `core/recognition/SongRecognitionClient.kt` | Existing Windows recognition client is still an empty-result stub | Requires actual desktop fingerprint/capture implementation; no fabricated matches | MISSING |
 | Search launch request and provider-aware/approved unified search | `ui/search/SearchScreen.kt` (`MeloXSearchLaunchBus`, UnifiedMusicService) | App Shell launch bus, existing-key observable approval scope, actual concurrent aggregation/partial errors/native identity and provider playback; cancellation is retained | UNIFIED_SEARCH.md; account/catalog/download/alternate-candidate acceptance and pinned pixels remain outstanding | PARTIAL |
-| FFmpeg source and packaged executable integrity | `.github/workflows/build.yml`, decoder resources | Explicit LFS checkout; manifest size/SHA-256/x64 ELF+PE; source/JAR/app-image/final-ZIP native decode checks | Windows Jellyfin run 38224003236 at 337042a passed 144 tests plus source/JAR/app-image/final-ZIP native checks; evidence/windows-ci-337042a. Failed 275032b run retained with bounded PCM correction | PLATFORM_EQUIVALENT |
+| FFmpeg source and packaged executable integrity | `.github/workflows/build.yml`, decoder resources | Explicit LFS checkout; manifest size/SHA-256/x64 ELF+PE; source/JAR/app-image/final-ZIP native decode checks | Windows Settings/legal run 38341304307 at 2181ba4 passed 151 tests plus source/JAR/app-image/final-ZIP native checks; evidence/windows-ci-2181ba4. Failed 275032b run retained with bounded PCM correction | PLATFORM_EQUIVALENT |
 | Real PCM beat/energy/FFT/audible/phrase analysis | `playback/MeloXAutoMixAudioAnalyzer.kt` | Real independent FFmpeg decoder + 11025Hz/1024 FFT/512 hop, signed PCM, source-keyed cache, cancellable native ownership | Generated 90/105/140 BPM, silence, FFT bands, malformed data and real WAV decode tests; no claim of production AutoMix | PARTIAL |
 | Primary/incoming mixing, tempo, EQ, SmartQueue, dual-cover handoff | `MeloXPlaybackService`, `MeloXAutoMixTransitionRuntime`, `MeloXSmartQueueBuilder`, bass envelope | Production AudioPlayer continuous dual-native-decode/PCM mix; controller scored/fallback plans/preload; native pitch-preserving tempo; real RBJ bass exchange; analyzed candidate queue; clock-driven dual covers and settings/buttons | AUTOMIX.md; real two-frequency kernel/controller tests and independent capture PCM readback; 7 production UI scenes / 8 assertions. Source cover-shadow artifact fixed from screenshot. Authenticated streams/Windows hardware/Android pixels outstanding | PARTIAL |
 | Local source playback and search preserve file identity | `core/provider/local/LocalProvider.kt`, provider resolver | Real indexed Local search and readable-file resolution; encoded track metadata/URI, no online fallback; bridge preserves collection identity | Production Local provider/controller AutoMix tests, Unicode/plus/ampersand path regression and generated-source UI replay | PARTIAL |
@@ -76,7 +76,7 @@ Previous 81/102/108/114/124-test batches remain archived.
 Jellyfin: `jellyfin-validation.json`, `jellyfin-tests/`, `jellyfin-ui-final/`
 (15 production state scenes / 12 assertions / 42 dynamic frames), actual
 header-authorized universal-stream native PCM and final Linux package checks.
-Latest verified Windows CI: exact Jellyfin commit
+Previous verified Windows CI: exact Jellyfin commit
 `337042a266b07e9c8b8bbe9c4e5740f48d038f29`, run `38224003236`,
 **144 tests / 24 suites / zero failures, errors or skipped**, plus source/JAR/
 app-image/final ZIP native decode. See `windows-ci-337042a/run.json`.
@@ -85,6 +85,10 @@ This is not Windows physical playback or Android pixel acceptance.
 Settings/legal: `SETTINGS_LEGAL.md`, `settings-validation.json`, `settings-tests/`,
 six `settings-*-ui/` replays (56 state scenes / 81 assertions / 150 frames),
 independent `settings-pcm-readback.json` and final `settings-linux-packaged-decoder.json`.
-Exact-commit Windows CI is pending this batch's upload; prior Jellyfin CI is not reused as this batch's result.
+Latest verified Windows CI: exact Settings/legal commit
+`2181ba4f57e63ee13d3d16aac2c539bb09afab32`, run `38341304307`, **SUCCESS**,
+**151 tests / 27 suites / zero failures, errors or skipped**. Source/JAR/app-image/
+final ZIP native decode each pass; raw evidence and artifact metadata are in
+`windows-ci-2181ba4/`. Physical sound/real account DPAPI and Android pixels remain blocked.
 
 Each level is reported independently. No `MATCH` entry is introduced solely by compilation, an existing file, or unit-test success.

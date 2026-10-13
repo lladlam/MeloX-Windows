@@ -1,0 +1,123 @@
+{
+  "run_id": 38341304307,
+  "url": "https://github.com/lladlam/MeloX-Windows/actions/runs/38341304307",
+  "head_sha": "2181ba4f57e63ee13d3d16aac2c539bb09afab32",
+  "status": "SUCCESS",
+  "tests": {
+    "tests": 151,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "suites": 27,
+  "packaged_decoder_checks": {
+    "image-decoder.json": {
+      "status": "PASSED",
+      "native_decoder": "PASSED",
+      "authorized_http_pcm": "PASSED",
+      "resources": [
+        {
+          "location": "desktop\\build\\releases\\MeloX-Desktop\\app\\MeloX-Desktop-windows-x64-1.0.0.jar!/decoder/ffmpeg.exe",
+          "bytes": 164352000,
+          "sha256": "af7913b7ddc324bf02b8af72fe8612b1471455ef8d9e04e45466510742abcff9",
+          "magic": "PE",
+          "verified": true
+        }
+      ]
+    },
+    "jar-decoder.json": {
+      "status": "PASSED",
+      "native_decoder": "PASSED",
+      "authorized_http_pcm": "PASSED",
+      "resources": [
+        {
+          "location": "D:\\a\\MeloX-Windows\\MeloX-Windows\\desktop\\build\\compose\\jars\\MeloX-Desktop-windows-x64-1.0.0.jar!/decoder/ffmpeg.exe",
+          "bytes": 164352000,
+          "sha256": "af7913b7ddc324bf02b8af72fe8612b1471455ef8d9e04e45466510742abcff9",
+          "magic": "PE",
+          "verified": true
+        }
+      ]
+    },
+    "source-decoder.json": {
+      "status": "PASSED",
+      "native_decoder": "PASSED",
+      "authorized_http_pcm": "PASSED",
+      "resources": [
+        {
+          "location": "desktop\\src\\main\\resources\\decoder\\ffmpeg",
+          "bytes": 172690600,
+          "sha256": "ee930e8def21a993f4b8c680757df15054da1c8f2698da0fdf87f1f3b15bd633",
+          "magic": "ELF",
+          "verified": true
+        },
+        {
+          "location": "desktop\\src\\main\\resources\\decoder\\ffmpeg.exe",
+          "bytes": 164352000,
+          "sha256": "af7913b7ddc324bf02b8af72fe8612b1471455ef8d9e04e45466510742abcff9",
+          "magic": "PE",
+          "verified": true
+        }
+      ]
+    },
+    "zip-decoder.json": {
+      "status": "PASSED",
+      "native_decoder": "PASSED",
+      "authorized_http_pcm": "PASSED",
+      "resources": [
+        {
+          "location": "desktop\\build\\releases\\MeloX-Desktop-Windows.zip!/app/MeloX-Desktop-windows-x64-1.0.0.jar!/decoder/ffmpeg.exe",
+          "bytes": 164352000,
+          "sha256": "af7913b7ddc324bf02b8af72fe8612b1471455ef8d9e04e45466510742abcff9",
+          "magic": "PE",
+          "verified": true
+        }
+      ]
+    }
+  },
+  "artifacts": [
+    {
+      "id": 11787022105,
+      "node_id": "MDg6QXJ0aWZhY3QxMTc4NzAyMjEwNQ==",
+      "name": "MeloX-Desktop-Windows",
+      "size_in_bytes": 263571649,
+      "url": "https://api.github.com/repos/lladlam/MeloX-Windows/actions/artifacts/11787022105",
+      "archive_download_url": "https://api.github.com/repos/lladlam/MeloX-Windows/actions/artifacts/11787022105/zip",
+      "expired": false,
+      "digest": "sha256:e47c4d0a7ae82694dfefe22c08dabfab02e15eada596f6295641bc168eabed93",
+      "created_at": "2026-10-13T03:26:47Z",
+      "updated_at": "2026-10-13T03:26:47Z",
+      "expires_at": "2027-01-11T03:21:14Z",
+      "workflow_run": {
+        "id": 38341304307,
+        "repository_id": 1376937043,
+        "head_repository_id": 1376937043,
+        "head_branch": "main",
+        "head_sha": "2181ba4f57e63ee13d3d16aac2c539bb09afab32"
+      }
+    },
+    {
+      "id": 11786289617,
+      "node_id": "MDg6QXJ0aWZhY3QxMTc4NjI4OTYxNw==",
+      "name": "Verification-Windows",
+      "size_in_bytes": 25589,
+      "url": "https://api.github.com/repos/lladlam/MeloX-Windows/actions/artifacts/11786289617",
+      "archive_download_url": "https://api.github.com/repos/lladlam/MeloX-Windows/actions/artifacts/11786289617/zip",
+      "expired": false,
+      "digest": "sha256:983c6ac34d073b9bb048f44ed92babd735ccc30c251962dcf15f7caeb6aa0a42",
+      "created_at": "2026-10-13T03:26:39Z",
+      "updated_at": "2026-10-13T03:26:39Z",
+      "expires_at": "2027-01-11T03:21:14Z",
+      "workflow_run": {
+        "id": 38341304307,
+        "repository_id": 1376937043,
+        "head_repository_id": 1376937043,
+        "head_branch": "main",
+        "head_sha": "2181ba4f57e63ee13d3d16aac2c539bb09afab32"
+      }
+    }
+  ],
+  "windows_native_account_dpapi": "BLOCKED_REAL_USER_MACHINE_REQUIRED",
+  "physical_audible_audio": "BLOCKED",
+  "android_pixel_dynamic_parity": "BLOCKED"
+}

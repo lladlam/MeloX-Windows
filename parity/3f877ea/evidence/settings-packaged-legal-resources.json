@@ -1,0 +1,39 @@
+{
+  "check": "final Linux JAR pinned legal resources and default Settings string values",
+  "status": "PASSED",
+  "jar_sha256": "56221f05c1ef6824f66dd96ef980a224626d2a9f8151ed2926e6736aa6e3fa8f",
+  "resources": [
+    {
+      "entry": "legal/cloud-control-privacy-zh-CN.md",
+      "bytes": 5020,
+      "sha256": "7030f44dda89b27357ba4b960562d5eae98d9b5ae451a8a398e4fb6cc68f5793",
+      "matches_pure_pinned_android": true
+    },
+    {
+      "entry": "legal/disclaimer-zh-CN.md",
+      "bytes": 5015,
+      "sha256": "4c6e212bb6c78bd2fa6e45a76136cba6a5cfd82c1321dfdf27d727df2a50c44e",
+      "matches_pure_pinned_android": true
+    },
+    {
+      "entry": "legal/privacy-policy-zh-CN.md",
+      "bytes": 7233,
+      "sha256": "fdf41c3aea883220ba8070823b1a35d1156869117ed607f6b5c2769997ceb097",
+      "matches_pure_pinned_android": true
+    },
+    {
+      "entry": "legal/third-party-music-sources-zh-CN.md",
+      "bytes": 3167,
+      "sha256": "4aefd5137ea6e9a2da335671753dca4d8aebcdcf0ddc903c00a03bc89ef62c38",
+      "matches_pure_pinned_android": true
+    },
+    {
+      "entry": "parity/pinned-settings-strings.properties",
+      "bytes": 8292,
+      "sha256": "aae50ac6f3f3127427e03f5ec8cade700d161fca75275d4d50f0797c4cccd931",
+      "pinned_default_string_entries": 122,
+      "matches_pure_pinned_android_values": true
+    }
+  ],
+  "android_visual_parity": "BLOCKED"
+}

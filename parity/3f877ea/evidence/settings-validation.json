@@ -75,7 +75,20 @@
   "automated_tests": "PASSED",
   "linux_production_offscreen_ui": "PASSED",
   "linux_software_pcm_spectral_overlap": "PASSED",
-  "windows_ci": "PENDING_EXACT_COMMIT",
+  "windows_ci": {
+    "status": "SUCCESS",
+    "run_id": 38341304307,
+    "sha": "2181ba4f57e63ee13d3d16aac2c539bb09afab32",
+    "url": "https://github.com/lladlam/MeloX-Windows/actions/runs/38341304307",
+    "tests": {
+      "tests": 151,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "suites": 27,
+    "source_jar_image_zip_native_decoder": "PASSED"
+  },
   "android_pixel_dynamic_parity": "BLOCKED",
   "windows_physical_audio_dpapi": "BLOCKED",
   "android_reason": "No connected pinned Android device/reference frames",
