@@ -24,6 +24,8 @@ jobs:
           gradle-version: '9.5.1'
       - name: Verify LFS binaries and native decoder
         run: python tools/verify_decoder_bundle.py --sources --run --output desktop/build/verification/source-decoder.json
+      - name: Verify pinned source resource bytes
+        run: python tools/verify_pinned_resources.py --sources --output desktop/build/verification/source-pinned-resources.json
       - name: Build uber jar
         run: gradle :shared:desktopTest :desktop:packageUberJarForCurrentOS
       - name: Verify native equalizer PCM
@@ -40,6 +42,8 @@ jobs:
           echo "Found: $($jar.Name) ($($jar.Length) bytes)"
       - name: Verify packaged JAR decoder
         run: python tools/verify_decoder_bundle.py --artifact "${{ steps.jar.outputs.jar_path }}" --run --output desktop/build/verification/jar-decoder.json
+      - name: Verify packaged JAR pinned resources
+        run: python tools/verify_pinned_resources.py --artifact "${{ steps.jar.outputs.jar_path }}" --output desktop/build/verification/jar-pinned-resources.json
       - name: Create app-image with jpackage
         shell: pwsh
         run: |
@@ -54,6 +58,8 @@ jobs:
             --java-options "-Xmx1g -Dfile.encoding=UTF-8"
       - name: Verify app-image decoder
         run: python tools/verify_decoder_bundle.py --artifact desktop/build/releases/MeloX-Desktop --run --output desktop/build/verification/image-decoder.json
+      - name: Verify app-image pinned resources
+        run: python tools/verify_pinned_resources.py --artifact desktop/build/releases/MeloX-Desktop --output desktop/build/verification/image-pinned-resources.json
       - name: Zip the app-image
         shell: pwsh
         run: |
@@ -62,6 +68,8 @@ jobs:
           Write-Output "Zip: $($zip.FullName) ($($zip.Length) bytes)"
       - name: Verify final distribution decoder
         run: python tools/verify_decoder_bundle.py --artifact desktop/build/releases/MeloX-Desktop-Windows.zip --run --output desktop/build/verification/zip-decoder.json
+      - name: Verify final distribution pinned resources
+        run: python tools/verify_pinned_resources.py --artifact desktop/build/releases/MeloX-Desktop-Windows.zip --output desktop/build/verification/zip-pinned-resources.json
       - name: Upload verification evidence
         if: always()
         uses: actions/upload-artifact@v4

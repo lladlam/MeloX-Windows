@@ -1,0 +1,16 @@
+{
+  "check": "source/packaged decoder integrity",
+  "resources": [
+    {
+      "location": "/tmp/opencode/melox-windows-a07e1be/MeloX-Desktop-Windows.zip!/app/MeloX-Desktop-windows-x64-1.0.0.jar!/decoder/ffmpeg",
+      "bytes": 172690600,
+      "sha256": "ee930e8def21a993f4b8c680757df15054da1c8f2698da0fdf87f1f3b15bd633",
+      "magic": "ELF",
+      "verified": true
+    }
+  ],
+  "native": {
+    "decoder_native_run": "NOT_RUN"
+  },
+  "audible_acceptance": "BLOCKED"
+}

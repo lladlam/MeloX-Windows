@@ -99,6 +99,21 @@ click/long-click targets actual production nodes.
 
 ## Remaining
 
+Windows feature run **38368910608** at exact **a07e1be97ea166ec886249ceaa307deb6fc87c2d**
+completed successfully: **166 tests / 31 suites**, real native EQ PCM, and native
+source/JAR/app-image/final ZIP format/authorized HTTP checks. Downloaded artifact
+GitHub digest matches; Windows PE/x64 decoder and feature classes are present.
+However, independent package inspection **rejects its pinned resource bytes**:
+Windows checkout converted the four legal files and default strings to CRLF.
+Their normalized text is unchanged. `windows-ci-a07e1be/` preserves raw reports,
+independent EQ readback and `rejected-final-zip-pinned-resources.json`.
+
+Follow-up `.gitattributes` forces LF for those resources; the new
+`tools/verify_pinned_resources.py` checks five immutable resource digests at
+source/JAR/app-image/final ZIP stages. It rejects the downloaded a07e1be package
+and passes source/final Linux JAR. The corrected Windows distribution needs its
+own exact-SHA CI/result. Next player inventory is `NEXT_SEARCH_PLAYER_GAPS.md`.
+
 Exact feature-SHA Windows CI is recorded separately after publication. Physical
 Windows audio/SMTC/device switch/sleep/native real-account DPAPI, authorized
 Provider reads/writes, tested online-song playback and podcast program reads are

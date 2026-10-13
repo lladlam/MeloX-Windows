@@ -39,6 +39,14 @@ Historical `parity/94e17c9/` evidence is reference material, not new acceptance.
 
 ## Evidence levels
 
+Windows feature `a07e1be`, run `38368910608`: CI **SUCCESS**, **166 tests / 31
+suites**, native EQ and source/JAR/app-image/final ZIP format/header decode pass.
+Downloaded artifact digest and Windows PE decoder verify independently. Its
+pinned resource bytes are **REJECTED** for Windows checkout CRLF conversion;
+normalized text is unchanged. See `windows-ci-a07e1be/`. Explicit LF attributes
+and immutable five-resource packaging checks now require a corrected exact-SHA
+Windows package; CI success alone did not establish this resource condition.
+
 Search/player/output: `SEARCH_PLAYER_PLAYBACK.md`, `search-player-validation.json`,
 `search-player-tests/`, `search-player-native-pcm/` and independent
 `search-player-equalizer-readback.json`. **166 tests / 31 suites / zero failures,

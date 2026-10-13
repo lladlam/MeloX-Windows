@@ -1,0 +1,279 @@
+{
+  "pinned_android": "3f877eaffe30c82eb6d24eb3647702f5bc554dd3",
+  "check": "next-batch source inspection; not behavioral acceptance",
+  "scope": "pinned LyricsSettings 1700-1897 vs desktop production settings UI",
+  "source_sha256": "6342b5d9c60728f8ce3b9b24a64780f2b5bcedea875e38f85a1a0b0f55cad904",
+  "pinned_setting_keys": [
+    "lyrics_advance_ms",
+    "lyrics_advance_word_by_word",
+    "lyrics_auto_follow",
+    "lyrics_auto_select",
+    "lyrics_blur_strength",
+    "lyrics_cascade_bounce",
+    "lyrics_cascade_bounce_enabled",
+    "lyrics_cascade_bounce_gradient",
+    "lyrics_cascade_catch_up_ratio",
+    "lyrics_cascade_chase_gradient",
+    "lyrics_cascade_delay_increase_ms",
+    "lyrics_cascade_delay_ms",
+    "lyrics_cascade_duration_ms",
+    "lyrics_cascade_following_delay_ms",
+    "lyrics_dim_amount",
+    "lyrics_distance_blur_scale",
+    "lyrics_focus_color_lead_ms",
+    "lyrics_focus_position",
+    "lyrics_focus_scale",
+    "lyrics_follow_delay_ms",
+    "lyrics_font_scale",
+    "lyrics_font_weight",
+    "lyrics_glow_enabled",
+    "lyrics_glow_long_tones_only",
+    "lyrics_glow_strength",
+    "lyrics_hidden_blur_scale",
+    "lyrics_highlight_gradient_reduction",
+    "lyrics_highlight_gradient_width",
+    "lyrics_inactive_opacity",
+    "lyrics_interface_auto_hide_ms",
+    "lyrics_interlude_countdown",
+    "lyrics_lift_mode",
+    "lyrics_long_press_share",
+    "lyrics_long_tone_detection",
+    "lyrics_long_tone_strength",
+    "lyrics_long_tone_threshold_ms",
+    "lyrics_pseudo_timing",
+    "lyrics_reduce_motion",
+    "lyrics_refresh_rate",
+    "lyrics_rendering_quality",
+    "lyrics_romanization",
+    "lyrics_romanization_display_mode",
+    "lyrics_romanization_font_scale",
+    "lyrics_romanization_opacity",
+    "lyrics_scale_bounce",
+    "lyrics_scale_bounce_duration_ms",
+    "lyrics_scale_bounce_enabled",
+    "lyrics_scroll_hide_threshold_dp",
+    "lyrics_snap_threshold_ms",
+    "lyrics_spacing_scale",
+    "lyrics_style",
+    "lyrics_tap_seek",
+    "lyrics_text_pv_animation_speed",
+    "lyrics_text_pv_motion_intensity",
+    "lyrics_text_pv_style",
+    "lyrics_translation",
+    "lyrics_translation_display_mode",
+    "lyrics_translation_font_scale",
+    "lyrics_translation_opacity",
+    "lyrics_word_by_word"
+  ],
+  "exposed_keys": [
+    "lyrics_auto_follow",
+    "lyrics_romanization",
+    "lyrics_style",
+    "lyrics_tap_seek",
+    "lyrics_text_pv_animation_speed",
+    "lyrics_text_pv_motion_intensity",
+    "lyrics_text_pv_style",
+    "lyrics_translation",
+    "lyrics_word_by_word"
+  ],
+  "missing_ui_keys": [
+    "lyrics_advance_ms",
+    "lyrics_advance_word_by_word",
+    "lyrics_auto_select",
+    "lyrics_blur_strength",
+    "lyrics_cascade_bounce",
+    "lyrics_cascade_bounce_enabled",
+    "lyrics_cascade_bounce_gradient",
+    "lyrics_cascade_catch_up_ratio",
+    "lyrics_cascade_chase_gradient",
+    "lyrics_cascade_delay_increase_ms",
+    "lyrics_cascade_delay_ms",
+    "lyrics_cascade_duration_ms",
+    "lyrics_cascade_following_delay_ms",
+    "lyrics_dim_amount",
+    "lyrics_distance_blur_scale",
+    "lyrics_focus_color_lead_ms",
+    "lyrics_focus_position",
+    "lyrics_focus_scale",
+    "lyrics_follow_delay_ms",
+    "lyrics_font_scale",
+    "lyrics_font_weight",
+    "lyrics_glow_enabled",
+    "lyrics_glow_long_tones_only",
+    "lyrics_glow_strength",
+    "lyrics_hidden_blur_scale",
+    "lyrics_highlight_gradient_reduction",
+    "lyrics_highlight_gradient_width",
+    "lyrics_inactive_opacity",
+    "lyrics_interface_auto_hide_ms",
+    "lyrics_interlude_countdown",
+    "lyrics_lift_mode",
+    "lyrics_long_press_share",
+    "lyrics_long_tone_detection",
+    "lyrics_long_tone_strength",
+    "lyrics_long_tone_threshold_ms",
+    "lyrics_pseudo_timing",
+    "lyrics_reduce_motion",
+    "lyrics_refresh_rate",
+    "lyrics_rendering_quality",
+    "lyrics_romanization_display_mode",
+    "lyrics_romanization_font_scale",
+    "lyrics_romanization_opacity",
+    "lyrics_scale_bounce",
+    "lyrics_scale_bounce_duration_ms",
+    "lyrics_scale_bounce_enabled",
+    "lyrics_scroll_hide_threshold_dp",
+    "lyrics_snap_threshold_ms",
+    "lyrics_spacing_scale",
+    "lyrics_translation_display_mode",
+    "lyrics_translation_font_scale",
+    "lyrics_translation_opacity"
+  ],
+  "existing_renderer_references": {
+    "lyrics_advance_ms": [
+      "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXAlternativeLyricsPanels.kt",
+      "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXLyricCascade.kt",
+      "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerLyrics.kt"
+    ],
+    "lyrics_advance_word_by_word": [
+      "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerLyrics.kt"
+    ],
+    "lyrics_auto_select": [
+      "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerLyrics.kt"
+    ],
+    "lyrics_blur_strength": [
+      "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerLyrics.kt"
+    ],
+    "lyrics_cascade_bounce": [],
+    "lyrics_cascade_bounce_enabled": [],
+    "lyrics_cascade_bounce_gradient": [],
+    "lyrics_cascade_catch_up_ratio": [],
+    "lyrics_cascade_chase_gradient": [
+      "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXLyricCascade.kt"
+    ],
+    "lyrics_cascade_delay_increase_ms": [],
+    "lyrics_cascade_delay_ms": [],
+    "lyrics_cascade_duration_ms": [
+      "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXLyricCascade.kt"
+    ],
+    "lyrics_cascade_following_delay_ms": [],
+    "lyrics_dim_amount": [
+      "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerLyrics.kt"
+    ],
+    "lyrics_distance_blur_scale": [
+      "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerLyrics.kt"
+    ],
+    "lyrics_focus_color_lead_ms": [
+      "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerLyrics.kt"
+    ],
+    "lyrics_focus_position": [
+      "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerLyrics.kt"
+    ],
+    "lyrics_focus_scale": [
+      "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXLyricCascade.kt",
+      "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerLyrics.kt"
+    ],
+    "lyrics_follow_delay_ms": [
+      "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerLyrics.kt"
+    ],
+    "lyrics_font_scale": [
+      "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerLyrics.kt"
+    ],
+    "lyrics_font_weight": [
+      "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXGlyphLyricText.kt",
+      "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerLyrics.kt"
+    ],
+    "lyrics_glow_enabled": [],
+    "lyrics_glow_long_tones_only": [],
+    "lyrics_glow_strength": [
+      "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXGlyphLyricText.kt"
+    ],
+    "lyrics_hidden_blur_scale": [
+      "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerLyrics.kt"
+    ],
+    "lyrics_highlight_gradient_reduction": [
+      "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXGlyphLyricText.kt"
+    ],
+    "lyrics_highlight_gradient_width": [
+      "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXGlyphLyricText.kt"
+    ],
+    "lyrics_inactive_opacity": [
+      "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXGlyphLyricText.kt"
+    ],
+    "lyrics_interface_auto_hide_ms": [
+      "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXIOSPlayerScene.kt"
+    ],
+    "lyrics_interlude_countdown": [
+      "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerLyrics.kt"
+    ],
+    "lyrics_lift_mode": [
+      "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXGlyphLyricText.kt"
+    ],
+    "lyrics_long_press_share": [
+      "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerLyrics.kt"
+    ],
+    "lyrics_long_tone_detection": [
+      "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXGlyphLyricText.kt"
+    ],
+    "lyrics_long_tone_strength": [],
+    "lyrics_long_tone_threshold_ms": [
+      "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXGlyphLyricText.kt"
+    ],
+    "lyrics_pseudo_timing": [
+      "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXAlternativeLyricsPanels.kt",
+      "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerLyrics.kt"
+    ],
+    "lyrics_reduce_motion": [
+      "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXAlternativeLyricsPanels.kt",
+      "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXLyricCascade.kt",
+      "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerLyrics.kt"
+    ],
+    "lyrics_refresh_rate": [
+      "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerLyrics.kt"
+    ],
+    "lyrics_rendering_quality": [
+      "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerLyrics.kt"
+    ],
+    "lyrics_romanization_display_mode": [
+      "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerLyrics.kt"
+    ],
+    "lyrics_romanization_font_scale": [
+      "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXGlyphLyricText.kt",
+      "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXLyricCascade.kt",
+      "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerLyrics.kt"
+    ],
+    "lyrics_romanization_opacity": [
+      "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXGlyphLyricText.kt"
+    ],
+    "lyrics_scale_bounce": [
+      "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerLyrics.kt"
+    ],
+    "lyrics_scale_bounce_duration_ms": [
+      "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerLyrics.kt"
+    ],
+    "lyrics_scale_bounce_enabled": [
+      "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerLyrics.kt"
+    ],
+    "lyrics_scroll_hide_threshold_dp": [
+      "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerLyrics.kt"
+    ],
+    "lyrics_snap_threshold_ms": [
+      "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXLyricCascade.kt"
+    ],
+    "lyrics_spacing_scale": [
+      "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerLyrics.kt"
+    ],
+    "lyrics_translation_display_mode": [],
+    "lyrics_translation_font_scale": [
+      "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXLyricCascade.kt",
+      "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerLyrics.kt"
+    ],
+    "lyrics_translation_opacity": [
+      "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerLyrics.kt"
+    ]
+  },
+  "limitations": [
+    "References indicate candidate consumers only, not verified behavior/equivalence",
+    "Skyline, awake modes, floating/system lyrics and player appearance require separate inventory"
+  ]
+}

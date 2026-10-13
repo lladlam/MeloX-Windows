@@ -1,0 +1,146 @@
+{
+  "run_id": 38368910608,
+  "url": "https://github.com/lladlam/MeloX-Windows/actions/runs/38368910608",
+  "head_sha": "a07e1be97ea166ec886249ceaa307deb6fc87c2d",
+  "status": "SUCCESS",
+  "tests": {
+    "tests": 166,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "suites": 31,
+  "packaged_decoder_checks": {
+    "source-decoder.json": {
+      "status": "PASSED",
+      "native_decoder": "PASSED",
+      "authorized_http_pcm": "PASSED",
+      "resources": [
+        {
+          "location": "desktop\\src\\main\\resources\\decoder\\ffmpeg",
+          "bytes": 172690600,
+          "sha256": "ee930e8def21a993f4b8c680757df15054da1c8f2698da0fdf87f1f3b15bd633",
+          "magic": "ELF",
+          "verified": true
+        },
+        {
+          "location": "desktop\\src\\main\\resources\\decoder\\ffmpeg.exe",
+          "bytes": 164352000,
+          "sha256": "af7913b7ddc324bf02b8af72fe8612b1471455ef8d9e04e45466510742abcff9",
+          "magic": "PE",
+          "verified": true
+        }
+      ]
+    },
+    "jar-decoder.json": {
+      "status": "PASSED",
+      "native_decoder": "PASSED",
+      "authorized_http_pcm": "PASSED",
+      "resources": [
+        {
+          "location": "D:\\a\\MeloX-Windows\\MeloX-Windows\\desktop\\build\\compose\\jars\\MeloX-Desktop-windows-x64-1.0.0.jar!/decoder/ffmpeg.exe",
+          "bytes": 164352000,
+          "sha256": "af7913b7ddc324bf02b8af72fe8612b1471455ef8d9e04e45466510742abcff9",
+          "magic": "PE",
+          "verified": true
+        }
+      ]
+    },
+    "image-decoder.json": {
+      "status": "PASSED",
+      "native_decoder": "PASSED",
+      "authorized_http_pcm": "PASSED",
+      "resources": [
+        {
+          "location": "desktop\\build\\releases\\MeloX-Desktop\\app\\MeloX-Desktop-windows-x64-1.0.0.jar!/decoder/ffmpeg.exe",
+          "bytes": 164352000,
+          "sha256": "af7913b7ddc324bf02b8af72fe8612b1471455ef8d9e04e45466510742abcff9",
+          "magic": "PE",
+          "verified": true
+        }
+      ]
+    },
+    "zip-decoder.json": {
+      "status": "PASSED",
+      "native_decoder": "PASSED",
+      "authorized_http_pcm": "PASSED",
+      "resources": [
+        {
+          "location": "desktop\\build\\releases\\MeloX-Desktop-Windows.zip!/app/MeloX-Desktop-windows-x64-1.0.0.jar!/decoder/ffmpeg.exe",
+          "bytes": 164352000,
+          "sha256": "af7913b7ddc324bf02b8af72fe8612b1471455ef8d9e04e45466510742abcff9",
+          "magic": "PE",
+          "verified": true
+        }
+      ]
+    }
+  },
+  "equalizer_ci": "PASSED",
+  "equalizer_downloaded_independent_readback": "PASSED",
+  "artifacts": [
+    {
+      "id": 11798451841,
+      "node_id": "MDg6QXJ0aWZhY3QxMTc5ODQ1MTg0MQ==",
+      "name": "MeloX-Desktop-Windows",
+      "size_in_bytes": 263772271,
+      "url": "https://api.github.com/repos/lladlam/MeloX-Windows/actions/artifacts/11798451841",
+      "archive_download_url": "https://api.github.com/repos/lladlam/MeloX-Windows/actions/artifacts/11798451841/zip",
+      "expired": false,
+      "digest": "sha256:406a002532f0ebb92d77b27b4e3dc0aa786b6192ba11e67b240d622ded85b7be",
+      "created_at": "2026-10-13T08:28:35Z",
+      "updated_at": "2026-10-13T08:28:35Z",
+      "expires_at": "2027-01-11T08:23:17Z",
+      "workflow_run": {
+        "id": 38368910608,
+        "repository_id": 1376937043,
+        "head_repository_id": 1376937043,
+        "head_branch": "main",
+        "head_sha": "a07e1be97ea166ec886249ceaa307deb6fc87c2d"
+      }
+    },
+    {
+      "id": 11797947423,
+      "node_id": "MDg6QXJ0aWZhY3QxMTc5Nzk0NzQyMw==",
+      "name": "Verification-Windows",
+      "size_in_bytes": 244955,
+      "url": "https://api.github.com/repos/lladlam/MeloX-Windows/actions/artifacts/11797947423",
+      "archive_download_url": "https://api.github.com/repos/lladlam/MeloX-Windows/actions/artifacts/11797947423/zip",
+      "expired": false,
+      "digest": "sha256:4239371d643cf8cc442906e03296f0edbf76c38000663821469adbc30942da7c",
+      "created_at": "2026-10-13T08:28:27Z",
+      "updated_at": "2026-10-13T08:28:27Z",
+      "expires_at": "2027-01-11T08:23:17Z",
+      "workflow_run": {
+        "id": 38368910608,
+        "repository_id": 1376937043,
+        "head_repository_id": 1376937043,
+        "head_branch": "main",
+        "head_sha": "a07e1be97ea166ec886249ceaa307deb6fc87c2d"
+      }
+    }
+  ],
+  "downloaded_artifact": {
+    "bytes": 263772271,
+    "sha256": "406a002532f0ebb92d77b27b4e3dc0aa786b6192ba11e67b240d622ded85b7be",
+    "github_digest_matches": true
+  },
+  "downloaded_distribution": {
+    "file": "/tmp/opencode/melox-windows-a07e1be/MeloX-Desktop-Windows.zip",
+    "bytes": 264503298,
+    "sha256": "50cf405ba89e548c59e5b606546e9ad81e85cd0a80a959c52c405f944c2983fb"
+  },
+  "windows_native_account_dpapi": "BLOCKED_REAL_USER_MACHINE_REQUIRED",
+  "physical_audible_audio": "BLOCKED",
+  "android_pixel_dynamic_parity": "BLOCKED",
+  "pinned_resource_bytes": "FAILED_WINDOWS_CHECKOUT_CRLF_CONVERSION",
+  "distribution_acceptance": "REJECTED_FOR_PINNED_RESOURCE_BYTE_PARITY",
+  "pinned_resource_rejection_evidence": "rejected-final-zip-pinned-resources.json",
+  "normalized_resource_text_unchanged": true,
+  "downloaded_windows_decoder": {
+    "bytes": 164352000,
+    "sha256": "af7913b7ddc324bf02b8af72fe8612b1471455ef8d9e04e45466510742abcff9",
+    "magic": "PE",
+    "machine": "x64",
+    "verified": true
+  }
+}

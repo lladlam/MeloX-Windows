@@ -57,6 +57,8 @@ Detailed observable-state matrix and evidence: `parity/3f877ea/`.
 
 ## Verified batch evidence
 
+- Search/player Windows feature CI **a07e1be97ea166ec886249ceaa307deb6fc87c2d**, run **38368910608**, CI SUCCESS: **166 tests / 31 suites**, genuine native single/dual EQ and source/JAR/app-image/final ZIP native format/authorized HTTP pass. Full artifact download digest verified and native EQ independently reread. Distribution resource-byte acceptance is **REJECTED**: checkout converted pinned legal/default strings to CRLF (normalized text unchanged). Explicit LF attributes and immutable source/JAR/app-image/final ZIP resource checks are added in a follow-up; archive is `windows-ci-a07e1be/`. Continue player work from `NEXT_SEARCH_PLAYER_GAPS.md`: 51 of pinned LyricsSettings' 60 distinct keys still need production Settings exposure; reference inventory is not behavior acceptance.
+
 - Latest Linux search/player/output: **166 tests / 31 suites / zero failures, errors or skipped**, **9 production replays / 258 state scenes / 747 dynamic frames / 215 assertions**, including all 18 TextPV styles and generated EVA. Independent native single/dual EQ PCM readback, source/final-JAR decode and unchanged legal files pass. `search-player-validation.json`, `search-player-tests/`, `search-player-native-pcm/`, `search-player-equalizer-readback.json`. Final Linux JAR SHA-256 `038815dd488e74cbb125a2e79e184bb73d59e15be791c64fbce9189ea7b5cd28`. New exact feature-SHA Windows CI is pending publication; old 2181ba4 CI does not cover these changes.
 
 - `parity/3f877ea/evidence/upstream-validation.json`: 81 automated tests / 14 suites, zero failures/errors/skipped, source digests and final Linux uber-JAR SHA-256.
