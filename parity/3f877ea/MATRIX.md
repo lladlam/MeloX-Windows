@@ -39,6 +39,16 @@ Historical `parity/94e17c9/` evidence is reference material, not new acceptance.
 
 ## Evidence levels
 
+Latest accepted Windows package: **47542d8401ed626e7fff87444499729a0f3c369b**,
+run **38372169489**, **SUCCESS**, **166 tests / 31 suites / zero failures,
+errors or skipped**. Native EQ and all four decoder stages pass; immutable five-
+resource byte checks pass at source/JAR/app-image/final ZIP. Downloaded artifact
+digest, final Windows PE decoder, resource bytes and actual native EQ PCM are
+independently verified in `windows-ci-47542d8/`. Final ZIP SHA-256
+`d79fd2e357efee6bcbc1f26f936afa89346f73e2ac4008c1fd0e316a0c0ba403`.
+This supersedes a07e1be's CRLF resource rejection for package acceptance only;
+physical/native real-account and Android pixel/motion levels remain BLOCKED.
+
 Windows feature `a07e1be`, run `38368910608`: CI **SUCCESS**, **166 tests / 31
 suites**, native EQ and source/JAR/app-image/final ZIP format/header decode pass.
 Downloaded artifact digest and Windows PE decoder verify independently. Its

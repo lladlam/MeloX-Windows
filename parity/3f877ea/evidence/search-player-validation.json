@@ -191,7 +191,7 @@
   },
   "capture_revision_note": "Replays were collected sequentially during this working-tree batch. Final source digests are recorded separately; older captures are not exact-final-artifact pixel evidence. All-18, live catalog/unavailable and generated EVA runs follow the final production-source changes.",
   "acceptance": {
-    "windows_ci": "PENDING_EXACT_FEATURE_SHA",
+    "windows_ci": "PASSED_EXACT_CORRECTED_PACKAGE_SHA_47542d8",
     "windows_physical_audio": "BLOCKED",
     "windows_real_account_DPAPI": "BLOCKED",
     "authenticated_provider_reads_writes": "BLOCKED",
@@ -199,5 +199,34 @@
     "podcast_programs": "BLOCKED_LOGIN_REQUIRED_-462",
     "pinned_android_pixels_motion": "BLOCKED_NO_DEVICE_REFERENCE",
     "overall_search_player_playback_parity": "PARTIAL"
+  },
+  "feature_sha": "a07e1be97ea166ec886249ceaa307deb6fc87c2d",
+  "windows_ci": {
+    "run_id": 38372169489,
+    "head_sha": "47542d8401ed626e7fff87444499729a0f3c369b",
+    "feature_sha": "a07e1be97ea166ec886249ceaa307deb6fc87c2d",
+    "status": "SUCCESS",
+    "tests": {
+      "tests": 166,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "suites": 31,
+    "evidence": "windows-ci-47542d8/",
+    "downloaded_distribution": {
+      "file": "/tmp/opencode/melox-windows-47542d8/MeloX-Desktop-Windows.zip",
+      "bytes": 264503115,
+      "sha256": "d79fd2e357efee6bcbc1f26f936afa89346f73e2ac4008c1fd0e316a0c0ba403"
+    },
+    "pinned_resource_bytes": "PASSED_ALL_FOUR_STAGES_AND_DOWNLOADED_ZIP",
+    "native_equalizer_readback": "PASSED_CI_AND_DOWNLOADED_NATIVE_PCM",
+    "artifact_id": 11800221356
+  },
+  "superseded_windows_resource_rejection": {
+    "run_id": 38368910608,
+    "sha": "a07e1be97ea166ec886249ceaa307deb6fc87c2d",
+    "reason": "Windows checkout CRLF conversion of immutable legal/default strings",
+    "evidence": "windows-ci-a07e1be/rejected-final-zip-pinned-resources.json"
   }
 }

@@ -1,5 +1,15 @@
 # Search, player and real output — pinned 3f877ea
 
+**Corrected Windows distribution verified:** package commit
+`47542d8401ed626e7fff87444499729a0f3c369b`, run **38372169489**, **SUCCESS**,
+**166 tests / 31 suites / zero failures, errors or skipped**. Source/JAR/app-image/
+final ZIP native decode, EQ PCM and all five pinned-resource byte checks pass.
+Downloaded GitHub artifact digest, final package's Windows PE/x64 decoder and
+resource bytes independently verify in `evidence/windows-ci-47542d8/`.
+Final ZIP: **264,503,115 bytes**, SHA-256
+`d79fd2e357efee6bcbc1f26f936afa89346f73e2ac4008c1fd0e316a0c0ba403`.
+[Download exact-SHA Windows artifact](https://github.com/lladlam/MeloX-Windows/actions/runs/38372169489/artifacts/11800221356).
+
 Acceptance source: `3f877eaffe30c82eb6d24eb3647702f5bc554dd3`, pure export.
 The existing player, decoder, Provider bridge, protected accounts, authored lyrics
 and persistent data are retained. Overall parity is **PARTIAL**, with no Android
@@ -111,10 +121,12 @@ independent EQ readback and `rejected-final-zip-pinned-resources.json`.
 Follow-up `.gitattributes` forces LF for those resources; the new
 `tools/verify_pinned_resources.py` checks five immutable resource digests at
 source/JAR/app-image/final ZIP stages. It rejects the downloaded a07e1be package
-and passes source/final Linux JAR. The corrected Windows distribution needs its
-own exact-SHA CI/result. Next player inventory is `NEXT_SEARCH_PLAYER_GAPS.md`.
+and passes source/final Linux JAR. The corrected Windows distribution passes
+exact-SHA run **38372169489** at **47542d8**, including independent downloaded
+resource-byte/PE/EQ checks. The rejected a07e1be report remains historical.
+Next player inventory is `NEXT_SEARCH_PLAYER_GAPS.md`.
 
-Exact feature-SHA Windows CI is recorded separately after publication. Physical
+Exact feature/package-SHA Windows CI is recorded above and separately archived. Physical
 Windows audio/SMTC/device switch/sleep/native real-account DPAPI, authorized
 Provider reads/writes, tested online-song playback and podcast program reads are
 **BLOCKED**. Connected pinned Android reference devices = zero; same-content

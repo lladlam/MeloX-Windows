@@ -1,0 +1,339 @@
+{
+  "run_id": 38372169489,
+  "url": "https://github.com/lladlam/MeloX-Windows/actions/runs/38372169489",
+  "head_sha": "47542d8401ed626e7fff87444499729a0f3c369b",
+  "feature_sha": "a07e1be97ea166ec886249ceaa307deb6fc87c2d",
+  "status": "SUCCESS",
+  "tests": {
+    "tests": 166,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "suites": 31,
+  "packaged_decoder_checks": {
+    "source-decoder.json": {
+      "status": "PASSED",
+      "native_decoder": "PASSED",
+      "authorized_http_pcm": "PASSED",
+      "resources": [
+        {
+          "location": "desktop\\src\\main\\resources\\decoder\\ffmpeg",
+          "bytes": 172690600,
+          "sha256": "ee930e8def21a993f4b8c680757df15054da1c8f2698da0fdf87f1f3b15bd633",
+          "magic": "ELF",
+          "verified": true
+        },
+        {
+          "location": "desktop\\src\\main\\resources\\decoder\\ffmpeg.exe",
+          "bytes": 164352000,
+          "sha256": "af7913b7ddc324bf02b8af72fe8612b1471455ef8d9e04e45466510742abcff9",
+          "magic": "PE",
+          "verified": true
+        }
+      ]
+    },
+    "jar-decoder.json": {
+      "status": "PASSED",
+      "native_decoder": "PASSED",
+      "authorized_http_pcm": "PASSED",
+      "resources": [
+        {
+          "location": "D:\\a\\MeloX-Windows\\MeloX-Windows\\desktop\\build\\compose\\jars\\MeloX-Desktop-windows-x64-1.0.0.jar!/decoder/ffmpeg.exe",
+          "bytes": 164352000,
+          "sha256": "af7913b7ddc324bf02b8af72fe8612b1471455ef8d9e04e45466510742abcff9",
+          "magic": "PE",
+          "verified": true
+        }
+      ]
+    },
+    "image-decoder.json": {
+      "status": "PASSED",
+      "native_decoder": "PASSED",
+      "authorized_http_pcm": "PASSED",
+      "resources": [
+        {
+          "location": "desktop\\build\\releases\\MeloX-Desktop\\app\\MeloX-Desktop-windows-x64-1.0.0.jar!/decoder/ffmpeg.exe",
+          "bytes": 164352000,
+          "sha256": "af7913b7ddc324bf02b8af72fe8612b1471455ef8d9e04e45466510742abcff9",
+          "magic": "PE",
+          "verified": true
+        }
+      ]
+    },
+    "zip-decoder.json": {
+      "status": "PASSED",
+      "native_decoder": "PASSED",
+      "authorized_http_pcm": "PASSED",
+      "resources": [
+        {
+          "location": "desktop\\build\\releases\\MeloX-Desktop-Windows.zip!/app/MeloX-Desktop-windows-x64-1.0.0.jar!/decoder/ffmpeg.exe",
+          "bytes": 164352000,
+          "sha256": "af7913b7ddc324bf02b8af72fe8612b1471455ef8d9e04e45466510742abcff9",
+          "magic": "PE",
+          "verified": true
+        }
+      ]
+    }
+  },
+  "pinned_resource_checks": {
+    "zip-pinned-resources.json": {
+      "check": "pinned legal/default-string exact resource bytes",
+      "pinned_android": "3f877eaffe30c82eb6d24eb3647702f5bc554dd3",
+      "artifact": "desktop\\build\\releases\\MeloX-Desktop-Windows.zip",
+      "status": "PASSED",
+      "resources": [
+        {
+          "resource": "legal/cloud-control-privacy-zh-CN.md",
+          "bytes": 5020,
+          "sha256": "7030f44dda89b27357ba4b960562d5eae98d9b5ae451a8a398e4fb6cc68f5793",
+          "expected_sha256": "7030f44dda89b27357ba4b960562d5eae98d9b5ae451a8a398e4fb6cc68f5793",
+          "crlf_count": 0,
+          "verified": true
+        },
+        {
+          "resource": "legal/disclaimer-zh-CN.md",
+          "bytes": 5015,
+          "sha256": "4c6e212bb6c78bd2fa6e45a76136cba6a5cfd82c1321dfdf27d727df2a50c44e",
+          "expected_sha256": "4c6e212bb6c78bd2fa6e45a76136cba6a5cfd82c1321dfdf27d727df2a50c44e",
+          "crlf_count": 0,
+          "verified": true
+        },
+        {
+          "resource": "legal/privacy-policy-zh-CN.md",
+          "bytes": 7233,
+          "sha256": "fdf41c3aea883220ba8070823b1a35d1156869117ed607f6b5c2769997ceb097",
+          "expected_sha256": "fdf41c3aea883220ba8070823b1a35d1156869117ed607f6b5c2769997ceb097",
+          "crlf_count": 0,
+          "verified": true
+        },
+        {
+          "resource": "legal/third-party-music-sources-zh-CN.md",
+          "bytes": 3167,
+          "sha256": "4aefd5137ea6e9a2da335671753dca4d8aebcdcf0ddc903c00a03bc89ef62c38",
+          "expected_sha256": "4aefd5137ea6e9a2da335671753dca4d8aebcdcf0ddc903c00a03bc89ef62c38",
+          "crlf_count": 0,
+          "verified": true
+        },
+        {
+          "resource": "parity/pinned-settings-strings.properties",
+          "bytes": 17451,
+          "sha256": "649df6af06ded94e91b6f4c728aafe2e29c76ba981097503f869e3fd8144fbc4",
+          "expected_sha256": "649df6af06ded94e91b6f4c728aafe2e29c76ba981097503f869e3fd8144fbc4",
+          "crlf_count": 0,
+          "verified": true
+        }
+      ]
+    },
+    "source-pinned-resources.json": {
+      "check": "pinned legal/default-string exact resource bytes",
+      "pinned_android": "3f877eaffe30c82eb6d24eb3647702f5bc554dd3",
+      "artifact": "source resources",
+      "status": "PASSED",
+      "resources": [
+        {
+          "resource": "legal/cloud-control-privacy-zh-CN.md",
+          "bytes": 5020,
+          "sha256": "7030f44dda89b27357ba4b960562d5eae98d9b5ae451a8a398e4fb6cc68f5793",
+          "expected_sha256": "7030f44dda89b27357ba4b960562d5eae98d9b5ae451a8a398e4fb6cc68f5793",
+          "crlf_count": 0,
+          "verified": true
+        },
+        {
+          "resource": "legal/disclaimer-zh-CN.md",
+          "bytes": 5015,
+          "sha256": "4c6e212bb6c78bd2fa6e45a76136cba6a5cfd82c1321dfdf27d727df2a50c44e",
+          "expected_sha256": "4c6e212bb6c78bd2fa6e45a76136cba6a5cfd82c1321dfdf27d727df2a50c44e",
+          "crlf_count": 0,
+          "verified": true
+        },
+        {
+          "resource": "legal/privacy-policy-zh-CN.md",
+          "bytes": 7233,
+          "sha256": "fdf41c3aea883220ba8070823b1a35d1156869117ed607f6b5c2769997ceb097",
+          "expected_sha256": "fdf41c3aea883220ba8070823b1a35d1156869117ed607f6b5c2769997ceb097",
+          "crlf_count": 0,
+          "verified": true
+        },
+        {
+          "resource": "legal/third-party-music-sources-zh-CN.md",
+          "bytes": 3167,
+          "sha256": "4aefd5137ea6e9a2da335671753dca4d8aebcdcf0ddc903c00a03bc89ef62c38",
+          "expected_sha256": "4aefd5137ea6e9a2da335671753dca4d8aebcdcf0ddc903c00a03bc89ef62c38",
+          "crlf_count": 0,
+          "verified": true
+        },
+        {
+          "resource": "parity/pinned-settings-strings.properties",
+          "bytes": 17451,
+          "sha256": "649df6af06ded94e91b6f4c728aafe2e29c76ba981097503f869e3fd8144fbc4",
+          "expected_sha256": "649df6af06ded94e91b6f4c728aafe2e29c76ba981097503f869e3fd8144fbc4",
+          "crlf_count": 0,
+          "verified": true
+        }
+      ]
+    },
+    "image-pinned-resources.json": {
+      "check": "pinned legal/default-string exact resource bytes",
+      "pinned_android": "3f877eaffe30c82eb6d24eb3647702f5bc554dd3",
+      "artifact": "desktop\\build\\releases\\MeloX-Desktop",
+      "status": "PASSED",
+      "resources": [
+        {
+          "resource": "legal/cloud-control-privacy-zh-CN.md",
+          "bytes": 5020,
+          "sha256": "7030f44dda89b27357ba4b960562d5eae98d9b5ae451a8a398e4fb6cc68f5793",
+          "expected_sha256": "7030f44dda89b27357ba4b960562d5eae98d9b5ae451a8a398e4fb6cc68f5793",
+          "crlf_count": 0,
+          "verified": true
+        },
+        {
+          "resource": "legal/disclaimer-zh-CN.md",
+          "bytes": 5015,
+          "sha256": "4c6e212bb6c78bd2fa6e45a76136cba6a5cfd82c1321dfdf27d727df2a50c44e",
+          "expected_sha256": "4c6e212bb6c78bd2fa6e45a76136cba6a5cfd82c1321dfdf27d727df2a50c44e",
+          "crlf_count": 0,
+          "verified": true
+        },
+        {
+          "resource": "legal/privacy-policy-zh-CN.md",
+          "bytes": 7233,
+          "sha256": "fdf41c3aea883220ba8070823b1a35d1156869117ed607f6b5c2769997ceb097",
+          "expected_sha256": "fdf41c3aea883220ba8070823b1a35d1156869117ed607f6b5c2769997ceb097",
+          "crlf_count": 0,
+          "verified": true
+        },
+        {
+          "resource": "legal/third-party-music-sources-zh-CN.md",
+          "bytes": 3167,
+          "sha256": "4aefd5137ea6e9a2da335671753dca4d8aebcdcf0ddc903c00a03bc89ef62c38",
+          "expected_sha256": "4aefd5137ea6e9a2da335671753dca4d8aebcdcf0ddc903c00a03bc89ef62c38",
+          "crlf_count": 0,
+          "verified": true
+        },
+        {
+          "resource": "parity/pinned-settings-strings.properties",
+          "bytes": 17451,
+          "sha256": "649df6af06ded94e91b6f4c728aafe2e29c76ba981097503f869e3fd8144fbc4",
+          "expected_sha256": "649df6af06ded94e91b6f4c728aafe2e29c76ba981097503f869e3fd8144fbc4",
+          "crlf_count": 0,
+          "verified": true
+        }
+      ]
+    },
+    "jar-pinned-resources.json": {
+      "check": "pinned legal/default-string exact resource bytes",
+      "pinned_android": "3f877eaffe30c82eb6d24eb3647702f5bc554dd3",
+      "artifact": "D:\\a\\MeloX-Windows\\MeloX-Windows\\desktop\\build\\compose\\jars\\MeloX-Desktop-windows-x64-1.0.0.jar",
+      "status": "PASSED",
+      "resources": [
+        {
+          "resource": "legal/cloud-control-privacy-zh-CN.md",
+          "bytes": 5020,
+          "sha256": "7030f44dda89b27357ba4b960562d5eae98d9b5ae451a8a398e4fb6cc68f5793",
+          "expected_sha256": "7030f44dda89b27357ba4b960562d5eae98d9b5ae451a8a398e4fb6cc68f5793",
+          "crlf_count": 0,
+          "verified": true
+        },
+        {
+          "resource": "legal/disclaimer-zh-CN.md",
+          "bytes": 5015,
+          "sha256": "4c6e212bb6c78bd2fa6e45a76136cba6a5cfd82c1321dfdf27d727df2a50c44e",
+          "expected_sha256": "4c6e212bb6c78bd2fa6e45a76136cba6a5cfd82c1321dfdf27d727df2a50c44e",
+          "crlf_count": 0,
+          "verified": true
+        },
+        {
+          "resource": "legal/privacy-policy-zh-CN.md",
+          "bytes": 7233,
+          "sha256": "fdf41c3aea883220ba8070823b1a35d1156869117ed607f6b5c2769997ceb097",
+          "expected_sha256": "fdf41c3aea883220ba8070823b1a35d1156869117ed607f6b5c2769997ceb097",
+          "crlf_count": 0,
+          "verified": true
+        },
+        {
+          "resource": "legal/third-party-music-sources-zh-CN.md",
+          "bytes": 3167,
+          "sha256": "4aefd5137ea6e9a2da335671753dca4d8aebcdcf0ddc903c00a03bc89ef62c38",
+          "expected_sha256": "4aefd5137ea6e9a2da335671753dca4d8aebcdcf0ddc903c00a03bc89ef62c38",
+          "crlf_count": 0,
+          "verified": true
+        },
+        {
+          "resource": "parity/pinned-settings-strings.properties",
+          "bytes": 17451,
+          "sha256": "649df6af06ded94e91b6f4c728aafe2e29c76ba981097503f869e3fd8144fbc4",
+          "expected_sha256": "649df6af06ded94e91b6f4c728aafe2e29c76ba981097503f869e3fd8144fbc4",
+          "crlf_count": 0,
+          "verified": true
+        }
+      ]
+    }
+  },
+  "equalizer_ci": "PASSED",
+  "artifacts": [
+    {
+      "id": 11800221356,
+      "node_id": "MDg6QXJ0aWZhY3QxMTgwMDIyMTM1Ng==",
+      "name": "MeloX-Desktop-Windows",
+      "size_in_bytes": 263772107,
+      "url": "https://api.github.com/repos/lladlam/MeloX-Windows/actions/artifacts/11800221356",
+      "archive_download_url": "https://api.github.com/repos/lladlam/MeloX-Windows/actions/artifacts/11800221356/zip",
+      "expired": false,
+      "digest": "sha256:a29632d7abd90ad9c844f2aad885e26c30667614d8a19afee8792407d02fbc37",
+      "created_at": "2026-10-13T08:57:37Z",
+      "updated_at": "2026-10-13T08:57:37Z",
+      "expires_at": "2027-01-11T08:51:32Z",
+      "workflow_run": {
+        "id": 38372169489,
+        "repository_id": 1376937043,
+        "head_repository_id": 1376937043,
+        "head_branch": "main",
+        "head_sha": "47542d8401ed626e7fff87444499729a0f3c369b"
+      }
+    },
+    {
+      "id": 11799732050,
+      "node_id": "MDg6QXJ0aWZhY3QxMTc5OTczMjA1MA==",
+      "name": "Verification-Windows",
+      "size_in_bytes": 248157,
+      "url": "https://api.github.com/repos/lladlam/MeloX-Windows/actions/artifacts/11799732050",
+      "archive_download_url": "https://api.github.com/repos/lladlam/MeloX-Windows/actions/artifacts/11799732050/zip",
+      "expired": false,
+      "digest": "sha256:310f6cfb324926470ddc84cadaf63bbdb122cc2bbbdf3d22fe7da01692f2829c",
+      "created_at": "2026-10-13T08:57:27Z",
+      "updated_at": "2026-10-13T08:57:27Z",
+      "expires_at": "2027-01-11T08:51:32Z",
+      "workflow_run": {
+        "id": 38372169489,
+        "repository_id": 1376937043,
+        "head_repository_id": 1376937043,
+        "head_branch": "main",
+        "head_sha": "47542d8401ed626e7fff87444499729a0f3c369b"
+      }
+    }
+  ],
+  "downloaded_artifact": {
+    "bytes": 263772107,
+    "sha256": "a29632d7abd90ad9c844f2aad885e26c30667614d8a19afee8792407d02fbc37",
+    "github_digest_matches": true
+  },
+  "downloaded_distribution": {
+    "file": "/tmp/opencode/melox-windows-47542d8/MeloX-Desktop-Windows.zip",
+    "bytes": 264503115,
+    "sha256": "d79fd2e357efee6bcbc1f26f936afa89346f73e2ac4008c1fd0e316a0c0ba403"
+  },
+  "downloaded_windows_decoder": {
+    "bytes": 164352000,
+    "sha256": "af7913b7ddc324bf02b8af72fe8612b1471455ef8d9e04e45466510742abcff9",
+    "magic": "PE",
+    "machine": "x64",
+    "verified": true
+  },
+  "distribution_acceptance": "PASSED_FOR_CI_AND_DOWNLOADED_PACKAGE_CHECKS",
+  "windows_native_account_dpapi": "BLOCKED_REAL_USER_MACHINE_REQUIRED",
+  "physical_audible_audio": "BLOCKED",
+  "android_pixel_dynamic_parity": "BLOCKED",
+  "equalizer_downloaded_independent_readback": "PASSED",
+  "downloaded_final_pinned_resource_bytes": "PASSED"
+}
