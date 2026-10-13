@@ -97,7 +97,8 @@ private fun playerAutomaticFractionSpec() = tween<Float>(
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-fun MeloXApp() {
+fun MeloXApp(onExit: () -> Unit = { kotlin.system.exitProcess(0) }) {
+    val onboarding = remember { melox.legal.MeloXOnboardingSession() }
     LaunchedEffect(Unit) {
         androidx.compose.runtime.withFrameNanos { }
         melox.remoteconfig.MeloXRemoteConfigRuntime.initializeAndRefresh()
@@ -112,6 +113,13 @@ fun MeloXApp() {
     val backDispatchers = remember { AppTab.entries.associateWith { MeloXBackDispatcher() } }
     val playerBackDispatcher = remember { MeloXBackDispatcher() }
     var settingsRouteRequest by remember { mutableStateOf<String?>(null) }
+    var onboardingLoginPending by remember { mutableStateOf(false) }
+    LaunchedEffect(onboarding.stage, onboardingLoginPending) {
+        if (onboarding.stage == melox.legal.MeloXOnboardingStage.Complete && onboardingLoginPending) {
+            settingsRouteRequest = "NeteaseLogin"
+            onboardingLoginPending = false
+        }
+    }
     val collectionTarget by melox.ui.navigation.MeloXCollectionLaunchBus.target.collectAsState()
     val collectionBackDispatcher = remember { MeloXBackDispatcher() }
     val searchLaunch = melox.ui.navigation.MeloXSearchLaunchBus.request
@@ -265,7 +273,7 @@ fun MeloXApp() {
         shapes = melox.ui.theme.MeloXMaterialShapes,
     ) {
         CompositionLocalProvider(androidx.compose.material3.LocalContentColor provides MaterialTheme.colorScheme.onBackground) {
-        melox.ui.screens.RemoteCompatibilityNotice()
+        if (onboarding.stage == melox.legal.MeloXOnboardingStage.Complete) melox.ui.screens.RemoteCompatibilityNotice()
         SharedTransitionLayout(modifier = Modifier.fillMaxSize()) {
             val sharedScope = this
             Box(
@@ -449,6 +457,33 @@ fun MeloXApp() {
                 }
             }
         }
+        when (onboarding.stage) {
+            melox.legal.MeloXOnboardingStage.Legal -> melox.ui.legal.MeloXFirstLaunchLegalConsent(
+                onAgree = onboarding::agreeLegal, onDecline = onExit,
+                onOpenProject = { runCatching { java.awt.Desktop.getDesktop().browse(java.net.URI("https://github.com/lladlam/MeloX-Android")) } },
+            )
+            melox.legal.MeloXOnboardingStage.Connect -> melox.ui.legal.MeloXConnectServiceDialog(
+                onLater = onboarding::finishConnection,
+                onLogin = {
+                    onboarding.finishConnection()
+                    selectedTab = AppTab.Settings
+                    // Desktop native dialog layers are ordered by creation. Keep the cloud
+                    // choice above login, as on Android, by launching login after that choice.
+                    onboardingLoginPending = true
+                },
+            )
+            melox.legal.MeloXOnboardingStage.CloudControl -> melox.ui.legal.MeloXCloudControlConsentDialog(
+                onReject = { playerScope.launch {
+                    melox.remoteconfig.MeloXRemoteConfigRuntime.setEnabled(false)
+                    onboarding.cloudChoiceRecorded()
+                } },
+                onAccept = { playerScope.launch {
+                    melox.remoteconfig.MeloXRemoteConfigRuntime.setEnabled(true)
+                    onboarding.cloudChoiceRecorded()
+                } },
+            )
+            melox.legal.MeloXOnboardingStage.Complete -> Unit
+        }
         }
     }
 }
@@ -470,11 +505,17 @@ private fun TabContent(
     val navState = melox.ui.navigation.rememberMeloXNavState()
     var selectedPlaylist by remember { mutableStateOf<NeteasePlaylistSummary?>(null) }
     var selectedAlbum by remember { mutableStateOf<Pair<String, String>?>(null) }
+    var loginInitialProvider by remember { mutableStateOf<String?>(null) }
     LaunchedEffect(settingsRouteRequest) {
         if (settingsRouteRequest == null) return@LaunchedEffect
         selectedPlaylist = null
         selectedAlbum = null
         navState.navigateToTab(tab)
+        if (settingsRouteRequest == "NeteaseLogin") {
+            loginInitialProvider = "netease"
+            navState.navigateTo(Route.Login)
+            onSettingsRouteConsumed()
+        }
     }
     val openPlaylist: (NeteasePlaylistSummary) -> Unit = { playlist ->
         selectedAlbum = null
@@ -505,19 +546,19 @@ private fun TabContent(
             AppTab.Downloads -> DownloadsScreen(navState = navState)
             AppTab.Cloud -> CloudScreen(navState = navState)
             AppTab.Settings -> SettingsScreen(
-                routeRequest = settingsRouteRequest,
+                routeRequest = settingsRouteRequest?.takeUnless { it == "NeteaseLogin" },
                 onRouteRequestConsumed = onSettingsRouteConsumed,
                 currentSource = source,
                 onSourceSelected = onSourceSelected,
                 onOpenMessages = { navState.navigateTo(Route.Messages) },
                 onOpenServices = { navState.navigateTo(Route.ProviderServices) },
-                onOpenLogin = { navState.navigateTo(Route.Login) },
+                onOpenLogin = { loginInitialProvider = null; navState.navigateTo(Route.Login) },
             )
             AppTab.Search -> SearchScreen(source = source,
                 onSearchExit = { onOpenTool("Home") }, onOpenPodcasts = { onOpenTool("Podcasts") })
         }
         when (navState.currentRoute) {
-            Route.Login -> LoginScreen(navState)
+            Route.Login -> LoginScreen(navState, initialProviderId = loginInitialProvider)
             Route.Messages -> MessagesScreen()
             Route.ProviderServices -> ProviderServicesScreen(navState)
             else -> Unit

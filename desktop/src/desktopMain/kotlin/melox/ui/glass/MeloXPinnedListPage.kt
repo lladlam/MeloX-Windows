@@ -62,9 +62,14 @@ fun MeloXPinnedListPage(
         }
     }
     val background = MaterialTheme.colorScheme.background
+    val pageBackdrop = rememberMeloXLayerBackdrop()
     val toolbarHeight = 62.dp
 
     Box(modifier.fillMaxSize().background(background)) {
+      CompositionLocalProvider(LocalMeloXLayerBackdrop provides pageBackdrop) {
+      Box(Modifier.fillMaxSize().meloXRecordBackdrop(pageBackdrop)) {
+      // Recorded descendants cannot read this layer (Skia RenderNodes must stay acyclic).
+      CompositionLocalProvider(LocalMeloXLayerBackdrop provides null) {
         LazyColumn(
             state = listState,
             modifier = Modifier.fillMaxSize(),
@@ -97,15 +102,18 @@ fun MeloXPinnedListPage(
             }
             content()
         }
+      }
+      }
         Box(
             Modifier
                 .fillMaxWidth()
                 .height(toolbarHeight + 38.dp)
-                .align(Alignment.TopCenter)
+                 .align(Alignment.TopCenter)
+                 .meloXTopFadeBackdrop(background)
                 .meloXBackdropBlur(
                     shape = RectangleShape,
                     blurRadius = 10.dp,
-                    surfaceColor = background.copy(alpha = 0.76f),
+                    surfaceColor = Color.Transparent,
                     dark = background.red + background.green + background.blue < 1.5f,
                 ),
         )
@@ -148,5 +156,6 @@ fun MeloXPinnedListPage(
                 }
             }
         }
+      }
     }
 }

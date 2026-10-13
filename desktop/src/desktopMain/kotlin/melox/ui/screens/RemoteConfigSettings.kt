@@ -26,6 +26,9 @@ import melox.ui.glass.MeloXGlassToggle
 import melox.ui.glass.MeloXSettingsDropdown
 import java.text.DateFormat
 import java.util.Date
+import melox.ui.legal.MeloXCloudControlConsentDialog
+import melox.ui.legal.MeloXLegalDocumentDialog
+import melox.ui.legal.MeloXLegalDocument
 
 @Composable
 internal fun RemoteConfigSettings() {
@@ -36,10 +39,6 @@ internal fun RemoteConfigSettings() {
     var route by remember { mutableStateOf(routing.selectedSource()) }
     var consentVisible by remember { mutableStateOf(false) }
     var policyVisible by remember { mutableStateOf(false) }
-    val policy = remember {
-        checkNotNull(MeloXRemoteConfigRuntime::class.java.classLoader.getResourceAsStream("legal/cloud-control-privacy-zh-CN.md"))
-            .bufferedReader().use { it.readText() }
-    }
     val source = when {
         !enabled -> "云控已拒绝或关闭"
         status.source == MeloXRemoteConfigSource.VerifiedRemote -> "已验证远程配置"
@@ -88,23 +87,11 @@ internal fun RemoteConfigSettings() {
         modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp, vertical = 5.dp).testTag("remote-clear")) {
         Text("清除缓存并恢复内置配置")
     }
-    MeloXGlassDialog(consentVisible, onDismiss = { consentVisible = false }, modifier = Modifier.testTag("remote-consent")) {
-        Text("云控隐私协议", fontSize = 19.sp, fontWeight = FontWeight.SemiBold)
-        Text("云控默认关闭，仅用于已内置音乐源的兼容性管理。启用后下载经过 ECDSA P-256 签名的静态配置；不会加入账号凭据、播放记录或用户标识。你可以随时撤回同意，停止请求并清除缓存。",
-            Modifier.padding(top = 10.dp), fontSize = 14.sp, lineHeight = 21.sp)
-        MeloXGlassButton(onClick = { policyVisible = true }, modifier = Modifier.testTag("remote-consent-policy"), style = MeloXGlassButtonStyle.Plain) { Text("查看完整协议") }
-        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-            MeloXGlassButton(onClick = { consentVisible = false; scope.launch { MeloXRemoteConfigRuntime.setEnabled(false) } },
-                modifier = Modifier.weight(1f).testTag("remote-reject"), style = MeloXGlassButtonStyle.Plain) { Text("拒绝") }
-            MeloXGlassButton(onClick = { consentVisible = false; scope.launch { MeloXRemoteConfigRuntime.setEnabled(true) } },
-                modifier = Modifier.weight(1f).testTag("remote-accept"), style = MeloXGlassButtonStyle.BorderedProminent) { Text("确定") }
-        }
-    }
-    MeloXGlassDialog(policyVisible, onDismiss = { policyVisible = false }, modifier = Modifier.testTag("remote-policy")) {
-        Text("云控隐私协议（Android 真源公开版本）", fontWeight = FontWeight.SemiBold)
-        Text(policy, Modifier.heightIn(max = 500.dp).verticalScroll(rememberScrollState()).padding(vertical = 12.dp), fontSize = 14.sp, lineHeight = 21.sp)
-        MeloXGlassButton(onClick = { policyVisible = false }, modifier = Modifier.testTag("remote-policy-close")) { Text("关闭") }
-    }
+    if (consentVisible) MeloXCloudControlConsentDialog(
+        onReject = { consentVisible = false; scope.launch { MeloXRemoteConfigRuntime.setEnabled(false) } },
+        onAccept = { scope.launch { MeloXRemoteConfigRuntime.setEnabled(true); consentVisible = false } },
+    )
+    if (policyVisible) MeloXLegalDocumentDialog(MeloXLegalDocument.CloudControlPrivacy) { policyVisible = false }
     }
 }
 

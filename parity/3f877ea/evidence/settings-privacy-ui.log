@@ -1,0 +1,133 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.5.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :desktop:kmpPartiallyResolvedDependenciesChecker
+> Task :desktop:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :desktop:convertXmlValueResourcesForCommonMain NO-SOURCE
+> Task :desktop:copyNonXmlValueResourcesForCommonMain NO-SOURCE
+> Task :desktop:prepareComposeResourcesTaskForCommonMain NO-SOURCE
+> Task :desktop:generateResourceAccessorsForCommonMain SKIPPED
+> Task :desktop:convertXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :desktop:copyNonXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :desktop:prepareComposeResourcesTaskForDesktopMain NO-SOURCE
+> Task :desktop:generateResourceAccessorsForDesktopMain SKIPPED
+> Task :desktop:generateActualResourceCollectorsForDesktopMain SKIPPED
+> Task :desktop:generateComposeResClass SKIPPED
+> Task :desktop:generateExpectResourceCollectorsForCommonMain SKIPPED
+> Task :innertube:kmpPartiallyResolvedDependenciesChecker
+> Task :innertube:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :innertube:extractAndroidInnerTube UP-TO-DATE
+> Task :innertube:compileKotlinDesktop UP-TO-DATE
+> Task :innertube:compileDesktopMainJava NO-SOURCE
+> Task :innertube:desktopProcessResources NO-SOURCE
+> Task :innertube:processDesktopMainResources SKIPPED
+> Task :innertube:desktopMainClasses UP-TO-DATE
+> Task :innertube:desktopJar UP-TO-DATE
+> Task :shared:kmpPartiallyResolvedDependenciesChecker
+> Task :shared:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :shared:convertXmlValueResourcesForCommonMain NO-SOURCE
+> Task :shared:copyNonXmlValueResourcesForCommonMain NO-SOURCE
+> Task :shared:prepareComposeResourcesTaskForCommonMain NO-SOURCE
+> Task :shared:generateResourceAccessorsForCommonMain SKIPPED
+> Task :shared:convertXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :shared:copyNonXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :shared:prepareComposeResourcesTaskForDesktopMain NO-SOURCE
+> Task :shared:generateResourceAccessorsForDesktopMain SKIPPED
+> Task :shared:generateActualResourceCollectorsForDesktopMain SKIPPED
+> Task :shared:generateComposeResClass SKIPPED
+> Task :shared:generateExpectResourceCollectorsForCommonMain SKIPPED
+> Task :shared:compileKotlinDesktop UP-TO-DATE
+> Task :shared:compileDesktopMainJava NO-SOURCE
+> Task :shared:assembleDesktopMainResources UP-TO-DATE
+> Task :shared:desktopProcessResources UP-TO-DATE
+> Task :shared:processDesktopMainResources SKIPPED
+> Task :shared:desktopMainClasses UP-TO-DATE
+> Task :shared:desktopJar UP-TO-DATE
+> Task :desktop:compileKotlinDesktop UP-TO-DATE
+> Task :desktop:compileDesktopMainJava NO-SOURCE
+> Task :desktop:assembleDesktopMainResources UP-TO-DATE
+> Task :desktop:desktopProcessResources UP-TO-DATE
+> Task :desktop:processDesktopMainResources SKIPPED
+> Task :desktop:desktopMainClasses UP-TO-DATE
+
+> Task :desktop:captureUi
+SLF4J(W): No SLF4J providers were found.
+SLF4J(W): Defaulting to no-operation (NOP) logger implementation
+SLF4J(W): See https://www.slf4j.org/codes.html#noProviders for further details.
+Captured 00-settings: 427x924 density=1.0
+Verified 00-settings: absent:onboarding-legal
+Verified 00-settings: absent:remote-consent
+Captured 01-search-frame-0: 427x924 density=1.0
+Captured 01-search-frame-160: 427x924 density=1.0
+Captured 01-search-frame-400: 427x924 density=1.0
+Captured 01-search: 427x924 density=1.0
+Captured 02-open-frame-0: 427x924 density=1.0
+Captured 02-open-frame-160: 427x924 density=1.0
+Captured 02-open-frame-400: 427x924 density=1.0
+Captured 02-open: 427x924 density=1.0
+Verified open: tag:settings-privacy
+Verified open: personalization:false
+Captured 03-algorithm-frame-0: 427x924 density=1.0
+Captured 03-algorithm-frame-160: 427x924 density=1.0
+Captured 03-algorithm-frame-400: 427x924 density=1.0
+Captured 03-algorithm: 427x924 density=1.0
+Verified algorithm: checked:privacy-algorithm
+Verified algorithm: algorithm:true
+Captured 04-policy-frame-0: 427x924 density=1.0
+Captured 04-policy-frame-160: 427x924 density=1.0
+Captured 04-policy-frame-400: 427x924 density=1.0
+Captured 04-policy: 427x924 density=1.0
+Verified policy: tag:privacy-policy
+Verified policy: state:privacy-policy-agree:waiting
+Captured 05-early-frame-0: 427x924 density=1.0
+Captured 05-early-frame-160: 427x924 density=1.0
+Captured 05-early-frame-400: 427x924 density=1.0
+Captured 05-early: 427x924 density=1.0
+Verified early: personalization:false
+Verified early: tag:privacy-policy
+Captured 06-ready-frame-0: 427x924 density=1.0
+Captured 06-ready-frame-160: 427x924 density=1.0
+Captured 06-ready-frame-400: 427x924 density=1.0
+Captured 06-ready: 427x924 density=1.0
+Verified ready: state:privacy-policy-agree:ready
+Captured 07-agree-frame-0: 427x924 density=1.0
+Captured 07-agree-frame-160: 427x924 density=1.0
+Captured 07-agree-frame-400: 427x924 density=1.0
+Captured 07-agree: 427x924 density=1.0
+Verified agree: personalization:true
+Verified agree: absent:privacy-policy
+Verified agree: state:privacy-content:consented
+Captured 08-withdraw-frame-0: 427x924 density=1.0
+Captured 08-withdraw-frame-160: 427x924 density=1.0
+Captured 08-withdraw-frame-400: 427x924 density=1.0
+Captured 08-withdraw: 427x924 density=1.0
+Verified withdraw: personalization:false
+Verified withdraw: state:privacy-content:not-consented
+Captured 09-clear-frame-0: 427x924 density=1.0
+Captured 09-clear-frame-160: 427x924 density=1.0
+Captured 09-clear-frame-400: 427x924 density=1.0
+Captured 09-clear: 427x924 density=1.0
+Verified clear: tag:privacy-clear-dialog
+Captured 10-cancel-frame-0: 427x924 density=1.0
+Captured 10-cancel-frame-160: 427x924 density=1.0
+Captured 10-cancel-frame-400: 427x924 density=1.0
+Captured 10-cancel: 427x924 density=1.0
+Verified cancel: absent:privacy-clear-dialog
+Captured 11-clear-again-frame-0: 427x924 density=1.0
+Captured 11-clear-again-frame-160: 427x924 density=1.0
+Captured 11-clear-again-frame-400: 427x924 density=1.0
+Captured 11-clear-again: 427x924 density=1.0
+Captured 12-confirm-frame-0: 427x924 density=1.0
+Captured 12-confirm-frame-160: 427x924 density=1.0
+Captured 12-confirm-frame-400: 427x924 density=1.0
+Captured 12-confirm: 427x924 density=1.0
+Verified confirm: personalization:false
+Verified confirm: absent:privacy-clear-dialog
+Captured 13-back-frame-0: 427x924 density=1.0
+Captured 13-back-frame-160: 427x924 density=1.0
+Captured 13-back-frame-400: 427x924 density=1.0
+Captured 13-back: 427x924 density=1.0
+Verified back: tag:settings-root
+
+BUILD SUCCESSFUL in 32s
+14 actionable tasks: 4 executed, 10 up-to-date
+Consider enabling configuration cache to speed up this build: https://docs.gradle.org/9.5.1/userguide/configuration_cache_enabling.html

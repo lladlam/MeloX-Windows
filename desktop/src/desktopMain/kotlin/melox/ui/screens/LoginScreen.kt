@@ -306,7 +306,7 @@ private fun LoginDialog(
         },
         text = {
             Column(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth().testTag("account-form-${provider.id}"),
                 verticalArrangement = Arrangement.spacedBy(12.dp),
             ) {
                 when (provider.id) {
@@ -1329,13 +1329,14 @@ private fun LoginButton(
 // ── Main LoginScreen composable ──
 
 @Composable
-fun LoginScreen(navState: MeloXNavState) {
-    val state = remember { LoginScreenState() }
+fun LoginScreen(navState: MeloXNavState, initialProviderId: String? = null) {
+    val state = remember { LoginScreenState().apply { dialogTarget = allProviders.firstOrNull { it.id == initialProviderId } } }
 
     Column(
         modifier = Modifier
-            .fillMaxSize()
-            .background(MeloXColors.pageBackground()),
+             .fillMaxSize()
+             .testTag("account-screen")
+             .background(MeloXColors.pageBackground()),
     ) {
         LoginTopBar(onBack = { navState.goBack() })
 

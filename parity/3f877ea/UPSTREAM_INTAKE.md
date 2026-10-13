@@ -33,3 +33,13 @@ The subsequent 2026-10-12 fetch resolves `origin/main` to **`f14a1c1f5400664d075
 | Version/schema | Android `versionCode = 23`, `versionName = 0.6.5`; new optional scripts/colors/rules/patch descriptors. | Windows compatibility remains pinned **20**, not automatically 23. The old evidence/matrix remains locked to `3f877ea`. |
 
 This intake records source changes only. It does not upgrade any UI, AutoSync, hot-update or updater acceptance conclusion.
+# Closing intake after Settings/legal (2026-10-13)
+
+Fetched `5b52a92022a5943e238ffc5d3121c536b2f29e5c`, **5 further commits / 24 changed files with rename detection** after `f14a1c1` (**17 commits total after pinned**). Pure export: `/tmp/opencode/melox-android-5b52a92/`; raw no-rename inventory (27 entries), commit list and hashes: `evidence/upstream-intake-5b52a92.json`.
+
+Reviewed incremental groups, all **INTAKE ONLY / NOT MIGRATED**:
+
+- Resource-backed UI strings restored across Settings, search, Library/discovery and Spotify; translations moved from `src/main/res` to the explicitly included `android/app/i18n` resource directory. Translation contribution documentation, revised Simplified/Traditional Chinese/Japanese and a Turkish draft are new source deltas. The current Windows pinned-default English Settings extraction is not labelled this locale implementation.
+- Podcast screens adopt localized resources. This does not establish desktop podcast functionality/layout parity.
+- New `lyric_language` preference (`system`, Chinese scripts or language tags) propagates through actual AMLL/provider/binding consumers. TTML main, inline and accompaniment translations prefer exact/base language, then non-Chinese and finally first available, retaining Chinese script conversion. New source parser/preference tests require an independent migration; they are not Windows test results.
+- Local agent notes are removed/ignored. No pinned baseline, provider identity, signed-policy compatibility value or acceptance status is upgraded.

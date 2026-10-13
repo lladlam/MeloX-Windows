@@ -8,10 +8,18 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import melox.platform.clearDesktopCookieJar
 import melox.network.NeteaseSearchClient
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 @Stable
 class NeteaseSessionStore(
     private val cookieProvider: () -> String = { "" },
+    private val accountLoader: suspend (String) -> NeteaseAccountProfile = { header -> NeteaseSearchClient(cookieProvider = { header }).accountProfile() },
 ) {
     private val preferences = encryptedPreferences(PREFERENCES_NAME)
 
@@ -38,17 +46,21 @@ class NeteaseSessionStore(
 
         isRefreshing = true
         errorMessage = null
-        return runCatching {
-            val account = NeteaseSearchClient(cookieProvider = { normalized }).accountProfile()
+        val requestedRevision = mutableRevision.value
+        return try { runCatching {
+            val account = withContext(Dispatchers.IO) { accountLoader(normalized) }
+            if (mutableRevision.value != requestedRevision) throw CancellationException("Account changed during login")
             if (persist) {
                 preferences.putString(KEY_COOKIE, normalized)
                 cookie = normalized
                 profile = account
+                mutableRevision.value++
             }
             account
         }.onFailure { error ->
+            if (error is CancellationException) throw error
             errorMessage = error.message ?: "网易云账号验证失败"
-        }.also {
+        } } finally {
             isRefreshing = false
         }
     }
@@ -63,14 +75,25 @@ class NeteaseSessionStore(
 
         isRefreshing = true
         errorMessage = null
-        runCatching {
-            NeteaseSearchClient(cookieProvider = { cookie }).accountProfile()
+        val requestedCookie = cookie
+        val requestedRevision = mutableRevision.value
+        try { runCatching {
+            withContext(Dispatchers.IO) { accountLoader(requestedCookie) }
         }.onSuccess { account ->
-            profile = account
+            if (mutableRevision.value == requestedRevision && cookie == requestedCookie) profile = account
         }.onFailure { error ->
-            errorMessage = error.message ?: "账号信息读取失败"
+            if (error is CancellationException) throw error
+            if (mutableRevision.value == requestedRevision && cookie == requestedCookie) errorMessage = error.message ?: "账号信息读取失败"
         }
-        isRefreshing = false
+        } finally { isRefreshing = false }
+    }
+
+    fun reloadFromStorage() {
+        val stored = readCookie()
+        if (stored == cookie) return
+        cookie = stored
+        profile = null
+        errorMessage = null
     }
 
     fun clear() {
@@ -79,9 +102,12 @@ class NeteaseSessionStore(
         profile = null
         errorMessage = null
         clearDesktopCookieJar()
+        mutableRevision.value++
     }
 
     companion object {
+        private val mutableRevision = MutableStateFlow(0L)
+        val revision = mutableRevision.asStateFlow()
         private const val PREFERENCES_NAME = "netease_session"
         private const val KEY_COOKIE = "cookie_header"
 
@@ -133,4 +159,7 @@ class NeteaseSessionStore(
 
 @Composable
 fun rememberNeteaseSessionStore(): NeteaseSessionStore =
-    remember { NeteaseSessionStore() }
+    remember { NeteaseSessionStore() }.also { store ->
+        val revision by NeteaseSessionStore.revision.collectAsState()
+        LaunchedEffect(revision) { store.reloadFromStorage() }
+    }

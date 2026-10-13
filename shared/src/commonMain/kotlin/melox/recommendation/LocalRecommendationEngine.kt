@@ -10,12 +10,23 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kotlinx.coroutines.joinAll
+import kotlinx.coroutines.ensureActive
+import kotlinx.coroutines.currentCoroutineContext
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.NonCancellable
 import kotlin.math.exp
 import kotlin.math.sqrt
 
 object LocalRecommendationEngine {
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default.limitedParallelism(1))
     private var job: Job? = null
+    private val runningJobs = mutableSetOf<Job>()
+
+    private fun track(running: Job) {
+        synchronized(runningJobs) { runningJobs += running }
+        running.invokeOnCompletion { synchronized(runningJobs) { runningJobs -= running } }
+    }
 
     fun start() {
         if (!LocalRecommendationStore.isAlgorithmEnabled()) return
@@ -29,6 +40,7 @@ object LocalRecommendationEngine {
             }
             LocalRecommendationStore.progress.value = LocalAnalysisProgress(LocalAnalysisStage.QuickScoring, features.size, features.size, message = "快速更新完成；请运行后台全量分析生成新推荐")
         }
+        track(checkNotNull(job))
     }
 
     fun startFullAnalysis() {
@@ -40,11 +52,12 @@ object LocalRecommendationEngine {
             val trainingTracks = runCatching {
                 val registry = MeloXMusicProviders.create()
                 UnifiedMusicService(registry).collectAggregationTracks(MusicSource.entries.toSet(), pageSizePerProvider = 100).tracks
-            }.getOrDefault(emptyList())
+            }.onFailure { if (it is CancellationException) throw it }.getOrDefault(emptyList())
             val candidateTracks = runCatching {
                 val registry = MeloXMusicProviders.create()
                 UnifiedMusicService(registry).collectRecommendationCandidates(MusicSource.entries.toSet(), limitPerProvider = 30)
-            }.getOrDefault(emptyList())
+            }.onFailure { if (it is CancellationException) throw it }.getOrDefault(emptyList())
+            currentCoroutineContext().ensureActive()
             LocalRecommendationStore.progress.value = LocalAnalysisProgress(LocalAnalysisStage.Syncing, trainingTracks.size, trainingTracks.size + candidateTracks.size, message = "已采集 ${trainingTracks.size} 个训练来源和 ${candidateTracks.size} 个候选来源", isFullAnalysis = true)
             val trainingGroups = TrackAggregation.aggregate(trainingTracks)
             val candidateGroups = TrackAggregation.aggregate(candidateTracks)
@@ -128,9 +141,27 @@ object LocalRecommendationEngine {
                 isFullAnalysis = true,
             )
         }
+        track(checkNotNull(job))
     }
 
-    fun stop() { job?.cancel(); job = null }
+    fun stop() {
+        synchronized(runningJobs) { runningJobs.toList() }.forEach { it.cancel() }
+        job = null
+    }
+
+    suspend fun stopAndJoin() {
+        val running = synchronized(runningJobs) { runningJobs.toList() }
+        job = null
+        running.forEach { it.cancel() }
+        running.joinAll()
+    }
+
+    /** A confirmed withdrawal/erase finishes even if its settings page closes. */
+    suspend fun revokePersonalizationAndClear() = withContext(NonCancellable) {
+        LocalRecommendationStore.setPersonalizationConsent(false)
+        stopAndJoin()
+        LocalRecommendationStore.clearPersonalization()
+    }
 
     private fun ruleScore(item: LocalTrackFeatures): Float {
         val recencyDays = ((System.currentTimeMillis() - item.lastPlayedAtMs).coerceAtLeast(0L) / 86_400_000L).toFloat()

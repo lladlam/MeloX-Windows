@@ -1,0 +1,161 @@
+{
+  "pinned_acceptance": "3f877eaffe30c82eb6d24eb3647702f5bc554dd3",
+  "previous_upstream": "f14a1c1f5400664d07575a113469f41ee3b70572",
+  "fetched_upstream": "5b52a92022a5943e238ffc5d3121c536b2f29e5c",
+  "new_commits": [
+    "5b52a92022a5943e238ffc5d3121c536b2f29e5c chore: keep local agent notes out of the repository",
+    "ee80b91e3c687886678078cdaa6282bee4d92c36 feat(i18n): lyric language setting and a Turkish draft",
+    "f37300b0ff43ea67d9e6142ce2c768571e9f9ac1 feat(lyrics): pick the translation track by system language",
+    "b0b61dea6dad44a65a92e330d1a976688f1e6744 feat(i18n): localize the podcast screens",
+    "8af2f5dcc3c74a7caa5db7a82f1424e4b191f07f feat(i18n): restore resource-based strings and add a translation folder"
+  ],
+  "commits_since_pinned": 17,
+  "summary": " AGENT.md                                           |  115 -\n CHANGELOG.md                                       |   14 +-\n android/app/build.gradle.kts                       |    4 +\n android/app/i18n/README.md                         |   36 +\n .../{src/main/res => i18n}/values-ja/strings.xml   |   46 +-\n android/app/i18n/values-tr/strings.xml             |  253 +++\n .../main/res => i18n}/values-zh-rCN/strings.xml    | 1013 +++++----\n .../main/res => i18n}/values-zh-rTW/strings.xml    | 2363 +++++++++++---------\n .../melox/core/lyrics/AmlldbLyricsClient.kt        |   12 +-\n .../lladlam/melox/core/lyrics/MeloXLyricScript.kt  |   40 +\n .../lladlam/melox/core/lyrics/TtmlLyricsParser.kt  |   73 +-\n .../lladlam/melox/ui/account/SpotifyLoginScreen.kt |   31 +-\n .../melox/ui/discovery/MeloXDiscoveryScreens.kt    |   56 +-\n .../com/lladlam/melox/ui/library/LibraryScreen.kt  |   74 +-\n .../melox/ui/player/MeloXProviderLyricsLoader.kt   |   14 +-\n .../melox/ui/podcast/MeloXPodcastScreens.kt        |   31 +-\n .../com/lladlam/melox/ui/search/SearchScreen.kt    |   34 +-\n .../melox/ui/settings/MeloXSettingsPreferences.kt  |    5 +\n .../lladlam/melox/ui/settings/SettingsScreen.kt    |  809 +++----\n android/app/src/main/res/values/strings.xml        |  824 +++----\n android/app/src/main/res/xml/locales_config.xml    |    1 +\n .../melox/core/lyrics/MeloXLyricPreferenceTest.kt  |   45 +\n .../melox/core/lyrics/TtmlLyricsParserTest.kt      |   43 +\n .../melox/ui/MeloXMeiScreenMigrationTest.kt        |    8 +-\n 24 files changed, 3390 insertions(+), 2554 deletions(-)\n",
+  "changed_files_no_rename": [
+    {
+      "status": "D",
+      "path": "AGENT.md",
+      "pure_export_sha256": null
+    },
+    {
+      "status": "M",
+      "path": "CHANGELOG.md",
+      "pure_export_sha256": "9ff79f269994adf81cdb08c968d0fca1a726edade6d9d31b0838f0f09f498be0"
+    },
+    {
+      "status": "M",
+      "path": "android/app/build.gradle.kts",
+      "pure_export_sha256": "474fa1443f71699329d4692a747b7cc03d45725a97ecb2d8251665a877fa4761"
+    },
+    {
+      "status": "A",
+      "path": "android/app/i18n/README.md",
+      "pure_export_sha256": "759d37781d118569bd4d0030a316c520ce78d277c9a1d25c665ecff17b73327e"
+    },
+    {
+      "status": "A",
+      "path": "android/app/i18n/values-ja/strings.xml",
+      "pure_export_sha256": "961e610b89e196d9ad7267e1b823c713684d1621732ecd96ac7b23749f2d524b"
+    },
+    {
+      "status": "A",
+      "path": "android/app/i18n/values-tr/strings.xml",
+      "pure_export_sha256": "bd8001c5c4697fb9e4711559104649445d2790364a4efb89c832267a723528e8"
+    },
+    {
+      "status": "A",
+      "path": "android/app/i18n/values-zh-rCN/strings.xml",
+      "pure_export_sha256": "3528ef3be658585fd363038cf7bc23816e7bc061c826eb3bcaddc38e990ec5fe"
+    },
+    {
+      "status": "A",
+      "path": "android/app/i18n/values-zh-rTW/strings.xml",
+      "pure_export_sha256": "e84ca3b913d3f288be5e43448cd910a246142cfca3c2a1cfdbdf7c173122805c"
+    },
+    {
+      "status": "M",
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/core/lyrics/AmlldbLyricsClient.kt",
+      "pure_export_sha256": "4a4975ce710693a648efc88ae57a8a1956c8dc76f65123b861c771b8ad5ca991"
+    },
+    {
+      "status": "M",
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/core/lyrics/MeloXLyricScript.kt",
+      "pure_export_sha256": "28df02b34bb8eaaf7f77929261e65eca924c5c873497d2a0529015cb31c70a5d"
+    },
+    {
+      "status": "M",
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/core/lyrics/TtmlLyricsParser.kt",
+      "pure_export_sha256": "23bc68c1845fe6fd8194ac1e3cc506bf96a9b4922488608d48de4352372ce3e3"
+    },
+    {
+      "status": "M",
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/account/SpotifyLoginScreen.kt",
+      "pure_export_sha256": "c440b3d616a0d62f3ecc000c799160a3cfd2912efda1ebc6e34ee1dad9b06c6b"
+    },
+    {
+      "status": "M",
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/discovery/MeloXDiscoveryScreens.kt",
+      "pure_export_sha256": "4374147a67c2bcaef9d77064ad97022edc4fd8ac791bde471c22b8e4a44cce4d"
+    },
+    {
+      "status": "M",
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/library/LibraryScreen.kt",
+      "pure_export_sha256": "5ab4bda42b11596c7b01df976ff461ff1206e2dd6a693733a1314f1685f38f08"
+    },
+    {
+      "status": "M",
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXProviderLyricsLoader.kt",
+      "pure_export_sha256": "0b2917077e9f0b33b6cbc0f338146d7ce72d56b1f16fbbcb72a3a5e469068494"
+    },
+    {
+      "status": "M",
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/podcast/MeloXPodcastScreens.kt",
+      "pure_export_sha256": "77870384ee5c7b6e5ca2a57287501cce950c23a3b866b382b54a0e9af174ae92"
+    },
+    {
+      "status": "M",
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/search/SearchScreen.kt",
+      "pure_export_sha256": "8875fc6197f5891f761223e6c96b9f90d0a07d90fa313c18ea634f17ea04cb8d"
+    },
+    {
+      "status": "M",
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/settings/MeloXSettingsPreferences.kt",
+      "pure_export_sha256": "6e3e24bde40e6c419203e9f5378800d5a440cfd616c96258da2b277f47e00977"
+    },
+    {
+      "status": "M",
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/settings/SettingsScreen.kt",
+      "pure_export_sha256": "fc451b426734704b68364f2cce15be4da54ba071fbcb4af7306d71847e3b8f3f"
+    },
+    {
+      "status": "D",
+      "path": "android/app/src/main/res/values-ja/strings.xml",
+      "pure_export_sha256": null
+    },
+    {
+      "status": "D",
+      "path": "android/app/src/main/res/values-zh-rCN/strings.xml",
+      "pure_export_sha256": null
+    },
+    {
+      "status": "D",
+      "path": "android/app/src/main/res/values-zh-rTW/strings.xml",
+      "pure_export_sha256": null
+    },
+    {
+      "status": "M",
+      "path": "android/app/src/main/res/values/strings.xml",
+      "pure_export_sha256": "f88d232dccffb201080039d6fa580c8aa19976a916bfd9df3b9869e5c2d45f7e"
+    },
+    {
+      "status": "M",
+      "path": "android/app/src/main/res/xml/locales_config.xml",
+      "pure_export_sha256": "678a759038d66d5642f7dea61f6d240d6ea3c09ab51de3015147fd6cb50bd917"
+    },
+    {
+      "status": "A",
+      "path": "android/app/src/test/kotlin/com/lladlam/melox/core/lyrics/MeloXLyricPreferenceTest.kt",
+      "pure_export_sha256": "cee40c08976c2559026e2af89da4b057c04f929824ee986f5fcddd878d219ef1"
+    },
+    {
+      "status": "M",
+      "path": "android/app/src/test/kotlin/com/lladlam/melox/core/lyrics/TtmlLyricsParserTest.kt",
+      "pure_export_sha256": "dafa220454fa06204905672379b3413a861a0f4147694d35952ababf17d9a77b"
+    },
+    {
+      "status": "M",
+      "path": "android/app/src/test/kotlin/com/lladlam/melox/ui/MeloXMeiScreenMigrationTest.kt",
+      "pure_export_sha256": "024f21e7e0d6ec34e8f8ac6d894b669543c7ed099073b3ddbf24beea55e3533a"
+    }
+  ],
+  "pure_export": "/tmp/opencode/melox-android-5b52a92",
+  "archive_sha256": "d71e9dd2bd70428657e12fa711f9ae7cd300220e7458bc083c01584dbea7e8a2",
+  "status": "INTAKE_ONLY_NOT_MIGRATED",
+  "reviewed": [
+    "Resource-based default Settings/search/library/discovery/account strings; translated res relocated to configured i18n resource source set",
+    "Podcast localization and translation contribution folder; Traditional/Simplified Chinese/Japanese migration and Turkish draft",
+    "System or explicit lyric_language selection; TTML inline/main/accompaniment exact language then non-Chinese/first fallback; Chinese script conversion retained",
+    "AMLL/provider/binding consumers propagate the selected preference; new parser/preference source tests are intake only",
+    "Local AGENT.md removed and ignored; no acceptance version change inferred"
+  ]
+}

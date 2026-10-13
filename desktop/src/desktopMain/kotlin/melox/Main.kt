@@ -58,7 +58,7 @@ fun main() {
                     exitApplication()
                 },
             ) {
-                MeloXApp()
+                MeloXApp(onExit = ::exitApplication)
             }
         }
     } catch (e: Exception) {

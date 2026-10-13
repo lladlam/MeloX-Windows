@@ -113,7 +113,7 @@ fun LibraryScreen(
     navState: MeloXNavState? = null,
 ) {
     val scope = rememberCoroutineScope()
-    val session = remember { NeteaseSessionStore() }
+    val session = melox.account.rememberNeteaseSessionStore()
     val source = MusicProviderSelectionStore.selectedSource()
     val client = remember {
         NeteaseLibraryClient(cookieProvider = { NeteaseSessionStore.readCookie() })
@@ -149,12 +149,24 @@ fun LibraryScreen(
                 loading = false
                 return
             }
-            runCatching { client.snapshot(userId) }
+            val requestedCookie = session.cookie
+            val requestedRevision = NeteaseSessionStore.revision.value
+            runCatching {
+                withContext(Dispatchers.IO) {
+                    NeteaseLibraryClient(cookieProvider = { requestedCookie }).snapshot(userId)
+                }
+            }
                 .onSuccess {
+                    if (requestedRevision != NeteaseSessionStore.revision.value || session.cookie != requestedCookie) {
+                        throw kotlinx.coroutines.CancellationException("NetEase account changed during library refresh")
+                    }
                     snapshot = it
                     cache.saveSnapshot(userId, it)
                 }
-                .onFailure { errorMessage = it.message ?: "音乐库加载失败" }
+                .onFailure {
+                    if (it is kotlinx.coroutines.CancellationException) throw it
+                    errorMessage = it.message ?: "音乐库加载失败"
+                }
         } else if (source == MusicSource.Local) {
             runCatching {
                 withContext(Dispatchers.IO) {

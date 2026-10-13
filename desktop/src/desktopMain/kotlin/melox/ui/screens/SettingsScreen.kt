@@ -39,7 +39,6 @@ import melox.audio.MusicQualityPreferences
 import melox.download.MeloXDownloadStore
 import melox.music.model.MusicSource
 import melox.network.MeloXHttpClient
-import melox.network.NeteaseSearchClient
 import melox.platform.meloXCacheDir
 import melox.platform.meloXDataDir
 import melox.playback.MeloXMediaCache
@@ -62,25 +61,36 @@ import melox.ui.glass.MeloXGlassTextField
 import melox.ui.glass.MeloXSettingsDropdown
 import melox.ui.glass.LocalSettingsGroupRowIndex
 import melox.ui.theme.MeloXColors
+import melox.ui.legal.pinnedString
+import melox.account.rememberNeteaseSessionStore
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.ui.draw.clip
+import androidx.compose.material3.CircularProgressIndicator
 
-private enum class SettingsRoute(val title: String, val subtitle: String, val symbol: MeloXSymbol) {
-    General("通用", "主题、启动行为与链接处理", MeloXSymbol.Settings),
-    Appearance("外观", "背景、封面动画与屏幕常亮", MeloXSymbol.Sparkles),
-    Content("内容", "地区、歌单信息和发现内容", MeloXSymbol.Grid),
-    TabLayout("页面与标签栏", "首页、标签栏与音乐库页面", MeloXSymbol.Grid),
-    Playback("播放", "音质、播放行为与自动混音", MeloXSymbol.MusicNote),
-    Lyrics("歌词", "翻译、罗马音、逐字与歌词交互", MeloXSymbol.Lyrics),
-    Storage("存储管理", "空间统计、下载与缓存清理", MeloXSymbol.Drive),
-    Features("功能模块", "播客、云盘、最近播放等模块", MeloXSymbol.ListBullet),
-    Messages("私信与站内分享", "联系人、会话历史与文字私信", MeloXSymbol.Message),
-    RemoteConfig("远程兼容性配置", "签名配置状态、平台熔断声明与本地缓存", MeloXSymbol.Cloud),
-    About("关于 MeloX", "版本、项目主页与开源信息", MeloXSymbol.Info),
+private enum class SettingsRoute(val resourceKey: String, val symbol: String) {
+    General("general", "⚙"),
+    Appearance("appearance", "✦"),
+    Content("content", "▦"),
+    TabLayout("tabs", "▥"),
+    Playback("playback", "♫"),
+    Lyrics("lyrics", "❞"),
+    Storage("storage", "▰"),
+    Features("features", "☷"),
+    Messages("messages", "✉"),
+    RemoteConfig("remote_config", "⌁"),
+    About("about", "ⓘ"),
+    Legal("legal", "▤"),
+    Privacy("privacy", "⌘"),
+    ;
+    val title: String get() = pinnedString("settings_route_$resourceKey")
+    val subtitle: String get() = pinnedString(if (this == Privacy) "settings_privacy_personalization" else "settings_sub_$resourceKey")
+    val keywords: String get() = pinnedString(if (this == Privacy) "settings_privacy_algorithm" else "settings_kw_$resourceKey")
 }
 
 private val SettingsSections = listOf(
-    "应用" to listOf(SettingsRoute.General, SettingsRoute.Appearance, SettingsRoute.Content, SettingsRoute.TabLayout, SettingsRoute.Playback, SettingsRoute.Lyrics, SettingsRoute.Storage),
-    "扩展" to listOf(SettingsRoute.Features, SettingsRoute.Messages),
-    "关于" to listOf(SettingsRoute.RemoteConfig, SettingsRoute.About),
+    "settings_section_app" to listOf(SettingsRoute.General, SettingsRoute.Appearance, SettingsRoute.Content, SettingsRoute.Playback, SettingsRoute.Lyrics, SettingsRoute.Storage),
+    "settings_section_more" to listOf(SettingsRoute.Features, SettingsRoute.Messages, SettingsRoute.TabLayout),
+    "settings_section_about" to listOf(SettingsRoute.RemoteConfig, SettingsRoute.About, SettingsRoute.Legal, SettingsRoute.Privacy),
 )
 
 @Composable
@@ -94,6 +104,8 @@ fun SettingsScreen(
     onOpenLogin: () -> Unit = {},
 ) {
     var route by remember { mutableStateOf<SettingsRoute?>(null) }
+    val session = rememberNeteaseSessionStore()
+    LaunchedEffect(session.cookie) { if (session.isLoggedIn) session.refreshProfile() }
     LaunchedEffect(routeRequest) {
         if (routeRequest == null) return@LaunchedEffect
         route = SettingsRoute.entries.firstOrNull { it.name == routeRequest }
@@ -105,40 +117,40 @@ fun SettingsScreen(
     if (route != null) detailRoute = route
     MeloXBackHandler(enabled = route != null) { route = null }
     Box(Modifier.fillMaxSize()) {
-    val normalized = search.trim()
+    val normalized = search.trim().lowercase()
+    val visibleSections = SettingsSections.mapNotNull { (title, items) ->
+        items.filter { normalized.isBlank() || "${it.title} ${it.subtitle} ${it.keywords}".lowercase().contains(normalized) }
+            .takeIf { it.isNotEmpty() }?.let { title to it }
+    }
     Column(
-        Modifier.fillMaxSize().background(MeloXColors.pageBackground()).verticalScroll(scroll)
-            .padding(horizontal = 20.dp).padding(top = 18.dp, bottom = 140.dp)
+        Modifier.fillMaxSize().testTag("settings-root").background(MeloXColors.pageBackground()).verticalScroll(scroll)
+             .padding(horizontal = 20.dp).padding(top = 18.dp, bottom = MeloXBottomContentClearanceDp)
             .then(if (route != null) Modifier.clearAndSetSemantics { } else Modifier),
     ) {
-        MeloXIosTopBar(title = "设置", contentPadding = PaddingValues(0.dp))
+        MeloXIosTopBar(title = pinnedString("tab_settings"), contentPadding = PaddingValues(0.dp))
         Spacer(Modifier.height(14.dp))
         MeloXGlassTextField(
             value = search,
             onValueChange = { search = it },
             modifier = Modifier.fillMaxWidth().testTag("settings-search"),
             leadingContent = { MeloXSymbolIcon(MeloXSymbol.Search, size = 20, iconSize = 24, color = MaterialTheme.colorScheme.onSurface.copy(alpha = .55f)) },
-            placeholder = { Text("搜索设置", color = MaterialTheme.colorScheme.onSurface.copy(alpha = .42f), fontSize = 16.sp) },
+             placeholder = { Text(pinnedString("settings_search_placeholder"), color = MaterialTheme.colorScheme.onSurface.copy(alpha = .42f), fontSize = 16.sp) },
             textStyle = androidx.compose.ui.text.TextStyle(color = MaterialTheme.colorScheme.onSurface, fontSize = 16.sp, lineHeight = 21.sp),
         )
         Spacer(Modifier.height(20.dp))
-        if (normalized.isBlank() || "账号 登录 网易云 服务 音乐源".contains(normalized)) {
-            SettingsAccountCard(onOpenLogin = onOpenLogin, onOpenServices = onOpenServices)
+        if (normalized.isBlank() || pinnedString("settings_account_keywords").lowercase().contains(normalized)) {
+            SettingsAccountCard(session, onOpenLogin = onOpenLogin, onOpenServices = onOpenServices)
             Spacer(Modifier.height(24.dp))
         }
-        SettingsSections.forEach { (title, items) ->
-            val visible = items.filter { item ->
-                normalized.isBlank() || item.title.contains(normalized) || item.subtitle.contains(normalized)
-            }
-            if (visible.isEmpty()) return@forEach
-            Text(title, Modifier.padding(start = 8.dp, bottom = 8.dp, top = 8.dp), color = MeloXColors.pageOnBackground().copy(alpha = 0.48f), fontSize = 13.sp, fontWeight = FontWeight.Medium)
-            MeloXIosGroupedList {
-            visible.forEachIndexed { index, item ->
+        visibleSections.forEach { (title, items) ->
+            Text(pinnedString(title), Modifier.padding(start = 8.dp, bottom = 8.dp, top = 8.dp), color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.48f), fontSize = 13.sp, fontWeight = FontWeight.Medium)
+            MeloXIosGroupedList(surfaceColor = MaterialTheme.colorScheme.surface) {
+            items.forEachIndexed { index, item ->
                 MeloXIosListRow(
                     modifier = Modifier.testTag("settings-open-${item.name.lowercase()}"),
                     title = item.title,
                     leading = { Box(Modifier.size(28.dp), contentAlignment = Alignment.Center) {
-                        MeloXSymbolIcon(item.symbol, size = 22, iconSize = 24, color = melox.ui.glass.MeloXSystemColors.Red)
+                        MeloXActionIcon(item.symbol, Modifier.size(22.dp), melox.ui.glass.MeloXSystemColors.Red)
                     } },
                     showTopSeparator = index > 0,
                     onClick = {
@@ -151,6 +163,19 @@ fun SettingsScreen(
             }
             }
             Spacer(Modifier.height(22.dp))
+        }
+        if (visibleSections.isEmpty() && normalized.isNotBlank()) {
+            Text(pinnedString("settings_search_empty"), Modifier.padding(vertical = 36.dp).testTag("settings-search-empty"),
+                color = MaterialTheme.colorScheme.onBackground.copy(alpha = .48f))
+        }
+        if (normalized.isBlank()) {
+            SettingsDangerButton(pinnedString("settings_reset_player"), Modifier.testTag("settings-reset")) {
+                MeloXSettingsPreferences.reset()
+                melox.playback.MeloXPlaybackModePreferences.reset()
+                PlaybackCommands.changeQuality(MusicQuality.Standard)
+            }
+            Spacer(Modifier.height(18.dp))
+            if (session.isLoggedIn) SettingsDangerButton(pinnedString("settings_sign_out"), Modifier.testTag("settings-sign-out")) { session.clear() }
         }
     }
     AnimatedVisibility(
@@ -165,30 +190,27 @@ fun SettingsScreen(
 }
 
 @Composable
-private fun SettingsAccountCard(onOpenLogin: () -> Unit, onOpenServices: () -> Unit) {
-    var nickname by remember { mutableStateOf<String?>(null) }
-    var loggedIn by remember { mutableStateOf(NeteaseSessionStore.containsMusicU(NeteaseSessionStore.readCookie())) }
-    LaunchedEffect(loggedIn) {
-        if (!loggedIn) {
-            nickname = null
-            return@LaunchedEffect
-        }
-        nickname = runCatching { NeteaseSearchClient(cookieProvider = { NeteaseSessionStore.readCookie() }).accountProfile().nickname }.getOrNull()
-    }
+private fun SettingsAccountCard(session: NeteaseSessionStore, onOpenLogin: () -> Unit, onOpenServices: () -> Unit) {
     val accent = melox.ui.glass.MeloXSystemColors.Red
-    Text("账号", Modifier.padding(start = 8.dp, bottom = 8.dp), fontSize = 13.sp,
+    Text(pinnedString("accessibility_account"), Modifier.padding(start = 8.dp, bottom = 8.dp), fontSize = 13.sp,
         color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.48f))
-    MeloXIosGroupedList {
+    MeloXIosGroupedList(surfaceColor = MaterialTheme.colorScheme.surface) {
     MeloXIosListRow(
-        title = nickname ?: if (loggedIn) "网易云账号" else "登录网易云音乐",
+        title = session.profile?.nickname ?: if (session.isLoggedIn && session.isRefreshing) pinnedString("settings_account_loading") else pinnedString("app_login_netease"),
         modifier = Modifier.testTag("settings-open-login"),
-        detail = if (loggedIn) "已登录" else null,
-        leading = { MeloXSymbolIcon(MeloXSymbol.Person, size = 30, iconSize = 24, weight = FontWeight.Medium, color = accent) },
+        detail = if (session.isLoggedIn && session.profile != null) pinnedString("provider_logged_in") else null,
+        leading = {
+            when {
+                session.profile != null -> MeloXArtworkImage(session.profile?.avatarUrl, accent, Modifier.size(30.dp).clip(CircleShape))
+                session.isLoggedIn && session.isRefreshing -> CircularProgressIndicator(Modifier.size(24.dp), strokeWidth = 2.dp, color = accent)
+                else -> MeloXSymbolIcon(MeloXSymbol.PersonFill, size = 30, iconSize = 24, weight = FontWeight.Medium, color = accent)
+            }
+        },
         onClick = onOpenLogin,
     )
     MeloXIosListRow(
-        title = "音乐服务",
-        subtitle = "切换音乐源、登录账号与聚合设置",
+        title = pinnedString("tab_services"),
+        subtitle = pinnedString("settings_services_subtitle"),
         modifier = Modifier.testTag("settings-open-services"),
         leading = { MeloXSymbolIcon(MeloXSymbol.MusicNote, size = 30, iconSize = 24, color = accent) },
         showTopSeparator = true,
@@ -205,6 +227,16 @@ private fun SettingsDetail(
     onOpenMessages: () -> Unit,
     onBack: () -> Unit,
 ) {
+    if (route == SettingsRoute.Legal || route == SettingsRoute.Privacy) {
+        melox.ui.glass.MeloXPinnedListPage(route.title, onNavigateBack = onBack,
+            bottomPadding = MeloXBottomContentClearanceDp,
+            modifier = Modifier.testTag("settings-${route.name.lowercase()}")) {
+            item {
+                if (route == SettingsRoute.Legal) LegalSettings() else PrivacySettings()
+            }
+        }
+        return
+    }
     Column(Modifier.fillMaxSize().testTag("settings-${route.name.lowercase()}")
         .background(MeloXColors.pageBackground()).padding(top = 18.dp)) {
         MeloXIosTopBar(title = route.title, onBack = onBack)
@@ -220,6 +252,8 @@ private fun SettingsDetail(
                 SettingsRoute.Features -> FeatureSettings()
                 SettingsRoute.Messages -> MessagesSettings(onOpenMessages)
                 SettingsRoute.RemoteConfig -> RemoteConfigSettings()
+                SettingsRoute.Legal -> LegalSettings()
+                SettingsRoute.Privacy -> PrivacySettings()
                 SettingsRoute.About -> AboutSettings()
             }
         }

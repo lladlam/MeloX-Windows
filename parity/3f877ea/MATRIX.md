@@ -9,6 +9,8 @@ The 2026-10-12 follow-up fetch found origin/main at `febb4c0534787e040a89df8457e
 
 Closing fetch: `f14a1c1f5400664d07575a113469f41ee3b70572`, another **3 commits / 28 files** (signed scripts, theme colors, matching rules/strategies and incremental APK update). Separately reviewed/exported in `UPSTREAM_INTAKE.md` / `evidence/upstream-intake-f14a1c1.json`; **not migrated/accepted**, compatibility stays 20.
 
+Settings/legal closing fetch: `5b52a92022a5943e238ffc5d3121c536b2f29e5c`, **5 more commits / 24 files** with rename detection, resource-backed localization/translation folder, podcast localization and explicit/system TTML translation language selection. Pure export and independent intake in `UPSTREAM_INTAKE.md` / `upstream-intake-5b52a92.json`; **17 commits after pinned, none implicitly migrated/accepted**.
+
 Historical `parity/94e17c9/` evidence is reference material, not new acceptance.
 
 | Observable behavior | Android source | Windows target / correction | Evidence / limitation | Status |
@@ -28,7 +30,8 @@ Historical `parity/94e17c9/` evidence is reference material, not new acceptance.
 | Local source playback and search preserve file identity | `core/provider/local/LocalProvider.kt`, provider resolver | Real indexed Local search and readable-file resolution; encoded track metadata/URI, no online fallback; bridge preserves collection identity | Production Local provider/controller AutoMix tests, Unicode/plus/ampersand path regression and generated-source UI replay | PARTIAL |
 | Cloud file upload, cancellation and refresh | `NeteaseUniversalSearchClient.uploadCloudSong`, `ui/cloud/MeloXCloudMusicScreen` | Actual desktop file picker and FFmpeg metadata/MD5; upload-check/token/LBS/NOS streaming PUT/info fallback/pub; request ownership, snapshot cleanup and successful refresh; embedded Library cloud actions | CLOUD_UPLOAD.md; six real-file/encrypted-HTTP protocol fixture tests. Desktop chooser/live authenticated remote upload not available in this environment | PARTIAL |
 | Settings TabLayout, persisted Library page, ordered home blocks and reachable shortcuts | `ui/settings/SettingsScreen.kt:2588–2737`, `ui/library/LibraryScreen.kt:227–241,374–389`, `MeloXDiscoveryScreens.kt:338–346` | Dedicated business-wired TabLayout route, existing keys, shared layout policy, saved source-specific Library pages, feature/placement gates and configured default; QuickActions joins saved home order; shortcuts reach enabled modules without dock placement | CONTENT_LAYOUT.md; persisted-state regression and production settings replay. Authenticated Library and pinned Android pixels remain blocked | PARTIAL |
-| Signed compatibility config, consent/withdrawal, real DoH and subsequent-request policy | `core/remoteconfig/*`, `core/network/MeloXGitHubRouting`, `MeloXApp`, `ContentSettings`, login screens and PlaybackService | Runtime lifecycle and real RemoteConfig route; fixed URLs/key, actual DNSPod DoH, cancellable/bounded HTTP and atomic cache/rollback; production login/playback/local-choice fallback gates and persisted notices; controlled-toggle confirmation fix | REMOTE_CONFIG.md; ten real P-256/HTTP/cache/cancellation/policy regressions. Windows lifecycle and pinned Android reference pixels outstanding; post-onboarding/Privacy integration remains partial | PARTIAL |
+| Signed compatibility config, consent/withdrawal, real DoH and subsequent-request policy | `core/remoteconfig/*`, `core/network/MeloXGitHubRouting`, `MeloXApp`, `ContentSettings`, login screens and PlaybackService | Runtime lifecycle and real RemoteConfig route; fixed URLs/key, actual DNSPod DoH, cancellable/bounded HTTP and atomic cache/rollback; production login/playback/local-choice fallback gates, notices and full source consent reused after onboarding and in Legal | REMOTE_CONFIG.md, SETTINGS_LEGAL.md; real P-256/HTTP/cache/cancellation/policy regressions plus genuine onboarding/reopen/UI choices. Windows lifecycle and pinned Android pixels outstanding | PARTIAL |
+| Settings root, full legal documents, onboarding and on-device privacy consent/erasure | `MeloXApp.kt:958–1008`, `ui/legal/*`, `ui/settings/SettingsScreen.kt:213–239,543–760` | Existing-key persistent ordering, actual app exit/NetEase form/cloud runtime; byte-identical documents and source-default strings; collapsing detail/fade shader with acyclic recording; ten-second consent and joined/background-safe erasure; live account revisions | SETTINGS_LEGAL.md; 151 total tests / 27 suites and 56 production scenes / 81 assertions / 150 frames, real generated dual PCM and final Linux JAR decode. Source's dormant Privacy route is explicitly made reachable; remaining root inventory/details/model/pixels are not accepted | PARTIAL |
 | Jellyfin login/session, catalogs/Library, universal playback and native playlist membership writes | `core/provider/jellyfin/*` | Actual desktop entered-server authentication, stable AES key in unchanged DPAPI store, owned/bounded HTTP, real capabilities/endpoints, native server/item/entry identities, token-free models and header-auth account-isolated artwork/playback caches; server-selected unknown quality | JELLYFIN.md; actual HTTP/protected-file/native authorized PCM and queue regressions; production missing-account/login-error replay. Live authorized server, Windows DPAPI/audio and pinned pixels outstanding | PARTIAL |
 | Windows sustained audible playback / AutoMix | Physical output requirement | `tools/windows_audio_acceptance.ps1` checks final app-image and captures explicit user observations | No Windows 10/11 device or audio hardware in this Linux session | BLOCKED |
 | Android/Windows same-content pixel and dynamic frames | All named UI pages and player scenes | Production ImageComposeScene capture retained; old reference evidence preserved | Connected Android devices = 0; missing current pinned reference frames. No new MATCH from unrelated feed SSIM | BLOCKED |
@@ -42,7 +45,7 @@ Historical `parity/94e17c9/` evidence is reference material, not new acceptance.
 4. Windows physical audible playback (currently BLOCKED).
 5. Same-content pinned Android/Windows pixels and dynamic frame acceptance (currently BLOCKED).
 
-Latest Jellyfin batch automated results: **144 tests / 24 suites / 0 failures, errors or skipped**;
+Latest Settings/legal batch automated results: **151 tests / 27 suites / 0 failures, errors or skipped**;
 desktopJar + Linux uber JAR successful. Source and final Linux uber JAR were
 verified independently (size/SHA-256/magic, native WAV/MP3/FLAC/AAC, required HTTP
 authorization headers). See `evidence/upstream-validation.json` and native
@@ -78,5 +81,10 @@ Latest verified Windows CI: exact Jellyfin commit
 **144 tests / 24 suites / zero failures, errors or skipped**, plus source/JAR/
 app-image/final ZIP native decode. See `windows-ci-337042a/run.json`.
 This is not Windows physical playback or Android pixel acceptance.
+
+Settings/legal: `SETTINGS_LEGAL.md`, `settings-validation.json`, `settings-tests/`,
+six `settings-*-ui/` replays (56 state scenes / 81 assertions / 150 frames),
+independent `settings-pcm-readback.json` and final `settings-linux-packaged-decoder.json`.
+Exact-commit Windows CI is pending this batch's upload; prior Jellyfin CI is not reused as this batch's result.
 
 Each level is reported independently. No `MATCH` entry is introduced solely by compilation, an existing file, or unit-test success.

@@ -136,6 +136,12 @@ fun main(args: Array<String>) = runBlocking {
             return when (kind) {
                 "page" -> semantics.tagged("now-playing")?.config?.getOrNull(SemanticsProperties.StateDescription) == expected
                 "state" -> semantics.tagged(expected.substringBeforeLast(':'))?.config?.getOrNull(SemanticsProperties.StateDescription) == expected.substringAfterLast(':')
+                "onboarded" -> melox.settings.MeloXSettingsPreferences.boolean("onboarding_completed") == expected.toBooleanStrict()
+                "legal-consent" -> melox.settings.MeloXSettingsPreferences.string("legal_consent_version") == expected
+                "cloud-choice" -> melox.remoteconfig.MeloXRemoteConfigConsent.choiceMade() == expected.toBooleanStrict()
+                "cloud-enabled" -> melox.remoteconfig.MeloXRemoteConfigConsent.enabled() == expected.toBooleanStrict()
+                "personalization" -> melox.recommendation.LocalRecommendationStore.hasPersonalizationConsent() == expected.toBooleanStrict()
+                "algorithm" -> melox.recommendation.LocalRecommendationStore.isAlgorithmEnabled() == expected.toBooleanStrict()
                 "index" -> melox.playback.PlaybackCommands.queue.value.index == expected.toInt()
                 "tag" -> semantics.tagged(expected) != null
                 "full-tag" -> semantics.tagged(expected)?.boundsInWindow?.let { it.width >= width * .97f && it.height >= height * .97f } == true
@@ -209,7 +215,12 @@ fun main(args: Array<String>) = runBlocking {
                 } ?: "netease:${song.id}" }))
                 .put("queue_entry_ids", JSONArray(queue.entryIds))
                 .put("selected_quality", melox.audio.MusicQualityPreferences.read().apiLevel)
-                .put("repeat_mode", melox.playback.PlaybackCommands.playerController()?.repeatMode?.value)
+                 .put("repeat_mode", melox.playback.PlaybackCommands.playerController()?.repeatMode?.value)
+                 .put("onboarding_completed", melox.settings.MeloXSettingsPreferences.boolean("onboarding_completed"))
+                 .put("legal_consent_version", melox.settings.MeloXSettingsPreferences.string("legal_consent_version"))
+                 .put("cloud_choice_made", melox.remoteconfig.MeloXRemoteConfigConsent.choiceMade())
+                 .put("cloud_enabled", melox.remoteconfig.MeloXRemoteConfigConsent.enabled())
+                 .put("personalization_consent", melox.recommendation.LocalRecommendationStore.hasPersonalizationConsent())
                 .put("shuffle_enabled", melox.playback.PlaybackCommands.playerController()?.shuffleEnabled?.value)
                 .put("autoplay_enabled", melox.playback.MeloXPlaybackModeRuntime.autoplayEnabled)
                 .put("lyric_document", semantics.tagged("player-lyrics")?.config?.getOrNull(melox.ui.screens.MeloXLyricDocumentKey) ?: JSONObject.NULL)

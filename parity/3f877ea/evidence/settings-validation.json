@@ -1,0 +1,93 @@
+{
+  "pinned_android": "3f877eaffe30c82eb6d24eb3647702f5bc554dd3",
+  "tests": {
+    "tests": 151,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "suites": 27,
+  "ui": {
+    "onboarding": {
+      "scenes": 10,
+      "assertions": 18,
+      "frames": 27,
+      "captures_including_frames": 37
+    },
+    "legal": {
+      "scenes": 14,
+      "assertions": 18,
+      "frames": 39,
+      "captures_including_frames": 53
+    },
+    "privacy": {
+      "scenes": 14,
+      "assertions": 21,
+      "frames": 39,
+      "captures_including_frames": 53
+    },
+    "light": {
+      "scenes": 9,
+      "assertions": 5,
+      "frames": 24,
+      "captures_including_frames": 33
+    },
+    "login": {
+      "scenes": 6,
+      "assertions": 11,
+      "frames": 15,
+      "captures_including_frames": 21
+    },
+    "pcm": {
+      "scenes": 3,
+      "assertions": 8,
+      "frames": 6,
+      "captures_including_frames": 9
+    }
+  },
+  "source_sha256": {
+    "desktop/src/desktopMain/kotlin/melox/ui/legal/MeloXLegalDocuments.kt": "9a1a77e2dc61e03eb66e1707c89f6952c56177ae6d1bf87c3f7dad6b624d42c4",
+    "shared/src/commonMain/kotlin/melox/legal/MeloXOnboardingSession.kt": "69fdf9b48ee832b71a18720e222f0639dba6e7e3ada0bb645da6eefc36917c31",
+    "desktop/src/desktopMain/kotlin/melox/ui/MeloXApp.kt": "5bb4387f95ecd6eb152ec9dce8b232035db9b82d60187eabc3e776f44af60405",
+    "desktop/src/desktopMain/kotlin/melox/Main.kt": "98639f6f8ff28d58079b39819a8afe1df4c818389a7aba356e3314f48bce9ce3",
+    "desktop/src/desktopMain/kotlin/melox/ui/screens/SettingsScreen.kt": "5687909c0c2bb5121e3024d996ca17c1cc860c51960285b0d6a62f51d22f172b",
+    "desktop/src/desktopMain/kotlin/melox/ui/screens/PrivacySettings.kt": "2118f166024492a4833afcd65412e73ceee3fc2b36eda20454c4979661508033",
+    "desktop/src/desktopMain/kotlin/melox/ui/screens/LegalSettings.kt": "39e2640c10d914b30361e1c9b075589f46a433e11de67023d4ffae71b96ffe68",
+    "desktop/src/desktopMain/kotlin/melox/ui/screens/LoginScreen.kt": "c427e2ef1f4fc3801b4618903e53221f1b85bd8b3e65744196e3ca9edf295d7a",
+    "desktop/src/desktopMain/kotlin/melox/ui/screens/RemoteConfigSettings.kt": "e2c4248f03ea41ed9576f268028ee252f042e5edf8ec878833a30d908d0e94b6",
+    "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXLibraryScreen.kt": "e2b99c87a3faaaea7689436e7ef574d11425997a433f0ae3661ea5f7221fd42b",
+    "desktop/src/desktopMain/kotlin/melox/ui/glass/MeloXPinnedListPage.kt": "6cc6285d4256faadb85a51dd1774d2c1ea3f9bfcc4b8e672b4475fe14d9c524a",
+    "desktop/src/desktopMain/kotlin/melox/ui/glass/MeloXTopFadeBackdrop.kt": "f024a914c25a7623dd333b663954d7427b0f15c3ce51f5894bfbba41008d9906",
+    "shared/src/commonMain/kotlin/melox/account/NeteaseSessionStore.kt": "7f8a5b285951fce167fe589fa170da03a4c54e40e98969598ce738cdbe1a7fd1",
+    "shared/src/commonMain/kotlin/melox/recommendation/LocalRecommendationEngine.kt": "0f36c3f368696b605574edc1cf383c8991e6541befdb1a3dab3e6087fc02b234"
+  },
+  "unchanged_pinned_legal_sha256": {
+    "third-party-music-sources-zh-CN.md": "4aefd5137ea6e9a2da335671753dca4d8aebcdcf0ddc903c00a03bc89ef62c38",
+    "privacy-policy-zh-CN.md": "fdf41c3aea883220ba8070823b1a35d1156869117ed607f6b5c2769997ceb097",
+    "disclaimer-zh-CN.md": "4c6e212bb6c78bd2fa6e45a76136cba6a5cfd82c1321dfdf27d727df2a50c44e",
+    "cloud-control-privacy-zh-CN.md": "7030f44dda89b27357ba4b960562d5eae98d9b5ae451a8a398e4fb6cc68f5793"
+  },
+  "linux_jar": {
+    "path": "desktop/build/compose/jars/MeloX-Desktop-linux-x64-1.0.0.jar",
+    "bytes": 221789413,
+    "sha256": "56221f05c1ef6824f66dd96ef980a224626d2a9f8151ed2926e6736aa6e3fa8f"
+  },
+  "automated_tests": "PASSED",
+  "linux_production_offscreen_ui": "PASSED",
+  "linux_software_pcm_spectral_overlap": "PASSED",
+  "windows_ci": "PENDING_EXACT_COMMIT",
+  "android_pixel_dynamic_parity": "BLOCKED",
+  "windows_physical_audio_dpapi": "BLOCKED",
+  "android_reason": "No connected pinned Android device/reference frames",
+  "physical_reason": "No Windows 10/11 machine with audio hardware or real user account in this Linux session",
+  "ui_totals": {
+    "scenes": 56,
+    "assertions": 81,
+    "frames": 150,
+    "captures_including_frames": 206
+  },
+  "android_device_check": {
+    "count": 0,
+    "devices": []
+  }
+}
