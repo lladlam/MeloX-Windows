@@ -1,0 +1,12 @@
+{
+  "output": "CONTROLLED_SOFTWARE_SOURCE_DATA_LINE",
+  "pcm_sha256": "67b593160d3014fea4c2e5d57b129b7872267914537dc1847565c2b8d8284a0e",
+  "file": "single-eq-boost-automix-true.s16le.gz",
+  "sample_rate": 44100,
+  "channels": 2,
+  "scenario": "generated square ±1000; Flat preamp +6 dB",
+  "bytes": 88200,
+  "origin": "GENERATED_AUDIO_PRODUCTION_NATIVE_DECODER",
+  "format": "S16LE",
+  "physical_audible_acceptance": "BLOCKED"
+}

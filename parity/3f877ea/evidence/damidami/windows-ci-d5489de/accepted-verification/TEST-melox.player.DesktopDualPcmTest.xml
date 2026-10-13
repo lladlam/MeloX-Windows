@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="DesktopDualPcmTest[desktop]" tests="7" skipped="0" failures="0" errors="0" timestamp="2026-10-13T14:51:52.569Z" hostname="runnervmfi6oq" time="2.792">
+  <properties/>
+  <testcase name="nativeTempoRampChangesDurationWhilePreservingPitch[desktop]" classname="melox.player.DesktopDualPcmTest" time="0.172"/>
+  <testcase name="softwareBassSwapActuallyAttenuatesLowEnergyWithoutCuttingTrebleOrWrappingPcm[desktop]" classname="melox.player.DesktopDualPcmTest" time="0.138"/>
+  <testcase name="cancellationReleasesBothNativeProcessesAndSuppressesLateHandoff[desktop]" classname="melox.player.DesktopDualPcmTest" time="0.452"/>
+  <testcase name="genuineDualDecodeAppliesUserEqualizerToPrimaryOverlapAndIncomingOnSameClock[desktop]" classname="melox.player.DesktopDualPcmTest" time="0.397"/>
+  <testcase name="invalidIncomingFileFallsBackToActualPrimaryPcmAndNeverHandsOff[desktop]" classname="melox.player.DesktopDualPcmTest" time="0.367"/>
+  <testcase name="twoDecodedFrequencyComponentsCrossfadeAndHandoffOnlyAfterRenderedFrames[desktop]" classname="melox.player.DesktopDualPcmTest" time="0.323"/>
+  <testcase name="pauseSeekZeroFlushesBothOldDecksAndRestartsSelectedAudioWithPauseIntent[desktop]" classname="melox.player.DesktopDualPcmTest" time="0.942"/>
+  <system-out><![CDATA[Native pitch-preserving tempo ramp duration_ms=2943.310657596372
+Real software shelf: bass_ratio=0.3534666811136285 treble_ratio=0.9999719981065996
+Actual dual-decoder PCM: MeloXDualPcmResult(primaryFrames=114660, incomingFrames=97020, overlapFrames=70560, writtenFrames=141120, renderedFrames=141120, clippedSamples=0); overlap projections 220Hz=3000.0095822870926 880Hz=3999.990266084742; sha256=3e9640851fbf9f5a50e1ff5f13b656b9fedde1e150a270f2411fa1aef241cb91
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

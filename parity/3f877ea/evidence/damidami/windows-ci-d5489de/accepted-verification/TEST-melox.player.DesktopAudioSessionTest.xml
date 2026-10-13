@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="DesktopAudioSessionTest[desktop]" tests="8" skipped="0" failures="0" errors="0" timestamp="2026-10-13T14:51:50.550Z" hostname="runnervmfi6oq" time="1.991">
+  <properties/>
+  <testcase name="realFfmpegNonzeroExitAfterPcmIsContentFailureRatherThanNaturalEnd[desktop]" classname="melox.player.DesktopAudioSessionTest" time="0.361"/>
+  <testcase name="unavailableDeviceReportsOutputFailureWithoutProducingAnEndEvent[desktop]" classname="melox.player.DesktopAudioSessionTest" time="0.015"/>
+  <testcase name="seekingToTheDecoderOriginalZeroPositionActuallyRestartsIt[desktop]" classname="melox.player.DesktopAudioSessionTest" time="0.164"/>
+  <testcase name="seekingToKnownTrackEndAcceptsAZeroPcmSuccessfulDecoderExit[desktop]" classname="melox.player.DesktopAudioSessionTest" time="0.088"/>
+  <testcase name="realOutputConsumesEqualizerPreampAndSeekingRebuildsDspWithCurrentSettings[desktop]" classname="melox.player.DesktopAudioSessionTest" time="0.367"/>
+  <testcase name="replacingTheSameUriKeepsEndCallbacksOwnedByTheNewRequest[desktop]" classname="melox.player.DesktopAudioSessionTest" time="0.306"/>
+  <testcase name="aDeviceStartFailureIsOutputFailureRatherThanCorruptContent[desktop]" classname="melox.player.DesktopAudioSessionTest" time="0.115"/>
+  <testcase name="decoderEofWaitsForBufferedFramesAndPauseResumePreserveTheTail[desktop]" classname="melox.player.DesktopAudioSessionTest" time="0.572"/>
+  <system-out><![CDATA[[DEBUG AudioPlayer] FFmpeg binary=C:\Users\runneradmin\AppData\Local\Temp\melox-decoder-ffmpeg-af7913b7ddc324bf.exe os=Windows Server 2025 sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+[DEBUG AudioPlayer] FFmpeg binary=C:\Users\runneradmin\AppData\Local\Temp\melox-decoder-ffmpeg-af7913b7ddc324bf.exe os=Windows Server 2025 sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+[DEBUG AudioPlayer] FFmpeg binary=C:\Users\runneradmin\AppData\Local\Temp\melox-decoder-ffmpeg-af7913b7ddc324bf.exe os=Windows Server 2025 sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+[DEBUG AudioPlayer] FFmpeg binary=C:\Users\runneradmin\AppData\Local\Temp\melox-decoder-ffmpeg-af7913b7ddc324bf.exe os=Windows Server 2025 sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+[DEBUG AudioPlayer] FFmpeg binary=C:\Users\runneradmin\AppData\Local\Temp\melox-decoder-ffmpeg-af7913b7ddc324bf.exe os=Windows Server 2025 sourceHost=local
+[DEBUG AudioPlayer] decode local source at 500ms
+[DEBUG AudioPlayer] FFmpeg binary=C:\Users\runneradmin\AppData\Local\Temp\melox-decoder-ffmpeg-af7913b7ddc324bf.exe os=Windows Server 2025 sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+[DEBUG AudioPlayer] FFmpeg binary=C:\Users\runneradmin\AppData\Local\Temp\melox-decoder-ffmpeg-af7913b7ddc324bf.exe os=Windows Server 2025 sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+[DEBUG AudioPlayer] FFmpeg binary=C:\Users\runneradmin\AppData\Local\Temp\melox-decoder-ffmpeg-af7913b7ddc324bf.exe os=Windows Server 2025 sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+[DEBUG AudioPlayer] FFmpeg binary=C:\Users\runneradmin\AppData\Local\Temp\melox-decoder-ffmpeg-af7913b7ddc324bf.exe os=Windows Server 2025 sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+[DEBUG AudioPlayer] FFmpeg binary=C:\Users\runneradmin\AppData\Local\Temp\melox-decoder-ffmpeg-af7913b7ddc324bf.exe os=Windows Server 2025 sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+[DEBUG AudioPlayer] FFmpeg binary=C:\Users\runneradmin\AppData\Local\Temp\melox-decoder-ffmpeg-af7913b7ddc324bf.exe os=Windows Server 2025 sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+]]></system-out>
+  <system-err><![CDATA[[ERROR AudioPlayer] ???? (Content): AudioPlaybackFailure: [in#0/wav @ 0000012788057c80] corrupt input packet in stream 0
+[in#0/wav @ 0000012788057c80] Task finished with error: Invalid data found when processing input
+[in#0/wav @ 0000012788057c80] Terminating thread with error: Invalid data found when processing input <- IOException: [in#0/wav @ 0000012788057c80] corrupt input packet in stream 0
+[in#0/wav @ 0000012788057c80] Task finished with error: Invalid data found when processing input
+[in#0/wav @ 0000012788057c80] Terminating thread with error: Invalid data found when processing input
+[ERROR AudioPlayer] ???? (Output): AudioPlaybackFailure: test device unavailable <- LineUnavailableException: test device unavailable
+[ERROR AudioPlayer] ???? (Output): AudioPlaybackFailure: device start failed <- IllegalStateException: device start failed
+]]></system-err>
+</testsuite>

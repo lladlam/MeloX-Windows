@@ -1,0 +1,12 @@
+{
+  "output": "CONTROLLED_SOFTWARE_SOURCE_DATA_LINE",
+  "pcm_sha256": "68a448fa54371a78837b0e4dfa0e1f370a618620c464a2b7c1c1797d6208e937",
+  "file": "single-eq-cut-after-seek-automix-true.s16le.gz",
+  "sample_rate": 44100,
+  "channels": 2,
+  "scenario": "seek 0 rebuild; generated square ±1000; Flat preamp -6 dB",
+  "bytes": 88200,
+  "origin": "GENERATED_AUDIO_PRODUCTION_NATIVE_DECODER",
+  "format": "S16LE",
+  "physical_audible_acceptance": "BLOCKED"
+}

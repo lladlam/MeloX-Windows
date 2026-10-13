@@ -85,6 +85,42 @@ yet a confirmed root cause or resolution of the user's physical Windows report**
 - Final test/capture/package results are recorded in `evidence/damidami/` as
   they complete. Physical Windows audio and Android pixel equivalence remain
   `BLOCKED` pending direct evidence.
+- Windows live same-track run **38416523071 / d5489de failed**: genuine search
+  found the original track but anonymous standard playback returned **no URL**.
+  No song PCM, FFmpeg stream or speaker initialization was reached; the later
+  lyric scene was not executed after the failed assertion. This negative result
+  is retained in `windows-replay-d5489de-rejected/`, not counted as successful
+  Windows playback. The upstream reason and whether it matches the user's
+  installation remain unknown. Standalone Windows native decoder checks passed.
+- Additional Linux 150% density replay (1650×1170 px, 1100×780 dp) passes real
+  non-silent PCM and settled lyric row geometry. This is a DPI investigation
+  frame, not a Windows hardware or Android pixel acceptance.
+
+## Verified Windows diagnostic package
+
+- Source: `d5489de43f2b5064500a5272eded96438c2c9875`.
+- Build run: **38416512058 / SUCCESS**; **182 tests / 36 suites / zero failures,
+  errors or skips** on Windows.
+- Source, JAR, app-image and final ZIP each pass native decoder and exact
+  pinned-resource checks, including the 19,646,728-byte Android MiLan Pro font.
+  Native MP3/FLAC/M4A and authenticated local HTTP PCM decode pass at every
+  layer; real single/dual EQ PCM verification passes.
+- Artifact **11823734742** was independently downloaded. Its outer SHA-256
+  matches GitHub's artifact digest; inner ZIP CRC, launcher PE, Java Sound DLL,
+  packaged FFmpeg PE/hash, diagnostic classes, exact six resources and stamped
+  source revision all verify.
+- Final `MeloX-Desktop-Windows.zip`: **264542926 bytes**, SHA-256
+  `2ff49d4d3aa1404c60d4484c2b3abb003a5a205733e776db732c2a3d3fb7c0da`.
+- Download:
+  <https://github.com/lladlam/MeloX-Windows/actions/runs/38416512058/artifacts/11823734742>.
+- Detailed independent result, retained 36 test XMLs and native/resource check
+  JSONs are in `evidence/damidami/windows-ci-d5489de/`. Only diagnostic/evidence
+  updates follow this release source; no newer evidence-only revision is used
+  to relabel the package's source.
+- This is a verified diagnostic/cache/output package. Same-track Windows live
+  playback remains blocked by the genuine upstream no-URL result above, and
+  the user's physical playback/lyric issue remains unconfirmed pending their
+  error/diagnostic and screenshot.
 
 ## Pending advanced lyrics settings
 

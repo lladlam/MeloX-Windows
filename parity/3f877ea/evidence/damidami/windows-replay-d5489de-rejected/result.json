@@ -1,0 +1,21 @@
+{
+  "head_sha": "d5489de43f2b5064500a5272eded96438c2c9875",
+  "run_id": 38416523071,
+  "track": "netease:2755332551",
+  "logged_in": false,
+  "requested_quality": "standard",
+  "ci_conclusion": "failure",
+  "same_track_playback_acceptance": "BLOCKED",
+  "observed_failure_stage": "provider playback URL resolution",
+  "observed_error": "NeteasePlaybackUnavailableException <- IOException: no URL for standard",
+  "cross_provider_fallback": "skipped: disabled or missing metadata",
+  "windows_bundled_decoder_integrity_and_standalone_native_pcm": "PASSED",
+  "same_track_ffmpeg_started": false,
+  "same_track_pcm_consumed": false,
+  "compose_milan_pro_loaded": true,
+  "native_word_glyph_rendering": "NOT_REACHED",
+  "lyrics_scene": "NOT_RUN_AFTER_SEARCH_FAILED",
+  "hardware_audibility": "BLOCKED",
+  "user_windows_root_cause": "UNCONFIRMED",
+  "diagnostic": "The live production search found the original target and attempted anonymous standard playback. The actual upstream response supplied no playable URL, before FFmpeg or speaker initialization. No alternate recording, mock URL, different song or simulated playing state was substituted. The underlying availability/network reason is not established by this evidence."
+}

@@ -1,0 +1,6 @@
+1791903105633 [INFO MeloXFont] Android MiLan Pro loaded: fonts/mi_lan_pro_vf.ttf; CSS/axis weights=[(100, 150), (200, 200), (300, 250), (400, 340), (500, 400), (600, 540), (700, 630), (800, 700), (900, 700)]
+1791903117975 [DEBUG MeloXPlayback] Playback queue dispatched: size=30, start=0, offline=false, quality=standard
+1791903118245 [DEBUG MeloXQuality] Resolving playback: song=2755332551 requested=standard loggedIn=false candidates=standard
+1791903118483 [WARN MeloXQuality] Playback candidate rejected: song=2755332551 quality=standard; IOException: no URL for standard
+1791903118485 [INFO MeloXPlayback] Cross-provider fallback: skipped song=2755332551: disabled or missing metadata
+1791903118515 [ERROR MeloXPlayback] resolve failed: NeteasePlaybackUnavailableException: 网易云未返回可播放的 标准 音源，且 MeloX 降级链路也没有可用资源 <- IOException: no URL for standard

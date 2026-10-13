@@ -1,0 +1,252 @@
+[
+  {
+    "ci_artifact_path": "shared/build/parity/test-home/native-pcm-evidence/single-eq-boost-automix-false.json",
+    "retained": "single-eq-boost-automix-false.json",
+    "sha256": "f5f6687fb2cda27d6a4e4d845deb7fd966b31e0000ce9cd6ee3da15838a9f4cb"
+  },
+  {
+    "ci_artifact_path": "shared/build/parity/test-home/native-pcm-evidence/dual-eq-band5-cut.json",
+    "retained": "dual-eq-band5-cut.json",
+    "sha256": "82997fcd3a0162b752b1d49b1ac9e1cf615e41b766b9ed23d04fe7b811e5ae79"
+  },
+  {
+    "ci_artifact_path": "shared/build/parity/test-home/native-pcm-evidence/single-eq-cut-after-seek-automix-true.json",
+    "retained": "single-eq-cut-after-seek-automix-true.json",
+    "sha256": "da57826306ef28c670d86c38a770c5c710ab164a044eae020514d401b347128c"
+  },
+  {
+    "ci_artifact_path": "shared/build/parity/test-home/native-pcm-evidence/single-eq-cut-after-seek-automix-false.json",
+    "retained": "single-eq-cut-after-seek-automix-false.json",
+    "sha256": "8a8859d0bcff6e3fd4db00f4b579f32b591cb0642223dc00e2f4702064b2b01f"
+  },
+  {
+    "ci_artifact_path": "shared/build/parity/test-home/native-pcm-evidence/single-eq-boost-automix-true.json",
+    "retained": "single-eq-boost-automix-true.json",
+    "sha256": "fadf741a55c4a8eca4ff5810134bcd8a56ad5461b8a66be8905c75555eb91fbe"
+  },
+  {
+    "ci_artifact_path": "shared/build/test-results/desktopTest/TEST-melox.settings.ContentLayoutRestorationTest.xml",
+    "retained": "TEST-melox.settings.ContentLayoutRestorationTest.xml",
+    "sha256": "f9c4797356d7cb1de0e9fff87d8dcb4eae5c1a94fa14cadbf84a1b9e165a3ef0"
+  },
+  {
+    "ci_artifact_path": "shared/build/test-results/desktopTest/TEST-melox.playback.DesktopAutoMixIntegrationTest.xml",
+    "retained": "TEST-melox.playback.DesktopAutoMixIntegrationTest.xml",
+    "sha256": "99aa8cc6feaab083661f967129e7c57d0c7424eee98d570c5898a7a8cfb3965d"
+  },
+  {
+    "ci_artifact_path": "shared/build/test-results/desktopTest/TEST-melox.remoteconfig.RemoteConfigProtocolTest.xml",
+    "retained": "TEST-melox.remoteconfig.RemoteConfigProtocolTest.xml",
+    "sha256": "f228c8f377e9066e3c6cfa4557183509e1ff9d4e688ac5011c8b0137cd57d002"
+  },
+  {
+    "ci_artifact_path": "shared/build/test-results/desktopTest/TEST-melox.account.NeteaseAccountLifecycleTest.xml",
+    "retained": "TEST-melox.account.NeteaseAccountLifecycleTest.xml",
+    "sha256": "474d76567c04596c2cb65da9e3b924af473f595a210931a8841401870319dd36"
+  },
+  {
+    "ci_artifact_path": "shared/build/test-results/desktopTest/TEST-melox.recommendation.PersonalizationEraseBoundaryTest.xml",
+    "retained": "TEST-melox.recommendation.PersonalizationEraseBoundaryTest.xml",
+    "sha256": "a35e49e35fd613ee289f323676e91705a53f39a401e655d63ecf5330aac04495"
+  },
+  {
+    "ci_artifact_path": "shared/build/test-results/desktopTest/TEST-melox.player.DesktopStreamingAudioSessionTest.xml",
+    "retained": "TEST-melox.player.DesktopStreamingAudioSessionTest.xml",
+    "sha256": "e35bde1167227e40aef240c535e38fa85ffa2a3ac77fdb6d392e3919741691bc"
+  },
+  {
+    "ci_artifact_path": "shared/build/test-results/desktopTest/TEST-melox.network.NeteaseResponseJsonTest.xml",
+    "retained": "TEST-melox.network.NeteaseResponseJsonTest.xml",
+    "sha256": "89a9e284518e951d0f1751c3807ec033c0448bdc0f296b6cecc65ccae62dba86"
+  },
+  {
+    "ci_artifact_path": "shared/build/test-results/desktopTest/TEST-melox.music.UnifiedSearchLifecycleTest.xml",
+    "retained": "TEST-melox.music.UnifiedSearchLifecycleTest.xml",
+    "sha256": "1f05dbf6494f10f5650e0eccecc26a9e00e1fbed6de44e4aa989d19649d78773"
+  },
+  {
+    "ci_artifact_path": "shared/build/test-results/desktopTest/TEST-melox.playback.DesktopEqualizerDspTest.xml",
+    "retained": "TEST-melox.playback.DesktopEqualizerDspTest.xml",
+    "sha256": "46df13bd017f04f7f092c33142e61c75e4e6c8ece97e804260c93d7425d62c27"
+  },
+  {
+    "ci_artifact_path": "shared/build/test-results/desktopTest/TEST-melox.provider.jellyfin.JellyfinProtocolTest.xml",
+    "retained": "TEST-melox.provider.jellyfin.JellyfinProtocolTest.xml",
+    "sha256": "9980943f64749d7dff1ff5ac765d8b299f599f34cb61a8991b5fcb1a26ac2e57"
+  },
+  {
+    "ci_artifact_path": "shared/build/test-results/desktopTest/TEST-melox.platform.JellyfinSessionPersistenceTest.xml",
+    "retained": "TEST-melox.platform.JellyfinSessionPersistenceTest.xml",
+    "sha256": "015797cd20b64f3bfbfde6ed0a95272c72833e524d67f74169b7c77d6b698cab"
+  },
+  {
+    "ci_artifact_path": "shared/build/test-results/desktopTest/TEST-melox.network.CloudUploadProtocolTest.xml",
+    "retained": "TEST-melox.network.CloudUploadProtocolTest.xml",
+    "sha256": "c2925c1b34852f453dd031909762f75b97536948fd7d8b3ef6198ee5adb13daf"
+  },
+  {
+    "ci_artifact_path": "shared/build/test-results/desktopTest/TEST-melox.lyrics.TtmlLyricsParserTest.xml",
+    "retained": "TEST-melox.lyrics.TtmlLyricsParserTest.xml",
+    "sha256": "25a085dc23fe8f1fb6c46dcb6e7ba976619d7d54fd67d6ac9afa67b7798e2628"
+  },
+  {
+    "ci_artifact_path": "shared/build/test-results/desktopTest/TEST-melox.playback.NeteasePlaybackRequestTest.xml",
+    "retained": "TEST-melox.playback.NeteasePlaybackRequestTest.xml",
+    "sha256": "6448ba58158c69a4e261f3cc0fe1030440f4f7dd9675a318a0b79f4cca265e86"
+  },
+  {
+    "ci_artifact_path": "shared/build/test-results/desktopTest/TEST-melox.playback.DesktopAutoplayTest.xml",
+    "retained": "TEST-melox.playback.DesktopAutoplayTest.xml",
+    "sha256": "3a64c0a58c8576d6f2d7d65683b267c4112aee9278777bb1684dfd53e7a7326c"
+  },
+  {
+    "ci_artifact_path": "shared/build/test-results/desktopTest/TEST-melox.playback.DesktopPcmAnalysisTest.xml",
+    "retained": "TEST-melox.playback.DesktopPcmAnalysisTest.xml",
+    "sha256": "def26902817eb9e809a68f5ab60290efeb761d650468136f1774e78bcc630218"
+  },
+  {
+    "ci_artifact_path": "shared/build/test-results/desktopTest/TEST-melox.platform.SecurePreferenceFileTest.xml",
+    "retained": "TEST-melox.platform.SecurePreferenceFileTest.xml",
+    "sha256": "053060264e75e1e271125b20e3c80cbbec56d4482ab4ef7d1bba16d86ab65e3d"
+  },
+  {
+    "ci_artifact_path": "shared/build/test-results/desktopTest/TEST-melox.legal.OnboardingPersistenceTest.xml",
+    "retained": "TEST-melox.legal.OnboardingPersistenceTest.xml",
+    "sha256": "319eccba0ccdddc353e49de0defb491c7cec6ae5313749072315f82a590128da"
+  },
+  {
+    "ci_artifact_path": "shared/build/test-results/desktopTest/TEST-melox.lyrics.LyricPresentationTest.xml",
+    "retained": "TEST-melox.lyrics.LyricPresentationTest.xml",
+    "sha256": "b4b319eccd416caa859ccd4e3043bad82d925528e488446c9bfdda489de58680"
+  },
+  {
+    "ci_artifact_path": "shared/build/test-results/desktopTest/TEST-melox.lyrics.LyricAnnotationAlignmentTest.xml",
+    "retained": "TEST-melox.lyrics.LyricAnnotationAlignmentTest.xml",
+    "sha256": "3abe1a8192c1225728cc83ecb9e99cff95c61a6923c568f67899de707f39e48d"
+  },
+  {
+    "ci_artifact_path": "shared/build/test-results/desktopTest/TEST-melox.player.DesktopPcmOutputTest.xml",
+    "retained": "TEST-melox.player.DesktopPcmOutputTest.xml",
+    "sha256": "e6c76c35dedcd185fba0a9f5d87de45182e83709ddab451895786874147001ff"
+  },
+  {
+    "ci_artifact_path": "shared/build/test-results/desktopTest/TEST-melox.lyrics.LyricsLoadTest.xml",
+    "retained": "TEST-melox.lyrics.LyricsLoadTest.xml",
+    "sha256": "365a8888fcf5564ff4007ff60366b254b99249f2e68836c5c03d4a716d9a13f5"
+  },
+  {
+    "ci_artifact_path": "shared/build/test-results/desktopTest/TEST-melox.player.DesktopAudioSessionTest.xml",
+    "retained": "TEST-melox.player.DesktopAudioSessionTest.xml",
+    "sha256": "991cb292ff6c072217be49aa71cc23ea7aa8020d30845ae34a8cdedf44ca7e47"
+  },
+  {
+    "ci_artifact_path": "shared/build/test-results/desktopTest/TEST-melox.player.DesktopDualPcmTest.xml",
+    "retained": "TEST-melox.player.DesktopDualPcmTest.xml",
+    "sha256": "15bf46a893df8b88a3f704aff8bd79e72c818e64b30945afd9537f725c9da422"
+  },
+  {
+    "ci_artifact_path": "shared/build/test-results/desktopTest/TEST-melox.playback.DesktopPlaybackStateTest.xml",
+    "retained": "TEST-melox.playback.DesktopPlaybackStateTest.xml",
+    "sha256": "b24b12bea7e6d882db8e35f156187e22d658d56f175068338aa985fb734cf246"
+  },
+  {
+    "ci_artifact_path": "shared/build/test-results/desktopTest/TEST-melox.playback.DesktopLocalLyricsPersistenceTest.xml",
+    "retained": "TEST-melox.playback.DesktopLocalLyricsPersistenceTest.xml",
+    "sha256": "b67afb707956f7d6f9b43b1c3d9a618be923b63b42591ed67a5d6e4021347945"
+  },
+  {
+    "ci_artifact_path": "shared/build/test-results/desktopTest/TEST-melox.player.DecoderExtractionCacheTest.xml",
+    "retained": "TEST-melox.player.DecoderExtractionCacheTest.xml",
+    "sha256": "8bd6d712563da11e34d4f5aad7f46b786c43b50273d90378474a41c5222dbdfb"
+  },
+  {
+    "ci_artifact_path": "shared/build/test-results/desktopTest/TEST-melox.playback.LocalProviderPlaybackTest.xml",
+    "retained": "TEST-melox.playback.LocalProviderPlaybackTest.xml",
+    "sha256": "755f2f57241dd73ed4c907ce6e06dfbf6a1211ff9fdd8a5eaadc046ee3a38013"
+  },
+  {
+    "ci_artifact_path": "shared/build/test-results/desktopTest/TEST-melox.playback.DesktopSongOperationIdentityTest.xml",
+    "retained": "TEST-melox.playback.DesktopSongOperationIdentityTest.xml",
+    "sha256": "92e9025d959203c920318e2cf0b7a49d91d88733dd111e67203a7fcd466c82e7"
+  },
+  {
+    "ci_artifact_path": "shared/build/test-results/desktopTest/TEST-melox.player.PlaybackLinkTest.xml",
+    "retained": "TEST-melox.player.PlaybackLinkTest.xml",
+    "sha256": "e9a285d68e81e8aa4d7da63d69d7c745d59d169b3859c30ee23ca17ebf178354"
+  },
+  {
+    "ci_artifact_path": "shared/build/test-results/desktopTest/TEST-melox.provider.lxuser.ChkszProtocolTest.xml",
+    "retained": "TEST-melox.provider.lxuser.ChkszProtocolTest.xml",
+    "sha256": "99e0ed9cac3a9eb85df0c5f0c97e0367424a7e0de7b0800565b9b46bd83e0ef0"
+  },
+  {
+    "ci_artifact_path": "shared/build/test-results/desktopTest/TEST-melox.diagnostics.DesktopProcessLogsTest.xml",
+    "retained": "TEST-melox.diagnostics.DesktopProcessLogsTest.xml",
+    "sha256": "1d33dd62211c15d665d9a2de8ae5984af5112723e985594d6431d46dea4fd8e8"
+  },
+  {
+    "ci_artifact_path": "shared/build/test-results/desktopTest/TEST-melox.lyrics.ProviderFirstLyricsTest.xml",
+    "retained": "TEST-melox.lyrics.ProviderFirstLyricsTest.xml",
+    "sha256": "f477b25ebc1122de9346ad0513853f6a605c246f16f78ba530d83bb05aec61ca"
+  },
+  {
+    "ci_artifact_path": "shared/build/test-results/desktopTest/TEST-melox.settings.PlayerAppearanceTest.xml",
+    "retained": "TEST-melox.settings.PlayerAppearanceTest.xml",
+    "sha256": "f04353d67e68470d8dc87d1e84c1854e235a6a05feab295732b1e59adf62d102"
+  },
+  {
+    "ci_artifact_path": "shared/build/test-results/desktopTest/TEST-melox.network.DesktopSearchProtocolTest.xml",
+    "retained": "TEST-melox.network.DesktopSearchProtocolTest.xml",
+    "sha256": "533968bfcb121e6057d318fc47c13275a7f7cff141817aee715800f6bc94187e"
+  },
+  {
+    "ci_artifact_path": "shared/build/test-results/desktopTest/TEST-melox.provider.spotify.SpotifyDesktopLoginTest.xml",
+    "retained": "TEST-melox.provider.spotify.SpotifyDesktopLoginTest.xml",
+    "sha256": "11f3a0e3ff93173b5308a73029c5509964d03df3d1a7c4558510d680a3d67d03"
+  },
+  {
+    "ci_artifact_path": "desktop/build/verification/zip-pinned-resources.json",
+    "retained": "zip-pinned-resources.json",
+    "sha256": "533f5bab419afdabdbb26abf42495f1278dd2c46e60eed3c4fb1be7ab54c5f5f"
+  },
+  {
+    "ci_artifact_path": "desktop/build/verification/source-decoder.json",
+    "retained": "source-decoder.json",
+    "sha256": "ed82774f6a9e91ba981671ef16c2eb47073c3ec1a4c1d88863f22127559495da"
+  },
+  {
+    "ci_artifact_path": "desktop/build/verification/source-pinned-resources.json",
+    "retained": "source-pinned-resources.json",
+    "sha256": "5d3b576af0ffb831e43f27a05bca626d000ad2a4457125b0c3a17e49ded244b5"
+  },
+  {
+    "ci_artifact_path": "desktop/build/verification/image-pinned-resources.json",
+    "retained": "image-pinned-resources.json",
+    "sha256": "ea24928c81a88095c0527c3440fcd61b9b680ed011583d95bcfb65a8c8b2cc72"
+  },
+  {
+    "ci_artifact_path": "desktop/build/verification/jar-decoder.json",
+    "retained": "jar-decoder.json",
+    "sha256": "029710fdb1f15d5ecc09769a8e18f5aba5eee40585b5a2a59cb6e8a891bd95d9"
+  },
+  {
+    "ci_artifact_path": "desktop/build/verification/equalizer-pcm.json",
+    "retained": "equalizer-pcm.json",
+    "sha256": "47d07dccd7534165425bd1fe771b6f014606f1a51b6bac64d32b0dc15e5f9835"
+  },
+  {
+    "ci_artifact_path": "desktop/build/verification/jar-pinned-resources.json",
+    "retained": "jar-pinned-resources.json",
+    "sha256": "2040c51742b822170d259ff729fad9677cdd36f1da224333839311318558b2fe"
+  },
+  {
+    "ci_artifact_path": "desktop/build/verification/image-decoder.json",
+    "retained": "image-decoder.json",
+    "sha256": "0e58e39d231853490935ab99c8450844bf38e1618fc32d901752fb6412745b42"
+  },
+  {
+    "ci_artifact_path": "desktop/build/verification/zip-decoder.json",
+    "retained": "zip-decoder.json",
+    "sha256": "f7f43b06b73da5ca513cb0a5139df5c1707d7e1e7a1ff01cb8945c8d55dc9865"
+  }
+]

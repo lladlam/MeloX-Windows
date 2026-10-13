@@ -1,0 +1,83 @@
+{
+  "status": "PASSED",
+  "head_sha": "d5489de43f2b5064500a5272eded96438c2c9875",
+  "run_id": 38416512058,
+  "tests": {
+    "tests": 182,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "suites": 36
+  },
+  "artifact_id": 11823734742,
+  "download_url": "https://github.com/lladlam/MeloX-Windows/actions/runs/38416512058/artifacts/11823734742",
+  "outer_artifact": {
+    "bytes": 263812345,
+    "sha256": "ed7e97ce456adc38d450aee9985153605effcc91b4332af27c6885ccb0a3e254",
+    "github_digest_match": true
+  },
+  "final_zip": {
+    "bytes": 264542926,
+    "sha256": "2ff49d4d3aa1404c60d4484c2b3abb003a5a205733e776db732c2a3d3fb7c0da",
+    "crc_verified": true
+  },
+  "jar": {
+    "bytes": 219435666,
+    "sha256": "d5053317480d0b2a4a34aa9d545d85028e0f852fc5b293c969bcbb2fa94d0873",
+    "feature_classes": [
+      "melox/player/MeloXPcmOutput.class",
+      "melox/player/FfmpegLocator.class",
+      "melox/diagnostics/MeloXProcessLogs.class",
+      "melox/ui/screens/MeloXPlayerQualityKt.class",
+      "melox/ui/theme/MeloXFontKt.class"
+    ],
+    "build_revision_verified": true
+  },
+  "windows_decoder": {
+    "location": "final ZIP!/app JAR!/decoder/ffmpeg.exe",
+    "bytes": 164352000,
+    "sha256": "af7913b7ddc324bf02b8af72fe8612b1471455ef8d9e04e45466510742abcff9",
+    "magic": "PE",
+    "verified": true
+  },
+  "pinned_resources": [
+    {
+      "resource": "legal/cloud-control-privacy-zh-CN.md",
+      "bytes": 5020,
+      "sha256": "7030f44dda89b27357ba4b960562d5eae98d9b5ae451a8a398e4fb6cc68f5793",
+      "verified": true
+    },
+    {
+      "resource": "legal/disclaimer-zh-CN.md",
+      "bytes": 5015,
+      "sha256": "4c6e212bb6c78bd2fa6e45a76136cba6a5cfd82c1321dfdf27d727df2a50c44e",
+      "verified": true
+    },
+    {
+      "resource": "legal/privacy-policy-zh-CN.md",
+      "bytes": 7233,
+      "sha256": "fdf41c3aea883220ba8070823b1a35d1156869117ed607f6b5c2769997ceb097",
+      "verified": true
+    },
+    {
+      "resource": "legal/third-party-music-sources-zh-CN.md",
+      "bytes": 3167,
+      "sha256": "4aefd5137ea6e9a2da335671753dca4d8aebcdcf0ddc903c00a03bc89ef62c38",
+      "verified": true
+    },
+    {
+      "resource": "parity/pinned-settings-strings.properties",
+      "bytes": 17451,
+      "sha256": "649df6af06ded94e91b6f4c728aafe2e29c76ba981097503f869e3fd8144fbc4",
+      "verified": true
+    },
+    {
+      "resource": "fonts/mi_lan_pro_vf.ttf",
+      "bytes": 19646728,
+      "sha256": "15fc7accb0afcbb7cf3bbf776536a37398e552f082bb13af70602bf1d7ed676f",
+      "verified": true
+    }
+  ],
+  "physical_audible_acceptance": "BLOCKED",
+  "user_report_resolution": "UNCONFIRMED"
+}
