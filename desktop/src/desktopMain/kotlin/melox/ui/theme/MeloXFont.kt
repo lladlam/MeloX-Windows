@@ -43,22 +43,51 @@ private fun loadFont(path: String, weight: FontWeight, axisWeight: Int = weight.
 
 private object MeloXFontLoader
 
-/** Android CSS 800/900 both select wght=700. SkParagraph synthesizes bold when
- * requested weight minus the native face weight is >=200, even with Compose
- * FontSynthesis.None. Request the equivalent 800 alias to retain the exact
- * pinned outlines/advances instead of emboldening the 700 face a second time.
- * Persisted logical weight and source variable-font bytes remain untouched.
- */
-internal fun lanTingRenderWeight(weight: FontWeight): FontWeight =
-    if (weight == FontWeight.Black) FontWeight.ExtraBold else weight
+// Pinned Android res/font/mi_lan_pro.xml: nine CSS weights; 800 and 900 both
+// select axis 700. Windows Skia applies the wght axis to outlines but keeps
+// default-axis advance widths for the *variable* font, so lyrics get heavy
+// glyphs on light advances and letters overlap. The package therefore ships
+// axis-frozen static instances (tools/generate_lanting_static.py) whose outlines
+// and hmtx advances are baked per weight and validated to shape identically to
+// the pinned variable font at each axis. The pinned variable font stays in the
+// package unchanged as the hash-verified source.
+private val LAN_TING_CSS_WEIGHTS = listOf(100, 200, 300, 400, 500, 600, 700, 800, 900)
+private fun lanTingStaticPath(cssWeight: Int): String =
+    "fonts/mi_lan_pro_w${if (cssWeight == 900) 800 else cssWeight}.ttf"
+
+private fun loadStaticFont(path: String, weight: FontWeight): Font? = try {
+    val cl = Thread.currentThread().contextClassLoader
+        ?: MeloXFontLoader::class.java.classLoader
+        ?: return null
+    val url = cl.getResource(path) ?: return null
+    val file = try {
+        java.io.File(url.toURI())
+    } catch (e: Exception) {
+        // All CSS entries share their per-instance file; never copy identical fonts.
+        extractedFonts.computeIfAbsent(url.toExternalForm()) {
+            val temp = java.io.File.createTempFile("melox_font_", ".ttf")
+            try {
+                url.openStream().use { input -> temp.outputStream().use { output -> input.copyTo(output) } }
+                temp.deleteOnExit()
+                temp
+            } catch (error: Exception) {
+                temp.delete()
+                throw error
+            }
+        }
+    }
+    DesktopFont(file = file, weight = weight, style = FontStyle.Normal,
+        variationSettings = FontVariation.Settings())
+} catch (e: Exception) {
+    melox.platform.logError("MeloXFont", "Failed to load static font $path: ${e.javaClass.simpleName}: ${e.message}")
+    null
+}
 
 private val MiLanPro = run {
-    // Android res/font/mi_lan_pro.xml maps CSS weights to private axis coordinates.
-    val axes = listOf(100 to 150, 200 to 200, 300 to 250, 400 to 340,
-        500 to 400, 600 to 540, 700 to 630, 800 to 700, 900 to 700)
-    val fonts = axes.mapNotNull { (weight, axis) -> loadFont("fonts/mi_lan_pro_vf.ttf", FontWeight(weight), axis) }
-    check(fonts.size == axes.size) { "Android 小米兰亭 Pro 字体未完整加载：fonts/mi_lan_pro_vf.ttf" }
-    melox.platform.logInfo("MeloXFont", "Android MiLan Pro loaded: fonts/mi_lan_pro_vf.ttf; CSS/axis weights=$axes")
+    val fonts = LAN_TING_CSS_WEIGHTS.mapNotNull { css -> loadStaticFont(lanTingStaticPath(css), FontWeight(css)) }
+    check(fonts.size == LAN_TING_CSS_WEIGHTS.size) { "Android 小米兰亭 Pro 静态字重未完整加载" }
+    melox.platform.logInfo("MeloXFont", "Android MiLan Pro static instances loaded: CSS=$LAN_TING_CSS_WEIGHTS " +
+        "files=mi_lan_pro_w{100..800}.ttf (CSS 900 shares frozen axis-700 instance)")
     FontFamily(fonts)
 }
 
@@ -82,16 +111,28 @@ internal fun meloXSfTypeface(weight: FontWeight): org.jetbrains.skia.Typeface =
     sfTypefaces.getValue(weight)
 
 private val lyricTypefaces by lazy {
-    val bytes = requireNotNull(MeloXFontLoader::class.java.getResourceAsStream("/fonts/mi_lan_pro_vf.ttf")).use { it.readBytes() }
-    org.jetbrains.skia.Data.makeFromBytes(bytes).use { data ->
-        val base = requireNotNull(org.jetbrains.skia.FontMgr.default.makeFromData(data))
-        try {
-            melox.platform.logInfo("MeloXFont", "Native lyric typeface loaded: family=${base.familyName}; bytes=${bytes.size}")
-            listOf(100 to 150, 200 to 200, 300 to 250, 400 to 340, 500 to 400, 600 to 540,
-                700 to 630, 800 to 700, 900 to 700).associate { (weight, axis) ->
-                weight to base.makeClone(org.jetbrains.skia.FontVariation("wght", axis.toFloat()))
+    LAN_TING_CSS_WEIGHTS.associate { css ->
+        val path = "/${lanTingStaticPath(css)}"
+        val bytes = requireNotNull(MeloXFontLoader::class.java.getResourceAsStream(path)) {
+            "Missing static MiLan Pro resource $path"
+        }.use { it.readBytes() }
+        css to org.jetbrains.skia.Data.makeFromBytes(bytes).use { data ->
+            requireNotNull(org.jetbrains.skia.FontMgr.default.makeFromData(data)) { "Cannot load $path" }
+        }
+    }.also { map ->
+        check(map.size == LAN_TING_CSS_WEIGHTS.size)
+        map.forEach { (css, typeface) ->
+            // A static instance must expose no variation axes; otherwise the
+            // Windows design-advance collapse could return.
+            require(typeface.variationAxes.isNullOrEmpty()) { "MiLan Pro CSS $css is not axis-frozen" }
+            val expectedStyleWeight = if (css == 900) 800 else css
+            require(typeface.fontStyle.weight == expectedStyleWeight) {
+                "MiLan Pro CSS $css reports style weight ${typeface.fontStyle.weight}, expected $expectedStyleWeight"
             }
-        } finally { base.close() }
+        }
+        val sample = map.getValue(400)
+        melox.platform.logInfo("MeloXFont",
+            "Native lyric static typefaces loaded: family=${sample.familyName}; css=$LAN_TING_CSS_WEIGHTS; variations=0")
     }
 }
 

@@ -1,0 +1,404 @@
+{
+  "check": "axis-frozen 小米兰亭 Pro instances shaped identically to the pinned variable font at each pinned axis",
+  "source": {
+    "file": "desktop/src/main/resources/fonts/mi_lan_pro_vf.ttf",
+    "bytes": 19646728,
+    "sha256": "15fc7accb0afcbb7cf3bbf776536a37398e552f082bb13af70602bf1d7ed676f"
+  },
+  "pinned_android": "3f877eaffe30c82eb6d24eb3647702f5bc554dd3",
+  "axes": [
+    [
+      100,
+      150
+    ],
+    [
+      200,
+      200
+    ],
+    [
+      300,
+      250
+    ],
+    [
+      400,
+      340
+    ],
+    [
+      500,
+      400
+    ],
+    [
+      600,
+      540
+    ],
+    [
+      700,
+      630
+    ],
+    [
+      800,
+      700
+    ]
+  ],
+  "css900": {
+    "reuses_css": 800
+  },
+  "fixtures": [
+    "Everything that you know will be changing",
+    "Like, like, like, yeah",
+    "你熟悉的日常都将重启",
+    "Lookin’ so sharp like"
+  ],
+  "harfbuzz": "14.6.0",
+  "entries": [
+    {
+      "css": 100,
+      "axis": 150,
+      "file": "fonts/mi_lan_pro_w100.ttf",
+      "bytes": 8230208,
+      "sha256": "70fb2b294260ce912eadb10ac56d4a273622e7a65d95d38242138e0ee4ee32d1",
+      "us_weight_class": 100,
+      "generation": [
+        {
+          "kind": "class1_pad",
+          "lookup": 0,
+          "subtable": 1,
+          "from_": 1,
+          "to": 3
+        },
+        {
+          "kind": "class1_pad",
+          "lookup": 1,
+          "subtable": 1,
+          "from_": 1,
+          "to": 3
+        },
+        {
+          "kind": "class2_pad",
+          "lookup": 1,
+          "subtable": 1,
+          "from_": 2,
+          "to": 89
+        },
+        {
+          "kind": "class1_pad",
+          "lookup": 1,
+          "subtable": 2,
+          "from_": 2,
+          "to": 89
+        },
+        {
+          "kind": "advances_written",
+          "count": 0
+        }
+      ]
+    },
+    {
+      "css": 200,
+      "axis": 200,
+      "file": "fonts/mi_lan_pro_w200.ttf",
+      "bytes": 8290892,
+      "sha256": "4fa164e4bde9fabea333d03f4e6fb86b6658518f8f1eb89559b420cd2bd81255",
+      "us_weight_class": 200,
+      "generation": [
+        {
+          "kind": "class1_pad",
+          "lookup": 0,
+          "subtable": 1,
+          "from_": 1,
+          "to": 3
+        },
+        {
+          "kind": "class1_pad",
+          "lookup": 1,
+          "subtable": 1,
+          "from_": 1,
+          "to": 3
+        },
+        {
+          "kind": "class2_pad",
+          "lookup": 1,
+          "subtable": 1,
+          "from_": 2,
+          "to": 89
+        },
+        {
+          "kind": "class1_pad",
+          "lookup": 1,
+          "subtable": 2,
+          "from_": 2,
+          "to": 89
+        },
+        {
+          "kind": "advances_written",
+          "count": 258
+        }
+      ]
+    },
+    {
+      "css": 300,
+      "axis": 250,
+      "file": "fonts/mi_lan_pro_w300.ttf",
+      "bytes": 8298388,
+      "sha256": "ac472c7958aed104315463ce22c9a554816f39845c6b2e6c045fb076d0c439bf",
+      "us_weight_class": 300,
+      "generation": [
+        {
+          "kind": "class1_pad",
+          "lookup": 0,
+          "subtable": 1,
+          "from_": 1,
+          "to": 3
+        },
+        {
+          "kind": "class1_pad",
+          "lookup": 1,
+          "subtable": 1,
+          "from_": 1,
+          "to": 3
+        },
+        {
+          "kind": "class2_pad",
+          "lookup": 1,
+          "subtable": 1,
+          "from_": 2,
+          "to": 89
+        },
+        {
+          "kind": "class1_pad",
+          "lookup": 1,
+          "subtable": 2,
+          "from_": 2,
+          "to": 89
+        },
+        {
+          "kind": "advances_written",
+          "count": 262
+        }
+      ]
+    },
+    {
+      "css": 400,
+      "axis": 340,
+      "file": "fonts/mi_lan_pro_w400.ttf",
+      "bytes": 8301192,
+      "sha256": "42bfe38b9178b7175ff683ae9de55795ff262a5bbb2b346f662eb3aa5e37a8ab",
+      "us_weight_class": 400,
+      "generation": [
+        {
+          "kind": "class1_pad",
+          "lookup": 0,
+          "subtable": 1,
+          "from_": 1,
+          "to": 3
+        },
+        {
+          "kind": "class1_pad",
+          "lookup": 1,
+          "subtable": 1,
+          "from_": 1,
+          "to": 3
+        },
+        {
+          "kind": "class2_pad",
+          "lookup": 1,
+          "subtable": 1,
+          "from_": 2,
+          "to": 89
+        },
+        {
+          "kind": "class1_pad",
+          "lookup": 1,
+          "subtable": 2,
+          "from_": 2,
+          "to": 89
+        },
+        {
+          "kind": "advances_written",
+          "count": 262
+        }
+      ]
+    },
+    {
+      "css": 500,
+      "axis": 400,
+      "file": "fonts/mi_lan_pro_w500.ttf",
+      "bytes": 8297116,
+      "sha256": "2ecf68785b40da3150812212ec84eb77676f82dca94e277c0b5c2cf32fdd5ba7",
+      "us_weight_class": 500,
+      "generation": [
+        {
+          "kind": "class1_pad",
+          "lookup": 0,
+          "subtable": 1,
+          "from_": 1,
+          "to": 3
+        },
+        {
+          "kind": "class1_pad",
+          "lookup": 1,
+          "subtable": 1,
+          "from_": 1,
+          "to": 3
+        },
+        {
+          "kind": "class2_pad",
+          "lookup": 1,
+          "subtable": 1,
+          "from_": 2,
+          "to": 89
+        },
+        {
+          "kind": "class1_pad",
+          "lookup": 1,
+          "subtable": 2,
+          "from_": 2,
+          "to": 89
+        },
+        {
+          "kind": "advances_written",
+          "count": 262
+        }
+      ]
+    },
+    {
+      "css": 600,
+      "axis": 540,
+      "file": "fonts/mi_lan_pro_w600.ttf",
+      "bytes": 8319260,
+      "sha256": "d198e5ef2c9c1deff7ee358483591a01564fe783dec24abde05dda704d0d952c",
+      "us_weight_class": 600,
+      "generation": [
+        {
+          "kind": "class1_pad",
+          "lookup": 0,
+          "subtable": 1,
+          "from_": 1,
+          "to": 3
+        },
+        {
+          "kind": "class1_pad",
+          "lookup": 1,
+          "subtable": 1,
+          "from_": 1,
+          "to": 3
+        },
+        {
+          "kind": "class2_pad",
+          "lookup": 1,
+          "subtable": 1,
+          "from_": 2,
+          "to": 89
+        },
+        {
+          "kind": "class1_pad",
+          "lookup": 1,
+          "subtable": 2,
+          "from_": 2,
+          "to": 89
+        },
+        {
+          "kind": "advances_written",
+          "count": 271
+        }
+      ]
+    },
+    {
+      "css": 700,
+      "axis": 630,
+      "file": "fonts/mi_lan_pro_w700.ttf",
+      "bytes": 8322248,
+      "sha256": "32a6cab672d95e961de693658417c7085c92fc11e90682293d85b7c6f449cc45",
+      "us_weight_class": 700,
+      "generation": [
+        {
+          "kind": "class1_pad",
+          "lookup": 0,
+          "subtable": 1,
+          "from_": 1,
+          "to": 3
+        },
+        {
+          "kind": "class1_pad",
+          "lookup": 1,
+          "subtable": 1,
+          "from_": 1,
+          "to": 3
+        },
+        {
+          "kind": "class2_pad",
+          "lookup": 1,
+          "subtable": 1,
+          "from_": 2,
+          "to": 89
+        },
+        {
+          "kind": "class1_pad",
+          "lookup": 1,
+          "subtable": 2,
+          "from_": 2,
+          "to": 89
+        },
+        {
+          "kind": "advances_written",
+          "count": 271
+        }
+      ]
+    },
+    {
+      "css": 800,
+      "axis": 700,
+      "file": "fonts/mi_lan_pro_w800.ttf",
+      "bytes": 8315512,
+      "sha256": "1daa60bd0678ce0cee06744e798bfcbd21339cac9ed305afefb8dc87a44ceb01",
+      "us_weight_class": 800,
+      "generation": [
+        {
+          "kind": "class1_pad",
+          "lookup": 0,
+          "subtable": 1,
+          "from_": 1,
+          "to": 3
+        },
+        {
+          "kind": "class1_pad",
+          "lookup": 1,
+          "subtable": 1,
+          "from_": 1,
+          "to": 3
+        },
+        {
+          "kind": "class2_pad",
+          "lookup": 1,
+          "subtable": 1,
+          "from_": 2,
+          "to": 89
+        },
+        {
+          "kind": "class1_pad",
+          "lookup": 1,
+          "subtable": 2,
+          "from_": 2,
+          "to": 89
+        },
+        {
+          "kind": "advances_written",
+          "count": 271
+        }
+      ]
+    },
+    {
+      "css": 900,
+      "axis": 700,
+      "file": "fonts/mi_lan_pro_w800.ttf",
+      "bytes": 8315512,
+      "sha256": "1daa60bd0678ce0cee06744e798bfcbd21339cac9ed305afefb8dc87a44ceb01",
+      "us_weight_class": 800,
+      "generation": {
+        "reuses_css": 800
+      }
+    }
+  ],
+  "physical_windows_acceptance": "BLOCKED",
+  "android_pixel_acceptance": "BLOCKED"
+}

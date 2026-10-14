@@ -37,7 +37,6 @@ import melox.lyrics.*
 import melox.settings.MeloXLyricsRenderingQuality
 import melox.settings.MeloXSettingsRuntime
 import melox.ui.theme.MeloXLanTingProFontFamily
-import melox.ui.theme.lanTingRenderWeight
 import org.jetbrains.skia.FilterTileMode
 import org.jetbrains.skia.ImageFilter
 import org.jetbrains.skia.Paint
@@ -63,7 +62,7 @@ internal fun MeloXGlyphLyricText(
     val density = LocalDensity.current
     val isRtl = LocalLayoutDirection.current == LayoutDirection.Rtl
     val flipped = line.agent?.alignment == LyricAgentAlignment.Flipped
-    val weight = lanTingRenderWeight(MeloXSettingsRuntime.lyricFontWeight.composeWeight)
+    val weight = MeloXSettingsRuntime.lyricFontWeight.composeWeight
     val measurer = rememberTextMeasurer(cacheSize = 64)
     BoxWithConstraints(modifier) {
         val width = with(density) { maxWidth.roundToPx().coerceAtLeast(1) }
@@ -251,7 +250,7 @@ internal fun MeloXRubyLyricText(line: LyricLine, time: () -> Long, timed: Boolea
                 val size = max(34f * fontScale * MeloXSettingsRuntime.lyricRomanizationFontScale, 13f)
                 Text(line.romanization.orEmpty(), color = Color.White.copy(alpha = MeloXSettingsRuntime.lyricRomanizationOpacity),
                     fontFamily = MeloXLanTingProFontFamily, fontSize = size.sp, lineHeight = (size * 1.2f).sp,
-                    fontWeight = lanTingRenderWeight(MeloXSettingsRuntime.lyricFontWeight.composeWeight),
+                    fontWeight = MeloXSettingsRuntime.lyricFontWeight.composeWeight,
                     textAlign = if (line.agent?.alignment == LyricAgentAlignment.Flipped) TextAlign.End else TextAlign.Start,
                     modifier = Modifier.fillMaxWidth().padding(top = 4.dp))
             }
@@ -277,7 +276,7 @@ internal fun MeloXRubyLyricText(line: LyricLine, time: () -> Long, timed: Boolea
                         alpha = if (!timed || unit.originalSyllables.isEmpty()) 1f else .3f +
                             ((time() - start).toFloat() / (end - start)).coerceIn(0f, 1f) * .7f
                     }, fontSize = primarySize.sp, lineHeight = (40.8f * fontScale).sp,
-                    fontWeight = lanTingRenderWeight(MeloXSettingsRuntime.lyricFontWeight.composeWeight), maxLines = 1,
+                    fontWeight = MeloXSettingsRuntime.lyricFontWeight.composeWeight, maxLines = 1,
                     style = TextStyle(shadow = if (blur > .05f) Shadow(Color.White.copy(alpha = .48f), Offset.Zero, blur) else null))
                 val romanization = unit.romanizationText
                 if (!romanization.isNullOrBlank()) {
@@ -285,7 +284,7 @@ internal fun MeloXRubyLyricText(line: LyricLine, time: () -> Long, timed: Boolea
                     val rubyCount = romanization.codePointCount(0, romanization.length).coerceAtLeast(1)
                     Text(romanization, color = Color.White.copy(alpha = MeloXSettingsRuntime.lyricRomanizationOpacity),
                         fontFamily = MeloXLanTingProFontFamily, fontSize = (rubySize * (originalCount * 1.85f / rubyCount).coerceIn(.68f, 1f)).sp,
-                        lineHeight = (rubySize * 1.2f).sp, fontWeight = lanTingRenderWeight(MeloXSettingsRuntime.lyricFontWeight.composeWeight), maxLines = 1,
+                        lineHeight = (rubySize * 1.2f).sp, fontWeight = MeloXSettingsRuntime.lyricFontWeight.composeWeight, maxLines = 1,
                         style = TextStyle(shadow = if (blur > .05f) Shadow(Color.White.copy(alpha = .42f), Offset.Zero, blur) else null))
                 }
             }

@@ -19,7 +19,6 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import melox.ui.theme.MeloXLanTingProFontFamily
 import melox.ui.theme.meloXLyricTypeface
-import melox.ui.theme.lanTingRenderWeight
 import org.jetbrains.skia.EncodedImageFormat
 import org.jetbrains.skia.Font
 import org.jetbrains.skia.Paint
@@ -43,30 +42,57 @@ fun main(args: Array<String>) = runBlocking {
         .joinToString("") { "%02x".format(it) }
     check(digest == referenceData.getString("font_sha256"))
     val references = referenceData.getJSONArray("rows")
-    var correctedFailures = 0
-    var rejectedHeavyControls = 0
-    var correctedCases = 0
+    val staticManifest = JSONObject(requireNotNull(Thread.currentThread().contextClassLoader
+        .getResourceAsStream("parity/mi-lan-pro-static.json")).bufferedReader().use { it.readText() })
+    check(staticManifest.getJSONObject("source").getString("sha256") == digest)
+    val entries = staticManifest.getJSONArray("entries")
+    val styleWeightByCss = mutableMapOf<Int, Int>()
+    val distinctFiles = mutableSetOf<String>()
+    for (i in 0 until entries.length()) {
+        val entry = entries.getJSONObject(i)
+        val css = entry.getInt("css")
+        styleWeightByCss[css] = entry.getInt("us_weight_class")
+        val bytes = requireNotNull(Thread.currentThread().contextClassLoader
+            .getResourceAsStream(entry.getString("file"))).use { it.readBytes() }
+        val sha = java.security.MessageDigest.getInstance("SHA-256").digest(bytes)
+            .joinToString("") { "%02x".format(it) }
+        require(sha == entry.getString("sha256")) { "static instance ${entry.getString("file")} hash mismatch" }
+        distinctFiles += entry.getString("file")
+    }
+    check(distinctFiles.size == 8) { "expected 8 frozen instance files, found ${distinctFiles.size}" }
+    var failedCases = 0
+    var frozenTypefacesVerified = 0
+    var totalCases = 0
     withContext(Dispatchers.Main) {
         for (index in 0 until references.length()) for (size in listOf(34f, 59.5f, 23.12f))
-            for (mode in listOf("All", "None", "Corrected")) {
+            for (mode in listOf("All", "None")) {
             val expected = references.getJSONObject(index)
             val weight = expected.getInt("css")
             val fixture = expected.getInt("fixture")
             val synthesis = if (mode == "All") FontSynthesis.All else FontSynthesis.None
-            val renderWeight = if (mode == "Corrected") lanTingRenderWeight(FontWeight(weight)) else FontWeight(weight)
+            val renderWeight = FontWeight(weight)
             val text = expected.getString("text")
+            // Subpixel sampling keeps the reference row aligned with Android-like
+            // linear (unhinted) rasterization; observed thin-stroke bias vs the
+            // SkParagraph row stays inside the documented envelope below.
             val native = Font(meloXLyricTypeface(FontWeight(weight)), size).apply { isSubpixel = true }
             val prefix = "$weight-$fixture-$size-$mode"
             val record = JSONObject().put("weight", weight).put("mode", mode).put("render_weight", renderWeight.weight)
                 .put("fixture", fixture).put("size_px", size).put("reference_axis", expected.getInt("axis"))
             record.put("native_advances", JSONArray(native.getWidths(native.getStringGlyphs(text)).toList()))
             if (size == 34f && fixture == 0) {
-                // Separate SkParagraph shaping from the native scaler/HVAR metrics:
-                // if measureTextWidth already collapses, only static axis instances help.
+                // Static instances must expose no variation axis and the frozen
+                // OS/2 style weight; a variable face here would reopen the
+                // Windows design-advance collapse.
+                val variations = native.typeface?.variations ?: emptyArray()
                 record.put("native_measure_width", native.measureTextWidth(text))
                     .put("typeface_style", native.typeface?.fontStyle?.toString())
-                    .put("typeface_variations", JSONArray((native.typeface?.variations ?: emptyArray())
-                        .map { JSONObject().put("tag", it.tag).put("value", it.value) }))
+                    .put("typeface_variations", JSONArray(variations.map { JSONObject().put("tag", it.tag).put("value", it.value) }))
+                require(variations.isEmpty()) { "CSS $weight typeface still has variation axes" }
+                require(native.typeface?.fontStyle?.weight == styleWeightByCss[weight]) {
+                    "CSS $weight typeface style weight ${native.typeface?.fontStyle?.weight} != ${styleWeightByCss[weight]}"
+                }
+                frozenTypefacesVerified++
             }
             val scene = ImageComposeScene(1600, 180) {
                 val measurer = rememberTextMeasurer()
@@ -106,25 +132,32 @@ fun main(args: Array<String>) = runBlocking {
                     .put("ink_ratio", candidate.toDouble() / reference)
                     .put("normalized_difference", difference.toDouble() / reference)
                 val advanceError = abs(record.getDouble("compose_width") - record.getDouble("reference_width"))
-                val inkError = abs(candidate.toDouble() / reference - 1)
-                // Independent advances catch spacing errors; independent native
-                // outlines catch weight synthesis even when both Compose paths agree.
-                val passed = advanceError <= .35 && (weight != 900 || inkError <= .05)
+                val inkRatio = candidate.toDouble() / reference
+                // Independent HarfBuzz advances catch spacing/advance collapse.
+                // The ink envelope catches outline substitution: excess ink above
+                // +5% is synthetic bold (measured +19..22% when it existed); the
+                // -15% floor allows the measured thin-stroke sampling bias of
+                // SkParagraph vs the linear reference (worst -9.7%, CSS 100 CJK
+                // at 34 px on Linux; Windows rows rasterize identical, ratio 1.0).
+                val passed = advanceError <= .35 && inkRatio <= 1.05 && inkRatio >= 0.85
                 record.put("advance_error_px", advanceError).put("accepted", passed)
-                if (mode == "Corrected") { correctedCases++; if (!passed) correctedFailures++ }
-                else if (weight == 900 && !passed) rejectedHeavyControls++
+                totalCases++
+                if (!passed) failedCases++
                 println("Font outlines $prefix ink=${candidate.toDouble() / reference} advanceError=$advanceError accepted=$passed")
                 rows.put(record)
             } finally { scene.close(); native.close() }
         }
     }
+    val passedAll = failedCases == 0 && frozenTypefacesVerified >= 5
     File(out, "metrics.json").writeText(JSONObject().put("results", rows).put("font_sha256", digest)
-        .put("os", System.getProperty("os.name")).put("corrected_cases", correctedCases)
-        .put("corrected_failures", correctedFailures).put("rejected_heavy_controls", rejectedHeavyControls)
-        .put("advance_limit_px", .35).put("heavy_ink_relative_limit", .05)
-        .put("status", if (correctedFailures == 0 && rejectedHeavyControls == 24) "PASSED" else "FAILED")
+        .put("os", System.getProperty("os.name")).put("total_cases", totalCases)
+        .put("failed_cases", failedCases).put("static_files_verified", distinctFiles.size)
+        .put("frozen_typefaces_verified", frozenTypefacesVerified)
+        .put("advance_limit_px", .35).put("ink_ratio_lower", 0.85).put("ink_ratio_upper", 1.05)
+        .put("status", if (passedAll) "PASSED" else "FAILED")
         .put("android_pixel_acceptance", "BLOCKED").toString(2))
-    check(correctedFailures == 0 && rejectedHeavyControls == 24) {
-        "Independent font audit: $correctedFailures corrected failures; $rejectedHeavyControls/24 rejected Heavy controls"
+    check(passedAll) {
+        "Independent font audit: $failedCases/$totalCases cases failed; " +
+            "static files ${distinctFiles.size}/8; frozen typefaces $frozenTypefacesVerified"
     }
 }

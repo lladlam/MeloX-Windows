@@ -104,3 +104,71 @@ A native `Font.measureTextWidth` probe per axis was added to determine whether
 the Windows scaler/HVAR metrics collapse or only SkParagraph does; that decides
 between a static-instance font fix and a shaping-configuration fix. The probe
 revision is `275bc2e`. The user's report remains open.
+
+## Windows probe verdict (run 38534556444)
+
+The probe isolated the defect to the **native font-metrics layer on Windows**,
+not to paragraph shaping configuration. For the same frozen font bytes, the
+Windows native typeface reports the correct per-axis style and outline ink, but
+`Font.measureTextWidth` returns one constant value for every axis:
+
+| CSS weight | Windows native width | Compose paragraph | HarfBuzz reference |
+|---:|---:|---:|---:|
+| 100 | 676.056 | 666.33 | 666.33 |
+| 400 | 676.056 | 668.14 | 694.89 |
+| 700 | 676.056 | 670.41 | 749.63 |
+| 800/900 | 676.056 | 670.92 | 763.74 |
+
+The Windows text stack applies the variable-font `wght` axis to glyph
+**outlines** (gvar) but keeps default-axis **advance widths** (the HVAR/VVAR
+advance deltas never reach the design metrics). The Linux FreeType pipeline
+applies both, so Linux measured 682→770 natively and passed every gate — a
+self-consistent but Windows-irrelevant result. No shaping configuration can
+restore an advance delta the platform font stack discards.
+
+## Correction: axis-frozen static instances
+
+Because the defect is in the platform's handling of *variable* advances, the
+desktop package now ships **static per-weight instances** of the pinned font
+(`tools/generate_lanting_static.py`): outlines and hmtx advances are baked at
+each Android-mapped axis, so every platform reads plain design metrics.
+
+- Source of truth is unchanged: the pinned 19,646,728-byte
+  `mi_lan_pro_vf.ttf` (sha256 `15fc7acc…ed676f`) stays in the package as the
+  hash-verified Android-identical resource and is never edited.
+- Eight instances cover the nine Android XML entries: CSS 100/200/300/400/500/
+  600/700/800 at axes 150/200/250/340/400/540/630/700; CSS 900 reuses the
+  axis-700 instance exactly as Android maps it. Manifest:
+  `parity/mi-lan-pro-static.json`.
+- Generation normalizes two source quirks without changing shaping:
+  over-range GPOS ClassDef entries (HarfBuzz skips those pairs; counts are
+  padded with zero-kern rows, identical result), and fontTools' reliance on gvar
+  phantom points for advances (this font encodes them in HVAR, so every glyph
+  advance is written from HarfBuzz's own HVAR-aware measurement).
+- **Equality gate**: each instance must shape (advances + GPOS kerning)
+  *exactly* equal to the pinned variable font at its pinned axis for the four
+  shipped fixtures, otherwise generation fails. `--verify` re-derives all bytes
+  in memory and must match the committed files (CI runs it).
+- `MeloXFont` loads the static instances, asserts zero variation axes and the
+  frozen OS/2 style weight per CSS entry, and keeps the persisted `Heavy`
+  setting meaning unchanged. The earlier `lanTingRenderWeight` alias is removed:
+  static CSS 900 carries its own entry, so no synthesis path can trigger.
+- The user-facing effect: Heavy glyphs now sit on Heavy advances, matching the
+  Android-variable rendering that the static instance provably equals.
+
+`auditFontMetrics` gates all 120 cases (20 references x 3 sizes x 2 synthesis
+modes): shaped paragraph advance within 0.35 px of the independent HarfBuzz
+reference, and ink inside the asymmetric envelope `[0.85, 1.05]` of the
+independent native static outlines — excess ink above +5% is the synthetic
+bold class (measured +19..22% when it existed), while the -15% floor tolerates
+the measured thin-stroke sampling bias of SkParagraph vs the linear reference
+(worst observed -9.7%: CSS 100 CJK at 34 px on Linux; Windows rasterizes the
+two rows identically, ratio 1.0). All 8 instance file hashes are matched
+against the packaged manifest, plus frozen-typeface assertions (zero variation
+axes, frozen OS/2 style weight). The old Heavy negative controls are retired
+because the synthetic path they guarded no longer exists (in synthesis-All mode
+the ink is now bit-identical to synthesis-None — evidence the path is gone;
+a regression reintroducing it would fail the upper ink bound or the advance
+gate instead).
+
+The user's report remains open pending a fresh Windows 10 package check.

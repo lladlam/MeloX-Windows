@@ -30,6 +30,11 @@ jobs:
         run: python tools/verify_decoder_bundle.py --sources --run --output desktop/build/verification/source-decoder.json
       - name: Verify pinned source resource bytes
         run: python tools/verify_pinned_resources.py --sources --output desktop/build/verification/source-pinned-resources.json
+      - name: Verify axis-frozen MiLan Pro instances from pinned variable source
+        shell: pwsh
+        run: |
+          python -m pip install --quiet "fonttools>=4.55" uharfbuzz
+          python tools/generate_lanting_static.py --verify
       - name: Build uber jar
         run: gradle :shared:desktopTest :desktop:packageUberJarForCurrentOS
       - name: Verify native equalizer PCM

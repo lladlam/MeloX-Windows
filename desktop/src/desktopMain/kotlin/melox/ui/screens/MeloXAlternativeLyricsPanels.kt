@@ -116,10 +116,10 @@ private fun EvaComposition(line: LyricLine, previous: LyricLine?, next: LyricLin
     val length = line.text.codePointCount(0, line.text.length)
     Column(Modifier.fillMaxWidth().testTag("lyric-line-$lineIndex").semantics { this[MeloXLyricTimeMsKey] = line.timeMs }
         .padding(horizontal = 30.dp).clickable(onClick = onSeek), verticalArrangement = Arrangement.Center) {
-        previous?.let { Text(it.text.uppercase(), color = Color.White.copy(alpha = .20f), fontSize = 16.sp, fontWeight = melox.ui.theme.lanTingRenderWeight(FontWeight.Black), maxLines = 1, overflow = TextOverflow.Ellipsis, modifier = Modifier.rotate(-2f)) }
+        previous?.let { Text(it.text.uppercase(), color = Color.White.copy(alpha = .20f), fontSize = 16.sp, fontWeight = FontWeight.Black, maxLines = 1, overflow = TextOverflow.Ellipsis, modifier = Modifier.rotate(-2f)) }
         Spacer(Modifier.size(18.dp))
         when {
-            length <= 7 -> Text(line.text, color = Color.White, fontSize = 52.sp, lineHeight = 55.sp, fontWeight = melox.ui.theme.lanTingRenderWeight(FontWeight.Black), letterSpacing = (-1).sp, modifier = Modifier.rotate(-1.5f))
+            length <= 7 -> Text(line.text, color = Color.White, fontSize = 52.sp, lineHeight = 55.sp, fontWeight = FontWeight.Black, letterSpacing = (-1).sp, modifier = Modifier.rotate(-1.5f))
             length <= 18 -> Row(verticalAlignment = Alignment.Bottom) {
                 Box(Modifier.size(width = 5.dp, height = 48.dp).background(Color.White)); Spacer(Modifier.width(14.dp))
                 Text(line.text, color = Color.White, fontSize = 38.sp, lineHeight = 43.sp, fontWeight = FontWeight.ExtraBold, modifier = Modifier.weight(1f))
@@ -202,7 +202,7 @@ private fun TextPVComposition(line: LyricLine, next: LyricLine?, style: MeloXTex
         Column(Modifier.fillMaxWidth(.94f).testTag("lyric-line-$lineIndex").semantics { this[MeloXLyricTimeMsKey] = line.timeMs }
             .clickable(onClick = onSeek), horizontalAlignment = when (spec.textAlign) { TextAlign.Center -> Alignment.CenterHorizontally; TextAlign.End -> Alignment.End; else -> Alignment.Start }) {
             spec.marker?.let { Text("$it // ${((line.timeMs / 10) % 1000).toString().padStart(3, '0')}", color = spec.accent, fontSize = 11.sp, letterSpacing = 2.sp) }
-            Text(if (spec.uppercase) line.text.uppercase() else line.text, color = spec.foreground, fontSize = spec.fontSize.sp, lineHeight = spec.lineHeight.sp, fontWeight = melox.ui.theme.lanTingRenderWeight(spec.weight), letterSpacing = spec.letterSpacing.sp, textAlign = spec.textAlign,
+            Text(if (spec.uppercase) line.text.uppercase() else line.text, color = spec.foreground, fontSize = spec.fontSize.sp, lineHeight = spec.lineHeight.sp, fontWeight = spec.weight, letterSpacing = spec.letterSpacing.sp, textAlign = spec.textAlign,
                 modifier = Modifier.rotate(spec.rotation).graphicsLayer { val wave = sin(phaseProvider() * 2 * PI.toFloat()) * motionIntensity; translationX = wave * spec.motionX; translationY = wave * spec.motionY; scaleX = 1 + wave * spec.pulse; scaleY = 1 + wave * spec.pulse })
             if (MeloXSettingsRuntime.showLyricTranslation && !line.translation.isNullOrBlank()) Text(line.translation.orEmpty(), color = spec.foreground.copy(alpha = .62f), fontSize = 15.sp, textAlign = spec.textAlign, modifier = Modifier.padding(top = 12.dp))
             next?.let { Text(it.text, color = spec.foreground.copy(alpha = spec.nextOpacity), fontSize = 17.sp, maxLines = 1, overflow = TextOverflow.Ellipsis, textAlign = spec.textAlign, modifier = Modifier.padding(top = 24.dp)) }
@@ -227,7 +227,7 @@ internal fun MeloXSkylineLyricsPanel(track: MusicTrack, modifier: Modifier = Mod
         if (ambient.isNotEmpty()) Column(Modifier.align(Alignment.CenterEnd).fillMaxWidth(.58f).rotate(-5f), verticalArrangement = Arrangement.spacedBy(5.dp)) {
             ambient.forEachIndexed { index, text ->
                 val fade = 1 - index.toFloat() / ambient.size.coerceAtLeast(1)
-                Text(text, color = Color.White.copy(alpha = (.08f * MeloXSettingsRuntime.skylineAmbientOpacity * (.45f + fade * .55f)).coerceIn(.02f, .22f)), fontSize = MeloXSettingsRuntime.skylineAmbientFontSize.sp, lineHeight = (MeloXSettingsRuntime.skylineAmbientFontSize * 1.08f).sp, fontWeight = melox.ui.theme.lanTingRenderWeight(FontWeight.Black), maxLines = 1, overflow = TextOverflow.Ellipsis,
+                Text(text, color = Color.White.copy(alpha = (.08f * MeloXSettingsRuntime.skylineAmbientOpacity * (.45f + fade * .55f)).coerceIn(.02f, .22f)), fontSize = MeloXSettingsRuntime.skylineAmbientFontSize.sp, lineHeight = (MeloXSettingsRuntime.skylineAmbientFontSize * 1.08f).sp, fontWeight = FontWeight.Black, maxLines = 1, overflow = TextOverflow.Ellipsis,
                     modifier = Modifier.graphicsLayer { translationX = if (MeloXSettingsRuntime.lyricReduceMotion) 0f else sin(phase.value * 2 * PI.toFloat() + index) * 14 * MeloXSettingsRuntime.skylineAmbientDrift }.rotate(sin((index + 1) * 1.73f) * MeloXSettingsRuntime.skylineAmbientMaximumTilt).blur((MeloXSettingsRuntime.skylineAmbientBlur * (1 + index * .08f)).dp))
             }
         }
