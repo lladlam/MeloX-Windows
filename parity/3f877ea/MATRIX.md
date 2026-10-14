@@ -36,10 +36,21 @@ Historical `parity/94e17c9/` evidence is reference material, not new acceptance.
 | Windows sustained audible playback / AutoMix | Physical output requirement | `tools/windows_audio_acceptance.ps1` checks final app-image and captures explicit user observations | No Windows 10/11 device or audio hardware in this Linux session | BLOCKED |
 | Android/Windows same-content pixel and dynamic frames | All named UI pages and player scenes | Production ImageComposeScene capture retained; old reference evidence preserved | Connected Android devices = 0; missing current pinned reference frames. No new MATCH from unrelated feed SSIM | BLOCKED |
 | Remaining settings, Classic/alternate lyric shells, Glass refraction, podcast/provider acceptance | Source paths specified by task | Existing implementations retained; confirmed gaps require subsequent batches | Not accepted by build or old matrix inventory | PARTIAL |
+| All 60 canonical advanced lyrics settings and visible renderer consumers | Pinned `SettingsScreen.kt:1700–1897`, lyrics preferences/runtime and iOS panel | Production AdvancedLyricsSettings route, exact strings/choices and existing-key persistence; translation scope now consumes its real setting | ADVANCED_LYRICS_SETTINGS.md; Linux/Windows 60 pointer keys / separate-JVM reload / 501 assertions and real Tiny Giant 173 scenes / 129 frames / 55 assertions. Windows `d186e0c` run 38592934356 passes all gates and independent package/PCM verification. Android pixels remain blocked | PARTIAL |
 
 ## Evidence levels
 
-Latest accepted Windows package: **47542d8401ed626e7fff87444499729a0f3c369b**,
+Latest independently verified Windows distribution:
+**d186e0c62941d2726c2184b8399d97c861af4195**, run **38592934356 / SUCCESS**,
+artifact **11909196579**. **204 tests / 39 suites / zero failures**, 60-key mouse
+replay + separate-JVM reload / 501 assertions; seven pinned resources, eight
+axis-frozen fonts, 60 row-mask and 120 font cases, real EQ PCM and no-forced-GC
+2GiB image stress pass. Final ZIP **307,984,559 bytes**, SHA-256
+`a97b4b0d89861634b12a35ea38be2b1277134a06cba1a8f59d6d9cb7b8bc8f37`.
+See `ADVANCED_LYRICS_SETTINGS.md`. Package verification is not user-machine
+memory/audio/DPAPI or pinned Android pixel/motion acceptance.
+
+Historical verified Windows package: **47542d8401ed626e7fff87444499729a0f3c369b**,
 run **38372169489**, **SUCCESS**, **166 tests / 31 suites / zero failures,
 errors or skipped**. Native EQ and all four decoder stages pass; immutable five-
 resource byte checks pass at source/JAR/app-image/final ZIP. Downloaded artifact
@@ -64,8 +75,10 @@ errors or skipped**, **9 production replays / 258 states / 747 frames / 215
 assertions**, all 18 TextPV styles. Real single/post-mix dual user EQ, native
 Songs/artwork/operation IDs, profile/catalog routing, adaptive Classic controls,
 EVA/TextPV/Skyline, observed Bilibili offsets and Local persistence are implemented.
-Their overall parity remains **PARTIAL**; advanced player/lyrics controls, full
-search animations and provider-account acceptance remain outstanding. Tested
+Their overall parity remains **PARTIAL**; the later advanced-lyrics batch now
+passes 60-key input/persistence and selected real rendering consumers, while
+additional player/Skyline settings, full search animations and provider-account
+acceptance remain outstanding. Tested
 online song has no playable non-preview source, and podcast programs require
 login (-462); neither is successful playback/catalog acceptance. New Windows CI
 must reference the published feature SHA. Hardware/native accounts and pinned

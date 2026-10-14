@@ -8,9 +8,26 @@ Settings/legal closing fetch (2026-10-13): `5b52a92022a5943e238ffc5d3121c536b2f2
 
 ## Landed in this batch
 
-### Current user playback/lyric follow-up (2026-10-14)
+### Current verified advanced lyrics delivery (2026-10-15)
 
-**Current verified package:** `797c3be4a64e3f9bef536e1cb2b26654c16f47d7`,
+**Current independently verified distribution:**
+`d186e0c62941d2726c2184b8399d97c861af4195`, Windows run **38592934356 / SUCCESS**,
+artifact **11909196579**. Final ZIP **307,984,559 bytes**, SHA-256
+`a97b4b0d89861634b12a35ea38be2b1277134a06cba1a8f59d6d9cb7b8bc8f37`.
+Download: <https://github.com/lladlam/MeloX-Windows/actions/runs/38592934356/artifacts/11909196579>.
+Linux/Windows **204 tests / 39 suites**, all **60 canonical lyric controls**
+changed by coordinate input and reloaded in a new JVM (**501 assertions**).
+Real Tiny Giant selected-consumer replay and PCM pass. Independent outer digest,
+ZIP CRC, revision, native FFmpeg/Java Sound/management, seven pinned resources,
+eight static fonts/metrics, 60 row-mask and 120 font cases, real EQ PCM and
+cache memory audit all pass. See `parity/3f877ea/ADVANCED_LYRICS_SETTINGS.md`.
+Whole-process 549→1431MB memory, pinned Android pixel/motion and physical Windows
+account/audio/device behavior remain pending/blocked. Next inventory: 17 pinned
+Skyline keys with no settings exposure; keep-awake lacks an OS consumer.
+
+### User-accepted font follow-up (2026-10-14)
+
+**User-accepted font package:** `797c3be4a64e3f9bef536e1cb2b26654c16f47d7`,
 Windows Build **38559314976 / SUCCESS**, artifact **11891553587**. **194 tests
 / 36 suites / zero failures, errors or skips**, Windows glyph raster **60 cases
 / zero difference**, and the new independent font gate **120/120 PASSED on
@@ -117,7 +134,12 @@ are still pending: first feature run `38587692142` at `9e1fe56` failed the
 existing AutoMix heard-position regression before lyrics replay. A deterministic
 inline-resolution case reproduced starting the incoming track at 0 instead of
 1200ms. Next now installs heard position before prepare; Linux 204/39 passes.
-Fresh Windows CI is required. See `parity/3f877ea/ADVANCED_LYRICS_SETTINGS.md`. Continue remaining
+The portable fixture and explicit UTF-8 replay argument files resolve the next
+two Windows gate failures. Run `38592934356` at exact
+`d186e0c62941d2726c2184b8399d97c861af4195` passes all Windows steps, including
+full pointer replay + separate-process reload and all package layers. Independent
+download/collection passes, artifact `11909196579`; delivery provenance is
+recorded above. See `parity/3f877ea/ADVANCED_LYRICS_SETTINGS.md`. Continue remaining
 pinned gaps and the 17 independent upstream increments afterward.
 
 User-reported “search works, anonymous playback fails” repair is tracked in

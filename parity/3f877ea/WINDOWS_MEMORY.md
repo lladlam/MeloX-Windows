@@ -102,6 +102,15 @@ later evidence/migration commits do not relabel this distribution. The failed
 download quota attempt was recovered after clearing only regenerable isolated
 Skiko extraction caches; final success used the full digest-verified download.
 
+The later advanced-lyrics delivery at exact
+`d186e0c62941d2726c2184b8399d97c861af4195` retains these memory repairs and is
+independently verified (run `38592934356`, artifact `11909196579`). Its uploaded
+native audit JSON is downloaded directly, without step-log reconstruction:
+warmup batch 2 resident 129,503,232 → final batch 7 131,637,248 bytes; private
+commit 417,247,232 → 418,942,976 bytes. Its complete 60-key Windows UI/reload gate
+also passes. Neither result resolves the user's full-player 549→1431MB report;
+the exact delivery details are in `ADVANCED_LYRICS_SETTINGS.md`.
+
 ## Preserved migration work
 
 The restored advanced-lyrics batch is retained in stash:

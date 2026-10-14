@@ -1,0 +1,12 @@
+{
+  "arguments.txt": {
+    "raw_downloaded_sha256": "06b6a5d2983952e4a5d3207574161eec945faa9cbaad6a440fd03b121c74e987",
+    "archive_sha256": "fd7b75e68a07419959c492abe4c54895e429df0f6bfb5be8a6e8df5719348ee6",
+    "normalization": "CRLF to LF only; UTF-8 text retained"
+  },
+  "control-inputs.json": {
+    "raw_downloaded_sha256": "b831de3634f62977e7fe6527e66cbd718402dd94d2036c49a4fbe1ee9ed36f09",
+    "archive_sha256": "56cf3ec1ee8dddb76d95d5b632b0c8e704234bb2374fa1b463811df38e70e1e6",
+    "normalization": "CRLF to LF only; UTF-8 text retained"
+  }
+}

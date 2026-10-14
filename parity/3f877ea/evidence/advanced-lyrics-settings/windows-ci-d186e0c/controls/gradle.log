@@ -1,0 +1,542 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.5.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build
+> Task :desktop:kmpPartiallyResolvedDependenciesChecker
+> Task :desktop:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :desktop:convertXmlValueResourcesForCommonMain NO-SOURCE
+> Task :desktop:copyNonXmlValueResourcesForCommonMain NO-SOURCE
+> Task :desktop:prepareComposeResourcesTaskForCommonMain NO-SOURCE
+> Task :desktop:generateResourceAccessorsForCommonMain SKIPPED
+> Task :desktop:convertXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :desktop:copyNonXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :desktop:prepareComposeResourcesTaskForDesktopMain NO-SOURCE
+> Task :desktop:generateResourceAccessorsForDesktopMain SKIPPED
+> Task :desktop:generateActualResourceCollectorsForDesktopMain SKIPPED
+> Task :desktop:generateComposeResClass SKIPPED
+> Task :desktop:generateExpectResourceCollectorsForCommonMain SKIPPED
+> Task :innertube:kmpPartiallyResolvedDependenciesChecker
+> Task :innertube:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :innertube:extractAndroidInnerTube UP-TO-DATE
+> Task :innertube:compileKotlinDesktop UP-TO-DATE
+> Task :innertube:compileDesktopMainJava NO-SOURCE
+> Task :innertube:desktopProcessResources NO-SOURCE
+> Task :innertube:processDesktopMainResources SKIPPED
+> Task :innertube:desktopMainClasses UP-TO-DATE
+> Task :innertube:desktopJar UP-TO-DATE
+> Task :shared:kmpPartiallyResolvedDependenciesChecker
+> Task :shared:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :shared:convertXmlValueResourcesForCommonMain NO-SOURCE
+> Task :shared:copyNonXmlValueResourcesForCommonMain NO-SOURCE
+> Task :shared:prepareComposeResourcesTaskForCommonMain NO-SOURCE
+> Task :shared:generateResourceAccessorsForCommonMain SKIPPED
+> Task :shared:convertXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :shared:copyNonXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :shared:prepareComposeResourcesTaskForDesktopMain NO-SOURCE
+> Task :shared:generateResourceAccessorsForDesktopMain SKIPPED
+> Task :shared:generateActualResourceCollectorsForDesktopMain SKIPPED
+> Task :shared:generateComposeResClass SKIPPED
+> Task :shared:generateExpectResourceCollectorsForCommonMain SKIPPED
+> Task :shared:compileKotlinDesktop UP-TO-DATE
+> Task :shared:compileDesktopMainJava NO-SOURCE
+> Task :shared:assembleDesktopMainResources UP-TO-DATE
+> Task :shared:desktopProcessResources UP-TO-DATE
+> Task :shared:processDesktopMainResources SKIPPED
+> Task :shared:desktopMainClasses UP-TO-DATE
+> Task :shared:desktopJar UP-TO-DATE
+> Task :desktop:compileKotlinDesktop UP-TO-DATE
+> Task :desktop:compileDesktopMainJava NO-SOURCE
+> Task :desktop:assembleDesktopMainResources UP-TO-DATE
+> Task :desktop:desktopProcessResources UP-TO-DATE
+> Task :desktop:processDesktopMainResources SKIPPED
+> Task :desktop:desktopMainClasses UP-TO-DATE
+
+> Task :desktop:captureUi
+[INFO MeloXFont] Android MiLan Pro static instances loaded: CSS=[100, 200, 300, 400, 500, 600, 700, 800, 900] files=mi_lan_pro_w{100..800}.ttf (CSS 900 shares frozen axis-700 instance)
+SLF4J(W): No SLF4J providers were found.
+SLF4J(W): Defaulting to no-operation (NOP) logger implementation
+SLF4J(W): See https://www.slf4j.org/codes.html#noProviders for further details.
+Captured 00-settings: 1100x780 density=1.0
+Physical click remote-reject: remote-reject at Offset(295.5, 468.0)
+Captured 01-remote-reject: 1100x780 density=1.0
+Verified remote-reject: cloud-choice:true
+Verified remote-reject: cloud-enabled:false
+Physical click open: settings-open-lyrics at Offset(550.0, 659.0)
+Captured 02-open: 1100x780 density=1.0
+Verified open: tag:settings-lyrics
+Verified open: tag:advanced-lyrics-settings
+Captured 03-reveal-lyrics_rendering_quality: 1100x780 density=1.0
+Physical click open-lyrics_rendering_quality: lyrics_rendering_quality at Offset(900.5, 168.5)
+Captured 04-open-lyrics_rendering_quality: 1100x780 density=1.0
+Physical click set-lyrics_rendering_quality: settings-option:Low � saves battery at Offset(945.0, 181.0)
+Captured 05-set-lyrics_rendering_quality: 1100x780 density=1.0
+Verified set-lyrics_rendering_quality: pref-string:lyrics_rendering_quality:Low
+Verified set-lyrics_rendering_quality: runtime:lyricRenderingQuality:Low
+Captured 06-reveal-lyrics_auto_select: 1100x780 density=1.0
+Physical click set-lyrics_auto_select: lyrics_auto_select at Offset(1032.0, 224.0)
+Captured 07-set-lyrics_auto_select: 1100x780 density=1.0
+Verified set-lyrics_auto_select: pref-bool:lyrics_auto_select:false
+Verified set-lyrics_auto_select: runtime:automaticLyricSelectionEnabled:false
+Verified set-lyrics_auto_select: unchecked:lyrics_auto_select
+Captured 08-reveal-lyrics_word_by_word: 1100x780 density=1.0
+Physical click set-lyrics_word_by_word: lyrics_word_by_word at Offset(1032.0, 280.0)
+Captured 09-set-lyrics_word_by_word: 1100x780 density=1.0
+Verified set-lyrics_word_by_word: pref-bool:lyrics_word_by_word:false
+Verified set-lyrics_word_by_word: runtime:lyricWordByWordEnabled:false
+Verified set-lyrics_word_by_word: unchecked:lyrics_word_by_word
+Captured 10-reveal-lyrics_pseudo_timing: 1100x780 density=1.0
+Physical click set-lyrics_pseudo_timing: lyrics_pseudo_timing at Offset(1032.0, 342.0)
+Captured 11-set-lyrics_pseudo_timing: 1100x780 density=1.0
+Verified set-lyrics_pseudo_timing: pref-bool:lyrics_pseudo_timing:true
+Verified set-lyrics_pseudo_timing: runtime:lyricPseudoTimingEnabled:true
+Verified set-lyrics_pseudo_timing: checked:lyrics_pseudo_timing
+Captured 12-reveal-lyrics_tap_seek: 1100x780 density=1.0
+Physical click set-lyrics_tap_seek: lyrics_tap_seek at Offset(1032.0, 404.0)
+Captured 13-set-lyrics_tap_seek: 1100x780 density=1.0
+Verified set-lyrics_tap_seek: pref-bool:lyrics_tap_seek:false
+Verified set-lyrics_tap_seek: runtime:lyricTapSeekEnabled:false
+Verified set-lyrics_tap_seek: unchecked:lyrics_tap_seek
+Captured 14-reveal-lyrics_long_press_share: 1100x780 density=1.0
+Physical click set-lyrics_long_press_share: lyrics_long_press_share at Offset(1032.0, 460.0)
+Captured 15-set-lyrics_long_press_share: 1100x780 density=1.0
+Verified set-lyrics_long_press_share: pref-bool:lyrics_long_press_share:false
+Verified set-lyrics_long_press_share: runtime:lyricLongPressShareEnabled:false
+Verified set-lyrics_long_press_share: unchecked:lyrics_long_press_share
+Captured 16-reveal-lyrics_interlude_countdown: 1100x780 density=1.0
+Physical click set-lyrics_interlude_countdown: lyrics_interlude_countdown at Offset(1032.0, 522.0)
+Captured 17-set-lyrics_interlude_countdown: 1100x780 density=1.0
+Verified set-lyrics_interlude_countdown: pref-bool:lyrics_interlude_countdown:false
+Verified set-lyrics_interlude_countdown: runtime:lyricInterludeCountdownEnabled:false
+Verified set-lyrics_interlude_countdown: unchecked:lyrics_interlude_countdown
+Captured 18-reveal-lyrics_auto_follow: 1100x780 density=1.0
+Physical click set-lyrics_auto_follow: lyrics_auto_follow at Offset(1032.0, 584.0)
+Captured 19-set-lyrics_auto_follow: 1100x780 density=1.0
+Verified set-lyrics_auto_follow: pref-bool:lyrics_auto_follow:false
+Verified set-lyrics_auto_follow: runtime:lyricAutoFollowEnabled:false
+Verified set-lyrics_auto_follow: unchecked:lyrics_auto_follow
+Captured 20-reveal-lyrics_follow_delay_ms: 1100x780 density=1.0
+Physical click open-lyrics_follow_delay_ms: lyrics_follow_delay_ms at Offset(1005.0, 534.5)
+Captured 21-open-lyrics_follow_delay_ms: 1100x780 density=1.0
+Physical click set-lyrics_follow_delay_ms: settings-option:5.0 seconds at Offset(945.0, 635.0)
+Captured 22-set-lyrics_follow_delay_ms: 1100x780 density=1.0
+Verified set-lyrics_follow_delay_ms: pref-int:lyrics_follow_delay_ms:5000
+Verified set-lyrics_follow_delay_ms: runtime:lyricFollowDelayMs:5000
+Captured 23-reveal-lyrics_reduce_motion: 1100x780 density=1.0
+Physical click set-lyrics_reduce_motion: lyrics_reduce_motion at Offset(1032.0, 596.0)
+Captured 24-set-lyrics_reduce_motion: 1100x780 density=1.0
+Verified set-lyrics_reduce_motion: pref-bool:lyrics_reduce_motion:true
+Verified set-lyrics_reduce_motion: runtime:lyricReduceMotion:true
+Verified set-lyrics_reduce_motion: checked:lyrics_reduce_motion
+Captured 25-reveal-lyrics_translation: 1100x780 density=1.0
+Physical click set-lyrics_translation: lyrics_translation at Offset(1032.0, 562.0)
+Captured 26-set-lyrics_translation: 1100x780 density=1.0
+Verified set-lyrics_translation: pref-bool:lyrics_translation:false
+Verified set-lyrics_translation: runtime:showLyricTranslation:false
+Verified set-lyrics_translation: unchecked:lyrics_translation
+Captured 27-reveal-lyrics_translation_font_scale: 1100x780 density=1.0
+Physical click open-lyrics_translation_font_scale: lyrics_translation_font_scale at Offset(1037.0, 512.5)
+Captured 28-open-lyrics_translation_font_scale: 1100x780 density=1.0
+Physical click set-lyrics_translation_font_scale: settings-option:80% at Offset(945.0, 500.0)
+Captured 29-set-lyrics_translation_font_scale: 1100x780 density=1.0
+Verified set-lyrics_translation_font_scale: pref-float:lyrics_translation_font_scale:0.8
+Verified set-lyrics_translation_font_scale: runtime:lyricTranslationFontScale:0.8
+Captured 30-reveal-lyrics_translation_opacity: 1100x780 density=1.0
+Physical click open-lyrics_translation_opacity: lyrics_translation_opacity at Offset(1036.5, 568.5)
+Captured 31-open-lyrics_translation_opacity: 1100x780 density=1.0
+Physical click set-lyrics_translation_opacity: settings-option:40% at Offset(945.0, 336.0)
+Captured 32-set-lyrics_translation_opacity: 1100x780 density=1.0
+Verified set-lyrics_translation_opacity: pref-float:lyrics_translation_opacity:0.4
+Verified set-lyrics_translation_opacity: runtime:lyricTranslationOpacity:0.4
+Captured 33-reveal-lyrics_translation_display_mode: 1100x780 density=1.0
+Physical click open-lyrics_translation_display_mode: lyrics_translation_display_mode at Offset(1014.0, 518.5)
+Captured 34-open-lyrics_translation_display_mode: 1100x780 density=1.0
+Physical click set-lyrics_translation_display_mode: settings-option:Current line only at Offset(945.0, 531.0)
+Captured 35-set-lyrics_translation_display_mode: 1100x780 density=1.0
+Verified set-lyrics_translation_display_mode: pref-string:lyrics_translation_display_mode:FocusedLine
+Verified set-lyrics_translation_display_mode: runtime:lyricTranslationDisplayMode:FocusedLine
+Captured 36-reveal-lyrics_romanization: 1100x780 density=1.0
+Physical click set-lyrics_romanization: lyrics_romanization at Offset(1032.0, 574.0)
+Captured 37-set-lyrics_romanization: 1100x780 density=1.0
+Verified set-lyrics_romanization: pref-bool:lyrics_romanization:true
+Verified set-lyrics_romanization: runtime:showLyricRomanization:true
+Verified set-lyrics_romanization: checked:lyrics_romanization
+Captured 38-reveal-lyrics_romanization_display_mode: 1100x780 density=1.0
+Physical click open-lyrics_romanization_display_mode: lyrics_romanization_display_mode at Offset(985.5, 525.5)
+Captured 39-open-lyrics_romanization_display_mode: 1100x780 density=1.0
+Physical click set-lyrics_romanization_display_mode: settings-option:Every line at Offset(945.0, 582.0)
+Captured 40-set-lyrics_romanization_display_mode: 1100x780 density=1.0
+Verified set-lyrics_romanization_display_mode: pref-string:lyrics_romanization_display_mode:AllLines
+Verified set-lyrics_romanization_display_mode: runtime:lyricRomanizationDisplayMode:AllLines
+Captured 41-reveal-lyrics_romanization_font_scale: 1100x780 density=1.0
+Physical click open-lyrics_romanization_font_scale: lyrics_romanization_font_scale at Offset(1037.0, 581.5)
+Captured 42-open-lyrics_romanization_font_scale: 1100x780 density=1.0
+Physical click set-lyrics_romanization_font_scale: settings-option:50% at Offset(945.0, 305.0)
+Captured 43-set-lyrics_romanization_font_scale: 1100x780 density=1.0
+Verified set-lyrics_romanization_font_scale: pref-float:lyrics_romanization_font_scale:0.5
+Verified set-lyrics_romanization_font_scale: runtime:lyricRomanizationFontScale:0.5
+Captured 44-reveal-lyrics_romanization_opacity: 1100x780 density=1.0
+Physical click open-lyrics_romanization_opacity: lyrics_romanization_opacity at Offset(1036.5, 531.5)
+Captured 45-open-lyrics_romanization_opacity: 1100x780 density=1.0
+Physical click set-lyrics_romanization_opacity: settings-option:50% at Offset(945.0, 343.0)
+Captured 46-set-lyrics_romanization_opacity: 1100x780 density=1.0
+Verified set-lyrics_romanization_opacity: pref-float:lyrics_romanization_opacity:0.5
+Verified set-lyrics_romanization_opacity: runtime:lyricRomanizationOpacity:0.5
+Captured 47-reveal-lyrics_advance_ms: 1100x780 density=1.0
+Physical click open-lyrics_advance_ms: lyrics_advance_ms at Offset(1025.5, 597.5)
+Captured 48-open-lyrics_advance_ms: 1100x780 density=1.0
+Physical click set-lyrics_advance_ms: settings-option:500 ms early at Offset(945.0, 453.0)
+Captured 49-set-lyrics_advance_ms: 1100x780 density=1.0
+Verified set-lyrics_advance_ms: pref-int:lyrics_advance_ms:500
+Verified set-lyrics_advance_ms: runtime:lyricAdvanceMs:500
+Captured 50-reveal-lyrics_advance_word_by_word: 1100x780 density=1.0
+Physical click set-lyrics_advance_word_by_word: lyrics_advance_word_by_word at Offset(1032.0, 547.0)
+Captured 51-set-lyrics_advance_word_by_word: 1100x780 density=1.0
+Verified set-lyrics_advance_word_by_word: pref-bool:lyrics_advance_word_by_word:true
+Verified set-lyrics_advance_word_by_word: runtime:lyricAdvanceAppliesToWordByWord:true
+Verified set-lyrics_advance_word_by_word: checked:lyrics_advance_word_by_word
+Captured 52-reveal-lyrics_refresh_rate: 1100x780 density=1.0
+Physical click open-lyrics_refresh_rate: lyrics_refresh_rate at Offset(1025.0, 603.5)
+Captured 53-open-lyrics_refresh_rate: 1100x780 density=1.0
+Physical click set-lyrics_refresh_rate: settings-option:120 FPS at Offset(945.0, 591.0)
+Captured 54-set-lyrics_refresh_rate: 1100x780 density=1.0
+Verified set-lyrics_refresh_rate: pref-int:lyrics_refresh_rate:120
+Verified set-lyrics_refresh_rate: runtime:lyricRefreshRate:120
+Captured 55-reveal-lyrics_font_scale: 1100x780 density=1.0
+Physical click open-lyrics_font_scale: lyrics_font_scale at Offset(1032.5, 553.5)
+Captured 56-open-lyrics_font_scale: 1100x780 density=1.0
+Physical click set-lyrics_font_scale: settings-option:112% at Offset(945.0, 643.0)
+Captured 57-set-lyrics_font_scale: 1100x780 density=1.0
+Verified set-lyrics_font_scale: pref-float:lyrics_font_scale:1.12
+Verified set-lyrics_font_scale: runtime:lyricFontScale:1.12
+Captured 58-reveal-lyrics_font_weight: 1100x780 density=1.0
+Physical click open-lyrics_font_weight: lyrics_font_weight at Offset(1028.5, 609.5)
+Captured 59-open-lyrics_font_weight: 1100x780 density=1.0
+Physical click set-lyrics_font_weight: settings-option:Regular at Offset(945.0, 421.0)
+Captured 60-set-lyrics_font_weight: 1100x780 density=1.0
+Verified set-lyrics_font_weight: pref-string:lyrics_font_weight:Regular
+Verified set-lyrics_font_weight: runtime:lyricFontWeight:Regular
+Captured 61-reveal-lyrics_lift_mode: 1100x780 density=1.0
+Physical click open-lyrics_lift_mode: lyrics_lift_mode at Offset(986.5, 559.5)
+Captured 62-open-lyrics_lift_mode: 1100x780 density=1.0
+Physical click set-lyrics_lift_mode: settings-option:Lift by word at Offset(945.0, 572.0)
+Captured 63-set-lyrics_lift_mode: 1100x780 density=1.0
+Verified set-lyrics_lift_mode: pref-string:lyrics_lift_mode:Word
+Verified set-lyrics_lift_mode: runtime:lyricLiftMode:Word
+Captured 64-reveal-lyrics_long_tone_detection: 1100x780 density=1.0
+Physical click open-lyrics_long_tone_detection: lyrics_long_tone_detection at Offset(971.5, 519.5)
+Captured 65-open-lyrics_long_tone_detection: 1100x780 density=1.0
+Physical click set-lyrics_long_tone_detection: settings-option:Detect by word at Offset(945.0, 532.0)
+Captured 66-set-lyrics_long_tone_detection: 1100x780 density=1.0
+Verified set-lyrics_long_tone_detection: pref-string:lyrics_long_tone_detection:Word
+Verified set-lyrics_long_tone_detection: runtime:lyricLongToneDetectionMode:Word
+Captured 67-reveal-lyrics_glow_enabled: 1100x780 density=1.0
+Physical click set-lyrics_glow_enabled: lyrics_glow_enabled at Offset(1032.0, 575.0)
+Captured 68-set-lyrics_glow_enabled: 1100x780 density=1.0
+Verified set-lyrics_glow_enabled: pref-bool:lyrics_glow_enabled:false
+Verified set-lyrics_glow_enabled: runtime:lyricGlowEnabled:false
+Verified set-lyrics_glow_enabled: unchecked:lyrics_glow_enabled
+Captured 69-reveal-lyrics_glow_long_tones_only: 1100x780 density=1.0
+Physical click set-lyrics_glow_long_tones_only: lyrics_glow_long_tones_only at Offset(1032.0, 525.0)
+Captured 70-set-lyrics_glow_long_tones_only: 1100x780 density=1.0
+Verified set-lyrics_glow_long_tones_only: pref-bool:lyrics_glow_long_tones_only:false
+Verified set-lyrics_glow_long_tones_only: runtime:lyricGlowLongTonesOnly:false
+Verified set-lyrics_glow_long_tones_only: unchecked:lyrics_glow_long_tones_only
+Captured 71-reveal-lyrics_glow_strength: 1100x780 density=1.0
+Physical click open-lyrics_glow_strength: lyrics_glow_strength at Offset(1032.5, 581.5)
+Captured 72-open-lyrics_glow_strength: 1100x780 density=1.0
+Physical click set-lyrics_glow_strength: settings-option:140% at Offset(945.0, 569.0)
+Captured 73-set-lyrics_glow_strength: 1100x780 density=1.0
+Verified set-lyrics_glow_strength: pref-float:lyrics_glow_strength:1.4
+Verified set-lyrics_glow_strength: runtime:lyricGlowStrength:1.4
+Captured 74-reveal-lyrics_long_tone_strength: 1100x780 density=1.0
+Physical click open-lyrics_long_tone_strength: lyrics_long_tone_strength at Offset(1032.5, 531.5)
+Captured 75-open-lyrics_long_tone_strength: 1100x780 density=1.0
+Physical click set-lyrics_long_tone_strength: settings-option:Off at Offset(945.0, 544.0)
+Captured 76-set-lyrics_long_tone_strength: 1100x780 density=1.0
+Verified set-lyrics_long_tone_strength: pref-float:lyrics_long_tone_strength:0
+Verified set-lyrics_long_tone_strength: runtime:lyricLongToneStrength:0
+Captured 77-reveal-lyrics_long_tone_threshold_ms: 1100x780 density=1.0
+Physical click open-lyrics_long_tone_threshold_ms: lyrics_long_tone_threshold_ms at Offset(1005.0, 587.5)
+Captured 78-open-lyrics_long_tone_threshold_ms: 1100x780 density=1.0
+Physical click set-lyrics_long_tone_threshold_ms: settings-option:0.3 seconds at Offset(945.0, 355.0)
+Captured 79-set-lyrics_long_tone_threshold_ms: 1100x780 density=1.0
+Verified set-lyrics_long_tone_threshold_ms: pref-int:lyrics_long_tone_threshold_ms:300
+Verified set-lyrics_long_tone_threshold_ms: runtime:lyricLongToneThresholdMs:300
+Captured 80-reveal-lyrics_spacing_scale: 1100x780 density=1.0
+Physical click open-lyrics_spacing_scale: lyrics_spacing_scale at Offset(1032.5, 537.5)
+Captured 81-open-lyrics_spacing_scale: 1100x780 density=1.0
+Physical click set-lyrics_spacing_scale: settings-option:140% at Offset(945.0, 682.0)
+Captured 82-set-lyrics_spacing_scale: 1100x780 density=1.0
+Verified set-lyrics_spacing_scale: pref-float:lyrics_spacing_scale:1.4
+Verified set-lyrics_spacing_scale: runtime:lyricSpacingScale:1.4
+Captured 83-reveal-lyrics_blur_strength: 1100x780 density=1.0
+Physical click open-lyrics_blur_strength: lyrics_blur_strength at Offset(1032.5, 593.5)
+Captured 84-open-lyrics_blur_strength: 1100x780 density=1.0
+Physical click set-lyrics_blur_strength: settings-option:Off at Offset(945.0, 449.0)
+Captured 85-set-lyrics_blur_strength: 1100x780 density=1.0
+Verified set-lyrics_blur_strength: pref-float:lyrics_blur_strength:0
+Verified set-lyrics_blur_strength: runtime:lyricBlurStrength:0
+Captured 86-reveal-lyrics_focus_scale: 1100x780 density=1.0
+Physical click open-lyrics_focus_scale: lyrics_focus_scale at Offset(1033.5, 553.5)
+Captured 87-open-lyrics_focus_scale: 1100x780 density=1.0
+Physical click set-lyrics_focus_scale: settings-option:108% at Offset(945.0, 687.0)
+Captured 88-set-lyrics_focus_scale: 1100x780 density=1.0
+Verified set-lyrics_focus_scale: pref-float:lyrics_focus_scale:1.08
+Verified set-lyrics_focus_scale: runtime:lyricFocusScale:1.08
+Captured 89-reveal-lyrics_inactive_opacity: 1100x780 density=1.0
+Physical click open-lyrics_inactive_opacity: lyrics_inactive_opacity at Offset(1037.0, 609.5)
+Captured 90-open-lyrics_inactive_opacity: 1100x780 density=1.0
+Physical click set-lyrics_inactive_opacity: settings-option:60% at Offset(945.0, 597.0)
+Captured 91-set-lyrics_inactive_opacity: 1100x780 density=1.0
+Verified set-lyrics_inactive_opacity: pref-float:lyrics_inactive_opacity:0.6
+Verified set-lyrics_inactive_opacity: runtime:lyricInactiveOpacity:0.6
+Captured 92-reveal-lyrics_interface_auto_hide_ms: 1100x780 density=1.0
+Physical click open-lyrics_interface_auto_hide_ms: lyrics_interface_auto_hide_ms at Offset(1013.0, 560.5)
+Captured 93-open-lyrics_interface_auto_hide_ms: 1100x780 density=1.0
+Physical click set-lyrics_interface_auto_hide_ms: settings-option:15 seconds at Offset(945.0, 681.0)
+Captured 94-set-lyrics_interface_auto_hide_ms: 1100x780 density=1.0
+Verified set-lyrics_interface_auto_hide_ms: pref-int:lyrics_interface_auto_hide_ms:15000
+Verified set-lyrics_interface_auto_hide_ms: runtime:lyricInterfaceAutoHideDelayMs:15000
+Captured 95-reveal-lyrics_scroll_hide_threshold_dp: 1100x780 density=1.0
+Physical click open-lyrics_scroll_hide_threshold_dp: lyrics_scroll_hide_threshold_dp at Offset(1025.0, 510.5)
+Captured 96-open-lyrics_scroll_hide_threshold_dp: 1100x780 density=1.0
+Physical click set-lyrics_scroll_hide_threshold_dp: settings-option:40 dp at Offset(945.0, 278.0)
+Captured 97-set-lyrics_scroll_hide_threshold_dp: 1100x780 density=1.0
+Verified set-lyrics_scroll_hide_threshold_dp: pref-int:lyrics_scroll_hide_threshold_dp:40
+Verified set-lyrics_scroll_hide_threshold_dp: runtime:lyricScrollHideThresholdDp:40
+Captured 98-reveal-lyrics_cascade_bounce_enabled: 1100x780 density=1.0
+Physical click set-lyrics_cascade_bounce_enabled: lyrics_cascade_bounce_enabled at Offset(1032.0, 576.0)
+Captured 99-set-lyrics_cascade_bounce_enabled: 1100x780 density=1.0
+Verified set-lyrics_cascade_bounce_enabled: pref-bool:lyrics_cascade_bounce_enabled:false
+Verified set-lyrics_cascade_bounce_enabled: runtime:lyricCascadeBounceEnabled:false
+Verified set-lyrics_cascade_bounce_enabled: unchecked:lyrics_cascade_bounce_enabled
+Captured 100-reveal-lyrics_scale_bounce_enabled: 1100x780 density=1.0
+Physical click set-lyrics_scale_bounce_enabled: lyrics_scale_bounce_enabled at Offset(1032.0, 526.0)
+Captured 101-set-lyrics_scale_bounce_enabled: 1100x780 density=1.0
+Verified set-lyrics_scale_bounce_enabled: pref-bool:lyrics_scale_bounce_enabled:false
+Verified set-lyrics_scale_bounce_enabled: runtime:lyricScaleBounceEnabled:false
+Verified set-lyrics_scale_bounce_enabled: unchecked:lyrics_scale_bounce_enabled
+Captured 102-reveal-lyrics_scale_bounce_duration_ms: 1100x780 density=1.0
+Physical click open-lyrics_scale_bounce_duration_ms: lyrics_scale_bounce_duration_ms at Offset(1024.0, 582.5)
+Captured 103-open-lyrics_scale_bounce_duration_ms: 1100x780 density=1.0
+Physical click set-lyrics_scale_bounce_duration_ms: settings-option:150 ms at Offset(945.0, 306.0)
+Captured 104-set-lyrics_scale_bounce_duration_ms: 1100x780 density=1.0
+Verified set-lyrics_scale_bounce_duration_ms: pref-int:lyrics_scale_bounce_duration_ms:150
+Verified set-lyrics_scale_bounce_duration_ms: runtime:lyricScaleBounceDurationMs:150
+Captured 105-reveal-lyrics_focus_color_lead_ms: 1100x780 density=1.0
+Physical click open-lyrics_focus_color_lead_ms: lyrics_focus_color_lead_ms at Offset(1025.5, 532.5)
+Captured 106-open-lyrics_focus_color_lead_ms: 1100x780 density=1.0
+Physical click set-lyrics_focus_color_lead_ms: settings-option:-300 ms at Offset(945.0, 168.0)
+Captured 107-set-lyrics_focus_color_lead_ms: 1100x780 density=1.0
+Verified set-lyrics_focus_color_lead_ms: pref-int:lyrics_focus_color_lead_ms:-300
+Verified set-lyrics_focus_color_lead_ms: runtime:lyricFocusColorLeadMs:-300
+Captured 108-reveal-lyrics_cascade_bounce: 1100x780 density=1.0
+Captured 109-set-lyrics_cascade_bounce: 1100x780 density=1.0
+Verified set-lyrics_cascade_bounce: pref-float:lyrics_cascade_bounce:0.8
+Verified set-lyrics_cascade_bounce: runtime:lyricCascadeBounce:0.8
+Captured 110-reveal-lyrics_cascade_bounce_gradient: 1100x780 density=1.0
+Captured 111-set-lyrics_cascade_bounce_gradient: 1100x780 density=1.0
+Verified set-lyrics_cascade_bounce_gradient: pref-float:lyrics_cascade_bounce_gradient:0
+Verified set-lyrics_cascade_bounce_gradient: runtime:lyricCascadeBounceGradient:0
+Captured 112-reveal-lyrics_scale_bounce: 1100x780 density=1.0
+Captured 113-set-lyrics_scale_bounce: 1100x780 density=1.0
+Verified set-lyrics_scale_bounce: pref-float:lyrics_scale_bounce:0.5
+Verified set-lyrics_scale_bounce: runtime:lyricScaleBounce:0.5
+Captured 114-reveal-lyrics_highlight_gradient_width: 1100x780 density=1.0
+Captured 115-set-lyrics_highlight_gradient_width: 1100x780 density=1.0
+Verified set-lyrics_highlight_gradient_width: pref-float:lyrics_highlight_gradient_width:3
+Verified set-lyrics_highlight_gradient_width: runtime:lyricHighlightGradientWidth:3
+Captured 116-reveal-lyrics_highlight_gradient_reduction: 1100x780 density=1.0
+Captured 117-set-lyrics_highlight_gradient_reduction: 1100x780 density=1.0
+Verified set-lyrics_highlight_gradient_reduction: pref-float:lyrics_highlight_gradient_reduction:0
+Verified set-lyrics_highlight_gradient_reduction: runtime:lyricHighlightGradientReduction:0
+Captured 118-reveal-lyrics_focus_position: 1100x780 density=1.0
+Captured 119-set-lyrics_focus_position: 1100x780 density=1.0
+Verified set-lyrics_focus_position: pref-float:lyrics_focus_position:0.8
+Verified set-lyrics_focus_position: runtime:lyricFocusPosition:0.8
+Captured 120-reveal-lyrics_distance_blur_scale: 1100x780 density=1.0
+Captured 121-set-lyrics_distance_blur_scale: 1100x780 density=1.0
+Verified set-lyrics_distance_blur_scale: pref-float:lyrics_distance_blur_scale:1.5
+Verified set-lyrics_distance_blur_scale: runtime:lyricDistanceBlurScale:1.5
+Captured 122-reveal-lyrics_hidden_blur_scale: 1100x780 density=1.0
+Captured 123-set-lyrics_hidden_blur_scale: 1100x780 density=1.0
+Verified set-lyrics_hidden_blur_scale: pref-float:lyrics_hidden_blur_scale:1.5
+Verified set-lyrics_hidden_blur_scale: runtime:lyricHiddenInterfaceBlurScale:1.5
+Captured 124-reveal-lyrics_dim_amount: 1100x780 density=1.0
+Captured 125-set-lyrics_dim_amount: 1100x780 density=1.0
+Verified set-lyrics_dim_amount: pref-float:lyrics_dim_amount:0
+Verified set-lyrics_dim_amount: runtime:lyricDimAmount:0
+Captured 126-reveal-lyrics_cascade_delay_ms: 1100x780 density=1.0
+Captured 127-set-lyrics_cascade_delay_ms: 1100x780 density=1.0
+Verified set-lyrics_cascade_delay_ms: pref-float:lyrics_cascade_delay_ms:100
+Verified set-lyrics_cascade_delay_ms: runtime:lyricCascadeDelayMs:100
+Captured 128-reveal-lyrics_cascade_delay_increase_ms: 1100x780 density=1.0
+Captured 129-set-lyrics_cascade_delay_increase_ms: 1100x780 density=1.0
+Verified set-lyrics_cascade_delay_increase_ms: pref-float:lyrics_cascade_delay_increase_ms:100
+Verified set-lyrics_cascade_delay_increase_ms: runtime:lyricCascadeDelayIncreaseMs:100
+Captured 130-reveal-lyrics_cascade_following_delay_ms: 1100x780 density=1.0
+Captured 131-set-lyrics_cascade_following_delay_ms: 1100x780 density=1.0
+Verified set-lyrics_cascade_following_delay_ms: pref-float:lyrics_cascade_following_delay_ms:200
+Verified set-lyrics_cascade_following_delay_ms: runtime:lyricCascadeFollowingDelayMs:200
+Captured 132-reveal-lyrics_cascade_catch_up_ratio: 1100x780 density=1.0
+Captured 133-set-lyrics_cascade_catch_up_ratio: 1100x780 density=1.0
+Verified set-lyrics_cascade_catch_up_ratio: pref-float:lyrics_cascade_catch_up_ratio:0.5
+Verified set-lyrics_cascade_catch_up_ratio: runtime:lyricCascadeCatchUpRatio:0.5
+Captured 134-reveal-lyrics_cascade_chase_gradient: 1100x780 density=1.0
+Captured 135-set-lyrics_cascade_chase_gradient: 1100x780 density=1.0
+Verified set-lyrics_cascade_chase_gradient: pref-float:lyrics_cascade_chase_gradient:1
+Verified set-lyrics_cascade_chase_gradient: runtime:lyricCascadeChaseSpeedGradient:1
+Captured 136-reveal-lyrics_cascade_duration_ms: 1100x780 density=1.0
+Captured 137-set-lyrics_cascade_duration_ms: 1100x780 density=1.0
+Verified set-lyrics_cascade_duration_ms: pref-float:lyrics_cascade_duration_ms:1200
+Verified set-lyrics_cascade_duration_ms: runtime:lyricCascadeDurationMs:1200
+Captured 138-reveal-lyrics_snap_threshold_ms: 1100x780 density=1.0
+Captured 139-set-lyrics_snap_threshold_ms: 1100x780 density=1.0
+Verified set-lyrics_snap_threshold_ms: pref-float:lyrics_snap_threshold_ms:500
+Verified set-lyrics_snap_threshold_ms: runtime:lyricSnapThresholdMs:500
+Captured 140-reveal-lyrics_style: 1100x780 density=1.0
+Physical click open-lyrics_style: lyrics_style at Offset(1004.5, 89.5)
+Captured 141-open-lyrics_style: 1100x780 density=1.0
+Physical click set-lyrics_style: settings-option:Text PV at Offset(945.0, 194.0)
+Captured 142-set-lyrics_style: 1100x780 density=1.0
+Verified set-lyrics_style: pref-string:lyrics_style:TextPV
+Verified set-lyrics_style: runtime:lyricsStyle:TextPV
+Captured 143-reveal-pv-style: 1100x780 density=1.0
+Physical click pv-style: lyrics-pv-kineticsplit at Offset(550.0, 518.0)
+Captured 144-pv-style: 1100x780 density=1.0
+Verified pv-style: pref-string:lyrics_text_pv_style:KineticSplit
+Verified pv-style: runtime:textPVStyle:KineticSplit
+Captured 145-reveal-lyrics_text_pv_motion_intensity: 1100x780 density=1.0
+Captured 146-set-lyrics_text_pv_motion_intensity: 1100x780 density=1.0
+Verified set-lyrics_text_pv_motion_intensity: pref-float:lyrics_text_pv_motion_intensity:1.5
+Verified set-lyrics_text_pv_motion_intensity: runtime:textPVMotionIntensity:1.5
+Captured 147-reveal-lyrics_text_pv_animation_speed: 1100x780 density=1.0
+Captured 148-set-lyrics_text_pv_animation_speed: 1100x780 density=1.0
+Verified set-lyrics_text_pv_animation_speed: pref-float:lyrics_text_pv_animation_speed:3
+Verified set-lyrics_text_pv_animation_speed: runtime:textPVAnimationSpeed:3
+Captured 149-reload: 1100x780 density=1.0
+Verified reload: pref-string:lyrics_rendering_quality:Low
+Verified reload: runtime:lyricRenderingQuality:Low
+Verified reload: pref-bool:lyrics_auto_select:false
+Verified reload: runtime:automaticLyricSelectionEnabled:false
+Verified reload: pref-bool:lyrics_word_by_word:false
+Verified reload: runtime:lyricWordByWordEnabled:false
+Verified reload: pref-bool:lyrics_pseudo_timing:true
+Verified reload: runtime:lyricPseudoTimingEnabled:true
+Verified reload: pref-bool:lyrics_tap_seek:false
+Verified reload: runtime:lyricTapSeekEnabled:false
+Verified reload: pref-bool:lyrics_long_press_share:false
+Verified reload: runtime:lyricLongPressShareEnabled:false
+Verified reload: pref-bool:lyrics_interlude_countdown:false
+Verified reload: runtime:lyricInterludeCountdownEnabled:false
+Verified reload: pref-bool:lyrics_auto_follow:false
+Verified reload: runtime:lyricAutoFollowEnabled:false
+Verified reload: pref-int:lyrics_follow_delay_ms:5000
+Verified reload: runtime:lyricFollowDelayMs:5000
+Verified reload: pref-bool:lyrics_reduce_motion:true
+Verified reload: runtime:lyricReduceMotion:true
+Verified reload: pref-bool:lyrics_translation:false
+Verified reload: runtime:showLyricTranslation:false
+Verified reload: pref-float:lyrics_translation_font_scale:0.8
+Verified reload: runtime:lyricTranslationFontScale:0.8
+Verified reload: pref-float:lyrics_translation_opacity:0.4
+Verified reload: runtime:lyricTranslationOpacity:0.4
+Verified reload: pref-string:lyrics_translation_display_mode:FocusedLine
+Verified reload: runtime:lyricTranslationDisplayMode:FocusedLine
+Verified reload: pref-bool:lyrics_romanization:true
+Verified reload: runtime:showLyricRomanization:true
+Verified reload: pref-string:lyrics_romanization_display_mode:AllLines
+Verified reload: runtime:lyricRomanizationDisplayMode:AllLines
+Verified reload: pref-float:lyrics_romanization_font_scale:0.5
+Verified reload: runtime:lyricRomanizationFontScale:0.5
+Verified reload: pref-float:lyrics_romanization_opacity:0.5
+Verified reload: runtime:lyricRomanizationOpacity:0.5
+Verified reload: pref-int:lyrics_advance_ms:500
+Verified reload: runtime:lyricAdvanceMs:500
+Verified reload: pref-bool:lyrics_advance_word_by_word:true
+Verified reload: runtime:lyricAdvanceAppliesToWordByWord:true
+Verified reload: pref-int:lyrics_refresh_rate:120
+Verified reload: runtime:lyricRefreshRate:120
+Verified reload: pref-float:lyrics_font_scale:1.12
+Verified reload: runtime:lyricFontScale:1.12
+Verified reload: pref-string:lyrics_font_weight:Regular
+Verified reload: runtime:lyricFontWeight:Regular
+Verified reload: pref-string:lyrics_lift_mode:Word
+Verified reload: runtime:lyricLiftMode:Word
+Verified reload: pref-string:lyrics_long_tone_detection:Word
+Verified reload: runtime:lyricLongToneDetectionMode:Word
+Verified reload: pref-bool:lyrics_glow_enabled:false
+Verified reload: runtime:lyricGlowEnabled:false
+Verified reload: pref-bool:lyrics_glow_long_tones_only:false
+Verified reload: runtime:lyricGlowLongTonesOnly:false
+Verified reload: pref-float:lyrics_glow_strength:1.4
+Verified reload: runtime:lyricGlowStrength:1.4
+Verified reload: pref-float:lyrics_long_tone_strength:0
+Verified reload: runtime:lyricLongToneStrength:0
+Verified reload: pref-int:lyrics_long_tone_threshold_ms:300
+Verified reload: runtime:lyricLongToneThresholdMs:300
+Verified reload: pref-float:lyrics_spacing_scale:1.4
+Verified reload: runtime:lyricSpacingScale:1.4
+Verified reload: pref-float:lyrics_blur_strength:0
+Verified reload: runtime:lyricBlurStrength:0
+Verified reload: pref-float:lyrics_focus_scale:1.08
+Verified reload: runtime:lyricFocusScale:1.08
+Verified reload: pref-float:lyrics_inactive_opacity:0.6
+Verified reload: runtime:lyricInactiveOpacity:0.6
+Verified reload: pref-int:lyrics_interface_auto_hide_ms:15000
+Verified reload: runtime:lyricInterfaceAutoHideDelayMs:15000
+Verified reload: pref-int:lyrics_scroll_hide_threshold_dp:40
+Verified reload: runtime:lyricScrollHideThresholdDp:40
+Verified reload: pref-bool:lyrics_cascade_bounce_enabled:false
+Verified reload: runtime:lyricCascadeBounceEnabled:false
+Verified reload: pref-bool:lyrics_scale_bounce_enabled:false
+Verified reload: runtime:lyricScaleBounceEnabled:false
+Verified reload: pref-int:lyrics_scale_bounce_duration_ms:150
+Verified reload: runtime:lyricScaleBounceDurationMs:150
+Verified reload: pref-int:lyrics_focus_color_lead_ms:-300
+Verified reload: runtime:lyricFocusColorLeadMs:-300
+Verified reload: pref-float:lyrics_cascade_bounce:0.8
+Verified reload: runtime:lyricCascadeBounce:0.8
+Verified reload: pref-float:lyrics_cascade_bounce_gradient:0
+Verified reload: runtime:lyricCascadeBounceGradient:0
+Verified reload: pref-float:lyrics_scale_bounce:0.5
+Verified reload: runtime:lyricScaleBounce:0.5
+Verified reload: pref-float:lyrics_highlight_gradient_width:3
+Verified reload: runtime:lyricHighlightGradientWidth:3
+Verified reload: pref-float:lyrics_highlight_gradient_reduction:0
+Verified reload: runtime:lyricHighlightGradientReduction:0
+Verified reload: pref-float:lyrics_focus_position:0.8
+Verified reload: runtime:lyricFocusPosition:0.8
+Verified reload: pref-float:lyrics_distance_blur_scale:1.5
+Verified reload: runtime:lyricDistanceBlurScale:1.5
+Verified reload: pref-float:lyrics_hidden_blur_scale:1.5
+Verified reload: runtime:lyricHiddenInterfaceBlurScale:1.5
+Verified reload: pref-float:lyrics_dim_amount:0
+Verified reload: runtime:lyricDimAmount:0
+Verified reload: pref-float:lyrics_cascade_delay_ms:100
+Verified reload: runtime:lyricCascadeDelayMs:100
+Verified reload: pref-float:lyrics_cascade_delay_increase_ms:100
+Verified reload: runtime:lyricCascadeDelayIncreaseMs:100
+Verified reload: pref-float:lyrics_cascade_following_delay_ms:200
+Verified reload: runtime:lyricCascadeFollowingDelayMs:200
+Verified reload: pref-float:lyrics_cascade_catch_up_ratio:0.5
+Verified reload: runtime:lyricCascadeCatchUpRatio:0.5
+Verified reload: pref-float:lyrics_cascade_chase_gradient:1
+Verified reload: runtime:lyricCascadeChaseSpeedGradient:1
+Verified reload: pref-float:lyrics_cascade_duration_ms:1200
+Verified reload: runtime:lyricCascadeDurationMs:1200
+Verified reload: pref-float:lyrics_snap_threshold_ms:500
+Verified reload: runtime:lyricSnapThresholdMs:500
+Verified reload: pref-string:lyrics_style:TextPV
+Verified reload: runtime:lyricsStyle:TextPV
+Verified reload: pref-string:lyrics_text_pv_style:KineticSplit
+Verified reload: runtime:textPVStyle:KineticSplit
+Verified reload: pref-float:lyrics_text_pv_motion_intensity:1.5
+Verified reload: runtime:textPVMotionIntensity:1.5
+Verified reload: pref-float:lyrics_text_pv_animation_speed:3
+Verified reload: runtime:textPVAnimationSpeed:3
+Captured 150-back: 1100x780 density=1.0
+Verified back: tag:settings-root
+gradle/actions: Writing build results to D:\a\_temp\.gradle-actions\build-results\__run_8-1791993444607.json
+
+BUILD SUCCESSFUL in 2m 12s
+14 actionable tasks: 4 executed, 10 up-to-date
+Consider enabling configuration cache to speed up this build: https://docs.gradle.org/9.5.1/userguide/configuration_cache_enabling.html

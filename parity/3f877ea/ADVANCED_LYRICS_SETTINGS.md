@@ -141,3 +141,42 @@ replay scripts now write UTF-8 explicitly, with default-independent reads in
 the controls script. Argument files are included in Windows evidence for
 subsequent runs. The failed replay and successful test/memory results are
 retained under `windows-failed-5721f90/`; there was no published package.
+
+## Successful Windows gates
+
+Run **`38592934356`**, exact feature revision
+**`d186e0c62941d2726c2184b8399d97c861af4195`**, completes successfully. All
+workflow steps pass, including the full production pointer replay and separate
+JVM reload, native EQ PCM, decoded-artwork memory audit, Windows glyph raster
+and frozen-font audits, plus JAR/app-image/final-ZIP decoder and pinned resources.
+Independent artifact collection is **PASSED** on 2026-10-15:
+
+- Artifact **`11909196579`**; final ZIP **307,984,559 bytes**, SHA-256
+  **`a97b4b0d89861634b12a35ea38be2b1277134a06cba1a8f59d6d9cb7b8bc8f37`**.
+- Exact full-source revision **`d186e0c62941d2726c2184b8399d97c861af4195`**;
+  evidence-only commits do not relabel this distribution.
+- GitHub outer-artifact digest, final ZIP CRC, packaged revision stamp, FFmpeg
+  PE/hash, Java Sound DLL and `java.management` verify independently.
+- All seven pinned resource hashes, eight static font instance bytes and metrics
+  bytes pass; Windows font audit **120 cases / zero failures**, lyric row-mask
+  audit **60 cases / zero difference**.
+- Downloaded Windows test reports: **204 tests / 39 suites / zero failures,
+  errors or skipped**. Independent PCM EQ verifier passes single preamp/seek
+  rebuild and dual primary/overlap/incoming tests.
+- Independent re-verification of downloaded control captures passes **all 60
+  pointer keys**, **151 + 2 scenes**, **501 assertions**, separate JVM reload.
+  The downloaded argument files preserve Unicode labels in UTF-8.
+- Downloaded native cache audit loads 2048 distinct 512px images / 2GiB cumulative
+  allocation without forced GC, retaining 32 images / 64MiB conservative budget;
+  warmup-to-final resident **123.50→125.54 MiB**, private commit
+  **397.92→399.54 MiB**. This does not establish whole-player memory convergence.
+
+Download: <https://github.com/lladlam/MeloX-Windows/actions/runs/38592934356/artifacts/11909196579>.
+Evidence: `evidence/advanced-lyrics-settings/windows-ci-d186e0c/`, including
+independent reports, raw capture JSON, selected screenshots and LF-normalized
+argument files/logs with original hash provenance. Independently digest-verified
+temporary distribution ZIP was removed after successful collection.
+
+The package retains the user-accepted font repair, pause-safe PCM writer and
+shared artwork leases/cache budget. Whole-player memory/user Windows acceptance
+and pinned Android pixels/motion remain separately pending/blocked.
