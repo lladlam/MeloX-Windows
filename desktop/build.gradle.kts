@@ -110,3 +110,13 @@ tasks.register<JavaExec>("auditArtworkMemory") {
     systemProperty("java.awt.headless", "true")
     args(layout.buildDirectory.dir("verification/artwork-memory").get().asFile.absolutePath)
 }
+
+tasks.register<JavaExec>("auditDisplayAwake") {
+    group = "verification"
+    description = "Acquire/release the real Windows display power request on one owner thread."
+    dependsOn("desktopMainClasses")
+    val compilation = kotlin.targets.getByName("desktop").compilations.getByName("main")
+    classpath = files(compilation.output.allOutputs, compilation.runtimeDependencyFiles)
+    mainClass.set("melox.validation.MeloXDisplayAwakeAuditKt")
+    args(layout.buildDirectory.file("verification/display-awake.json").get().asFile.absolutePath)
+}

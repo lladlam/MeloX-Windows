@@ -41,6 +41,8 @@ jobs:
         run: python tools/verify_native_equalizer.py shared/build/parity/test-home/native-pcm-evidence --output desktop/build/verification/equalizer-pcm.json
       - name: Audit decoded artwork memory budget and Windows process memory
         run: gradle :desktop:auditArtworkMemory
+      - name: Audit real Windows display power request ownership
+        run: gradle :desktop:auditDisplayAwake
       - name: Replay all pinned lyrics controls and reload them in a new process
         shell: pwsh
         run: |
@@ -52,6 +54,18 @@ jobs:
           python tools/capture_lyrics_settings.py reload "$homeDir" desktop/build/parity/lyrics-reload
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           python tools/verify_lyrics_controls_capture.py desktop/build/parity/lyrics-controls desktop/build/parity/lyrics-reload --output desktop/build/verification/lyrics-controls.json
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Replay Skyline controls, awake scopes, reset and independent reloads
+        shell: pwsh
+        run: |
+          $homeDir = "$pwd/desktop/build/parity/skyline-controls-home"
+          New-Item -ItemType Directory -Force "$homeDir/.melox" | Out-Null
+          [System.IO.File]::WriteAllText("$homeDir/.melox/prefs_melox_app_settings.properties", "onboarding_completed=true`n", [System.Text.UTF8Encoding]::new($false))
+          foreach ($mode in @("controls", "reload", "reset", "reload-reset")) {
+            python tools/capture_skyline_settings.py "$mode" "$homeDir" "desktop/build/parity/skyline/$mode"
+            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          }
+          python tools/verify_skyline_controls_capture.py desktop/build/parity/skyline --output desktop/build/verification/skyline-controls.json
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - name: Audit production lyric glyph raster at Windows DPI scales
         run: gradle :desktop:auditLyricRaster
@@ -113,6 +127,10 @@ jobs:
             desktop/build/parity/lyrics-reload/*.png
             desktop/build/parity/lyrics-reload/gradle.log
             desktop/build/parity/lyrics-reload/arguments.txt
+            desktop/build/parity/skyline/**/*.json
+            desktop/build/parity/skyline/**/*.png
+            desktop/build/parity/skyline/**/gradle.log
+            desktop/build/parity/skyline/**/arguments.txt
             desktop/build/verification/lyric-raster/*.json
             desktop/build/verification/lyric-raster/*.png
             desktop/build/verification/font-metrics/*.json

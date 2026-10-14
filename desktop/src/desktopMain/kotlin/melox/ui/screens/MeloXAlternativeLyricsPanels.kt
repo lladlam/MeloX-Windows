@@ -224,16 +224,16 @@ internal fun MeloXSkylineLyricsPanel(track: MusicTrack, modifier: Modifier = Mod
         val ambient = remember(state.lines, state.index, MeloXSettingsRuntime.skylineAmbientLines, MeloXSettingsRuntime.skylineAmbientMaximumCharacters, MeloXSettingsRuntime.skylineAmbientMaximumVisibleTexts) {
             state.lines.drop(state.index + 1).take(MeloXSettingsRuntime.skylineAmbientLines).flatMap { it.text.chunked(MeloXSettingsRuntime.skylineAmbientMaximumCharacters) }.filter(String::isNotBlank).take(MeloXSettingsRuntime.skylineAmbientMaximumVisibleTexts)
         }
-        if (ambient.isNotEmpty()) Column(Modifier.align(Alignment.CenterEnd).fillMaxWidth(.58f).rotate(-5f), verticalArrangement = Arrangement.spacedBy(5.dp)) {
+        if (ambient.isNotEmpty()) Column(Modifier.testTag("skyline-ambient").align(Alignment.CenterEnd).fillMaxWidth(.58f).rotate(-5f), verticalArrangement = Arrangement.spacedBy(5.dp)) {
             ambient.forEachIndexed { index, text ->
                 val fade = 1 - index.toFloat() / ambient.size.coerceAtLeast(1)
                 Text(text, color = Color.White.copy(alpha = (.08f * MeloXSettingsRuntime.skylineAmbientOpacity * (.45f + fade * .55f)).coerceIn(.02f, .22f)), fontSize = MeloXSettingsRuntime.skylineAmbientFontSize.sp, lineHeight = (MeloXSettingsRuntime.skylineAmbientFontSize * 1.08f).sp, fontWeight = FontWeight.Black, maxLines = 1, overflow = TextOverflow.Ellipsis,
-                    modifier = Modifier.graphicsLayer { translationX = if (MeloXSettingsRuntime.lyricReduceMotion) 0f else sin(phase.value * 2 * PI.toFloat() + index) * 14 * MeloXSettingsRuntime.skylineAmbientDrift }.rotate(sin((index + 1) * 1.73f) * MeloXSettingsRuntime.skylineAmbientMaximumTilt).blur((MeloXSettingsRuntime.skylineAmbientBlur * (1 + index * .08f)).dp))
+                    modifier = Modifier.testTag("skyline-ambient-$index").graphicsLayer { translationX = if (MeloXSettingsRuntime.lyricReduceMotion) 0f else sin(phase.value * 2 * PI.toFloat() + index) * 14 * MeloXSettingsRuntime.skylineAmbientDrift }.rotate(sin((index + 1) * 1.73f) * MeloXSettingsRuntime.skylineAmbientMaximumTilt).blur((MeloXSettingsRuntime.skylineAmbientBlur * (1 + index * .08f)).dp))
             }
         }
         Row(Modifier.fillMaxSize().padding(horizontal = 40.dp, vertical = 24.dp), verticalAlignment = Alignment.CenterVertically) {
             if (MeloXSettingsRuntime.skylineShowSongInfo) {
-                Column(Modifier.weight(.42f), verticalArrangement = Arrangement.Center) {
+                Column(Modifier.testTag("skyline-song-info").weight(.42f), verticalArrangement = Arrangement.Center) {
                     MeloXArtworkImage(track.artworkUrl, Color.DarkGray, Modifier.size(132.dp).clip(RoundedCornerShape(20.dp)))
                     Text(track.title, color = Color.White, fontSize = 18.sp, fontWeight = FontWeight.Bold, maxLines = 1, overflow = TextOverflow.Ellipsis, modifier = Modifier.padding(top = 14.dp))
                     Text(track.artistText, color = Color.White.copy(alpha = .52f), fontSize = 13.sp, maxLines = 1, overflow = TextOverflow.Ellipsis)
@@ -247,9 +247,9 @@ internal fun MeloXSkylineLyricsPanel(track: MusicTrack, modifier: Modifier = Mod
                 val progress = if (line == null || line.syllables.isEmpty()) 0f else ((position + advance - line.timeMs).toFloat() / (end - line.timeMs).coerceAtLeast(1)).coerceIn(0f, 1f)
                 Column(Modifier.fillMaxWidth(MeloXSettingsRuntime.skylineCurrentWidth), verticalArrangement = Arrangement.Center) {
                     Text(line?.text.orEmpty(), color = Color.White, fontSize = MeloXSettingsRuntime.skylineCurrentFontSize.sp, lineHeight = (MeloXSettingsRuntime.skylineCurrentFontSize * 1.12f).sp, fontWeight = FontWeight.ExtraBold,
-                        modifier = Modifier.scale(1 + (MeloXSettingsRuntime.skylineCurrentMaximumScale - 1) * progress).clickable { line?.let { PlaybackCommands.playerController()?.seekTo(it.timeMs) } })
+                        modifier = Modifier.testTag("skyline-current-line").scale(1 + (MeloXSettingsRuntime.skylineCurrentMaximumScale - 1) * progress).clickable { line?.let { PlaybackCommands.playerController()?.seekTo(it.timeMs) } })
                     if (MeloXSettingsRuntime.showLyricTranslation && !line?.translation.isNullOrBlank()) Text(line.translation.orEmpty(), color = Color.White.copy(alpha = .62f), fontSize = 16.sp, modifier = Modifier.padding(top = 10.dp))
-                    next?.let { Text(it.text, color = Color.White.copy(alpha = MeloXSettingsRuntime.skylineNextOpacity), fontSize = MeloXSettingsRuntime.skylineNextFontSize.sp, lineHeight = (MeloXSettingsRuntime.skylineNextFontSize * 1.2f).sp, fontWeight = FontWeight.SemiBold, maxLines = 2, overflow = TextOverflow.Ellipsis, modifier = Modifier.padding(top = MeloXSettingsRuntime.skylineCurrentSpacing.dp)) }
+                    next?.let { Text(it.text, color = Color.White.copy(alpha = MeloXSettingsRuntime.skylineNextOpacity), fontSize = MeloXSettingsRuntime.skylineNextFontSize.sp, lineHeight = (MeloXSettingsRuntime.skylineNextFontSize * 1.2f).sp, fontWeight = FontWeight.SemiBold, maxLines = 2, overflow = TextOverflow.Ellipsis, modifier = Modifier.testTag("skyline-next-line").padding(top = MeloXSettingsRuntime.skylineCurrentSpacing.dp)) }
                 }
             }
         }

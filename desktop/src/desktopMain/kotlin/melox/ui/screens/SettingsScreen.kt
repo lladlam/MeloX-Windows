@@ -77,6 +77,7 @@ private enum class SettingsRoute(val resourceKey: String, val symbol: String) {
     TabLayout("tabs", "▥"),
     Playback("playback", "♫"),
     Lyrics("lyrics", "❞"),
+    SkylineLyrics("skyline", "▱"),
     Storage("storage", "▰"),
     Features("features", "☷"),
     Messages("messages", "✉"),
@@ -92,7 +93,7 @@ private enum class SettingsRoute(val resourceKey: String, val symbol: String) {
 
 private val SettingsSections = listOf(
     "settings_section_app" to listOf(SettingsRoute.General, SettingsRoute.Appearance, SettingsRoute.Content, SettingsRoute.Playback, SettingsRoute.Lyrics, SettingsRoute.Storage),
-    "settings_section_more" to listOf(SettingsRoute.Features, SettingsRoute.Messages, SettingsRoute.TabLayout),
+    "settings_section_more" to listOf(SettingsRoute.Features, SettingsRoute.Messages, SettingsRoute.TabLayout, SettingsRoute.SkylineLyrics),
     "settings_section_about" to listOf(SettingsRoute.RemoteConfig, SettingsRoute.About, SettingsRoute.Legal, SettingsRoute.Privacy),
 )
 
@@ -254,6 +255,7 @@ private fun SettingsDetail(
                 SettingsRoute.TabLayout -> TabLayoutSettings(currentSource)
                 SettingsRoute.Playback -> PlaybackSettings()
                 SettingsRoute.Lyrics -> LyricsSettings()
+                SettingsRoute.SkylineLyrics -> SkylineLyricsSettings()
                 SettingsRoute.Storage -> StorageSettings()
                 SettingsRoute.Features -> FeatureSettings()
                 SettingsRoute.Messages -> MessagesSettings(onOpenMessages)
@@ -320,7 +322,14 @@ private fun AppearanceSettings() {
     PreferenceToggle("封面播放动效", MeloXSettingsRuntime.artworkMotionEnabled, "player_artwork_motion")
     PreferenceToggle("减少动态效果", MeloXSettingsRuntime.reduceMotion, "reduce_motion")
     PreferenceToggle("使用毛玻璃", MeloXSettingsRuntime.frostedGlassEnabled, "player_frosted_glass")
-    PreferenceToggle("播放时保持屏幕常亮", MeloXSettingsRuntime.keepScreenOn, "player_keep_screen_on")
+    Box(Modifier.testTag("player_screen_awake_mode")) {
+        MeloXSettingsDropdown(pinnedString("settings_screen_awake_scope"), MeloXSettingsRuntime.screenAwakeMode,
+            listOf(melox.settings.MeloXScreenAwakeMode.Disabled to pinnedString("settings_skyline_off"),
+                melox.settings.MeloXScreenAwakeMode.Player to pinnedString("settings_awake_player"),
+                melox.settings.MeloXScreenAwakeMode.Lyrics to pinnedString("settings_awake_lyrics"),
+                melox.settings.MeloXScreenAwakeMode.HiddenLyricsInterface to pinnedString("settings_awake_hidden_lyrics")),
+            onSelected = { MeloXSettingsPreferences.setString("player_screen_awake_mode", it.name) })
+    }
     PreferenceToggle("沉浸式播放", MeloXSettingsRuntime.immersivePlaybackEnabled, "immersive_playback")
 }
 

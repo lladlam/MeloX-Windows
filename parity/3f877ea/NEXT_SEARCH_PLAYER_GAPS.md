@@ -38,13 +38,15 @@ actual UI input, persisted reload and changed production rendering with real PCM
 
 ## Other confirmed next checks
 
-- Skyline has additional source settings in `SettingsScreen.kt:1091…`; current
-  Desktop controls primarily expose TextPV. Inventory Skyline separately.
+- Skyline's 17 source settings in `SettingsScreen.kt:1091…` now have production
+  controls, exact reset and four-process pointer/persistence evidence. See
+  `SKYLINE_SETTINGS_POWER.md`; fresh Windows delivery gates are pending.
 - `MeloXIOSNowPlayingSharedHost.kt:130–145` keeps the Android view awake for
   explicit Skyline and Disabled/Player/Lyrics/HiddenLyricsInterface scopes.
-  Desktop runtime has these keys but no actual OS power-request consumer yet.
-  Implement Windows-native lifetime/foreground/disposal behavior, then test it on
-  physical Windows. Do not label a stored toggle as a platform function.
+  A real Windows same-thread display/system-idle request is now connected to
+  those scopes and direct window foreground/iconify/disposal events. Native
+  Windows CI ownership checks and physical Windows idle/sleep acceptance remain
+  required; Linux reports unsupported rather than simulating power success.
 - Complete provider-native action capabilities and favorite-state reads; the
   common overlay currently handles NetEase IDs but full source-specific actions
   still require work. Provider bridge negative IDs must remain stable.

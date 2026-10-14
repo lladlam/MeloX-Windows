@@ -35,6 +35,8 @@ private object PinnedSettingsStrings {
             .reader(Charsets.UTF_8).use(::load)
         checkNotNull(PinnedSettingsStrings::class.java.classLoader.getResourceAsStream("parity/pinned-lyrics-strings.properties"))
             .reader(Charsets.UTF_8).use(::load)
+        checkNotNull(PinnedSettingsStrings::class.java.classLoader.getResourceAsStream("parity/pinned-skyline-strings.properties"))
+            .reader(Charsets.UTF_8).use(::load)
     }
 }
 

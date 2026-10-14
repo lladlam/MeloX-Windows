@@ -1,0 +1,206 @@
+{
+  "pinned_android": "3f877eaffe30c82eb6d24eb3647702f5bc554dd3",
+  "check": "source consumer paths; not Android behavioral/pixel equivalence",
+  "keys": {
+    "lyrics_skyline_ambient_blur": {
+      "property": "skylineAmbientBlur",
+      "production_consumers": [
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXAlternativeLyricsPanels.kt",
+          "line": 231,
+          "code": "modifier = Modifier.testTag(\"skyline-ambient-$index\").graphicsLayer { translationX = if (MeloXSettingsRuntime.lyricReduceMotion) 0f else sin(phase.value * 2 * PI.toFloat() + index) * 14 * MeloXSettingsRuntime.skylineAmbientDrift }.rotate(sin((index + 1) * 1.73f) * MeloXSettingsRuntime.skylineAmbientMaximumTilt).blur((MeloXSettingsRuntime.skylineAmbientBlur * (1 + index * .08f)).dp))"
+        }
+      ]
+    },
+    "lyrics_skyline_ambient_drift": {
+      "property": "skylineAmbientDrift",
+      "production_consumers": [
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXAlternativeLyricsPanels.kt",
+          "line": 219,
+          "code": "LaunchedEffect(active, MeloXSettingsRuntime.lyricReduceMotion, MeloXSettingsRuntime.skylineAmbientDrift) {"
+        },
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXAlternativeLyricsPanels.kt",
+          "line": 220,
+          "code": "if (!active || MeloXSettingsRuntime.lyricReduceMotion || MeloXSettingsRuntime.skylineAmbientDrift <= 0) { phase.snapTo(0f); return@LaunchedEffect }"
+        },
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXAlternativeLyricsPanels.kt",
+          "line": 231,
+          "code": "modifier = Modifier.testTag(\"skyline-ambient-$index\").graphicsLayer { translationX = if (MeloXSettingsRuntime.lyricReduceMotion) 0f else sin(phase.value * 2 * PI.toFloat() + index) * 14 * MeloXSettingsRuntime.skylineAmbientDrift }.rotate(sin((index + 1) * 1.73f) * MeloXSettingsRuntime.skylineAmbientMaximumTilt).blur((MeloXSettingsRuntime.skylineAmbientBlur * (1 + index * .08f)).dp))"
+        }
+      ]
+    },
+    "lyrics_skyline_ambient_font_size": {
+      "property": "skylineAmbientFontSize",
+      "production_consumers": [
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXAlternativeLyricsPanels.kt",
+          "line": 230,
+          "code": "Text(text, color = Color.White.copy(alpha = (.08f * MeloXSettingsRuntime.skylineAmbientOpacity * (.45f + fade * .55f)).coerceIn(.02f, .22f)), fontSize = MeloXSettingsRuntime.skylineAmbientFontSize.sp, lineHeight = (MeloXSettingsRuntime.skylineAmbientFontSize * 1.08f).sp, fontWeight = FontWeight.Black, maxLines = 1, overflow = TextOverflow.Ellipsis,"
+        }
+      ]
+    },
+    "lyrics_skyline_ambient_lines": {
+      "property": "skylineAmbientLines",
+      "production_consumers": [
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXAlternativeLyricsPanels.kt",
+          "line": 224,
+          "code": "val ambient = remember(state.lines, state.index, MeloXSettingsRuntime.skylineAmbientLines, MeloXSettingsRuntime.skylineAmbientMaximumCharacters, MeloXSettingsRuntime.skylineAmbientMaximumVisibleTexts) {"
+        },
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXAlternativeLyricsPanels.kt",
+          "line": 225,
+          "code": "state.lines.drop(state.index + 1).take(MeloXSettingsRuntime.skylineAmbientLines).flatMap { it.text.chunked(MeloXSettingsRuntime.skylineAmbientMaximumCharacters) }.filter(String::isNotBlank).take(MeloXSettingsRuntime.skylineAmbientMaximumVisibleTexts)"
+        }
+      ]
+    },
+    "lyrics_skyline_ambient_max_characters": {
+      "property": "skylineAmbientMaximumCharacters",
+      "production_consumers": [
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXAlternativeLyricsPanels.kt",
+          "line": 224,
+          "code": "val ambient = remember(state.lines, state.index, MeloXSettingsRuntime.skylineAmbientLines, MeloXSettingsRuntime.skylineAmbientMaximumCharacters, MeloXSettingsRuntime.skylineAmbientMaximumVisibleTexts) {"
+        },
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXAlternativeLyricsPanels.kt",
+          "line": 225,
+          "code": "state.lines.drop(state.index + 1).take(MeloXSettingsRuntime.skylineAmbientLines).flatMap { it.text.chunked(MeloXSettingsRuntime.skylineAmbientMaximumCharacters) }.filter(String::isNotBlank).take(MeloXSettingsRuntime.skylineAmbientMaximumVisibleTexts)"
+        }
+      ]
+    },
+    "lyrics_skyline_ambient_max_tilt": {
+      "property": "skylineAmbientMaximumTilt",
+      "production_consumers": [
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXAlternativeLyricsPanels.kt",
+          "line": 231,
+          "code": "modifier = Modifier.testTag(\"skyline-ambient-$index\").graphicsLayer { translationX = if (MeloXSettingsRuntime.lyricReduceMotion) 0f else sin(phase.value * 2 * PI.toFloat() + index) * 14 * MeloXSettingsRuntime.skylineAmbientDrift }.rotate(sin((index + 1) * 1.73f) * MeloXSettingsRuntime.skylineAmbientMaximumTilt).blur((MeloXSettingsRuntime.skylineAmbientBlur * (1 + index * .08f)).dp))"
+        }
+      ]
+    },
+    "lyrics_skyline_ambient_max_visible": {
+      "property": "skylineAmbientMaximumVisibleTexts",
+      "production_consumers": [
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXAlternativeLyricsPanels.kt",
+          "line": 224,
+          "code": "val ambient = remember(state.lines, state.index, MeloXSettingsRuntime.skylineAmbientLines, MeloXSettingsRuntime.skylineAmbientMaximumCharacters, MeloXSettingsRuntime.skylineAmbientMaximumVisibleTexts) {"
+        },
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXAlternativeLyricsPanels.kt",
+          "line": 225,
+          "code": "state.lines.drop(state.index + 1).take(MeloXSettingsRuntime.skylineAmbientLines).flatMap { it.text.chunked(MeloXSettingsRuntime.skylineAmbientMaximumCharacters) }.filter(String::isNotBlank).take(MeloXSettingsRuntime.skylineAmbientMaximumVisibleTexts)"
+        }
+      ]
+    },
+    "lyrics_skyline_ambient_opacity": {
+      "property": "skylineAmbientOpacity",
+      "production_consumers": [
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXAlternativeLyricsPanels.kt",
+          "line": 230,
+          "code": "Text(text, color = Color.White.copy(alpha = (.08f * MeloXSettingsRuntime.skylineAmbientOpacity * (.45f + fade * .55f)).coerceIn(.02f, .22f)), fontSize = MeloXSettingsRuntime.skylineAmbientFontSize.sp, lineHeight = (MeloXSettingsRuntime.skylineAmbientFontSize * 1.08f).sp, fontWeight = FontWeight.Black, maxLines = 1, overflow = TextOverflow.Ellipsis,"
+        }
+      ]
+    },
+    "lyrics_skyline_current_font_size": {
+      "property": "skylineCurrentFontSize",
+      "production_consumers": [
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXAlternativeLyricsPanels.kt",
+          "line": 249,
+          "code": "Text(line?.text.orEmpty(), color = Color.White, fontSize = MeloXSettingsRuntime.skylineCurrentFontSize.sp, lineHeight = (MeloXSettingsRuntime.skylineCurrentFontSize * 1.12f).sp, fontWeight = FontWeight.ExtraBold,"
+        }
+      ]
+    },
+    "lyrics_skyline_current_max_scale": {
+      "property": "skylineCurrentMaximumScale",
+      "production_consumers": [
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXAlternativeLyricsPanels.kt",
+          "line": 250,
+          "code": "modifier = Modifier.testTag(\"skyline-current-line\").scale(1 + (MeloXSettingsRuntime.skylineCurrentMaximumScale - 1) * progress).clickable { line?.let { PlaybackCommands.playerController()?.seekTo(it.timeMs) } })"
+        }
+      ]
+    },
+    "lyrics_skyline_current_spacing": {
+      "property": "skylineCurrentSpacing",
+      "production_consumers": [
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXAlternativeLyricsPanels.kt",
+          "line": 252,
+          "code": "next?.let { Text(it.text, color = Color.White.copy(alpha = MeloXSettingsRuntime.skylineNextOpacity), fontSize = MeloXSettingsRuntime.skylineNextFontSize.sp, lineHeight = (MeloXSettingsRuntime.skylineNextFontSize * 1.2f).sp, fontWeight = FontWeight.SemiBold, maxLines = 2, overflow = TextOverflow.Ellipsis, modifier = Modifier.testTag(\"skyline-next-line\").padding(top = MeloXSettingsRuntime.skylineCurrentSpacing.dp)) }"
+        }
+      ]
+    },
+    "lyrics_skyline_current_width": {
+      "property": "skylineCurrentWidth",
+      "production_consumers": [
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXAlternativeLyricsPanels.kt",
+          "line": 248,
+          "code": "Column(Modifier.fillMaxWidth(MeloXSettingsRuntime.skylineCurrentWidth), verticalArrangement = Arrangement.Center) {"
+        }
+      ]
+    },
+    "lyrics_skyline_enabled": {
+      "property": "skylineEnabled",
+      "production_consumers": [
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXIOSLandscapePlayerScene.kt",
+          "line": 75,
+          "code": "if (page == 1 && MeloXSettingsRuntime.skylineEnabled) {"
+        }
+      ]
+    },
+    "lyrics_skyline_keep_awake": {
+      "property": "skylineKeepsScreenAwake",
+      "production_consumers": [
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXIOSPlayerScene.kt",
+          "line": 117,
+          "code": "skylineVisible, MeloXSettingsRuntime.skylineKeepsScreenAwake,"
+        }
+      ]
+    },
+    "lyrics_skyline_next_font_size": {
+      "property": "skylineNextFontSize",
+      "production_consumers": [
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXAlternativeLyricsPanels.kt",
+          "line": 252,
+          "code": "next?.let { Text(it.text, color = Color.White.copy(alpha = MeloXSettingsRuntime.skylineNextOpacity), fontSize = MeloXSettingsRuntime.skylineNextFontSize.sp, lineHeight = (MeloXSettingsRuntime.skylineNextFontSize * 1.2f).sp, fontWeight = FontWeight.SemiBold, maxLines = 2, overflow = TextOverflow.Ellipsis, modifier = Modifier.testTag(\"skyline-next-line\").padding(top = MeloXSettingsRuntime.skylineCurrentSpacing.dp)) }"
+        }
+      ]
+    },
+    "lyrics_skyline_next_opacity": {
+      "property": "skylineNextOpacity",
+      "production_consumers": [
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXAlternativeLyricsPanels.kt",
+          "line": 252,
+          "code": "next?.let { Text(it.text, color = Color.White.copy(alpha = MeloXSettingsRuntime.skylineNextOpacity), fontSize = MeloXSettingsRuntime.skylineNextFontSize.sp, lineHeight = (MeloXSettingsRuntime.skylineNextFontSize * 1.2f).sp, fontWeight = FontWeight.SemiBold, maxLines = 2, overflow = TextOverflow.Ellipsis, modifier = Modifier.testTag(\"skyline-next-line\").padding(top = MeloXSettingsRuntime.skylineCurrentSpacing.dp)) }"
+        }
+      ]
+    },
+    "lyrics_skyline_song_info": {
+      "property": "skylineShowSongInfo",
+      "production_consumers": [
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXAlternativeLyricsPanels.kt",
+          "line": 235,
+          "code": "if (MeloXSettingsRuntime.skylineShowSongInfo) {"
+        },
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXAlternativeLyricsPanels.kt",
+          "line": 243,
+          "code": "AnimatedContent(state.index, Modifier.weight(if (MeloXSettingsRuntime.skylineShowSongInfo) .58f else 1f),"
+        }
+      ]
+    }
+  }
+}

@@ -138,7 +138,7 @@ private fun percent(value: Float) = pinnedString("settings_unit_percent", (value
 private fun offOrPercent(value: Float) = if (value == 0f) pinnedString("settings_skyline_off") else percent(value)
 
 @Composable
-private fun LyricsGroup(content: @Composable ColumnScope.() -> Unit) {
+internal fun LyricsGroup(content: @Composable ColumnScope.() -> Unit) {
     Spacer(Modifier.height(10.dp))
     CompositionLocalProvider(LocalSettingsGroupRowIndex provides mutableIntStateOf(0)) {
         MeloXIosGroupedList(Modifier.padding(horizontal = 20.dp), surfaceColor = MaterialTheme.colorScheme.surface, content = content)
@@ -146,20 +146,20 @@ private fun LyricsGroup(content: @Composable ColumnScope.() -> Unit) {
 }
 
 @Composable
-private fun LyricsSliderGroup(content: @Composable ColumnScope.() -> Unit) {
+internal fun LyricsSliderGroup(content: @Composable ColumnScope.() -> Unit) {
     Spacer(Modifier.height(10.dp))
     Column(Modifier.padding(horizontal = 20.dp), content = content)
 }
 
 @Composable
-private fun LyricsToggle(title: String, key: String, checked: Boolean, note: String? = null) {
+internal fun LyricsToggle(title: String, key: String, checked: Boolean, note: String? = null) {
     MeloXIosListRow(title = pinnedString(title), subtitle = note?.let { pinnedString(it) }, showChevron = false,
         showTopSeparator = LocalSettingsGroupRowIndex.current.intValue++ > 0,
         trailingContent = { MeloXGlassToggle(checked, onCheckedChange = { MeloXSettingsPreferences.setBoolean(key, it) }, modifier = Modifier.testTag(key)) })
 }
 
 @Composable
-private fun LyricsIntChoice(title: String, key: String, value: Int, choices: List<Int>, label: (Int) -> String) {
+internal fun LyricsIntChoice(title: String, key: String, value: Int, choices: List<Int>, label: (Int) -> String) {
     Box(Modifier.testTag(key)) {
         MeloXSettingsDropdown(pinnedString(title), value, choices.map { it to label(it) },
             onSelected = { MeloXSettingsPreferences.setInt(key, it) }, grouped = true)
@@ -190,7 +190,7 @@ private fun LyricsAnnotationChoice(title: String, key: String, value: MeloXLyric
 }
 
 @Composable
-private fun LyricsFloatSlider(title: String, key: String, value: Float, range: ClosedFloatingPointRange<Float>, steps: Int, label: (Float) -> String = ::percent) {
+internal fun LyricsFloatSlider(title: String, key: String, value: Float, range: ClosedFloatingPointRange<Float>, steps: Int, label: (Float) -> String = ::percent) {
     var dragging by remember { mutableStateOf<Float?>(null) }
     val step = (range.endInclusive - range.start) / (steps + 1)
     fun snap(v: Float) = (range.start + ((v - range.start) / step).roundToInt() * step).coerceIn(range)

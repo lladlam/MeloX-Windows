@@ -6,3 +6,4 @@ desktop/src/main/resources/fonts/*.ttf -text
 desktop/src/main/resources/parity/mi-lan-pro-static.json text eol=lf
 desktop/src/main/resources/parity/*.json text eol=lf
 desktop/src/main/resources/parity/pinned-lyrics-strings.properties text eol=lf
+desktop/src/main/resources/parity/pinned-skyline-strings.properties text eol=lf

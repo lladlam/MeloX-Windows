@@ -68,7 +68,30 @@ fun main() {
                     exitApplication()
                 },
             ) {
-                MeloXApp(onExit = ::exitApplication)
+                val displayAwake = androidx.compose.runtime.remember { melox.platform.MeloXDisplayAwakeController(initialForeground = false) }
+                androidx.compose.runtime.DisposableEffect(window, displayAwake) {
+                    fun foreground() = window.isFocused && (window.extendedState and java.awt.Frame.ICONIFIED) == 0
+                    val listener = object : java.awt.event.WindowAdapter() {
+                        override fun windowLostFocus(event: java.awt.event.WindowEvent) { displayAwake.setForeground(false) }
+                        override fun windowGainedFocus(event: java.awt.event.WindowEvent) { displayAwake.setForeground(foreground()) }
+                        override fun windowStateChanged(event: java.awt.event.WindowEvent) { displayAwake.setForeground(foreground()) }
+                    }
+                    window.addWindowFocusListener(listener)
+                    window.addWindowStateListener(listener)
+                    displayAwake.setForeground(foreground())
+                    onDispose {
+                        window.removeWindowFocusListener(listener)
+                        window.removeWindowStateListener(listener)
+                        displayAwake.close()
+                    }
+                }
+                val focused = androidx.compose.ui.platform.LocalWindowInfo.current.isWindowFocused
+                androidx.compose.runtime.CompositionLocalProvider(
+                    melox.ui.player.LocalMeloXDisplayAwakeOwner provides displayAwake,
+                    melox.ui.player.LocalMeloXWindowForeground provides (focused && !windowState.isMinimized),
+                ) {
+                    MeloXApp(onExit = ::exitApplication)
+                }
             }
         }
     } catch (e: Exception) {

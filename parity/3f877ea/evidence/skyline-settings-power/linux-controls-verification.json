@@ -1,0 +1,55 @@
+{
+  "status": "PASSED",
+  "pinned_android": "3f877eaffe30c82eb6d24eb3647702f5bc554dd3",
+  "skyline_keys": 17,
+  "screen_awake_scope_choices": [
+    "Disabled",
+    "HiddenLyricsInterface",
+    "Lyrics",
+    "Player"
+  ],
+  "pointer_verified_keys": [
+    "lyrics_skyline_ambient_blur",
+    "lyrics_skyline_ambient_drift",
+    "lyrics_skyline_ambient_font_size",
+    "lyrics_skyline_ambient_lines",
+    "lyrics_skyline_ambient_max_characters",
+    "lyrics_skyline_ambient_max_tilt",
+    "lyrics_skyline_ambient_max_visible",
+    "lyrics_skyline_ambient_opacity",
+    "lyrics_skyline_current_font_size",
+    "lyrics_skyline_current_max_scale",
+    "lyrics_skyline_current_spacing",
+    "lyrics_skyline_current_width",
+    "lyrics_skyline_enabled",
+    "lyrics_skyline_keep_awake",
+    "lyrics_skyline_next_font_size",
+    "lyrics_skyline_next_opacity",
+    "lyrics_skyline_song_info",
+    "player_screen_awake_mode"
+  ],
+  "separately_reloaded_changed_and_reset_values": true,
+  "reset_preserved_keys": [
+    "lyrics_skyline_ambient_lines",
+    "lyrics_skyline_enabled",
+    "lyrics_skyline_keep_awake",
+    "lyrics_skyline_song_info",
+    "player_screen_awake_mode"
+  ],
+  "reset_changed_keys": 13,
+  "captures_sha256": {
+    "controls": "290cf12e17ad50763bc4cd600166d40d327837bda89e09d7bf82fda4a63c1f65",
+    "reload": "3f38ed6373254458ee3a9d218c4dd05c8082fd239f208d6d16a83c1ca88a67b0",
+    "reset": "3d299e2917f4bb102c7a56c67977f9359030b29b9efb1e8367db2701a5f41658",
+    "reload-reset": "7fb75d1b3484a455cd0b01c15c793056fefb67f7c49f26ce065de545e5fc0953"
+  },
+  "scene_counts": {
+    "controls": 58,
+    "reload": 3,
+    "reset": 6,
+    "reload-reset": 3
+  },
+  "passed_assertions": 342,
+  "android_pixel_motion_acceptance": "BLOCKED",
+  "physical_windows_power_acceptance": "BLOCKED"
+}

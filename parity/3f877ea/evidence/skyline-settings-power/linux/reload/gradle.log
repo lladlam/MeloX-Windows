@@ -1,0 +1,137 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.5.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build
+> Task :desktop:kmpPartiallyResolvedDependenciesChecker
+> Task :desktop:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :desktop:convertXmlValueResourcesForCommonMain NO-SOURCE
+> Task :desktop:copyNonXmlValueResourcesForCommonMain NO-SOURCE
+> Task :desktop:prepareComposeResourcesTaskForCommonMain NO-SOURCE
+> Task :desktop:generateResourceAccessorsForCommonMain SKIPPED
+> Task :desktop:convertXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :desktop:copyNonXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :desktop:prepareComposeResourcesTaskForDesktopMain NO-SOURCE
+> Task :desktop:generateResourceAccessorsForDesktopMain SKIPPED
+> Task :desktop:generateActualResourceCollectorsForDesktopMain SKIPPED
+> Task :desktop:generateComposeResClass SKIPPED
+> Task :desktop:generateExpectResourceCollectorsForCommonMain SKIPPED
+> Task :innertube:kmpPartiallyResolvedDependenciesChecker
+> Task :innertube:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :innertube:extractAndroidInnerTube UP-TO-DATE
+> Task :innertube:compileKotlinDesktop UP-TO-DATE
+> Task :innertube:compileDesktopMainJava NO-SOURCE
+> Task :innertube:desktopProcessResources NO-SOURCE
+> Task :innertube:processDesktopMainResources SKIPPED
+> Task :innertube:desktopMainClasses UP-TO-DATE
+> Task :innertube:desktopJar UP-TO-DATE
+> Task :shared:kmpPartiallyResolvedDependenciesChecker
+> Task :shared:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :shared:convertXmlValueResourcesForCommonMain NO-SOURCE
+> Task :shared:copyNonXmlValueResourcesForCommonMain NO-SOURCE
+> Task :shared:prepareComposeResourcesTaskForCommonMain NO-SOURCE
+> Task :shared:generateResourceAccessorsForCommonMain SKIPPED
+> Task :shared:convertXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :shared:copyNonXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :shared:prepareComposeResourcesTaskForDesktopMain NO-SOURCE
+> Task :shared:generateResourceAccessorsForDesktopMain SKIPPED
+> Task :shared:generateActualResourceCollectorsForDesktopMain SKIPPED
+> Task :shared:generateComposeResClass SKIPPED
+> Task :shared:generateExpectResourceCollectorsForCommonMain SKIPPED
+> Task :shared:compileKotlinDesktop UP-TO-DATE
+> Task :shared:compileDesktopMainJava NO-SOURCE
+> Task :shared:assembleDesktopMainResources UP-TO-DATE
+> Task :shared:desktopProcessResources UP-TO-DATE
+> Task :shared:processDesktopMainResources SKIPPED
+> Task :shared:desktopMainClasses UP-TO-DATE
+> Task :shared:desktopJar UP-TO-DATE
+> Task :desktop:compileKotlinDesktop UP-TO-DATE
+> Task :desktop:compileDesktopMainJava NO-SOURCE
+> Task :desktop:assembleDesktopMainResources UP-TO-DATE
+> Task :desktop:desktopProcessResources UP-TO-DATE
+> Task :desktop:processDesktopMainResources SKIPPED
+> Task :desktop:desktopMainClasses UP-TO-DATE
+
+> Task :desktop:captureUi
+[INFO MeloXFont] Android MiLan Pro static instances loaded: CSS=[100, 200, 300, 400, 500, 600, 700, 800, 900] files=mi_lan_pro_w{100..800}.ttf (CSS 900 shares frozen axis-700 instance)
+SLF4J(W): No SLF4J providers were found.
+SLF4J(W): Defaulting to no-operation (NOP) logger implementation
+SLF4J(W): See https://www.slf4j.org/codes.html#noProviders for further details.
+Captured 00-settings: 1100x780 density=1.0
+Verified 00-settings: pref-bool:lyrics_skyline_enabled:false
+Verified 00-settings: runtime:skylineEnabled:false
+Verified 00-settings: pref-bool:lyrics_skyline_song_info:false
+Verified 00-settings: runtime:skylineShowSongInfo:false
+Verified 00-settings: pref-bool:lyrics_skyline_keep_awake:false
+Verified 00-settings: runtime:skylineKeepsScreenAwake:false
+Verified 00-settings: pref-int:lyrics_skyline_ambient_lines:4
+Verified 00-settings: runtime:skylineAmbientLines:4
+Verified 00-settings: pref-int:lyrics_skyline_ambient_max_characters:2
+Verified 00-settings: runtime:skylineAmbientMaximumCharacters:2
+Verified 00-settings: pref-int:lyrics_skyline_ambient_max_visible:8
+Verified 00-settings: runtime:skylineAmbientMaximumVisibleTexts:8
+Verified 00-settings: pref-float:lyrics_skyline_current_font_size:84
+Verified 00-settings: runtime:skylineCurrentFontSize:84
+Verified 00-settings: pref-float:lyrics_skyline_current_max_scale:1.2
+Verified 00-settings: runtime:skylineCurrentMaximumScale:1.2
+Verified 00-settings: pref-float:lyrics_skyline_current_width:0.4
+Verified 00-settings: runtime:skylineCurrentWidth:0.4
+Verified 00-settings: pref-float:lyrics_skyline_next_font_size:44
+Verified 00-settings: runtime:skylineNextFontSize:44
+Verified 00-settings: pref-float:lyrics_skyline_next_opacity:0.2
+Verified 00-settings: runtime:skylineNextOpacity:0.2
+Verified 00-settings: pref-float:lyrics_skyline_current_spacing:36
+Verified 00-settings: runtime:skylineCurrentSpacing:36
+Verified 00-settings: pref-float:lyrics_skyline_ambient_font_size:24
+Verified 00-settings: runtime:skylineAmbientFontSize:24
+Verified 00-settings: pref-float:lyrics_skyline_ambient_opacity:1.8
+Verified 00-settings: runtime:skylineAmbientOpacity:1.8
+Verified 00-settings: pref-float:lyrics_skyline_ambient_blur:0
+Verified 00-settings: runtime:skylineAmbientBlur:0
+Verified 00-settings: pref-float:lyrics_skyline_ambient_max_tilt:20
+Verified 00-settings: runtime:skylineAmbientMaximumTilt:20
+Verified 00-settings: pref-float:lyrics_skyline_ambient_drift:0
+Verified 00-settings: runtime:skylineAmbientDrift:0
+Verified 00-settings: pref-string:player_screen_awake_mode:HiddenLyricsInterface
+Verified 00-settings: runtime:screenAwakeMode:HiddenLyricsInterface
+Captured 01-root-skyline: 1100x780 density=1.0
+Physical click open: settings-open-skylinelyrics at Offset(550.0, 580.0)
+Captured 02-open: 1100x780 density=1.0
+Verified open: tag:skyline-settings
+Verified open: pref-bool:lyrics_skyline_enabled:false
+Verified open: runtime:skylineEnabled:false
+Verified open: pref-bool:lyrics_skyline_song_info:false
+Verified open: runtime:skylineShowSongInfo:false
+Verified open: pref-bool:lyrics_skyline_keep_awake:false
+Verified open: runtime:skylineKeepsScreenAwake:false
+Verified open: pref-int:lyrics_skyline_ambient_lines:4
+Verified open: runtime:skylineAmbientLines:4
+Verified open: pref-int:lyrics_skyline_ambient_max_characters:2
+Verified open: runtime:skylineAmbientMaximumCharacters:2
+Verified open: pref-int:lyrics_skyline_ambient_max_visible:8
+Verified open: runtime:skylineAmbientMaximumVisibleTexts:8
+Verified open: pref-float:lyrics_skyline_current_font_size:84
+Verified open: runtime:skylineCurrentFontSize:84
+Verified open: pref-float:lyrics_skyline_current_max_scale:1.2
+Verified open: runtime:skylineCurrentMaximumScale:1.2
+Verified open: pref-float:lyrics_skyline_current_width:0.4
+Verified open: runtime:skylineCurrentWidth:0.4
+Verified open: pref-float:lyrics_skyline_next_font_size:44
+Verified open: runtime:skylineNextFontSize:44
+Verified open: pref-float:lyrics_skyline_next_opacity:0.2
+Verified open: runtime:skylineNextOpacity:0.2
+Verified open: pref-float:lyrics_skyline_current_spacing:36
+Verified open: runtime:skylineCurrentSpacing:36
+Verified open: pref-float:lyrics_skyline_ambient_font_size:24
+Verified open: runtime:skylineAmbientFontSize:24
+Verified open: pref-float:lyrics_skyline_ambient_opacity:1.8
+Verified open: runtime:skylineAmbientOpacity:1.8
+Verified open: pref-float:lyrics_skyline_ambient_blur:0
+Verified open: runtime:skylineAmbientBlur:0
+Verified open: pref-float:lyrics_skyline_ambient_max_tilt:20
+Verified open: runtime:skylineAmbientMaximumTilt:20
+Verified open: pref-float:lyrics_skyline_ambient_drift:0
+Verified open: runtime:skylineAmbientDrift:0
+Verified open: pref-string:player_screen_awake_mode:HiddenLyricsInterface
+Verified open: runtime:screenAwakeMode:HiddenLyricsInterface
+
+BUILD SUCCESSFUL in 11s
+14 actionable tasks: 4 executed, 10 up-to-date
+Consider enabling configuration cache to speed up this build: https://docs.gradle.org/9.5.1/userguide/configuration_cache_enabling.html

@@ -1,0 +1,31 @@
+{
+  "pinned_android": "3f877eaffe30c82eb6d24eb3647702f5bc554dd3",
+  "verified_against_pure_export": true,
+  "resource": "parity/pinned-skyline-strings.properties",
+  "sha256": "f8d430f736486ca2e3e5e8d323defdf082f5f45b116de31c15dc18c7363278ca",
+  "strings": 31,
+  "canonical_keys": [
+    "lyrics_skyline_ambient_blur",
+    "lyrics_skyline_ambient_drift",
+    "lyrics_skyline_ambient_font_size",
+    "lyrics_skyline_ambient_lines",
+    "lyrics_skyline_ambient_max_characters",
+    "lyrics_skyline_ambient_max_tilt",
+    "lyrics_skyline_ambient_max_visible",
+    "lyrics_skyline_ambient_opacity",
+    "lyrics_skyline_current_font_size",
+    "lyrics_skyline_current_max_scale",
+    "lyrics_skyline_current_spacing",
+    "lyrics_skyline_current_width",
+    "lyrics_skyline_enabled",
+    "lyrics_skyline_keep_awake",
+    "lyrics_skyline_next_font_size",
+    "lyrics_skyline_next_opacity",
+    "lyrics_skyline_song_info"
+  ],
+  "source_sha256": {
+    "res/values/strings.xml": "920ba9684ce585713be0dbc7256eea248ca1ad65dd1e723fbf0d91effb21f841",
+    "kotlin/com/lladlam/melox/ui/settings/SettingsScreen.kt": "5325c809720af94a15034e615714a003a8c48dfe6b8dee771ff1c4d2292b22c3",
+    "kotlin/com/lladlam/melox/ui/player/MeloXIOSNowPlayingSharedHost.kt": "e6274924dc7c5fd12420bccb57499a20db7d806574ca8c90dc9a5e9bb6f2801d"
+  }
+}

@@ -112,6 +112,10 @@ internal fun MeloXIOSPlayerScene(
         val isLandscape = maxWidth > maxHeight
         LaunchedEffect(isLandscape) { if (!isLandscape) showSkyline = false }
         val skylineVisible = isLandscape && page == 1 && showSkyline
+        melox.ui.player.MeloXDisplayAwakeEffect(melox.settings.MeloXScreenAwakePolicy.required(
+            MeloXSettingsRuntime.screenAwakeMode, page == 1, !showsLyricsControls,
+            skylineVisible, MeloXSettingsRuntime.skylineKeepsScreenAwake,
+            foreground = true, playerVisible = expansion >= .99f))
         melox.ui.navigation.MeloXBackHandler(skylineVisible, priority = 60) { showSkyline = false }
         val dragRangePx = (constraints.maxHeight * .86f).coerceAtLeast(1f)
         var collapseProgress by remember { mutableFloatStateOf(0f) }

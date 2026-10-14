@@ -22,8 +22,17 @@ ZIP CRC, revision, native FFmpeg/Java Sound/management, seven pinned resources,
 eight static fonts/metrics, 60 row-mask and 120 font cases, real EQ PCM and
 cache memory audit all pass. See `parity/3f877ea/ADVANCED_LYRICS_SETTINGS.md`.
 Whole-process 549→1431MB memory, pinned Android pixel/motion and physical Windows
-account/audio/device behavior remain pending/blocked. Next inventory: 17 pinned
-Skyline keys with no settings exposure; keep-awake lacks an OS consumer.
+account/audio/device behavior remain pending/blocked.
+
+**Next active batch:** all 17 Skyline settings and exact 13-key reset are
+implemented at the source SkylineLyrics route. Four awake scopes replace the
+legacy stored toggle, with an actual Windows same-thread display/system idle
+request and direct AWT foreground/iconify gate; disposal prevents late reacquire.
+Linux controls: 70 scenes / 342 assertions across four JVMs. Real Tiny Giant:
+217 scenes / 162 frames / 69 assertions, paused geometry restores with 0px error
+and genuine PCM passes. Linux 206 tests / 40 suites and package decoder/resource
+gates pass. Native API is UNSUPPORTED on Linux; fresh Windows gates and independent
+distribution collection are required. See `parity/3f877ea/SKYLINE_SETTINGS_POWER.md`.
 
 ### User-accepted font follow-up (2026-10-14)
 

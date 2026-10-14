@@ -1,0 +1,13 @@
+{
+  "status": "PASSED",
+  "check": "same-process real Skyline settings/layout round trip",
+  "scenes": 217,
+  "frames": 162,
+  "passed_assertions": 69,
+  "unchanged_paused_lyric_text": true,
+  "changed_geometry_max_delta_px": 460.44946,
+  "restored_geometry_max_error_px": 0.0,
+  "song_info_and_ambient_removed_and_restored": true,
+  "android_pixel_motion_acceptance": "BLOCKED",
+  "native_windows_power_acceptance": "BLOCKED"
+}
