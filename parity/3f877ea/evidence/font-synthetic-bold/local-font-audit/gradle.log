@@ -1,0 +1,238 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.5.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :desktop:kmpPartiallyResolvedDependenciesChecker
+> Task :desktop:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :desktop:convertXmlValueResourcesForCommonMain NO-SOURCE
+> Task :desktop:copyNonXmlValueResourcesForCommonMain NO-SOURCE
+> Task :desktop:prepareComposeResourcesTaskForCommonMain NO-SOURCE
+> Task :desktop:generateResourceAccessorsForCommonMain SKIPPED
+> Task :desktop:convertXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :desktop:copyNonXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :desktop:prepareComposeResourcesTaskForDesktopMain NO-SOURCE
+> Task :desktop:generateResourceAccessorsForDesktopMain SKIPPED
+> Task :desktop:generateActualResourceCollectorsForDesktopMain SKIPPED
+> Task :desktop:generateComposeResClass SKIPPED
+> Task :desktop:generateExpectResourceCollectorsForCommonMain SKIPPED
+> Task :innertube:kmpPartiallyResolvedDependenciesChecker
+> Task :innertube:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :innertube:extractAndroidInnerTube UP-TO-DATE
+> Task :innertube:compileKotlinDesktop UP-TO-DATE
+> Task :innertube:compileDesktopMainJava NO-SOURCE
+> Task :innertube:desktopProcessResources NO-SOURCE
+> Task :innertube:processDesktopMainResources SKIPPED
+> Task :innertube:desktopMainClasses UP-TO-DATE
+> Task :innertube:desktopJar UP-TO-DATE
+> Task :shared:kmpPartiallyResolvedDependenciesChecker
+> Task :shared:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :shared:convertXmlValueResourcesForCommonMain NO-SOURCE
+> Task :shared:copyNonXmlValueResourcesForCommonMain NO-SOURCE
+> Task :shared:prepareComposeResourcesTaskForCommonMain NO-SOURCE
+> Task :shared:generateResourceAccessorsForCommonMain SKIPPED
+> Task :shared:convertXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :shared:copyNonXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :shared:prepareComposeResourcesTaskForDesktopMain NO-SOURCE
+> Task :shared:generateResourceAccessorsForDesktopMain SKIPPED
+> Task :shared:generateActualResourceCollectorsForDesktopMain SKIPPED
+> Task :shared:generateComposeResClass SKIPPED
+> Task :shared:generateExpectResourceCollectorsForCommonMain SKIPPED
+> Task :shared:compileKotlinDesktop UP-TO-DATE
+> Task :shared:compileDesktopMainJava NO-SOURCE
+> Task :shared:assembleDesktopMainResources UP-TO-DATE
+> Task :shared:desktopProcessResources UP-TO-DATE
+> Task :shared:processDesktopMainResources SKIPPED
+> Task :shared:desktopMainClasses UP-TO-DATE
+> Task :shared:desktopJar UP-TO-DATE
+> Task :desktop:compileKotlinDesktop
+> Task :desktop:compileDesktopMainJava NO-SOURCE
+> Task :desktop:assembleDesktopMainResources UP-TO-DATE
+> Task :desktop:desktopProcessResources
+> Task :desktop:processDesktopMainResources SKIPPED
+> Task :desktop:desktopMainClasses
+
+> Task :desktop:auditFontMetrics
+[INFO MeloXFont] Android MiLan Pro loaded: fonts/mi_lan_pro_vf.ttf; CSS/axis weights=[(100, 150), (200, 200), (300, 250), (400, 340), (500, 400), (600, 540), (700, 630), (800, 700), (900, 700)]
+[INFO MeloXFont] Native lyric typeface loaded: family=MI Lan Pro VF; bytes=19646728
+Font outlines 100-0-34.0-All ink=0.9796580953926022 advanceError=0.0014946289062436335 accepted=true
+Font outlines 100-0-34.0-None ink=0.9796580953926022 advanceError=0.0014946289062436335 accepted=true
+Font outlines 100-0-34.0-Corrected ink=0.9796580953926022 advanceError=0.0014946289062436335 accepted=true
+Font outlines 100-0-59.5-All ink=0.9922305918386001 advanceError=4.3359374990359356E-4 accepted=true
+Font outlines 100-0-59.5-None ink=0.9922305918386001 advanceError=4.3359374990359356E-4 accepted=true
+Font outlines 100-0-59.5-Corrected ink=0.9922305918386001 advanceError=4.3359374990359356E-4 accepted=true
+Font outlines 100-0-23.12-All ink=0.9717869770238743 advanceError=0.20996345901488667 accepted=true
+Font outlines 100-0-23.12-None ink=0.9717869770238743 advanceError=0.20996345901488667 accepted=true
+Font outlines 100-0-23.12-Corrected ink=0.9717869770238743 advanceError=0.20996345901488667 accepted=true
+Font outlines 100-1-34.0-All ink=0.9026085534385477 advanceError=7.32421875E-4 accepted=true
+Font outlines 100-1-34.0-None ink=0.9026085534385477 advanceError=7.32421875E-4 accepted=true
+Font outlines 100-1-34.0-Corrected ink=0.9026085534385477 advanceError=7.32421875E-4 accepted=true
+Font outlines 100-1-59.5-All ink=0.971736960144314 advanceError=6.103515625E-5 accepted=true
+Font outlines 100-1-59.5-None ink=0.971736960144314 advanceError=6.103515625E-5 accepted=true
+Font outlines 100-1-59.5-Corrected ink=0.971736960144314 advanceError=6.103515625E-5 accepted=true
+Font outlines 100-1-23.12-All ink=0.9480371106339659 advanceError=0.10564804077148438 accepted=true
+Font outlines 100-1-23.12-None ink=0.9480371106339659 advanceError=0.10564804077148438 accepted=true
+Font outlines 100-1-23.12-Corrected ink=0.9480371106339659 advanceError=0.10564804077148438 accepted=true
+Font outlines 100-2-34.0-All ink=0.9751667430375236 advanceError=7.739257812318101E-4 accepted=true
+Font outlines 100-2-34.0-None ink=0.9751667430375236 advanceError=7.739257812318101E-4 accepted=true
+Font outlines 100-2-34.0-Corrected ink=0.9751667430375236 advanceError=7.739257812318101E-4 accepted=true
+Font outlines 100-2-59.5-All ink=0.9869711910346953 advanceError=2.709960937181677E-4 accepted=true
+Font outlines 100-2-59.5-None ink=0.9869711910346953 advanceError=2.709960937181677E-4 accepted=true
+Font outlines 100-2-59.5-Corrected ink=0.9869711910346953 advanceError=2.709960937181677E-4 accepted=true
+Font outlines 100-2-23.12-All ink=0.9654091001517213 advanceError=0.11138328552243593 accepted=true
+Font outlines 100-2-23.12-None ink=0.9654091001517213 advanceError=0.11138328552243593 accepted=true
+Font outlines 100-2-23.12-Corrected ink=0.9654091001517213 advanceError=0.11138328552243593 accepted=true
+Font outlines 100-3-34.0-All ink=0.9809982208239781 advanceError=7.17773437543201E-4 accepted=true
+Font outlines 100-3-34.0-None ink=0.9809982208239781 advanceError=7.17773437543201E-4 accepted=true
+Font outlines 100-3-34.0-Corrected ink=0.9809982208239781 advanceError=7.17773437543201E-4 accepted=true
+Font outlines 100-3-59.5-All ink=0.9924991936886507 advanceError=2.490234375045475E-4 accepted=true
+Font outlines 100-3-59.5-None ink=0.9924991936886507 advanceError=2.490234375045475E-4 accepted=true
+Font outlines 100-3-59.5-Corrected ink=0.9924991936886507 advanceError=2.490234375045475E-4 accepted=true
+Font outlines 100-3-23.12-All ink=0.9611903561325391 advanceError=0.1036523628235102 accepted=true
+Font outlines 100-3-23.12-None ink=0.9611903561325391 advanceError=0.1036523628235102 accepted=true
+Font outlines 100-3-23.12-Corrected ink=0.9611903561325391 advanceError=0.1036523628235102 accepted=true
+Font outlines 400-0-34.0-All ink=0.9812078322481398 advanceError=0.06259326171868906 accepted=true
+Font outlines 400-0-34.0-None ink=0.9812078322481398 advanceError=0.06259326171868906 accepted=true
+Font outlines 400-0-34.0-Corrected ink=0.9812078322481398 advanceError=0.06259326171868906 accepted=true
+Font outlines 400-0-59.5-All ink=0.974709794671606 advanceError=0.10738671874992178 accepted=true
+Font outlines 400-0-59.5-None ink=0.974709794671606 advanceError=0.10738671874992178 accepted=true
+Font outlines 400-0-59.5-Corrected ink=0.974709794671606 advanceError=0.10738671874992178 accepted=true
+Font outlines 400-0-23.12-All ink=1.0376631406118975 advanceError=0.25979248428342316 accepted=true
+Font outlines 400-0-23.12-None ink=1.0376631406118975 advanceError=0.25979248428342316 accepted=true
+Font outlines 400-0-23.12-Corrected ink=1.0376631406118975 advanceError=0.25979248428342316 accepted=true
+Font outlines 400-1-34.0-All ink=0.988834465437849 advanceError=7.32421875E-4 accepted=true
+Font outlines 400-1-34.0-None ink=0.988834465437849 advanceError=7.32421875E-4 accepted=true
+Font outlines 400-1-34.0-Corrected ink=0.988834465437849 advanceError=7.32421875E-4 accepted=true
+Font outlines 400-1-59.5-All ink=0.9808905152680265 advanceError=6.103515625E-5 accepted=true
+Font outlines 400-1-59.5-None ink=0.9808905152680265 advanceError=6.103515625E-5 accepted=true
+Font outlines 400-1-59.5-Corrected ink=0.9808905152680265 advanceError=6.103515625E-5 accepted=true
+Font outlines 400-1-23.12-All ink=0.9970151756191902 advanceError=0.10564804077148438 accepted=true
+Font outlines 400-1-23.12-None ink=0.9970151756191902 advanceError=0.10564804077148438 accepted=true
+Font outlines 400-1-23.12-Corrected ink=0.9970151756191902 advanceError=0.10564804077148438 accepted=true
+Font outlines 400-2-34.0-All ink=0.9798652705572234 advanceError=0.008599121093709527 accepted=true
+Font outlines 400-2-34.0-None ink=0.9798652705572234 advanceError=0.008599121093709527 accepted=true
+Font outlines 400-2-34.0-Corrected ink=0.9798652705572234 advanceError=0.008599121093709527 accepted=true
+Font outlines 400-2-59.5-All ink=0.976917437922609 advanceError=0.016437011718721806 accepted=true
+Font outlines 400-2-59.5-None ink=0.976917437922609 advanceError=0.016437011718721806 accepted=true
+Font outlines 400-2-59.5-Corrected ink=0.976917437922609 advanceError=0.016437011718721806 accepted=true
+Font outlines 400-2-23.12-All ink=1.0337253201828067 advanceError=0.1136712131500417 accepted=true
+Font outlines 400-2-23.12-None ink=1.0337253201828067 advanceError=0.1136712131500417 accepted=true
+Font outlines 400-2-23.12-Corrected ink=1.0337253201828067 advanceError=0.1136712131500417 accepted=true
+Font outlines 400-3-34.0-All ink=0.9755522673197929 advanceError=0.013115478515658197 accepted=true
+Font outlines 400-3-34.0-None ink=0.9755522673197929 advanceError=0.013115478515658197 accepted=true
+Font outlines 400-3-34.0-Corrected ink=0.9755522673197929 advanceError=0.013115478515658197 accepted=true
+Font outlines 400-3-59.5-All ink=0.977923811479618 advanceError=0.02164746093751546 accepted=true
+Font outlines 400-3-59.5-None ink=0.977923811479618 advanceError=0.02164746093751546 accepted=true
+Font outlines 400-3-59.5-Corrected ink=0.977923811479618 advanceError=0.02164746093751546 accepted=true
+Font outlines 400-3-23.12-All ink=1.0389664472763829 advanceError=0.11745800209047275 accepted=true
+Font outlines 400-3-23.12-None ink=1.0389664472763829 advanceError=0.11745800209047275 accepted=true
+Font outlines 400-3-23.12-Corrected ink=1.0389664472763829 advanceError=0.11745800209047275 accepted=true
+Font outlines 700-0-34.0-All ink=1.0097819821271155 advanceError=0.07548144531244816 accepted=true
+Font outlines 700-0-34.0-None ink=1.0097819821271155 advanceError=0.07548144531244816 accepted=true
+Font outlines 700-0-34.0-Corrected ink=1.0097819821271155 advanceError=0.07548144531244816 accepted=true
+Font outlines 700-0-59.5-All ink=0.9855413354155084 advanceError=0.12919335937499454 accepted=true
+Font outlines 700-0-59.5-None ink=0.9855413354155084 advanceError=0.12919335937499454 accepted=true
+Font outlines 700-0-59.5-Corrected ink=0.9855413354155084 advanceError=0.12919335937499454 accepted=true
+Font outlines 700-0-23.12-All ink=1.0231101940626415 advanceError=0.28450750732417873 accepted=true
+Font outlines 700-0-23.12-None ink=1.0231101940626415 advanceError=0.28450750732417873 accepted=true
+Font outlines 700-0-23.12-Corrected ink=1.0231101940626415 advanceError=0.28450750732417873 accepted=true
+Font outlines 700-1-34.0-All ink=0.9947718307027966 advanceError=7.32421875E-4 accepted=true
+Font outlines 700-1-34.0-None ink=0.9947718307027966 advanceError=7.32421875E-4 accepted=true
+Font outlines 700-1-34.0-Corrected ink=0.9947718307027966 advanceError=7.32421875E-4 accepted=true
+Font outlines 700-1-59.5-All ink=0.9841050917292891 advanceError=6.103515625E-5 accepted=true
+Font outlines 700-1-59.5-None ink=0.9841050917292891 advanceError=6.103515625E-5 accepted=true
+Font outlines 700-1-59.5-Corrected ink=0.9841050917292891 advanceError=6.103515625E-5 accepted=true
+Font outlines 700-1-23.12-All ink=1.0128974360594818 advanceError=0.10564804077148438 accepted=true
+Font outlines 700-1-23.12-None ink=1.0128974360594818 advanceError=0.10564804077148438 accepted=true
+Font outlines 700-1-23.12-Corrected ink=1.0128974360594818 advanceError=0.10564804077148438 accepted=true
+Font outlines 700-2-34.0-All ink=1.0067537332659557 advanceError=0.014622070312498181 accepted=true
+Font outlines 700-2-34.0-None ink=1.0067537332659557 advanceError=0.014622070312498181 accepted=true
+Font outlines 700-2-34.0-Corrected ink=1.0067537332659557 advanceError=0.014622070312498181 accepted=true
+Font outlines 700-2-59.5-All ink=0.9844155797504912 advanceError=0.02403222656255366 accepted=true
+Font outlines 700-2-59.5-None ink=0.9844155797504912 advanceError=0.02403222656255366 accepted=true
+Font outlines 700-2-59.5-Corrected ink=0.9844155797504912 advanceError=0.02403222656255366 accepted=true
+Font outlines 700-2-23.12-All ink=1.0168548942337319 advanceError=0.14008992576600576 accepted=true
+Font outlines 700-2-23.12-None ink=1.0168548942337319 advanceError=0.14008992576600576 accepted=true
+Font outlines 700-2-23.12-Corrected ink=1.0168548942337319 advanceError=0.14008992576600576 accepted=true
+Font outlines 700-3-34.0-All ink=1.0084878162758555 advanceError=0.0370629882812068 accepted=true
+Font outlines 700-3-34.0-None ink=1.0084878162758555 advanceError=0.0370629882812068 accepted=true
+Font outlines 700-3-34.0-Corrected ink=1.0084878162758555 advanceError=0.0370629882812068 accepted=true
+Font outlines 700-3-59.5-All ink=0.9872139603616991 advanceError=0.06359374999999545 accepted=true
+Font outlines 700-3-59.5-None ink=0.9872139603616991 advanceError=0.06359374999999545 accepted=true
+Font outlines 700-3-59.5-Corrected ink=0.9872139603616991 advanceError=0.06359374999999545 accepted=true
+Font outlines 700-3-23.12-All ink=1.0205371052185734 advanceError=0.14198028564450738 accepted=true
+Font outlines 700-3-23.12-None ink=1.0205371052185734 advanceError=0.14198028564450738 accepted=true
+Font outlines 700-3-23.12-Corrected ink=1.0205371052185734 advanceError=0.14198028564450738 accepted=true
+Font outlines 800-0-34.0-All ink=1.0068709838740846 advanceError=0.001765625000075488 accepted=true
+Font outlines 800-0-34.0-None ink=1.0068709838740846 advanceError=0.001765625000075488 accepted=true
+Font outlines 800-0-34.0-Corrected ink=1.0068709838740846 advanceError=0.001765625000075488 accepted=true
+Font outlines 800-0-59.5-All ink=0.9794626017957357 advanceError=2.822265626036824E-4 accepted=true
+Font outlines 800-0-59.5-None ink=0.9794626017957357 advanceError=2.822265626036824E-4 accepted=true
+Font outlines 800-0-59.5-Corrected ink=0.9794626017957357 advanceError=2.822265626036824E-4 accepted=true
+Font outlines 800-0-23.12-All ink=1.0136892279034881 advanceError=0.23880492591865732 accepted=true
+Font outlines 800-0-23.12-None ink=1.0136892279034881 advanceError=0.23880492591865732 accepted=true
+Font outlines 800-0-23.12-Corrected ink=1.0136892279034881 advanceError=0.23880492591865732 accepted=true
+Font outlines 800-1-34.0-All ink=0.9947467592958431 advanceError=7.32421875E-4 accepted=true
+Font outlines 800-1-34.0-None ink=0.9947467592958431 advanceError=7.32421875E-4 accepted=true
+Font outlines 800-1-34.0-Corrected ink=0.9947467592958431 advanceError=7.32421875E-4 accepted=true
+Font outlines 800-1-59.5-All ink=0.9763708773530219 advanceError=6.103515625E-5 accepted=true
+Font outlines 800-1-59.5-None ink=0.9763708773530219 advanceError=6.103515625E-5 accepted=true
+Font outlines 800-1-59.5-Corrected ink=0.9763708773530219 advanceError=6.103515625E-5 accepted=true
+Font outlines 800-1-23.12-All ink=1.0126159803989738 advanceError=0.10564804077148438 accepted=true
+Font outlines 800-1-23.12-None ink=1.0126159803989738 advanceError=0.10564804077148438 accepted=true
+Font outlines 800-1-23.12-Corrected ink=1.0126159803989738 advanceError=0.10564804077148438 accepted=true
+Font outlines 800-2-34.0-All ink=1.0042503020699631 advanceError=0.0010617675781077196 accepted=true
+Font outlines 800-2-34.0-None ink=1.0042503020699631 advanceError=0.0010617675781077196 accepted=true
+Font outlines 800-2-34.0-Corrected ink=1.0042503020699631 advanceError=0.0010617675781077196 accepted=true
+Font outlines 800-2-59.5-All ink=0.9791415351943007 advanceError=2.78808593748181E-4 accepted=true
+Font outlines 800-2-59.5-None ink=0.9791415351943007 advanceError=2.78808593748181E-4 accepted=true
+Font outlines 800-2-59.5-Corrected ink=0.9791415351943007 advanceError=2.78808593748181E-4 accepted=true
+Font outlines 800-2-23.12-All ink=1.0079171806167402 advanceError=0.1333727817535646 accepted=true
+Font outlines 800-2-23.12-None ink=1.0079171806167402 advanceError=0.1333727817535646 accepted=true
+Font outlines 800-2-23.12-Corrected ink=1.0079171806167402 advanceError=0.1333727817535646 accepted=true
+Font outlines 800-3-34.0-All ink=1.0042535484765824 advanceError=9.25292968759095E-4 accepted=true
+Font outlines 800-3-34.0-None ink=1.0042535484765824 advanceError=9.25292968759095E-4 accepted=true
+Font outlines 800-3-34.0-Corrected ink=1.0042535484765824 advanceError=9.25292968759095E-4 accepted=true
+Font outlines 800-3-59.5-All ink=0.9806250773289179 advanceError=3.2226562495907274E-4 accepted=true
+Font outlines 800-3-59.5-None ink=0.9806250773289179 advanceError=3.2226562495907274E-4 accepted=true
+Font outlines 800-3-59.5-Corrected ink=0.9806250773289179 advanceError=3.2226562495907274E-4 accepted=true
+Font outlines 800-3-23.12-All ink=1.0135423287673895 advanceError=0.11942036628721553 accepted=true
+Font outlines 800-3-23.12-None ink=1.0135423287673895 advanceError=0.11942036628721553 accepted=true
+Font outlines 800-3-23.12-Corrected ink=1.0135423287673895 advanceError=0.11942036628721553 accepted=true
+Font outlines 900-0-34.0-All ink=1.2225350329632003 advanceError=0.001765625000075488 accepted=false
+Font outlines 900-0-34.0-None ink=1.2225350329632003 advanceError=0.001765625000075488 accepted=false
+Font outlines 900-0-34.0-Corrected ink=1.0068709838740846 advanceError=0.001765625000075488 accepted=true
+Font outlines 900-0-59.5-All ink=1.1833335200922894 advanceError=2.822265626036824E-4 accepted=false
+Font outlines 900-0-59.5-None ink=1.1833335200922894 advanceError=2.822265626036824E-4 accepted=false
+Font outlines 900-0-59.5-Corrected ink=0.9794626017957357 advanceError=2.822265626036824E-4 accepted=true
+Font outlines 900-0-23.12-All ink=1.2803368485853048 advanceError=0.23880492591865732 accepted=false
+Font outlines 900-0-23.12-None ink=1.2803368485853048 advanceError=0.23880492591865732 accepted=false
+Font outlines 900-0-23.12-Corrected ink=1.0136892279034881 advanceError=0.23880492591865732 accepted=true
+Font outlines 900-1-34.0-All ink=1.2014918313220024 advanceError=7.32421875E-4 accepted=false
+Font outlines 900-1-34.0-None ink=1.2014918313220024 advanceError=7.32421875E-4 accepted=false
+Font outlines 900-1-34.0-Corrected ink=0.9947467592958431 advanceError=7.32421875E-4 accepted=true
+Font outlines 900-1-59.5-All ink=1.1829821625622405 advanceError=6.103515625E-5 accepted=false
+Font outlines 900-1-59.5-None ink=1.1829821625622405 advanceError=6.103515625E-5 accepted=false
+Font outlines 900-1-59.5-Corrected ink=0.9763708773530219 advanceError=6.103515625E-5 accepted=true
+Font outlines 900-1-23.12-All ink=1.2308258900423912 advanceError=0.10564804077148438 accepted=false
+Font outlines 900-1-23.12-None ink=1.2308258900423912 advanceError=0.10564804077148438 accepted=false
+Font outlines 900-1-23.12-Corrected ink=1.0126159803989738 advanceError=0.10564804077148438 accepted=true
+Font outlines 900-2-34.0-All ink=1.2256063348983832 advanceError=0.0010617675781077196 accepted=false
+Font outlines 900-2-34.0-None ink=1.2256063348983832 advanceError=0.0010617675781077196 accepted=false
+Font outlines 900-2-34.0-Corrected ink=1.0042503020699631 advanceError=0.0010617675781077196 accepted=true
+Font outlines 900-2-59.5-All ink=1.1919921339356307 advanceError=2.78808593748181E-4 accepted=false
+Font outlines 900-2-59.5-None ink=1.1919921339356307 advanceError=2.78808593748181E-4 accepted=false
+Font outlines 900-2-59.5-Corrected ink=0.9791415351943007 advanceError=2.78808593748181E-4 accepted=true
+Font outlines 900-2-23.12-All ink=1.2852599118942731 advanceError=0.1333727817535646 accepted=false
+Font outlines 900-2-23.12-None ink=1.2852599118942731 advanceError=0.1333727817535646 accepted=false
+Font outlines 900-2-23.12-Corrected ink=1.0079171806167402 advanceError=0.1333727817535646 accepted=true
+Font outlines 900-3-34.0-All ink=1.2262203523047759 advanceError=9.25292968759095E-4 accepted=false
+Font outlines 900-3-34.0-None ink=1.2262203523047759 advanceError=9.25292968759095E-4 accepted=false
+Font outlines 900-3-34.0-Corrected ink=1.0042535484765824 advanceError=9.25292968759095E-4 accepted=true
+Font outlines 900-3-59.5-All ink=1.1896980315303411 advanceError=3.2226562495907274E-4 accepted=false
+Font outlines 900-3-59.5-None ink=1.1896980315303411 advanceError=3.2226562495907274E-4 accepted=false
+Font outlines 900-3-59.5-Corrected ink=0.9806250773289179 advanceError=3.2226562495907274E-4 accepted=true
+Font outlines 900-3-23.12-All ink=1.2740810284938995 advanceError=0.11942036628721553 accepted=false
+Font outlines 900-3-23.12-None ink=1.2740810284938995 advanceError=0.11942036628721553 accepted=false
+Font outlines 900-3-23.12-Corrected ink=1.0135423287673895 advanceError=0.11942036628721553 accepted=true
+
+BUILD SUCCESSFUL in 35s
+14 actionable tasks: 6 executed, 8 up-to-date
+Consider enabling configuration cache to speed up this build: https://docs.gradle.org/9.5.1/userguide/configuration_cache_enabling.html

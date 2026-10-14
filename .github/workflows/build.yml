@@ -36,6 +36,8 @@ jobs:
         run: python tools/verify_native_equalizer.py shared/build/parity/test-home/native-pcm-evidence --output desktop/build/verification/equalizer-pcm.json
       - name: Audit production lyric glyph raster at Windows DPI scales
         run: gradle :desktop:auditLyricRaster
+      - name: Audit pinned font outlines and independent HarfBuzz advances
+        run: gradle :desktop:auditFontMetrics
       - name: Get jar info
         id: jar
         shell: pwsh
@@ -85,6 +87,8 @@ jobs:
             desktop/build/verification/*.json
             desktop/build/verification/lyric-raster/*.json
             desktop/build/verification/lyric-raster/*.png
+            desktop/build/verification/font-metrics/*.json
+            desktop/build/verification/font-metrics/*.png
             shared/build/test-results/desktopTest/*.xml
             shared/build/parity/test-home/native-pcm-evidence/*
       - name: Upload zip artifact

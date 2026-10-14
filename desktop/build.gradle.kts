@@ -87,3 +87,14 @@ tasks.register<JavaExec>("auditLyricRaster") {
     systemProperty("user.home", layout.buildDirectory.dir("verification/lyric-raster-home").get().asFile.absolutePath)
     args(layout.buildDirectory.dir("verification/lyric-raster").get().asFile.absolutePath)
 }
+
+tasks.register<JavaExec>("auditFontMetrics") {
+    group = "verification"
+    dependsOn("desktopMainClasses")
+    val compilation = kotlin.targets.getByName("desktop").compilations.getByName("main")
+    classpath = files(compilation.output.allOutputs, compilation.runtimeDependencyFiles)
+    mainClass.set("melox.validation.MeloXFontMetricsAuditKt")
+    systemProperty("java.awt.headless", "true")
+    systemProperty("user.home", layout.buildDirectory.dir("verification/font-metrics-home").get().asFile.absolutePath)
+    args(layout.buildDirectory.dir("verification/font-metrics").get().asFile.absolutePath)
+}

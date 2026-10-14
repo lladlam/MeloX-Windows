@@ -43,6 +43,15 @@ private fun loadFont(path: String, weight: FontWeight, axisWeight: Int = weight.
 
 private object MeloXFontLoader
 
+/** Android CSS 800/900 both select wght=700. SkParagraph synthesizes bold when
+ * requested weight minus the native face weight is >=200, even with Compose
+ * FontSynthesis.None. Request the equivalent 800 alias to retain the exact
+ * pinned outlines/advances instead of emboldening the 700 face a second time.
+ * Persisted logical weight and source variable-font bytes remain untouched.
+ */
+internal fun lanTingRenderWeight(weight: FontWeight): FontWeight =
+    if (weight == FontWeight.Black) FontWeight.ExtraBold else weight
+
 private val MiLanPro = run {
     // Android res/font/mi_lan_pro.xml maps CSS weights to private axis coordinates.
     val axes = listOf(100 to 150, 200 to 200, 300 to 250, 400 to 340,

@@ -340,7 +340,7 @@ internal fun LyricsPage(
                         }
                         if (showTranslation) {
                             Text(line.translation.orEmpty(), fontSize = translationSize.sp, lineHeight = (translationSize * 1.2f).sp,
-                                fontWeight = MeloXSettingsRuntime.lyricFontWeight.composeWeight, textAlign = textAlign,
+                                fontWeight = melox.ui.theme.lanTingRenderWeight(MeloXSettingsRuntime.lyricFontWeight.composeWeight), textAlign = textAlign,
                                 color = Color.White.copy(alpha = MeloXSettingsRuntime.lyricTranslationOpacity),
                                 fontFamily = MeloXLanTingProFontFamily,
                                 modifier = Modifier.fillMaxWidth().then(rowAlpha).graphicsLayer {

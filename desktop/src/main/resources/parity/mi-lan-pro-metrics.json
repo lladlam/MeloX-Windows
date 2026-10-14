@@ -1,0 +1,148 @@
+{
+  "font_sha256": "15fc7accb0afcbb7cf3bbf776536a37398e552f082bb13af70602bf1d7ed676f",
+  "harfbuzz": "14.6.0",
+  "pinned_android": "3f877eaffe30c82eb6d24eb3647702f5bc554dd3",
+  "upem": 1000,
+  "rows": [
+    {
+      "css": 100,
+      "axis": 150,
+      "fixture": 0,
+      "text": "Everything that you know will be changing",
+      "advance_em": 19.598
+    },
+    {
+      "css": 100,
+      "axis": 150,
+      "fixture": 1,
+      "text": "你熟悉的日常都将重启",
+      "advance_em": 10.0
+    },
+    {
+      "css": 100,
+      "axis": 150,
+      "fixture": 2,
+      "text": "You'll like it, you love it",
+      "advance_em": 10.28
+    },
+    {
+      "css": 100,
+      "axis": 150,
+      "fixture": 3,
+      "text": "Lookin’ so sharp like",
+      "advance_em": 9.71
+    },
+    {
+      "css": 400,
+      "axis": 340,
+      "fixture": 0,
+      "text": "Everything that you know will be changing",
+      "advance_em": 20.438
+    },
+    {
+      "css": 400,
+      "axis": 340,
+      "fixture": 1,
+      "text": "你熟悉的日常都将重启",
+      "advance_em": 10.0
+    },
+    {
+      "css": 400,
+      "axis": 340,
+      "fixture": 2,
+      "text": "You'll like it, you love it",
+      "advance_em": 11.127
+    },
+    {
+      "css": 400,
+      "axis": 340,
+      "fixture": 3,
+      "text": "Lookin’ so sharp like",
+      "advance_em": 10.239
+    },
+    {
+      "css": 700,
+      "axis": 630,
+      "fixture": 0,
+      "text": "Everything that you know will be changing",
+      "advance_em": 22.048
+    },
+    {
+      "css": 700,
+      "axis": 630,
+      "fixture": 1,
+      "text": "你熟悉的日常都将重启",
+      "advance_em": 10.0
+    },
+    {
+      "css": 700,
+      "axis": 630,
+      "fixture": 2,
+      "text": "You'll like it, you love it",
+      "advance_em": 12.153
+    },
+    {
+      "css": 700,
+      "axis": 630,
+      "fixture": 3,
+      "text": "Lookin’ so sharp like",
+      "advance_em": 11.04
+    },
+    {
+      "css": 800,
+      "axis": 700,
+      "fixture": 0,
+      "text": "Everything that you know will be changing",
+      "advance_em": 22.463
+    },
+    {
+      "css": 800,
+      "axis": 700,
+      "fixture": 1,
+      "text": "你熟悉的日常都将重启",
+      "advance_em": 10.0
+    },
+    {
+      "css": 800,
+      "axis": 700,
+      "fixture": 2,
+      "text": "You'll like it, you love it",
+      "advance_em": 12.391
+    },
+    {
+      "css": 800,
+      "axis": 700,
+      "fixture": 3,
+      "text": "Lookin’ so sharp like",
+      "advance_em": 11.235
+    },
+    {
+      "css": 900,
+      "axis": 700,
+      "fixture": 0,
+      "text": "Everything that you know will be changing",
+      "advance_em": 22.463
+    },
+    {
+      "css": 900,
+      "axis": 700,
+      "fixture": 1,
+      "text": "你熟悉的日常都将重启",
+      "advance_em": 10.0
+    },
+    {
+      "css": 900,
+      "axis": 700,
+      "fixture": 2,
+      "text": "You'll like it, you love it",
+      "advance_em": 12.391
+    },
+    {
+      "css": 900,
+      "axis": 700,
+      "fixture": 3,
+      "text": "Lookin’ so sharp like",
+      "advance_em": 11.235
+    }
+  ]
+}
