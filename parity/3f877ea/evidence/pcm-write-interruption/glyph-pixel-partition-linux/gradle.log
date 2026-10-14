@@ -1,0 +1,117 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.5.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :desktop:kmpPartiallyResolvedDependenciesChecker
+> Task :desktop:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :desktop:convertXmlValueResourcesForCommonMain NO-SOURCE
+> Task :desktop:copyNonXmlValueResourcesForCommonMain NO-SOURCE
+> Task :desktop:prepareComposeResourcesTaskForCommonMain NO-SOURCE
+> Task :desktop:generateResourceAccessorsForCommonMain SKIPPED
+> Task :desktop:convertXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :desktop:copyNonXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :desktop:prepareComposeResourcesTaskForDesktopMain NO-SOURCE
+> Task :desktop:generateResourceAccessorsForDesktopMain SKIPPED
+> Task :desktop:generateActualResourceCollectorsForDesktopMain SKIPPED
+> Task :desktop:generateComposeResClass SKIPPED
+> Task :desktop:generateExpectResourceCollectorsForCommonMain SKIPPED
+> Task :innertube:kmpPartiallyResolvedDependenciesChecker
+> Task :innertube:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :innertube:extractAndroidInnerTube UP-TO-DATE
+> Task :innertube:compileKotlinDesktop UP-TO-DATE
+> Task :innertube:compileDesktopMainJava NO-SOURCE
+> Task :innertube:desktopProcessResources NO-SOURCE
+> Task :innertube:processDesktopMainResources SKIPPED
+> Task :innertube:desktopMainClasses UP-TO-DATE
+> Task :innertube:desktopJar UP-TO-DATE
+> Task :shared:kmpPartiallyResolvedDependenciesChecker
+> Task :shared:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :shared:convertXmlValueResourcesForCommonMain NO-SOURCE
+> Task :shared:copyNonXmlValueResourcesForCommonMain NO-SOURCE
+> Task :shared:prepareComposeResourcesTaskForCommonMain NO-SOURCE
+> Task :shared:generateResourceAccessorsForCommonMain SKIPPED
+> Task :shared:convertXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :shared:copyNonXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :shared:prepareComposeResourcesTaskForDesktopMain NO-SOURCE
+> Task :shared:generateResourceAccessorsForDesktopMain SKIPPED
+> Task :shared:generateActualResourceCollectorsForDesktopMain SKIPPED
+> Task :shared:generateComposeResClass SKIPPED
+> Task :shared:generateExpectResourceCollectorsForCommonMain SKIPPED
+> Task :shared:compileKotlinDesktop UP-TO-DATE
+> Task :shared:compileDesktopMainJava NO-SOURCE
+> Task :shared:assembleDesktopMainResources UP-TO-DATE
+> Task :shared:desktopProcessResources UP-TO-DATE
+> Task :shared:processDesktopMainResources SKIPPED
+> Task :shared:desktopMainClasses UP-TO-DATE
+> Task :shared:desktopJar UP-TO-DATE
+> Task :desktop:compileKotlinDesktop
+> Task :desktop:compileDesktopMainJava NO-SOURCE
+> Task :desktop:assembleDesktopMainResources UP-TO-DATE
+> Task :desktop:desktopProcessResources UP-TO-DATE
+> Task :desktop:processDesktopMainResources SKIPPED
+> Task :desktop:desktopMainClasses
+
+> Task :desktop:auditLyricRaster
+[INFO MeloXFont] Android MiLan Pro loaded: fonts/mi_lan_pro_vf.ttf; CSS/axis weights=[(100, 150), (200, 200), (300, 250), (400, 340), (500, 400), (600, 540), (700, 630), (800, 700), (900, 700)]
+Lyric raster 1.0-Bold-0 normalized difference=0.0
+Lyric raster 1.0-Bold-1 normalized difference=0.0
+Lyric raster 1.0-Bold-2 normalized difference=0.0
+Lyric raster 1.0-Bold-3 normalized difference=0.0
+Lyric raster 1.0-Bold-4 normalized difference=0.0
+Lyric raster 1.0-Bold-5 normalized difference=0.0
+Lyric raster 1.0-Heavy-0 normalized difference=0.0
+Lyric raster 1.0-Heavy-1 normalized difference=0.0
+Lyric raster 1.0-Heavy-2 normalized difference=0.0
+Lyric raster 1.0-Heavy-3 normalized difference=0.0
+Lyric raster 1.0-Heavy-4 normalized difference=0.0
+Lyric raster 1.0-Heavy-5 normalized difference=0.0
+Lyric raster 1.25-Bold-0 normalized difference=0.0
+Lyric raster 1.25-Bold-1 normalized difference=0.0
+Lyric raster 1.25-Bold-2 normalized difference=0.0
+Lyric raster 1.25-Bold-3 normalized difference=0.0
+Lyric raster 1.25-Bold-4 normalized difference=0.0
+Lyric raster 1.25-Bold-5 normalized difference=0.0
+Lyric raster 1.25-Heavy-0 normalized difference=0.0
+Lyric raster 1.25-Heavy-1 normalized difference=0.0
+Lyric raster 1.25-Heavy-2 normalized difference=0.0
+Lyric raster 1.25-Heavy-3 normalized difference=0.0
+Lyric raster 1.25-Heavy-4 normalized difference=0.0
+Lyric raster 1.25-Heavy-5 normalized difference=0.0
+Lyric raster 1.5-Bold-0 normalized difference=0.0
+Lyric raster 1.5-Bold-1 normalized difference=0.0
+Lyric raster 1.5-Bold-2 normalized difference=0.0
+Lyric raster 1.5-Bold-3 normalized difference=0.0
+Lyric raster 1.5-Bold-4 normalized difference=0.0
+Lyric raster 1.5-Bold-5 normalized difference=0.0
+Lyric raster 1.5-Heavy-0 normalized difference=0.0
+Lyric raster 1.5-Heavy-1 normalized difference=0.0
+Lyric raster 1.5-Heavy-2 normalized difference=0.0
+Lyric raster 1.5-Heavy-3 normalized difference=0.0
+Lyric raster 1.5-Heavy-4 normalized difference=0.0
+Lyric raster 1.5-Heavy-5 normalized difference=0.0
+Lyric raster 1.75-Bold-0 normalized difference=0.0
+Lyric raster 1.75-Bold-1 normalized difference=0.0
+Lyric raster 1.75-Bold-2 normalized difference=0.0
+Lyric raster 1.75-Bold-3 normalized difference=0.0
+Lyric raster 1.75-Bold-4 normalized difference=0.0
+Lyric raster 1.75-Bold-5 normalized difference=0.0
+Lyric raster 1.75-Heavy-0 normalized difference=0.0
+Lyric raster 1.75-Heavy-1 normalized difference=0.0
+Lyric raster 1.75-Heavy-2 normalized difference=0.0
+Lyric raster 1.75-Heavy-3 normalized difference=0.0
+Lyric raster 1.75-Heavy-4 normalized difference=0.0
+Lyric raster 1.75-Heavy-5 normalized difference=0.0
+Lyric raster 2.0-Bold-0 normalized difference=0.0
+Lyric raster 2.0-Bold-1 normalized difference=0.0
+Lyric raster 2.0-Bold-2 normalized difference=0.0
+Lyric raster 2.0-Bold-3 normalized difference=0.0
+Lyric raster 2.0-Bold-4 normalized difference=0.0
+Lyric raster 2.0-Bold-5 normalized difference=0.0
+Lyric raster 2.0-Heavy-0 normalized difference=0.0
+Lyric raster 2.0-Heavy-1 normalized difference=0.0
+Lyric raster 2.0-Heavy-2 normalized difference=0.0
+Lyric raster 2.0-Heavy-3 normalized difference=0.0
+Lyric raster 2.0-Heavy-4 normalized difference=0.0
+Lyric raster 2.0-Heavy-5 normalized difference=0.0
+
+BUILD SUCCESSFUL in 23s
+14 actionable tasks: 5 executed, 9 up-to-date
+Consider enabling configuration cache to speed up this build: https://docs.gradle.org/9.5.1/userguide/configuration_cache_enabling.html

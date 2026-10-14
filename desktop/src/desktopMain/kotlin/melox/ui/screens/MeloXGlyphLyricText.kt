@@ -47,7 +47,7 @@ import kotlin.math.roundToInt
 import kotlin.math.sin
 
 private data class DrawableLyricGlyph(
-    val offset: Int, val bounds: Rect,
+    val offset: Int, val bounds: Rect, val region: org.jetbrains.skia.Rect,
 )
 
 /** Pinned glyph masks/lift/glow. Only the Canvas subscribes to the high-frequency clock. */
@@ -102,7 +102,7 @@ internal fun MeloXGlyphLyricText(
         DisposableEffect(blur) { onDispose { blur?.close() } }
         DisposableEffect(glowMask) { onDispose { glowMask.close() } }
         val glyphs = remember(layout, line.text) {
-            buildList {
+            val measured = buildList {
                 var offset = 0
                 while (offset < line.text.length) {
                     val character = line.text[offset]
@@ -113,10 +113,25 @@ internal fun MeloXGlyphLyricText(
                             it.width.isFinite() && it.height.isFinite() && it.width > 0f && it.height > 0f
                         }
                         if (bounds != null) {
-                            add(DrawableLyricGlyph(offset, bounds))
+                            add(offset to bounds)
                         }
                     }
                     offset += count
+                }
+            }
+            measured.groupBy { layout.getLineForOffset(it.first) }.flatMap { (row, entries) ->
+                // Fractional strict image crops cut antialiased pixels at every
+                // advance on Windows. Pixel-aligned partitions tile the complete
+                // shaped row, including the last glyph's right-side ink overhang.
+                // Bounds remain unchanged for the source timing/pivot/reveal math.
+                val ordered = entries.sortedBy { it.second.left }.distinctBy { it.second.left }
+                ordered.mapIndexedNotNull { index, (offset, bounds) ->
+                    val left = if (index == 0) 0f else bounds.left.roundToInt().toFloat()
+                    val right = if (index == ordered.lastIndex) layout.size.width.toFloat()
+                        else ordered[index + 1].second.left.roundToInt().toFloat()
+                    if (right <= left) null else DrawableLyricGlyph(offset, bounds,
+                        org.jetbrains.skia.Rect.makeLTRB(left, layout.getLineTop(row).roundToInt().toFloat(),
+                            right, layout.getLineBottom(row).roundToInt().toFloat()))
                 }
             }
         }
@@ -130,11 +145,9 @@ internal fun MeloXGlyphLyricText(
         Canvas(Modifier.fillMaxWidth().height(height).testTag(if (animates) "lyric-timed-text" else "lyric-static-text")
             .semantics { text = AnnotatedString(line.text) }) {
             fun drawGlyph(glyph: DrawableLyricGlyph, alpha: Float, glow: Boolean = false) {
-                val bounds = glyph.bounds
-                val region = org.jetbrains.skia.Rect.makeLTRB(bounds.left, bounds.top, bounds.right, bounds.bottom)
                 paint.alpha = (alpha.coerceIn(0f, 1f) * 255f).roundToInt()
                 paint.imageFilter = if (glow) glowMask else blur
-                drawContext.canvas.nativeCanvas.drawImageRect(rowMask, region, region, paint, true)
+                drawContext.canvas.nativeCanvas.drawImageRect(rowMask, glyph.region, glyph.region, paint, true)
                 paint.imageFilter = null
             }
             if (!animates) {

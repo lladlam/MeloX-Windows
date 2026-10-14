@@ -1,0 +1,15 @@
+{
+  "status": "PASSED",
+  "source": "ea18d388b5a127eea78753a0e49ad83199acc1d1",
+  "playing_lyric_scenes": 8,
+  "playing_frames": 6,
+  "positions": [
+    2093,
+    8708
+  ],
+  "total_scenes": 41,
+  "assertions": 20,
+  "check": "actual online playback advances lyric clock and raster after physical resume, with genuine software PCM consumption",
+  "physical_audible_acceptance": "BLOCKED",
+  "android_pixel_motion_acceptance": "BLOCKED"
+}

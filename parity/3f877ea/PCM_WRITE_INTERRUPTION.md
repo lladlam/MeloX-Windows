@@ -111,3 +111,31 @@ their reproduction with the final package.
 Additional genuine FFmpeg/player tests cover stop and seek releasing a paused
 pending write without stale end/error callbacks, and unexpected device closure
 still producing an Output failure with `accepted=0` / `open=false` diagnostics.
+
+## Enforced Windows rejection and pixel-partition follow-up
+
+Windows Build **38504096447 / ea18d38** passed all **194 tests / 36 suites**, native
+FFmpeg source checks and real EQ PCM. The newly enforced glyph check correctly
+rejected it: maximum normalized absolute ink difference **1.5407%**, above the
+unchanged **1%** bound. No app-image or distribution ZIP was created. Its actual
+test/raster evidence is retained in `windows-rejected-ea18d38/`.
+
+Inspecting the actual Windows raster difference reveals vertical cuts at the
+fractional character advances, plus missing trailing `h` ink past its advance.
+Strict fractional image crops were discarding edge pixels. The follow-up tiles
+each complete shaped row with nonoverlapping **integer pixel partitions**,
+preserves trailing ink overhang, and retains original measured bounds for the
+animation pivot, source timing and highlight math. Duplicate shaping-cluster
+origins share one partition. This corrects the desktop compositor rather than
+relaxing the acceptance gate.
+
+The audit now additionally covers ligatures, a combining accent/surrogate-pair
+fallback glyph, and explicit multirow text. All **60 Linux cases** reconstruct
+the unlifted shaped paragraph with **zero pixel difference**. Final Windows
+results and distribution integrity must be accepted independently.
+
+The preceding actual Tiny Giant motion replay at `ea18d38` also passed: **41
+state/frame scenes / 20 assertions**, including physical resume, real advancing
+lyric positions **2093–8708 ms**, six playing lyric raster frames and subsequent
+pause. These are actual desktop PCM-clock frames; they are not pinned Android
+dynamic acceptance and do not override the later Windows raster rejection.

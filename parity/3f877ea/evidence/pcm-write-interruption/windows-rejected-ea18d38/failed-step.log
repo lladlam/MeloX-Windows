@@ -1,0 +1,127 @@
+build	Audit production lyric glyph raster at Windows DPI scales	﻿2026-10-14T03:06:02.4859904Z ##[group]Run gradle :desktop:auditLyricRaster
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:02.4860290Z ^[[36;1mgradle :desktop:auditLyricRaster^[[0m
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:02.4914684Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:02.4915057Z env:
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:02.4915427Z   JAVA_HOME: C:\hostedtoolcache\windows\Java_Temurin-Hotspot_jdk\17.0.20-101\x64
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:02.4915899Z   JAVA_HOME_17_X64: C:\hostedtoolcache\windows\Java_Temurin-Hotspot_jdk\17.0.20-101\x64
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:02.4916279Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:02.4916551Z   GRADLE_USER_HOME: D:\a\.gradle
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:02.4916800Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:02.4917071Z   GRADLE_BUILD_ACTION_CACHE_RESTORED: true
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:02.4917445Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:02.4917869Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:02.4918261Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:02.4918541Z ##[endgroup]
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:03.8976582Z > Task :desktop:kmpPartiallyResolvedDependenciesChecker
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:03.8979685Z > Task :desktop:checkKotlinGradlePluginConfigurationErrors SKIPPED
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:03.8991212Z > Task :desktop:convertXmlValueResourcesForCommonMain NO-SOURCE
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:03.8994303Z > Task :desktop:copyNonXmlValueResourcesForCommonMain NO-SOURCE
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:03.9015930Z > Task :desktop:prepareComposeResourcesTaskForCommonMain NO-SOURCE
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:03.9024533Z > Task :desktop:generateResourceAccessorsForCommonMain SKIPPED
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:03.9031459Z > Task :desktop:convertXmlValueResourcesForDesktopMain NO-SOURCE
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:03.9032504Z > Task :desktop:copyNonXmlValueResourcesForDesktopMain NO-SOURCE
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:03.9033780Z > Task :desktop:prepareComposeResourcesTaskForDesktopMain NO-SOURCE
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:03.9038544Z > Task :desktop:generateResourceAccessorsForDesktopMain SKIPPED
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:03.9039512Z > Task :desktop:generateActualResourceCollectorsForDesktopMain SKIPPED
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:03.9042861Z > Task :desktop:generateComposeResClass SKIPPED
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:03.9140893Z > Task :desktop:generateExpectResourceCollectorsForCommonMain SKIPPED
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:03.9148429Z > Task :innertube:kmpPartiallyResolvedDependenciesChecker
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:03.9149953Z > Task :innertube:checkKotlinGradlePluginConfigurationErrors SKIPPED
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:03.9150689Z > Task :innertube:extractAndroidInnerTube UP-TO-DATE
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:04.0136426Z > Task :innertube:compileKotlinDesktop UP-TO-DATE
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:04.0144706Z > Task :innertube:compileDesktopMainJava NO-SOURCE
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:04.0151318Z > Task :innertube:desktopProcessResources NO-SOURCE
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:04.0151976Z > Task :innertube:processDesktopMainResources SKIPPED
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:04.0157116Z > Task :innertube:desktopMainClasses UP-TO-DATE
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:04.0159785Z > Task :innertube:desktopJar UP-TO-DATE
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:04.0166975Z > Task :shared:kmpPartiallyResolvedDependenciesChecker
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:04.0186228Z > Task :shared:checkKotlinGradlePluginConfigurationErrors SKIPPED
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:04.0207347Z > Task :shared:convertXmlValueResourcesForCommonMain NO-SOURCE
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:04.0211385Z > Task :shared:copyNonXmlValueResourcesForCommonMain NO-SOURCE
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:04.0218269Z > Task :shared:prepareComposeResourcesTaskForCommonMain NO-SOURCE
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:04.0240893Z > Task :shared:generateResourceAccessorsForCommonMain SKIPPED
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:04.0266607Z > Task :shared:convertXmlValueResourcesForDesktopMain NO-SOURCE
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:04.0267404Z > Task :shared:copyNonXmlValueResourcesForDesktopMain NO-SOURCE
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:04.0278536Z > Task :shared:prepareComposeResourcesTaskForDesktopMain NO-SOURCE
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:04.0282715Z > Task :shared:generateResourceAccessorsForDesktopMain SKIPPED
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:04.0320801Z > Task :shared:generateActualResourceCollectorsForDesktopMain SKIPPED
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:04.0328430Z > Task :shared:generateComposeResClass SKIPPED
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:04.0329046Z > Task :shared:generateExpectResourceCollectorsForCommonMain SKIPPED
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:04.0978858Z > Task :shared:compileKotlinDesktop UP-TO-DATE
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:04.0984752Z > Task :shared:compileDesktopMainJava NO-SOURCE
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:04.0986806Z > Task :shared:assembleDesktopMainResources UP-TO-DATE
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:04.0988103Z > Task :shared:desktopProcessResources UP-TO-DATE
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:04.0994879Z > Task :shared:processDesktopMainResources SKIPPED
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:04.0997943Z > Task :shared:desktopMainClasses UP-TO-DATE
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:04.1000301Z > Task :shared:desktopJar UP-TO-DATE
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:04.1018488Z > Task :desktop:compileKotlinDesktop UP-TO-DATE
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:04.1019400Z > Task :desktop:compileDesktopMainJava NO-SOURCE
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:04.1023328Z > Task :desktop:assembleDesktopMainResources UP-TO-DATE
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:04.1025462Z > Task :desktop:desktopProcessResources UP-TO-DATE
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:04.1038308Z > Task :desktop:processDesktopMainResources SKIPPED
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:04.1038937Z > Task :desktop:desktopMainClasses UP-TO-DATE
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:06.0954392Z 
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:06.0956733Z > Task :desktop:auditLyricRaster
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:06.0958786Z [INFO MeloXFont] Android MiLan Pro loaded: fonts/mi_lan_pro_vf.ttf; CSS/axis weights=[(100, 150), (200, 200), (300, 250), (400, 340), (500, 400), (600, 540), (700, 630), (800, 700), (900, 700)]
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:06.0960420Z Lyric raster 1.0-Bold-0 normalized difference=0.0077356814095194786
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:06.0961053Z Lyric raster 1.0-Bold-1 normalized difference=0.012261150935668628
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:06.1959910Z Lyric raster 1.0-Bold-2 normalized difference=0.0
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:06.2951229Z Lyric raster 1.0-Heavy-0 normalized difference=0.008637317257220568
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:06.3963536Z Lyric raster 1.0-Heavy-1 normalized difference=0.015407454077843465
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:06.3964499Z Lyric raster 1.0-Heavy-2 normalized difference=5.066614100545374E-5
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:06.4961697Z Lyric raster 1.25-Bold-0 normalized difference=0.006755870040896783
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:06.5951408Z Lyric raster 1.25-Bold-1 normalized difference=0.012548313475823985
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:06.6952568Z Lyric raster 1.25-Bold-2 normalized difference=0.0
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:06.6953274Z Lyric raster 1.25-Heavy-0 normalized difference=0.007189470191350514
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:06.7946697Z Lyric raster 1.25-Heavy-1 normalized difference=0.014473576567311932
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:06.8963429Z Lyric raster 1.25-Heavy-2 normalized difference=5.72423302943789E-5
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:06.8964115Z Lyric raster 1.5-Bold-0 normalized difference=0.005316133296486965
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:06.9962146Z Lyric raster 1.5-Bold-1 normalized difference=0.00907778364583549
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:06.9963461Z Lyric raster 1.5-Bold-2 normalized difference=0.0
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:07.0949062Z Lyric raster 1.5-Heavy-0 normalized difference=0.0053583682087245035
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:07.1950819Z Lyric raster 1.5-Heavy-1 normalized difference=0.012400139510202546
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:07.1951350Z Lyric raster 1.5-Heavy-2 normalized difference=2.9935286325668118E-5
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:07.2961611Z Lyric raster 1.75-Bold-0 normalized difference=0.0031587495488492184
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:07.2962678Z Lyric raster 1.75-Bold-1 normalized difference=0.009056596596300436
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:07.3951181Z Lyric raster 1.75-Bold-2 normalized difference=0.0
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:07.4950732Z Lyric raster 1.75-Heavy-0 normalized difference=0.0032529089579212437
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:07.4951484Z Lyric raster 1.75-Heavy-1 normalized difference=0.012096573729667678
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:07.5951128Z Lyric raster 1.75-Heavy-2 normalized difference=2.9234814291768188E-5
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:07.5951847Z Lyric raster 2.0-Bold-0 normalized difference=0.0032917815151969313
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:07.6951511Z Lyric raster 2.0-Bold-1 normalized difference=0.007274030145378706
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:07.7955256Z Lyric raster 2.0-Bold-2 normalized difference=0.0
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:07.7979554Z Lyric raster 2.0-Heavy-0 normalized difference=0.0032975063646174117
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:07.8951622Z Lyric raster 2.0-Heavy-1 normalized difference=0.011432031820229244
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:07.9951925Z Lyric raster 2.0-Heavy-2 normalized difference=1.9956482772717433E-5
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:07.9968143Z ##[error]Exception in thread "main" java.lang.IllegalStateException: Individual glyph geometry diverges from its own shaped paragraph: 0.015407454077843465
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:07.9969713Z 	at melox.validation.MeloXLyricRasterAuditKt$main$1.invokeSuspend(MeloXLyricRasterAudit.kt:82)
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:07.9970423Z 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:07.9970921Z 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:07.9971431Z 	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:256)
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:07.9971914Z 	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:54)
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:07.9972367Z 	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlockingImpl(Builders.kt:30)
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:07.9972802Z 	at kotlinx.coroutines.BuildersKt.runBlockingImpl(Unknown Source)
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:07.9973289Z 	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK(Builders.concurrent.kt:172)
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:07.9973766Z 	at kotlinx.coroutines.BuildersKt.runBlockingK(Unknown Source)
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:07.9974262Z 	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK$default(Builders.concurrent.kt:157)
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:07.9974778Z 	at kotlinx.coroutines.BuildersKt.runBlockingK$default(Unknown Source)
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:07.9975258Z 	at melox.validation.MeloXLyricRasterAuditKt.main(MeloXLyricRasterAudit.kt:28)
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:09.0951730Z 
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:09.0952903Z > Task :desktop:auditLyricRaster FAILED
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:09.0953525Z 
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:09.1276886Z FAILURE: Build failed with an exception.
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:09.1294682Z gradle/actions: Writing build results to D:\a\_temp\.gradle-actions\build-results\__run_6-1791947163462.json
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:09.1295427Z 
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:09.1307287Z * What went wrong:
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:09.1309011Z Execution failed for task ':desktop:auditLyricRaster' (registered in build file 'desktop\build.gradle.kts').
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:09.1323190Z > Process 'command 'C:\hostedtoolcache\windows\Java_Temurin-Hotspot_jdk\17.0.20-101\x64\bin\java.exe'' finished with non-zero exit value 1
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:09.1323988Z 
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:09.1324107Z * Try:
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:09.1324634Z > Run with --stacktrace option to get the stack trace.
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:09.1325194Z > Run with --info or --debug option to get more log output.
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:09.1325853Z > Run with --scan to get full insights from a Build Scan (powered by Develocity).
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:09.1330883Z > Get more help at https://help.gradle.org.
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:09.1331210Z 
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:09.1331340Z BUILD FAILED in 6s
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:09.1331698Z 14 actionable tasks: 4 executed, 10 up-to-date
+build	Audit production lyric glyph raster at Windows DPI scales	2026-10-14T03:06:09.2451814Z ##[error]Process completed with exit code 1.

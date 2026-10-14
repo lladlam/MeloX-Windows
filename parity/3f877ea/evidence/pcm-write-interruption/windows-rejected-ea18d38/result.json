@@ -1,0 +1,16 @@
+{
+  "status": "REJECTED",
+  "source": "ea18d388b5a127eea78753a0e49ad83199acc1d1",
+  "run_id": 38504096447,
+  "tests": {
+    "tests": 194,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "suites": 36
+  },
+  "glyph_self_geometry": "FAILED",
+  "maximum_normalized_difference": 0.015407454077843465,
+  "distribution_created": false,
+  "reason": "Fractional strict mask crops cut edge pixels at glyph advances and trailing ink overhang; gate stays 1 percent"
+}

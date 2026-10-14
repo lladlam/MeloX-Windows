@@ -34,7 +34,8 @@ fun main(args: Array<String>) = runBlocking {
         for (density in listOf(1f, 1.25f, 1.5f, 1.75f, 2f)) {
             for (weight in listOf(MeloXLyricsFontWeight.Bold, MeloXLyricsFontWeight.Heavy)) {
                 MeloXSettingsPreferences.setString("lyrics_font_weight", weight.name)
-                for ((index, text) in listOf("Like in me", "Like, like, like, yeah", "喜欢 喜欢 喜欢").withIndex()) {
+                for ((index, text) in listOf("Like in me", "Like, like, like, yeah", "喜欢 喜欢 喜欢",
+                    "office affinity fi ffi", "Cafe\u0301 \uD83C\uDFB5", "Like in me\nLike, like, like, yeah").withIndex()) {
                     val line = LyricLine(timeMs = 0, text = text)
                     val prefix = "${density}-${weight.name}-$index"
                     for (native in listOf(false, true)) {

@@ -4,6 +4,16 @@ Pinned Android remains `3f877eaffe30c82eb6d24eb3647702f5bc554dd3`.
 
 ## User report and exact target
 
+**2026-10-14 follow-up:** the user ran diagnostic package `d5489de` and supplied
+an actual Windows 10 PCM-write Output failure and a Tiny Giant glyph-overlap
+screenshot. That report's actual track is `netease:3334421408`. The newer
+pause-safe PCM and shaped-row glyph corrections are tracked in
+[`PCM_WRITE_INTERRUPTION.md`](PCM_WRITE_INTERRUPTION.md); their production
+attempt `ea18d388b5a127eea78753a0e49ad83199acc1d1` was rejected by its enforced
+Windows glyph audit and is followed by a pixel-partition correction. The observations and
+package below describe the earlier DAMIDAMI investigation and are not
+evidence that the user's physical issue is resolved.
+
 - Anonymous Android playback works; Windows returns to the play-button state.
 - Track duration is visible. Duration metadata alone does not prove decoding or
   successful speaker initialization.

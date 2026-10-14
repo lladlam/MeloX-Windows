@@ -8,6 +8,49 @@ Settings/legal closing fetch (2026-10-13): `5b52a92022a5943e238ffc5d3121c536b2f2
 
 ## Landed in this batch
 
+### Current user playback/lyric follow-up (2026-10-14)
+
+Production attempt `ea18d388b5a127eea78753a0e49ad83199acc1d1` was rejected by
+Windows Build `38504096447` at the enforced glyph geometry gate (1.5407% > 1%).
+All 194 Windows tests and real native EQ passed; no distribution was created.
+The next production revision fixes fractional mask-crop seams with integer
+pixel partitions covering each complete shaped row and trailing ink overhang.
+All 60 expanded Linux audit cases now have zero difference. Retain the exact
+final verified package source even when an evidence-only commit advances main.
+
+The user's genuine Windows 10 report from diagnostic package `d5489de` reached
+actual URL resolution, bundled FFmpeg and an opened Java Sound default output,
+then failed in PCM write. This is distinct from Windows anonymous DAMIDAMI CI
+returning no URL. The report's actual track and supplied scrambled-glyph
+screenshot are Tiny Giant (`netease:3334421408`), not DAMIDAMI `2755332551`.
+
+Confirmed pause-interrupted zero/short-write errors in both normal and AutoMix
+output are corrected by a shared pause-version-aware PCM writer with exact
+already-processed remainder retention. Real-device zero/unaligned/closed writes
+still fail and now report accepted/requested bytes, open/running/paused state,
+pause version and PCM clock. Real bundled-FFmpeg regressions now total
+**194 tests / 36 suites / zero failures, errors or skipped** locally, including
+quick pause/resume, byte retention, paused pending-write stop/seek and unexpected
+device closure. Real single/dual EQ PCM remains verified.
+
+Glyph overlap investigation now compares **within-character/word rendering**,
+not just settled lyric row gaps. Windows's rejected unlifted Heavy baseline
+differs from its own shaped paragraph by up to 25.22% normalized absolute ink
+difference. Glyph regions now come from one immutable Compose-shaped row mask
+with the exact pinned MiLan Pro font; original glyph timing/reveal/lift/glow/
+scale/blur is preserved. The expanded 60-case 100–200% density compositor
+self-geometry audit passes locally with zero difference and enforces a 1%
+gate in Windows CI.
+Production Tiny Giant online/native FFmpeg/consumed software PCM and its
+opening lyrics at 175% density replay successfully.
+
+See `parity/3f877ea/PCM_WRITE_INTERRUPTION.md` and
+`evidence/pcm-write-interruption/`. User Windows 10 rendering/audibility and
+pinned Android pixels/motion remain **BLOCKED** until directly reproduced.
+The advanced-lyrics settings batch is still preserved in stash; its failed
+first-toggle physical replay must be fixed before release. Continue remaining
+pinned gaps and the 17 independent upstream increments afterward.
+
 User-reported “search works, anonymous playback fails” repair is tracked in
 `parity/3f877ea/PLAYBACK_BUGFIX.md`: real song 139774 reproduced an unencoded
 NBSP query failure before any audio request. Old package 47542d8 predates the
