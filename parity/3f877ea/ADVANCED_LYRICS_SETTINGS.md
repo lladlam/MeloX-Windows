@@ -122,3 +122,12 @@ After the position-before-prepare fix, Linux passes **204 tests / 39 suites /
 zero failures, errors or skipped**, including the original seven AutoMix
 integration scenarios and the deterministic inline-resolution regression.
 Fresh Windows CI/package collection is required for this follow-up revision.
+
+Follow-up run `38589870910` / `94e0bfa` passes the original seven AutoMix cases
+but fails the **new fixture resolver before overlap preparation**: Windows
+FFmpeg rejects raw Java `file:/C:/...` URIs. That test bypassed production Local
+Provider's native-path conversion. Its immediate resolver now converts its
+genuine generated WAV URI to a native absolute path and fails immediately on
+decoder errors. Linux passes all eight AutoMix integration cases with this
+portable fixture. This run did not reach lyrics controls or publish a package.
+Its failed XML is retained under `windows-failed-94e0bfa/`.

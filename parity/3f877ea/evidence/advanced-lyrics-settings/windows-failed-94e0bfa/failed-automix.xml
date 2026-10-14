@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="DesktopAutoMixIntegrationTest[desktop]" tests="8" skipped="0" failures="1" errors="0" timestamp="2026-10-14T15:36:05.958Z" hostname="runnervmfi6oq" time="43.625">
+  <properties/>
+  <testcase name="nextDuringOverlapContinuesAtHeardIncomingPositionAndPreviousReturnsToPrimary[desktop]" classname="melox.playback.DesktopAutoMixIntegrationTest" time="3.096"/>
+  <testcase name="pauseDuringOverlapCancelsBothDecksKeepsPrimaryPositionAndSeekZeroStillWorks[desktop]" classname="melox.playback.DesktopAutoMixIntegrationTest" time="2.656"/>
+  <testcase name="threeRealTracksPerformTwoConsecutiveHandoffsWithoutReopeningTheOutput[desktop]" classname="melox.playback.DesktopAutoMixIntegrationTest" time="4.502"/>
+  <testcase name="immediatelyResolvedNextStartsAtHeardIncomingPositionWithoutOpeningAtZero[desktop]" classname="melox.playback.DesktopAutoMixIntegrationTest" time="30.08">
+    <failure message="kotlinx.coroutines.TimeoutCancellationException: Timed out waiting for 30000 ms" type="kotlinx.coroutines.TimeoutCancellationException">kotlinx.coroutines.TimeoutCancellationException: Timed out waiting for 30000 ms
+	at _COROUTINE._BOUNDARY._(CoroutineDebugging.kt:42)
+	at melox.playback.DesktopAutoMixIntegrationTest$until$2.invokeSuspend(DesktopAutoMixIntegrationTest.kt:72)
+	at melox.playback.DesktopAutoMixIntegrationTest$immediatelyResolvedNextStartsAtHeardIncomingPositionWithoutOpeningAtZero$1.invokeSuspend(DesktopAutoMixIntegrationTest.kt:207)
+Caused by: kotlinx.coroutines.TimeoutCancellationException: Timed out waiting for 30000 ms
+	at kotlinx.coroutines.TimeoutKt.TimeoutCancellationException(Timeout.kt:281)
+	at kotlinx.coroutines.TimeoutCoroutine.run(Timeout.kt:243)
+	at kotlinx.coroutines.EventLoopImplBase$DelayedRunnableTask.run(EventLoop.common.kt:498)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:256)
+	at kotlinx.coroutines.DefaultExecutor.run(DefaultExecutor.kt:105)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+</failure>
+  </testcase>
+  <testcase name="smartQueueActuallyAnalyzesCandidatePcmAndAppendsCompatibleTempoBeforeOriginalOrder[desktop]" classname="melox.playback.DesktopAutoMixIntegrationTest" time="0.773"/>
+  <testcase name="actualControllerPreloadsMixesPromotesIncomingAndFinishesOnTheSameOutput[desktop]" classname="melox.playback.DesktopAutoMixIntegrationTest" time="1.943"/>
+  <testcase name="disablingSmartQueueRetainsOriginalUnconsumedTrackEvenWhenItsAnalysisFailed[desktop]" classname="melox.playback.DesktopAutoMixIntegrationTest" time="0.079"/>
+  <testcase name="muteAndSoftwareVolumeChangeActualPcmWhenDeviceHasNoMasterGain[desktop]" classname="melox.playback.DesktopAutoMixIntegrationTest" time="0.496"/>
+  <system-out><![CDATA[[DEBUG MeloXThirdParty] resolve detail source=local id=fixture- title=generated-1000 artists=???? durationMs=8000 metadata=Local
+[INFO MeloXThirdParty] Resolve start source=local quality=Standard thirdParty=false
+[INFO MeloXThirdParty] Resolve fallback source=local stage=provider chksz=disabled
+[DEBUG MeloXThirdParty] resolve detail source=local id=fixture- title=generated-4000 artists=???? durationMs=6000 metadata=Local
+[INFO MeloXThirdParty] Resolve start source=local quality=Standard thirdParty=false
+[INFO MeloXThirdParty] Resolve fallback source=local stage=provider chksz=disabled
+[DEBUG MeloXThirdParty] resolve detail source=local id=fixture- title=generated-1000 artists=???? durationMs=8000 metadata=Local
+[INFO MeloXThirdParty] Resolve start source=local quality=Standard thirdParty=false
+[INFO MeloXThirdParty] Resolve fallback source=local stage=provider chksz=disabled
+[DEBUG MeloXThirdParty] resolve detail source=local id=fixture- title=generated-4000 artists=???? durationMs=6000 metadata=Local
+[INFO MeloXThirdParty] Resolve start source=local quality=Standard thirdParty=false
+[INFO MeloXThirdParty] Resolve fallback source=local stage=provider chksz=disabled
+[DEBUG MeloXThirdParty] resolve detail source=local id=fixture- title=generated-1000 artists=???? durationMs=8000 metadata=Local
+[INFO MeloXThirdParty] Resolve start source=local quality=Standard thirdParty=false
+[INFO MeloXThirdParty] Resolve fallback source=local stage=provider chksz=disabled
+[DEBUG MeloXThirdParty] resolve detail source=local id=fixture- title=generated-2000 artists=???? durationMs=10000 metadata=Local
+[INFO MeloXThirdParty] Resolve start source=local quality=Standard thirdParty=false
+[INFO MeloXThirdParty] Resolve fallback source=local stage=provider chksz=disabled
+[DEBUG MeloXThirdParty] resolve detail source=local id=fixture- title=generated-4000 artists=???? durationMs=6000 metadata=Local
+[INFO MeloXThirdParty] Resolve start source=local quality=Standard thirdParty=false
+[INFO MeloXThirdParty] Resolve fallback source=local stage=provider chksz=disabled
+Production chained AutoMix: 3 real tracks / 2 rendered-clock handoffs / 1 output / 18s PCM / zero native decoder leaks
+[DEBUG MeloXThirdParty] resolve detail source=local id=fixture- title=generated-130 artists=???? durationMs=16000 metadata=Local
+[INFO MeloXThirdParty] Resolve start source=local quality=Standard thirdParty=false
+[INFO MeloXThirdParty] Resolve fallback source=local stage=provider chksz=disabled
+[DEBUG MeloXThirdParty] resolve detail source=local id=fixture- title=generated-130 artists=???? durationMs=16000 metadata=Local
+[DEBUG MeloXThirdParty] resolve detail source=local id=fixture- title=generated-130 artists=???? durationMs=16000 metadata=Local
+[INFO MeloXThirdParty] Resolve start source=local quality=Standard thirdParty=false
+[INFO MeloXThirdParty] Resolve start source=local quality=Standard thirdParty=false
+[INFO MeloXThirdParty] Resolve fallback source=local stage=provider chksz=disabled
+[INFO MeloXThirdParty] Resolve fallback source=local stage=provider chksz=disabled
+Real analyzed Smart Queue: selected 92 BPM candidate over original 140 BPM candidate for 90 BPM source; unconsumed candidate restored on disable
+[DEBUG MeloXThirdParty] resolve detail source=local id=fixture- title=generated-1000 artists=???? durationMs=8000 metadata=Local
+[INFO MeloXThirdParty] Resolve start source=local quality=Standard thirdParty=false
+[INFO MeloXThirdParty] Resolve fallback source=local stage=provider chksz=disabled
+[DEBUG MeloXThirdParty] resolve detail source=local id=fixture- title=generated-4000 artists=???? durationMs=6000 metadata=Local
+[INFO MeloXThirdParty] Resolve start source=local quality=Standard thirdParty=false
+[INFO MeloXThirdParty] Resolve fallback source=local stage=provider chksz=disabled
+Production controller AutoMix: same_output=true accepted_bytes=1940400 queue_index=1 final_position_ms=6000
+[DEBUG MeloXThirdParty] resolve detail source=local id=fixture- title=generated-1000 artists=???? durationMs=8000 metadata=Local
+[INFO MeloXThirdParty] Resolve start source=local quality=Standard thirdParty=false
+[INFO MeloXThirdParty] Resolve fallback source=local stage=provider chksz=disabled
+]]></system-out>
+  <system-err><![CDATA[[ERROR AudioPlayer] ???? (Content): IOException: [in#0 @ 00000268c478f380] Error opening input: Invalid argument
+Error opening input file file:/C:/Users/RUNNER~1/AppData/Local/Temp/melox-controller-mix3789757149036907638/1.wav.
+Error opening input files: Invalid argument <- IOException: [in#0 @ 00000268c478f380] Error opening input: Invalid argument
+Error opening input file file:/C:/Users/RUNNER~1/AppData/Local/Temp/melox-controller-mix3789757149036907638/1.wav.
+Error opening input files: Invalid argument <- IOException: [in#0 @ 00000268c478f380] Error opening input: Invalid argument
+Error opening input file file:/C:/Users/RUNNER~1/AppData/Local/Temp/melox-controller-mix3789757149036907638/1.wav.
+Error opening input files: Invalid argument
+[ERROR MeloXPlayback] decoder failed (Content): AudioPlaybackFailure: [in#0 @ 00000268c478f380] Error opening input: Invalid argument
+Error opening input file file:/C:/Users/RUNNER~1/AppData/Local/Temp/melox-controller-mix3789757149036907638/1.wav.
+Error opening input files: Invalid argument <- IOException: [in#0 @ 00000268c478f380] Error opening input: Invalid argument
+Error opening input file file:/C:/Users/RUNNER~1/AppData/Local/Temp/melox-controller-mix3789757149036907638/1.wav.
+Error opening input files: Invalid argument <- IOException: [in#0 @ 00000268c478f380] Error opening input: Invalid argument
+Error opening input file file:/C:/Users/RUNNER~1/AppData/Local/Temp/melox-controller-mix3789757149036907638/1.wav.
+Error opening input files: Invalid argument <- IOException: [in#0 @ 00000268c478f380] Error opening input: Invalid argument
+Error opening input file file:/C:/Users/RUNNER~1/AppData/Local/Temp/melox-controller-mix3789757149036907638/1.wav.
+Error opening input files: Invalid argument
+[ERROR AudioPlayer] ???? (Content): IOException: [in#0 @ 000001b11423f380] Error opening input: Invalid argument
+Error opening input file file:/C:/Users/RUNNER~1/AppData/Local/Temp/melox-controller-mix3789757149036907638/2.wav.
+Error opening input files: Invalid argument <- IOException: [in#0 @ 000001b11423f380] Error opening input: Invalid argument
+Error opening input file file:/C:/Users/RUNNER~1/AppData/Local/Temp/melox-controller-mix3789757149036907638/2.wav.
+Error opening input files: Invalid argument <- IOException: [in#0 @ 000001b11423f380] Error opening input: Invalid argument
+Error opening input file file:/C:/Users/RUNNER~1/AppData/Local/Temp/melox-controller-mix3789757149036907638/2.wav.
+Error opening input files: Invalid argument
+[ERROR MeloXPlayback] decoder failed (Content): AudioPlaybackFailure: [in#0 @ 000001b11423f380] Error opening input: Invalid argument
+Error opening input file file:/C:/Users/RUNNER~1/AppData/Local/Temp/melox-controller-mix3789757149036907638/2.wav.
+Error opening input files: Invalid argument <- IOException: [in#0 @ 000001b11423f380] Error opening input: Invalid argument
+Error opening input file file:/C:/Users/RUNNER~1/AppData/Local/Temp/melox-controller-mix3789757149036907638/2.wav.
+Error opening input files: Invalid argument <- IOException: [in#0 @ 000001b11423f380] Error opening input: Invalid argument
+Error opening input file file:/C:/Users/RUNNER~1/AppData/Local/Temp/melox-controller-mix3789757149036907638/2.wav.
+Error opening input files: Invalid argument <- IOException: [in#0 @ 000001b11423f380] Error opening input: Invalid argument
+Error opening input file file:/C:/Users/RUNNER~1/AppData/Local/Temp/melox-controller-mix3789757149036907638/2.wav.
+Error opening input files: Invalid argument
+[ERROR AudioPlayer] ???? (Content): IOException: [in#0 @ 000002617f27c280] Error opening input: Invalid argument
+Error opening input file file:/C:/Users/RUNNER~1/AppData/Local/Temp/melox-controller-mix3789757149036907638/2.wav.
+Error opening input files: Invalid argument <- IOException: [in#0 @ 000002617f27c280] Error opening input: Invalid argument
+Error opening input file file:/C:/Users/RUNNER~1/AppData/Local/Temp/melox-controller-mix3789757149036907638/2.wav.
+Error opening input files: Invalid argument <- IOException: [in#0 @ 000002617f27c280] Error opening input: Invalid argument
+Error opening input file file:/C:/Users/RUNNER~1/AppData/Local/Temp/melox-controller-mix3789757149036907638/2.wav.
+Error opening input files: Invalid argument
+[ERROR MeloXPlayback] decoder failed (Content): AudioPlaybackFailure: [in#0 @ 000002617f27c280] Error opening input: Invalid argument
+Error opening input file file:/C:/Users/RUNNER~1/AppData/Local/Temp/melox-controller-mix3789757149036907638/2.wav.
+Error opening input files: Invalid argument <- IOException: [in#0 @ 000002617f27c280] Error opening input: Invalid argument
+Error opening input file file:/C:/Users/RUNNER~1/AppData/Local/Temp/melox-controller-mix3789757149036907638/2.wav.
+Error opening input files: Invalid argument <- IOException: [in#0 @ 000002617f27c280] Error opening input: Invalid argument
+Error opening input file file:/C:/Users/RUNNER~1/AppData/Local/Temp/melox-controller-mix3789757149036907638/2.wav.
+Error opening input files: Invalid argument <- IOException: [in#0 @ 000002617f27c280] Error opening input: Invalid argument
+Error opening input file file:/C:/Users/RUNNER~1/AppData/Local/Temp/melox-controller-mix3789757149036907638/2.wav.
+Error opening input files: Invalid argument
+]]></system-err>
+</testsuite>

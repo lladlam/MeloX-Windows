@@ -59,7 +59,10 @@ class DesktopAutoMixIntegrationTest {
     }
     private fun install(songs: List<SearchSong>, immediateResolution: Boolean = false) {
         val controller = MeloXDesktopPlayer(if (immediateResolution) { entry ->
-            DesktopPlaybackRequest((entry.song.providerTrack!!.providerMetadata as ProviderTrackMetadata.Local).contentUri)
+            val uri = (entry.song.providerTrack!!.providerMetadata as ProviderTrackMetadata.Local).contentUri
+            // Match Local Provider's URI-to-native-path boundary. FFmpeg on
+            // Windows cannot open Java's file:/C:/... spelling directly.
+            DesktopPlaybackRequest(File(java.net.URI(uri)).absolutePath)
         } else null, { start ->
             starts += start
             AudioPlayer.play(start.request.uri, start.track, start.request.headers, start.positionMs, start.durationMs,
@@ -204,7 +207,10 @@ class DesktopAutoMixIntegrationTest {
     }
     @Test fun immediatelyResolvedNextStartsAtHeardIncomingPositionWithoutOpeningAtZero() = runBlocking<Unit> {
         install(listOf(song(1, 1000, 8000), song(2, 4000, 6000)), immediateResolution = true)
-        until { MeloXAutoMixTransitionRuntime.state.value.status == "prepared" }
+        until {
+            assertNull(AudioPlayer.state.value.error, "Real fixture decode must succeed before the overlap regression")
+            MeloXAutoMixTransitionRuntime.state.value.status == "prepared"
+        }
         advanceTo(6200)
         until { AudioPlayer.incomingMixPosition()?.let { it in 1100..1300 } == true }
         val heard = assertNotNull(AudioPlayer.incomingMixPosition())

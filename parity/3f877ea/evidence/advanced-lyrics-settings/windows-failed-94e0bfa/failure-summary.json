@@ -1,0 +1,11 @@
+{
+  "run_id": 38589870910,
+  "head_sha": "94e0bfa08a342497c2dd57878445e7e2856c3a3b",
+  "status": "FAILED",
+  "downloaded_raw_xml_sha256": "661bd36fe0b53e80b31c293eca0b395ea728bc922d2abf09b65d977cca8f29cd",
+  "archive_normalization": "CRLF to LF and trailing whitespace removed",
+  "original_seven_automix_tests": "PASSED",
+  "new_fixture_test": "FAILED before preparation: invalid Java Windows file URI bypassed Local Provider conversion",
+  "package_delivered": false,
+  "lyrics_windows_replay": "NOT_RUN"
+}
