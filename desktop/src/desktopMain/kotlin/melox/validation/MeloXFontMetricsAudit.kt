@@ -60,6 +60,14 @@ fun main(args: Array<String>) = runBlocking {
             val record = JSONObject().put("weight", weight).put("mode", mode).put("render_weight", renderWeight.weight)
                 .put("fixture", fixture).put("size_px", size).put("reference_axis", expected.getInt("axis"))
             record.put("native_advances", JSONArray(native.getWidths(native.getStringGlyphs(text)).toList()))
+            if (size == 34f && fixture == 0) {
+                // Separate SkParagraph shaping from the native scaler/HVAR metrics:
+                // if measureTextWidth already collapses, only static axis instances help.
+                record.put("native_measure_width", native.measureTextWidth(text))
+                    .put("typeface_style", native.typeface?.fontStyle?.toString())
+                    .put("typeface_variations", JSONArray((native.typeface?.variations ?: emptyArray())
+                        .map { JSONObject().put("tag", it.tag).put("value", it.value) }))
+            }
             val scene = ImageComposeScene(1600, 180) {
                 val measurer = rememberTextMeasurer()
                 val layout = measurer.measure(AnnotatedString(text), TextStyle(fontFamily = MeloXLanTingProFontFamily,
