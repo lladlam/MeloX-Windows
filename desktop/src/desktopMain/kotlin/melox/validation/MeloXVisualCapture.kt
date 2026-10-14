@@ -30,6 +30,7 @@ import org.json.JSONArray
 @OptIn(ExperimentalComposeUiApi::class, InternalComposeUiApi::class)
 fun main(args: Array<String>) = runBlocking {
     fun option(name: String, default: String) = args.indexOf(name).takeIf { it >= 0 }?.let { args.getOrNull(it + 1) } ?: default
+    org.jetbrains.skia.impl.Stats.enabled = "--skia-stats" in args
     val width = option("--width", "427").toInt()
     val height = option("--height", "924").toInt()
     val density = option("--density", "1").toFloat()
@@ -215,6 +216,14 @@ fun main(args: Array<String>) = runBlocking {
             val page = semantics.tagged("now-playing")?.config?.getOrNull(SemanticsProperties.StateDescription)
             File(output, "$name.semantics.json").writeText(semantics.toEvidence().toString(2))
             sceneEvidence.put(JSONObject().put("file", "$name.png")
+                .put("memory", JSONObject(melox.diagnostics.MeloXMemoryDiagnostics.snapshot()))
+                .put("skia", JSONObject()
+                    .put("font_cache_bytes", org.jetbrains.skia.Graphics.fontCacheUsed)
+                    .put("resource_cache_bytes", org.jetbrains.skia.Graphics.resourceCacheTotalUsed)
+                    .put("live_objects", if (org.jetbrains.skia.impl.Stats.enabled) JSONObject(org.jetbrains.skia.impl.Stats.allocated) else JSONObject.NULL))
+                .put("artwork_cache", melox.ui.artwork.MeloXArtworkMemoryCache.stats().let {
+                    JSONObject().put("entries", it.entries).put("budgeted_bytes", it.retainedWeight).put("budget_bytes", it.maxWeight)
+                })
                 .put("captured_elapsed_ms", (System.nanoTime() - start) / 1_000_000.0)
                 .put("page", page ?: JSONObject.NULL)
                 .put("controls_visible", semantics.tagged("player-controls") != null)

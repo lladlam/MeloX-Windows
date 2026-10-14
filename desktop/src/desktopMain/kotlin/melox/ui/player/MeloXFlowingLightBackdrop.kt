@@ -46,6 +46,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 import melox.network.MeloXHttpClient
 import melox.playback.MeloXAudioReactiveRuntime
+import melox.ui.artwork.rememberMeloXArtworkBitmap
 import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import okhttp3.Request
 import org.jetbrains.skia.Bitmap
@@ -93,15 +94,13 @@ internal object ArtworkDynamicPaletteProvider {
             cached(key)?.let { return@withContext it }
             val palette = runCatching {
                 val decoded = decodeArtwork(source, session)
-                val scaled = if (decoded.width == TARGET_SIZE && decoded.height == TARGET_SIZE) {
-                    decoded
-                } else {
-                    scaleNearest(decoded, TARGET_SIZE, TARGET_SIZE)
-                }
                 try {
-                    makePalette(scaled)
+                    if (decoded.width == TARGET_SIZE && decoded.height == TARGET_SIZE) {
+                        makePalette(decoded)
+                    } else {
+                        scaleNearest(decoded, TARGET_SIZE, TARGET_SIZE).use(::makePalette)
+                    }
                 } finally {
-                    if (scaled !== decoded) scaled.close()
                     decoded.close()
                 }
             }.getOrNull()
@@ -144,13 +143,18 @@ internal object ArtworkDynamicPaletteProvider {
     }
 
     private fun decodeBytes(bytes: ByteArray): Bitmap {
-        val image = Image.makeFromEncoded(bytes)
-        val bitmap = Bitmap()
-        val info = ImageInfo(image.width, image.height, ColorType.BGRA_8888, ColorAlphaType.UNPREMUL)
-        check(bitmap.allocPixels(info)) { "Unable to allocate artwork pixels" }
-        check(image.readPixels(bitmap)) { "Unable to read artwork pixels" }
-        image.close()
-        return bitmap
+        return Image.makeFromEncoded(bytes).use { image ->
+            val bitmap = Bitmap()
+            try {
+                val info = ImageInfo(image.width, image.height, ColorType.BGRA_8888, ColorAlphaType.UNPREMUL)
+                check(bitmap.allocPixels(info)) { "Unable to allocate artwork pixels" }
+                check(image.readPixels(bitmap)) { "Unable to read artwork pixels" }
+                bitmap
+            } catch (error: Throwable) {
+                bitmap.close()
+                throw error
+            }
+        }
     }
 
     private fun scaleNearest(source: Bitmap, targetWidth: Int, targetHeight: Int): Bitmap {
@@ -699,10 +703,6 @@ private fun fillFlowingMeshPixels(
     }
 }
 
-private val desktopArtworkCache = object : LinkedHashMap<String, ImageBitmap>(32, .75f, true) {
-    override fun removeEldestEntry(eldest: MutableMap.MutableEntry<String, ImageBitmap>?): Boolean = size > 32
-}
-
 @Composable
 private fun DesktopArtworkImage(
     artworkUrl: String?,
@@ -711,18 +711,9 @@ private fun DesktopArtworkImage(
 ) {
     val revision by melox.provider.jellyfin.JellyfinSessionStore.revision.collectAsState()
     val session = remember(revision) { melox.provider.jellyfin.JellyfinSessionStore.read() }
-    val key = remember(artworkUrl, session) { artworkUrl?.let { melox.provider.jellyfin.JellyfinArtworkAccess.cacheKey(it, session) } }
-    var bitmap by remember(key) {
-        mutableStateOf(key?.let { synchronized(desktopArtworkCache) { desktopArtworkCache[it] } })
-    }
-    LaunchedEffect(artworkUrl, key) {
-        val source = artworkUrl?.takeIf(String::isNotBlank) ?: return@LaunchedEffect
-        if (synchronized(desktopArtworkCache) { desktopArtworkCache[key] } != null) return@LaunchedEffect
-        val loaded = withContext(Dispatchers.IO) {
-            runCatching { decodeArtworkImage(source, session) }.getOrNull()
-        } ?: return@LaunchedEffect
-        synchronized(desktopArtworkCache) { desktopArtworkCache[checkNotNull(key)] = loaded }
-        bitmap = loaded
+    val key = remember(artworkUrl, session) { artworkUrl?.takeIf(String::isNotBlank)?.let { melox.provider.jellyfin.JellyfinArtworkAccess.cacheKey(it, session) } }
+    val bitmap = rememberMeloXArtworkBitmap(key) {
+        runCatching { decodeArtworkImage(checkNotNull(artworkUrl), session) }.getOrNull()
     }
     val image = bitmap
     if (image != null) {
@@ -752,6 +743,5 @@ private fun decodeArtworkImage(source: String, session: melox.provider.jellyfin.
         "file" -> File(URI(source)).readBytes()
         else -> File(source).readBytes()
     }
-    val image = Image.makeFromEncoded(bytes)
-    return image.toComposeImageBitmap().also { image.close() }
+    return Image.makeFromEncoded(bytes).use { it.toComposeImageBitmap() }
 }

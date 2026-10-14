@@ -172,6 +172,7 @@ internal fun MeloXPlayerPlaybackError(state: melox.player.PlayerState, onRetry: 
         Row(Modifier.fillMaxWidth().padding(top = 12.dp), horizontalArrangement = Arrangement.spacedBy(10.dp)) {
             MeloXGlassButton(onClick = {
                 val text = "$title\ncommit=${melox.MeloXBuildConfig.BUILD_COMMIT}\nos=${System.getProperty("os.name")} ${System.getProperty("os.version")} ${System.getProperty("os.arch")}\n${melox.diagnostics.MeloXProcessLogs.redact(retained.error.orEmpty())}\n\n" +
+                    "memory=${melox.diagnostics.MeloXMemoryDiagnostics.describe()}\n" +
                     melox.diagnostics.MeloXProcessLogs.snapshot().joinToString("\n")
                 runCatching { java.awt.Toolkit.getDefaultToolkit().systemClipboard.setContents(java.awt.datatransfer.StringSelection(text), null) }
                     .onSuccess { copyStatus = "错误和调试日志已复制" }

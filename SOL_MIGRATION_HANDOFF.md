@@ -36,7 +36,15 @@ variable source, each provably shaping identically to the variable font at its
 Android-mapped axis; CSS 900 reuses the axis-700 instance; stale STAT is
 dropped (DirectWrite would otherwise report private axis coordinates and
 re-enable synthetic bold); the pinned variable font remains in the package
-unchanged as the hash-verified source. User Windows 10 retest is pending.
+unchanged as the hash-verified source. The user accepted the `797c3be` font fix
+on 2026-10-14 (“可以了。继续迁移其他功能”). Android pixels/motion remain separate.
+
+**New active report:** the Windows executable uses **549 MB at startup** and
+**1431 MB after playing for a while**. The unbounded general decoded-artwork
+cache and separate player-image cache are being replaced by one 128-entry /
+64 MiB budget. Per-row 64-paragraph history is disabled; actual heap/OS process
+memory diagnostics and image-retention stress are added. See
+`parity/3f877ea/WINDOWS_MEMORY.md`. Exact new-package/user retest is pending.
 
 The earlier `989f33b` package passed all prior gates but was **rejected by the
 user for the font symptom**; it is not accepted as resolving the report.
@@ -93,8 +101,9 @@ opening lyrics at 175% density replay successfully.
 See `parity/3f877ea/PCM_WRITE_INTERRUPTION.md` and
 `evidence/pcm-write-interruption/`. User Windows 10 rendering/audibility and
 pinned Android pixels/motion remain **BLOCKED** until directly reproduced.
-The advanced-lyrics settings batch is still preserved in stash; its failed
-first-toggle physical replay must be fixed before release. Continue remaining
+The advanced-lyrics batch is preserved in two stashes. Restored v7 passed the
+first toggle and all Apple-style sliders, then failed to reveal the style
+selector. It is paused for the memory report and is not released. Continue remaining
 pinned gaps and the 17 independent upstream increments afterward.
 
 User-reported “search works, anonymous playback fails” repair is tracked in

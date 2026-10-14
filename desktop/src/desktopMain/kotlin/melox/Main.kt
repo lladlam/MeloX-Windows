@@ -44,6 +44,14 @@ fun main() {
 
     try {
         application {
+            androidx.compose.runtime.LaunchedEffect(Unit) {
+                while (true) {
+                    val images = melox.ui.artwork.MeloXArtworkMemoryCache.stats()
+                    melox.platform.logInfo("MeloXMemory", "${melox.diagnostics.MeloXMemoryDiagnostics.describe()} " +
+                        "artwork_entries=${images.entries} artwork_budgeted_bytes=${images.retainedWeight} artwork_budget_bytes=${images.maxWeight}")
+                    kotlinx.coroutines.delay(60_000L)
+                }
+            }
             val windowState = rememberWindowState(
                 width = 427.dp,
                 height = 924.dp,

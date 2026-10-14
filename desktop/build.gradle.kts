@@ -44,6 +44,7 @@ compose.desktop {
             vendor = "MeloX"
             modules(
                 "java.instrument",
+                "java.management",
                 "java.prefs",
                 "java.sql",
                 "jdk.unsupported",
@@ -97,4 +98,15 @@ tasks.register<JavaExec>("auditFontMetrics") {
     systemProperty("java.awt.headless", "true")
     systemProperty("user.home", layout.buildDirectory.dir("verification/font-metrics-home").get().asFile.absolutePath)
     args(layout.buildDirectory.dir("verification/font-metrics").get().asFile.absolutePath)
+}
+
+tasks.register<JavaExec>("auditArtworkMemory") {
+    group = "verification"
+    description = "Stress the production decoded artwork budget and record real heap/resident measurements."
+    dependsOn("desktopMainClasses")
+    val compilation = kotlin.targets.getByName("desktop").compilations.getByName("main")
+    classpath = files(compilation.output.allOutputs, compilation.runtimeDependencyFiles)
+    mainClass.set("melox.validation.MeloXArtworkMemoryAuditKt")
+    systemProperty("java.awt.headless", "true")
+    args(layout.buildDirectory.dir("verification/artwork-memory").get().asFile.absolutePath)
 }

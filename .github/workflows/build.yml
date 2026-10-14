@@ -39,6 +39,8 @@ jobs:
         run: gradle :shared:desktopTest :desktop:packageUberJarForCurrentOS
       - name: Verify native equalizer PCM
         run: python tools/verify_native_equalizer.py shared/build/parity/test-home/native-pcm-evidence --output desktop/build/verification/equalizer-pcm.json
+      - name: Audit decoded artwork memory budget and Windows process memory
+        run: gradle :desktop:auditArtworkMemory
       - name: Audit production lyric glyph raster at Windows DPI scales
         run: gradle :desktop:auditLyricRaster
       - name: Audit pinned font outlines and independent HarfBuzz advances

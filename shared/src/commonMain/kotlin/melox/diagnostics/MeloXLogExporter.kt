@@ -50,6 +50,7 @@ object MeloXLogExporter {
             appendLine("应用包名：melox")
             appendLine("应用版本：${systemProperty("melox.version").ifBlank { systemProperty("jpackage.app-version").ifBlank { "未知" } }}")
             appendLine("源码提交：${MeloXBuildConfig.BUILD_COMMIT}")
+            appendLine("当前内存（字节）：${MeloXMemoryDiagnostics.describe()}")
             appendLine("构建类型：${if (MeloXBuildConfig.DEBUG) "Debug" else "Release"}")
             appendLine("Android 版本：${deviceInfo.androidVersion}")
             appendLine("手机型号：${deviceInfo.phoneModel}")

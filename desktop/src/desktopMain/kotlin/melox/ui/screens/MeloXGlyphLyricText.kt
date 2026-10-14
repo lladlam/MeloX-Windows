@@ -63,7 +63,10 @@ internal fun MeloXGlyphLyricText(
     val isRtl = LocalLayoutDirection.current == LayoutDirection.Rtl
     val flipped = line.agent?.alignment == LyricAgentAlignment.Flipped
     val weight = MeloXSettingsRuntime.lyricFontWeight.composeWeight
-    val measurer = rememberTextMeasurer(cacheSize = 64)
+    // This composable owns one row layout already via remember below. Keeping
+    // another 64 historical paragraphs per live row multiplies native text
+    // retention when the window is resized or lyric settings change.
+    val measurer = rememberTextMeasurer(cacheSize = 0)
     BoxWithConstraints(modifier) {
         val width = with(density) { maxWidth.roundToPx().coerceAtLeast(1) }
         val style = TextStyle(color = Color.White, fontFamily = MeloXLanTingProFontFamily,

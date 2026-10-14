@@ -472,6 +472,8 @@ private fun StorageSettings() {
             runCatching {
                 MeloXHttpClient.clearCache()
                 MeloXMediaCache.clear()
+                melox.ui.artwork.MeloXArtworkMemoryCache.clear()
+                melox.ui.player.ArtworkDynamicPaletteProvider.clearMemoryCache()
             }.onSuccess {
                 cacheFiles = cacheDir.listFiles()?.size ?: 0
                 message = "缓存已清理"
