@@ -19,8 +19,8 @@ private fun loadFont(path: String, weight: FontWeight, axisWeight: Int = weight.
         val file = try {
             java.io.File(url.toURI())
         } catch (e: Exception) {
-            // All nine variable-weight instances must share the same extracted
-            // 19 MB Android font, rather than create nine identical temp files.
+            // Resources inside the jar must be extracted once per URL; SF Pro and
+            // Material Symbols load exactly one file each.
             extractedFonts.computeIfAbsent(url.toExternalForm()) {
                 val temp = java.io.File.createTempFile("melox_font_", ".ttf")
                 try {

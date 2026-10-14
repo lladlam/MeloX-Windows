@@ -196,13 +196,29 @@ def main() -> int:
 
     if args.verify:
         committed = json.loads(MANIFEST.read_text(encoding='utf-8'))
+        # Keep the host-regenerated manifest for post-mortem comparison.
+        regenerated_path = Path('desktop/build/verification/font-static-regenerated.json')
+        regenerated_path.parent.mkdir(parents=True, exist_ok=True)
+        regenerated_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + '\n',
+                                    encoding='utf-8')
+        # The shaping tool version is host evidence, not font content: pip may
+        # resolve a newer uharfbuzz on another host. Shape equality against the
+        # pinned variable font is still enforced inside build_instance() above.
+        committed_hb = committed.pop('harfbuzz', None)
+        regenerated_hb = manifest.pop('harfbuzz', None)
         if committed != manifest:
-            raise SystemExit('committed manifest differs from regenerated manifest')
+            only_committed = {k: committed[k] for k in committed.keys() - manifest.keys()}
+            only_regenerated = {k: manifest[k] for k in manifest.keys() - committed.keys()}
+            changed = {k for k in committed.keys() & manifest.keys() if committed[k] != manifest[k]}
+            raise SystemExit(f'committed manifest differs from regenerated manifest; '
+                             f'changed={sorted(changed)} committed-only={only_committed} '
+                             f'regenerated-only={only_regenerated}')
         for css, axis in AXES:
             path = OUT_DIR / f'mi_lan_pro_w{css}.ttf'
             if not path.is_file() or sha256(path.read_bytes()) != sha256(outputs[css][0]):
                 raise SystemExit(f'committed instance differs from regenerated {path}')
-        print(f'VERIFIED: {len(AXES)} static instances byte-match regeneration from pinned source')
+        print(f'VERIFIED: {len(AXES)} static instances byte-match regeneration from pinned source '
+              f'(harfbuzz committed={committed_hb} host={regenerated_hb})')
         return 0
 
     for css, axis in AXES:
