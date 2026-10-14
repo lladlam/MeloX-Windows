@@ -92,6 +92,7 @@ jobs:
           name: Verification-${{ runner.os }}
           path: |
             desktop/build/verification/*.json
+            desktop/build/verification/artwork-memory/*.json
             desktop/build/verification/lyric-raster/*.json
             desktop/build/verification/lyric-raster/*.png
             desktop/build/verification/font-metrics/*.json

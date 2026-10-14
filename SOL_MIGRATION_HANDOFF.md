@@ -44,7 +44,11 @@ on 2026-10-14 (“可以了。继续迁移其他功能”). Android pixels/motio
 cache and separate player-image cache are being replaced by one 128-entry /
 64 MiB budget. Per-row 64-paragraph history is disabled; actual heap/OS process
 memory diagnostics and image-retention stress are added. See
-`parity/3f877ea/WINDOWS_MEMORY.md`. Exact new-package/user retest is pending.
+`parity/3f877ea/WINDOWS_MEMORY.md`. Feature revision is `768445f`; Windows run
+`38578024876` passed. Local/Windows 202/39 tests, no-forced-GC 2 GiB cache stress
+and real twenty-cycle playback pass, but the full Linux renderer still reaches
+894 MiB while artwork stays at 24 MiB. Do not label the whole symptom resolved.
+Exact new-package/user retest is pending.
 
 The earlier `989f33b` package passed all prior gates but was **rejected by the
 user for the font symptom**; it is not accepted as resolving the report.

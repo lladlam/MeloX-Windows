@@ -216,6 +216,8 @@ static fonts + manifest byte-equality, real single/dual EQ PCM, and 194 tests
 `cfec0f200a8f74248460e23dfe4d6777425b50daead6e2bff4c22c9268c4ae57`:
 <https://github.com/lladlam/MeloX-Windows/actions/runs/38559314976/artifacts/11891553587>.
 
-The user's genuine Windows 10 retest and pinned Android pixel/motion acceptance
-remain pending; this is Server-2025 rendering plus independent metric gates,
-not physical acceptance.
+The user accepted the exact `797c3be` package on 2026-10-14: “可以了。继续迁移其他功能”.
+This accepts the reported Tiny Giant font symptom on their Windows machine.
+Pinned Android same-content pixel/motion acceptance remains separate; the
+Server-2025 independent gates are not Android MATCH. The subsequent memory
+growth report is tracked in `WINDOWS_MEMORY.md`.

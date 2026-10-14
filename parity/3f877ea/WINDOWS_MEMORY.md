@@ -56,6 +56,35 @@ Linux resident samples settled at **121–127 MiB** after warmup (net +5.77 MiB
 from batch 2 to batch 7), rather than tracking the 2 GiB cumulative allocation.
 This is image-cache lifetime evidence, not a 127 MiB promise for the full app.
 
+The real post-lease Tiny Giant replay passed all twenty player disposal cycles,
+paused lyric geometry and real non-silent consumed PCM over approximately
+138 seconds. **Full-process memory remains high:** Linux resident memory was
+292.47 MiB initially, 519.04 MiB after warmup and 894.09 MiB at the final
+settled capture, while the artwork budget stayed at 23.65 MiB (three images).
+The final Java heap was 123.94 MiB used / 228 MiB committed; non-heap was
+98.92 MiB; measured Skia glyph cache was only 1.87 MiB and resource cache zero.
+The validation PCM recording retained 20,483,768 bytes. Native objects are
+instrumented in the replay report; these measurements **do not prove the whole
+549→1431 MB user symptom is fixed**. Continue profiling native renderer/text
+ownership and allocator retention, using the new Windows per-minute breakdown.
+Reports are under `evidence/windows-memory/`; audio recordings stay local.
+
+Windows run `38578024876` at exact feature source
+`768445faedc17c7ca25bdeee5c8eb5d9cbfea5c2` passed 202 tests / 39 suites, the
+ownership stress, raster/font gates and all packaging-layer checks. The image
+stress working set settled at 123.37–125.12 MiB from batch 2 to batch 7;
+private commit was 398.32–399.34 MiB. Used Java heap was 7–9 MiB while its
+committed heap was 256 MiB: private commit is not the same as resident memory.
+The first run's evidence upload omitted the new `artwork-memory` subdirectory.
+Its eight actual printed samples and PASS line are retained/reconstructed from
+the exact CI step log, explicitly labelled, rather than represented as a
+downloaded audit JSON. The workflow now includes that directory for future runs.
+
+The packaged application writes its 60-second memory samples to
+`%USERPROFILE%\.melox\logs\melox-debug.log`. The prefix is `[INFO MeloXMemory]`.
+The log-export API exists, but there is currently no general settings export
+button; do not instruct the user to use a nonexistent UI control.
+
 Fresh Windows CI and independently downloaded package evidence are required
 before handing out a new distribution. User-machine 549→1431 MB symptom
 resolution remains **PENDING** until that exact distribution is retested.

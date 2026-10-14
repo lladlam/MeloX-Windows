@@ -1,0 +1,78 @@
+build	Audit decoded artwork memory budget and Windows process memory	﻿2026-10-14T14:17:09.4621207Z ##[group]Run gradle :desktop:auditArtworkMemory
+build	Audit decoded artwork memory budget and Windows process memory	2026-10-14T14:17:09.4621931Z ^[[36;1mgradle :desktop:auditArtworkMemory^[[0m
+build	Audit decoded artwork memory budget and Windows process memory	2026-10-14T14:17:09.4757963Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+build	Audit decoded artwork memory budget and Windows process memory	2026-10-14T14:17:09.4758373Z env:
+build	Audit decoded artwork memory budget and Windows process memory	2026-10-14T14:17:09.4759297Z   JAVA_HOME: C:\hostedtoolcache\windows\Java_Temurin-Hotspot_jdk\17.0.20-101\x64
+build	Audit decoded artwork memory budget and Windows process memory	2026-10-14T14:17:09.4759895Z   JAVA_HOME_17_X64: C:\hostedtoolcache\windows\Java_Temurin-Hotspot_jdk\17.0.20-101\x64
+build	Audit decoded artwork memory budget and Windows process memory	2026-10-14T14:17:09.4760375Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+build	Audit decoded artwork memory budget and Windows process memory	2026-10-14T14:17:09.4760701Z   GRADLE_USER_HOME: D:\a\.gradle
+build	Audit decoded artwork memory budget and Windows process memory	2026-10-14T14:17:09.4760991Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+build	Audit decoded artwork memory budget and Windows process memory	2026-10-14T14:17:09.4761319Z   GRADLE_BUILD_ACTION_CACHE_RESTORED: true
+build	Audit decoded artwork memory budget and Windows process memory	2026-10-14T14:17:09.4761783Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+build	Audit decoded artwork memory budget and Windows process memory	2026-10-14T14:17:09.4762297Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+build	Audit decoded artwork memory budget and Windows process memory	2026-10-14T14:17:09.4762641Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+build	Audit decoded artwork memory budget and Windows process memory	2026-10-14T14:17:09.4762973Z ##[endgroup]
+build	Audit decoded artwork memory budget and Windows process memory	2026-10-14T14:17:12.1224185Z > Task :desktop:kmpPartiallyResolvedDependenciesChecker
+build	Audit decoded artwork memory budget and Windows process memory	2026-10-14T14:17:12.1230788Z > Task :desktop:checkKotlinGradlePluginConfigurationErrors SKIPPED
+build	Audit decoded artwork memory budget and Windows process memory	2026-10-14T14:17:12.1231845Z > Task :desktop:convertXmlValueResourcesForCommonMain NO-SOURCE
+build	Audit decoded artwork memory budget and Windows process memory	2026-10-14T14:17:12.1237983Z > Task :desktop:copyNonXmlValueResourcesForCommonMain NO-SOURCE
+build	Audit decoded artwork memory budget and Windows process memory	2026-10-14T14:17:12.1243461Z > Task :desktop:prepareComposeResourcesTaskForCommonMain NO-SOURCE
+build	Audit decoded artwork memory budget and Windows process memory	2026-10-14T14:17:12.1246510Z > Task :desktop:generateResourceAccessorsForCommonMain SKIPPED
+build	Audit decoded artwork memory budget and Windows process memory	2026-10-14T14:17:12.1249941Z > Task :desktop:convertXmlValueResourcesForDesktopMain NO-SOURCE
+build	Audit decoded artwork memory budget and Windows process memory	2026-10-14T14:17:12.1260661Z > Task :desktop:copyNonXmlValueResourcesForDesktopMain NO-SOURCE
+build	Audit decoded artwork memory budget and Windows process memory	2026-10-14T14:17:12.1261827Z > Task :desktop:prepareComposeResourcesTaskForDesktopMain NO-SOURCE
+build	Audit decoded artwork memory budget and Windows process memory	2026-10-14T14:17:12.1263081Z > Task :desktop:generateResourceAccessorsForDesktopMain SKIPPED
+build	Audit decoded artwork memory budget and Windows process memory	2026-10-14T14:17:12.1264190Z > Task :desktop:generateActualResourceCollectorsForDesktopMain SKIPPED
+build	Audit decoded artwork memory budget and Windows process memory	2026-10-14T14:17:12.1265017Z > Task :desktop:generateComposeResClass SKIPPED
+build	Audit decoded artwork memory budget and Windows process memory	2026-10-14T14:17:12.1265787Z > Task :desktop:generateExpectResourceCollectorsForCommonMain SKIPPED
+build	Audit decoded artwork memory budget and Windows process memory	2026-10-14T14:17:12.1266620Z > Task :innertube:kmpPartiallyResolvedDependenciesChecker
+build	Audit decoded artwork memory budget and Windows process memory	2026-10-14T14:17:12.1267431Z > Task :innertube:checkKotlinGradlePluginConfigurationErrors SKIPPED
+build	Audit decoded artwork memory budget and Windows process memory	2026-10-14T14:17:12.2599791Z > Task :innertube:extractAndroidInnerTube UP-TO-DATE
+build	Audit decoded artwork memory budget and Windows process memory	2026-10-14T14:17:12.3272015Z > Task :innertube:compileKotlinDesktop UP-TO-DATE
+build	Audit decoded artwork memory budget and Windows process memory	2026-10-14T14:17:12.3288982Z > Task :innertube:compileDesktopMainJava NO-SOURCE
+build	Audit decoded artwork memory budget and Windows process memory	2026-10-14T14:17:12.3464639Z > Task :innertube:desktopProcessResources NO-SOURCE
+build	Audit decoded artwork memory budget and Windows process memory	2026-10-14T14:17:12.3466217Z > Task :innertube:processDesktopMainResources SKIPPED
+build	Audit decoded artwork memory budget and Windows process memory	2026-10-14T14:17:12.3536499Z > Task :innertube:desktopMainClasses UP-TO-DATE
+build	Audit decoded artwork memory budget and Windows process memory	2026-10-14T14:17:12.3581085Z > Task :innertube:desktopJar UP-TO-DATE
+build	Audit decoded artwork memory budget and Windows process memory	2026-10-14T14:17:12.3646219Z > Task :shared:kmpPartiallyResolvedDependenciesChecker
+build	Audit decoded artwork memory budget and Windows process memory	2026-10-14T14:17:12.3725407Z > Task :shared:checkKotlinGradlePluginConfigurationErrors SKIPPED
+build	Audit decoded artwork memory budget and Windows process memory	2026-10-14T14:17:12.3732339Z > Task :shared:convertXmlValueResourcesForCommonMain NO-SOURCE
+build	Audit decoded artwork memory budget and Windows process memory	2026-10-14T14:17:12.3733740Z > Task :shared:copyNonXmlValueResourcesForCommonMain NO-SOURCE
+build	Audit decoded artwork memory budget and Windows process memory	2026-10-14T14:17:12.3734634Z > Task :shared:prepareComposeResourcesTaskForCommonMain NO-SOURCE
+build	Audit decoded artwork memory budget and Windows process memory	2026-10-14T14:17:12.3735501Z > Task :shared:generateResourceAccessorsForCommonMain SKIPPED
+build	Audit decoded artwork memory budget and Windows process memory	2026-10-14T14:17:12.3736329Z > Task :shared:convertXmlValueResourcesForDesktopMain NO-SOURCE
+build	Audit decoded artwork memory budget and Windows process memory	2026-10-14T14:17:12.3737192Z > Task :shared:copyNonXmlValueResourcesForDesktopMain NO-SOURCE
+build	Audit decoded artwork memory budget and Windows process memory	2026-10-14T14:17:12.3738110Z > Task :shared:prepareComposeResourcesTaskForDesktopMain NO-SOURCE
+build	Audit decoded artwork memory budget and Windows process memory	2026-10-14T14:17:12.3738983Z > Task :shared:generateResourceAccessorsForDesktopMain SKIPPED
+build	Audit decoded artwork memory budget and Windows process memory	2026-10-14T14:17:12.3739865Z > Task :shared:generateActualResourceCollectorsForDesktopMain SKIPPED
+build	Audit decoded artwork memory budget and Windows process memory	2026-10-14T14:17:12.3744094Z > Task :shared:generateComposeResClass SKIPPED
+build	Audit decoded artwork memory budget and Windows process memory	2026-10-14T14:17:12.4229392Z > Task :shared:generateExpectResourceCollectorsForCommonMain SKIPPED
+build	Audit decoded artwork memory budget and Windows process memory	2026-10-14T14:17:12.5220377Z > Task :shared:compileKotlinDesktop UP-TO-DATE
+build	Audit decoded artwork memory budget and Windows process memory	2026-10-14T14:17:12.5226004Z > Task :shared:compileDesktopMainJava NO-SOURCE
+build	Audit decoded artwork memory budget and Windows process memory	2026-10-14T14:17:12.5271433Z > Task :shared:assembleDesktopMainResources UP-TO-DATE
+build	Audit decoded artwork memory budget and Windows process memory	2026-10-14T14:17:12.5277200Z > Task :shared:desktopProcessResources UP-TO-DATE
+build	Audit decoded artwork memory budget and Windows process memory	2026-10-14T14:17:12.5287081Z > Task :shared:processDesktopMainResources SKIPPED
+build	Audit decoded artwork memory budget and Windows process memory	2026-10-14T14:17:12.5310736Z > Task :shared:desktopMainClasses UP-TO-DATE
+build	Audit decoded artwork memory budget and Windows process memory	2026-10-14T14:17:12.5315404Z > Task :shared:desktopJar UP-TO-DATE
+build	Audit decoded artwork memory budget and Windows process memory	2026-10-14T14:17:12.6263733Z > Task :desktop:compileKotlinDesktop UP-TO-DATE
+build	Audit decoded artwork memory budget and Windows process memory	2026-10-14T14:17:12.6306691Z > Task :desktop:compileDesktopMainJava NO-SOURCE
+build	Audit decoded artwork memory budget and Windows process memory	2026-10-14T14:17:12.6309648Z > Task :desktop:assembleDesktopMainResources UP-TO-DATE
+build	Audit decoded artwork memory budget and Windows process memory	2026-10-14T14:17:12.6320828Z > Task :desktop:desktopProcessResources UP-TO-DATE
+build	Audit decoded artwork memory budget and Windows process memory	2026-10-14T14:17:12.6325702Z > Task :desktop:processDesktopMainResources SKIPPED
+build	Audit decoded artwork memory budget and Windows process memory	2026-10-14T14:17:12.6327023Z > Task :desktop:desktopMainClasses UP-TO-DATE
+build	Audit decoded artwork memory budget and Windows process memory	2026-10-14T14:17:14.7225765Z 
+build	Audit decoded artwork memory budget and Windows process memory	2026-10-14T14:17:14.7229295Z > Task :desktop:auditArtworkMemory
+build	Audit decoded artwork memory budget and Windows process memory	2026-10-14T14:17:14.7231523Z batch=0 uptime_ms=1956 heap_used_bytes=5246640 heap_committed_bytes=268435456 heap_max_bytes=4294967296 non_heap_used_bytes=11871240 threads=13 direct_buffer_bytes=8192 resident_bytes=121016320 private_commit_bytes=409124864 cache=Stats(entries=32, retainedWeight=67108864, maxWeight=67108864)
+build	Audit decoded artwork memory budget and Windows process memory	2026-10-14T14:17:15.1206774Z batch=1 uptime_ms=2378 heap_used_bytes=7343792 heap_committed_bytes=268435456 heap_max_bytes=4294967296 non_heap_used_bytes=12603528 threads=13 direct_buffer_bytes=8192 resident_bytes=129171456 private_commit_bytes=417611776 cache=Stats(entries=32, retainedWeight=67108864, maxWeight=67108864)
+build	Audit decoded artwork memory budget and Windows process memory	2026-10-14T14:17:15.5381324Z batch=2 uptime_ms=2769 heap_used_bytes=7343792 heap_committed_bytes=268435456 heap_max_bytes=4294967296 non_heap_used_bytes=12741208 threads=13 direct_buffer_bytes=8192 resident_bytes=129363968 private_commit_bytes=417669120 cache=Stats(entries=32, retainedWeight=67108864, maxWeight=67108864)
+build	Audit decoded artwork memory budget and Windows process memory	2026-10-14T14:17:15.9209799Z batch=3 uptime_ms=3182 heap_used_bytes=9440944 heap_committed_bytes=268435456 heap_max_bytes=4294967296 non_heap_used_bytes=12814120 threads=13 direct_buffer_bytes=8192 resident_bytes=129495040 private_commit_bytes=417734656 cache=Stats(entries=32, retainedWeight=67108864, maxWeight=67108864)
+build	Audit decoded artwork memory budget and Windows process memory	2026-10-14T14:17:16.3203425Z batch=4 uptime_ms=3562 heap_used_bytes=9440944 heap_committed_bytes=268435456 heap_max_bytes=4294967296 non_heap_used_bytes=12841672 threads=13 direct_buffer_bytes=8192 resident_bytes=130809856 private_commit_bytes=418414592 cache=Stats(entries=32, retainedWeight=67108864, maxWeight=67108864)
+build	Audit decoded artwork memory budget and Windows process memory	2026-10-14T14:17:16.6213408Z batch=5 uptime_ms=3944 heap_used_bytes=9440944 heap_committed_bytes=268435456 heap_max_bytes=4294967296 non_heap_used_bytes=12871672 threads=13 direct_buffer_bytes=8192 resident_bytes=130809856 private_commit_bytes=418418688 cache=Stats(entries=32, retainedWeight=67108864, maxWeight=67108864)
+build	Audit decoded artwork memory budget and Windows process memory	2026-10-14T14:17:17.0204520Z batch=6 uptime_ms=4340 heap_used_bytes=9440944 heap_committed_bytes=268435456 heap_max_bytes=4294967296 non_heap_used_bytes=12892216 threads=13 direct_buffer_bytes=8192 resident_bytes=130809856 private_commit_bytes=418418688 cache=Stats(entries=32, retainedWeight=67108864, maxWeight=67108864)
+build	Audit decoded artwork memory budget and Windows process memory	2026-10-14T14:17:17.4213718Z batch=7 uptime_ms=4711 heap_used_bytes=9440944 heap_committed_bytes=268435456 heap_max_bytes=4294967296 non_heap_used_bytes=12929248 threads=13 direct_buffer_bytes=8192 resident_bytes=131194880 private_commit_bytes=418738176 cache=Stats(entries=32, retainedWeight=67108864, maxWeight=67108864)
+build	Audit decoded artwork memory budget and Windows process memory	2026-10-14T14:17:17.4216517Z PASS: 2048 distinct decoded images; bounded retention and post-warmup memory plateau
+build	Audit decoded artwork memory budget and Windows process memory	2026-10-14T14:17:17.4436150Z gradle/actions: Writing build results to D:\a\_temp\.gradle-actions\build-results\__run_7-1791987431052.json
+build	Audit decoded artwork memory budget and Windows process memory	2026-10-14T14:17:17.4468087Z 
+build	Audit decoded artwork memory budget and Windows process memory	2026-10-14T14:17:17.4548848Z BUILD SUCCESSFUL in 7s
+build	Audit decoded artwork memory budget and Windows process memory	2026-10-14T14:17:17.4560121Z 14 actionable tasks: 4 executed, 10 up-to-date
+build	Audit decoded artwork memory budget and Windows process memory	2026-10-14T14:17:17.4562273Z Consider enabling configuration cache to speed up this build: https://docs.gradle.org/9.5.1/userguide/configuration_cache_enabling.html
