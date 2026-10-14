@@ -55,8 +55,8 @@
       "css": 100,
       "axis": 150,
       "file": "fonts/mi_lan_pro_w100.ttf",
-      "bytes": 8230208,
-      "sha256": "70fb2b294260ce912eadb10ac56d4a273622e7a65d95d38242138e0ee4ee32d1",
+      "bytes": 8230140,
+      "sha256": "7c2d43c62483c59cd12928409866030ca2fc5e174048995605f21548fd0ccf70",
       "us_weight_class": 100,
       "generation": [
         {
@@ -90,6 +90,9 @@
         {
           "kind": "advances_written",
           "count": 0
+        },
+        {
+          "kind": "stat_dropped"
         }
       ]
     },
@@ -97,8 +100,8 @@
       "css": 200,
       "axis": 200,
       "file": "fonts/mi_lan_pro_w200.ttf",
-      "bytes": 8290892,
-      "sha256": "4fa164e4bde9fabea333d03f4e6fb86b6658518f8f1eb89559b420cd2bd81255",
+      "bytes": 8290824,
+      "sha256": "0d591a2b5907666f42399295043649959362d301f9f00f08bf3abda5cd7e7000",
       "us_weight_class": 200,
       "generation": [
         {
@@ -132,6 +135,9 @@
         {
           "kind": "advances_written",
           "count": 258
+        },
+        {
+          "kind": "stat_dropped"
         }
       ]
     },
@@ -139,8 +145,8 @@
       "css": 300,
       "axis": 250,
       "file": "fonts/mi_lan_pro_w300.ttf",
-      "bytes": 8298388,
-      "sha256": "ac472c7958aed104315463ce22c9a554816f39845c6b2e6c045fb076d0c439bf",
+      "bytes": 8298320,
+      "sha256": "ecd3e429ef61ae7bc3b1a63078f07420c9e176cabade7aa40521f1933c4e0cf2",
       "us_weight_class": 300,
       "generation": [
         {
@@ -174,6 +180,9 @@
         {
           "kind": "advances_written",
           "count": 262
+        },
+        {
+          "kind": "stat_dropped"
         }
       ]
     },
@@ -181,8 +190,8 @@
       "css": 400,
       "axis": 340,
       "file": "fonts/mi_lan_pro_w400.ttf",
-      "bytes": 8301192,
-      "sha256": "42bfe38b9178b7175ff683ae9de55795ff262a5bbb2b346f662eb3aa5e37a8ab",
+      "bytes": 8301124,
+      "sha256": "a1088e474967e00721652d70c21f6b01b4d3437dc18ac549974174ec978e4f9a",
       "us_weight_class": 400,
       "generation": [
         {
@@ -216,6 +225,9 @@
         {
           "kind": "advances_written",
           "count": 262
+        },
+        {
+          "kind": "stat_dropped"
         }
       ]
     },
@@ -223,8 +235,8 @@
       "css": 500,
       "axis": 400,
       "file": "fonts/mi_lan_pro_w500.ttf",
-      "bytes": 8297116,
-      "sha256": "2ecf68785b40da3150812212ec84eb77676f82dca94e277c0b5c2cf32fdd5ba7",
+      "bytes": 8297048,
+      "sha256": "2322e992a516fe28ab298b87d86c53ffa6a66f7056b842209db44281ec9baf9e",
       "us_weight_class": 500,
       "generation": [
         {
@@ -258,6 +270,9 @@
         {
           "kind": "advances_written",
           "count": 262
+        },
+        {
+          "kind": "stat_dropped"
         }
       ]
     },
@@ -265,8 +280,8 @@
       "css": 600,
       "axis": 540,
       "file": "fonts/mi_lan_pro_w600.ttf",
-      "bytes": 8319260,
-      "sha256": "d198e5ef2c9c1deff7ee358483591a01564fe783dec24abde05dda704d0d952c",
+      "bytes": 8319192,
+      "sha256": "1980be14b365315f33fe0c7a0dcaaeaa7cb079f5e0362a9edb7609c6a2331d29",
       "us_weight_class": 600,
       "generation": [
         {
@@ -300,6 +315,9 @@
         {
           "kind": "advances_written",
           "count": 271
+        },
+        {
+          "kind": "stat_dropped"
         }
       ]
     },
@@ -307,8 +325,8 @@
       "css": 700,
       "axis": 630,
       "file": "fonts/mi_lan_pro_w700.ttf",
-      "bytes": 8322248,
-      "sha256": "32a6cab672d95e961de693658417c7085c92fc11e90682293d85b7c6f449cc45",
+      "bytes": 8322180,
+      "sha256": "f2a1d79ecaa69ac1ff95cc9c5793a92c671844a844cf3b2a74cffe4ea9f3f0ef",
       "us_weight_class": 700,
       "generation": [
         {
@@ -342,6 +360,9 @@
         {
           "kind": "advances_written",
           "count": 271
+        },
+        {
+          "kind": "stat_dropped"
         }
       ]
     },
@@ -349,8 +370,8 @@
       "css": 800,
       "axis": 700,
       "file": "fonts/mi_lan_pro_w800.ttf",
-      "bytes": 8315512,
-      "sha256": "1daa60bd0678ce0cee06744e798bfcbd21339cac9ed305afefb8dc87a44ceb01",
+      "bytes": 8315444,
+      "sha256": "a3c6e5921918e18ed42887dc1e3c35c644d5ad027e977f63287cb035ae2fe678",
       "us_weight_class": 800,
       "generation": [
         {
@@ -384,6 +405,9 @@
         {
           "kind": "advances_written",
           "count": 271
+        },
+        {
+          "kind": "stat_dropped"
         }
       ]
     },
@@ -391,8 +415,8 @@
       "css": 900,
       "axis": 700,
       "file": "fonts/mi_lan_pro_w800.ttf",
-      "bytes": 8315512,
-      "sha256": "1daa60bd0678ce0cee06744e798bfcbd21339cac9ed305afefb8dc87a44ceb01",
+      "bytes": 8315444,
+      "sha256": "a3c6e5921918e18ed42887dc1e3c35c644d5ad027e977f63287cb035ae2fe678",
       "us_weight_class": 800,
       "generation": {
         "reuses_css": 800

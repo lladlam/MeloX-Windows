@@ -135,15 +135,27 @@ def build_instance(source: bytes, css: int, axis: int) -> tuple[bytes, list]:
     frozen['head'].created = source_head.created
     frozen['head'].modified = source_head.modified
     frozen['OS/2'].usWeightClass = css
+    # A frozen instance has no axes; a retained STAT would still declare the
+    # private wght coordinates (150..700). DirectWrite derives the typeface
+    # weight from STAT on Windows (measured 150 for CSS 100, 700 for the CSS
+    # 900 alias) while other platforms read OS/2: that mismatch fails the
+    # frozen-typeface gate and would reopen synthetic bold for Heavy. Static
+    # fonts need no STAT; OS/2.usWeightClass is authoritative.
+    if 'STAT' in frozen:
+        del frozen['STAT']
+        notes.append(dict(kind='stat_dropped'))
 
     assert 'fvar' not in frozen and 'gvar' not in frozen and 'HVAR' not in frozen
+    assert 'STAT' not in frozen
     assert frozen['maxp'].numGlyphs == TTFont(io.BytesIO(source))['maxp'].numGlyphs
 
     buffer = io.BytesIO()
     frozen.save(buffer)
     data = buffer.getvalue()
 
-    static_face = hb.Face(data)
+    # Each frozen instance must shape exactly like the variable font at its
+    # pinned axis (advances + GPOS kerning), otherwise it is not a faithful
+    # Android-mapped instance and generation fails.
     for text in FIXTURES:
         got = shape_advance_sum(data, text, None)
         want = shape_advance_sum(source, text, axis)
@@ -191,8 +203,9 @@ def main() -> int:
     for css, axis in AXES:
         data, notes = build_instance(source, css, axis)
         outputs[css] = (data, notes)
+        frozen_count = next(n['count'] for n in notes if n['kind'] == 'advances_written')
         print(f'CSS {css:3d} -> wght {axis}: {len(data)} bytes, sha256 {sha256(data)[:16]}… '
-              f'({notes[-1]["count"]} advances frozen)')
+              f'({frozen_count} advances frozen)')
 
     manifest = render_manifest(source, outputs)
 
