@@ -97,3 +97,28 @@ checks do not establish Android MATCH or user-machine Windows acceptance.
 
 The unresolved 549→1431 MB report remains tracked in `WINDOWS_MEMORY.md`.
 The two original advanced-lyrics stashes are retained as recovery checkpoints.
+
+## Windows regression interruption
+
+Feature run `38587692142` at `9e1fe56a76b23fa9322960bf8c8afbda3e51d623`
+**failed**: 203 tests / 39 suites / one AutoMix integration failure. Lyrics
+pointer gate was not reached and no distribution was published. The downloaded
+test XML locates the failure at incoming heard-position assertion (line 193);
+the coroutine method's line 186 in the step log is not the failing assertion.
+
+`next()` previously selected/prepared the incoming track with zero position,
+then issued a second seek to its already-heard overlap position. Resolution
+could start inline or on another thread before that seek, opening a zero-start
+decoder and racing the new seek. A deterministic immediate fixture resolver
+with real bundled FFmpeg/PCM reproduces **expected 1200ms / actual 0ms start**.
+The fix passes the heard position into selection before preparation, with a
+single controller start. The new regression also checks previous returns to
+primary at zero. AutoMix cancellation may reopen an outgoing endpoint before
+selection closes it; endpoint count is not used as a proxy for the incoming
+start position. The failed run and before-fix
+reproduction remain under `evidence/advanced-lyrics-settings/windows-failed-9e1fe56/`.
+
+After the position-before-prepare fix, Linux passes **204 tests / 39 suites /
+zero failures, errors or skipped**, including the original seven AutoMix
+integration scenarios and the deterministic inline-resolution regression.
+Fresh Windows CI/package collection is required for this follow-up revision.

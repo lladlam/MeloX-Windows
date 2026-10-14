@@ -1,0 +1,15 @@
+{
+  "run_id": 38587692142,
+  "head_sha": "9e1fe56a76b23fa9322960bf8c8afbda3e51d623",
+  "status": "FAILED",
+  "tests": {
+    "tests": 203,
+    "failures": 1,
+    "errors": 0,
+    "skipped": 0,
+    "suites": 39
+  },
+  "package_delivered": false,
+  "lyrics_windows_replay": "NOT_RUN",
+  "deterministic_reproduction": "expected 1200ms start, actual 0ms with inline fixture resolution and real FFmpeg"
+}

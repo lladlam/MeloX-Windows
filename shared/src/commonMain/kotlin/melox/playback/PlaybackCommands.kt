@@ -750,8 +750,10 @@ class MeloXDesktopPlayer internal constructor(
             else -> return
         }
         val incomingPosition = AudioPlayer.incomingMixPosition()
-        seekToIndex(nextIndex)
-        if (incomingPosition != null) seekTo(incomingPosition)
+        // Install the heard position before prepare can resolve/start the new
+        // track. A second seek after selection races fast/inline resolution,
+        // briefly opening at zero or letting that start overwrite the seek.
+        selectIndex(nextIndex, automatic = false, startPositionMs = incomingPosition ?: 0L)
     }
 
     fun previous() {
@@ -787,13 +789,13 @@ class MeloXDesktopPlayer internal constructor(
         selectIndex(index, automatic = false)
     }
 
-    private fun selectIndex(index: Int, automatic: Boolean) {
+    private fun selectIndex(index: Int, automatic: Boolean, startPositionMs: Long = 0L) {
         if (index !in items.indices) return
         if (index == currentMediaItemIndex) return
         if (!automatic) resetFailureRecovery()
         currentMediaItemIndex = index
-        currentPosition = 0L
-        pendingSeekMs = 0L
+        currentPosition = startPositionMs.coerceAtLeast(0L)
+        pendingSeekMs = currentPosition
         prepare()
         PlaybackCommands.publishQueue(this)
     }

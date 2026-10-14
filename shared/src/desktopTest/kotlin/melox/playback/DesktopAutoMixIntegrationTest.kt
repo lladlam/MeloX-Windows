@@ -25,6 +25,7 @@ class DesktopAutoMixIntegrationTest {
     private val original = AudioPlayer.outputLineFactory
     private val root = Files.createTempDirectory("melox-controller-mix").toFile()
     private val outputs = CopyOnWriteArrayList<Output>()
+    private val starts = CopyOnWriteArrayList<DesktopPlaybackStart>()
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
     private var player: MeloXDesktopPlayer? = null
     @BeforeTest fun setup() {
@@ -56,11 +57,15 @@ class DesktopAutoMixIntegrationTest {
             providerMetadata = ProviderTrackMetadata.Local(file.toURI().toString(), "fixture-$id"))
         return SearchSong(id, track.title, "generated", "fixture", null, durationMs = ms.toLong(), providerTrack = track)
     }
-    private fun install(songs: List<SearchSong>) {
-        val controller = MeloXDesktopPlayer(null, { start ->
+    private fun install(songs: List<SearchSong>, immediateResolution: Boolean = false) {
+        val controller = MeloXDesktopPlayer(if (immediateResolution) { entry ->
+            DesktopPlaybackRequest((entry.song.providerTrack!!.providerMetadata as ProviderTrackMetadata.Local).contentUri)
+        } else null, { start ->
+            starts += start
             AudioPlayer.play(start.request.uri, start.track, start.request.headers, start.positionMs, start.durationMs,
                 start.playWhenReady, start.onEnded, start.onFailure)
-        }, scope, Dispatchers.IO, {}, { _, _ -> })
+        }, if (immediateResolution) CoroutineScope(scope.coroutineContext + Dispatchers.Unconfined) else scope,
+            if (immediateResolution) Dispatchers.Unconfined else Dispatchers.IO, {}, { _, _ -> })
         player = controller; PlaybackCommands.adoptController(controller)
         controller.setMediaItems(songs, 0, 0); controller.prepare(); controller.play(); PlaybackCommands.publishQueue(controller)
     }
@@ -190,12 +195,29 @@ class DesktopAutoMixIntegrationTest {
         player!!.next()
         until { outputs.size >= 2 && AudioPlayer.isReady() && AudioPlayer.currentTrack.value?.title == "generated-4000" }
         assertEquals(1, PlaybackCommands.queue.value.index)
-        assertTrue(AudioPlayer.getCurrentPositionMs() in 1100..1300)
+        assertTrue(AudioPlayer.getCurrentPositionMs() in 1100..1300, "Incoming heard position: ${AudioPlayer.getCurrentPositionMs()}, starts=${starts.map { it.positionMs }}")
         assertFalse(MeloXAutoMixTransitionRuntime.state.value.active)
         player!!.previous()
         until { AudioPlayer.isReady() && AudioPlayer.currentTrack.value?.title == "generated-1000" }
         assertEquals(0, PlaybackCommands.queue.value.index)
         assertEquals(0L, AudioPlayer.getCurrentPositionMs())
+    }
+    @Test fun immediatelyResolvedNextStartsAtHeardIncomingPositionWithoutOpeningAtZero() = runBlocking<Unit> {
+        install(listOf(song(1, 1000, 8000), song(2, 4000, 6000)), immediateResolution = true)
+        until { MeloXAutoMixTransitionRuntime.state.value.status == "prepared" }
+        advanceTo(6200)
+        until { AudioPlayer.incomingMixPosition()?.let { it in 1100..1300 } == true }
+        val heard = assertNotNull(AudioPlayer.incomingMixPosition())
+        player!!.next()
+        until { starts.size == 2 && AudioPlayer.isReady() && AudioPlayer.currentTrack.value?.title == "generated-4000" }
+        assertEquals(heard, starts.last().positionMs, "Resolution completing inline must never start the incoming deck at zero")
+        assertEquals(heard, AudioPlayer.getCurrentPositionMs())
+        assertEquals(1, PlaybackCommands.queue.value.index)
+        player!!.previous()
+        until { starts.size == 3 && AudioPlayer.isReady() && AudioPlayer.currentTrack.value?.title == "generated-1000" }
+        assertEquals(0L, starts.last().positionMs)
+        assertEquals(0L, AudioPlayer.getCurrentPositionMs())
+        assertEquals(0, PlaybackCommands.queue.value.index)
     }
     private class Output {
         val accepted = AtomicLong(); val rendered = AtomicLong(); val closed = AtomicBoolean(false); val running = AtomicBoolean(false)

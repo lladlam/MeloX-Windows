@@ -113,7 +113,11 @@ All 60 keys now pass a complete coordinate replay and separate-JVM persistence
 check (151 + 2 scenes / 501 assertions). Real Tiny Giant consumer replay passes
 173 scenes / 129 dynamic frames / 55 assertions, including translation scope,
 font/size/reduced motion, real PCM and auto-hide/reveal. Windows release gates
-are still pending. See `parity/3f877ea/ADVANCED_LYRICS_SETTINGS.md`. Continue remaining
+are still pending: first feature run `38587692142` at `9e1fe56` failed the
+existing AutoMix heard-position regression before lyrics replay. A deterministic
+inline-resolution case reproduced starting the incoming track at 0 instead of
+1200ms. Next now installs heard position before prepare; Linux 204/39 passes.
+Fresh Windows CI is required. See `parity/3f877ea/ADVANCED_LYRICS_SETTINGS.md`. Continue remaining
 pinned gaps and the 17 independent upstream increments afterward.
 
 User-reported “search works, anonymous playback fails” repair is tracked in

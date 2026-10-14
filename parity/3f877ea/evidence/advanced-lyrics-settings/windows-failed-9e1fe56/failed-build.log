@@ -1,0 +1,192 @@
+build	Build uber jar	﻿2026-10-14T15:17:27.9673741Z ##[group]Run gradle :shared:desktopTest :desktop:packageUberJarForCurrentOS
+build	Build uber jar	2026-10-14T15:17:27.9674157Z ^[[36;1mgradle :shared:desktopTest :desktop:packageUberJarForCurrentOS^[[0m
+build	Build uber jar	2026-10-14T15:17:27.9725041Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+build	Build uber jar	2026-10-14T15:17:27.9725286Z env:
+build	Build uber jar	2026-10-14T15:17:27.9725508Z   JAVA_HOME: C:\hostedtoolcache\windows\Java_Temurin-Hotspot_jdk\17.0.20-101\x64
+build	Build uber jar	2026-10-14T15:17:27.9725868Z   JAVA_HOME_17_X64: C:\hostedtoolcache\windows\Java_Temurin-Hotspot_jdk\17.0.20-101\x64
+build	Build uber jar	2026-10-14T15:17:27.9726145Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+build	Build uber jar	2026-10-14T15:17:27.9726346Z   GRADLE_USER_HOME: D:\a\.gradle
+build	Build uber jar	2026-10-14T15:17:27.9726527Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+build	Build uber jar	2026-10-14T15:17:27.9726728Z   GRADLE_BUILD_ACTION_CACHE_RESTORED: true
+build	Build uber jar	2026-10-14T15:17:27.9727006Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+build	Build uber jar	2026-10-14T15:17:27.9727304Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+build	Build uber jar	2026-10-14T15:17:27.9727546Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+build	Build uber jar	2026-10-14T15:17:27.9727725Z ##[endgroup]
+build	Build uber jar	2026-10-14T15:17:29.0914265Z Starting a Gradle Daemon (subsequent builds will be faster)
+build	Build uber jar	2026-10-14T15:17:36.9840846Z > Task :innertube:kmpPartiallyResolvedDependenciesChecker
+build	Build uber jar	2026-10-14T15:17:36.9849937Z > Task :innertube:checkKotlinGradlePluginConfigurationErrors SKIPPED
+build	Build uber jar	2026-10-14T15:17:37.1767164Z > Task :innertube:extractAndroidInnerTube
+build	Build uber jar	2026-10-14T15:17:37.7767582Z > Task :innertube:desktopProcessResources NO-SOURCE
+build	Build uber jar	2026-10-14T15:17:37.7768423Z > Task :innertube:processDesktopMainResources SKIPPED
+build	Build uber jar	2026-10-14T15:17:37.7768897Z > Task :shared:kmpPartiallyResolvedDependenciesChecker
+build	Build uber jar	2026-10-14T15:17:37.7769517Z > Task :shared:checkKotlinGradlePluginConfigurationErrors SKIPPED
+build	Build uber jar	2026-10-14T15:17:37.8828442Z > Task :shared:convertXmlValueResourcesForCommonMain NO-SOURCE
+build	Build uber jar	2026-10-14T15:17:37.8830492Z > Task :shared:copyNonXmlValueResourcesForCommonMain NO-SOURCE
+build	Build uber jar	2026-10-14T15:17:37.8850938Z > Task :shared:prepareComposeResourcesTaskForCommonMain NO-SOURCE
+build	Build uber jar	2026-10-14T15:17:37.8867718Z > Task :shared:generateResourceAccessorsForCommonMain SKIPPED
+build	Build uber jar	2026-10-14T15:17:37.8868868Z > Task :shared:convertXmlValueResourcesForDesktopMain NO-SOURCE
+build	Build uber jar	2026-10-14T15:17:37.8869559Z > Task :shared:copyNonXmlValueResourcesForDesktopMain NO-SOURCE
+build	Build uber jar	2026-10-14T15:17:37.8870376Z > Task :shared:prepareComposeResourcesTaskForDesktopMain NO-SOURCE
+build	Build uber jar	2026-10-14T15:17:37.8870970Z > Task :shared:generateResourceAccessorsForDesktopMain SKIPPED
+build	Build uber jar	2026-10-14T15:17:37.8872496Z > Task :shared:generateActualResourceCollectorsForDesktopMain SKIPPED
+build	Build uber jar	2026-10-14T15:17:37.8874223Z > Task :shared:generateComposeResClass SKIPPED
+build	Build uber jar	2026-10-14T15:17:37.8877306Z > Task :shared:generateExpectResourceCollectorsForCommonMain SKIPPED
+build	Build uber jar	2026-10-14T15:17:37.8890904Z > Task :shared:assembleDesktopMainResources
+build	Build uber jar	2026-10-14T15:17:37.8906251Z > Task :shared:desktopProcessResources
+build	Build uber jar	2026-10-14T15:17:37.8906683Z > Task :shared:processDesktopMainResources SKIPPED
+build	Build uber jar	2026-10-14T15:17:37.8907137Z > Task :shared:convertXmlValueResourcesForCommonTest NO-SOURCE
+build	Build uber jar	2026-10-14T15:17:37.8907592Z > Task :shared:copyNonXmlValueResourcesForCommonTest NO-SOURCE
+build	Build uber jar	2026-10-14T15:17:37.8908030Z > Task :shared:prepareComposeResourcesTaskForCommonTest NO-SOURCE
+build	Build uber jar	2026-10-14T15:17:37.8908457Z > Task :shared:generateResourceAccessorsForCommonTest SKIPPED
+build	Build uber jar	2026-10-14T15:17:37.8908898Z > Task :shared:convertXmlValueResourcesForDesktopTest NO-SOURCE
+build	Build uber jar	2026-10-14T15:17:37.8909196Z > Task :shared:copyNonXmlValueResourcesForDesktopTest NO-SOURCE
+build	Build uber jar	2026-10-14T15:17:37.8910647Z > Task :shared:prepareComposeResourcesTaskForDesktopTest NO-SOURCE
+build	Build uber jar	2026-10-14T15:17:37.8911274Z > Task :shared:generateResourceAccessorsForDesktopTest SKIPPED
+build	Build uber jar	2026-10-14T15:17:37.8911791Z > Task :shared:assembleDesktopTestResources
+build	Build uber jar	2026-10-14T15:17:39.2816625Z > Task :shared:desktopTestProcessResources
+build	Build uber jar	2026-10-14T15:17:39.2817170Z > Task :shared:processDesktopTestResources SKIPPED
+build	Build uber jar	2026-10-14T15:17:39.2824843Z > Task :desktop:kmpPartiallyResolvedDependenciesChecker
+build	Build uber jar	2026-10-14T15:17:39.3923818Z > Task :desktop:checkKotlinGradlePluginConfigurationErrors SKIPPED
+build	Build uber jar	2026-10-14T15:17:39.3926639Z > Task :desktop:convertXmlValueResourcesForCommonMain NO-SOURCE
+build	Build uber jar	2026-10-14T15:17:39.3936770Z > Task :desktop:copyNonXmlValueResourcesForCommonMain NO-SOURCE
+build	Build uber jar	2026-10-14T15:17:39.3938209Z > Task :desktop:prepareComposeResourcesTaskForCommonMain NO-SOURCE
+build	Build uber jar	2026-10-14T15:17:39.3938956Z > Task :desktop:generateResourceAccessorsForCommonMain SKIPPED
+build	Build uber jar	2026-10-14T15:17:39.3939456Z > Task :desktop:convertXmlValueResourcesForDesktopMain NO-SOURCE
+build	Build uber jar	2026-10-14T15:17:39.3939948Z > Task :desktop:copyNonXmlValueResourcesForDesktopMain NO-SOURCE
+build	Build uber jar	2026-10-14T15:17:39.3940472Z > Task :desktop:prepareComposeResourcesTaskForDesktopMain NO-SOURCE
+build	Build uber jar	2026-10-14T15:17:39.3940982Z > Task :desktop:generateResourceAccessorsForDesktopMain SKIPPED
+build	Build uber jar	2026-10-14T15:17:39.3941502Z > Task :desktop:generateActualResourceCollectorsForDesktopMain SKIPPED
+build	Build uber jar	2026-10-14T15:17:39.3979456Z > Task :desktop:generateComposeResClass SKIPPED
+build	Build uber jar	2026-10-14T15:17:39.3996932Z > Task :desktop:generateExpectResourceCollectorsForCommonMain SKIPPED
+build	Build uber jar	2026-10-14T15:17:39.4015458Z > Task :desktop:assembleDesktopMainResources
+build	Build uber jar	2026-10-14T15:17:40.6773670Z > Task :desktop:desktopProcessResources
+build	Build uber jar	2026-10-14T15:17:40.6774067Z > Task :desktop:processDesktopMainResources SKIPPED
+build	Build uber jar	2026-10-14T15:18:05.4774575Z
+build	Build uber jar	2026-10-14T15:18:05.4775438Z > Task :innertube:compileKotlinDesktop
+build	Build uber jar	2026-10-14T15:18:05.4776708Z w: file:///D:/a/MeloX-Windows/MeloX-Windows/innertube/build/generated/androidMain/com/metrolist/innertube/YouTube.kt:2579:103 Unnecessary safe call on a non-null receiver of type 'List<MusicCarouselShelfRenderer.Content>'.
+build	Build uber jar	2026-10-14T15:18:05.4778744Z w: file:///D:/a/MeloX-Windows/MeloX-Windows/innertube/build/generated/androidMain/com/metrolist/innertube/YouTube.kt:2606:109 Unnecessary safe call on a non-null receiver of type 'List<MusicShelfRenderer.Content>'.
+build	Build uber jar	2026-10-14T15:18:05.4780273Z w: file:///D:/a/MeloX-Windows/MeloX-Windows/innertube/build/generated/androidMain/com/metrolist/innertube/YouTube.kt:2628:131 Unnecessary safe call on a non-null receiver of type 'List<MusicCarouselShelfRenderer.Content>'.
+build	Build uber jar	2026-10-14T15:18:05.4781827Z w: file:///D:/a/MeloX-Windows/MeloX-Windows/innertube/build/generated/androidMain/com/metrolist/innertube/YouTube.kt:2707:38 Unnecessary safe call on a non-null receiver of type 'List<MusicCarouselShelfRenderer.Content>'.
+build	Build uber jar	2026-10-14T15:18:05.4783324Z w: file:///D:/a/MeloX-Windows/MeloX-Windows/innertube/build/generated/androidMain/com/metrolist/innertube/YouTube.kt:3394:25 Redundant creation of Json format. Creating instances for each usage can be slow.
+build	Build uber jar	2026-10-14T15:18:05.4785115Z w: file:///D:/a/MeloX-Windows/MeloX-Windows/innertube/build/generated/androidMain/com/metrolist/innertube/pages/ArtistItemsPage.kt:118:63 Unnecessary safe call on a non-null receiver of type 'Runs'.
+build	Build uber jar	2026-10-14T15:18:06.4766080Z
+build	Build uber jar	2026-10-14T15:18:06.4767256Z > Task :innertube:compileDesktopMainJava NO-SOURCE
+build	Build uber jar	2026-10-14T15:18:06.4767641Z > Task :innertube:desktopMainClasses
+build	Build uber jar	2026-10-14T15:18:06.7776467Z > Task :innertube:desktopJar
+build	Build uber jar	2026-10-14T15:18:35.3765473Z
+build	Build uber jar	2026-10-14T15:18:35.3766342Z > Task :shared:compileKotlinDesktop
+build	Build uber jar	2026-10-14T15:18:35.3771098Z w: file:///D:/a/MeloX-Windows/MeloX-Windows/shared/src/commonMain/kotlin/melox/audio/NeteaseQualityClient.kt:317:37 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+build	Build uber jar	2026-10-14T15:18:35.3774568Z w: file:///D:/a/MeloX-Windows/MeloX-Windows/shared/src/commonMain/kotlin/melox/download/MeloXDownloadStore.kt:372:46 Elvis operator (?:) always returns the left operand of non-nullable type 'ResponseBody'.
+build	Build uber jar	2026-10-14T15:18:35.3776024Z w: file:///D:/a/MeloX-Windows/MeloX-Windows/shared/src/commonMain/kotlin/melox/download/MeloXDownloadStore.kt:508:46 Elvis operator (?:) always returns the left operand of non-nullable type 'ResponseBody'.
+build	Build uber jar	2026-10-14T15:18:35.3777354Z w: file:///D:/a/MeloX-Windows/MeloX-Windows/shared/src/commonMain/kotlin/melox/library/NeteaseLibraryClient.kt:473:37 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+build	Build uber jar	2026-10-14T15:18:35.3780351Z w: file:///D:/a/MeloX-Windows/MeloX-Windows/shared/src/commonMain/kotlin/melox/lyrics/AmlldbLyricsClient.kt:78:75 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+build	Build uber jar	2026-10-14T15:18:35.3795070Z w: file:///D:/a/MeloX-Windows/MeloX-Windows/shared/src/commonMain/kotlin/melox/lyrics/LrcLibLyricsClient.kt:44:64 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+build	Build uber jar	2026-10-14T15:18:35.3808097Z w: file:///D:/a/MeloX-Windows/MeloX-Windows/shared/src/commonMain/kotlin/melox/network/NeteaseAuthenticatedEapi.kt:30:36 Elvis operator (?:) always returns the left operand of non-nullable type 'JSONObject'.
+build	Build uber jar	2026-10-14T15:18:35.3834932Z w: file:///D:/a/MeloX-Windows/MeloX-Windows/shared/src/commonMain/kotlin/melox/network/NeteaseAuthenticatedEapi.kt:67:37 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+build	Build uber jar	2026-10-14T15:18:35.3873096Z w: file:///D:/a/MeloX-Windows/MeloX-Windows/shared/src/commonMain/kotlin/melox/network/NeteaseAuthenticatedWeapi.kt:77:37 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+build	Build uber jar	2026-10-14T15:18:35.3876003Z w: file:///D:/a/MeloX-Windows/MeloX-Windows/shared/src/commonMain/kotlin/melox/network/NeteaseCloudUploadClient.kt:95:70 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+build	Build uber jar	2026-10-14T15:18:35.3878180Z w: file:///D:/a/MeloX-Windows/MeloX-Windows/shared/src/commonMain/kotlin/melox/network/NeteaseCloudUploadClient.kt:124:34 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+build	Build uber jar	2026-10-14T15:18:35.3882175Z w: file:///D:/a/MeloX-Windows/MeloX-Windows/shared/src/commonMain/kotlin/melox/network/NeteaseMusicOperationsClient.kt:572:35 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+build	Build uber jar	2026-10-14T15:18:35.3883373Z w: file:///D:/a/MeloX-Windows/MeloX-Windows/shared/src/commonMain/kotlin/melox/network/NeteaseSearchClient.kt:319:37 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+build	Build uber jar	2026-10-14T15:18:35.3884544Z w: file:///D:/a/MeloX-Windows/MeloX-Windows/shared/src/commonMain/kotlin/melox/network/NeteaseUniversalSearchClient.kt:175:17 'when' is exhaustive so 'else' is redundant here.
+build	Build uber jar	2026-10-14T15:18:35.3885603Z w: file:///D:/a/MeloX-Windows/MeloX-Windows/shared/src/commonMain/kotlin/melox/network/NeteaseUniversalSearchClient.kt:208:25 'when' is exhaustive so 'else' is redundant here.
+build	Build uber jar	2026-10-14T15:18:35.3886739Z w: file:///D:/a/MeloX-Windows/MeloX-Windows/shared/src/commonMain/kotlin/melox/network/NeteaseUniversalSearchClient.kt:454:37 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+build	Build uber jar	2026-10-14T15:18:35.3888523Z w: file:///D:/a/MeloX-Windows/MeloX-Windows/shared/src/commonMain/kotlin/melox/platform/MeloXPreferences.kt:10:1 'expect'/'actual' classes (including interfaces, objects, annotations, enums, and 'actual' typealiases) are in Beta. Consider using the '-Xexpect-actual-classes' flag to suppress this warning. Also see: https://youtrack.jetbrains.com/issue/KT-61573
+build	Build uber jar	2026-10-14T15:18:35.3889705Z w: file:///D:/a/MeloX-Windows/MeloX-Windows/shared/src/commonMain/kotlin/melox/playback/PlaybackCommands.kt:263:43 Unnecessary safe call on a non-null receiver of type 'MusicTrack'.
+build	Build uber jar	2026-10-14T15:18:35.3890458Z w: file:///D:/a/MeloX-Windows/MeloX-Windows/shared/src/commonMain/kotlin/melox/playback/ProviderPlaybackResolver.kt:235:69 Elvis operator (?:) always returns the left operand of non-nullable type 'String'.
+build	Build uber jar	2026-10-14T15:18:35.3891284Z w: file:///D:/a/MeloX-Windows/MeloX-Windows/shared/src/commonMain/kotlin/melox/playback/ProviderPlaybackResolver.kt:265:17 Elvis operator (?:) always returns the left operand of non-nullable type 'Pair<String, Long>'.
+build	Build uber jar	2026-10-14T15:18:35.3893290Z w: file:///D:/a/MeloX-Windows/MeloX-Windows/shared/src/commonMain/kotlin/melox/player/MeloXDualDecodeSession.kt:129:68 Return in function with expression body and without explicit return type. Use block body '{...}' or add an explicit return type. This will become an error in language version 2.5. See https://youtrack.jetbrains.com/issue/KTLC-288.
+build	Build uber jar	2026-10-14T15:18:35.3894988Z w: file:///D:/a/MeloX-Windows/MeloX-Windows/shared/src/commonMain/kotlin/melox/player/MeloXDualDecodeSession.kt:130:44 Return in function with expression body and without explicit return type. Use block body '{...}' or add an explicit return type. This will become an error in language version 2.5. See https://youtrack.jetbrains.com/issue/KTLC-288.
+build	Build uber jar	2026-10-14T15:18:35.3896265Z w: file:///D:/a/MeloX-Windows/MeloX-Windows/shared/src/commonMain/kotlin/melox/player/MeloXDualDecodeSession.kt:148:72 Return in function with expression body and without explicit return type. Use block body '{...}' or add an explicit return type. This will become an error in language version 2.5. See https://youtrack.jetbrains.com/issue/KTLC-288.
+build	Build uber jar	2026-10-14T15:18:35.3897281Z w: file:///D:/a/MeloX-Windows/MeloX-Windows/shared/src/commonMain/kotlin/melox/player/MeloXDualDecodeSession.kt:207:34 Unnecessary safe call on a non-null receiver of type 'MeloXBufferedPcmDeck'.
+build	Build uber jar	2026-10-14T15:18:35.3897977Z w: file:///D:/a/MeloX-Windows/MeloX-Windows/shared/src/commonMain/kotlin/melox/player/MeloXDualDecodeSession.kt:248:51 Condition is always 'true'.
+build	Build uber jar	2026-10-14T15:18:35.3898669Z w: file:///D:/a/MeloX-Windows/MeloX-Windows/shared/src/commonMain/kotlin/melox/player/MeloXDualDecodeSession.kt:249:30 Unnecessary safe call on a non-null receiver of type 'MeloXBufferedPcmDeck'.
+build	Build uber jar	2026-10-14T15:18:35.3899473Z w: file:///D:/a/MeloX-Windows/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/jellyfin/JellyfinApiClient.kt:89:17 Condition is always 'true'.
+build	Build uber jar	2026-10-14T15:18:35.3900148Z w: file:///D:/a/MeloX-Windows/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/jellyfin/JellyfinApiClient.kt:90:29 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+build	Build uber jar	2026-10-14T15:18:35.3900882Z w: file:///D:/a/MeloX-Windows/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/kugou/KugouApiClient.kt:337:62 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+build	Build uber jar	2026-10-14T15:18:35.3902008Z w: file:///D:/a/MeloX-Windows/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/kugou/KugouLoginClient.kt:129:37 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+build	Build uber jar	2026-10-14T15:18:35.3903135Z w: file:///D:/a/MeloX-Windows/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/kugou/KugouRequestClient.kt:113:45 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+build	Build uber jar	2026-10-14T15:18:35.3904010Z w: file:///D:/a/MeloX-Windows/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/kuwo/KuwoPhoneAuthClient.kt:95:38 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+build	Build uber jar	2026-10-14T15:18:35.3904768Z w: file:///D:/a/MeloX-Windows/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/kuwo/KuwoRequestClient.kt:36:42 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+build	Build uber jar	2026-10-14T15:18:35.3905509Z w: file:///D:/a/MeloX-Windows/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/kuwo/KuwoRequestClient.kt:63:33 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+build	Build uber jar	2026-10-14T15:18:35.3906238Z w: file:///D:/a/MeloX-Windows/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/lxuser/ChkszApiClient.kt:40:59 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+build	Build uber jar	2026-10-14T15:18:35.3907173Z w: file:///D:/a/MeloX-Windows/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicApiClient.kt:380:37 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+build	Build uber jar	2026-10-14T15:18:35.3908275Z w: file:///D:/a/MeloX-Windows/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicApiClient.kt:555:37 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+build	Build uber jar	2026-10-14T15:18:35.3909434Z w: file:///D:/a/MeloX-Windows/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicCatalogClient.kt:331:37 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+build	Build uber jar	2026-10-14T15:18:35.3911012Z w: file:///D:/a/MeloX-Windows/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicFavoriteClient.kt:111:62 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+build	Build uber jar	2026-10-14T15:18:35.4109754Z w: file:///D:/a/MeloX-Windows/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicFavoriteClient.kt:182:37 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+build	Build uber jar	2026-10-14T15:18:35.4111095Z w: file:///D:/a/MeloX-Windows/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicFavoriteClient.kt:252:38 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+build	Build uber jar	2026-10-14T15:18:35.4111872Z w: file:///D:/a/MeloX-Windows/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicPhoneAuthClient.kt:62:41 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+build	Build uber jar	2026-10-14T15:18:35.4113164Z w: file:///D:/a/MeloX-Windows/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicPlaybackVkeyClient.kt:126:37 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+build	Build uber jar	2026-10-14T15:18:35.4113927Z w: file:///D:/a/MeloX-Windows/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicPlaylistClient.kt:158:37 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+build	Build uber jar	2026-10-14T15:18:35.4121356Z w: file:///D:/a/MeloX-Windows/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicQrLoginClient.kt:137:38 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+build	Build uber jar	2026-10-14T15:18:35.4123134Z w: file:///D:/a/MeloX-Windows/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicQrLoginClient.kt:170:51 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+build	Build uber jar	2026-10-14T15:18:35.4124093Z w: file:///D:/a/MeloX-Windows/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicQrLoginClient.kt:182:38 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+build	Build uber jar	2026-10-14T15:18:35.4124850Z w: file:///D:/a/MeloX-Windows/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicQrLoginClient.kt:247:51 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+build	Build uber jar	2026-10-14T15:18:35.4125586Z w: file:///D:/a/MeloX-Windows/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicQrLoginClient.kt:264:53 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+build	Build uber jar	2026-10-14T15:18:35.4126340Z w: file:///D:/a/MeloX-Windows/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicQrLoginClient.kt:381:62 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+build	Build uber jar	2026-10-14T15:18:35.4127073Z w: file:///D:/a/MeloX-Windows/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicQrLoginClient.kt:411:62 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+build	Build uber jar	2026-10-14T15:18:35.4127795Z w: file:///D:/a/MeloX-Windows/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicRankingClient.kt:151:37 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+build	Build uber jar	2026-10-14T15:18:35.4128533Z w: file:///D:/a/MeloX-Windows/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicRichLyricsClient.kt:140:38 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+build	Build uber jar	2026-10-14T15:18:35.4129291Z w: file:///D:/a/MeloX-Windows/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicRichLyricsClient.kt:254:37 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+build	Build uber jar	2026-10-14T15:18:35.4130041Z w: file:///D:/a/MeloX-Windows/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicRichLyricsClient.kt:303:67 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+build	Build uber jar	2026-10-14T15:18:35.4130789Z w: file:///D:/a/MeloX-Windows/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/spotify/SpotifyApiClient.kt:371:45 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+build	Build uber jar	2026-10-14T15:18:35.4134587Z w: file:///D:/a/MeloX-Windows/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/spotify/SpotifyOAuth.kt:169:45 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+build	Build uber jar	2026-10-14T15:18:35.4135358Z w: file:///D:/a/MeloX-Windows/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/youtubemusic/YouTubeMusicProvider.kt:247:106 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+build	Build uber jar	2026-10-14T15:18:35.4136095Z w: file:///D:/a/MeloX-Windows/MeloX-Windows/shared/src/commonMain/kotlin/melox/update/MeloXUpdateClient.kt:42:48 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+build	Build uber jar	2026-10-14T15:18:35.4136792Z w: file:///D:/a/MeloX-Windows/MeloX-Windows/shared/src/commonMain/kotlin/melox/update/MeloXUpdateClient.kt:58:48 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+build	Build uber jar	2026-10-14T15:18:35.4137467Z w: file:///D:/a/MeloX-Windows/MeloX-Windows/shared/src/commonMain/kotlin/melox/update/UpdateChecker.kt:51:37 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+build	Build uber jar	2026-10-14T15:18:35.4138148Z w: file:///D:/a/MeloX-Windows/MeloX-Windows/shared/src/commonMain/kotlin/melox/update/UpdateChecker.kt:102:46 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+build	Build uber jar	2026-10-14T15:18:35.4138822Z w: file:///D:/a/MeloX-Windows/MeloX-Windows/shared/src/commonMain/kotlin/melox/update/UpdateChecker.kt:105:26 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+build	Build uber jar	2026-10-14T15:18:35.4140005Z w: file:///D:/a/MeloX-Windows/MeloX-Windows/shared/src/desktopMain/kotlin/melox/platform/MeloXPreferences.kt:7:1 'expect'/'actual' classes (including interfaces, objects, annotations, enums, and 'actual' typealiases) are in Beta. Consider using the '-Xexpect-actual-classes' flag to suppress this warning. Also see: https://youtrack.jetbrains.com/issue/KT-61573
+build	Build uber jar	2026-10-14T15:18:36.2761095Z
+build	Build uber jar	2026-10-14T15:18:36.2764490Z > Task :shared:compileDesktopMainJava NO-SOURCE
+build	Build uber jar	2026-10-14T15:18:36.2764886Z > Task :shared:desktopMainClasses
+build	Build uber jar	2026-10-14T15:18:36.4771402Z > Task :shared:desktopJar
+build	Build uber jar	2026-10-14T15:18:45.5773142Z
+build	Build uber jar	2026-10-14T15:18:45.5774141Z > Task :shared:compileTestKotlinDesktop
+build	Build uber jar	2026-10-14T15:18:45.5774971Z w: file:///D:/a/MeloX-Windows/MeloX-Windows/shared/src/commonTest/kotlin/melox/player/PlaybackLinkTest.kt:175:33 No cast needed.
+build	Build uber jar	2026-10-14T15:18:45.5776145Z w: file:///D:/a/MeloX-Windows/MeloX-Windows/shared/src/desktopTest/kotlin/melox/playback/DesktopAutoMixIntegrationTest.kt:202:72 This class is not recommended for use in Kotlin. Use 'kotlin.Any' instead.
+build	Build uber jar	2026-10-14T15:18:45.9771522Z
+build	Build uber jar	2026-10-14T15:18:45.9772699Z > Task :shared:compileDesktopTestJava NO-SOURCE
+build	Build uber jar	2026-10-14T15:18:45.9773327Z > Task :shared:desktopTestClasses
+build	Build uber jar	2026-10-14T15:18:57.9828401Z
+build	Build uber jar	2026-10-14T15:18:57.9829697Z > Task :shared:desktopTest
+build	Build uber jar	2026-10-14T15:18:57.9830139Z
+build	Build uber jar	2026-10-14T15:18:57.9830815Z DesktopAutoMixIntegrationTest[desktop] > nextDuringOverlapContinuesAtHeardIncomingPositionAndPreviousReturnsToPrimary[desktop] FAILED
+build	Build uber jar	2026-10-14T15:18:57.9831830Z     java.lang.AssertionError at DesktopAutoMixIntegrationTest.kt:186
+build	Build uber jar	2026-10-14T15:19:07.0198962Z
+build	Build uber jar	2026-10-14T15:19:07.0200692Z > Task :desktop:compileKotlinDesktop
+build	Build uber jar	2026-10-14T15:19:10.5809153Z w: file:///D:/a/MeloX-Windows/MeloX-Windows/desktop/src/desktopMain/kotlin/melox/ui/foundation/MeloXSymbol.kt:113:23 'fun painterResource(resourcePath: String): Painter' is deprecated. Migrate to the Compose resources library. See https://www.jetbrains.com/help/kotlin-multiplatform-dev/compose-images-resources.html If you need to load resources specificly from Java classpath, you should still use the new resource library and use a snippet from https://github.com/JetBrains/compose-multiplatform-core/pull/1457.
+build	Build uber jar	2026-10-14T15:19:10.5812321Z w: file:///D:/a/MeloX-Windows/MeloX-Windows/desktop/src/desktopMain/kotlin/melox/ui/player/MeloXFlowingLightBackdrop.kt:135:38 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+build	Build uber jar	2026-10-14T15:19:10.5817947Z w: file:///D:/a/MeloX-Windows/MeloX-Windows/desktop/src/desktopMain/kotlin/melox/ui/player/MeloXFlowingLightBackdrop.kt:740:30 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+build	Build uber jar	2026-10-14T15:19:10.5820278Z w: file:///D:/a/MeloX-Windows/MeloX-Windows/desktop/src/desktopMain/kotlin/melox/ui/screens/AlbumDetailScreen.kt:182:49 'val outlinedButtonBorder: BorderStroke' is deprecated. Please use the version that takes an `enabled` param to get the `BorderStroke` with the correct opacity.
+build	Build uber jar	2026-10-14T15:19:10.5822411Z w: file:///D:/a/MeloX-Windows/MeloX-Windows/desktop/src/desktopMain/kotlin/melox/ui/screens/AlbumDetailScreen.kt:195:49 'val outlinedButtonBorder: BorderStroke' is deprecated. Please use the version that takes an `enabled` param to get the `BorderStroke` with the correct opacity.
+build	Build uber jar	2026-10-14T15:19:10.5824806Z w: file:///D:/a/MeloX-Windows/MeloX-Windows/desktop/src/desktopMain/kotlin/melox/ui/screens/LoginScreen.kt:1:16 Suppression of error 'INVISIBLE_REFERENCE' might compile and work, but the compiler behavior is UNSPECIFIED and WILL NOT BE PRESERVED. Please report your use case to the Kotlin issue tracker instead: https://kotl.in/issue
+build	Build uber jar	2026-10-14T15:19:10.5826606Z w: file:///D:/a/MeloX-Windows/MeloX-Windows/desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXArtwork.kt:38:71 'fun loadImageBitmap(inputStream: InputStream): ImageBitmap' is deprecated. Migrate to the Compose resources library. See https://www.jetbrains.com/help/kotlin-multiplatform-dev/compose-images-resources.html.
+build	Build uber jar	2026-10-14T15:19:10.5827990Z w: file:///D:/a/MeloX-Windows/MeloX-Windows/desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXDetailPalette.kt:56:34 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+build	Build uber jar	2026-10-14T15:19:10.5829195Z w: file:///D:/a/MeloX-Windows/MeloX-Windows/desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXLibraryDownloads.kt:511:70 'fun loadImageBitmap(inputStream: InputStream): ImageBitmap' is deprecated. Migrate to the Compose resources library. See https://www.jetbrains.com/help/kotlin-multiplatform-dev/compose-images-resources.html.
+build	Build uber jar	2026-10-14T15:19:10.5830434Z w: file:///D:/a/MeloX-Windows/MeloX-Windows/desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXSongActionsOverlay.kt:162:35 Elvis operator (?:) always returns the left operand of non-nullable type 'Int'.
+build	Build uber jar	2026-10-14T15:19:10.5831601Z w: file:///D:/a/MeloX-Windows/MeloX-Windows/desktop/src/desktopMain/kotlin/melox/ui/screens/PlaylistDetailScreen.kt:219:49 'val outlinedButtonBorder: BorderStroke' is deprecated. Please use the version that takes an `enabled` param to get the `BorderStroke` with the correct opacity.
+build	Build uber jar	2026-10-14T15:19:10.5832920Z w: file:///D:/a/MeloX-Windows/MeloX-Windows/desktop/src/desktopMain/kotlin/melox/ui/screens/PlaylistDetailScreen.kt:238:49 'val outlinedButtonBorder: BorderStroke' is deprecated. Please use the version that takes an `enabled` param to get the `BorderStroke` with the correct opacity.
+build	Build uber jar	2026-10-14T15:19:10.5834887Z w: file:///D:/a/MeloX-Windows/MeloX-Windows/desktop/src/desktopMain/kotlin/melox/validation/MeloXSceneSemantics.kt:27:58 'val InvisibleToUser: SemanticsPropertyKey<Unit>' is deprecated. Use `hideFromAccessibility` instead.
+build	Build uber jar	2026-10-14T15:19:19.3765212Z
+build	Build uber jar	2026-10-14T15:19:19.3765312Z
+build	Build uber jar	2026-10-14T15:19:19.3766143Z > Task :shared:desktopTest
+build	Build uber jar	2026-10-14T15:19:19.3766946Z 203 tests completed, 1 failed
+build	Build uber jar	2026-10-14T15:19:19.5768228Z
+build	Build uber jar	2026-10-14T15:19:19.5769400Z > Task :shared:desktopTest FAILED
+build	Build uber jar	2026-10-14T15:19:19.5770262Z gradle/actions: Writing build results to D:\a\_temp\.gradle-actions\build-results\__run_5-1791991052510.json
+build	Build uber jar	2026-10-14T15:19:19.6763954Z
+build	Build uber jar	2026-10-14T15:19:19.6764769Z FAILURE: Build failed with an exception.
+build	Build uber jar	2026-10-14T15:19:19.6765115Z
+build	Build uber jar	2026-10-14T15:19:19.6765214Z * What went wrong:
+build	Build uber jar	2026-10-14T15:19:19.6765503Z Execution failed for task ':shared:desktopTest'.
+build	Build uber jar	2026-10-14T15:19:19.6766178Z > There were failing tests. See the report at: file:///D:/a/MeloX-Windows/MeloX-Windows/shared/build/reports/tests/desktopTest/index.html
+build	Build uber jar	2026-10-14T15:19:19.6767070Z
+build	Build uber jar	2026-10-14T15:19:19.6767202Z * Try:
+build	Build uber jar	2026-10-14T15:19:19.6768884Z > Run with --scan to get full insights from a Build Scan (powered by Develocity).
+build	Build uber jar	2026-10-14T15:19:19.6775116Z
+build	Build uber jar	2026-10-14T15:19:19.6778463Z BUILD FAILED in 1m 51s
+build	Build uber jar	2026-10-14T15:19:19.6778763Z 17 actionable tasks: 17 executed
+build	Build uber jar	2026-10-14T15:19:19.7956858Z ##[error]Process completed with exit code 1.

@@ -1,0 +1,12 @@
+{
+  "failed-automix.xml": {
+    "downloaded_raw_sha256": "af2b422ab6941f96bf46ee7e0f7ac3b18f82e112a3be9fdfd68afb5e0e9c740c",
+    "archive_sha256": "15bb8836cd845f8c615795f158d281816abd16b05870d15d248f7b48c393d0d6",
+    "normalization": "CRLF to LF and trailing whitespace removed; content retained"
+  },
+  "failed-build.log": {
+    "downloaded_raw_sha256": "ff260ad23c6f219834fe1a45d995f22e6c69fa3170bc2c1c7447ee80a117472b",
+    "archive_sha256": "9b549ce4864dce2ddba4ada2edca86ba2663ee1d85edd61b9223c45b7a076ea0",
+    "normalization": "CRLF to LF and trailing whitespace removed; content retained"
+  }
+}
