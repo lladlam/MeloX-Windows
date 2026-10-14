@@ -2,3 +2,5 @@ desktop/src/main/resources/decoder/ffmpeg filter=lfs diff=lfs merge=lfs -text
 desktop/src/main/resources/decoder/ffmpeg.exe filter=lfs diff=lfs merge=lfs -text
 desktop/src/main/resources/legal/*.md text eol=lf
 desktop/src/main/resources/parity/pinned-settings-strings.properties text eol=lf
+desktop/src/main/resources/fonts/*.ttf -text
+desktop/src/main/resources/parity/mi-lan-pro-static.json text eol=lf

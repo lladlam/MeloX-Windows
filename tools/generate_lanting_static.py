@@ -164,7 +164,9 @@ def render_manifest(source: bytes, outputs: dict[int, tuple[bytes, dict]]) -> di
                         us_weight_class=800, generation={'reuses_css': WEIGHT900_FILE_CSS}))
     return dict(
         check='axis-frozen 小米兰亭 Pro instances shaped identically to the pinned variable font at each pinned axis',
-        source=dict(file=str(SOURCE), bytes=len(source), sha256=sha256(source)),
+        # as_posix(): Windows Path str() would embed backslashes and break the
+        # cross-host manifest comparison; resource keys are always '/'-separated.
+        source=dict(file=SOURCE.as_posix(), bytes=len(source), sha256=sha256(source)),
         pinned_android=PINNED_ANDROID,
         axes=[[css, axis] for css, axis in AXES], css900=dict(reuses_css=WEIGHT900_FILE_CSS),
         fixtures=FIXTURES,
