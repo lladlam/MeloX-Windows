@@ -40,13 +40,14 @@ actual UI input, persisted reload and changed production rendering with real PCM
 
 - Skyline's 17 source settings in `SettingsScreen.kt:1091…` now have production
   controls, exact reset and four-process pointer/persistence evidence. See
-  `SKYLINE_SETTINGS_POWER.md`; fresh Windows delivery gates are pending.
+  `SKYLINE_SETTINGS_POWER.md`; Windows `f3e3a83` and independent delivery gates pass.
 - `MeloXIOSNowPlayingSharedHost.kt:130–145` keeps the Android view awake for
   explicit Skyline and Disabled/Player/Lyrics/HiddenLyricsInterface scopes.
   A real Windows same-thread display/system-idle request is now connected to
   those scopes and direct window foreground/iconify/disposal events. Native
-  Windows CI ownership checks and physical Windows idle/sleep acceptance remain
-  required; Linux reports unsupported rather than simulating power success.
+  Windows CI ownership checks pass on the actual API; physical Windows idle/sleep
+  acceptance remains required. Linux reports unsupported rather than simulating
+  power success.
 - Complete provider-native action capabilities and favorite-state reads; the
   common overlay currently handles NetEase IDs but full source-specific actions
   still require work. Provider bridge negative IDs must remain stable.

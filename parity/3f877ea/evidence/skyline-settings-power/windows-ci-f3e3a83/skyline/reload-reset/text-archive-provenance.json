@@ -1,0 +1,22 @@
+{
+  "control-inputs.json": {
+    "raw_downloaded_sha256": "d49c9ef8a081d1f1eb94af4ec2bfffd03bf9a0ff817e836134f0e12c8fbaf1de",
+    "archive_sha256": "b75d068bb2da190c24fef4d1cfa241a41ebb825c4f68fd5e15cbd60c846df830",
+    "normalization": "CRLF to LF only"
+  },
+  "reset-inputs.json": {
+    "raw_downloaded_sha256": "573e176acfb06f9f4ba48b01a5635d56f737022fd48cc8b9cacdc46e58c74a55",
+    "archive_sha256": "20b69d84667fcc46af3125038096f318dcd9eae902c7dacbe7770a7bc421b718",
+    "normalization": "CRLF to LF only"
+  },
+  "arguments.txt": {
+    "raw_downloaded_sha256": "4d4b9184085d92d47f50b1255c18615cc8f94581c4d9e1e48c1c66a89e140755",
+    "archive_sha256": "cfb552a97361d899e78ab471e8e158c2900a7faf5ee357c8b9c91ef9b5135b2f",
+    "normalization": "CRLF to LF only"
+  },
+  "gradle.log": {
+    "raw_downloaded_sha256": "4a87d5b257061ecbe93ebf03f47fd089323184f0dcca267147efa32ad912e5a5",
+    "archive_sha256": "c0e78b2740401df77398357d6267b8e8d11dda1a9e1a2991b9ffac251e11754e",
+    "normalization": "LF; log trailing whitespace removed"
+  }
+}

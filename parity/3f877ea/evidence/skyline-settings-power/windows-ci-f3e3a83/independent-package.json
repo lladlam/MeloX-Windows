@@ -1,0 +1,450 @@
+{
+  "status": "PASSED",
+  "head_sha": "f3e3a83d63d0d12c36723aee974ebf3dc2a530d1",
+  "run_id": 38653215039,
+  "tests": {
+    "tests": 206,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "suites": 40
+  },
+  "glyph_self_geometry": {
+    "status": "PASSED",
+    "os": "Windows Server 2025",
+    "maximum_normalized_difference": 0,
+    "cases": 60
+  },
+  "artifact_id": 11936083521,
+  "download_url": "https://github.com/lladlam/MeloX-Windows/actions/runs/38653215039/artifacts/11936083521",
+  "outer_artifact": {
+    "bytes": 307303330,
+    "sha256": "3abeb62d858e6b6840fc53f3569f1135e97e1ddab70392f7b9f713e20d8bd188",
+    "github_digest_match": true
+  },
+  "final_zip": {
+    "bytes": 308020756,
+    "sha256": "0cc5fb610ed0dea45a323f5763ce05cdf055cbdbec9b3c12295e85a05f5ffe0a",
+    "crc_verified": true
+  },
+  "jar": {
+    "bytes": 262906803,
+    "sha256": "0a8e349860253a0f0580b06bac391d231c98a71f71be43ed0b4dbbfbee103ee2",
+    "feature_classes": [
+      "melox/player/MeloXPcmOutput.class",
+      "melox/player/MeloXPcmWriterKt.class",
+      "melox/player/FfmpegLocator.class",
+      "melox/diagnostics/MeloXProcessLogs.class",
+      "melox/ui/screens/MeloXPlayerQualityKt.class",
+      "melox/ui/screens/MeloXGlyphLyricTextKt.class",
+      "melox/ui/theme/MeloXFontKt.class",
+      "melox/cache/MeloXWeightedLruCache.class",
+      "melox/ui/artwork/MeloXArtworkMemoryCache.class",
+      "melox/diagnostics/MeloXMemoryDiagnostics.class",
+      "melox/diagnostics/ProcessMemoryCounters.class",
+      "melox/diagnostics/ProcessMemoryApi.class"
+    ],
+    "shaped_row_mask_verified": true,
+    "pause_version_writer_verified": true,
+    "build_revision_verified": true,
+    "static_font_instances_verified": [
+      "fonts/mi_lan_pro_w100.ttf",
+      "fonts/mi_lan_pro_w200.ttf",
+      "fonts/mi_lan_pro_w300.ttf",
+      "fonts/mi_lan_pro_w400.ttf",
+      "fonts/mi_lan_pro_w500.ttf",
+      "fonts/mi_lan_pro_w600.ttf",
+      "fonts/mi_lan_pro_w700.ttf",
+      "fonts/mi_lan_pro_w800.ttf"
+    ],
+    "shared_artwork_cache_classes_verified": true,
+    "java_management_module_verified": true
+  },
+  "windows_decoder": {
+    "location": "final ZIP!/app JAR!/decoder/ffmpeg.exe",
+    "bytes": 164352000,
+    "sha256": "af7913b7ddc324bf02b8af72fe8612b1471455ef8d9e04e45466510742abcff9",
+    "magic": "PE",
+    "verified": true
+  },
+  "pinned_resources": [
+    {
+      "resource": "legal/cloud-control-privacy-zh-CN.md",
+      "bytes": 5020,
+      "sha256": "7030f44dda89b27357ba4b960562d5eae98d9b5ae451a8a398e4fb6cc68f5793",
+      "verified": true
+    },
+    {
+      "resource": "legal/disclaimer-zh-CN.md",
+      "bytes": 5015,
+      "sha256": "4c6e212bb6c78bd2fa6e45a76136cba6a5cfd82c1321dfdf27d727df2a50c44e",
+      "verified": true
+    },
+    {
+      "resource": "legal/privacy-policy-zh-CN.md",
+      "bytes": 7233,
+      "sha256": "fdf41c3aea883220ba8070823b1a35d1156869117ed607f6b5c2769997ceb097",
+      "verified": true
+    },
+    {
+      "resource": "legal/third-party-music-sources-zh-CN.md",
+      "bytes": 3167,
+      "sha256": "4aefd5137ea6e9a2da335671753dca4d8aebcdcf0ddc903c00a03bc89ef62c38",
+      "verified": true
+    },
+    {
+      "resource": "parity/pinned-settings-strings.properties",
+      "bytes": 17451,
+      "sha256": "649df6af06ded94e91b6f4c728aafe2e29c76ba981097503f869e3fd8144fbc4",
+      "verified": true
+    },
+    {
+      "resource": "fonts/mi_lan_pro_vf.ttf",
+      "bytes": 19646728,
+      "sha256": "15fc7accb0afcbb7cf3bbf776536a37398e552f082bb13af70602bf1d7ed676f",
+      "verified": true
+    },
+    {
+      "resource": "parity/pinned-lyrics-strings.properties",
+      "bytes": 4200,
+      "sha256": "01c641adab3e72ed3570698fe5c407f71ff82c350d29c8346d13951dadf87717",
+      "verified": true
+    },
+    {
+      "resource": "parity/pinned-skyline-strings.properties",
+      "bytes": 1615,
+      "sha256": "f8d430f736486ca2e3e5e8d323defdf082f5f45b116de31c15dc18c7363278ca",
+      "verified": true
+    }
+  ],
+  "physical_audible_acceptance": "BLOCKED",
+  "user_report_resolution": "UNCONFIRMED",
+  "independent_font_outline_audit": {
+    "status": "PASSED",
+    "total_cases": 120,
+    "failed_cases": 0,
+    "static_files_verified": 8,
+    "frozen_typefaces_verified": 10,
+    "font_sha256": "15fc7accb0afcbb7cf3bbf776536a37398e552f082bb13af70602bf1d7ed676f",
+    "os": "Windows Server 2025"
+  },
+  "memory_audit": {
+    "allocated_decoded_pixel_bytes": 2147483648,
+    "user_windows_playback_acceptance": "PENDING",
+    "forced_gc": false,
+    "post_warmup_resident_growth_bytes": 1777664,
+    "images_loaded": 2048,
+    "post_warmup_used_heap_growth_bytes": 2097152,
+    "samples": [
+      {
+        "uptime_ms": 6427,
+        "cache_entries": 32,
+        "batch": 0,
+        "threads": 12,
+        "heap_committed_bytes": 268435456,
+        "images_loaded": 256,
+        "non_heap_used_bytes": 9312128,
+        "direct_buffer_bytes": 8192,
+        "heap_used_bytes": 9630720,
+        "resident_bytes": 125894656,
+        "private_commit_bytes": 413470720,
+        "cache_budgeted_bytes": 67108864,
+        "heap_max_bytes": 4294967296
+      },
+      {
+        "uptime_ms": 7123,
+        "cache_entries": 32,
+        "batch": 1,
+        "threads": 13,
+        "heap_committed_bytes": 268435456,
+        "images_loaded": 512,
+        "non_heap_used_bytes": 12782384,
+        "direct_buffer_bytes": 8192,
+        "heap_used_bytes": 5327344,
+        "resident_bytes": 128258048,
+        "private_commit_bytes": 415739904,
+        "cache_budgeted_bytes": 67108864,
+        "heap_max_bytes": 4294967296
+      },
+      {
+        "uptime_ms": 7507,
+        "cache_entries": 32,
+        "batch": 2,
+        "threads": 13,
+        "heap_committed_bytes": 268435456,
+        "images_loaded": 768,
+        "non_heap_used_bytes": 12916008,
+        "direct_buffer_bytes": 8192,
+        "heap_used_bytes": 5327344,
+        "resident_bytes": 128532480,
+        "private_commit_bytes": 415940608,
+        "cache_budgeted_bytes": 67108864,
+        "heap_max_bytes": 4294967296
+      },
+      {
+        "uptime_ms": 7887,
+        "cache_entries": 32,
+        "batch": 3,
+        "threads": 13,
+        "heap_committed_bytes": 268435456,
+        "images_loaded": 1024,
+        "non_heap_used_bytes": 12997720,
+        "direct_buffer_bytes": 8192,
+        "heap_used_bytes": 5327344,
+        "resident_bytes": 128602112,
+        "private_commit_bytes": 416010240,
+        "cache_budgeted_bytes": 67108864,
+        "heap_max_bytes": 4294967296
+      },
+      {
+        "uptime_ms": 8261,
+        "cache_entries": 32,
+        "batch": 4,
+        "threads": 13,
+        "heap_committed_bytes": 268435456,
+        "images_loaded": 1280,
+        "non_heap_used_bytes": 13026336,
+        "direct_buffer_bytes": 8192,
+        "heap_used_bytes": 7424496,
+        "resident_bytes": 130064384,
+        "private_commit_bytes": 417497088,
+        "cache_budgeted_bytes": 67108864,
+        "heap_max_bytes": 4294967296
+      },
+      {
+        "uptime_ms": 8634,
+        "cache_entries": 32,
+        "batch": 5,
+        "threads": 13,
+        "heap_committed_bytes": 268435456,
+        "images_loaded": 1536,
+        "non_heap_used_bytes": 13043512,
+        "direct_buffer_bytes": 8192,
+        "heap_used_bytes": 7424496,
+        "resident_bytes": 130064384,
+        "private_commit_bytes": 417497088,
+        "cache_budgeted_bytes": 67108864,
+        "heap_max_bytes": 4294967296
+      },
+      {
+        "uptime_ms": 9009,
+        "cache_entries": 32,
+        "batch": 6,
+        "threads": 13,
+        "heap_committed_bytes": 268435456,
+        "images_loaded": 1792,
+        "non_heap_used_bytes": 13073872,
+        "direct_buffer_bytes": 8192,
+        "heap_used_bytes": 7424496,
+        "resident_bytes": 130064384,
+        "private_commit_bytes": 417484800,
+        "cache_budgeted_bytes": 67108864,
+        "heap_max_bytes": 4294967296
+      },
+      {
+        "uptime_ms": 9381,
+        "cache_entries": 32,
+        "batch": 7,
+        "threads": 13,
+        "heap_committed_bytes": 268435456,
+        "images_loaded": 2048,
+        "non_heap_used_bytes": 13099808,
+        "direct_buffer_bytes": 8192,
+        "heap_used_bytes": 7424496,
+        "resident_bytes": 130310144,
+        "private_commit_bytes": 417558528,
+        "cache_budgeted_bytes": 67108864,
+        "heap_max_bytes": 4294967296
+      }
+    ],
+    "status": "PASSED",
+    "validation_generated_pixels": true
+  },
+  "independent_lyrics_controls": {
+    "status": "PASSED",
+    "pinned_android": "3f877eaffe30c82eb6d24eb3647702f5bc554dd3",
+    "canonical_keys": 60,
+    "pointer_verified_keys": [
+      "lyrics_advance_ms",
+      "lyrics_advance_word_by_word",
+      "lyrics_auto_follow",
+      "lyrics_auto_select",
+      "lyrics_blur_strength",
+      "lyrics_cascade_bounce",
+      "lyrics_cascade_bounce_enabled",
+      "lyrics_cascade_bounce_gradient",
+      "lyrics_cascade_catch_up_ratio",
+      "lyrics_cascade_chase_gradient",
+      "lyrics_cascade_delay_increase_ms",
+      "lyrics_cascade_delay_ms",
+      "lyrics_cascade_duration_ms",
+      "lyrics_cascade_following_delay_ms",
+      "lyrics_dim_amount",
+      "lyrics_distance_blur_scale",
+      "lyrics_focus_color_lead_ms",
+      "lyrics_focus_position",
+      "lyrics_focus_scale",
+      "lyrics_follow_delay_ms",
+      "lyrics_font_scale",
+      "lyrics_font_weight",
+      "lyrics_glow_enabled",
+      "lyrics_glow_long_tones_only",
+      "lyrics_glow_strength",
+      "lyrics_hidden_blur_scale",
+      "lyrics_highlight_gradient_reduction",
+      "lyrics_highlight_gradient_width",
+      "lyrics_inactive_opacity",
+      "lyrics_interface_auto_hide_ms",
+      "lyrics_interlude_countdown",
+      "lyrics_lift_mode",
+      "lyrics_long_press_share",
+      "lyrics_long_tone_detection",
+      "lyrics_long_tone_strength",
+      "lyrics_long_tone_threshold_ms",
+      "lyrics_pseudo_timing",
+      "lyrics_reduce_motion",
+      "lyrics_refresh_rate",
+      "lyrics_rendering_quality",
+      "lyrics_romanization",
+      "lyrics_romanization_display_mode",
+      "lyrics_romanization_font_scale",
+      "lyrics_romanization_opacity",
+      "lyrics_scale_bounce",
+      "lyrics_scale_bounce_duration_ms",
+      "lyrics_scale_bounce_enabled",
+      "lyrics_scroll_hide_threshold_dp",
+      "lyrics_snap_threshold_ms",
+      "lyrics_spacing_scale",
+      "lyrics_style",
+      "lyrics_tap_seek",
+      "lyrics_text_pv_animation_speed",
+      "lyrics_text_pv_motion_intensity",
+      "lyrics_text_pv_style",
+      "lyrics_translation",
+      "lyrics_translation_display_mode",
+      "lyrics_translation_font_scale",
+      "lyrics_translation_opacity",
+      "lyrics_word_by_word"
+    ],
+    "separate_jvm_reload_verified": true,
+    "controls_capture_sha256": "1fd2ded7355e0cdd231363c2ed262ee34f3331cee4743ce3ce6a1ecd66e948a5",
+    "reload_capture_sha256": "b1fac0c68e12c3d3f3e70f81d109e5ea73f549769d4499bb171a888dce49fce1",
+    "controls_scenes": 151,
+    "reload_scenes": 2,
+    "passed_assertions": 501,
+    "android_pixel_motion_acceptance": "BLOCKED",
+    "windows_user_acceptance": "PENDING"
+  },
+  "independent_skyline_controls": {
+    "status": "PASSED",
+    "pinned_android": "3f877eaffe30c82eb6d24eb3647702f5bc554dd3",
+    "skyline_keys": 17,
+    "screen_awake_scope_choices": [
+      "Disabled",
+      "HiddenLyricsInterface",
+      "Lyrics",
+      "Player"
+    ],
+    "pointer_verified_keys": [
+      "lyrics_skyline_ambient_blur",
+      "lyrics_skyline_ambient_drift",
+      "lyrics_skyline_ambient_font_size",
+      "lyrics_skyline_ambient_lines",
+      "lyrics_skyline_ambient_max_characters",
+      "lyrics_skyline_ambient_max_tilt",
+      "lyrics_skyline_ambient_max_visible",
+      "lyrics_skyline_ambient_opacity",
+      "lyrics_skyline_current_font_size",
+      "lyrics_skyline_current_max_scale",
+      "lyrics_skyline_current_spacing",
+      "lyrics_skyline_current_width",
+      "lyrics_skyline_enabled",
+      "lyrics_skyline_keep_awake",
+      "lyrics_skyline_next_font_size",
+      "lyrics_skyline_next_opacity",
+      "lyrics_skyline_song_info",
+      "player_screen_awake_mode"
+    ],
+    "separately_reloaded_changed_and_reset_values": true,
+    "reset_preserved_keys": [
+      "lyrics_skyline_ambient_lines",
+      "lyrics_skyline_enabled",
+      "lyrics_skyline_keep_awake",
+      "lyrics_skyline_song_info",
+      "player_screen_awake_mode"
+    ],
+    "reset_changed_keys": 13,
+    "captures_sha256": {
+      "controls": "bd03c248f7014487459754994871b04fd9e8502e273f86c0e42b383b0afbee53",
+      "reload": "49d2d952efe394c03b2fa4bcdae9516e03b28c1599ba466038dd3a07c62f2c32",
+      "reset": "6aea6a3d30301bc9f9fcd320d09846b259fe4c2d92804465117c700daa3e955c",
+      "reload-reset": "5a3f13717bd61640e3f3e65604624aac1d6cc66b357662b054d6671be064994d"
+    },
+    "scene_counts": {
+      "controls": 58,
+      "reload": 3,
+      "reset": 6,
+      "reload-reset": 3
+    },
+    "passed_assertions": 342,
+    "android_pixel_motion_acceptance": "BLOCKED",
+    "physical_windows_power_acceptance": "BLOCKED"
+  },
+  "native_windows_display_request": {
+    "os": "Windows Server 2025",
+    "physical_display_idle_sleep_acceptance": "BLOCKED",
+    "api": "kernel32.SetThreadExecutionState",
+    "samples": [
+      {
+        "previous_flags": 2147483648,
+        "requested": true,
+        "active": true,
+        "error": null,
+        "owner_thread_id": 14,
+        "native_calls": 1
+      },
+      {
+        "previous_flags": 2147483648,
+        "requested": true,
+        "active": true,
+        "error": null,
+        "owner_thread_id": 14,
+        "native_calls": 1
+      },
+      {
+        "previous_flags": 2147483651,
+        "requested": false,
+        "active": false,
+        "error": null,
+        "owner_thread_id": 14,
+        "native_calls": 2
+      },
+      {
+        "previous_flags": 2147483651,
+        "requested": false,
+        "active": false,
+        "error": null,
+        "owner_thread_id": 14,
+        "native_calls": 2
+      },
+      {
+        "previous_flags": 2147483648,
+        "requested": true,
+        "active": true,
+        "error": null,
+        "owner_thread_id": 14,
+        "native_calls": 3
+      },
+      {
+        "previous_flags": 2147483651,
+        "requested": false,
+        "active": false,
+        "error": null,
+        "owner_thread_id": 14,
+        "native_calls": 4
+      }
+    ],
+    "status": "PASSED"
+  },
+  "user_memory_symptom_resolution": "PENDING"
+}

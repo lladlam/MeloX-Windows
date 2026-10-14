@@ -92,9 +92,47 @@ consumed PCM on two correctly released output endpoints. The replay physically
 reveals auto-hidden landscape controls before resuming through Artwork.
 Archived captures independently pass both verifiers.
 
-Fresh Windows native/package collection is pending. Android same-content
+Windows run **38653215039** at exact feature revision
+**`f3e3a83d63d0d12c36723aee974ebf3dc2a530d1`** completes successfully. Every step
+passes: real native display request ownership, Skyline controls/scope/reset and
+new-JVM reloads, the prior full 60-key lyrics replay/reload, native EQ/cache
+memory/font/glyph audits and all JAR/app-image/final-ZIP checks. Independent
+download/package collection is **PASSED** on 2026-10-15:
+
+- Artifact **`11936083521`**, final ZIP **308,020,756 bytes**, SHA-256
+  **`0cc5fb610ed0dea45a323f5763ce05cdf055cbdbec9b3c12295e85a05f5ffe0a`**.
+- Exact source revision remains **`f3e3a83d63d0d12c36723aee974ebf3dc2a530d1`**;
+  later evidence-only commits do not relabel this distribution.
+- Outer GitHub digest, ZIP CRC, launcher PE, FFmpeg PE/hash, Java Sound DLL,
+  `java.management`, exact packaged revision, eight pinned resource hashes,
+  all eight frozen font instances/metrics and ownership/consumer classes verify.
+- Downloaded Windows reports: **206 tests / 40 suites / zero failures, errors
+  or skipped**; 60 glyph row-mask cases / zero difference; 120 font cases / zero
+  failures; real single/post-seek/dual primary/overlap/incoming EQ PCM passes.
+- Independent downloaded Skyline verifier: **17 pointer keys + four awake scope
+  choices**, exact 13-key reset, separate-JVM changed/reset persistence, **70
+  scenes / 342 assertions**. Prior full lyrics batch: **60 keys / 501 assertions**.
+- Real kernel32 samples all share owner thread **14**, with only **four native
+  calls**. Previous state flags alternate `0x80000000` / `0x80000003`; repeated
+  enable does not make an extra native call, backgrounding clears display/system
+  idle holds, delayed UI enable cannot reacquire while backgrounded, foreground
+  return reacquires, and disposal clears. Late released-owner requests cannot
+  reacquire. This directly verifies native ownership, not physical idle/sleep.
+- The uploaded Windows no-forced-GC artwork audit JSON passes and is downloaded
+  directly; no log reconstruction is used in this run.
+
+Download: <https://github.com/lladlam/MeloX-Windows/actions/runs/38653215039/artifacts/11936083521>.
+Evidence: `evidence/skyline-settings-power/windows-ci-f3e3a83/`, including native
+samples, independent reports, raw capture JSON, selected screenshots and
+LF-normalized argument/log archives with original hash provenance. The verified
+temporary distribution ZIP was deleted after successful collection.
+
+Android same-content
 pixel/motion and physical Windows power acceptance remain **BLOCKED**.
 
 The independently verified preceding advanced-lyrics distribution is exact
-`d186e0c62941d2726c2184b8399d97c861af4195`; this unverified working batch is not
-included in that package.
+`d186e0c62941d2726c2184b8399d97c861af4195`; Skyline/native power are included only
+in the new `f3e3a83` package. The existing accepted font repair, pause-safe PCM
+writer, shared artwork ownership/budget and memory diagnostics are retained.
+The user's full-process 549→1431MB report remains unresolved pending their exact
+Windows retest; native cache stress does not establish whole-player convergence.

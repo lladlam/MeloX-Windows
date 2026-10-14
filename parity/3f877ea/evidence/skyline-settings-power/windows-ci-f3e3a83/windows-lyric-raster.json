@@ -1,0 +1,490 @@
+{
+  "android_pixel_acceptance": "BLOCKED",
+  "os": "Windows Server 2025",
+  "maximum_normalized_difference": 0,
+  "limit": 0.01,
+  "check": "production unlifted individual glyphs versus the same production shaped text",
+  "results": [
+    {
+      "fixture": 0,
+      "reference_ink": 483000,
+      "density": 1,
+      "normalized_difference": 0,
+      "weight": "Bold",
+      "absolute_pixel_difference": 0
+    },
+    {
+      "fixture": 1,
+      "reference_ink": 952942,
+      "density": 1,
+      "normalized_difference": 0,
+      "weight": "Bold",
+      "absolute_pixel_difference": 0
+    },
+    {
+      "fixture": 2,
+      "reference_ink": 950006,
+      "density": 1,
+      "normalized_difference": 0,
+      "weight": "Bold",
+      "absolute_pixel_difference": 0
+    },
+    {
+      "fixture": 3,
+      "reference_ink": 954254,
+      "density": 1,
+      "normalized_difference": 0,
+      "weight": "Bold",
+      "absolute_pixel_difference": 0
+    },
+    {
+      "fixture": 4,
+      "reference_ink": 293492,
+      "density": 1,
+      "normalized_difference": 0,
+      "weight": "Bold",
+      "absolute_pixel_difference": 0
+    },
+    {
+      "fixture": 5,
+      "reference_ink": 1435942,
+      "density": 1,
+      "normalized_difference": 0,
+      "weight": "Bold",
+      "absolute_pixel_difference": 0
+    },
+    {
+      "fixture": 0,
+      "reference_ink": 515373,
+      "density": 1,
+      "normalized_difference": 0,
+      "weight": "Heavy",
+      "absolute_pixel_difference": 0
+    },
+    {
+      "fixture": 1,
+      "reference_ink": 1026721,
+      "density": 1,
+      "normalized_difference": 0,
+      "weight": "Heavy",
+      "absolute_pixel_difference": 0
+    },
+    {
+      "fixture": 2,
+      "reference_ink": 1017278,
+      "density": 1,
+      "normalized_difference": 0,
+      "weight": "Heavy",
+      "absolute_pixel_difference": 0
+    },
+    {
+      "fixture": 3,
+      "reference_ink": 1028278,
+      "density": 1,
+      "normalized_difference": 0,
+      "weight": "Heavy",
+      "absolute_pixel_difference": 0
+    },
+    {
+      "fixture": 4,
+      "reference_ink": 308202,
+      "density": 1,
+      "normalized_difference": 0,
+      "weight": "Heavy",
+      "absolute_pixel_difference": 0
+    },
+    {
+      "fixture": 5,
+      "reference_ink": 1542094,
+      "density": 1,
+      "normalized_difference": 0,
+      "weight": "Heavy",
+      "absolute_pixel_difference": 0
+    },
+    {
+      "fixture": 0,
+      "reference_ink": 761793,
+      "density": 1.25,
+      "normalized_difference": 0,
+      "weight": "Bold",
+      "absolute_pixel_difference": 0
+    },
+    {
+      "fixture": 1,
+      "reference_ink": 1515558,
+      "density": 1.25,
+      "normalized_difference": 0,
+      "weight": "Bold",
+      "absolute_pixel_difference": 0
+    },
+    {
+      "fixture": 2,
+      "reference_ink": 1484795,
+      "density": 1.25,
+      "normalized_difference": 0,
+      "weight": "Bold",
+      "absolute_pixel_difference": 0
+    },
+    {
+      "fixture": 3,
+      "reference_ink": 1520706,
+      "density": 1.25,
+      "normalized_difference": 0,
+      "weight": "Bold",
+      "absolute_pixel_difference": 0
+    },
+    {
+      "fixture": 4,
+      "reference_ink": 462003,
+      "density": 1.25,
+      "normalized_difference": 0,
+      "weight": "Bold",
+      "absolute_pixel_difference": 0
+    },
+    {
+      "fixture": 5,
+      "reference_ink": 2277351,
+      "density": 1.25,
+      "normalized_difference": 0,
+      "weight": "Bold",
+      "absolute_pixel_difference": 0
+    },
+    {
+      "fixture": 0,
+      "reference_ink": 823600,
+      "density": 1.25,
+      "normalized_difference": 0,
+      "weight": "Heavy",
+      "absolute_pixel_difference": 0
+    },
+    {
+      "fixture": 1,
+      "reference_ink": 1640748,
+      "density": 1.25,
+      "normalized_difference": 0,
+      "weight": "Heavy",
+      "absolute_pixel_difference": 0
+    },
+    {
+      "fixture": 2,
+      "reference_ink": 1615602,
+      "density": 1.25,
+      "normalized_difference": 0,
+      "weight": "Heavy",
+      "absolute_pixel_difference": 0
+    },
+    {
+      "fixture": 3,
+      "reference_ink": 1649093,
+      "density": 1.25,
+      "normalized_difference": 0,
+      "weight": "Heavy",
+      "absolute_pixel_difference": 0
+    },
+    {
+      "fixture": 4,
+      "reference_ink": 488845,
+      "density": 1.25,
+      "normalized_difference": 0,
+      "weight": "Heavy",
+      "absolute_pixel_difference": 0
+    },
+    {
+      "fixture": 5,
+      "reference_ink": 2464348,
+      "density": 1.25,
+      "normalized_difference": 0,
+      "weight": "Heavy",
+      "absolute_pixel_difference": 0
+    },
+    {
+      "fixture": 0,
+      "reference_ink": 1065749,
+      "density": 1.5,
+      "normalized_difference": 0,
+      "weight": "Bold",
+      "absolute_pixel_difference": 0
+    },
+    {
+      "fixture": 1,
+      "reference_ink": 2123142,
+      "density": 1.5,
+      "normalized_difference": 0,
+      "weight": "Bold",
+      "absolute_pixel_difference": 0
+    },
+    {
+      "fixture": 2,
+      "reference_ink": 2076670,
+      "density": 1.5,
+      "normalized_difference": 0,
+      "weight": "Bold",
+      "absolute_pixel_difference": 0
+    },
+    {
+      "fixture": 3,
+      "reference_ink": 2115957,
+      "density": 1.5,
+      "normalized_difference": 0,
+      "weight": "Bold",
+      "absolute_pixel_difference": 0
+    },
+    {
+      "fixture": 4,
+      "reference_ink": 646738,
+      "density": 1.5,
+      "normalized_difference": 0,
+      "weight": "Bold",
+      "absolute_pixel_difference": 0
+    },
+    {
+      "fixture": 5,
+      "reference_ink": 3188891,
+      "density": 1.5,
+      "normalized_difference": 0,
+      "weight": "Bold",
+      "absolute_pixel_difference": 0
+    },
+    {
+      "fixture": 0,
+      "reference_ink": 1145436,
+      "density": 1.5,
+      "normalized_difference": 0,
+      "weight": "Heavy",
+      "absolute_pixel_difference": 0
+    },
+    {
+      "fixture": 1,
+      "reference_ink": 2285790,
+      "density": 1.5,
+      "normalized_difference": 0,
+      "weight": "Heavy",
+      "absolute_pixel_difference": 0
+    },
+    {
+      "fixture": 2,
+      "reference_ink": 2250194,
+      "density": 1.5,
+      "normalized_difference": 0,
+      "weight": "Heavy",
+      "absolute_pixel_difference": 0
+    },
+    {
+      "fixture": 3,
+      "reference_ink": 2291155,
+      "density": 1.5,
+      "normalized_difference": 0,
+      "weight": "Heavy",
+      "absolute_pixel_difference": 0
+    },
+    {
+      "fixture": 4,
+      "reference_ink": 681561,
+      "density": 1.5,
+      "normalized_difference": 0,
+      "weight": "Heavy",
+      "absolute_pixel_difference": 0
+    },
+    {
+      "fixture": 5,
+      "reference_ink": 3431226,
+      "density": 1.5,
+      "normalized_difference": 0,
+      "weight": "Heavy",
+      "absolute_pixel_difference": 0
+    },
+    {
+      "fixture": 0,
+      "reference_ink": 1460110,
+      "density": 1.75,
+      "normalized_difference": 0,
+      "weight": "Bold",
+      "absolute_pixel_difference": 0
+    },
+    {
+      "fixture": 1,
+      "reference_ink": 2903043,
+      "density": 1.75,
+      "normalized_difference": 0,
+      "weight": "Bold",
+      "absolute_pixel_difference": 0
+    },
+    {
+      "fixture": 2,
+      "reference_ink": 2866161,
+      "density": 1.75,
+      "normalized_difference": 0,
+      "weight": "Bold",
+      "absolute_pixel_difference": 0
+    },
+    {
+      "fixture": 3,
+      "reference_ink": 2910518,
+      "density": 1.75,
+      "normalized_difference": 0,
+      "weight": "Bold",
+      "absolute_pixel_difference": 0
+    },
+    {
+      "fixture": 4,
+      "reference_ink": 888115,
+      "density": 1.75,
+      "normalized_difference": 0,
+      "weight": "Bold",
+      "absolute_pixel_difference": 0
+    },
+    {
+      "fixture": 5,
+      "reference_ink": 4363153,
+      "density": 1.75,
+      "normalized_difference": 0,
+      "weight": "Bold",
+      "absolute_pixel_difference": 0
+    },
+    {
+      "fixture": 0,
+      "reference_ink": 1574840,
+      "density": 1.75,
+      "normalized_difference": 0,
+      "weight": "Heavy",
+      "absolute_pixel_difference": 0
+    },
+    {
+      "fixture": 1,
+      "reference_ink": 3135547,
+      "density": 1.75,
+      "normalized_difference": 0,
+      "weight": "Heavy",
+      "absolute_pixel_difference": 0
+    },
+    {
+      "fixture": 2,
+      "reference_ink": 3107633,
+      "density": 1.75,
+      "normalized_difference": 0,
+      "weight": "Heavy",
+      "absolute_pixel_difference": 0
+    },
+    {
+      "fixture": 3,
+      "reference_ink": 3155353,
+      "density": 1.75,
+      "normalized_difference": 0,
+      "weight": "Heavy",
+      "absolute_pixel_difference": 0
+    },
+    {
+      "fixture": 4,
+      "reference_ink": 942490,
+      "density": 1.75,
+      "normalized_difference": 0,
+      "weight": "Heavy",
+      "absolute_pixel_difference": 0
+    },
+    {
+      "fixture": 5,
+      "reference_ink": 4710387,
+      "density": 1.75,
+      "normalized_difference": 0,
+      "weight": "Heavy",
+      "absolute_pixel_difference": 0
+    },
+    {
+      "fixture": 0,
+      "reference_ink": 1868912,
+      "density": 2,
+      "normalized_difference": 0,
+      "weight": "Bold",
+      "absolute_pixel_difference": 0
+    },
+    {
+      "fixture": 1,
+      "reference_ink": 3715325,
+      "density": 2,
+      "normalized_difference": 0,
+      "weight": "Bold",
+      "absolute_pixel_difference": 0
+    },
+    {
+      "fixture": 2,
+      "reference_ink": 3660988,
+      "density": 2,
+      "normalized_difference": 0,
+      "weight": "Bold",
+      "absolute_pixel_difference": 0
+    },
+    {
+      "fixture": 3,
+      "reference_ink": 3717339,
+      "density": 2,
+      "normalized_difference": 0,
+      "weight": "Bold",
+      "absolute_pixel_difference": 0
+    },
+    {
+      "fixture": 4,
+      "reference_ink": 1138636,
+      "density": 2,
+      "normalized_difference": 0,
+      "weight": "Bold",
+      "absolute_pixel_difference": 0
+    },
+    {
+      "fixture": 5,
+      "reference_ink": 5584237,
+      "density": 2,
+      "normalized_difference": 0,
+      "weight": "Bold",
+      "absolute_pixel_difference": 0
+    },
+    {
+      "fixture": 0,
+      "reference_ink": 2022527,
+      "density": 2,
+      "normalized_difference": 0,
+      "weight": "Heavy",
+      "absolute_pixel_difference": 0
+    },
+    {
+      "fixture": 1,
+      "reference_ink": 4014062,
+      "density": 2,
+      "normalized_difference": 0,
+      "weight": "Heavy",
+      "absolute_pixel_difference": 0
+    },
+    {
+      "fixture": 2,
+      "reference_ink": 3973407,
+      "density": 2,
+      "normalized_difference": 0,
+      "weight": "Heavy",
+      "absolute_pixel_difference": 0
+    },
+    {
+      "fixture": 3,
+      "reference_ink": 4047925,
+      "density": 2,
+      "normalized_difference": 0,
+      "weight": "Heavy",
+      "absolute_pixel_difference": 0
+    },
+    {
+      "fixture": 4,
+      "reference_ink": 1208351,
+      "density": 2,
+      "normalized_difference": 0,
+      "weight": "Heavy",
+      "absolute_pixel_difference": 0
+    },
+    {
+      "fixture": 5,
+      "reference_ink": 6036589,
+      "density": 2,
+      "normalized_difference": 0,
+      "weight": "Heavy",
+      "absolute_pixel_difference": 0
+    }
+  ],
+  "status": "PASSED"
+}

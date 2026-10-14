@@ -1,0 +1,17 @@
+{
+  "control-inputs.json": {
+    "raw_downloaded_sha256": "b831de3634f62977e7fe6527e66cbd718402dd94d2036c49a4fbe1ee9ed36f09",
+    "archive_sha256": "56cf3ec1ee8dddb76d95d5b632b0c8e704234bb2374fa1b463811df38e70e1e6",
+    "normalization": "CRLF to LF only"
+  },
+  "arguments.txt": {
+    "raw_downloaded_sha256": "dccd752ba3391150e8d0b58aa53ed9977da2cee680dc7f77fd02c938de6b98bc",
+    "archive_sha256": "52ef78b5de76b73b1ff541590affb06a40ad2ef74422f4990c1bfe1bce7422cd",
+    "normalization": "CRLF to LF only"
+  },
+  "gradle.log": {
+    "raw_downloaded_sha256": "2355ccc394b7d370ea2e10780b670552117989e405ffa6a196101748ad7a7196",
+    "archive_sha256": "36ea6f8e7692e912c50fc905f566f8886a897933d3c12ce35e3dc06b13c62161",
+    "normalization": "LF; log trailing whitespace removed"
+  }
+}

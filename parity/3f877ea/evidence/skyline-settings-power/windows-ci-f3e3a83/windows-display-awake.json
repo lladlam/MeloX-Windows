@@ -1,0 +1,56 @@
+{
+  "os": "Windows Server 2025",
+  "physical_display_idle_sleep_acceptance": "BLOCKED",
+  "api": "kernel32.SetThreadExecutionState",
+  "samples": [
+    {
+      "previous_flags": 2147483648,
+      "requested": true,
+      "active": true,
+      "error": null,
+      "owner_thread_id": 14,
+      "native_calls": 1
+    },
+    {
+      "previous_flags": 2147483648,
+      "requested": true,
+      "active": true,
+      "error": null,
+      "owner_thread_id": 14,
+      "native_calls": 1
+    },
+    {
+      "previous_flags": 2147483651,
+      "requested": false,
+      "active": false,
+      "error": null,
+      "owner_thread_id": 14,
+      "native_calls": 2
+    },
+    {
+      "previous_flags": 2147483651,
+      "requested": false,
+      "active": false,
+      "error": null,
+      "owner_thread_id": 14,
+      "native_calls": 2
+    },
+    {
+      "previous_flags": 2147483648,
+      "requested": true,
+      "active": true,
+      "error": null,
+      "owner_thread_id": 14,
+      "native_calls": 3
+    },
+    {
+      "previous_flags": 2147483651,
+      "requested": false,
+      "active": false,
+      "error": null,
+      "owner_thread_id": 14,
+      "native_calls": 4
+    }
+  ],
+  "status": "PASSED"
+}

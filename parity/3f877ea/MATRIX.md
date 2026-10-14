@@ -37,11 +37,22 @@ Historical `parity/94e17c9/` evidence is reference material, not new acceptance.
 | Android/Windows same-content pixel and dynamic frames | All named UI pages and player scenes | Production ImageComposeScene capture retained; old reference evidence preserved | Connected Android devices = 0; missing current pinned reference frames. No new MATCH from unrelated feed SSIM | BLOCKED |
 | Remaining settings, Classic/alternate lyric shells, Glass refraction, podcast/provider acceptance | Source paths specified by task | Existing implementations retained; confirmed gaps require subsequent batches | Not accepted by build or old matrix inventory | PARTIAL |
 | All 60 canonical advanced lyrics settings and visible renderer consumers | Pinned `SettingsScreen.kt:1700–1897`, lyrics preferences/runtime and iOS panel | Production AdvancedLyricsSettings route, exact strings/choices and existing-key persistence; translation scope now consumes its real setting | ADVANCED_LYRICS_SETTINGS.md; Linux/Windows 60 pointer keys / separate-JVM reload / 501 assertions and real Tiny Giant 173 scenes / 129 frames / 55 assertions. Windows `d186e0c` run 38592934356 passes all gates and independent package/PCM verification. Android pixels remain blocked | PARTIAL |
-| Skyline 17 settings, source reset and native keep-awake scopes | Pinned `SettingsScreen.kt:1091–1178`, `MeloXIOSNowPlayingSharedHost.kt:129–145` | Existing real renderer consumers; 13-key reset with preserved flags/count; four awake scopes; dedicated kernel32 owner thread and foreground/iconify/disposal release | SKYLINE_SETTINGS_POWER.md; Linux 70 control scenes / 342 assertions across four JVMs, real Tiny Giant 217 scenes / 162 frames / 69 assertions and 0px geometry restore. Linux native power unsupported; Windows delivery/native ownership and physical acceptance pending | PARTIAL |
+| Skyline 17 settings, source reset and native keep-awake scopes | Pinned `SettingsScreen.kt:1091–1178`, `MeloXIOSNowPlayingSharedHost.kt:129–145` | Existing real renderer consumers; 13-key reset with preserved flags/count; four awake scopes; dedicated kernel32 owner thread and foreground/iconify/disposal release | SKYLINE_SETTINGS_POWER.md; Linux/Windows 70 control scenes / 342 assertions across four JVMs, real Tiny Giant 217 scenes / 162 frames / 69 assertions and 0px geometry restore. Windows run 38653215039 at f3e3a83 and independent native/package collection pass; physical power/Android pixels remain blocked | PARTIAL |
 
 ## Evidence levels
 
 Latest independently verified Windows distribution:
+**f3e3a83d63d0d12c36723aee974ebf3dc2a530d1**, run **38653215039 / SUCCESS**,
+artifact **11936083521**. **206 tests / 40 suites / zero failures**, all 17 Skyline
+keys + four awake scopes/source reset / 342 assertions, prior 60 lyrics keys /
+501 assertions, real Windows power-request ownership, eight pinned resources,
+eight fonts, glyph/font/EQ/cache-memory audits and all packaging layers pass.
+Final ZIP **308,020,756 bytes**, SHA-256
+`0cc5fb610ed0dea45a323f5763ce05cdf055cbdbec9b3c12295e85a05f5ffe0a`.
+See `SKYLINE_SETTINGS_POWER.md`. Physical user-memory/power/accounts/audio and
+pinned Android pixel/motion acceptance remain pending/blocked.
+
+Preceding independently verified Windows distribution:
 **d186e0c62941d2726c2184b8399d97c861af4195**, run **38592934356 / SUCCESS**,
 artifact **11909196579**. **204 tests / 39 suites / zero failures**, 60-key mouse
 replay + separate-JVM reload / 501 assertions; seven pinned resources, eight

@@ -8,9 +8,29 @@ Settings/legal closing fetch (2026-10-13): `5b52a92022a5943e238ffc5d3121c536b2f2
 
 ## Landed in this batch
 
-### Current verified advanced lyrics delivery (2026-10-15)
+### Current verified Skyline/native power delivery (2026-10-15)
 
 **Current independently verified distribution:**
+`f3e3a83d63d0d12c36723aee974ebf3dc2a530d1`, Windows run **38653215039 / SUCCESS**,
+artifact **11936083521**. Final ZIP **308,020,756 bytes**, SHA-256
+`0cc5fb610ed0dea45a323f5763ce05cdf055cbdbec9b3c12295e85a05f5ffe0a`.
+Download: <https://github.com/lladlam/MeloX-Windows/actions/runs/38653215039/artifacts/11936083521>.
+Linux/Windows **206 tests / 40 suites / zero failures**. Skyline all 17 keys,
+four awake scopes and source reset pass 70 scenes / 342 assertions across four
+JVMs. Prior 60-key lyrics replay/reload / 501 assertions still passes. Real
+Tiny Giant consumer/layout/PCM replay passes with 0px paused geometry restore.
+Real Windows kernel32 ownership passes six samples / four native calls / one
+thread, including direct foreground gate and stale-UI/late-disposal protection.
+Independent artifact digest/CRC/revision, FFmpeg/Java Sound/management, eight
+pinned resources, eight static fonts/metrics, glyph/font/EQ/cache-memory gates
+pass. See `parity/3f877ea/SKYLINE_SETTINGS_POWER.md`. User-machine power/idle,
+549→1431MB memory, physical accounts/audio/devices and Android pixels remain
+pending/blocked. Next gaps include provider-native actions and real initial
+favorite-state reads; current song actions still start `liked=false`.
+
+### Preceding verified advanced lyrics delivery (2026-10-15)
+
+**Preceding independently verified distribution:**
 `d186e0c62941d2726c2184b8399d97c861af4195`, Windows run **38592934356 / SUCCESS**,
 artifact **11909196579**. Final ZIP **307,984,559 bytes**, SHA-256
 `a97b4b0d89861634b12a35ea38be2b1277134a06cba1a8f59d6d9cb7b8bc8f37`.
@@ -24,15 +44,18 @@ cache memory audit all pass. See `parity/3f877ea/ADVANCED_LYRICS_SETTINGS.md`.
 Whole-process 549→1431MB memory, pinned Android pixel/motion and physical Windows
 account/audio/device behavior remain pending/blocked.
 
-**Next active batch:** all 17 Skyline settings and exact 13-key reset are
+**Follow-up Skyline batch (now verified above):** all 17 Skyline settings and exact 13-key reset are
 implemented at the source SkylineLyrics route. Four awake scopes replace the
 legacy stored toggle, with an actual Windows same-thread display/system idle
 request and direct AWT foreground/iconify gate; disposal prevents late reacquire.
 Linux controls: 70 scenes / 342 assertions across four JVMs. Real Tiny Giant:
 217 scenes / 162 frames / 69 assertions, paused geometry restores with 0px error
 and genuine PCM passes. Linux 206 tests / 40 suites and package decoder/resource
-gates pass. Native API is UNSUPPORTED on Linux; fresh Windows gates and independent
-distribution collection are required. See `parity/3f877ea/SKYLINE_SETTINGS_POWER.md`.
+gates pass. Native API is UNSUPPORTED on Linux. Windows run `38653215039` at exact
+`f3e3a83d63d0d12c36723aee974ebf3dc2a530d1` now passes all steps including real
+native power-request ownership, both settings replay batches and packaging.
+Independent distribution collection passes, artifact `11936083521`; source
+revision remains `f3e3a83`. See `parity/3f877ea/SKYLINE_SETTINGS_POWER.md`.
 
 ### User-accepted font follow-up (2026-10-14)
 

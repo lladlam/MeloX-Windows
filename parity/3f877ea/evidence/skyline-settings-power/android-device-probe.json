@@ -1,0 +1,7 @@
+{
+  "date": "2026-10-15",
+  "count": 0,
+  "devices": [],
+  "android_same_content_pixel_motion_acceptance": "BLOCKED",
+  "note": "Rechecked after exact f3e3a83 Windows package collection; no pinned Android comparison is claimed."
+}

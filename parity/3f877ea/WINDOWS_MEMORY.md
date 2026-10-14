@@ -111,6 +111,17 @@ commit 417,247,232 → 418,942,976 bytes. Its complete 60-key Windows UI/reload 
 also passes. Neither result resolves the user's full-player 549→1431MB report;
 the exact delivery details are in `ADVANCED_LYRICS_SETTINGS.md`.
 
+The current Skyline/native-power delivery at exact
+`f3e3a83d63d0d12c36723aee974ebf3dc2a530d1` also retains these repairs and passes
+independent package collection (run `38653215039`, artifact `11936083521`).
+The directly downloaded no-forced-GC artwork audit again loads 2,048 images / 2GiB
+cumulative pixels and retains 32 entries / 64MiB budget. Batch 2→7 resident is
+128,532,480→130,310,144 bytes (+1,777,664); private commit is
+415,940,608→417,558,528 bytes. These are isolated cache-stress measurements,
+not evidence that whole-player renderer/text growth or the user's reported
+549→1431MB symptom is resolved. See `SKYLINE_SETTINGS_POWER.md` for the exact
+download, final ZIP hash and remaining physical acceptance boundaries.
+
 ## Preserved migration work
 
 The restored advanced-lyrics batch is retained in stash:
@@ -118,5 +129,6 @@ The restored advanced-lyrics batch is retained in stash:
 The earlier original advanced-lyrics stash is also retained. After the user
 requested continued migration, the full 60-key control replay and separate-JVM
 reload passed, with real Tiny Giant consumer replay. See
-`ADVANCED_LYRICS_SETTINGS.md`; Windows delivery gates are pending. The v7
+`ADVANCED_LYRICS_SETTINGS.md`; Windows delivery gates and independent collection
+now pass for both the advanced-lyrics and Skyline distributions. The v7
 failed reveal remains historical evidence, not the current control result.
