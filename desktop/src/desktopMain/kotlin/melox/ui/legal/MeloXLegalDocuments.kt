@@ -33,6 +33,8 @@ private object PinnedSettingsStrings {
     val values = Properties().apply {
         checkNotNull(PinnedSettingsStrings::class.java.classLoader.getResourceAsStream("parity/pinned-settings-strings.properties"))
             .reader(Charsets.UTF_8).use(::load)
+        checkNotNull(PinnedSettingsStrings::class.java.classLoader.getResourceAsStream("parity/pinned-lyrics-strings.properties"))
+            .reader(Charsets.UTF_8).use(::load)
     }
 }
 

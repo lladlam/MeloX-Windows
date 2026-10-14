@@ -284,8 +284,11 @@ internal fun LyricsPage(
                     val flipped = line.agent?.alignment == LyricAgentAlignment.Flipped
                     val textAlign = if (flipped) TextAlign.End else TextAlign.Start
                     val showRoman = MeloXSettingsRuntime.showLyricRomanization && !line.romanization.isNullOrBlank()
-                    val visibleRoman = showRoman && (MeloXSettingsRuntime.lyricRomanizationDisplayMode == MeloXLyricAnnotationDisplayMode.AllLines || focused)
+                    val visibleRoman = MeloXLyricPresentation.annotationVisible(MeloXSettingsRuntime.showLyricRomanization,
+                        line.romanization, MeloXSettingsRuntime.lyricRomanizationDisplayMode, focused)
                     val showTranslation = MeloXSettingsRuntime.showLyricTranslation && !line.translation.isNullOrBlank()
+                    val visibleTranslation = MeloXLyricPresentation.annotationVisible(MeloXSettingsRuntime.showLyricTranslation,
+                        line.translation, MeloXSettingsRuntime.lyricTranslationDisplayMode, focused)
                     val effectiveBlur = max(blur, focusBlur).let { when (quality) {
                         MeloXLyricsRenderingQuality.Low -> 0f
                         MeloXLyricsRenderingQuality.Balanced -> it * .55f
@@ -338,12 +341,16 @@ internal fun LyricsPage(
                         if (showRoman && !visibleRoman) {
                             Spacer(Modifier.height(with(density) { (romanSize * 1.2f).sp.toDp() } + 4.dp))
                         }
-                        if (showTranslation) {
+                        if (showTranslation && !visibleTranslation) {
+                            // Keep focus-only annotations from moving the line anchors.
+                            Spacer(Modifier.height(with(density) { (translationSize * 1.2f).sp.toDp() } + 4.dp))
+                        }
+                        if (visibleTranslation) {
                             Text(line.translation.orEmpty(), fontSize = translationSize.sp, lineHeight = (translationSize * 1.2f).sp,
                                 fontWeight = MeloXSettingsRuntime.lyricFontWeight.composeWeight, textAlign = textAlign,
                                 color = Color.White.copy(alpha = MeloXSettingsRuntime.lyricTranslationOpacity),
                                 fontFamily = MeloXLanTingProFontFamily,
-                                modifier = Modifier.fillMaxWidth().then(rowAlpha).graphicsLayer {
+                                modifier = Modifier.fillMaxWidth().testTag("lyric-translation-$index").then(rowAlpha).graphicsLayer {
                                     val radius = effectiveBlur.dp.toPx()
                                     renderEffect = if (radius > .05f) BlurEffect(radius, radius) else null
                                 }.padding(top = 4.dp))

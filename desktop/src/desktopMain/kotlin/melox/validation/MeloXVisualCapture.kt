@@ -172,6 +172,17 @@ fun main(args: Array<String>) = runBlocking {
                 "pv-style" -> melox.settings.MeloXSettingsRuntime.textPVStyle.name == expected
                 "pv-speed" -> melox.settings.MeloXSettingsRuntime.textPVAnimationSpeed == expected.toFloat()
                 "pv-intensity" -> melox.settings.MeloXSettingsRuntime.textPVMotionIntensity == expected.toFloat()
+                "pref-bool" -> expected.split(':', limit = 2).let { (key, value) -> melox.settings.MeloXSettingsPreferences.boolean(key, !value.toBooleanStrict()) == value.toBooleanStrict() }
+                "pref-int" -> expected.split(':', limit = 2).let { (key, value) -> melox.settings.MeloXSettingsPreferences.int(key, Int.MIN_VALUE) == value.toInt() }
+                "pref-float" -> expected.split(':', limit = 2).let { (key, value) -> kotlin.math.abs(melox.settings.MeloXSettingsPreferences.float(key, Float.NaN) - value.toFloat()) < .001f }
+                "pref-string" -> expected.split(':', limit = 2).let { (key, value) -> melox.settings.MeloXSettingsPreferences.string(key) == value }
+                "runtime" -> expected.split(':', limit = 2).let { (property, value) ->
+                    val getter = "get" + property.replaceFirstChar(Char::uppercaseChar)
+                    val actual = melox.settings.MeloXSettingsRuntime::class.java.getMethod(getter).invoke(melox.settings.MeloXSettingsRuntime)
+                    if (actual is Number) kotlin.math.abs(actual.toDouble() - value.toDouble()) < .001 else actual.toString() == value
+                }
+                "translation-count" -> semantics.count { it.config.getOrNull(SemanticsProperties.TestTag)?.startsWith("lyric-translation-") == true } == expected.toInt()
+                "translation-min" -> semantics.count { it.config.getOrNull(SemanticsProperties.TestTag)?.startsWith("lyric-translation-") == true } >= expected.toInt()
                 "eq-preamp" -> melox.playback.MeloXEqualizerSettings.current.value.preampDb == expected.toFloat()
                 "eq-band" -> expected.split(':').let { (index, gain) -> melox.playback.MeloXEqualizerSettings.current.value.gainsDb[index.toInt()] == gain.toFloat() }
                 "queue-min" -> melox.playback.PlaybackCommands.queue.value.songs.size >= expected.toInt()
@@ -280,7 +291,10 @@ fun main(args: Array<String>) = runBlocking {
             steps.forEachIndexed { index, step ->
                 val (name, coordinates) = step.split(':', limit = 2)
                 val eventStart = System.nanoTime()
-                if (coordinates == "escape") {
+                if (coordinates == "reload-settings") {
+                    // Re-read genuine canonical preferences; no validation values are injected.
+                    melox.settings.MeloXSettingsRuntime.initialize(force = true)
+                } else if (coordinates == "escape") {
                     // Synthetic input is confined to this version-pinned capture harness.
                     scene.sendKeyEvent(KeyEvent(key = Key.Escape, type = KeyEventType.KeyDown))
                     check(scene.sendKeyEvent(KeyEvent(key = Key.Escape, type = KeyEventType.KeyUp))) { "Escape was not handled at $name" }
@@ -300,23 +314,67 @@ fun main(args: Array<String>) = runBlocking {
                     fun pointerTarget(candidate: SemanticsNode): SemanticsNode? =
                         if (candidate.config.contains(if (hold) SemanticsActions.OnLongClick else SemanticsActions.OnClick)) candidate
                         else candidate.children.firstNotNullOfOrNull(::pointerTarget)
-                    val target = checkNotNull(pointerTarget(node)) { "$tag has no matching pointer action" }
+                    var target = checkNotNull(pointerTarget(node)) { "$tag has no matching pointer action" }
                     check(!target.config.contains(SemanticsProperties.Disabled)) { "$tag pointer target is disabled at $name" }
+                    // Dropdown items and page routes animate after their semantics
+                    // appear. A real mouse must hit the final target, not the
+                    // clipped bounds from the first spring frame.
+                    var stableFrames = 0
+                    var previousBounds = target.boundsInWindow
+                    awaitUi {
+                        val current = scene.captureSemantics().tagged(tag)?.let(::pointerTarget)
+                        if (current == null || current.boundsInWindow.isEmpty) {
+                            stableFrames = 0
+                            false
+                        } else {
+                            val b = current.boundsInWindow
+                            val drift = maxOf(kotlin.math.abs(b.left - previousBounds.left),
+                                kotlin.math.abs(b.top - previousBounds.top), kotlin.math.abs(b.right - previousBounds.right),
+                                kotlin.math.abs(b.bottom - previousBounds.bottom))
+                            stableFrames = if (drift < .25f * density) stableFrames + 1 else 0
+                            previousBounds = b
+                            target = current
+                            stableFrames >= 4
+                        }
+                    }
+                    check(stableFrames >= 4) { "$tag did not settle before physical click at $name" }
                     val point = target.boundsInWindow.center
                     println("Physical click $name: $tag at $point")
+                    // A desktop mouse reaches the target before pressing; render
+                    // that move so popup disposal and new hit-test paths settle.
+                    // Keep down/up on separate frames for pointer coroutines.
+                    scene.sendPointerEvent(PointerEventType.Move, point)
+                    settle(16)
                     scene.sendPointerEvent(PointerEventType.Press, point, button = PointerButton.Primary)
-                    if (hold) settle(700)
+                    settle(if (hold) 700 else 32)
                     scene.sendPointerEvent(PointerEventType.Release, point, button = PointerButton.Primary)
                 } else if (coordinates.startsWith("reveal@")) {
                     val tag = coordinates.substringAfter('@')
                     var revealed = false
-                    for (attempt in 0 until 80) {
+                    // The first settings row centers at 112dp below its 74dp
+                    // header. A viewport-percentage guard (18% = 140px here)
+                    // made it impossible to reveal that row at the top limit.
+                    val topGuard = 80f * density
+                    val bottomGuard = height - 170f * density
+                    for (attempt in 0 until 400) {
                         val node = scene.captureSemantics().lastOrNull { it.config.getOrNull(SemanticsProperties.TestTag) == tag }
                         val centerY = node?.let { it.positionInWindow.y + it.size.height / 2f }
-                        if (centerY != null && centerY in height * .18f..height - 170f && !node.boundsInWindow.isEmpty) { revealed = true; break }
-                        val direction = if (centerY != null && centerY < height * .18f) -1f else 1f
+                        if (centerY != null && centerY in topGuard..bottomGuard && !node.boundsInWindow.isEmpty) {
+                            // A wheel animation may pass through the target and
+                            // keep moving. Confirm visibility after settling.
+                            settle(240)
+                            val settled = scene.captureSemantics().tagged(tag)
+                            val y = settled?.let { it.positionInWindow.y + it.size.height / 2f }
+                            if (y != null && y in topGuard..bottomGuard && !settled.boundsInWindow.isEmpty) {
+                                revealed = true
+                                break
+                            }
+                        }
+                        val direction = if (centerY != null && centerY < topGuard) -1f else 1f
+                        // Traverse long production settings pages by mouse wheel,
+                        // with enough distance to return from their last slider.
                         scene.sendPointerEvent(PointerEventType.Scroll, Offset(width * .5f, height * .55f), scrollDelta = Offset(0f, direction * 3f))
-                        settle(120)
+                        settle(240)
                     }
                     check(revealed) { "Could not reveal production node $tag using mouse wheel at $name" }
                 } else if (coordinates.startsWith("wait@")) {
@@ -335,8 +393,16 @@ fun main(args: Array<String>) = runBlocking {
                 } else if (coordinates.startsWith("slider@")) {
                     val (tag, fraction) = coordinates.substringAfter('@').split(',')
                     val bounds = requireNotNull(scene.captureSemantics().tagged(tag)) { "Missing slider node $tag" }.boundsInWindow
-                    val point = Offset(bounds.left + bounds.width * fraction.toFloat().coerceIn(0f, 1f), bounds.center.y)
+                    // Right/bottom bounds are exclusive in desktop hit testing.
+                    // Stay just inside for endpoint selections; stepped sliders
+                    // still quantize to their exact minimum/maximum.
+                    val x = (bounds.left + bounds.width * fraction.toFloat().coerceIn(0f, 1f))
+                        .coerceIn(bounds.left + .5f * density, bounds.right - .5f * density)
+                    val point = Offset(x, bounds.center.y)
+                    scene.sendPointerEvent(PointerEventType.Move, point)
+                    settle(16)
                     scene.sendPointerEvent(PointerEventType.Press, point, button = PointerButton.Primary)
+                    settle(32)
                     scene.sendPointerEvent(PointerEventType.Release, point, button = PointerButton.Primary)
                 } else if (coordinates.startsWith("hold@")) {
                     val (x, y) = coordinates.removePrefix("hold@").split(',').map(String::toFloat)

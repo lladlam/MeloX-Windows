@@ -1,0 +1,267 @@
+{
+  "status": "PASSED",
+  "head_sha": "768445faedc17c7ca25bdeee5c8eb5d9cbfea5c2",
+  "run_id": 38578024876,
+  "tests": {
+    "tests": 202,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "suites": 39
+  },
+  "glyph_self_geometry": {
+    "status": "PASSED",
+    "os": "Windows Server 2025",
+    "maximum_normalized_difference": 0,
+    "cases": 60
+  },
+  "artifact_id": 11901753358,
+  "download_url": "https://github.com/lladlam/MeloX-Windows/actions/runs/38578024876/artifacts/11901753358",
+  "outer_artifact": {
+    "bytes": 307224558,
+    "sha256": "ed14ad945f50232750fabcfa37a62549d8fd6cdbbbb6dc426195fa90dd54750c",
+    "github_digest_match": true
+  },
+  "final_zip": {
+    "bytes": 307942342,
+    "sha256": "3689043da3fa5ad9ccd90ecd13311b5db6dba74750764175b570dde9c0ecde5b",
+    "crc_verified": true
+  },
+  "jar": {
+    "bytes": 262825708,
+    "sha256": "53f08494b724e096563cac6986948a3450776dd2fdc6cfbc358baa865941da20",
+    "feature_classes": [
+      "melox/player/MeloXPcmOutput.class",
+      "melox/player/MeloXPcmWriterKt.class",
+      "melox/player/FfmpegLocator.class",
+      "melox/diagnostics/MeloXProcessLogs.class",
+      "melox/ui/screens/MeloXPlayerQualityKt.class",
+      "melox/ui/screens/MeloXGlyphLyricTextKt.class",
+      "melox/ui/theme/MeloXFontKt.class",
+      "melox/cache/MeloXWeightedLruCache.class",
+      "melox/ui/artwork/MeloXArtworkMemoryCache.class",
+      "melox/diagnostics/MeloXMemoryDiagnostics.class",
+      "melox/diagnostics/ProcessMemoryCounters.class",
+      "melox/diagnostics/ProcessMemoryApi.class"
+    ],
+    "shaped_row_mask_verified": true,
+    "pause_version_writer_verified": true,
+    "build_revision_verified": true,
+    "static_font_instances_verified": [
+      "fonts/mi_lan_pro_w100.ttf",
+      "fonts/mi_lan_pro_w200.ttf",
+      "fonts/mi_lan_pro_w300.ttf",
+      "fonts/mi_lan_pro_w400.ttf",
+      "fonts/mi_lan_pro_w500.ttf",
+      "fonts/mi_lan_pro_w600.ttf",
+      "fonts/mi_lan_pro_w700.ttf",
+      "fonts/mi_lan_pro_w800.ttf"
+    ],
+    "shared_artwork_cache_classes_verified": true,
+    "java_management_module_verified": true
+  },
+  "windows_decoder": {
+    "location": "final ZIP!/app JAR!/decoder/ffmpeg.exe",
+    "bytes": 164352000,
+    "sha256": "af7913b7ddc324bf02b8af72fe8612b1471455ef8d9e04e45466510742abcff9",
+    "magic": "PE",
+    "verified": true
+  },
+  "pinned_resources": [
+    {
+      "resource": "legal/cloud-control-privacy-zh-CN.md",
+      "bytes": 5020,
+      "sha256": "7030f44dda89b27357ba4b960562d5eae98d9b5ae451a8a398e4fb6cc68f5793",
+      "verified": true
+    },
+    {
+      "resource": "legal/disclaimer-zh-CN.md",
+      "bytes": 5015,
+      "sha256": "4c6e212bb6c78bd2fa6e45a76136cba6a5cfd82c1321dfdf27d727df2a50c44e",
+      "verified": true
+    },
+    {
+      "resource": "legal/privacy-policy-zh-CN.md",
+      "bytes": 7233,
+      "sha256": "fdf41c3aea883220ba8070823b1a35d1156869117ed607f6b5c2769997ceb097",
+      "verified": true
+    },
+    {
+      "resource": "legal/third-party-music-sources-zh-CN.md",
+      "bytes": 3167,
+      "sha256": "4aefd5137ea6e9a2da335671753dca4d8aebcdcf0ddc903c00a03bc89ef62c38",
+      "verified": true
+    },
+    {
+      "resource": "parity/pinned-settings-strings.properties",
+      "bytes": 17451,
+      "sha256": "649df6af06ded94e91b6f4c728aafe2e29c76ba981097503f869e3fd8144fbc4",
+      "verified": true
+    },
+    {
+      "resource": "fonts/mi_lan_pro_vf.ttf",
+      "bytes": 19646728,
+      "sha256": "15fc7accb0afcbb7cf3bbf776536a37398e552f082bb13af70602bf1d7ed676f",
+      "verified": true
+    }
+  ],
+  "physical_audible_acceptance": "BLOCKED",
+  "user_report_resolution": "UNCONFIRMED",
+  "independent_font_outline_audit": {
+    "status": "PASSED",
+    "total_cases": 120,
+    "failed_cases": 0,
+    "static_files_verified": 8,
+    "frozen_typefaces_verified": 10,
+    "font_sha256": "15fc7accb0afcbb7cf3bbf776536a37398e552f082bb13af70602bf1d7ed676f",
+    "os": "Windows Server 2025"
+  },
+  "memory_audit": {
+    "status": "PASSED",
+    "images_loaded": 2048,
+    "forced_gc": false,
+    "samples": [
+      {
+        "batch": 0,
+        "uptime_ms": 1956,
+        "heap_used_bytes": 5246640,
+        "heap_committed_bytes": 268435456,
+        "heap_max_bytes": 4294967296,
+        "non_heap_used_bytes": 11871240,
+        "threads": 13,
+        "direct_buffer_bytes": 8192,
+        "resident_bytes": 121016320,
+        "private_commit_bytes": 409124864,
+        "entries": 32,
+        "eight": 67108864,
+        "cache_entries": 32,
+        "cache_budgeted_bytes": 67108864,
+        "images_loaded": 256
+      },
+      {
+        "batch": 1,
+        "uptime_ms": 2378,
+        "heap_used_bytes": 7343792,
+        "heap_committed_bytes": 268435456,
+        "heap_max_bytes": 4294967296,
+        "non_heap_used_bytes": 12603528,
+        "threads": 13,
+        "direct_buffer_bytes": 8192,
+        "resident_bytes": 129171456,
+        "private_commit_bytes": 417611776,
+        "entries": 32,
+        "eight": 67108864,
+        "cache_entries": 32,
+        "cache_budgeted_bytes": 67108864,
+        "images_loaded": 512
+      },
+      {
+        "batch": 2,
+        "uptime_ms": 2769,
+        "heap_used_bytes": 7343792,
+        "heap_committed_bytes": 268435456,
+        "heap_max_bytes": 4294967296,
+        "non_heap_used_bytes": 12741208,
+        "threads": 13,
+        "direct_buffer_bytes": 8192,
+        "resident_bytes": 129363968,
+        "private_commit_bytes": 417669120,
+        "entries": 32,
+        "eight": 67108864,
+        "cache_entries": 32,
+        "cache_budgeted_bytes": 67108864,
+        "images_loaded": 768
+      },
+      {
+        "batch": 3,
+        "uptime_ms": 3182,
+        "heap_used_bytes": 9440944,
+        "heap_committed_bytes": 268435456,
+        "heap_max_bytes": 4294967296,
+        "non_heap_used_bytes": 12814120,
+        "threads": 13,
+        "direct_buffer_bytes": 8192,
+        "resident_bytes": 129495040,
+        "private_commit_bytes": 417734656,
+        "entries": 32,
+        "eight": 67108864,
+        "cache_entries": 32,
+        "cache_budgeted_bytes": 67108864,
+        "images_loaded": 1024
+      },
+      {
+        "batch": 4,
+        "uptime_ms": 3562,
+        "heap_used_bytes": 9440944,
+        "heap_committed_bytes": 268435456,
+        "heap_max_bytes": 4294967296,
+        "non_heap_used_bytes": 12841672,
+        "threads": 13,
+        "direct_buffer_bytes": 8192,
+        "resident_bytes": 130809856,
+        "private_commit_bytes": 418414592,
+        "entries": 32,
+        "eight": 67108864,
+        "cache_entries": 32,
+        "cache_budgeted_bytes": 67108864,
+        "images_loaded": 1280
+      },
+      {
+        "batch": 5,
+        "uptime_ms": 3944,
+        "heap_used_bytes": 9440944,
+        "heap_committed_bytes": 268435456,
+        "heap_max_bytes": 4294967296,
+        "non_heap_used_bytes": 12871672,
+        "threads": 13,
+        "direct_buffer_bytes": 8192,
+        "resident_bytes": 130809856,
+        "private_commit_bytes": 418418688,
+        "entries": 32,
+        "eight": 67108864,
+        "cache_entries": 32,
+        "cache_budgeted_bytes": 67108864,
+        "images_loaded": 1536
+      },
+      {
+        "batch": 6,
+        "uptime_ms": 4340,
+        "heap_used_bytes": 9440944,
+        "heap_committed_bytes": 268435456,
+        "heap_max_bytes": 4294967296,
+        "non_heap_used_bytes": 12892216,
+        "threads": 13,
+        "direct_buffer_bytes": 8192,
+        "resident_bytes": 130809856,
+        "private_commit_bytes": 418418688,
+        "entries": 32,
+        "eight": 67108864,
+        "cache_entries": 32,
+        "cache_budgeted_bytes": 67108864,
+        "images_loaded": 1792
+      },
+      {
+        "batch": 7,
+        "uptime_ms": 4711,
+        "heap_used_bytes": 9440944,
+        "heap_committed_bytes": 268435456,
+        "heap_max_bytes": 4294967296,
+        "non_heap_used_bytes": 12929248,
+        "threads": 13,
+        "direct_buffer_bytes": 8192,
+        "resident_bytes": 131194880,
+        "private_commit_bytes": 418738176,
+        "entries": 32,
+        "eight": 67108864,
+        "cache_entries": 32,
+        "cache_budgeted_bytes": 67108864,
+        "images_loaded": 2048
+      }
+    ],
+    "reconstructed_from_exact_ci_step_log": true,
+    "audit_json_not_uploaded": true,
+    "post_warmup_resident_growth_bytes": 1830912,
+    "post_warmup_used_heap_growth_bytes": 2097152
+  },
+  "user_memory_symptom_resolution": "PENDING"
+}

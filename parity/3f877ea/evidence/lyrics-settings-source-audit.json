@@ -1,0 +1,12 @@
+{
+  "pinned_android": "3f877eaffe30c82eb6d24eb3647702f5bc554dd3",
+  "source_sha256": {
+    "kotlin/com/lladlam/melox/ui/settings/SettingsScreen.kt": "5325c809720af94a15034e615714a003a8c48dfe6b8dee771ff1c4d2292b22c3",
+    "res/values/strings.xml": "920ba9684ce585713be0dbc7256eea248ca1ad65dd1e723fbf0d91effb21f841"
+  },
+  "resource": "parity/pinned-lyrics-strings.properties",
+  "sha256": "01c641adab3e72ed3570698fe5c407f71ff82c350d29c8346d13951dadf87717",
+  "strings": 89,
+  "verified_against_pure_export": true,
+  "check": "All 89 additional values exactly equal parsed pure pinned values/strings.xml. Existing five immutable resources retained. Source inspection is not behavioral acceptance."
+}

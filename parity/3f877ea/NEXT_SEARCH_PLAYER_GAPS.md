@@ -3,11 +3,12 @@
 Pinned acceptance base remains `3f877eaffe30c82eb6d24eb3647702f5bc554dd3`.
 These are inspected gaps, not new acceptance results.
 
-Current priority is the user's anonymous DAMIDAMI playback failure and scrambled
-lyrics report. See `DAMIDAMI_WINDOWS.md` for real diagnostic/cache fixes,
-same-track replay evidence, font provenance and remaining Windows/Android blocks.
-Advanced lyrics controls are preserved in a local WIP stash pending their failed
-pointer replay; the inventory below is not superseded by an accepted release.
+The user accepted the `797c3be` font symptom fix and requested continued migration.
+The later memory report remains open in `WINDOWS_MEMORY.md`. Advanced lyrics
+controls have now passed all 60 canonical keys, separate-JVM persistence and
+real Tiny Giant consumer replay; see `ADVANCED_LYRICS_SETTINGS.md`. Exact Windows
+package gates remain pending. The inventory below is the historical inspected
+gap, not the current production-UI key count.
 
 ## Confirmed production settings exposure gap
 

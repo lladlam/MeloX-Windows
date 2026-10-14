@@ -39,6 +39,9 @@ def main():
     font = json.loads((repo / 'parity/3f877ea/evidence/lyrics-font-source-audit.json').read_text())
     assert font['pinned_android'] == baseline['pinned_android'] and font['verified_against_pure_git_blob']
     expected[font['resource']] = font['sha256']
+    lyrics = json.loads((repo / 'parity/3f877ea/evidence/lyrics-settings-source-audit.json').read_text())
+    assert lyrics['pinned_android'] == baseline['pinned_android'] and lyrics['verified_against_pure_export']
+    expected[lyrics['resource']] = lyrics['sha256']
     records = []
     archive = zipfile.ZipFile(io.BytesIO(packaged_bytes(args.artifact))) if args.artifact else None
     try:

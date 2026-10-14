@@ -48,7 +48,10 @@ memory diagnostics and image-retention stress are added. See
 `38578024876` passed. Local/Windows 202/39 tests, no-forced-GC 2 GiB cache stress
 and real twenty-cycle playback pass, but the full Linux renderer still reaches
 894 MiB while artwork stays at 24 MiB. Do not label the whole symptom resolved.
-Exact new-package/user retest is pending.
+Independent download of artifact `11901753358` passes all package checks;
+final ZIP SHA-256 `3689043da3fa5ad9ccd90ecd13311b5db6dba74750764175b570dde9c0ecde5b`.
+User memory retest is pending. On request, migration resumes with advanced
+lyrics controls while retaining the unresolved full-process memory finding.
 
 The earlier `989f33b` package passed all prior gates but was **rejected by the
 user for the font symptom**; it is not accepted as resolving the report.
@@ -105,9 +108,12 @@ opening lyrics at 175% density replay successfully.
 See `parity/3f877ea/PCM_WRITE_INTERRUPTION.md` and
 `evidence/pcm-write-interruption/`. User Windows 10 rendering/audibility and
 pinned Android pixels/motion remain **BLOCKED** until directly reproduced.
-The advanced-lyrics batch is preserved in two stashes. Restored v7 passed the
-first toggle and all Apple-style sliders, then failed to reveal the style
-selector. It is paused for the memory report and is not released. Continue remaining
+The advanced-lyrics batch is preserved in two stashes and restored for migration.
+All 60 keys now pass a complete coordinate replay and separate-JVM persistence
+check (151 + 2 scenes / 501 assertions). Real Tiny Giant consumer replay passes
+173 scenes / 129 dynamic frames / 55 assertions, including translation scope,
+font/size/reduced motion, real PCM and auto-hide/reveal. Windows release gates
+are still pending. See `parity/3f877ea/ADVANCED_LYRICS_SETTINGS.md`. Continue remaining
 pinned gaps and the 17 independent upstream increments afterward.
 
 User-reported “search works, anonymous playback fails” repair is tracked in

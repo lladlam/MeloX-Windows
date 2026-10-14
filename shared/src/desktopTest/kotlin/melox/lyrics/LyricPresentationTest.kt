@@ -9,6 +9,17 @@ import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 class LyricPresentationTest {
+    @Test fun focusOnlyAnnotationsNeverShowEmptyDisabledOrUnfocusedText() {
+        val focused = melox.settings.MeloXLyricAnnotationDisplayMode.FocusedLine
+        val all = melox.settings.MeloXLyricAnnotationDisplayMode.AllLines
+        assertFalse(MeloXLyricPresentation.annotationVisible(true, "translation", focused, false))
+        assertTrue(MeloXLyricPresentation.annotationVisible(true, "translation", focused, true))
+        assertTrue(MeloXLyricPresentation.annotationVisible(true, "translation", all, false))
+        assertFalse(MeloXLyricPresentation.annotationVisible(false, "translation", all, true))
+        assertFalse(MeloXLyricPresentation.annotationVisible(true, "  ", all, true))
+        assertFalse(MeloXLyricPresentation.annotationVisible(true, null, focused, true))
+    }
+
     @Test fun repeatedWordsKeepTheirOwnProviderTimesAndDoNotConsumeTheGap() {
         val line = LyricLine(0, text = "ha ha", syllables = listOf(
             LyricSyllable("ha", 1000, 1400), LyricSyllable("ha", 2200, 2600)))

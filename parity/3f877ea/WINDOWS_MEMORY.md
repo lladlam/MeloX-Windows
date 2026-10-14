@@ -90,10 +90,24 @@ before handing out a new distribution. User-machine 549→1431 MB symptom
 resolution remains **PENDING** until that exact distribution is retested.
 Neither memory stress nor playback establishes Android pixel/motion MATCH.
 
+The exact `768445f` package has now been independently downloaded and verified:
+artifact `11901753358`, **307,942,342 bytes**, final ZIP SHA-256
+`3689043da3fa5ad9ccd90ecd13311b5db6dba74750764175b570dde9c0ecde5b`.
+Outer artifact GitHub digest, ZIP CRC, Java Sound DLL, `java.management`,
+Windows FFmpeg PE/hash, six pinned resources, all eight static font bytes,
+metrics resource, ownership/diagnostic classes and exact revision stamp pass.
+Link: <https://github.com/lladlam/MeloX-Windows/actions/runs/38578024876/artifacts/11901753358>.
+Its full-source revision remains `768445faedc17c7ca25bdeee5c8eb5d9cbfea5c2`;
+later evidence/migration commits do not relabel this distribution. The failed
+download quota attempt was recovered after clearing only regenerable isolated
+Skiko extraction caches; final success used the full digest-verified download.
+
 ## Preserved migration work
 
 The restored advanced-lyrics batch is retained in stash:
 `WIP restored advanced lyrics controls v7; paused for user 549MB startup to 1431MB memory report`.
-The earlier original advanced-lyrics stash is also retained. The latest replay
-passed setting changes through the last Apple-style slider, then failed to
-reveal the style selector. It is not released as a 60-key accepted batch.
+The earlier original advanced-lyrics stash is also retained. After the user
+requested continued migration, the full 60-key control replay and separate-JVM
+reload passed, with real Tiny Giant consumer replay. See
+`ADVANCED_LYRICS_SETTINGS.md`; Windows delivery gates are pending. The v7
+failed reveal remains historical evidence, not the current control result.

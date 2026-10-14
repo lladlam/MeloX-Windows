@@ -41,6 +41,18 @@ jobs:
         run: python tools/verify_native_equalizer.py shared/build/parity/test-home/native-pcm-evidence --output desktop/build/verification/equalizer-pcm.json
       - name: Audit decoded artwork memory budget and Windows process memory
         run: gradle :desktop:auditArtworkMemory
+      - name: Replay all pinned lyrics controls and reload them in a new process
+        shell: pwsh
+        run: |
+          $homeDir = "$pwd/desktop/build/parity/lyrics-controls-home"
+          New-Item -ItemType Directory -Force "$homeDir/.melox" | Out-Null
+          [System.IO.File]::WriteAllText("$homeDir/.melox/prefs_melox_app_settings.properties", "onboarding_completed=true`n", [System.Text.UTF8Encoding]::new($false))
+          python tools/capture_lyrics_settings.py controls "$homeDir" desktop/build/parity/lyrics-controls
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python tools/capture_lyrics_settings.py reload "$homeDir" desktop/build/parity/lyrics-reload
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python tools/verify_lyrics_controls_capture.py desktop/build/parity/lyrics-controls desktop/build/parity/lyrics-reload --output desktop/build/verification/lyrics-controls.json
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - name: Audit production lyric glyph raster at Windows DPI scales
         run: gradle :desktop:auditLyricRaster
       - name: Audit pinned font outlines and independent HarfBuzz advances
@@ -93,6 +105,12 @@ jobs:
           path: |
             desktop/build/verification/*.json
             desktop/build/verification/artwork-memory/*.json
+            desktop/build/parity/lyrics-controls/*.json
+            desktop/build/parity/lyrics-controls/*.png
+            desktop/build/parity/lyrics-controls/gradle.log
+            desktop/build/parity/lyrics-reload/*.json
+            desktop/build/parity/lyrics-reload/*.png
+            desktop/build/parity/lyrics-reload/gradle.log
             desktop/build/verification/lyric-raster/*.json
             desktop/build/verification/lyric-raster/*.png
             desktop/build/verification/font-metrics/*.json

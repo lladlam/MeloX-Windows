@@ -431,12 +431,7 @@ private fun AutoMixPlaybackSettings() {
 
 @Composable
 private fun LyricsSettings() {
-    AlternativeLyricsSettings()
-    PreferenceToggle("显示翻译", MeloXSettingsRuntime.showLyricTranslation, "lyrics_translation")
-    PreferenceToggle("显示罗马音", MeloXSettingsRuntime.showLyricRomanization, "lyrics_romanization")
-    PreferenceToggle("逐字歌词", MeloXSettingsRuntime.lyricWordByWordEnabled, "lyrics_word_by_word")
-    PreferenceToggle("自动跟随当前歌词", MeloXSettingsRuntime.lyricAutoFollowEnabled, "lyrics_auto_follow")
-    PreferenceToggle("点击歌词跳转进度", MeloXSettingsRuntime.lyricTapSeekEnabled, "lyrics_tap_seek")
+    AdvancedLyricsSettings()
 }
 
 @Composable

@@ -1,6 +1,7 @@
 package melox.lyrics
 
 import melox.settings.MeloXLyricsGroupingMode
+import melox.settings.MeloXLyricAnnotationDisplayMode
 import melox.settings.MeloXSettingsRuntime
 import java.text.BreakIterator
 import java.util.Locale
@@ -39,6 +40,9 @@ object MeloXLyricPresentation {
     )
 
     val InactiveGlyph = GlyphVisual(0f, 0f, 1f, 0f, 0f, 0f)
+
+    fun annotationVisible(enabled: Boolean, text: String?, mode: MeloXLyricAnnotationDisplayMode, active: Boolean): Boolean =
+        enabled && !text.isNullOrBlank() && (mode == MeloXLyricAnnotationDisplayMode.AllLines || active)
 
     fun glyphTimings(
         line: LyricLine,

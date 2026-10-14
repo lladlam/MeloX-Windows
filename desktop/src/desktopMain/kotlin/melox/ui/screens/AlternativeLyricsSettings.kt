@@ -17,11 +17,13 @@ import melox.ui.glass.*
 import melox.ui.legal.pinnedString
 
 @Composable
-internal fun AlternativeLyricsSettings() {
+internal fun AlternativeLyricsSettings(showStyleSelector: Boolean = true) {
     Column(Modifier.padding(horizontal = 20.dp)) {
-        MeloXSettingsDropdown(pinnedString("settings_lyrics_style"), MeloXSettingsRuntime.lyricsStyle,
-            listOf(MeloXLyricsStyle.AppleMusic to "Apple Music", MeloXLyricsStyle.Eva to pinnedString("settings_lyrics_style_eva"), MeloXLyricsStyle.TextPV to pinnedString("settings_lyrics_style_text_pv")),
-            onSelected = { MeloXSettingsPreferences.setString("lyrics_style", it.name) })
+        if (showStyleSelector) {
+            MeloXSettingsDropdown(pinnedString("settings_lyrics_style"), MeloXSettingsRuntime.lyricsStyle,
+                listOf(MeloXLyricsStyle.AppleMusic to "Apple Music", MeloXLyricsStyle.Eva to pinnedString("settings_lyrics_style_eva"), MeloXLyricsStyle.TextPV to pinnedString("settings_lyrics_style_text_pv")),
+                onSelected = { MeloXSettingsPreferences.setString("lyrics_style", it.name) })
+        }
         if (MeloXSettingsRuntime.lyricsStyle == MeloXLyricsStyle.TextPV) {
             Spacer(Modifier.height(10.dp))
             MeloXIosGroupedList(surfaceColor = MaterialTheme.colorScheme.surface) {

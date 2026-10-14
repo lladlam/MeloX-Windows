@@ -1,0 +1,867 @@
+{
+  "check": "source audit only, not pixel/motion acceptance",
+  "pinned_android": "3f877eaffe30c82eb6d24eb3647702f5bc554dd3",
+  "exact_default_strings": 89,
+  "keys": {
+    "lyrics_advance_ms": {
+      "property": "lyricAdvanceMs",
+      "production_consumers": [
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXAlternativeLyricsPanels.kt",
+          "line": 53,
+          "code": "val advance = effectiveBilibiliLyricAdvance(MeloXSettingsRuntime.lyricAdvanceMs, rememberBilibiliLyricOffset(track))"
+        },
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXAlternativeLyricsPanels.kt",
+          "line": 217,
+          "code": "val advance = effectiveBilibiliLyricAdvance(MeloXSettingsRuntime.lyricAdvanceMs, rememberBilibiliLyricOffset(track))"
+        },
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXLyricCascade.kt",
+          "line": 110,
+          "code": "MeloXSettingsRuntime.lyricAdvanceMs).toFloat(), 0f) else null"
+        },
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerLyrics.kt",
+          "line": 169,
+          "code": "val lyricAdvance = effectiveBilibiliLyricAdvance(MeloXSettingsRuntime.lyricAdvanceMs, rememberBilibiliLyricOffset(track))"
+        }
+      ]
+    },
+    "lyrics_advance_word_by_word": {
+      "property": "lyricAdvanceAppliesToWordByWord",
+      "production_consumers": [
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerLyrics.kt",
+          "line": 170,
+          "code": "val timedAdvance = if (track.id.source == melox.music.model.MusicSource.Bilibili || MeloXSettingsRuntime.lyricAdvanceAppliesToWordByWord) lyricAdvance else 0L"
+        }
+      ]
+    },
+    "lyrics_auto_follow": {
+      "property": "lyricAutoFollowEnabled",
+      "production_consumers": [
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXLyricCascade.kt",
+          "line": 72,
+          "code": "val follow = MeloXSettingsRuntime.lyricAutoFollowEnabled"
+        },
+        {
+          "file": "shared/src/commonMain/kotlin/melox/lyrics/MeloXLyricsLoad.kt",
+          "line": 353,
+          "code": "autoFollow = MeloXSettingsRuntime.lyricAutoFollowEnabled,"
+        }
+      ]
+    },
+    "lyrics_auto_select": {
+      "property": "automaticLyricSelectionEnabled",
+      "production_consumers": [
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerLyrics.kt",
+          "line": 103,
+          "code": "LaunchedEffect(track.id, MeloXSettingsRuntime.automaticLyricSelectionEnabled, MeloXSettingsRuntime.lyricStrongBindingEnabled) {"
+        },
+        {
+          "file": "shared/src/commonMain/kotlin/melox/lyrics/MeloXLyricsLoad.kt",
+          "line": 39,
+          "code": "val automatic = MeloXSettingsRuntime.automaticLyricSelectionEnabled || track.id.source == MusicSource.Local"
+        }
+      ]
+    },
+    "lyrics_blur_strength": {
+      "property": "lyricBlurStrength",
+      "production_consumers": [
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerLyrics.kt",
+          "line": 281,
+          "code": "val blur = lyricDistanceBlur(distance, estimatedStride, .8f * distanceScale * MeloXSettingsRuntime.lyricBlurStrength, focus)"
+        },
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerLyrics.kt",
+          "line": 283,
+          "code": ".8f * MeloXSettingsRuntime.lyricBlurStrength * (1f - focus)"
+        }
+      ]
+    },
+    "lyrics_cascade_bounce": {
+      "property": "lyricCascadeBounce",
+      "production_consumers": [
+        {
+          "file": "shared/src/commonMain/kotlin/melox/lyrics/MeloXLyricPresentation.kt",
+          "line": 223,
+          "code": "return MeloXSettingsRuntime.lyricCascadeBounce * (1f - (1f - normalized) * MeloXSettingsRuntime.lyricCascadeBounceGradient)"
+        }
+      ]
+    },
+    "lyrics_cascade_bounce_enabled": {
+      "property": "lyricCascadeBounceEnabled",
+      "production_consumers": [
+        {
+          "file": "shared/src/commonMain/kotlin/melox/lyrics/MeloXLyricPresentation.kt",
+          "line": 221,
+          "code": "if (!MeloXSettingsRuntime.lyricCascadeBounceEnabled) return 0f"
+        }
+      ]
+    },
+    "lyrics_cascade_bounce_gradient": {
+      "property": "lyricCascadeBounceGradient",
+      "production_consumers": [
+        {
+          "file": "shared/src/commonMain/kotlin/melox/lyrics/MeloXLyricPresentation.kt",
+          "line": 223,
+          "code": "return MeloXSettingsRuntime.lyricCascadeBounce * (1f - (1f - normalized) * MeloXSettingsRuntime.lyricCascadeBounceGradient)"
+        }
+      ]
+    },
+    "lyrics_cascade_catch_up_ratio": {
+      "property": "lyricCascadeCatchUpRatio",
+      "production_consumers": [
+        {
+          "file": "shared/src/commonMain/kotlin/melox/lyrics/MeloXLyricPresentation.kt",
+          "line": 209,
+          "code": "val completion = animationDurationMs * MeloXSettingsRuntime.lyricCascadeCatchUpRatio"
+        }
+      ]
+    },
+    "lyrics_cascade_chase_gradient": {
+      "property": "lyricCascadeChaseSpeedGradient",
+      "production_consumers": [
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXLyricCascade.kt",
+          "line": 161,
+          "code": "val lineDuration = slowest + (chaseTiming.durationMs - slowest) * MeloXSettingsRuntime.lyricCascadeChaseSpeedGradient"
+        }
+      ]
+    },
+    "lyrics_cascade_delay_increase_ms": {
+      "property": "lyricCascadeDelayIncreaseMs",
+      "production_consumers": [
+        {
+          "file": "shared/src/commonMain/kotlin/melox/lyrics/MeloXLyricPresentation.kt",
+          "line": 214,
+          "code": "order.toFloat() * (order - 1) / 2f * MeloXSettingsRuntime.lyricCascadeDelayIncreaseMs"
+        }
+      ]
+    },
+    "lyrics_cascade_delay_ms": {
+      "property": "lyricCascadeDelayMs",
+      "production_consumers": [
+        {
+          "file": "shared/src/commonMain/kotlin/melox/lyrics/MeloXLyricPresentation.kt",
+          "line": 213,
+          "code": "val delay = MeloXSettingsRuntime.lyricCascadeFollowingDelayMs + order * MeloXSettingsRuntime.lyricCascadeDelayMs +"
+        }
+      ]
+    },
+    "lyrics_cascade_duration_ms": {
+      "property": "lyricCascadeDurationMs",
+      "production_consumers": [
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXLyricCascade.kt",
+          "line": 108,
+          "code": "val fullDuration = max(baseDuration.toFloat(), MeloXSettingsRuntime.lyricCascadeDurationMs)"
+        }
+      ]
+    },
+    "lyrics_cascade_following_delay_ms": {
+      "property": "lyricCascadeFollowingDelayMs",
+      "production_consumers": [
+        {
+          "file": "shared/src/commonMain/kotlin/melox/lyrics/MeloXLyricPresentation.kt",
+          "line": 213,
+          "code": "val delay = MeloXSettingsRuntime.lyricCascadeFollowingDelayMs + order * MeloXSettingsRuntime.lyricCascadeDelayMs +"
+        }
+      ]
+    },
+    "lyrics_dim_amount": {
+      "property": "lyricDimAmount",
+      "production_consumers": [
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerLyrics.kt",
+          "line": 278,
+          "code": "val opacity = lyricDistanceOpacity(distance, estimatedStride, MeloXSettingsRuntime.lyricDimAmount, focus) *"
+        },
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerLyrics.kt",
+          "line": 279,
+          "code": "lyricEmphasis(focus, MeloXSettingsRuntime.lyricDimAmount)"
+        },
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerLyrics.kt",
+          "line": 298,
+          "code": "val followingAlpha = lyricDistanceOpacity(estimatedStride, estimatedStride, MeloXSettingsRuntime.lyricDimAmount, 0f) *"
+        },
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerLyrics.kt",
+          "line": 299,
+          "code": "lyricEmphasis(0f, MeloXSettingsRuntime.lyricDimAmount)"
+        }
+      ]
+    },
+    "lyrics_distance_blur_scale": {
+      "property": "lyricDistanceBlurScale",
+      "production_consumers": [
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerLyrics.kt",
+          "line": 280,
+          "code": "val distanceScale = if (interfaceHidden) MeloXSettingsRuntime.lyricHiddenInterfaceBlurScale else MeloXSettingsRuntime.lyricDistanceBlurScale"
+        }
+      ]
+    },
+    "lyrics_focus_color_lead_ms": {
+      "property": "lyricFocusColorLeadMs",
+      "production_consumers": [
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerLyrics.kt",
+          "line": 184,
+          "code": "val colorLead = MeloXSettingsRuntime.lyricFocusColorLeadMs"
+        }
+      ]
+    },
+    "lyrics_focus_position": {
+      "property": "lyricFocusPosition",
+      "production_consumers": [
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerLyrics.kt",
+          "line": 240,
+          "code": "val focusPosition = MeloXSettingsRuntime.lyricFocusPosition"
+        }
+      ]
+    },
+    "lyrics_focus_scale": {
+      "property": "lyricFocusScale",
+      "production_consumers": [
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXLyricCascade.kt",
+          "line": 60,
+          "code": "val scale = MeloXSettingsRuntime.lyricFocusScale"
+        },
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerLyrics.kt",
+          "line": 315,
+          "code": "val scale = 1f + (MeloXSettingsRuntime.lyricFocusScale - 1f) * max(scaleProgress, focus)"
+        }
+      ]
+    },
+    "lyrics_follow_delay_ms": {
+      "property": "lyricFollowDelayMs",
+      "production_consumers": [
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerLyrics.kt",
+          "line": 226,
+          "code": "LaunchedEffect(browsing, interactionGeneration, MeloXSettingsRuntime.lyricFollowDelayMs) {"
+        },
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerLyrics.kt",
+          "line": 228,
+          "code": "delay(MeloXSettingsRuntime.lyricFollowDelayMs.toLong())"
+        }
+      ]
+    },
+    "lyrics_font_scale": {
+      "property": "lyricFontScale",
+      "production_consumers": [
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerLyrics.kt",
+          "line": 239,
+          "code": "val fontScale = MeloXSettingsRuntime.lyricFontScale"
+        }
+      ]
+    },
+    "lyrics_font_weight": {
+      "property": "lyricFontWeight",
+      "production_consumers": [
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXGlyphLyricText.kt",
+          "line": 65,
+          "code": "val weight = MeloXSettingsRuntime.lyricFontWeight.composeWeight"
+        },
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXGlyphLyricText.kt",
+          "line": 256,
+          "code": "fontWeight = MeloXSettingsRuntime.lyricFontWeight.composeWeight,"
+        },
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXGlyphLyricText.kt",
+          "line": 282,
+          "code": "fontWeight = MeloXSettingsRuntime.lyricFontWeight.composeWeight, maxLines = 1,"
+        },
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXGlyphLyricText.kt",
+          "line": 290,
+          "code": "lineHeight = (rubySize * 1.2f).sp, fontWeight = MeloXSettingsRuntime.lyricFontWeight.composeWeight, maxLines = 1,"
+        },
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerLyrics.kt",
+          "line": 350,
+          "code": "fontWeight = MeloXSettingsRuntime.lyricFontWeight.composeWeight, textAlign = textAlign,"
+        }
+      ]
+    },
+    "lyrics_glow_enabled": {
+      "property": "lyricGlowEnabled",
+      "production_consumers": [
+        {
+          "file": "shared/src/commonMain/kotlin/melox/lyrics/MeloXLyricPresentation.kt",
+          "line": 124,
+          "code": "val glow = if (reduceMotion || !MeloXSettingsRuntime.lyricGlowEnabled ||"
+        }
+      ]
+    },
+    "lyrics_glow_long_tones_only": {
+      "property": "lyricGlowLongTonesOnly",
+      "production_consumers": [
+        {
+          "file": "shared/src/commonMain/kotlin/melox/lyrics/MeloXLyricPresentation.kt",
+          "line": 125,
+          "code": "MeloXSettingsRuntime.lyricGlowLongTonesOnly && !timing.isLongTone) 0f else {"
+        }
+      ]
+    },
+    "lyrics_glow_strength": {
+      "property": "lyricGlowStrength",
+      "production_consumers": [
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXGlyphLyricText.kt",
+          "line": 193,
+          "code": "val glow = fx.glow * strength * MeloXSettingsRuntime.lyricGlowStrength"
+        }
+      ]
+    },
+    "lyrics_hidden_blur_scale": {
+      "property": "lyricHiddenInterfaceBlurScale",
+      "production_consumers": [
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerLyrics.kt",
+          "line": 280,
+          "code": "val distanceScale = if (interfaceHidden) MeloXSettingsRuntime.lyricHiddenInterfaceBlurScale else MeloXSettingsRuntime.lyricDistanceBlurScale"
+        }
+      ]
+    },
+    "lyrics_highlight_gradient_reduction": {
+      "property": "lyricHighlightGradientReduction",
+      "production_consumers": [
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXGlyphLyricText.kt",
+          "line": 217,
+          "code": "val mask = (1f - mid) * (1f - MeloXSettingsRuntime.lyricHighlightGradientReduction * mid)"
+        }
+      ]
+    },
+    "lyrics_highlight_gradient_width": {
+      "property": "lyricHighlightGradientWidth",
+      "production_consumers": [
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXGlyphLyricText.kt",
+          "line": 202,
+          "code": "val feather = max(bounds.width * MeloXSettingsRuntime.lyricHighlightGradientWidth, 1.5f * density.density)"
+        }
+      ]
+    },
+    "lyrics_inactive_opacity": {
+      "property": "lyricInactiveOpacity",
+      "production_consumers": [
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXGlyphLyricText.kt",
+          "line": 58,
+          "code": "unplayedAlpha: Float = MeloXSettingsRuntime.lyricInactiveOpacity,"
+        }
+      ]
+    },
+    "lyrics_interface_auto_hide_ms": {
+      "property": "lyricInterfaceAutoHideDelayMs",
+      "production_consumers": [
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXIOSPlayerScene.kt",
+          "line": 91,
+          "code": "LaunchedEffect(page, track.id, showsLyricsControls, activityGeneration, MeloXSettingsRuntime.lyricInterfaceAutoHideDelayMs) {"
+        },
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXIOSPlayerScene.kt",
+          "line": 93,
+          "code": "delay(MeloXSettingsRuntime.lyricInterfaceAutoHideDelayMs.toLong())"
+        }
+      ]
+    },
+    "lyrics_interlude_countdown": {
+      "property": "lyricInterludeCountdownEnabled",
+      "production_consumers": [
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerLyrics.kt",
+          "line": 174,
+          "code": "val countdownEnabled = MeloXSettingsRuntime.lyricInterludeCountdownEnabled"
+        }
+      ]
+    },
+    "lyrics_lift_mode": {
+      "property": "lyricLiftMode",
+      "production_consumers": [
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXGlyphLyricText.kt",
+          "line": 141,
+          "code": "val liftMode = MeloXSettingsRuntime.lyricLiftMode"
+        }
+      ]
+    },
+    "lyrics_long_press_share": {
+      "property": "lyricLongPressShareEnabled",
+      "production_consumers": [
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerLyrics.kt",
+          "line": 308,
+          "code": "val canShare = interactive && MeloXSettingsRuntime.lyricLongPressShareEnabled"
+        }
+      ]
+    },
+    "lyrics_long_tone_detection": {
+      "property": "lyricLongToneDetectionMode",
+      "production_consumers": [
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXGlyphLyricText.kt",
+          "line": 142,
+          "code": "val longToneMode = MeloXSettingsRuntime.lyricLongToneDetectionMode"
+        }
+      ]
+    },
+    "lyrics_long_tone_strength": {
+      "property": "lyricLongToneStrength",
+      "production_consumers": [
+        {
+          "file": "shared/src/commonMain/kotlin/melox/lyrics/MeloXLyricPresentation.kt",
+          "line": 118,
+          "code": "timing.expansionAmount * MeloXSettingsRuntime.lyricLongToneStrength"
+        },
+        {
+          "file": "shared/src/commonMain/kotlin/melox/lyrics/MeloXLyricPresentation.kt",
+          "line": 130,
+          "code": "timing.expansionAmount * MeloXSettingsRuntime.lyricLongToneStrength"
+        }
+      ]
+    },
+    "lyrics_long_tone_threshold_ms": {
+      "property": "lyricLongToneThresholdMs",
+      "production_consumers": [
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXGlyphLyricText.kt",
+          "line": 143,
+          "code": "val threshold = MeloXSettingsRuntime.lyricLongToneThresholdMs"
+        }
+      ]
+    },
+    "lyrics_pseudo_timing": {
+      "property": "lyricPseudoTimingEnabled",
+      "production_consumers": [
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXAlternativeLyricsPanels.kt",
+          "line": 46,
+          "code": "val document = remember(loaded.document, authoredOnly, MeloXSettingsRuntime.lyricPseudoTimingEnabled) {"
+        },
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXAlternativeLyricsPanels.kt",
+          "line": 47,
+          "code": "loaded.document?.let { if (!authoredOnly && MeloXSettingsRuntime.lyricPseudoTimingEnabled) it.withPseudoTiming() else it }"
+        },
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerLyrics.kt",
+          "line": 163,
+          "code": "val document = remember(state.document, MeloXSettingsRuntime.lyricPseudoTimingEnabled) {"
+        },
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerLyrics.kt",
+          "line": 164,
+          "code": "state.document?.let { if (MeloXSettingsRuntime.lyricPseudoTimingEnabled) it.withPseudoTiming() else it }"
+        },
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerLyrics.kt",
+          "line": 236,
+          "code": "\"${it.source}:${it.quality};lines=${it.lines.size};pseudoTimingAllowed=${it.pseudoTimingAllowed};pseudoTimingEnabled=${MeloXSettingsRuntime.lyricPseudoTimingEnabled}\""
+        }
+      ]
+    },
+    "lyrics_reduce_motion": {
+      "property": "lyricReduceMotion",
+      "production_consumers": [
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXAlternativeLyricsPanels.kt",
+          "line": 98,
+          "code": "val intensity = if (!active || MeloXSettingsRuntime.lyricReduceMotion) 0f else MeloXSettingsRuntime.textPVMotionIntensity"
+        },
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXAlternativeLyricsPanels.kt",
+          "line": 219,
+          "code": "LaunchedEffect(active, MeloXSettingsRuntime.lyricReduceMotion, MeloXSettingsRuntime.skylineAmbientDrift) {"
+        },
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXAlternativeLyricsPanels.kt",
+          "line": 220,
+          "code": "if (!active || MeloXSettingsRuntime.lyricReduceMotion || MeloXSettingsRuntime.skylineAmbientDrift <= 0) { phase.snapTo(0f); return@LaunchedEffect }"
+        },
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXAlternativeLyricsPanels.kt",
+          "line": 231,
+          "code": "modifier = Modifier.graphicsLayer { translationX = if (MeloXSettingsRuntime.lyricReduceMotion) 0f else sin(phase.value * 2 * PI.toFloat() + index) * 14 * MeloXSettingsRuntime.skylineAmbientDrift }.rotate(sin((index + 1) * 1.73f) * MeloXSettingsRuntime.skylineAmbientMaximumTilt).blur((MeloXSettingsRuntime.skylineAmbientBlur * (1 + index * .08f)).dp))"
+        },
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXLyricCascade.kt",
+          "line": 73,
+          "code": "val reduceMotion = MeloXSettingsRuntime.lyricReduceMotion"
+        },
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerLyrics.kt",
+          "line": 267,
+          "code": "tween(if (MeloXSettingsRuntime.lyricReduceMotion) 0 else 120,"
+        },
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerLyrics.kt",
+          "line": 270,
+          "code": "tween(if (MeloXSettingsRuntime.lyricReduceMotion) 0 else MeloXSettingsRuntime.lyricScaleBounceDurationMs,"
+        },
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerLyrics.kt",
+          "line": 303,
+          "code": "MeloXSettingsRuntime.lyricReduceMotion, Modifier.padding(bottom = 8.dp).graphicsLayer {"
+        },
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerLyrics.kt",
+          "line": 326,
+          "code": "MeloXTimedAccompaniment(it, timeProvider, fontScale, MeloXSettingsRuntime.lyricReduceMotion, quality, effectiveBlur)"
+        },
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerLyrics.kt",
+          "line": 333,
+          "code": "MeloXGlyphLyricText(line, timeProvider, timed, fontScale, MeloXSettingsRuntime.lyricReduceMotion,"
+        },
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerLyrics.kt",
+          "line": 339,
+          "code": "MeloXTimedAccompaniment(it, timeProvider, fontScale, MeloXSettingsRuntime.lyricReduceMotion, quality, effectiveBlur)"
+        }
+      ]
+    },
+    "lyrics_refresh_rate": {
+      "property": "lyricRefreshRate",
+      "production_consumers": [
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerLyrics.kt",
+          "line": 151,
+          "code": "val refreshRate = min(MeloXSettingsRuntime.lyricRefreshRate, if (quality == MeloXLyricsRenderingQuality.Low) 30 else 60)"
+        }
+      ]
+    },
+    "lyrics_rendering_quality": {
+      "property": "lyricRenderingQuality",
+      "production_consumers": [
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerLyrics.kt",
+          "line": 150,
+          "code": "val quality = MeloXSettingsRuntime.lyricRenderingQuality"
+        }
+      ]
+    },
+    "lyrics_romanization": {
+      "property": "showLyricRomanization",
+      "production_consumers": [
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXAlternativeLyricsPanels.kt",
+          "line": 129,
+          "code": "if (MeloXSettingsRuntime.showLyricRomanization && !line.romanization.isNullOrBlank()) Text(line.romanization.orEmpty(), color = Color.White.copy(alpha = .48f), fontSize = 13.sp, modifier = Modifier.padding(top = 10.dp))"
+        },
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXLyricCascade.kt",
+          "line": 58,
+          "code": "val showRoman = MeloXSettingsRuntime.showLyricRomanization"
+        },
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerLyrics.kt",
+          "line": 286,
+          "code": "val showRoman = MeloXSettingsRuntime.showLyricRomanization && !line.romanization.isNullOrBlank()"
+        },
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerLyrics.kt",
+          "line": 287,
+          "code": "val visibleRoman = MeloXLyricPresentation.annotationVisible(MeloXSettingsRuntime.showLyricRomanization,"
+        }
+      ]
+    },
+    "lyrics_romanization_display_mode": {
+      "property": "lyricRomanizationDisplayMode",
+      "production_consumers": [
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerLyrics.kt",
+          "line": 288,
+          "code": "line.romanization, MeloXSettingsRuntime.lyricRomanizationDisplayMode, focused)"
+        }
+      ]
+    },
+    "lyrics_romanization_font_scale": {
+      "property": "lyricRomanizationFontScale",
+      "production_consumers": [
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXGlyphLyricText.kt",
+          "line": 253,
+          "code": "val size = max(34f * fontScale * MeloXSettingsRuntime.lyricRomanizationFontScale, 13f)"
+        },
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXGlyphLyricText.kt",
+          "line": 270,
+          "code": "val rubySize = max(primarySize * MeloXSettingsRuntime.lyricRomanizationFontScale, 13f)"
+        },
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXLyricCascade.kt",
+          "line": 56,
+          "code": "val romanSize = max(34f * fontScale * MeloXSettingsRuntime.lyricRomanizationFontScale, 13f)"
+        },
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerLyrics.kt",
+          "line": 244,
+          "code": "val romanSize = max(34f * fontScale * MeloXSettingsRuntime.lyricRomanizationFontScale, 13f)"
+        }
+      ]
+    },
+    "lyrics_romanization_opacity": {
+      "property": "lyricRomanizationOpacity",
+      "production_consumers": [
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXGlyphLyricText.kt",
+          "line": 254,
+          "code": "Text(line.romanization.orEmpty(), color = Color.White.copy(alpha = MeloXSettingsRuntime.lyricRomanizationOpacity),"
+        },
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXGlyphLyricText.kt",
+          "line": 288,
+          "code": "Text(romanization, color = Color.White.copy(alpha = MeloXSettingsRuntime.lyricRomanizationOpacity),"
+        }
+      ]
+    },
+    "lyrics_scale_bounce": {
+      "property": "lyricScaleBounce",
+      "production_consumers": [
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerLyrics.kt",
+          "line": 272,
+          "code": "if (MeloXSettingsRuntime.lyricScaleBounceEnabled) MeloXSettingsRuntime.lyricScaleBounce else 0f) }),"
+        }
+      ]
+    },
+    "lyrics_scale_bounce_duration_ms": {
+      "property": "lyricScaleBounceDurationMs",
+      "production_consumers": [
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerLyrics.kt",
+          "line": 270,
+          "code": "tween(if (MeloXSettingsRuntime.lyricReduceMotion) 0 else MeloXSettingsRuntime.lyricScaleBounceDurationMs,"
+        }
+      ]
+    },
+    "lyrics_scale_bounce_enabled": {
+      "property": "lyricScaleBounceEnabled",
+      "production_consumers": [
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerLyrics.kt",
+          "line": 272,
+          "code": "if (MeloXSettingsRuntime.lyricScaleBounceEnabled) MeloXSettingsRuntime.lyricScaleBounce else 0f) }),"
+        }
+      ]
+    },
+    "lyrics_scroll_hide_threshold_dp": {
+      "property": "lyricScrollHideThresholdDp",
+      "production_consumers": [
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerLyrics.kt",
+          "line": 202,
+          "code": "val hideThresholdPx = with(density) { MeloXSettingsRuntime.lyricScrollHideThresholdDp.dp.toPx() }"
+        }
+      ]
+    },
+    "lyrics_snap_threshold_ms": {
+      "property": "lyricSnapThresholdMs",
+      "production_consumers": [
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXLyricCascade.kt",
+          "line": 111,
+          "code": "val duration = if (remaining == null) fullDuration else if (remaining < MeloXSettingsRuntime.lyricSnapThresholdMs) 0f"
+        }
+      ]
+    },
+    "lyrics_spacing_scale": {
+      "property": "lyricSpacingScale",
+      "production_consumers": [
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerLyrics.kt",
+          "line": 248,
+          "code": "(8f + 28f * MeloXSettingsRuntime.lyricSpacingScale).dp.toPx()).coerceAtLeast(1f)"
+        },
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerLyrics.kt",
+          "line": 359,
+          "code": "if (index != lines.lastIndex) Spacer(Modifier.height((28f * MeloXSettingsRuntime.lyricSpacingScale).dp))"
+        }
+      ]
+    },
+    "lyrics_style": {
+      "property": "lyricsStyle",
+      "production_consumers": [
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXAlternativeLyricsPanels.kt",
+          "line": 76,
+          "code": "val style = MeloXSettingsRuntime.lyricsStyle"
+        },
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerLyrics.kt",
+          "line": 134,
+          "code": "if (MeloXSettingsRuntime.lyricsStyle != melox.settings.MeloXLyricsStyle.AppleMusic) {"
+        }
+      ]
+    },
+    "lyrics_tap_seek": {
+      "property": "lyricTapSeekEnabled",
+      "production_consumers": [
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerLyrics.kt",
+          "line": 307,
+          "code": "val canTap = interactive && MeloXSettingsRuntime.lyricTapSeekEnabled"
+        },
+        {
+          "file": "shared/src/commonMain/kotlin/melox/lyrics/MeloXLyricsLoad.kt",
+          "line": 354,
+          "code": "tapSeek = MeloXSettingsRuntime.lyricTapSeekEnabled,"
+        }
+      ]
+    },
+    "lyrics_text_pv_animation_speed": {
+      "property": "textPVAnimationSpeed",
+      "production_consumers": [
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXAlternativeLyricsPanels.kt",
+          "line": 97,
+          "code": "val speed = MeloXSettingsRuntime.textPVAnimationSpeed"
+        }
+      ]
+    },
+    "lyrics_text_pv_motion_intensity": {
+      "property": "textPVMotionIntensity",
+      "production_consumers": [
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXAlternativeLyricsPanels.kt",
+          "line": 98,
+          "code": "val intensity = if (!active || MeloXSettingsRuntime.lyricReduceMotion) 0f else MeloXSettingsRuntime.textPVMotionIntensity"
+        }
+      ]
+    },
+    "lyrics_text_pv_style": {
+      "property": "textPVStyle",
+      "production_consumers": [
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXAlternativeLyricsPanels.kt",
+          "line": 104,
+          "code": "TextPVBackground(MeloXSettingsRuntime.textPVStyle, { phase.value }, intensity)"
+        },
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXAlternativeLyricsPanels.kt",
+          "line": 108,
+          "code": "state.lines.getOrNull(index)?.let { line -> TextPVComposition(line, state.lines.getOrNull(index + 1), MeloXSettingsRuntime.textPVStyle, { phase.value }, intensity, index) { PlaybackCommands.playerController()?.seekTo(line.timeMs) } }"
+        }
+      ]
+    },
+    "lyrics_translation": {
+      "property": "showLyricTranslation",
+      "production_consumers": [
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXAlternativeLyricsPanels.kt",
+          "line": 130,
+          "code": "if (MeloXSettingsRuntime.showLyricTranslation && !line.translation.isNullOrBlank()) Text(line.translation.orEmpty(), color = Color.White.copy(alpha = .72f), fontSize = 16.sp, fontStyle = FontStyle.Italic, modifier = Modifier.padding(top = 7.dp))"
+        },
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXAlternativeLyricsPanels.kt",
+          "line": 207,
+          "code": "if (MeloXSettingsRuntime.showLyricTranslation && !line.translation.isNullOrBlank()) Text(line.translation.orEmpty(), color = spec.foreground.copy(alpha = .62f), fontSize = 15.sp, textAlign = spec.textAlign, modifier = Modifier.padding(top = 12.dp))"
+        },
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXAlternativeLyricsPanels.kt",
+          "line": 251,
+          "code": "if (MeloXSettingsRuntime.showLyricTranslation && !line?.translation.isNullOrBlank()) Text(line.translation.orEmpty(), color = Color.White.copy(alpha = .62f), fontSize = 16.sp, modifier = Modifier.padding(top = 10.dp))"
+        },
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXLyricCascade.kt",
+          "line": 59,
+          "code": "val showTranslation = MeloXSettingsRuntime.showLyricTranslation"
+        },
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerLyrics.kt",
+          "line": 289,
+          "code": "val showTranslation = MeloXSettingsRuntime.showLyricTranslation && !line.translation.isNullOrBlank()"
+        },
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerLyrics.kt",
+          "line": 290,
+          "code": "val visibleTranslation = MeloXLyricPresentation.annotationVisible(MeloXSettingsRuntime.showLyricTranslation,"
+        },
+        {
+          "file": "shared/src/commonMain/kotlin/melox/lyrics/MeloXLyricsLoad.kt",
+          "line": 351,
+          "code": "showTranslation = MeloXSettingsRuntime.showLyricTranslation,"
+        }
+      ]
+    },
+    "lyrics_translation_display_mode": {
+      "property": "lyricTranslationDisplayMode",
+      "production_consumers": [
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerLyrics.kt",
+          "line": 291,
+          "code": "line.translation, MeloXSettingsRuntime.lyricTranslationDisplayMode, focused)"
+        }
+      ]
+    },
+    "lyrics_translation_font_scale": {
+      "property": "lyricTranslationFontScale",
+      "production_consumers": [
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXLyricCascade.kt",
+          "line": 57,
+          "code": "val translationSize = max(34f * fontScale * MeloXSettingsRuntime.lyricTranslationFontScale, 13f)"
+        },
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerLyrics.kt",
+          "line": 245,
+          "code": "val translationSize = max(34f * fontScale * MeloXSettingsRuntime.lyricTranslationFontScale, 13f)"
+        }
+      ]
+    },
+    "lyrics_translation_opacity": {
+      "property": "lyricTranslationOpacity",
+      "production_consumers": [
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerLyrics.kt",
+          "line": 351,
+          "code": "color = Color.White.copy(alpha = MeloXSettingsRuntime.lyricTranslationOpacity),"
+        }
+      ]
+    },
+    "lyrics_word_by_word": {
+      "property": "lyricWordByWordEnabled",
+      "production_consumers": [
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXGlyphLyricText.kt",
+          "line": 170,
+          "code": "(!MeloXSettingsRuntime.lyricWordByWordEnabled || reduceMotion)) {"
+        },
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXGlyphLyricText.kt",
+          "line": 248,
+          "code": "if (MeloXSettingsRuntime.lyricWordByWordEnabled) {"
+        },
+        {
+          "file": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerLyrics.kt",
+          "line": 167,
+          "code": "val wordByWord = MeloXSettingsRuntime.lyricWordByWordEnabled"
+        },
+        {
+          "file": "shared/src/commonMain/kotlin/melox/lyrics/MeloXLyricsLoad.kt",
+          "line": 352,
+          "code": "wordByWord = MeloXSettingsRuntime.lyricWordByWordEnabled,"
+        }
+      ]
+    }
+  }
+}
