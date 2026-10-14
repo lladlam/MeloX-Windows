@@ -43,6 +43,7 @@ internal class MeloXDualDecodeSession(
     private data class Mix(val startFrame: Long, val prepared: Prepared)
     private val closed = AtomicBoolean(false)
     private val paused = AtomicBoolean(false)
+    private val pauseVersion = AtomicLong()
     private val revision = AtomicLong()
     private val selection = AtomicReference(primarySource)
     private val prepared = AtomicReference<Prepared?>(null)
@@ -57,8 +58,8 @@ internal class MeloXDualDecodeSession(
     @Volatile private var preparing = false
 
     fun hasMix() = prepared.get() != null || active.get() != null || preparing || pendingHandoff.get()
-    fun pause() { paused.set(true); output.get()?.let { runCatching { it.stop() } } }
-    fun resume() { paused.set(false); output.get()?.let { runCatching { it.start() } } }
+    fun pause() = synchronized(lock) { paused.set(true); pauseVersion.incrementAndGet(); output.get()?.let { runCatching { it.stop() } }; Unit }
+    fun resume() = synchronized(lock) { paused.set(false); output.get()?.let { runCatching { it.start() } }; Unit }
     fun clock(): MeloXDualClock = synchronized(lock) { clock }
     fun seek(positionMs: Long) = replace((clock().source ?: primarySource).copy(startMs = positionMs.coerceAtLeast(0)))
     fun next(): Boolean {
@@ -215,7 +216,11 @@ internal class MeloXDualDecodeSession(
                         if (count == 0) {
                             if (!started && !(selected.durationMs > 0 && selected.startMs >= selected.durationMs)) throw IOException("Decoder emitted no PCM")
                             while (!closed.get() && revision.get() == version && line.longFramePosition < written) {
-                                if (paused.get()) line.stop() else if (!line.isRunning) line.start()
+                                synchronized(lock) {
+                                    if (!closed.get() && revision.get() == version) {
+                                        if (paused.get()) line.stop() else if (!line.isRunning) line.start()
+                                    }
+                                }
                                 publish(); delay(10)
                             }
                             publish()
@@ -229,13 +234,16 @@ internal class MeloXDualDecodeSession(
                         while (paused.get() && !closed.get() && revision.get() == version) delay(10)
                         if (closed.get() || revision.get() != version) break
                         if (!started) { started = true; onReady() }
-                        if (!line.isRunning) try { line.start() } catch (failure: Exception) { throw AudioPlaybackFailure(AudioFailureKind.Output, failure) }
                         equalizer.process(blockA, count, volume)
-                        var offset = 0
-                        while (offset < count && !closed.get() && revision.get() == version) {
-                            val accepted = try { line.write(blockA, offset, count - offset) } catch (failure: Exception) { throw AudioPlaybackFailure(AudioFailureKind.Output, failure) }
-                            if (accepted <= 0 || accepted % 4 != 0) throw AudioPlaybackFailure(AudioFailureKind.Output, IOException("Output stopped accepting aligned PCM"))
-                            offset += accepted; written += accepted / 4; publishedWritten.set(written)
+                        val endpoint = line
+                        writePcmBlock(endpoint, blockA, count,
+                            isCurrent = { !closed.get() && revision.get() == version },
+                            isPaused = paused::get, pauseVersion = pauseVersion::get,
+                            startIfPlaying = { synchronized(lock) {
+                                if (closed.get() || revision.get() != version || paused.get()) false
+                                else { if (!endpoint.isRunning) endpoint.start(); true }
+                            } }) { accepted ->
+                            written += accepted / 4; publishedWritten.set(written)
                         }
                         if (currentMix != null && mixing != null && mixed >= currentMix.plan.durationMs * AudioPlayer.PCM_SAMPLE_RATE / 1000) {
                             a?.close(); a = currentMix.incoming

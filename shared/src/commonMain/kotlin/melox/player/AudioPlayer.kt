@@ -46,6 +46,7 @@ object AudioPlayer {
     @Volatile private var volumeLinear: Float = 1f
     private val playbackLock = Any()
     private val paused = AtomicBoolean(false)
+    private val pauseVersion = AtomicLong()
     private val ready = AtomicBoolean(false)
     private val writtenFrames = AtomicLong(0L)
     private val pendingSeekMs = AtomicLong(-1L)
@@ -284,11 +285,8 @@ object AudioPlayer {
                         break
                     }
                     if (paused.get()) {
-                        if (line.isRunning) line.stop()
                         Thread.sleep(40)
                         continue
-                    } else if (!line.isRunning && started) {
-                        line.start()
                     }
                     // Pipe reads may split PCM frames. readNBytes preserves alignment
                     // across short reads and exposes a malformed final partial frame.
@@ -316,9 +314,12 @@ object AudioPlayer {
                         // the tail queued, and allow pause/seek/stop while it plays.
                         while (session.get() === request && seekRevision.get() == launchedRevision &&
                             line.longFramePosition < writtenFrames.get()) {
-                            if (paused.get()) {
-                                if (line.isRunning) line.stop()
-                            } else if (!line.isRunning) line.start()
+                            synchronized(playbackLock) {
+                                if (session.get() === request && seekRevision.get() == launchedRevision) {
+                                    if (paused.get()) { if (line.isRunning) line.stop() }
+                                    else if (!line.isRunning) line.start()
+                                }
+                            }
                             delay(10)
                         }
                         if (session.get() !== request) return
@@ -345,19 +346,18 @@ object AudioPlayer {
                         progressJob = startProgress(request)
                     }
                     equalizer.process(buffer, read, volumeLinear)
-                    var written = 0
-                    while (written < read && session.get() === request && seekRevision.get() == launchedRevision) {
-                        val accepted = try { line.write(buffer, written, read - written) }
-                        catch (error: Exception) { throw AudioPlaybackFailure(AudioFailureKind.Output, error) }
-                        if (accepted <= 0 || accepted % PCM_BYTES_PER_FRAME != 0) {
-                            throw AudioPlaybackFailure(AudioFailureKind.Output, IOException("Audio output stopped accepting PCM frames"))
-                        }
+                    val written = writePcmBlock(line, buffer, read,
+                        isCurrent = { session.get() === request && seekRevision.get() == launchedRevision },
+                        isPaused = paused::get, pauseVersion = pauseVersion::get,
+                        startIfPlaying = { synchronized(playbackLock) {
+                            if (session.get() !== request || seekRevision.get() != launchedRevision || paused.get()) false
+                            else { if (!line.isRunning) line.start(); true }
+                        } }) { accepted ->
                         synchronized(playbackLock) {
                             if (session.get() === request && seekRevision.get() == launchedRevision) {
                                 writtenFrames.addAndGet(accepted / PCM_BYTES_PER_FRAME.toLong())
                             }
                         }
-                        written += accepted
                     }
                     if (session.get() === request && seekRevision.get() == launchedRevision) publishPcmEnergy(buffer, written)
                 }
@@ -453,25 +453,24 @@ object AudioPlayer {
 
 
     fun pause() {
-        val line = synchronized(playbackLock) {
+        synchronized(playbackLock) {
             if (_currentTrack.value == null) return
             paused.set(true)
+            pauseVersion.incrementAndGet()
             _state.value = _state.value.copy(isPlaying = false, isPaused = true)
-            currentLine
+            currentLine?.let { runCatching { it.stop() } }
         }
         dualSession.get()?.pause()
-        line?.let { runCatching { it.stop() } }
     }
 
     fun resume() {
-        val line = synchronized(playbackLock) {
+        synchronized(playbackLock) {
             if (_currentTrack.value == null || _state.value.error != null || _state.value.isFinished) return
             paused.set(false)
             _state.value = _state.value.copy(isPlaying = ready.get(), isPaused = false, isFinished = false)
-            currentLine.takeIf { ready.get() }
+            currentLine.takeIf { ready.get() }?.let { runCatching { it.start() } }
         }
         dualSession.get()?.resume()
-        line?.let { runCatching { it.start() } }
     }
 
     fun stop(clearTrack: Boolean = true) {

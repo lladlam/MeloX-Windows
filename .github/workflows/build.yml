@@ -34,6 +34,8 @@ jobs:
         run: gradle :shared:desktopTest :desktop:packageUberJarForCurrentOS
       - name: Verify native equalizer PCM
         run: python tools/verify_native_equalizer.py shared/build/parity/test-home/native-pcm-evidence --output desktop/build/verification/equalizer-pcm.json
+      - name: Audit production lyric glyph raster at Windows DPI scales
+        run: gradle :desktop:auditLyricRaster
       - name: Get jar info
         id: jar
         shell: pwsh
@@ -81,6 +83,8 @@ jobs:
           name: Verification-${{ runner.os }}
           path: |
             desktop/build/verification/*.json
+            desktop/build/verification/lyric-raster/*.json
+            desktop/build/verification/lyric-raster/*.png
             shared/build/test-results/desktopTest/*.xml
             shared/build/parity/test-home/native-pcm-evidence/*
       - name: Upload zip artifact

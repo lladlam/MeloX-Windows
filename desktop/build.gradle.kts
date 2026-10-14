@@ -75,3 +75,15 @@ tasks.register<JavaExec>("captureUi") {
     args(if (argumentFile != null) file(argumentFile).readLines(Charsets.UTF_8)
         else providers.gradleProperty("captureArgs").getOrElse("").split(' ').filter { it.isNotBlank() })
 }
+
+tasks.register<JavaExec>("auditLyricRaster") {
+    group = "verification"
+    description = "Compare production individual glyphs against their own shaped text layout at Windows DPI scales."
+    dependsOn("desktopMainClasses")
+    val compilation = kotlin.targets.getByName("desktop").compilations.getByName("main")
+    classpath = files(compilation.output.allOutputs, compilation.runtimeDependencyFiles)
+    mainClass.set("melox.validation.MeloXLyricRasterAuditKt")
+    systemProperty("java.awt.headless", "true")
+    systemProperty("user.home", layout.buildDirectory.dir("verification/lyric-raster-home").get().asFile.absolutePath)
+    args(layout.buildDirectory.dir("verification/lyric-raster").get().asFile.absolutePath)
+}

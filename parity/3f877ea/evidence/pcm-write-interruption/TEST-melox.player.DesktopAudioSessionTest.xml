@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="DesktopAudioSessionTest[desktop]" tests="11" skipped="0" failures="0" errors="0" timestamp="2026-10-14T02:31:44.676Z" hostname="lladlam-arch" time="1.896">
+  <properties/>
+  <testcase name="realFfmpegNonzeroExitAfterPcmIsContentFailureRatherThanNaturalEnd[desktop]" classname="melox.player.DesktopAudioSessionTest" time="0.152"/>
+  <testcase name="unavailableDeviceReportsOutputFailureWithoutProducingAnEndEvent[desktop]" classname="melox.player.DesktopAudioSessionTest" time="0.11"/>
+  <testcase name="seekingToTheDecoderOriginalZeroPositionActuallyRestartsIt[desktop]" classname="melox.player.DesktopAudioSessionTest" time="0.168"/>
+  <testcase name="seekingToKnownTrackEndAcceptsAZeroPcmSuccessfulDecoderExit[desktop]" classname="melox.player.DesktopAudioSessionTest" time="0.126"/>
+  <testcase name="realOutputConsumesEqualizerPreampAndSeekingRebuildsDspWithCurrentSettings[desktop]" classname="melox.player.DesktopAudioSessionTest" time="0.304"/>
+  <testcase name="pausedWriteReturningZeroRetainsPcmAndResumesOnTheSameDevice[desktop]" classname="melox.player.DesktopAudioSessionTest" time="0.235"/>
+  <testcase name="replacingTheSameUriKeepsEndCallbacksOwnedByTheNewRequest[desktop]" classname="melox.player.DesktopAudioSessionTest" time="0.159"/>
+  <testcase name="genuinelyZeroProgressRunningDeviceStillReportsAnOutputFailure[desktop]" classname="melox.player.DesktopAudioSessionTest" time="0.118"/>
+  <testcase name="aDeviceStartFailureIsOutputFailureRatherThanCorruptContent[desktop]" classname="melox.player.DesktopAudioSessionTest" time="0.111"/>
+  <testcase name="decoderEofWaitsForBufferedFramesAndPauseResumePreserveTheTail[desktop]" classname="melox.player.DesktopAudioSessionTest" time="0.235"/>
+  <testcase name="quickPauseResumeBeforeInterruptedWriteReturnsKeepsZeroAndShortWriteRemainders[desktop]" classname="melox.player.DesktopAudioSessionTest" time="0.177"/>
+  <system-out><![CDATA[[DEBUG AudioPlayer] FFmpeg binary=/tmp/melox-decoder-ffmpeg os=Linux sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+[DEBUG AudioPlayer] FFmpeg binary=/tmp/melox-decoder-ffmpeg os=Linux sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+[DEBUG AudioPlayer] FFmpeg binary=/tmp/melox-decoder-ffmpeg os=Linux sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+[DEBUG AudioPlayer] FFmpeg binary=/tmp/melox-decoder-ffmpeg os=Linux sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+[DEBUG AudioPlayer] FFmpeg binary=/tmp/melox-decoder-ffmpeg os=Linux sourceHost=local
+[DEBUG AudioPlayer] decode local source at 500ms
+[DEBUG AudioPlayer] FFmpeg binary=/tmp/melox-decoder-ffmpeg os=Linux sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+[DEBUG AudioPlayer] FFmpeg binary=/tmp/melox-decoder-ffmpeg os=Linux sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+[DEBUG AudioPlayer] FFmpeg binary=/tmp/melox-decoder-ffmpeg os=Linux sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+[DEBUG AudioPlayer] PCM write interrupted by pause: offset=4096 remaining=31184 paused=true pauseVersion=42->43
+[DEBUG AudioPlayer] FFmpeg binary=/tmp/melox-decoder-ffmpeg os=Linux sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+[DEBUG AudioPlayer] FFmpeg binary=/tmp/melox-decoder-ffmpeg os=Linux sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+[DEBUG AudioPlayer] FFmpeg binary=/tmp/melox-decoder-ffmpeg os=Linux sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+[DEBUG AudioPlayer] FFmpeg binary=/tmp/melox-decoder-ffmpeg os=Linux sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+[DEBUG AudioPlayer] FFmpeg binary=/tmp/melox-decoder-ffmpeg os=Linux sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+[DEBUG AudioPlayer] FFmpeg binary=/tmp/melox-decoder-ffmpeg os=Linux sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+[DEBUG AudioPlayer] PCM write interrupted by pause: offset=4096 remaining=31184 paused=false pauseVersion=44->45
+[DEBUG AudioPlayer] FFmpeg binary=/tmp/melox-decoder-ffmpeg os=Linux sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+]]></system-out>
+  <system-err><![CDATA[[ERROR AudioPlayer] 播放失败 (Content): AudioPlaybackFailure: [in#0/wav @ 0x564d0c351a00] corrupt input packet in stream 0
+[in#0/wav @ 0x564d0c351a00] Task finished with error: Invalid data found when processing input
+[in#0/wav @ 0x564d0c351a00] Terminating thread with error: Invalid data found when processing input <- IOException: [in#0/wav @ 0x564d0c351a00] corrupt input packet in stream 0
+[in#0/wav @ 0x564d0c351a00] Task finished with error: Invalid data found when processing input
+[in#0/wav @ 0x564d0c351a00] Terminating thread with error: Invalid data found when processing input
+[ERROR AudioPlayer] 播放失败 (Output): AudioPlaybackFailure: test device unavailable <- LineUnavailableException: test device unavailable
+Exception in thread "DefaultDispatcher-worker-8 @coroutine#387" java.io.IOException: Stream closed
+	at java.base/java.io.BufferedInputStream.getBufIfOpen(BufferedInputStream.java:168)
+	at java.base/java.io.BufferedInputStream.read(BufferedInputStream.java:334)
+	at java.base/sun.nio.cs.StreamDecoder.readBytes(StreamDecoder.java:287)
+	at java.base/sun.nio.cs.StreamDecoder.implRead(StreamDecoder.java:330)
+	at java.base/sun.nio.cs.StreamDecoder.read(StreamDecoder.java:190)
+	at java.base/java.io.InputStreamReader.read(InputStreamReader.java:177)
+	at java.base/java.io.BufferedReader.fill(BufferedReader.java:162)
+	at java.base/java.io.BufferedReader.readLine(BufferedReader.java:329)
+	at java.base/java.io.BufferedReader.readLine(BufferedReader.java:396)
+	at melox.player.AudioPlayer$runSession$stderrJob$1.invokeSuspend(AudioPlayer.kt:251)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:124)
+	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:89)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:586)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:798)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:717)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:704)
+	Suppressed: kotlinx.coroutines.internal.DiagnosticCoroutineContextException: [CoroutineId(387), "coroutine#387":StandaloneCoroutine{Cancelling}@56989fc6, Dispatchers.IO]
+[ERROR AudioPlayer] 播放失败 (Output): AudioPlaybackFailure: Audio output stopped accepting aligned PCM frames (accepted=0 requested=31184 offset=4096 open=true running=true paused=false pauseVersion=43->43 framePosition=0 buffer=176400 available=172304) <- IOException: Audio output stopped accepting aligned PCM frames (accepted=0 requested=31184 offset=4096 open=true running=true paused=false pauseVersion=43->43 framePosition=0 buffer=176400 available=172304)
+[ERROR AudioPlayer] 播放失败 (Output): AudioPlaybackFailure: device start failed <- IllegalStateException: device start failed
+]]></system-err>
+</testsuite>

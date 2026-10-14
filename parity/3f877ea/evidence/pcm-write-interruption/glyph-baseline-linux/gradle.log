@@ -1,0 +1,103 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.5.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :desktop:kmpPartiallyResolvedDependenciesChecker
+> Task :desktop:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :desktop:convertXmlValueResourcesForCommonMain NO-SOURCE
+> Task :desktop:copyNonXmlValueResourcesForCommonMain NO-SOURCE
+> Task :desktop:prepareComposeResourcesTaskForCommonMain NO-SOURCE
+> Task :desktop:generateResourceAccessorsForCommonMain SKIPPED
+> Task :desktop:convertXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :desktop:copyNonXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :desktop:prepareComposeResourcesTaskForDesktopMain NO-SOURCE
+> Task :desktop:generateResourceAccessorsForDesktopMain SKIPPED
+> Task :desktop:generateActualResourceCollectorsForDesktopMain SKIPPED
+> Task :desktop:generateComposeResClass SKIPPED
+> Task :desktop:generateExpectResourceCollectorsForCommonMain SKIPPED
+> Task :innertube:kmpPartiallyResolvedDependenciesChecker
+> Task :innertube:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :innertube:extractAndroidInnerTube UP-TO-DATE
+> Task :innertube:compileKotlinDesktop UP-TO-DATE
+> Task :innertube:compileDesktopMainJava NO-SOURCE
+> Task :innertube:desktopProcessResources NO-SOURCE
+> Task :innertube:processDesktopMainResources SKIPPED
+> Task :innertube:desktopMainClasses UP-TO-DATE
+> Task :innertube:desktopJar UP-TO-DATE
+> Task :shared:kmpPartiallyResolvedDependenciesChecker
+> Task :shared:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :shared:convertXmlValueResourcesForCommonMain NO-SOURCE
+> Task :shared:copyNonXmlValueResourcesForCommonMain NO-SOURCE
+> Task :shared:prepareComposeResourcesTaskForCommonMain NO-SOURCE
+> Task :shared:generateResourceAccessorsForCommonMain SKIPPED
+> Task :shared:convertXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :shared:copyNonXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :shared:prepareComposeResourcesTaskForDesktopMain NO-SOURCE
+> Task :shared:generateResourceAccessorsForDesktopMain SKIPPED
+> Task :shared:generateActualResourceCollectorsForDesktopMain SKIPPED
+> Task :shared:generateComposeResClass SKIPPED
+> Task :shared:generateExpectResourceCollectorsForCommonMain SKIPPED
+> Task :shared:compileKotlinDesktop UP-TO-DATE
+> Task :shared:compileDesktopMainJava NO-SOURCE
+> Task :shared:assembleDesktopMainResources UP-TO-DATE
+> Task :shared:desktopProcessResources UP-TO-DATE
+> Task :shared:processDesktopMainResources SKIPPED
+> Task :shared:desktopMainClasses UP-TO-DATE
+> Task :shared:desktopJar UP-TO-DATE
+
+> Task :desktop:compileKotlinDesktop
+w: file:///home/lladlam/%E9%A1%B9%E7%9B%AE/MeloX-Windows/desktop/src/desktopMain/kotlin/melox/ui/foundation/MeloXSymbol.kt:113:23 'fun painterResource(resourcePath: String): Painter' is deprecated. Migrate to the Compose resources library. See https://www.jetbrains.com/help/kotlin-multiplatform-dev/compose-images-resources.html If you need to load resources specificly from Java classpath, you should still use the new resource library and use a snippet from https://github.com/JetBrains/compose-multiplatform-core/pull/1457.
+w: file:///home/lladlam/%E9%A1%B9%E7%9B%AE/MeloX-Windows/desktop/src/desktopMain/kotlin/melox/ui/player/MeloXFlowingLightBackdrop.kt:136:38 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///home/lladlam/%E9%A1%B9%E7%9B%AE/MeloX-Windows/desktop/src/desktopMain/kotlin/melox/ui/player/MeloXFlowingLightBackdrop.kt:749:30 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///home/lladlam/%E9%A1%B9%E7%9B%AE/MeloX-Windows/desktop/src/desktopMain/kotlin/melox/ui/screens/AlbumDetailScreen.kt:182:49 'val outlinedButtonBorder: BorderStroke' is deprecated. Please use the version that takes an `enabled` param to get the `BorderStroke` with the correct opacity.
+w: file:///home/lladlam/%E9%A1%B9%E7%9B%AE/MeloX-Windows/desktop/src/desktopMain/kotlin/melox/ui/screens/AlbumDetailScreen.kt:195:49 'val outlinedButtonBorder: BorderStroke' is deprecated. Please use the version that takes an `enabled` param to get the `BorderStroke` with the correct opacity.
+w: file:///home/lladlam/%E9%A1%B9%E7%9B%AE/MeloX-Windows/desktop/src/desktopMain/kotlin/melox/ui/screens/LoginScreen.kt:1:16 Suppression of error 'INVISIBLE_REFERENCE' might compile and work, but the compiler behavior is UNSPECIFIED and WILL NOT BE PRESERVED. Please report your use case to the Kotlin issue tracker instead: https://kotl.in/issue
+w: file:///home/lladlam/%E9%A1%B9%E7%9B%AE/MeloX-Windows/desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXArtwork.kt:61:75 'fun loadImageBitmap(inputStream: InputStream): ImageBitmap' is deprecated. Migrate to the Compose resources library. See https://www.jetbrains.com/help/kotlin-multiplatform-dev/compose-images-resources.html.
+w: file:///home/lladlam/%E9%A1%B9%E7%9B%AE/MeloX-Windows/desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXDetailPalette.kt:56:34 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///home/lladlam/%E9%A1%B9%E7%9B%AE/MeloX-Windows/desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXLibraryDownloads.kt:511:70 'fun loadImageBitmap(inputStream: InputStream): ImageBitmap' is deprecated. Migrate to the Compose resources library. See https://www.jetbrains.com/help/kotlin-multiplatform-dev/compose-images-resources.html.
+w: file:///home/lladlam/%E9%A1%B9%E7%9B%AE/MeloX-Windows/desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXSongActionsOverlay.kt:162:35 Elvis operator (?:) always returns the left operand of non-nullable type 'Int'.
+w: file:///home/lladlam/%E9%A1%B9%E7%9B%AE/MeloX-Windows/desktop/src/desktopMain/kotlin/melox/ui/screens/PlaylistDetailScreen.kt:219:49 'val outlinedButtonBorder: BorderStroke' is deprecated. Please use the version that takes an `enabled` param to get the `BorderStroke` with the correct opacity.
+w: file:///home/lladlam/%E9%A1%B9%E7%9B%AE/MeloX-Windows/desktop/src/desktopMain/kotlin/melox/ui/screens/PlaylistDetailScreen.kt:238:49 'val outlinedButtonBorder: BorderStroke' is deprecated. Please use the version that takes an `enabled` param to get the `BorderStroke` with the correct opacity.
+w: file:///home/lladlam/%E9%A1%B9%E7%9B%AE/MeloX-Windows/desktop/src/desktopMain/kotlin/melox/validation/MeloXSceneSemantics.kt:27:58 'val InvisibleToUser: SemanticsPropertyKey<Unit>' is deprecated. Use `hideFromAccessibility` instead.
+
+> Task :desktop:compileDesktopMainJava NO-SOURCE
+> Task :desktop:assembleDesktopMainResources UP-TO-DATE
+> Task :desktop:desktopProcessResources UP-TO-DATE
+> Task :desktop:processDesktopMainResources SKIPPED
+> Task :desktop:desktopMainClasses
+
+> Task :desktop:auditLyricRaster
+[INFO MeloXFont] Android MiLan Pro loaded: fonts/mi_lan_pro_vf.ttf; CSS/axis weights=[(100, 150), (200, 200), (300, 250), (400, 340), (500, 400), (600, 540), (700, 630), (800, 700), (900, 700)]
+[INFO MeloXFont] Native lyric typeface loaded: family=MI Lan Pro VF; bytes=19646728
+Lyric raster 1.0-Bold-0 normalized difference=0.06318506002239552
+Lyric raster 1.0-Bold-1 normalized difference=0.07721605308959888
+Lyric raster 1.0-Bold-2 normalized difference=0.046640330034565546
+Lyric raster 1.0-Heavy-0 normalized difference=0.19294717123436766
+Lyric raster 1.0-Heavy-1 normalized difference=0.19253914555756302
+Lyric raster 1.0-Heavy-2 normalized difference=0.16954144509491423
+Lyric raster 1.25-Bold-0 normalized difference=0.07570411829646816
+Lyric raster 1.25-Bold-1 normalized difference=0.06588420695536763
+Lyric raster 1.25-Bold-2 normalized difference=0.10292271397362615
+Lyric raster 1.25-Heavy-0 normalized difference=0.17155689604301216
+Lyric raster 1.25-Heavy-1 normalized difference=0.1769007984252413
+Lyric raster 1.25-Heavy-2 normalized difference=0.16085606638832547
+Lyric raster 1.5-Bold-0 normalized difference=0.1135923365299057
+Lyric raster 1.5-Bold-1 normalized difference=0.12376763677268579
+Lyric raster 1.5-Bold-2 normalized difference=0.2414411446835636
+Lyric raster 1.5-Heavy-0 normalized difference=0.19909803252772387
+Lyric raster 1.5-Heavy-1 normalized difference=0.2026986126128547
+Lyric raster 1.5-Heavy-2 normalized difference=0.2089991496574375
+Lyric raster 1.75-Bold-0 normalized difference=0.03930494910398215
+Lyric raster 1.75-Bold-1 normalized difference=0.03360679061633949
+Lyric raster 1.75-Bold-2 normalized difference=0.06755070362160927
+Lyric raster 1.75-Heavy-0 normalized difference=0.16009003135509406
+Lyric raster 1.75-Heavy-1 normalized difference=0.16548455801256945
+Lyric raster 1.75-Heavy-2 normalized difference=0.17507148965003716
+Lyric raster 2.0-Bold-0 normalized difference=0.041782276670022524
+Lyric raster 2.0-Bold-1 normalized difference=0.03622344078683086
+Lyric raster 2.0-Bold-2 normalized difference=0.03412199819648451
+Lyric raster 2.0-Heavy-0 normalized difference=0.17630076930775215
+Lyric raster 2.0-Heavy-1 normalized difference=0.1828922681423413
+Lyric raster 2.0-Heavy-2 normalized difference=0.18637767205297157
+
+BUILD SUCCESSFUL in 52s
+14 actionable tasks: 5 executed, 9 up-to-date
+Consider enabling configuration cache to speed up this build: https://docs.gradle.org/9.5.1/userguide/configuration_cache_enabling.html
