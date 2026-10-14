@@ -131,3 +131,13 @@ genuine generated WAV URI to a native absolute path and fails immediately on
 decoder errors. Linux passes all eight AutoMix integration cases with this
 portable fixture. This run did not reach lyrics controls or publish a package.
 Its failed XML is retained under `windows-failed-94e0bfa/`.
+
+Run `38591272129` / `5721f90` passes **204 tests / 39 suites / zero failures**
+and native memory/EQ gates, then fails the first lyrics quality option. Its
+actual UI semantics contain `Low · saves battery`; the replay argument used a
+damaged separator. Python's Windows default text-file encoding was used to
+write the argument file, but Gradle reads that file explicitly as UTF-8. Both
+replay scripts now write UTF-8 explicitly, with default-independent reads in
+the controls script. Argument files are included in Windows evidence for
+subsequent runs. The failed replay and successful test/memory results are
+retained under `windows-failed-5721f90/`; there was no published package.

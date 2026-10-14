@@ -108,9 +108,11 @@ jobs:
             desktop/build/parity/lyrics-controls/*.json
             desktop/build/parity/lyrics-controls/*.png
             desktop/build/parity/lyrics-controls/gradle.log
+            desktop/build/parity/lyrics-controls/arguments.txt
             desktop/build/parity/lyrics-reload/*.json
             desktop/build/parity/lyrics-reload/*.png
             desktop/build/parity/lyrics-reload/gradle.log
+            desktop/build/parity/lyrics-reload/arguments.txt
             desktop/build/verification/lyric-raster/*.json
             desktop/build/verification/lyric-raster/*.png
             desktop/build/verification/font-metrics/*.json

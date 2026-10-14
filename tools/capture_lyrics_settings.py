@@ -20,7 +20,7 @@ assert mode in ('controls', 'reload')
 output.mkdir(parents=True, exist_ok=True)
 gradle = os.environ.get('MELOX_GRADLE') or shutil.which('gradle')
 assert gradle, 'Set MELOX_GRADLE'
-setters = (repo / 'shared/src/commonMain/kotlin/melox/settings/MeloXSettingsPreferences.kt').read_text()
+setters = (repo / 'shared/src/commonMain/kotlin/melox/settings/MeloXSettingsPreferences.kt').read_text(encoding='utf-8')
 properties = dict(re.findall(r'"(lyrics_[^"]+)"\s*->\s*MeloXSettingsRuntime\.(\w+)', setters))
 properties['lyrics_text_pv_style'] = 'textPVStyle'  # Setter also updates the style's reference speed.
 steps, expectations, changed = [], {}, {}
@@ -111,13 +111,13 @@ add('reveal-pv-style', 'reveal@lyrics-pv-kineticsplit')
 add('pv-style', 'tap@lyrics-pv-kineticsplit', checks('lyrics_text_pv_style', 'string', 'KineticSplit'))
 slider('lyrics_text_pv_motion_intensity', .75, 1.5, 'lyrics-pv-intensity')
 slider('lyrics_text_pv_animation_speed', .75, 3, 'lyrics-pv-speed')
-inventory = json.loads((repo / 'parity/3f877ea/evidence/search-player-next-lyrics-control-gaps.json').read_text())
+inventory = json.loads((repo / 'parity/3f877ea/evidence/search-player-next-lyrics-control-gaps.json').read_text(encoding='utf-8'))
 assert set(changed) == set(inventory['pinned_setting_keys']), (len(changed), set(inventory['pinned_setting_keys']) - set(changed))
 all_checks = [item for key, (kind, value) in changed.items()
               for item in (f'pref-{kind}:{key}:{value}', f'runtime:{properties[key]}:{value}')]
 if mode == 'controls':
     settings = home / '.melox/prefs_melox_app_settings.properties'
-    assert not any(line.startswith('lyrics_') for line in settings.read_text().splitlines()), 'Use a fresh isolated controls home'
+    assert not any(line.startswith('lyrics_') for line in settings.read_text(encoding='utf-8').splitlines()), 'Use a fresh isolated controls home'
     add('reload', 'reload-settings', all_checks)
     add('back', 'escape', ['tag:settings-root'])
 else:
@@ -127,12 +127,12 @@ args = ['--source', 'Local', '--start-tab', 'Settings', '--theme', 'Dark', '--wi
         '--output', str(output), '--wait-ms', '180', '--startup-wait-ms', '1000',
         '--steps', ';'.join(steps), '--expect', ';'.join(name + '=' + ','.join(values) for name, values in expectations.items())]
 argfile = output / 'arguments.txt'
-argfile.write_text('\n'.join(args) + '\n')
-(output / 'control-inputs.json').write_text(json.dumps(changed, indent=2) + '\n')
+argfile.write_text('\n'.join(args) + '\n', encoding='utf-8')
+(output / 'control-inputs.json').write_text(json.dumps(changed, indent=2) + '\n', encoding='utf-8')
 command = [gradle, ':desktop:captureUi', '--no-daemon', '--max-workers=1', '--console=plain',
            '-Pkotlin.compiler.execution.strategy=in-process', '-Dorg.gradle.jvmargs=' + os.environ.get('MELOX_CAPTURE_JVMARGS', '-Xmx1024m -XX:+UseSerialGC'),
            '-PcaptureHome=' + str(home), '-PcaptureArgsFile=' + str(argfile)]
-(output / 'command.txt').write_text(subprocess.list2cmdline(command) + '\n')
+(output / 'command.txt').write_text(subprocess.list2cmdline(command) + '\n', encoding='utf-8')
 with (output / 'gradle.log').open('w') as log:
     result = subprocess.run(command, cwd=repo, stdout=log, stderr=subprocess.STDOUT)
 print(mode, result.returncode)

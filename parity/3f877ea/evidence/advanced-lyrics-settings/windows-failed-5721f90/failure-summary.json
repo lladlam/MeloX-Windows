@@ -1,0 +1,16 @@
+{
+  "run_id": 38591272129,
+  "head_sha": "5721f90778390acd3b57828bd60f5bd8b228c589",
+  "status": "FAILED",
+  "tests": {
+    "tests": 204,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "suites": 39
+  },
+  "lyrics_replay": "FAILED at first option: argument file written with Windows default encoding, read as UTF-8 by Gradle",
+  "package_delivered": false,
+  "archive_normalization": "text: CRLF to LF / trailing whitespace; raw Gradle log SHA recorded",
+  "raw_gradle_log_sha256": "fea83ce71ddaa8e63457a65e378bcbc0c767ae24b80184377a4d0e2eb799bea2"
+}

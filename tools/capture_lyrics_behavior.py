@@ -85,7 +85,7 @@ args = ['--source', 'Netease', '--start-tab', 'Settings', '--theme', 'Dark',
         '--play-id', '3334421408', '--capture-pcm', '--steps', ';'.join(steps),
         '--expect', ';'.join(n + '=' + ','.join(v) for n, v in expected.items())]
 argfile = out / 'arguments.txt'
-argfile.write_text('\n'.join(args) + '\n')
+argfile.write_text('\n'.join(args) + '\n', encoding='utf-8')
 command = [gradle, ':desktop:captureUi', '--no-daemon', '--max-workers=1', '--console=plain',
            '-Pkotlin.compiler.execution.strategy=in-process',
            '-Dorg.gradle.jvmargs=' + os.environ.get('MELOX_CAPTURE_JVMARGS', '-Xmx1024m -XX:+UseSerialGC'),
