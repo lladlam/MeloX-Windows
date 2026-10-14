@@ -1,0 +1,16 @@
+{
+  "source": "9c8f6bd2157aefcdf087aa2686f7fc0dcdcb5272",
+  "run_id": 38501893658,
+  "os": "Windows Server 2025",
+  "tests": {
+    "tests": 188,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "suites": 36
+  },
+  "glyph_baseline_maximum_difference": 0.25219725749846233,
+  "glyph_self_geometry_acceptance": "FAILS_LATER_1_PERCENT_GATE",
+  "hardware_audio": "BLOCKED",
+  "android_pixel_acceptance": "BLOCKED"
+}

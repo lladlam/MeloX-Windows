@@ -224,6 +224,70 @@ open class DesktopAudioSessionTest {
         assertEquals(2L, output.calls.get(), "A genuinely failed output must not busy-loop")
     }
 
+    @Test fun stopReleasesPausedPendingWriteWithoutFailureOrEndCallback() = runBlocking<Unit> {
+        val output = InterruptedWriteOutput(holdReturn = true)
+        AudioPlayer.outputLineFactory = { output.line }
+        val failures = CopyOnWriteArrayList<AudioPlaybackFailure>()
+        val ended = AtomicBoolean(false)
+        AudioPlayer.play(wav().path, track, onEnded = { ended.set(true) }, onFailure = failures::add)
+        awaitCondition { output.waiting.get() }
+        val beforePause = output.pcm()
+        AudioPlayer.pause()
+        AudioPlayer.stop()
+        awaitCondition { output.returned.get() && output.closed.get() }
+        delay(80)
+        assertTrue(failures.isEmpty())
+        assertFalse(ended.get())
+        assertFalse(output.running.get())
+        assertContentEquals(beforePause, output.pcm())
+        assertNull(AudioPlayer.currentTrack.value)
+        assertNull(AudioPlayer.state.value.error)
+    }
+
+    @Test fun seekReleasesPausedPendingWriteAndOnlyReplacementPcmCanFinish() = runBlocking<Unit> {
+        val interrupted = InterruptedWriteOutput(holdReturn = true)
+        val opened = AtomicLong()
+        AudioPlayer.outputLineFactory = {
+            if (opened.incrementAndGet() == 1L) interrupted.line
+            else ControlledOutput().also(outputs::add).line
+        }
+        val file = wav()
+        val failures = CopyOnWriteArrayList<AudioPlaybackFailure>()
+        val ended = CompletableDeferred<Unit>()
+        AudioPlayer.play(file.path, track, onEnded = { ended.complete(Unit) }, onFailure = failures::add)
+        awaitCondition { interrupted.waiting.get() }
+        val beforePause = interrupted.pcm()
+        AudioPlayer.pause()
+        AudioPlayer.seekTo(0)
+        awaitCondition { interrupted.returned.get() && interrupted.closed.get() && outputs.size == 1 }
+        assertContentEquals(beforePause, interrupted.pcm())
+        assertTrue(failures.isEmpty())
+        assertFalse(ended.isCompleted)
+        assertTrue(AudioPlayer.state.value.isPaused)
+        AudioPlayer.resume()
+        awaitCondition { outputs.single().acceptedBytes.get() == 88_200L || failures.isNotEmpty() }
+        assertTrue(failures.isEmpty())
+        assertContentEquals(file.readBytes().copyOfRange(44, 88_244), outputs.single().pcm())
+        outputs.single().consumeAll()
+        withTimeout(15_000) { ended.await() }
+        assertEquals(500L, AudioPlayer.getCurrentPositionMs())
+        assertFalse(interrupted.running.get())
+    }
+
+    @Test fun unexpectedDeviceCloseDuringWriteStillFailsWithLineStateDiagnostics() = runBlocking<Unit> {
+        val output = InterruptedWriteOutput(holdReturn = true)
+        AudioPlayer.outputLineFactory = { output.line }
+        val failed = CompletableDeferred<AudioPlaybackFailure>()
+        AudioPlayer.play(wav().path, track, onFailure = { failed.complete(it) })
+        awaitCondition { output.waiting.get() }
+        output.line.close()
+        val failure = withTimeout(15_000) { failed.await() }
+        assertEquals(AudioFailureKind.Output, failure.kind)
+        assertTrue(failure.message.orEmpty().contains("accepted=0"))
+        assertTrue(failure.message.orEmpty().contains("open=false"))
+        assertFalse(AudioPlayer.state.value.isFinished)
+    }
+
     @Test fun realOutputConsumesEqualizerPreampAndSeekingRebuildsDspWithCurrentSettings() = runBlocking<Unit> {
         val prefs = melox.platform.getPreferences("melox_app_settings")
         val keys = listOf("equalizer_enabled", "equalizer_preset", "equalizer_preamp_db")

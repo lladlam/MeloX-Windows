@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="NeteaseAccountLifecycleTest[desktop]" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-10-14T02:39:28.348Z" hostname="runnervmfi6oq" time="0.912">
+  <properties/>
+  <testcase name="cancellationPropagatesAndReleasesLoadingStateWithoutSaving[desktop]" classname="melox.account.NeteaseAccountLifecycleTest" time="0.865"/>
+  <testcase name="retainedSettingsSessionReloadsAfterSiblingLoginAndLogout[desktop]" classname="melox.account.NeteaseAccountLifecycleTest" time="0.021"/>
+  <testcase name="delayedProfileCannotRestoreAccountAfterLogout[desktop]" classname="melox.account.NeteaseAccountLifecycleTest" time="0.017"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

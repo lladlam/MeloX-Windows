@@ -28,6 +28,7 @@ import kotlin.math.abs
 fun main(args: Array<String>) = runBlocking {
     val output = File(args.firstOrNull() ?: "build/verification/lyric-raster").apply { mkdirs() }
     val results = JSONArray()
+    var maximumDifference = 0.0
     withContext(Dispatchers.Main) {
         MeloXSettingsPreferences.initialize()
         for (density in listOf(1f, 1.25f, 1.5f, 1.75f, 2f)) {
@@ -64,6 +65,7 @@ fun main(args: Array<String>) = runBlocking {
                     }
                     check(referenceInk > 0)
                     val ratio = difference.toDouble() / referenceInk
+                    maximumDifference = maxOf(maximumDifference, ratio)
                     results.put(JSONObject().put("density", density).put("weight", weight.name).put("fixture", index)
                         .put("reference_ink", referenceInk).put("absolute_pixel_difference", difference)
                         .put("normalized_difference", ratio))
@@ -74,5 +76,8 @@ fun main(args: Array<String>) = runBlocking {
     }
     File(output, "raster.json").writeText(JSONObject().put("os", System.getProperty("os.name"))
         .put("check", "production unlifted individual glyphs versus the same production shaped text")
+        .put("maximum_normalized_difference", maximumDifference).put("limit", .01)
+        .put("status", if (maximumDifference <= .01) "PASSED" else "FAILED")
         .put("android_pixel_acceptance", "BLOCKED").put("results", results).toString(2))
+    check(maximumDifference <= .01) { "Individual glyph geometry diverges from its own shaped paragraph: $maximumDifference" }
 }

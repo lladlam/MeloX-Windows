@@ -1,0 +1,250 @@
+{
+  "android_pixel_acceptance": "BLOCKED",
+  "os": "Linux",
+  "maximum_normalized_difference": 6.51401742806927E-4,
+  "limit": 0.01,
+  "check": "production unlifted individual glyphs versus the same production shaped text",
+  "results": [
+    {
+      "fixture": 0,
+      "reference_ink": 498314,
+      "density": 1,
+      "normalized_difference": 6.020300453127947E-5,
+      "weight": "Bold",
+      "absolute_pixel_difference": 30
+    },
+    {
+      "fixture": 1,
+      "reference_ink": 982490,
+      "density": 1,
+      "normalized_difference": 1.5979806410243362E-4,
+      "weight": "Bold",
+      "absolute_pixel_difference": 157
+    },
+    {
+      "fixture": 2,
+      "reference_ink": 971777,
+      "density": 1,
+      "normalized_difference": 2.0580853426249026E-6,
+      "weight": "Bold",
+      "absolute_pixel_difference": 2
+    },
+    {
+      "fixture": 0,
+      "reference_ink": 652334,
+      "density": 1,
+      "normalized_difference": 1.5176274730429503E-4,
+      "weight": "Heavy",
+      "absolute_pixel_difference": 99
+    },
+    {
+      "fixture": 1,
+      "reference_ink": 1301808,
+      "density": 1,
+      "normalized_difference": 6.51401742806927E-4,
+      "weight": "Heavy",
+      "absolute_pixel_difference": 848
+    },
+    {
+      "fixture": 2,
+      "reference_ink": 1267460,
+      "density": 1,
+      "normalized_difference": 1.8067631325643414E-4,
+      "weight": "Heavy",
+      "absolute_pixel_difference": 229
+    },
+    {
+      "fixture": 0,
+      "reference_ink": 740039,
+      "density": 1.25,
+      "normalized_difference": 2.1620482163777854E-5,
+      "weight": "Bold",
+      "absolute_pixel_difference": 16
+    },
+    {
+      "fixture": 1,
+      "reference_ink": 1479778,
+      "density": 1.25,
+      "normalized_difference": 1.2096409055952988E-4,
+      "weight": "Bold",
+      "absolute_pixel_difference": 179
+    },
+    {
+      "fixture": 2,
+      "reference_ink": 1489506,
+      "density": 1.25,
+      "normalized_difference": 0,
+      "weight": "Bold",
+      "absolute_pixel_difference": 0
+    },
+    {
+      "fixture": 0,
+      "reference_ink": 1006599,
+      "density": 1.25,
+      "normalized_difference": 3.1392838657697854E-4,
+      "weight": "Heavy",
+      "absolute_pixel_difference": 316
+    },
+    {
+      "fixture": 1,
+      "reference_ink": 2018849,
+      "density": 1.25,
+      "normalized_difference": 5.765661522976706E-4,
+      "weight": "Heavy",
+      "absolute_pixel_difference": 1164
+    },
+    {
+      "fixture": 2,
+      "reference_ink": 1973118,
+      "density": 1.25,
+      "normalized_difference": 1.0085560012122944E-4,
+      "weight": "Heavy",
+      "absolute_pixel_difference": 199
+    },
+    {
+      "fixture": 0,
+      "reference_ink": 1059781,
+      "density": 1.5,
+      "normalized_difference": 2.3589779397818983E-5,
+      "weight": "Bold",
+      "absolute_pixel_difference": 25
+    },
+    {
+      "fixture": 1,
+      "reference_ink": 2120215,
+      "density": 1.5,
+      "normalized_difference": 8.914190306171779E-5,
+      "weight": "Bold",
+      "absolute_pixel_difference": 189
+    },
+    {
+      "fixture": 2,
+      "reference_ink": 2106853,
+      "density": 1.5,
+      "normalized_difference": 0,
+      "weight": "Bold",
+      "absolute_pixel_difference": 0
+    },
+    {
+      "fixture": 0,
+      "reference_ink": 1413133,
+      "density": 1.5,
+      "normalized_difference": 3.042884144662958E-4,
+      "weight": "Heavy",
+      "absolute_pixel_difference": 430
+    },
+    {
+      "fixture": 1,
+      "reference_ink": 2828194,
+      "density": 1.5,
+      "normalized_difference": 4.3808875911624165E-4,
+      "weight": "Heavy",
+      "absolute_pixel_difference": 1239
+    },
+    {
+      "fixture": 2,
+      "reference_ink": 2803576,
+      "density": 1.5,
+      "normalized_difference": 7.383427451226577E-5,
+      "weight": "Heavy",
+      "absolute_pixel_difference": 207
+    },
+    {
+      "fixture": 0,
+      "reference_ink": 1451980,
+      "density": 1.75,
+      "normalized_difference": 7.162633094119754E-5,
+      "weight": "Bold",
+      "absolute_pixel_difference": 104
+    },
+    {
+      "fixture": 1,
+      "reference_ink": 2899295,
+      "density": 1.75,
+      "normalized_difference": 9.692011333789766E-5,
+      "weight": "Bold",
+      "absolute_pixel_difference": 281
+    },
+    {
+      "fixture": 2,
+      "reference_ink": 2839097,
+      "density": 1.75,
+      "normalized_difference": 0,
+      "weight": "Bold",
+      "absolute_pixel_difference": 0
+    },
+    {
+      "fixture": 0,
+      "reference_ink": 1898894,
+      "density": 1.75,
+      "normalized_difference": 1.6009319108912872E-4,
+      "weight": "Heavy",
+      "absolute_pixel_difference": 304
+    },
+    {
+      "fixture": 1,
+      "reference_ink": 3817190,
+      "density": 1.75,
+      "normalized_difference": 2.0748246746952602E-4,
+      "weight": "Heavy",
+      "absolute_pixel_difference": 792
+    },
+    {
+      "fixture": 2,
+      "reference_ink": 3819434,
+      "density": 1.75,
+      "normalized_difference": 7.27856535811327E-5,
+      "weight": "Heavy",
+      "absolute_pixel_difference": 278
+    },
+    {
+      "fixture": 0,
+      "reference_ink": 1856457,
+      "density": 2,
+      "normalized_difference": 5.97913121607449E-5,
+      "weight": "Bold",
+      "absolute_pixel_difference": 111
+    },
+    {
+      "fixture": 1,
+      "reference_ink": 3704176,
+      "density": 2,
+      "normalized_difference": 7.505042956922133E-5,
+      "weight": "Bold",
+      "absolute_pixel_difference": 278
+    },
+    {
+      "fixture": 2,
+      "reference_ink": 3729383,
+      "density": 2,
+      "normalized_difference": 0,
+      "weight": "Bold",
+      "absolute_pixel_difference": 0
+    },
+    {
+      "fixture": 0,
+      "reference_ink": 2478072,
+      "density": 2,
+      "normalized_difference": 5.2460138365632634E-5,
+      "weight": "Heavy",
+      "absolute_pixel_difference": 130
+    },
+    {
+      "fixture": 1,
+      "reference_ink": 4975984,
+      "density": 2,
+      "normalized_difference": 3.177261020131898E-4,
+      "weight": "Heavy",
+      "absolute_pixel_difference": 1581
+    },
+    {
+      "fixture": 2,
+      "reference_ink": 4946805,
+      "density": 2,
+      "normalized_difference": 4.1036588262525E-5,
+      "weight": "Heavy",
+      "absolute_pixel_difference": 203
+    }
+  ],
+  "status": "PASSED"
+}

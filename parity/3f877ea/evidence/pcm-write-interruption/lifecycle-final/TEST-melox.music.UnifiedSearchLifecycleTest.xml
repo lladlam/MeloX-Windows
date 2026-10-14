@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="UnifiedSearchLifecycleTest[desktop]" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-10-14T02:59:44.450Z" hostname="lladlam-arch" time="0.107">
+  <properties/>
+  <testcase name="studioAndLiveResultsKeepTheirDistinctVersionsAndOriginalResourceIds[desktop]" classname="melox.music.UnifiedSearchLifecycleTest" time="0.037"/>
+  <testcase name="anUndeclaredSearchMethodIsUnavailableRatherThanAReportedEmptySuccess[desktop]" classname="melox.music.UnifiedSearchLifecycleTest" time="0.005"/>
+  <testcase name="concurrentWhitelistSearchPreservesHealthyNativeIdentityWhenAnotherProviderFails[desktop]" classname="melox.music.UnifiedSearchLifecycleTest" time="0.003"/>
+  <testcase name="nativeDuplicatesAreRemovedAndForeignIdentityCannotMasqueradeAsTheQueriedProvider[desktop]" classname="melox.music.UnifiedSearchLifecycleTest" time="0.001"/>
+  <testcase name="cancellingObsoleteSearchCancelsAllChildrenInsteadOfPublishingFailureResults[desktop]" classname="melox.music.UnifiedSearchLifecycleTest" time="0.002"/>
+  <testcase name="timedOutSourceReportsItsOwnFailureWhileOtherApprovedResultsRemainUsable[desktop]" classname="melox.music.UnifiedSearchLifecycleTest" time="0.059"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[SLF4J(W): No SLF4J providers were found.
+SLF4J(W): Defaulting to no-operation (NOP) logger implementation
+SLF4J(W): See https://www.slf4j.org/codes.html#noProviders for further details.
+]]></system-err>
+</testsuite>

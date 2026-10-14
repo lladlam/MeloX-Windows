@@ -10,19 +10,21 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.graphics.drawscope.clipRect
+import androidx.compose.ui.graphics.drawscope.CanvasDrawScope
 import androidx.compose.ui.graphics.drawscope.withTransform
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.nativeCanvas
+import androidx.compose.ui.graphics.asComposeCanvas
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.text
 import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.drawText
 import androidx.compose.ui.text.rememberTextMeasurer
@@ -35,19 +37,17 @@ import melox.lyrics.*
 import melox.settings.MeloXLyricsRenderingQuality
 import melox.settings.MeloXSettingsRuntime
 import melox.ui.theme.MeloXLanTingProFontFamily
-import melox.ui.theme.meloXLyricTypeface
-import org.jetbrains.skia.FilterBlurMode
-import org.jetbrains.skia.Font
-import org.jetbrains.skia.MaskFilter
+import org.jetbrains.skia.FilterTileMode
+import org.jetbrains.skia.ImageFilter
 import org.jetbrains.skia.Paint
+import org.jetbrains.skia.Surface
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.roundToInt
 import kotlin.math.sin
 
 private data class DrawableLyricGlyph(
-    val offset: Int, val text: String, val bounds: Rect, val baseline: Float,
-    val fallback: TextLayoutResult?,
+    val offset: Int, val bounds: Rect,
 )
 
 /** Pinned glyph masks/lift/glow. Only the Canvas subscribes to the high-frequency clock. */
@@ -73,24 +73,35 @@ internal fun MeloXGlyphLyricText(
             measurer.measure(AnnotatedString(line.text), style, constraints = Constraints(minWidth = width, maxWidth = width), softWrap = true)
         }
         val height = with(density) { layout.size.height.toDp() }
-        val font = remember(weight, style.fontSize, density) {
-            Font(meloXLyricTypeface(weight), with(density) { style.fontSize.toPx() }).apply { isSubpixel = true }
+        // Measure and rasterize through the SAME shaped Compose paragraph. Independent
+        // native drawString differed from the shaped variable-weight paragraph on
+        // Windows, especially at Heavy. Its geometry must not be independently resolved.
+        // One immutable row mask per layout; no per-frame layout or per-glyph surface.
+        val rowMask = remember(layout, density, isRtl) {
+            Surface.makeRasterN32Premul(layout.size.width.coerceAtLeast(1), layout.size.height.coerceAtLeast(1)).use { surface ->
+                surface.canvas.clear(0)
+                CanvasDrawScope().draw(density, if (isRtl) LayoutDirection.Rtl else LayoutDirection.Ltr,
+                    surface.canvas.asComposeCanvas(), Size(layout.size.width.toFloat(), layout.size.height.toFloat())) {
+                    drawText(layout, color = Color.White)
+                }
+                surface.makeImageSnapshot()
+            }
         }
         val paint = remember { Paint().apply { color = 0xFFFFFFFF.toInt(); isAntiAlias = true } }
         val blur = remember(softBlurDp, density) {
             with(density) { softBlurDp.dp.toPx() }.takeIf { it > .05f }?.let {
-                MaskFilter.makeBlur(FilterBlurMode.NORMAL, it, true)
+                ImageFilter.makeBlur(it, it, FilterTileMode.DECAL)
             }
         }
         val glowRadius = with(density) {
             (style.fontSize.toPx() * if (renderingQuality == MeloXLyricsRenderingQuality.High) .30f else .18f).coerceAtLeast(3.dp.toPx())
         }
-        val glowMask = remember(glowRadius) { MaskFilter.makeBlur(FilterBlurMode.NORMAL, glowRadius, true) }
-        DisposableEffect(font) { onDispose { font.close() } }
+        val glowMask = remember(glowRadius) { ImageFilter.makeBlur(glowRadius, glowRadius, FilterTileMode.DECAL) }
+        DisposableEffect(rowMask) { onDispose { rowMask.close() } }
         DisposableEffect(paint) { onDispose { paint.close() } }
         DisposableEffect(blur) { onDispose { blur?.close() } }
         DisposableEffect(glowMask) { onDispose { glowMask.close() } }
-        val glyphs = remember(layout, line.text, font) {
+        val glyphs = remember(layout, line.text) {
             buildList {
                 var offset = 0
                 while (offset < line.text.length) {
@@ -102,12 +113,7 @@ internal fun MeloXGlyphLyricText(
                             it.width.isFinite() && it.height.isFinite() && it.width > 0f && it.height > 0f
                         }
                         if (bounds != null) {
-                            val text = line.text.substring(offset, offset + count)
-                            // Native MiLan covers the source CJK/Latin glyphs. Compose's
-                            // font resolver supplies the same fallback route for other scripts.
-                            val fallback = if (font.getStringGlyphs(text).any { it.toInt() == 0 }) measurer.measure(
-                                AnnotatedString(text), style.copy(textAlign = TextAlign.Start), softWrap = false) else null
-                            add(DrawableLyricGlyph(offset, text, bounds, layout.getLineBaseline(layout.getLineForOffset(offset)), fallback))
+                            add(DrawableLyricGlyph(offset, bounds))
                         }
                     }
                     offset += count
@@ -124,17 +130,12 @@ internal fun MeloXGlyphLyricText(
         Canvas(Modifier.fillMaxWidth().height(height).testTag(if (animates) "lyric-timed-text" else "lyric-static-text")
             .semantics { text = AnnotatedString(line.text) }) {
             fun drawGlyph(glyph: DrawableLyricGlyph, alpha: Float, glow: Boolean = false) {
-                val fallback = glyph.fallback
-                if (fallback != null) {
-                    drawText(fallback, color = Color.White.copy(alpha = alpha.coerceIn(0f, 1f)),
-                        topLeft = Offset(glyph.bounds.left, glyph.baseline - fallback.getLineBaseline(0)),
-                        shadow = if (glow) Shadow(Color.White.copy(alpha = alpha.coerceIn(0f, 1f)), Offset.Zero, glowRadius) else null)
-                } else {
-                    paint.alpha = (alpha.coerceIn(0f, 1f) * 255f).roundToInt()
-                    paint.maskFilter = if (glow) glowMask else blur
-                    drawContext.canvas.nativeCanvas.drawString(glyph.text, glyph.bounds.left, glyph.baseline, font, paint)
-                    paint.maskFilter = null
-                }
+                val bounds = glyph.bounds
+                val region = org.jetbrains.skia.Rect.makeLTRB(bounds.left, bounds.top, bounds.right, bounds.bottom)
+                paint.alpha = (alpha.coerceIn(0f, 1f) * 255f).roundToInt()
+                paint.imageFilter = if (glow) glowMask else blur
+                drawContext.canvas.nativeCanvas.drawImageRect(rowMask, region, region, paint, true)
+                paint.imageFilter = null
             }
             if (!animates) {
                 if (blur == null) drawText(layout, color = Color.White)

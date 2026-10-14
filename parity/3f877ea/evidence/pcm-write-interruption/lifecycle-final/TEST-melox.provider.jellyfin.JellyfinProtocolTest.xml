@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="JellyfinProtocolTest[desktop]" tests="10" skipped="0" failures="0" errors="0" timestamp="2026-10-14T03:00:07.702Z" hostname="lladlam-arch" time="0.753">
+  <properties/>
+  <testcase name="realWriteMethodsSendServerEndpointsAndOnlyRenameName[desktop]" classname="melox.provider.jellyfin.JellyfinProtocolTest" time="0.177"/>
+  <testcase name="catalogPaginationMappingAndPlaybackKeepNativeIdentityAndHeaders[desktop]" classname="melox.provider.jellyfin.JellyfinProtocolTest" time="0.16"/>
+  <testcase name="playlistDuplicatesUseMembershipIdsForRemoveAndMoveAnd204IsSuccess[desktop]" classname="melox.provider.jellyfin.JellyfinProtocolTest" time="0.007"/>
+  <testcase name="foreignSourceServerAndChangedSessionAreRejected[desktop]" classname="melox.provider.jellyfin.JellyfinProtocolTest" time="0.004"/>
+  <testcase name="cancellingDuringResponseBodyClosesOwnedSocketPromptly[desktop]" classname="melox.provider.jellyfin.JellyfinProtocolTest" time="0.105"/>
+  <testcase name="productionResolverRetainsServerMetadataSeparatesAccountsAndDoesNotInventQuality[desktop]" classname="melox.provider.jellyfin.JellyfinProtocolTest" time="0.006"/>
+  <testcase name="artworkCredentialsAreRestrictedToOriginBasePathAndImageEndpoint[desktop]" classname="melox.provider.jellyfin.JellyfinProtocolTest" time="0.002"/>
+  <testcase name="authenticationUsesDesktopIdentityStableDeviceAndNoQueryToken[desktop]" classname="melox.provider.jellyfin.JellyfinProtocolTest" time="0.092"/>
+  <testcase name="nativeDecoderConsumesActualAuthorizedUniversalStreamPcm[desktop]" classname="melox.provider.jellyfin.JellyfinProtocolTest" time="0.072"/>
+  <testcase name="responseBoundsErrorsAndAuthenticationRedirectsAreEnforced[desktop]" classname="melox.provider.jellyfin.JellyfinProtocolTest" time="0.128"/>
+  <system-out><![CDATA[[DEBUG MeloXThirdParty] resolve detail source=jellyfin id=audio-on title=generated artists=未知歌手 durationMs=null metadata=Jellyfin
+[INFO MeloXThirdParty] Resolve start source=jellyfin quality=Standard thirdParty=true
+[INFO MeloXThirdParty] Resolve fallback source=jellyfin stage=provider chksz=unavailable
+[DEBUG MeloXThirdParty] resolve detail source=jellyfin id=audio-on title=generated artists=未知歌手 durationMs=null metadata=Jellyfin
+[INFO MeloXThirdParty] Resolve start source=jellyfin quality=Standard thirdParty=true
+[INFO MeloXThirdParty] Resolve fallback source=jellyfin stage=provider chksz=unavailable
+[DEBUG MeloXThirdParty] resolve detail source=jellyfin id=audio-on title=generated artists=未知歌手 durationMs=null metadata=Jellyfin
+[INFO MeloXThirdParty] Resolve start source=jellyfin quality=Standard thirdParty=true
+[INFO MeloXThirdParty] Resolve fallback source=jellyfin stage=provider chksz=unavailable
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

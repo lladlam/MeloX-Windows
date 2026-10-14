@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="DesktopStreamingAudioSessionTest[desktop]" tests="11" skipped="0" failures="0" errors="0" timestamp="2026-10-14T02:39:55.408Z" hostname="runnervmfi6oq" time="2.701">
+  <properties/>
+  <testcase name="realFfmpegNonzeroExitAfterPcmIsContentFailureRatherThanNaturalEnd[desktop]" classname="melox.player.DesktopStreamingAudioSessionTest" time="0.306"/>
+  <testcase name="unavailableDeviceReportsOutputFailureWithoutProducingAnEndEvent[desktop]" classname="melox.player.DesktopStreamingAudioSessionTest" time="0.014"/>
+  <testcase name="seekingToTheDecoderOriginalZeroPositionActuallyRestartsIt[desktop]" classname="melox.player.DesktopStreamingAudioSessionTest" time="0.263"/>
+  <testcase name="seekingToKnownTrackEndAcceptsAZeroPcmSuccessfulDecoderExit[desktop]" classname="melox.player.DesktopStreamingAudioSessionTest" time="0.062"/>
+  <testcase name="realOutputConsumesEqualizerPreampAndSeekingRebuildsDspWithCurrentSettings[desktop]" classname="melox.player.DesktopStreamingAudioSessionTest" time="0.355"/>
+  <testcase name="pausedWriteReturningZeroRetainsPcmAndResumesOnTheSameDevice[desktop]" classname="melox.player.DesktopStreamingAudioSessionTest" time="0.389"/>
+  <testcase name="replacingTheSameUriKeepsEndCallbacksOwnedByTheNewRequest[desktop]" classname="melox.player.DesktopStreamingAudioSessionTest" time="0.345"/>
+  <testcase name="genuinelyZeroProgressRunningDeviceStillReportsAnOutputFailure[desktop]" classname="melox.player.DesktopStreamingAudioSessionTest" time="0.056"/>
+  <testcase name="aDeviceStartFailureIsOutputFailureRatherThanCorruptContent[desktop]" classname="melox.player.DesktopStreamingAudioSessionTest" time="0.185"/>
+  <testcase name="decoderEofWaitsForBufferedFramesAndPauseResumePreserveTheTail[desktop]" classname="melox.player.DesktopStreamingAudioSessionTest" time="0.189"/>
+  <testcase name="quickPauseResumeBeforeInterruptedWriteReturnsKeepsZeroAndShortWriteRemainders[desktop]" classname="melox.player.DesktopStreamingAudioSessionTest" time="0.536"/>
+  <system-out><![CDATA[[DEBUG AudioPlayer] PCM write interrupted by pause: offset=0 remaining=3528 paused=true pauseVersion=0->1
+[DEBUG AudioPlayer] PCM write interrupted by pause: offset=0 remaining=3528 paused=false pauseVersion=0->1
+]]></system-out>
+  <system-err><![CDATA[[ERROR AudioPlayer] ???? (Content): IOException: [in#0/wav @ 00000219a8e98200] corrupt input packet in stream 0
+[in#0/wav @ 00000219a8e98200] Task finished with error: Invalid data found when processing input
+[in#0/wav @ 00000219a8e98200] Terminating thread with error: Invalid data found when processing input <- IOException: [in#0/wav @ 00000219a8e98200] corrupt input packet in stream 0
+[in#0/wav @ 00000219a8e98200] Task finished with error: Invalid data found when processing input
+[in#0/wav @ 00000219a8e98200] Terminating thread with error: Invalid data found when processing input <- IOException: [in#0/wav @ 00000219a8e98200] corrupt input packet in stream 0
+[in#0/wav @ 00000219a8e98200] Task finished with error: Invalid data found when processing input
+[in#0/wav @ 00000219a8e98200] Terminating thread with error: Invalid data found when processing input
+[ERROR AudioPlayer] ???? (Output): AudioPlaybackFailure: test device unavailable <- LineUnavailableException: test device unavailable
+[ERROR AudioPlayer] ???? (Output): AudioPlaybackFailure: Audio output stopped accepting aligned PCM frames (accepted=0 requested=3528 offset=0 open=true running=true paused=false pauseVersion=0->0 framePosition=0 buffer=176400 available=172872) <- IOException: Audio output stopped accepting aligned PCM frames (accepted=0 requested=3528 offset=0 open=true running=true paused=false pauseVersion=0->0 framePosition=0 buffer=176400 available=172872)
+[ERROR AudioPlayer] ???? (Output): AudioPlaybackFailure: device start failed <- IllegalStateException: device start failed
+]]></system-err>
+</testsuite>

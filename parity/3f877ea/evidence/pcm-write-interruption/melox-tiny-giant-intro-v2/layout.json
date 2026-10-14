@@ -1,0 +1,118 @@
+{
+  "status": "PASSED",
+  "check": "settled production lyric rows do not overlap",
+  "viewport": [
+    666,
+    1334
+  ],
+  "scenes": [
+    {
+      "file": "05-lyrics.png",
+      "position_ms": 1793,
+      "rows": [
+        {
+          "tag": "lyric-line-0",
+          "bounds": [
+            56,
+            439,
+            610,
+            643
+          ]
+        },
+        {
+          "tag": "lyric-line-1",
+          "bounds": [
+            56,
+            692,
+            610,
+            895
+          ]
+        },
+        {
+          "tag": "lyric-line-2",
+          "bounds": [
+            56,
+            944,
+            610,
+            1076
+          ]
+        },
+        {
+          "tag": "lyric-line-3",
+          "bounds": [
+            56,
+            1125,
+            610,
+            1275
+          ]
+        },
+        {
+          "tag": "lyric-line-4",
+          "bounds": [
+            56,
+            1324,
+            610,
+            1334
+          ]
+        }
+      ],
+      "minimum_row_gap_px": 49,
+      "semantics_sha256": "9da8dc10b2e27d84ab1c96c53dcf629d6791f5bbb4523eca211a393351a45851"
+    },
+    {
+      "file": "06-lyrics-loaded.png",
+      "position_ms": 1793,
+      "rows": [
+        {
+          "tag": "lyric-line-0",
+          "bounds": [
+            56,
+            439,
+            610,
+            643
+          ]
+        },
+        {
+          "tag": "lyric-line-1",
+          "bounds": [
+            56,
+            692,
+            610,
+            895
+          ]
+        },
+        {
+          "tag": "lyric-line-2",
+          "bounds": [
+            56,
+            944,
+            610,
+            1076
+          ]
+        },
+        {
+          "tag": "lyric-line-3",
+          "bounds": [
+            56,
+            1125,
+            610,
+            1275
+          ]
+        },
+        {
+          "tag": "lyric-line-4",
+          "bounds": [
+            56,
+            1324,
+            610,
+            1334
+          ]
+        }
+      ],
+      "minimum_row_gap_px": 49,
+      "semantics_sha256": "9da8dc10b2e27d84ab1c96c53dcf629d6791f5bbb4523eca211a393351a45851"
+    }
+  ],
+  "android_pixel_acceptance": "BLOCKED",
+  "user_scrambled_lyrics_report": "UNRESOLVED_WITHOUT_USER_REFERENCE"
+}

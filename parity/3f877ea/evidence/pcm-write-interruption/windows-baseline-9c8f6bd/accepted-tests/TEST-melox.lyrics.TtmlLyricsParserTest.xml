@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="TtmlLyricsParserTest[desktop]" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-10-14T02:39:30.698Z" hostname="runnervmfi6oq" time="0.946">
+  <properties/>
+  <testcase name="officialApiLookupUsesPlatformIdAndBindingRoundTrips[desktop]" classname="melox.lyrics.TtmlLyricsParserTest" time="0.002"/>
+  <testcase name="selectsAuthoredTranslationBeforeScriptConversion[desktop]" classname="melox.lyrics.TtmlLyricsParserTest" time="0.883"/>
+  <testcase name="parsesTimedSyllablesTranslationsRomanizationAgentsAndBackground[desktop]" classname="melox.lyrics.TtmlLyricsParserTest" time="0.061"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

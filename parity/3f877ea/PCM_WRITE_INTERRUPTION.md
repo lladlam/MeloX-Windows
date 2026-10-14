@@ -76,3 +76,38 @@ layout and retains actual raster frames/metrics. This is a glyph-layout
 diagnostic fixture, with no fake song, provider, stream or playing state.
 Android pixel/motion acceptance and the user's physical-output acceptance
 remain BLOCKED until their respective direct evidence is available.
+
+## Shaped-row glyph correction
+
+The independent **Windows Server 2025** baseline at `9c8f6bd` confirms that
+this is a real desktop discrepancy: ordinary unlifted Heavy text differed from
+its own Compose-shaped paragraph by up to **25.22%** normalized absolute ink
+difference. Bold matched on this Windows host. The baseline's successful Build
+only means its tests and resources passed; the diagnostic raster had not yet
+been an enforced gate, and its glyph geometry is rejected.
+
+The correction measures and rasterizes a row with the same Compose paragraph
+and exact pinned MiLan Pro font. Individual glyph regions come from that
+immutable shaped-row mask, preserving shaping, variable weight, fallback,
+wrapping and the original source positions. The existing per-glyph reveal,
+lift, scale, shake, glow and soft blur still act on each region. The mask is
+rebuilt only when the row layout changes and explicitly released with the
+composition; no paragraph re-layout or per-glyph surface occurs on a clock tick.
+
+After correction, the same **30 Linux cases** have maximum normalized absolute
+ink difference **0.0652%**. The raster diagnostic now enforces a 1% upper bound
+and runs in Windows CI. This checks the internal consistency of the desktop
+compositor; it is not a comparison against Android screenshots.
+
+Real Tiny Giant (`netease:3334421408`) was also replayed through its actual
+online provider, native bundled FFmpeg, production lyrics and timed-glyph
+compositor at 175% density. Physical-coordinate pause/seek into the opening
+“Like in me” / “Like, like, like, yeah” rows and buffered decoder lifetime
+checks passed. Consumed software-endpoint PCM is non-silent, row geometry is
+retained, and actual production frames are archived. No online PCM recording
+is published. The user's Windows 10 rendering and speaker output still require
+their reproduction with the final package.
+
+Additional genuine FFmpeg/player tests cover stop and seek releasing a paused
+pending write without stale end/error callbacks, and unexpected device closure
+still producing an Output failure with `accepted=0` / `open=false` diagnostics.
