@@ -1,0 +1,278 @@
+build	Audit pinned font outlines and independent HarfBuzz advances	﻿2026-10-14T07:34:21.7069021Z ##[group]Run gradle :desktop:auditFontMetrics
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:21.7069564Z ^[[36;1mgradle :desktop:auditFontMetrics^[[0m
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:21.7131978Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:21.7132317Z env:
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:21.7132618Z   JAVA_HOME: C:\hostedtoolcache\windows\Java_Temurin-Hotspot_jdk\17.0.20-101\x64
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:21.7133207Z   JAVA_HOME_17_X64: C:\hostedtoolcache\windows\Java_Temurin-Hotspot_jdk\17.0.20-101\x64
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:21.7133594Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:21.7133889Z   GRADLE_USER_HOME: D:\a\.gradle
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:21.7134127Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:21.7134390Z   GRADLE_BUILD_ACTION_CACHE_RESTORED: true
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:21.7134759Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:21.7135153Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:21.7135425Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:21.7135695Z ##[endgroup]
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:23.0560425Z > Task :desktop:kmpPartiallyResolvedDependenciesChecker
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:23.0577827Z > Task :desktop:checkKotlinGradlePluginConfigurationErrors SKIPPED
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:23.0588958Z > Task :desktop:convertXmlValueResourcesForCommonMain NO-SOURCE
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:23.0595147Z > Task :desktop:copyNonXmlValueResourcesForCommonMain NO-SOURCE
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:23.0605396Z > Task :desktop:prepareComposeResourcesTaskForCommonMain NO-SOURCE
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:23.0630276Z > Task :desktop:generateResourceAccessorsForCommonMain SKIPPED
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:23.0639790Z > Task :desktop:convertXmlValueResourcesForDesktopMain NO-SOURCE
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:23.0642503Z > Task :desktop:copyNonXmlValueResourcesForDesktopMain NO-SOURCE
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:23.0646122Z > Task :desktop:prepareComposeResourcesTaskForDesktopMain NO-SOURCE
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:23.0653585Z > Task :desktop:generateResourceAccessorsForDesktopMain SKIPPED
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:23.0662813Z > Task :desktop:generateActualResourceCollectorsForDesktopMain SKIPPED
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:23.0663736Z > Task :desktop:generateComposeResClass SKIPPED
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:23.0667102Z > Task :desktop:generateExpectResourceCollectorsForCommonMain SKIPPED
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:23.0686974Z > Task :innertube:kmpPartiallyResolvedDependenciesChecker
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:23.0690745Z > Task :innertube:checkKotlinGradlePluginConfigurationErrors SKIPPED
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:23.0691638Z > Task :innertube:extractAndroidInnerTube UP-TO-DATE
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:23.1507194Z > Task :innertube:compileKotlinDesktop UP-TO-DATE
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:23.1514086Z > Task :innertube:compileDesktopMainJava NO-SOURCE
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:23.1514936Z > Task :innertube:desktopProcessResources NO-SOURCE
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:23.1518875Z > Task :innertube:processDesktopMainResources SKIPPED
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:23.1525539Z > Task :innertube:desktopMainClasses UP-TO-DATE
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:23.1527983Z > Task :innertube:desktopJar UP-TO-DATE
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:23.1552644Z > Task :shared:kmpPartiallyResolvedDependenciesChecker
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:23.1555838Z > Task :shared:checkKotlinGradlePluginConfigurationErrors SKIPPED
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:23.1562313Z > Task :shared:convertXmlValueResourcesForCommonMain NO-SOURCE
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:23.1589930Z > Task :shared:copyNonXmlValueResourcesForCommonMain NO-SOURCE
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:23.1591604Z > Task :shared:prepareComposeResourcesTaskForCommonMain NO-SOURCE
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:23.1592465Z > Task :shared:generateResourceAccessorsForCommonMain SKIPPED
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:23.1593207Z > Task :shared:convertXmlValueResourcesForDesktopMain NO-SOURCE
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:23.1594292Z > Task :shared:copyNonXmlValueResourcesForDesktopMain NO-SOURCE
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:23.1595017Z > Task :shared:prepareComposeResourcesTaskForDesktopMain NO-SOURCE
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:23.1595748Z > Task :shared:generateResourceAccessorsForDesktopMain SKIPPED
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:23.1596579Z > Task :shared:generateActualResourceCollectorsForDesktopMain SKIPPED
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:23.1603577Z > Task :shared:generateComposeResClass SKIPPED
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:23.1604126Z > Task :shared:generateExpectResourceCollectorsForCommonMain SKIPPED
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:23.2503213Z > Task :shared:compileKotlinDesktop UP-TO-DATE
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:23.2505611Z > Task :shared:compileDesktopMainJava NO-SOURCE
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:23.2506453Z > Task :shared:assembleDesktopMainResources UP-TO-DATE
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:23.2510979Z > Task :shared:desktopProcessResources UP-TO-DATE
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:23.2513047Z > Task :shared:processDesktopMainResources SKIPPED
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:23.2515286Z > Task :shared:desktopMainClasses UP-TO-DATE
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:23.2517241Z > Task :shared:desktopJar UP-TO-DATE
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:23.2520310Z > Task :desktop:compileKotlinDesktop UP-TO-DATE
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:23.2534370Z > Task :desktop:compileDesktopMainJava NO-SOURCE
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:23.2548580Z > Task :desktop:assembleDesktopMainResources UP-TO-DATE
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:23.2549490Z > Task :desktop:desktopProcessResources UP-TO-DATE
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:23.2550208Z > Task :desktop:processDesktopMainResources SKIPPED
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:23.2550844Z > Task :desktop:desktopMainClasses UP-TO-DATE
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:25.2492228Z 
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:25.2493426Z > Task :desktop:auditFontMetrics
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:25.2494717Z [INFO MeloXFont] Android MiLan Pro loaded: fonts/mi_lan_pro_vf.ttf; CSS/axis weights=[(100, 150), (200, 200), (300, 250), (400, 340), (500, 400), (600, 540), (700, 630), (800, 700), (900, 700)]
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:25.2495932Z [INFO MeloXFont] Native lyric typeface loaded: family=MI Lan Pro VF; bytes=19646728
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:25.2496816Z Font outlines 100-0-34.0-All ink=1.0 advanceError=9.082031249363354E-5 accepted=true
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:25.2497665Z Font outlines 100-0-34.0-None ink=1.0 advanceError=9.082031249363354E-5 accepted=true
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:25.2498397Z Font outlines 100-0-34.0-Corrected ink=1.0 advanceError=9.082031249363354E-5 accepted=true
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:25.2499120Z Font outlines 100-0-59.5-All ink=1.0 advanceError=1.8945312490359356E-4 accepted=true
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:25.2499781Z Font outlines 100-0-59.5-None ink=1.0 advanceError=1.8945312490359356E-4 accepted=true
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:25.2500233Z Font outlines 100-0-59.5-Corrected ink=1.0 advanceError=1.8945312490359356E-4 accepted=true
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:25.2500686Z Font outlines 100-0-23.12-All ink=1.0 advanceError=5.851364136333359E-5 accepted=true
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:25.2501104Z Font outlines 100-0-23.12-None ink=1.0 advanceError=5.851364136333359E-5 accepted=true
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:25.2501564Z Font outlines 100-0-23.12-Corrected ink=1.0 advanceError=5.851364136333359E-5 accepted=true
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:25.2501993Z Font outlines 100-1-34.0-All ink=1.0 advanceError=0.0 accepted=true
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:25.2502358Z Font outlines 100-1-34.0-None ink=1.0 advanceError=0.0 accepted=true
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:25.2502726Z Font outlines 100-1-34.0-Corrected ink=1.0 advanceError=0.0 accepted=true
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:25.2503088Z Font outlines 100-1-59.5-All ink=1.0 advanceError=0.0 accepted=true
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:25.2503438Z Font outlines 100-1-59.5-None ink=1.0 advanceError=0.0 accepted=true
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:25.2503791Z Font outlines 100-1-59.5-Corrected ink=1.0 advanceError=0.0 accepted=true
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:25.2504185Z Font outlines 100-1-23.12-All ink=1.0 advanceError=5.7220458984375E-5 accepted=true
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:25.2504606Z Font outlines 100-1-23.12-None ink=1.0 advanceError=5.7220458984375E-5 accepted=true
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:25.3490357Z Font outlines 100-1-23.12-Corrected ink=1.0 advanceError=5.7220458984375E-5 accepted=true
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:25.3491652Z Font outlines 100-2-34.0-All ink=1.0 advanceError=8.05664062681899E-5 accepted=true
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:25.3492347Z Font outlines 100-2-34.0-None ink=1.0 advanceError=8.05664062681899E-5 accepted=true
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:25.4491133Z Font outlines 100-2-34.0-Corrected ink=1.0 advanceError=8.05664062681899E-5 accepted=true
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:25.4491703Z Font outlines 100-2-59.5-All ink=1.0 advanceError=2.6855468718167685E-5 accepted=true
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:25.5490972Z Font outlines 100-2-59.5-None ink=1.0 advanceError=2.6855468718167685E-5 accepted=true
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:25.5491861Z Font outlines 100-2-59.5-Corrected ink=1.0 advanceError=2.6855468718167685E-5 accepted=true
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:25.5492585Z Font outlines 100-2-23.12-All ink=1.0 advanceError=8.21685791265736E-5 accepted=true
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:25.6490610Z Font outlines 100-2-23.12-None ink=1.0 advanceError=8.21685791265736E-5 accepted=true
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:25.6491655Z Font outlines 100-2-23.12-Corrected ink=1.0 advanceError=8.21685791265736E-5 accepted=true
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:25.6492822Z Font outlines 100-3-34.0-All ink=1.0 advanceError=1.4648437456799002E-5 accepted=true
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:25.7500865Z Font outlines 100-3-34.0-None ink=1.0 advanceError=1.4648437456799002E-5 accepted=true
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:25.7501456Z Font outlines 100-3-34.0-Corrected ink=1.0 advanceError=1.4648437456799002E-5 accepted=true
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:25.7501933Z Font outlines 100-3-59.5-All ink=1.0 advanceError=1.2695312500454747E-4 accepted=true
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:25.8496880Z Font outlines 100-3-59.5-None ink=1.0 advanceError=1.2695312500454747E-4 accepted=true
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:25.8497463Z Font outlines 100-3-59.5-Corrected ink=1.0 advanceError=1.2695312500454747E-4 accepted=true
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:25.8497932Z Font outlines 100-3-23.12-All ink=1.0 advanceError=6.162643430229764E-5 accepted=true
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:25.9497396Z Font outlines 100-3-23.12-None ink=1.0 advanceError=6.162643430229764E-5 accepted=true
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:25.9500422Z Font outlines 100-3-23.12-Corrected ink=1.0 advanceError=6.162643430229764E-5 accepted=true
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:25.9501423Z Font outlines 400-0-34.0-All ink=1.0 advanceError=26.75113085937494 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:26.0497155Z Font outlines 400-0-34.0-None ink=1.0 advanceError=26.75113085937494 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:26.0497718Z Font outlines 400-0-34.0-Corrected ink=1.0 advanceError=26.75113085937494 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:26.1507350Z Font outlines 400-0-59.5-All ink=1.0 advanceError=46.81454003906242 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:26.1508587Z Font outlines 400-0-59.5-None ink=1.0 advanceError=46.81454003906242 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:26.2497109Z Font outlines 400-0-59.5-Corrected ink=1.0 advanceError=46.81454003906242 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:26.2498019Z Font outlines 400-0-23.12-All ink=1.0 advanceError=18.190639652252173 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:26.3506663Z Font outlines 400-0-23.12-None ink=1.0 advanceError=18.190639652252173 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:26.3507226Z Font outlines 400-0-23.12-Corrected ink=1.0 advanceError=18.190639652252173 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:26.3507713Z Font outlines 400-1-34.0-All ink=1.0 advanceError=0.0 accepted=true
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:26.4496692Z Font outlines 400-1-34.0-None ink=1.0 advanceError=0.0 accepted=true
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:26.4497223Z Font outlines 400-1-34.0-Corrected ink=1.0 advanceError=0.0 accepted=true
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:26.5507118Z Font outlines 400-1-59.5-All ink=1.0 advanceError=0.0 accepted=true
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:26.5507652Z Font outlines 400-1-59.5-None ink=1.0 advanceError=0.0 accepted=true
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:26.6507319Z Font outlines 400-1-59.5-Corrected ink=1.0 advanceError=0.0 accepted=true
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:26.6508173Z Font outlines 400-1-23.12-All ink=1.0 advanceError=5.7220458984375E-5 accepted=true
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:26.7492267Z Font outlines 400-1-23.12-None ink=1.0 advanceError=5.7220458984375E-5 accepted=true
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:26.7493257Z Font outlines 400-1-23.12-Corrected ink=1.0 advanceError=5.7220458984375E-5 accepted=true
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:26.7494647Z Font outlines 400-2-34.0-All ink=1.0 advanceError=28.07434765625004 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:26.8492685Z Font outlines 400-2-34.0-None ink=1.0 advanceError=28.07434765625004 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:26.8493302Z Font outlines 400-2-34.0-Corrected ink=1.0 advanceError=28.07434765625004 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:26.9492414Z Font outlines 400-2-59.5-All ink=1.0 advanceError=49.13029150390628 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:26.9493424Z Font outlines 400-2-59.5-None ink=1.0 advanceError=49.13029150390628 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:26.9493874Z Font outlines 400-2-59.5-Corrected ink=1.0 advanceError=49.13029150390628 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:27.0501752Z Font outlines 400-2-23.12-All ink=1.0 advanceError=19.09053888893129 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:27.0502576Z Font outlines 400-2-23.12-None ink=1.0 advanceError=19.09053888893129 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:27.0503366Z Font outlines 400-2-23.12-Corrected ink=1.0 advanceError=19.09053888893129 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:27.1491904Z Font outlines 400-3-34.0-All ink=1.0 advanceError=17.624229980468783 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:27.1492755Z Font outlines 400-3-34.0-None ink=1.0 advanceError=17.624229980468783 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:27.2492475Z Font outlines 400-3-34.0-Corrected ink=1.0 advanceError=17.624229980468783 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:27.2493375Z Font outlines 400-3-59.5-All ink=1.0 advanceError=30.842570312500015 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:27.2494196Z Font outlines 400-3-59.5-None ink=1.0 advanceError=30.842570312500015 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:27.3501773Z Font outlines 400-3-59.5-Corrected ink=1.0 advanceError=30.842570312500015 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:27.3502640Z Font outlines 400-3-23.12-All ink=1.0 advanceError=11.984401361465473 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:27.3503324Z Font outlines 400-3-23.12-None ink=1.0 advanceError=11.984401361465473 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:27.4501730Z Font outlines 400-3-23.12-Corrected ink=1.0 advanceError=11.984401361465473 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:27.4502344Z Font outlines 700-0-34.0-All ink=1.0 advanceError=79.22562792968745 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:27.5492398Z Font outlines 700-0-34.0-None ink=1.0 advanceError=79.22562792968745 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:27.5492975Z Font outlines 700-0-34.0-Corrected ink=1.0 advanceError=79.22562792968745 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:27.6492252Z Font outlines 700-0-59.5-All ink=1.0 advanceError=138.6449404296875 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:27.6492982Z Font outlines 700-0-59.5-None ink=1.0 advanceError=138.6449404296875 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:27.7487685Z Font outlines 700-0-59.5-Corrected ink=1.0 advanceError=138.6449404296875 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:27.7488563Z Font outlines 700-0-23.12-All ink=1.0 advanceError=53.87337469482418 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:27.7489319Z Font outlines 700-0-23.12-None ink=1.0 advanceError=53.87337469482418 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:27.8488656Z Font outlines 700-0-23.12-Corrected ink=1.0 advanceError=53.87337469482418 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:27.8489644Z Font outlines 700-1-34.0-All ink=1.0 advanceError=0.0 accepted=true
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:27.9493059Z Font outlines 700-1-34.0-None ink=1.0 advanceError=0.0 accepted=true
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:27.9493847Z Font outlines 700-1-34.0-Corrected ink=1.0 advanceError=0.0 accepted=true
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:28.0493325Z Font outlines 700-1-59.5-All ink=1.0 advanceError=0.0 accepted=true
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:28.0494177Z Font outlines 700-1-59.5-None ink=1.0 advanceError=0.0 accepted=true
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:28.1493174Z Font outlines 700-1-59.5-Corrected ink=1.0 advanceError=0.0 accepted=true
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:28.1493730Z Font outlines 700-1-23.12-All ink=1.0 advanceError=5.7220458984375E-5 accepted=true
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:28.1494174Z Font outlines 700-1-23.12-None ink=1.0 advanceError=5.7220458984375E-5 accepted=true
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:28.2495289Z Font outlines 700-1-23.12-Corrected ink=1.0 advanceError=5.7220458984375E-5 accepted=true
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:28.2496569Z Font outlines 700-2-34.0-All ink=1.0 advanceError=62.57352099609375 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:28.2497119Z Font outlines 700-2-34.0-None ink=1.0 advanceError=62.57352099609375 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:28.3493650Z Font outlines 700-2-34.0-Corrected ink=1.0 advanceError=62.57352099609375 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:28.3494533Z Font outlines 700-2-59.5-All ink=1.0 advanceError=109.5038295898438 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:28.4494333Z Font outlines 700-2-59.5-None ink=1.0 advanceError=109.5038295898438 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:28.4495050Z Font outlines 700-2-59.5-Corrected ink=1.0 advanceError=109.5038295898438 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:28.5494049Z Font outlines 700-2-23.12-All ink=1.0 advanceError=42.54997151756288 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:28.5494956Z Font outlines 700-2-23.12-None ink=1.0 advanceError=42.54997151756288 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:28.5495922Z Font outlines 700-2-23.12-Corrected ink=1.0 advanceError=42.54997151756288 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:28.6494311Z Font outlines 700-3-34.0-All ink=1.0 advanceError=44.06623779296871 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:28.6495166Z Font outlines 700-3-34.0-None ink=1.0 advanceError=44.06623779296871 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:28.6495911Z Font outlines 700-3-34.0-Corrected ink=1.0 advanceError=44.06623779296871 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:28.7490116Z Font outlines 700-3-59.5-All ink=1.0 advanceError=77.1159619140625 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:28.7491080Z Font outlines 700-3-59.5-None ink=1.0 advanceError=77.1159619140625 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:28.8489830Z Font outlines 700-3-59.5-Corrected ink=1.0 advanceError=77.1159619140625 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:28.8490403Z Font outlines 700-3-23.12-All ink=1.0 advanceError=29.964978332519507 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:28.8490833Z Font outlines 700-3-23.12-None ink=1.0 advanceError=29.964978332519507 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:28.9501216Z Font outlines 700-3-23.12-Corrected ink=1.0 advanceError=29.964978332519507 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:28.9502347Z Font outlines 800-0-34.0-All ink=1.0 advanceError=92.82012500000008 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:29.0499601Z Font outlines 800-0-34.0-None ink=1.0 advanceError=92.82012500000008 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:29.0500488Z Font outlines 800-0-34.0-Corrected ink=1.0 advanceError=92.82012500000008 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:29.0501252Z Font outlines 800-0-59.5-All ink=1.0 advanceError=162.4350966796876 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:29.1499089Z Font outlines 800-0-59.5-None ink=1.0 advanceError=162.4350966796876 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:29.1499741Z Font outlines 800-0-59.5-Corrected ink=1.0 advanceError=162.4350966796876 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:29.2489440Z Font outlines 800-0-23.12-All ink=1.0 advanceError=63.11752807044991 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:29.2489997Z Font outlines 800-0-23.12-None ink=1.0 advanceError=63.11752807044991 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:29.3489887Z Font outlines 800-0-23.12-Corrected ink=1.0 advanceError=63.11752807044991 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:29.3490985Z Font outlines 800-1-34.0-All ink=1.0 advanceError=0.0 accepted=true
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:29.3491714Z Font outlines 800-1-34.0-None ink=1.0 advanceError=0.0 accepted=true
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:29.4499462Z Font outlines 800-1-34.0-Corrected ink=1.0 advanceError=0.0 accepted=true
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:29.4500219Z Font outlines 800-1-59.5-All ink=1.0 advanceError=0.0 accepted=true
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:29.5489638Z Font outlines 800-1-59.5-None ink=1.0 advanceError=0.0 accepted=true
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:29.6488962Z Font outlines 800-1-59.5-Corrected ink=1.0 advanceError=0.0 accepted=true
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:29.6489508Z Font outlines 800-1-23.12-All ink=1.0 advanceError=5.7220458984375E-5 accepted=true
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:29.6489956Z Font outlines 800-1-23.12-None ink=1.0 advanceError=5.7220458984375E-5 accepted=true
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:29.7499443Z Font outlines 800-1-23.12-Corrected ink=1.0 advanceError=5.7220458984375E-5 accepted=true
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:29.7500281Z Font outlines 800-2-34.0-All ink=1.0 advanceError=70.61791357421873 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:29.8499789Z Font outlines 800-2-34.0-None ink=1.0 advanceError=70.61791357421873 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:29.8500335Z Font outlines 800-2-34.0-Corrected ink=1.0 advanceError=70.61791357421873 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:29.8500798Z Font outlines 800-2-59.5-All ink=1.0 advanceError=123.58145556640625 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:29.9490709Z Font outlines 800-2-59.5-None ink=1.0 advanceError=123.58145556640625 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:29.9491610Z Font outlines 800-2-59.5-Corrected ink=1.0 advanceError=123.58145556640625 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:30.0501119Z Font outlines 800-2-23.12-All ink=1.0 advanceError=48.020152566909815 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:30.0501659Z Font outlines 800-2-23.12-None ink=1.0 advanceError=48.020152566909815 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:30.0502143Z Font outlines 800-2-23.12-Corrected ink=1.0 advanceError=48.020152566909815 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:30.1491348Z Font outlines 800-3-34.0-All ink=1.0 advanceError=50.49000000000001 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:30.1492178Z Font outlines 800-3-34.0-None ink=1.0 advanceError=50.49000000000001 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:30.1492939Z Font outlines 800-3-34.0-Corrected ink=1.0 advanceError=50.49000000000001 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:30.2492045Z Font outlines 800-3-59.5-All ink=1.0 advanceError=88.35762207031246 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:30.2492643Z Font outlines 800-3-59.5-None ink=1.0 advanceError=88.35762207031246 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:30.3501133Z Font outlines 800-3-59.5-Corrected ink=1.0 advanceError=88.35762207031246 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:30.3502036Z Font outlines 800-3-23.12-All ink=1.0 advanceError=34.33315022468565 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:30.3502779Z Font outlines 800-3-23.12-None ink=1.0 advanceError=34.33315022468565 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:30.3503557Z Font outlines 800-3-23.12-Corrected ink=1.0 advanceError=34.33315022468565 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:30.4501456Z Font outlines 900-0-34.0-All ink=1.192076929754138 advanceError=92.82012500000008 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:30.4502513Z Font outlines 900-0-34.0-None ink=1.192076929754138 advanceError=92.82012500000008 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:30.5491610Z Font outlines 900-0-34.0-Corrected ink=1.0 advanceError=92.82012500000008 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:30.5492572Z Font outlines 900-0-59.5-All ink=1.1759802346903798 advanceError=162.4350966796876 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:30.6498778Z Font outlines 900-0-59.5-None ink=1.1759802346903798 advanceError=162.4350966796876 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:30.7489298Z Font outlines 900-0-59.5-Corrected ink=1.0 advanceError=162.4350966796876 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:30.7490237Z Font outlines 900-0-23.12-All ink=1.2251089408669709 advanceError=63.11752807044991 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:30.7491080Z Font outlines 900-0-23.12-None ink=1.2251089408669709 advanceError=63.11752807044991 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:30.8493219Z Font outlines 900-0-23.12-Corrected ink=1.0 advanceError=63.11752807044991 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:30.8494085Z Font outlines 900-1-34.0-All ink=1.2122059487385264 advanceError=0.0 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:30.9493857Z Font outlines 900-1-34.0-None ink=1.2122059487385264 advanceError=0.0 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:30.9494660Z Font outlines 900-1-34.0-Corrected ink=1.0 advanceError=0.0 accepted=true
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:31.0503364Z Font outlines 900-1-59.5-All ink=1.1993951482449452 advanceError=0.0 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:31.0504196Z Font outlines 900-1-59.5-None ink=1.1993951482449452 advanceError=0.0 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:31.1493300Z Font outlines 900-1-59.5-Corrected ink=1.0 advanceError=0.0 accepted=true
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:31.1494191Z Font outlines 900-1-23.12-All ink=1.2413471126161377 advanceError=5.7220458984375E-5 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:31.2506110Z Font outlines 900-1-23.12-None ink=1.2413471126161377 advanceError=5.7220458984375E-5 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:31.2507423Z Font outlines 900-1-23.12-Corrected ink=1.0 advanceError=5.7220458984375E-5 accepted=true
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:31.2508232Z Font outlines 900-2-34.0-All ink=1.196456953207438 advanceError=70.61791357421873 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:31.3503250Z Font outlines 900-2-34.0-None ink=1.196456953207438 advanceError=70.61791357421873 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:31.3504207Z Font outlines 900-2-34.0-Corrected ink=1.0 advanceError=70.61791357421873 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:31.4493714Z Font outlines 900-2-59.5-All ink=1.177384495591684 advanceError=123.58145556640625 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:31.4494726Z Font outlines 900-2-59.5-None ink=1.177384495591684 advanceError=123.58145556640625 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:31.5505910Z Font outlines 900-2-59.5-Corrected ink=1.0 advanceError=123.58145556640625 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:31.5506870Z Font outlines 900-2-23.12-All ink=1.2385264762104466 advanceError=48.020152566909815 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:31.5507817Z Font outlines 900-2-23.12-None ink=1.2385264762104466 advanceError=48.020152566909815 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:31.6498906Z Font outlines 900-2-23.12-Corrected ink=1.0 advanceError=48.020152566909815 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:31.6499710Z Font outlines 900-3-34.0-All ink=1.197799659461825 advanceError=50.49000000000001 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:31.6500227Z Font outlines 900-3-34.0-None ink=1.197799659461825 advanceError=50.49000000000001 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:31.7499681Z Font outlines 900-3-34.0-Corrected ink=1.0 advanceError=50.49000000000001 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:31.7500645Z Font outlines 900-3-59.5-All ink=1.1749149490394637 advanceError=88.35762207031246 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:31.8505639Z Font outlines 900-3-59.5-None ink=1.1749149490394637 advanceError=88.35762207031246 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:31.8506234Z Font outlines 900-3-59.5-Corrected ink=1.0 advanceError=88.35762207031246 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:31.8506779Z Font outlines 900-3-23.12-All ink=1.226974411764098 advanceError=34.33315022468565 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:31.9496181Z Font outlines 900-3-23.12-None ink=1.226974411764098 advanceError=34.33315022468565 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:31.9497167Z Font outlines 900-3-23.12-Corrected ink=1.0 advanceError=34.33315022468565 accepted=false
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:32.0523735Z ##[error]Exception in thread "main" java.lang.IllegalStateException: Independent font audit: 36 corrected failures; 24/24 rejected Heavy controls
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:32.0525947Z 	at melox.validation.MeloXFontMetricsAuditKt$main$1.invokeSuspend(MeloXFontMetricsAudit.kt:119)
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:32.0526979Z 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:32.0527832Z 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:32.0528599Z 	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:256)
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:32.0529402Z 	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:54)
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:32.0530174Z 	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlockingImpl(Builders.kt:30)
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:32.0530915Z 	at kotlinx.coroutines.BuildersKt.runBlockingImpl(Unknown Source)
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:32.0531726Z 	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK(Builders.concurrent.kt:172)
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:32.0532522Z 	at kotlinx.coroutines.BuildersKt.runBlockingK(Unknown Source)
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:32.0533463Z 	at kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK$default(Builders.concurrent.kt:157)
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:32.0534353Z 	at kotlinx.coroutines.BuildersKt.runBlockingK$default(Unknown Source)
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:32.0535107Z 	at melox.validation.MeloXFontMetricsAuditKt.main(MeloXFontMetricsAudit.kt:35)
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:33.1476848Z 
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:33.1488029Z 
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:33.1488969Z FAILURE: Build failed with an exception.
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:33.1490270Z > Task :desktop:auditFontMetrics FAILED
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:33.1491584Z 
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:33.1492101Z gradle/actions: Writing build results to D:\a\_temp\.gradle-actions\build-results\__run_7-1791963262702.json
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:33.1492808Z * What went wrong:
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:33.1493160Z 14 actionable tasks: 4 executed, 10 up-to-date
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:33.1498528Z Execution failed for task ':desktop:auditFontMetrics' (registered in build file 'desktop\build.gradle.kts').
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:33.1499998Z > Process 'command 'C:\hostedtoolcache\windows\Java_Temurin-Hotspot_jdk\17.0.20-101\x64\bin\java.exe'' finished with non-zero exit value 1
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:33.1500713Z 
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:33.1500825Z * Try:
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:33.1501173Z > Run with --stacktrace option to get the stack trace.
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:33.1501706Z > Run with --info or --debug option to get more log output.
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:33.1502334Z > Run with --scan to get full insights from a Build Scan (powered by Develocity).
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:33.1502926Z > Get more help at https://help.gradle.org.
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:33.1503221Z 
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:33.1503346Z BUILD FAILED in 11s
+build	Audit pinned font outlines and independent HarfBuzz advances	2026-10-14T07:34:33.2735761Z ##[error]Process completed with exit code 1.

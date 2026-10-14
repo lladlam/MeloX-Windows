@@ -73,5 +73,34 @@ screenshots include the actual main line, accompaniment and translation, plus
 pause/seek/resume and genuinely advancing lyric clock. This still does not
 constitute physical Windows 10 or pinned Android pixel/motion acceptance.
 
-Final Windows independent-outline results and the exact distribution are
-recorded below after verification. Until then the user's report remains open.
+## Windows CI result for 73efc08 (rejected)
+
+Run `38528660536` stopped at the new font gate: Heavy synthetic-ink controls
+rejected as expected (24/24), but the advance gate failed for most corrected
+cases, so **no distribution was created**.
+
+Measured Windows Server 2025 paragraph width for fixture0 (34 px), compared
+with the independent HarfBuzz reference:
+
+| CSS weight | Windows Compose | HarfBuzz reference | error |
+|---:|---:|---:|---:|
+| 100 | 666.33 | 666.33 | 0.00 |
+| 400 | 668.14 | 694.89 | 26.75 |
+| 700 | 670.41 | 749.63 | 79.23 |
+| 800/900 | 670.92 | 763.74 | 92.82 |
+
+The Windows row raster grows in **ink** with the axis (so outlines receive the
+`wght` variation) but barely grows in **advance width** (666→671 instead of
+666→764). Heavy outlines therefore sit on near-light advances: exactly the
+reported letter-overlap. Linux shaping grows 666→759 correctly, which is why
+earlier Linux-only self-checks could not detect it. The CJK fixtures pass
+because MiLan CJK advances are full-width regardless of axis.
+
+This is why the earlier zero-difference compositor gate (both rows drawn from
+the same paragraph positions) passed while the user still saw overlap: it never
+compared the Windows paragraph against independent font metrics.
+
+A native `Font.measureTextWidth` probe per axis was added to determine whether
+the Windows scaler/HVAR metrics collapse or only SkParagraph does; that decides
+between a static-instance font fix and a shaping-configuration fix. The probe
+revision is `275bc2e`. The user's report remains open.
