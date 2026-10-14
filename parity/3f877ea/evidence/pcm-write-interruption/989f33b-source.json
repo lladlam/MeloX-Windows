@@ -1,0 +1,37 @@
+{
+  "source": "989f33bd4cb074e91ff9dc267e53b5ce380c0294",
+  "pinned_android": "3f877eaffe30c82eb6d24eb3647702f5bc554dd3",
+  "sha256": {
+    "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXGlyphLyricText.kt": {
+      "bytes": 19551,
+      "sha256": "e190c8f0e37551c2e08842b33be3e37accc7ec29ddbb7ca067bcd9fa4673e345"
+    },
+    "desktop/src/desktopMain/kotlin/melox/validation/MeloXLyricRasterAudit.kt": {
+      "bytes": 4744,
+      "sha256": "0aeebd7a1b78979631d2494a5f9752764b0742f2674fe6dbd0d1ffade44d6e3f"
+    },
+    "shared/src/commonMain/kotlin/melox/player/AudioPlayer.kt": {
+      "bytes": 32734,
+      "sha256": "a6b0280335cbb13fb88d0945ded7932a6d48555733db4e8d51cc18025d1453b3"
+    },
+    "shared/src/commonMain/kotlin/melox/player/MeloXDualDecodeSession.kt": {
+      "bytes": 19120,
+      "sha256": "b08995ecf27db0e44da79e8a449d19a7fca6bba60cdc5a31984c8c434328efce"
+    },
+    "shared/src/commonMain/kotlin/melox/player/MeloXPcmWriter.kt": {
+      "bytes": 2488,
+      "sha256": "592e54d65ead2e4faf6d971099089f4304ac7206528bffdda01debcbb736f929"
+    },
+    "shared/src/desktopTest/kotlin/melox/player/DesktopAudioSessionTest.kt": {
+      "bytes": 21677,
+      "sha256": "74b72462b998456a2b2197489866cd7f266ea4dff1707cd364ab0afa36428d1c"
+    },
+    "desktop/src/main/resources/fonts/mi_lan_pro_vf.ttf": {
+      "bytes": 19646728,
+      "sha256": "15fc7accb0afcbb7cf3bbf776536a37398e552f082bb13af70602bf1d7ed676f"
+    }
+  },
+  "windows_build_run": 38505030167,
+  "physical_windows_user_output": "BLOCKED",
+  "pinned_android_pixel_motion": "BLOCKED"
+}

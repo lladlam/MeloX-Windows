@@ -1,0 +1,15 @@
+{
+  "status": "PASSED",
+  "source": "989f33bd4cb074e91ff9dc267e53b5ce380c0294",
+  "playing_lyric_scenes": 8,
+  "playing_frames": 6,
+  "positions": [
+    1993,
+    8510
+  ],
+  "total_scenes": 41,
+  "assertions": 20,
+  "check": "production pixel-partition glyph compositor and actual online native PCM advance after physical resume",
+  "physical_audible_acceptance": "BLOCKED",
+  "android_pixel_motion_acceptance": "BLOCKED"
+}

@@ -139,3 +139,45 @@ state/frame scenes / 20 assertions**, including physical resume, real advancing
 lyric positions **2093–8708 ms**, six playing lyric raster frames and subsequent
 pause. These are actual desktop PCM-clock frames; they are not pinned Android
 dynamic acceptance and do not override the later Windows raster rejection.
+
+## Verified final Windows package
+
+- Exact production source: **`989f33bd4cb074e91ff9dc267e53b5ce380c0294`**.
+- Build **38505030167 / SUCCESS**, artifact **11867583407**.
+- Windows Server 2025: **194 tests / 36 suites / zero failures, errors or skips**.
+- All **60** Bold/Heavy / 100–200% density / English, CJK, ligature,
+  combining-accent, surrogate fallback and multiline glyph cases have **zero
+  pixel difference** against their own complete shaped paragraph. The 1% gate
+  stays enforced. This passes desktop internal glyph geometry, not Android
+  pixel or motion equivalence.
+- Source, packaged JAR, app-image and final ZIP each verify the genuine Windows
+  FFmpeg hash/PE binary and all six exact pinned resource hashes. Native
+  MP3/FLAC/M4A and authorized local HTTP decode pass at all four stages.
+- Independently downloaded the artifact, verified its SHA-256 against GitHub's
+  digest, final ZIP CRC, actual launcher PE / Java Sound DLL, packaged decoder,
+  pinned font/resources and stamped exact commit. The actual JAR contains both
+  the pause-version writer and the shaped-row image compositor, with the old
+  independent `drawString` glyph path absent.
+- Independently reread downloaded Windows-generated single/dual EQ PCM;
+  genuine gain and primary/overlap/incoming spectral checks pass.
+- Final `MeloX-Desktop-Windows.zip`: **264568692 bytes**, SHA-256
+  **`30ef69fba859ea273814b6d7efab3799f6255788da7f5a0f2c144ef40863338c`**.
+- Download:
+  <https://github.com/lladlam/MeloX-Windows/actions/runs/38505030167/artifacts/11867583407>.
+- Full independent package result, run/artifact metadata, 36 Windows test
+  reports, generated EQ and actual Windows raster evidence are retained in
+  `evidence/pcm-write-interruption/windows-ci-989f33b/`.
+- The final source's actual Tiny Giant online/native PCM/production glyph
+  playback also passes: **41 state/frame scenes / 20 assertions**, physical
+  pause/seek/resume, advancing lyric clock **1993–8510 ms**, six playing lyric
+  raster frames and non-silent consumed software PCM. See
+  `melox-tiny-giant-partition-v4/`. No online recording is published.
+
+Unzip the complete distribution to a fresh directory and run
+`MeloX-Desktop.exe`. The user's Windows 10 physical audio/rendering report is
+still **UNCONFIRMED**, pending that exact package's reproduction. Request a
+continuous playback of at least two minutes, lyric-page viewing and several
+pause/resume operations; retain the actual copied diagnostics and screenshot
+if any error or glyph overlap persists. Pinned Android pixel/motion and
+Windows physical speaker/device-switch/sleep/continuous-listening acceptance
+remain **BLOCKED** until direct evidence is available. No older MATCH is reused.

@@ -10,7 +10,12 @@ screenshot. That report's actual track is `netease:3334421408`. The newer
 pause-safe PCM and shaped-row glyph corrections are tracked in
 [`PCM_WRITE_INTERRUPTION.md`](PCM_WRITE_INTERRUPTION.md); their production
 attempt `ea18d388b5a127eea78753a0e49ad83199acc1d1` was rejected by its enforced
-Windows glyph audit and is followed by a pixel-partition correction. The observations and
+Windows glyph audit and is followed by the independently verified final
+pixel-partition correction **989f33b**, Build **38505030167 / SUCCESS**,
+**194 tests / 36 suites** and **60 Windows glyph cases / zero pixel difference**.
+Its download is
+<https://github.com/lladlam/MeloX-Windows/actions/runs/38505030167/artifacts/11867583407>.
+User physical Windows 10 audio/rendering still needs direct retest. The observations and
 package below describe the earlier DAMIDAMI investigation and are not
 evidence that the user's physical issue is resolved.
 

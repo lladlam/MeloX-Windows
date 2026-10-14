@@ -1,0 +1,180 @@
+{
+  "status": "PASSED",
+  "check": "settled production lyric rows do not overlap",
+  "viewport": [
+    666,
+    1334
+  ],
+  "scenes": [
+    {
+      "file": "05-lyrics.png",
+      "position_ms": 1793,
+      "rows": [
+        {
+          "tag": "lyric-line-0",
+          "bounds": [
+            56,
+            439,
+            610,
+            643
+          ]
+        },
+        {
+          "tag": "lyric-line-1",
+          "bounds": [
+            56,
+            692,
+            610,
+            895
+          ]
+        },
+        {
+          "tag": "lyric-line-2",
+          "bounds": [
+            56,
+            944,
+            610,
+            1076
+          ]
+        },
+        {
+          "tag": "lyric-line-3",
+          "bounds": [
+            56,
+            1125,
+            610,
+            1275
+          ]
+        },
+        {
+          "tag": "lyric-line-4",
+          "bounds": [
+            56,
+            1324,
+            610,
+            1334
+          ]
+        }
+      ],
+      "minimum_row_gap_px": 49,
+      "semantics_sha256": "c97410d82e155baba2de3846b5a253b384b6bac424653d57f0519391fe53513a"
+    },
+    {
+      "file": "06-lyrics-loaded.png",
+      "position_ms": 1793,
+      "rows": [
+        {
+          "tag": "lyric-line-0",
+          "bounds": [
+            56,
+            439,
+            610,
+            643
+          ]
+        },
+        {
+          "tag": "lyric-line-1",
+          "bounds": [
+            56,
+            692,
+            610,
+            895
+          ]
+        },
+        {
+          "tag": "lyric-line-2",
+          "bounds": [
+            56,
+            944,
+            610,
+            1076
+          ]
+        },
+        {
+          "tag": "lyric-line-3",
+          "bounds": [
+            56,
+            1125,
+            610,
+            1275
+          ]
+        },
+        {
+          "tag": "lyric-line-4",
+          "bounds": [
+            56,
+            1324,
+            610,
+            1334
+          ]
+        }
+      ],
+      "minimum_row_gap_px": 49,
+      "semantics_sha256": "c97410d82e155baba2de3846b5a253b384b6bac424653d57f0519391fe53513a"
+    },
+    {
+      "file": "09-pause-again.png",
+      "position_ms": 8553,
+      "rows": [
+        {
+          "tag": "lyric-line-1",
+          "bounds": [
+            56,
+            207,
+            610,
+            221
+          ]
+        },
+        {
+          "tag": "lyric-line-2",
+          "bounds": [
+            56,
+            270,
+            610,
+            402
+          ]
+        },
+        {
+          "tag": "lyric-line-3",
+          "bounds": [
+            56,
+            451,
+            610,
+            604
+          ]
+        },
+        {
+          "tag": "lyric-line-4",
+          "bounds": [
+            56,
+            653,
+            610,
+            927
+          ]
+        },
+        {
+          "tag": "lyric-line-5",
+          "bounds": [
+            56,
+            976,
+            610,
+            1126
+          ]
+        },
+        {
+          "tag": "lyric-line-6",
+          "bounds": [
+            56,
+            1175,
+            610,
+            1334
+          ]
+        }
+      ],
+      "minimum_row_gap_px": 49,
+      "semantics_sha256": "7bc5165ec9c5b31508b248354d9b27007885dd2f5aae10575f678dddc6e7b795"
+    }
+  ],
+  "android_pixel_acceptance": "BLOCKED",
+  "user_scrambled_lyrics_report": "UNRESOLVED_WITHOUT_USER_REFERENCE"
+}

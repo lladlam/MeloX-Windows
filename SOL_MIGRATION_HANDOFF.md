@@ -10,10 +10,25 @@ Settings/legal closing fetch (2026-10-13): `5b52a92022a5943e238ffc5d3121c536b2f2
 
 ### Current user playback/lyric follow-up (2026-10-14)
 
+**Verified final package:** `989f33bd4cb074e91ff9dc267e53b5ce380c0294`, Windows
+Build **38505030167 / SUCCESS**, artifact **11867583407**. **194 tests / 36
+suites / zero failures, errors or skips**, plus **60 Windows glyph cases / zero
+pixel difference**. Source/JAR/app-image/final ZIP genuine native decode and six
+exact pinned resources pass. Independently downloaded artifact digest, ZIP CRC,
+FFmpeg PE/hash, Java Sound DLL, actual correction classes, exact revision and
+generated single/dual EQ PCM all verify. Final ZIP SHA-256
+`30ef69fba859ea273814b6d7efab3799f6255788da7f5a0f2c144ef40863338c`.
+Download:
+<https://github.com/lladlam/MeloX-Windows/actions/runs/38505030167/artifacts/11867583407>.
+Final-source Tiny Giant replay passes **41 scenes / 20 assertions**, including
+actual online native PCM, paused seek, physical resume, six playing lyric
+frames and subsequent pause. User Windows 10 retest and Android pixels/motion
+are still pending; evidence-only archival commits do not relabel the package.
+
 Production attempt `ea18d388b5a127eea78753a0e49ad83199acc1d1` was rejected by
 Windows Build `38504096447` at the enforced glyph geometry gate (1.5407% > 1%).
 All 194 Windows tests and real native EQ passed; no distribution was created.
-The next production revision fixes fractional mask-crop seams with integer
+The final production revision fixes fractional mask-crop seams with integer
 pixel partitions covering each complete shaped row and trailing ink overhang.
 All 60 expanded Linux audit cases now have zero difference. Retain the exact
 final verified package source even when an evidence-only commit advances main.
