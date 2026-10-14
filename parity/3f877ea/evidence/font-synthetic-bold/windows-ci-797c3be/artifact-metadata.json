@@ -1,0 +1,45 @@
+{
+  "total_count": 2,
+  "artifacts": [
+    {
+      "id": 11891708503,
+      "node_id": "MDg6QXJ0aWZhY3QxMTg5MTcwODUwMw==",
+      "name": "Verification-Windows",
+      "size_in_bytes": 2293581,
+      "url": "https://api.github.com/repos/lladlam/MeloX-Windows/actions/artifacts/11891708503",
+      "archive_download_url": "https://api.github.com/repos/lladlam/MeloX-Windows/actions/artifacts/11891708503/zip",
+      "expired": false,
+      "digest": "sha256:da81463c80b3e899da4f413af7b277272f1d85a2843dbf9e0b409627fa0267fc",
+      "created_at": "2026-10-14T11:58:12Z",
+      "updated_at": "2026-10-14T11:58:12Z",
+      "expires_at": "2027-01-12T11:49:38Z",
+      "workflow_run": {
+        "id": 38559314976,
+        "repository_id": 1376937043,
+        "head_repository_id": 1376937043,
+        "head_branch": "main",
+        "head_sha": "797c3be4a64e3f9bef536e1cb2b26654c16f47d7"
+      }
+    },
+    {
+      "id": 11891553587,
+      "node_id": "MDg6QXJ0aWZhY3QxMTg5MTU1MzU4Nw==",
+      "name": "MeloX-Desktop-Windows",
+      "size_in_bytes": 307201079,
+      "url": "https://api.github.com/repos/lladlam/MeloX-Windows/actions/artifacts/11891553587",
+      "archive_download_url": "https://api.github.com/repos/lladlam/MeloX-Windows/actions/artifacts/11891553587/zip",
+      "expired": false,
+      "digest": "sha256:bd6282c3f97004d10eecbb103b2488cfd6faa3ea628b8d7a7c7da5760a052f3a",
+      "created_at": "2026-10-14T11:58:23Z",
+      "updated_at": "2026-10-14T11:58:23Z",
+      "expires_at": "2027-01-12T11:49:38Z",
+      "workflow_run": {
+        "id": 38559314976,
+        "repository_id": 1376937043,
+        "head_repository_id": 1376937043,
+        "head_branch": "main",
+        "head_sha": "797c3be4a64e3f9bef536e1cb2b26654c16f47d7"
+      }
+    }
+  ]
+}

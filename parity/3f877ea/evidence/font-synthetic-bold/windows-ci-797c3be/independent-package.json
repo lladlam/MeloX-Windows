@@ -1,0 +1,112 @@
+{
+  "status": "PASSED",
+  "head_sha": "797c3be4a64e3f9bef536e1cb2b26654c16f47d7",
+  "run_id": 38559314976,
+  "tests": {
+    "tests": 194,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "suites": 36
+  },
+  "glyph_self_geometry": {
+    "status": "PASSED",
+    "os": "Windows Server 2025",
+    "maximum_normalized_difference": 0,
+    "cases": 60
+  },
+  "artifact_id": 11891553587,
+  "download_url": "https://github.com/lladlam/MeloX-Windows/actions/runs/38559314976/artifacts/11891553587",
+  "outer_artifact": {
+    "bytes": 307201079,
+    "sha256": "bd6282c3f97004d10eecbb103b2488cfd6faa3ea628b8d7a7c7da5760a052f3a",
+    "github_digest_match": true
+  },
+  "final_zip": {
+    "bytes": 307918466,
+    "sha256": "cfec0f200a8f74248460e23dfe4d6777425b50daead6e2bff4c22c9268c4ae57",
+    "crc_verified": true
+  },
+  "jar": {
+    "bytes": 262800309,
+    "sha256": "f490998f5688dee7dd5f3082e23598bf7cf2138291f358c8dd1533889e46a5c2",
+    "feature_classes": [
+      "melox/player/MeloXPcmOutput.class",
+      "melox/player/MeloXPcmWriterKt.class",
+      "melox/player/FfmpegLocator.class",
+      "melox/diagnostics/MeloXProcessLogs.class",
+      "melox/ui/screens/MeloXPlayerQualityKt.class",
+      "melox/ui/screens/MeloXGlyphLyricTextKt.class",
+      "melox/ui/theme/MeloXFontKt.class"
+    ],
+    "shaped_row_mask_verified": true,
+    "pause_version_writer_verified": true,
+    "build_revision_verified": true,
+    "static_font_instances_verified": [
+      "fonts/mi_lan_pro_w100.ttf",
+      "fonts/mi_lan_pro_w200.ttf",
+      "fonts/mi_lan_pro_w300.ttf",
+      "fonts/mi_lan_pro_w400.ttf",
+      "fonts/mi_lan_pro_w500.ttf",
+      "fonts/mi_lan_pro_w600.ttf",
+      "fonts/mi_lan_pro_w700.ttf",
+      "fonts/mi_lan_pro_w800.ttf"
+    ]
+  },
+  "windows_decoder": {
+    "location": "final ZIP!/app JAR!/decoder/ffmpeg.exe",
+    "bytes": 164352000,
+    "sha256": "af7913b7ddc324bf02b8af72fe8612b1471455ef8d9e04e45466510742abcff9",
+    "magic": "PE",
+    "verified": true
+  },
+  "pinned_resources": [
+    {
+      "resource": "legal/cloud-control-privacy-zh-CN.md",
+      "bytes": 5020,
+      "sha256": "7030f44dda89b27357ba4b960562d5eae98d9b5ae451a8a398e4fb6cc68f5793",
+      "verified": true
+    },
+    {
+      "resource": "legal/disclaimer-zh-CN.md",
+      "bytes": 5015,
+      "sha256": "4c6e212bb6c78bd2fa6e45a76136cba6a5cfd82c1321dfdf27d727df2a50c44e",
+      "verified": true
+    },
+    {
+      "resource": "legal/privacy-policy-zh-CN.md",
+      "bytes": 7233,
+      "sha256": "fdf41c3aea883220ba8070823b1a35d1156869117ed607f6b5c2769997ceb097",
+      "verified": true
+    },
+    {
+      "resource": "legal/third-party-music-sources-zh-CN.md",
+      "bytes": 3167,
+      "sha256": "4aefd5137ea6e9a2da335671753dca4d8aebcdcf0ddc903c00a03bc89ef62c38",
+      "verified": true
+    },
+    {
+      "resource": "parity/pinned-settings-strings.properties",
+      "bytes": 17451,
+      "sha256": "649df6af06ded94e91b6f4c728aafe2e29c76ba981097503f869e3fd8144fbc4",
+      "verified": true
+    },
+    {
+      "resource": "fonts/mi_lan_pro_vf.ttf",
+      "bytes": 19646728,
+      "sha256": "15fc7accb0afcbb7cf3bbf776536a37398e552f082bb13af70602bf1d7ed676f",
+      "verified": true
+    }
+  ],
+  "physical_audible_acceptance": "BLOCKED",
+  "user_report_resolution": "UNCONFIRMED",
+  "independent_font_outline_audit": {
+    "status": "PASSED",
+    "total_cases": 120,
+    "failed_cases": 0,
+    "static_files_verified": 8,
+    "frozen_typefaces_verified": 10,
+    "font_sha256": "15fc7accb0afcbb7cf3bbf776536a37398e552f082bb13af70602bf1d7ed676f",
+    "os": "Windows Server 2025"
+  }
+}

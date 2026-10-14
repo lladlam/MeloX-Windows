@@ -172,3 +172,50 @@ a regression reintroducing it would fail the upper ink bound or the advance
 gate instead).
 
 The user's report remains open pending a fresh Windows 10 package check.
+
+## Final Windows verification and package (797c3be)
+
+Two follow-up Windows CI defects were caught by the new gates before any
+distribution existed, both outside the font content:
+
+1. `b955125` / `ad97786`: the cross-host static-instance verifier compared the
+   whole manifest. Windows regenerated all eight instances **byte-identically**
+   (every sha256 matched Linux), but `str(Path())` embeds backslashes on
+   Windows and the pip-resolved HarfBuzz version string can drift. The compare
+   now uses posix resource keys, ignores the tool-version field, reports both
+   versions, and persists the host-regenerated manifest for post-mortems.
+2. `f15fe75`: the Windows frozen-typeface assertion failed with
+   `CSS 100 reports style weight 150, expected 100`. The retained STAT table
+   still declared the private `wght` coordinates (150 for the Thin instance,
+   **700 for the Heavy alias**); DirectWrite derives typeface weight from STAT
+   while Linux reads OS/2. Besides failing the gate, CSS 900 minus STAT 700 is
+   exactly the synthetic-bold threshold, so the stale STAT would have
+   re-enabled the emboldening this document fixes. Frozen instances now drop
+   STAT entirely; OS/2.usWeightClass (100..800) is authoritative.
+   `b0eedba` then passed the full Windows pipeline; `797c3be` additionally
+   pins parity JSON to LF (Windows checkout had CRLF-converted the HarfBuzz
+   metrics reference in the jar; content identical, bytes not).
+
+Final verified package: **797c3be4a64e3f9bef536e1cb2b26654c16f47d7**,
+run **38559314976 / SUCCESS**, artifact **11891553587**.
+
+Windows Server 2025 font gate (`auditFontMetrics`, 120/120 PASSED): native
+`Font.measureTextWidth` now grows per weight (676.06 / 702.75 / 755.21 /
+768.88 for CSS 100/400/700/800) instead of the collapsed constant 676.056, and
+the shaped paragraph matches the independent HarfBuzz reference within
+**0.0002 px** at every weight (CSS 900 line width restored from 670.92 to
+763.74 px). Ink ratio is exactly 1.0 for all 120 cases — the synthetic-bold
+path does not exist in the shipped font set. Typefaces report frozen style
+weights with zero variation axes; all 8 packaged instance bytes match the
+manifest; glyph raster self-geometry is 60 cases / zero difference on Windows.
+
+Independent download verification: artifact GitHub digest, ZIP CRC, FFmpeg
+PE/hash, Java Sound DLL, exact revision stamp, six pinned resources, all 8
+static fonts + manifest byte-equality, real single/dual EQ PCM, and 194 tests
+/ 36 suites / zero failures. Final ZIP **307,918,466 bytes**, SHA-256
+`cfec0f200a8f74248460e23dfe4d6777425b50daead6e2bff4c22c9268c4ae57`:
+<https://github.com/lladlam/MeloX-Windows/actions/runs/38559314976/artifacts/11891553587>.
+
+The user's genuine Windows 10 retest and pinned Android pixel/motion acceptance
+remain pending; this is Server-2025 rendering plus independent metric gates,
+not physical acceptance.

@@ -10,7 +10,38 @@ Settings/legal closing fetch (2026-10-13): `5b52a92022a5943e238ffc5d3121c536b2f2
 
 ### Current user playback/lyric follow-up (2026-10-14)
 
-**Verified final package:** `989f33bd4cb074e91ff9dc267e53b5ce380c0294`, Windows
+**Current verified package:** `797c3be4a64e3f9bef536e1cb2b26654c16f47d7`,
+Windows Build **38559314976 / SUCCESS**, artifact **11891553587**. **194 tests
+/ 36 suites / zero failures, errors or skips**, Windows glyph raster **60 cases
+/ zero difference**, and the new independent font gate **120/120 PASSED on
+Windows Server 2025**: native measure width per weight 676.06/702.75/755.21/
+768.88 (was one collapsed constant 676.056), shaped paragraph vs independent
+HarfBuzz within **0.0002 px** at every weight, ink ratio exactly 1.0 (no
+synthetic-bold path), 8 packaged axis-frozen instance bytes + manifest
+verified, frozen typefaces with zero variation axes. Final ZIP **307,918,466
+bytes**, SHA-256
+`cfec0f200a8f74248460e23dfe4d6777425b50daead6e2bff4c22c9268c4ae57`.
+Download: <https://github.com/lladlam/MeloX-Windows/actions/runs/38559314976/artifacts/11891553587>.
+Independent artifact digest, ZIP CRC, FFmpeg PE/hash, Java Sound DLL, exact
+revision, six pinned resources, static fonts/manifest bytes, real single/dual
+EQ PCM all verify. See `parity/3f877ea/FONT_SYNTHETIC_BOLD.md` and
+`evidence/font-synthetic-bold/`.
+
+**Windows root cause fixed in this package:** the Windows text stack applies
+the variable-font `wght` axis to outlines but keeps default-axis advance
+widths, so Heavy glyphs sat on light advances (the user's letter-overlap
+report; Linux never reproduced it). The package now ships eight axis-frozen
+static instances (`tools/generate_lanting_static.py`) baked from the pinned
+variable source, each provably shaping identically to the variable font at its
+Android-mapped axis; CSS 900 reuses the axis-700 instance; stale STAT is
+dropped (DirectWrite would otherwise report private axis coordinates and
+re-enable synthetic bold); the pinned variable font remains in the package
+unchanged as the hash-verified source. User Windows 10 retest is pending.
+
+The earlier `989f33b` package passed all prior gates but was **rejected by the
+user for the font symptom**; it is not accepted as resolving the report.
+
+**Verified previous package:** `989f33bd4cb074e91ff9dc267e53b5ce380c0294`, Windows
 Build **38505030167 / SUCCESS**, artifact **11867583407**. **194 tests / 36
 suites / zero failures, errors or skips**, plus **60 Windows glyph cases / zero
 pixel difference**. Source/JAR/app-image/final ZIP genuine native decode and six
