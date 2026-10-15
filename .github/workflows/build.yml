@@ -43,6 +43,8 @@ jobs:
         run: gradle :desktop:auditArtworkMemory :desktop:auditArtworkDecode
       - name: Audit real Windows display power request ownership
         run: gradle :desktop:auditDisplayAwake
+      - name: Audit pinned settings icons against the Android SF Symbol mapping
+        run: gradle :desktop:auditSettingsIcons
       - name: Replay pinned settings routes in four locales and verify real preference consumers
         shell: pwsh
         run: |
@@ -152,7 +154,10 @@ jobs:
           name: Verification-${{ runner.os }}
           path: |
             desktop/build/verification/*.json
+            desktop/build/verification/settings-icons.json
             desktop/build/parity/settings-*/*.json
+            desktop/build/parity/settings-*/gradle.log
+            desktop/build/parity/settings-*/arguments.txt
             desktop/build/parity/startup-memory/*.json
             desktop/build/verification/artwork-memory/*.json
             desktop/build/parity/lyrics-controls/*.json

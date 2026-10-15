@@ -93,6 +93,47 @@ enum class MeloXSymbol(
     Star("star", intArrayOf(0x1001BF)),
 }
 
+/**
+ * Pinned Android `MeloXActionIcon` token table. Branch order is significant and
+ * first-match wins, exactly like the Kotlin `when` in the pinned source, so a
+ * repeated token resolves to the same SF Symbol on both platforms.
+ *
+ * An unmapped token fails fast. Android does the same, and a silent fallback
+ * glyph would ship a plausible-looking but wrong icon on a settings row.
+ */
+internal fun meloXActionIconSymbol(token: String): MeloXSymbol = when (token) {
+    "◷" -> MeloXSymbol.Clock
+    "+", "＋" -> MeloXSymbol.Plus
+    "↓×" -> MeloXSymbol.Download
+    "↗" -> MeloXSymbol.Share
+    // Android Mail is SF Symbols `paperplane`, not the `message` bubble.
+    "✉" -> MeloXSymbol.Send
+    "◎", "◌" -> MeloXSymbol.Message
+    "i", "#", "ⓘ" -> MeloXSymbol.Info
+    "♡", "♥" -> MeloXSymbol.Heart
+    "▣", "⇥", "♬" -> MeloXSymbol.ListBullet
+    "✓" -> MeloXSymbol.Checkmark
+    "○" -> MeloXSymbol.Ellipsis
+    "♫", "♪" -> MeloXSymbol.MusicNote
+    "✦" -> MeloXSymbol.Sparkles
+    "❞" -> MeloXSymbol.Quote
+    "▱" -> MeloXSymbol.Rotate
+    "▤" -> MeloXSymbol.Pip
+    "☷", "▦", "▥" -> MeloXSymbol.Grid
+    "⌁" -> MeloXSymbol.Mic
+    "▰" -> MeloXSymbol.Drive
+    "⚙" -> MeloXSymbol.Settings
+    "⌘" -> MeloXSymbol.Bug
+    "↑" -> MeloXSymbol.Upload
+    "↓" -> MeloXSymbol.Download
+    "‹" -> MeloXSymbol.ChevronLeft
+    "›" -> MeloXSymbol.ChevronRight
+    "•••", "…" -> MeloXSymbol.Ellipsis
+    "×" -> MeloXSymbol.XMark
+    "↻" -> MeloXSymbol.Refresh
+    else -> error("Missing pinned SF Symbol token: $token")
+}
+
 private fun codePointToString(codePoints: IntArray): String {
     val sb = StringBuilder()
     for (cp in codePoints) sb.appendCodePoint(cp)

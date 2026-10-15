@@ -892,37 +892,7 @@ internal fun MeloXActionIcon(
     color: Color,
     enabled: Boolean = true,
 ) {
-    val symbol = when (token) {
-        "◷" -> melox.ui.foundation.MeloXSymbol.Clock
-        "+", "＋" -> melox.ui.foundation.MeloXSymbol.Plus
-        "↓×" -> melox.ui.foundation.MeloXSymbol.Download
-        "↗" -> melox.ui.foundation.MeloXSymbol.Share
-        "✉" -> melox.ui.foundation.MeloXSymbol.Message
-        "◎", "◌" -> melox.ui.foundation.MeloXSymbol.Message
-        "i", "#", "ⓘ" -> melox.ui.foundation.MeloXSymbol.Info
-        "♡", "♥" -> melox.ui.foundation.MeloXSymbol.Heart
-        "▣", "⇥", "♬" -> melox.ui.foundation.MeloXSymbol.ListBullet
-        "✓" -> melox.ui.foundation.MeloXSymbol.Checkmark
-        "○" -> melox.ui.foundation.MeloXSymbol.Ellipsis
-        "♫", "♪" -> melox.ui.foundation.MeloXSymbol.MusicNote
-        "✦" -> melox.ui.foundation.MeloXSymbol.Sparkles
-        "❞" -> melox.ui.foundation.MeloXSymbol.Quote
-        "▱" -> melox.ui.foundation.MeloXSymbol.Rotate
-        "▤" -> melox.ui.foundation.MeloXSymbol.Pip
-        "☷", "▦", "▥" -> melox.ui.foundation.MeloXSymbol.Grid
-        "⌁" -> melox.ui.foundation.MeloXSymbol.Mic
-        "▰" -> melox.ui.foundation.MeloXSymbol.Drive
-        "⚙" -> melox.ui.foundation.MeloXSymbol.Settings
-        "⌘" -> melox.ui.foundation.MeloXSymbol.Bug
-        "↑" -> melox.ui.foundation.MeloXSymbol.Upload
-        "↓" -> melox.ui.foundation.MeloXSymbol.Download
-        "‹" -> melox.ui.foundation.MeloXSymbol.ChevronLeft
-        "›" -> melox.ui.foundation.MeloXSymbol.ChevronRight
-        "•••", "…" -> melox.ui.foundation.MeloXSymbol.Ellipsis
-        "×" -> melox.ui.foundation.MeloXSymbol.XMark
-        "↻" -> melox.ui.foundation.MeloXSymbol.Refresh
-        else -> melox.ui.foundation.MeloXSymbol.Question
-    }
+    val symbol = melox.ui.foundation.meloXActionIconSymbol(token)
     MeloXSymbolIcon(
         symbol = symbol,
         modifier = modifier,

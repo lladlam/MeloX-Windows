@@ -163,5 +163,9 @@ command = [gradle, ':desktop:captureUi', '--no-daemon', '--max-workers=1', '--co
     '-PcaptureHome=' + str(home), '-PcaptureArgsFile=' + str(argfile)]
 with (output / 'gradle.log').open('w') as log:
     result = subprocess.run(command, cwd=repo, stdout=log, stderr=subprocess.STDOUT)
+if result.returncode != 0:
+    # CI only surfaces this step's stdout, so mirror the harness failure here.
+    tail = (output / 'gradle.log').read_text(encoding='utf-8', errors='replace').splitlines()
+    print('\n'.join(tail[-60:]), file=sys.stderr)
 print(mode, locale, theme, width, height, result.returncode)
 sys.exit(result.returncode)

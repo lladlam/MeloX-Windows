@@ -126,6 +126,18 @@ tasks.register<JavaExec>("auditArtworkDecode") {
     args(layout.buildDirectory.file("verification/artwork-decode.json").get().asFile.absolutePath)
 }
 
+tasks.register<JavaExec>("auditSettingsIcons") {
+    group = "verification"
+    description = "Check every pinned settings row icon against the pinned Android SF Symbol mapping."
+    dependsOn("desktopMainClasses")
+    val compilation = kotlin.targets.getByName("desktop").compilations.getByName("main")
+    classpath = files(compilation.output.allOutputs, compilation.runtimeDependencyFiles)
+    mainClass.set("melox.validation.MeloXSettingsIconAuditKt")
+    systemProperty("java.awt.headless", "true")
+    args(rootProject.layout.projectDirectory.file("parity/3f877ea/evidence/settings-pages-source-audit.json").asFile.absolutePath,
+        layout.buildDirectory.file("verification/settings-icons.json").get().asFile.absolutePath)
+}
+
 tasks.register<JavaExec>("auditDisplayAwake") {
     group = "verification"
     description = "Acquire/release the real Windows display power request on one owner thread."
