@@ -1,0 +1,136 @@
+{
+  "check": "pinned legal/default-string exact resource bytes",
+  "pinned_android": "3f877eaffe30c82eb6d24eb3647702f5bc554dd3",
+  "artifact": "desktop/build/delivery-a0c8b79/MeloX-Desktop-Windows/MeloX-Desktop-Windows.zip",
+  "status": "PASSED",
+  "resources": [
+    {
+      "resource": "AudioFingerprint/NeteaseAPI-LICENSE.txt",
+      "bytes": 1081,
+      "sha256": "e463bb821c363e6182f16ec1bf24405af3315b4adc72fc1402232fa98b9a0b12",
+      "expected_sha256": "e463bb821c363e6182f16ec1bf24405af3315b4adc72fc1402232fa98b9a0b12",
+      "crlf_count": 0,
+      "verified": true
+    },
+    {
+      "resource": "AudioFingerprint/NeteaseAudioFingerprint-NOTICE.txt",
+      "bytes": 397,
+      "sha256": "49f519decb43364a19327b299001ceb8d27bafc74ec8c1ebd701745264f07cda",
+      "expected_sha256": "49f519decb43364a19327b299001ceb8d27bafc74ec8c1ebd701745264f07cda",
+      "crlf_count": 0,
+      "verified": true
+    },
+    {
+      "resource": "AudioFingerprint/afp.js",
+      "bytes": 58815,
+      "sha256": "5adcf5479a882689f627e095d108d5fe34165ebb63383a2468057041498458a9",
+      "expected_sha256": "5adcf5479a882689f627e095d108d5fe34165ebb63383a2468057041498458a9",
+      "crlf_count": 0,
+      "verified": true
+    },
+    {
+      "resource": "AudioFingerprint/afp.wasm.js",
+      "bytes": 308355,
+      "sha256": "4926a6d69527a1afbc7f7d120b9c21947e677d80c484c8b65572fa7d4ce3b99f",
+      "expected_sha256": "4926a6d69527a1afbc7f7d120b9c21947e677d80c484c8b65572fa7d4ce3b99f",
+      "crlf_count": 0,
+      "verified": true
+    },
+    {
+      "resource": "fonts/mi_lan_pro_vf.ttf",
+      "bytes": 19646728,
+      "sha256": "15fc7accb0afcbb7cf3bbf776536a37398e552f082bb13af70602bf1d7ed676f",
+      "expected_sha256": "15fc7accb0afcbb7cf3bbf776536a37398e552f082bb13af70602bf1d7ed676f",
+      "crlf_count": 1989,
+      "verified": true
+    },
+    {
+      "resource": "legal/cloud-control-privacy-zh-CN.md",
+      "bytes": 5020,
+      "sha256": "7030f44dda89b27357ba4b960562d5eae98d9b5ae451a8a398e4fb6cc68f5793",
+      "expected_sha256": "7030f44dda89b27357ba4b960562d5eae98d9b5ae451a8a398e4fb6cc68f5793",
+      "crlf_count": 0,
+      "verified": true
+    },
+    {
+      "resource": "legal/disclaimer-zh-CN.md",
+      "bytes": 5015,
+      "sha256": "4c6e212bb6c78bd2fa6e45a76136cba6a5cfd82c1321dfdf27d727df2a50c44e",
+      "expected_sha256": "4c6e212bb6c78bd2fa6e45a76136cba6a5cfd82c1321dfdf27d727df2a50c44e",
+      "crlf_count": 0,
+      "verified": true
+    },
+    {
+      "resource": "legal/privacy-policy-zh-CN.md",
+      "bytes": 7233,
+      "sha256": "fdf41c3aea883220ba8070823b1a35d1156869117ed607f6b5c2769997ceb097",
+      "expected_sha256": "fdf41c3aea883220ba8070823b1a35d1156869117ed607f6b5c2769997ceb097",
+      "crlf_count": 0,
+      "verified": true
+    },
+    {
+      "resource": "legal/third-party-music-sources-zh-CN.md",
+      "bytes": 3167,
+      "sha256": "4aefd5137ea6e9a2da335671753dca4d8aebcdcf0ddc903c00a03bc89ef62c38",
+      "expected_sha256": "4aefd5137ea6e9a2da335671753dca4d8aebcdcf0ddc903c00a03bc89ef62c38",
+      "crlf_count": 0,
+      "verified": true
+    },
+    {
+      "resource": "parity/pinned-lyrics-strings.properties",
+      "bytes": 4200,
+      "sha256": "01c641adab3e72ed3570698fe5c407f71ff82c350d29c8346d13951dadf87717",
+      "expected_sha256": "01c641adab3e72ed3570698fe5c407f71ff82c350d29c8346d13951dadf87717",
+      "crlf_count": 0,
+      "verified": true
+    },
+    {
+      "resource": "parity/pinned-settings-pages-ja.properties",
+      "bytes": 56634,
+      "sha256": "d9181161f6e3ee2fd73319576a3af14b832a0861153eaa9e3210a5c9aeb8de5c",
+      "expected_sha256": "d9181161f6e3ee2fd73319576a3af14b832a0861153eaa9e3210a5c9aeb8de5c",
+      "crlf_count": 0,
+      "verified": true
+    },
+    {
+      "resource": "parity/pinned-settings-pages-zh-rCN.properties",
+      "bytes": 43937,
+      "sha256": "0e21323368d9e8bbf97d2c23b22615c66ad8d7084291eaaf036ca3488c8124dd",
+      "expected_sha256": "0e21323368d9e8bbf97d2c23b22615c66ad8d7084291eaaf036ca3488c8124dd",
+      "crlf_count": 0,
+      "verified": true
+    },
+    {
+      "resource": "parity/pinned-settings-pages-zh-rTW.properties",
+      "bytes": 44381,
+      "sha256": "5cc19eb20f2f6e3c81517229b22fd455117c9c7316c3190034bb19195c61d218",
+      "expected_sha256": "5cc19eb20f2f6e3c81517229b22fd455117c9c7316c3190034bb19195c61d218",
+      "crlf_count": 0,
+      "verified": true
+    },
+    {
+      "resource": "parity/pinned-settings-pages.properties",
+      "bytes": 46323,
+      "sha256": "a46855aaf06004ff52d9142b14b5665e11d6e215850ea2ddc6db609dd8bed4b8",
+      "expected_sha256": "a46855aaf06004ff52d9142b14b5665e11d6e215850ea2ddc6db609dd8bed4b8",
+      "crlf_count": 0,
+      "verified": true
+    },
+    {
+      "resource": "parity/pinned-settings-strings.properties",
+      "bytes": 17451,
+      "sha256": "649df6af06ded94e91b6f4c728aafe2e29c76ba981097503f869e3fd8144fbc4",
+      "expected_sha256": "649df6af06ded94e91b6f4c728aafe2e29c76ba981097503f869e3fd8144fbc4",
+      "crlf_count": 0,
+      "verified": true
+    },
+    {
+      "resource": "parity/pinned-skyline-strings.properties",
+      "bytes": 1615,
+      "sha256": "f8d430f736486ca2e3e5e8d323defdf082f5f45b116de31c15dc18c7363278ca",
+      "expected_sha256": "f8d430f736486ca2e3e5e8d323defdf082f5f45b116de31c15dc18c7363278ca",
+      "crlf_count": 0,
+      "verified": true
+    }
+  ]
+}

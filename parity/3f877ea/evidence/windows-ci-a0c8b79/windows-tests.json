@@ -1,0 +1,14 @@
+{
+  "run_id": "38716111866",
+  "head_sha": "a0c8b79a59a54c5e963a0b8c15496ac7f6de9ce0",
+  "platform": "windows-latest (GitHub Actions)",
+  "source": "downloaded Verification-Windows artifact XML reports",
+  "totals": {
+    "suites": 47,
+    "tests": 230,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "zero_failures": true
+}
