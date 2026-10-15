@@ -111,6 +111,11 @@ interface FavoriteCapability {
     )
 }
 
+/** A nullable/failed read must never be interpreted as "not liked" by a toggle. */
+interface FavoriteStateCapability {
+    suspend fun isFavorite(track: MusicTrack): Boolean
+}
+
 /**
  * Optional playlist mutation surface. A provider returns only playlists for
  * which it has a reliable provider-native writable id; display/global ids must

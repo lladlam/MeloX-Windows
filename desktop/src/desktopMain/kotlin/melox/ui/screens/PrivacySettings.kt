@@ -34,11 +34,11 @@ internal fun SettingsActionButton(title: String, modifier: Modifier = Modifier, 
 }
 
 @Composable
-internal fun SettingsDangerButton(title: String, modifier: Modifier = Modifier, onClick: () -> Unit) {
+internal fun SettingsDangerButton(title: String, modifier: Modifier = Modifier, enabled: Boolean = true, onClick: () -> Unit) {
     Box(modifier.fillMaxWidth().height(54.dp).meloXLiquidButton(
-        shape = RoundedCornerShape(27.dp), tint = MaterialTheme.colorScheme.error.copy(alpha = .25f),
+        shape = RoundedCornerShape(27.dp), enabled = enabled, tint = MaterialTheme.colorScheme.error.copy(alpha = .25f),
         surfaceColor = MaterialTheme.colorScheme.error.copy(alpha = .20f),
-    ).clickable(onClick = onClick).padding(horizontal = 18.dp), contentAlignment = Alignment.CenterStart) {
+    ).clickable(enabled = enabled, onClick = onClick).padding(horizontal = 18.dp), contentAlignment = Alignment.CenterStart) {
         Text(title, color = MaterialTheme.colorScheme.error, fontWeight = FontWeight.SemiBold)
     }
 }

@@ -8,3 +8,4 @@ desktop/src/main/resources/parity/*.json text eol=lf
 desktop/src/main/resources/parity/pinned-lyrics-strings.properties text eol=lf
 desktop/src/main/resources/parity/pinned-skyline-strings.properties text eol=lf
 desktop/src/main/resources/parity/pinned-settings-pages*.properties text eol=lf
+shared/src/desktopMain/resources/AudioFingerprint/* -text -whitespace

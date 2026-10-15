@@ -97,6 +97,7 @@ object PlaybackCommands {
             entryIds = entries.map { it.entryId },
         )
         player.persistSnapshot()
+        MeloXPlaybackEvents.publish(player, MeloXPlaybackEvents.Kind.Queue)
     }
 
     fun currentSongId(): Long? = (activeController as? MeloXDesktopPlayer)?.currentMediaItem?.toLongOrNull()
@@ -502,6 +503,14 @@ class MeloXDesktopPlayer internal constructor(
         playWhenReady = false
     }
 
+    /** Together supplies a concrete order; do not run local Smart Queue/shuffle over it. */
+    internal fun installSynchronizedQueue(songs: List<SearchSong>, index: Int, positionMs: Long) {
+        _shuffleEnabled.value = false
+        restore(songs.mapIndexed { original, song ->
+            QueueEntry(song, PlaybackCommands.QUEUE_ORIGIN_BASE, original, UUID.randomUUID().toString())
+        }, index, positionMs)
+    }
+
     private var deferredRestore = false
 
     fun prepare(resolveAudio: Boolean = true) {
@@ -683,6 +692,7 @@ class MeloXDesktopPlayer internal constructor(
 
     fun play() {
         playWhenReady = true
+        MeloXPlaybackEvents.publish(this, MeloXPlaybackEvents.Kind.Play)
         if (deferredRestore) {
             prepare()
             persistSnapshot()
@@ -707,6 +717,7 @@ class MeloXDesktopPlayer internal constructor(
         playWhenReady = false
         awaitingAutoplay = false
         currentPosition = AudioPlayer.getCurrentPositionMs()
+        MeloXPlaybackEvents.publish(this, MeloXPlaybackEvents.Kind.Pause)
         AudioPlayer.pause()
         cancelMix()
         persistSnapshot()
@@ -795,11 +806,12 @@ class MeloXDesktopPlayer internal constructor(
         currentPosition = target
         pendingSeekMs = target
         AudioPlayer.seekTo(target)
+        MeloXPlaybackEvents.publish(this, MeloXPlaybackEvents.Kind.Seek)
         persistSnapshot()
     }
 
-    fun seekToIndex(index: Int) {
-        selectIndex(index, automatic = false)
+    fun seekToIndex(index: Int, startPositionMs: Long = 0L) {
+        selectIndex(index, automatic = false, startPositionMs = startPositionMs)
     }
 
     private fun selectIndex(index: Int, automatic: Boolean, startPositionMs: Long = 0L) {
@@ -1014,6 +1026,9 @@ class MeloXDesktopPlayer internal constructor(
     private fun resolve(entry: QueueEntry): DesktopPlaybackRequest {
         val song = entry.song
         val track = song.providerTrack
+        song.neteaseSongId?.let { nativeId ->
+            MeloXDownloadStore.instance().localPlaybackString(nativeId)?.let { return DesktopPlaybackRequest(it) }
+        }
         if (track != null) {
             ProviderPlaybackRuntime.initialize()
             val registry = ProviderPlaybackRuntime.registryOrNull()

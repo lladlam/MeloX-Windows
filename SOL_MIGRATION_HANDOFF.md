@@ -8,6 +8,28 @@ Settings/legal closing fetch (2026-10-13): `5b52a92022a5943e238ffc5d3121c536b2f2
 
 ## Landed in this batch
 
+### Active completion batch (2026-10-15)
+
+See `parity/3f877ea/COMPLETION_LOG.md` for step-by-step implementation, failures and evidence.
+The earlier disabled Recognition/ListenTogether/system-font description below is now historical:
+these three paths have real consumers. Song actions use the pinned modal/pages/SF layout and actual
+provider-native favorite/playlist clients, with Local persistence. Sleep timer lives at application
+scope and restores its deadline. Together uses actual status/command/playlist/heartbeat protocols.
+Recognition executes byte-identical pinned JS/WASM over actual microphone/file PCM, then calls
+NetEase match; no metadata-only search is presented as acoustic recognition.
+
+Latest full local test/compile: **221 tests / 44 suites / 0 failures** (including process-disposal
+timer restore regression). Source resource gate: **16 exact-byte resources PASS**. New physical controls
+and independent JVM reload now both exit 0: **68 scenes / 63 assertions PASS**, including Local
+favorite/playlist persistence, sleep timer restore/cancel and system font reload. Lifecycle teardown
+preserves the timer preference while stopping its AWT worker. Complete evidence is archived in
+`evidence/song-actions-local/`. Windows build/package validation for this batch is still pending.
+
+Remaining confirmed gaps include Bilibili/Kuwo/Apple Music provider stubs, legacy segment/prefetch
+stubs, several OS settings/login flows, full Search/Library/collection animation acceptance,
+live provider accounts/two-user Together/microphone, long-run Windows memory growth and same-content
+pinned Android frames (0 connected devices). No whole-app 1:1 completion or new release is claimed.
+
 ### Settings pages pinned replica + cold-start memory (2026-10-15)
 
 **No distribution has been issued from this batch yet.**
@@ -24,12 +46,12 @@ Root sections/order and all 19 entries match the source (Privacy is no longer a 
 Appearance, Content, Playback, AutoMix, EQ, Storage, About, RemoteConfig and TabLayout text no longer
 hard-code Chinese; Content areas are the source `全部/华语/欧美/日本/韩国`.
 
-Controls whose OS backend does not exist on desktop (clipboard links, haptics, system font, immersive
+Controls whose OS backend did not exist in that earlier settings batch (clipboard links, haptics, system font, immersive
 playback, system notification lyrics, floating overlay, recognition, listen-together, auto-update
 scheduler, playback second account, Bilibili A/V alignment) stay **disabled with an explicit
 `settings-platform-availability` note**. They never persist an enable, so there is no "toggle works but
-does nothing" state. Recognition/ListenTogether remain the pinned empty/stub backends and are not
-presented as functional.
+does nothing" state. Recognition/ListenTogether/system font were completed later as described above;
+the remaining unavailable OS rows are still disabled.
 
 Verification on the **same JVM flags as the shipped package** (`-Xms16m -Xmx1g -XX:+UseSerialGC`):
 4 locale route replays (19 routes each, physical mouse + real keyboard no-match search) + controls +

@@ -406,12 +406,12 @@ class SpotifyApiClient(
 
     private data class PageResult<T>(val items: List<T>, val total: Long?)
 
-    private companion object {
-        const val ApiBase = "https://api.spotify.com/v1/"
+    internal companion object {
+        private const val ApiBase = "https://api.spotify.com/v1/"
         const val LikedSongsPlaylistId = "liked-songs"
-        const val MaximumSearchLimit = 10
-        const val MaximumSearchOffset = 1_000
-        val JsonMediaType = "application/json; charset=utf-8".toMediaType()
+        private const val MaximumSearchLimit = 10
+        private const val MaximumSearchOffset = 1_000
+        private val JsonMediaType = "application/json; charset=utf-8".toMediaType()
     }
 }
 

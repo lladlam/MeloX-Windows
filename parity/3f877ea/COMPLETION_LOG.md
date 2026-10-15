@@ -1,0 +1,102 @@
+# 功能与 UI 补齐执行日志
+
+真源固定为 Android `3f877eaffe30c82eb6d24eb3647702f5bc554dd3`，只读取纯 Git 树。
+2026-10-15 本轮起点 Windows `d3a091f30a2abe09bf76389a80588fe23f21e1da`。
+逐项记录实现和验证；“实现”与 Android 同内容像素/动态验收分开记账。
+
+## 0. 起点复核
+
+- Windows CI `38680774924` / `d3a091f`：SUCCESS；四语言设置回放的 CJK 参数修复已通过 Windows。
+- 工作区干净，原始 stash 保留。
+- 历史矩阵里的“缺失设置页/51 个歌词键”已过时：设置 19 路由、60 个歌词键、17 个 Skyline 键已有实现和回放。
+- 当前真实缺口：歌曲操作面板只实现少数入口，喜爱状态固定从 false 开始；源端完整面板包含下载、歌单写入、评论及回复、好友分享、动态分享、听歌排行、百科、定时关闭。
+
+## 本轮工作清单
+
+| 项目 | 状态 | 实现/证据 |
+|---|---|---|
+| 歌曲操作：真实初始喜爱状态、并发写入保护 | 本地回归/物理回放 PASS，线上待验 | NetEase/Local/Spotify/Jellyfin；未知状态不发反向写入 |
+| 歌曲操作：下载/删除、添加/创建歌单、来源歌单移除 | 已实现，验证中 | NetEase 下载用原生 ID；PlaylistWrite/Sync 按来源派发 |
+| 歌曲操作：评论分页、回复分页、分享联系人、动态、听歌排行、百科 | 已接真实客户端，验证中 | 错误与空数据分开；真账号写操作待授权验收 |
+| 定时关闭：后台计时/取消/真实暂停 | 实现及物理设置/跨 JVM 恢复 PASS | 不依赖面板存活；退出停止 worker 但保留 deadline |
+| 歌曲操作 UI：源端顺序、尺寸、SF 图标、页面切换/返回 | 本地物理回放 PASS，Android 帧待验 | controls/reload 68 scenes / 63 assertions |
+| 搜索/Library/收藏详情及跨页动画差异 | 待复核 | 对照纯 pinned 源逐项列差异 |
+| 桌面缺后端的设置功能 | 待复核 | 禁止仅存开关；逐项接真实消费者 |
+| ListenTogether 原有空实现 | 已替换，验证中 | 应用级轮询/指令/心跳/队列状态机；设置和播放器入口接入 |
+| Recognition 原有空实现 | 已替换，验证中 | Java Sound 麦克风/FFmpeg 本地 PCM → pinned JS/WASM → 真实 match API |
+| Android 同内容截图/动态帧 | 缺参考证据 | 不用桌面自比对冒充验收 |
+| Bilibili / Kuwo / Apple Music 原生 provider | 确认仍有空实现 | Search 返回空页，Playback 返回 Unavailable；不能称全部音源迁移完成 |
+| 播放预取 / 独立本地音频分段抽取 | 确认仍有空实现 | `MeloXMediaPrefetcher` no-op，旧 `LocalAudioSegmentExtractor` 返回空 PCM；本轮识曲直接使用真实 FFmpeg 路径 |
+| 播放后 549→1431MB 持续增长 | 未定位 | 仍需 Windows 复测/长时采样；本轮不继承旧启动内存结果为增长修复 |
+
+## 步骤记录
+
+每个已完成步骤在此追加：真源位置 → 修改文件 → 验证命令/结果 → 剩余差异。
+
+### 1. 定时关闭后台消费者
+
+- 真源：`MeloXPlayerUi.kt:689–707` 与播放服务的 `playback_sleep_timer_end_epoch_ms` 消费者。
+- 新增 `shared/.../playback/MeloXSleepTimer.kt`：保留同一 epoch 偏好键；进程拥有计时任务，关闭弹层/换歌不会取消；替换/取消使旧任务失效；到期清空偏好并暂停真实 controller/AudioPlayer；应用启动恢复计时。
+- 验证：`:shared:desktopTest --tests melox.playback.PlaybackSleepTimerTest` **2 tests PASS**。覆盖替换、取消、恢复、精确到期、只暂停一次。
+- UI 入口正在并入源端歌曲操作面板；物理 15/30/45/60 分钟选择和重启证据后补。
+
+### 2. 歌曲操作面板与原生身份
+
+- 真源：`ui/player/MeloXSongActionsOverlay.kt`；Windows 改为源端 38dp 圆角 ModalBottomSheet、18dp 内容边距、58×4dp 拖动柄、页面 fade/scale 切换。
+- 接入定时、队列、下载、歌单列表/创建/添加/移除、评论/回复游标分页、联系人发送、动态分享、排行和百科；网络失败有重试和原始错误，不以空列表冒充成功。
+- 喜爱读取独立为 `FavoriteStateCapability`；NetEase 读真实 liked IDs，Local 读持久化记录，Spotify 遍历原生喜爱曲库，Jellyfin 读鉴权的 UserData。无可靠读取能力的来源明确禁用 toggle；不把 unknown 当 false。
+- `MeloXDownloadStore.start` 验证来源并使用 `neteaseSongId`，修复桥接 legacy hash 被错误传到网易云 URL 解析的路径。
+- `PlaylistDetailScreen` 传递真实所有者/来源歌单，写操作完成后重新加载详情。
+- `LocalProvider` 接入已存在的本地歌单存储，真实创建/添加/删除/重命名/排序和持久化喜爱。
+- 首轮物理回放已通过 Local 喜爱 unknown→unliked→liked、下载禁用。后续 Sleep 断言因 harness 以末尾冒号分割而失败，已把状态值改成 `Sleep-idle`，待复跑。
+- 桌面分享当前使用操作系统剪贴板，提示“已复制”；这是明确的平台差异，尚非 Windows 原生分享面板。
+
+### 3. 一起听进程级协调器
+
+- 真源：`playback/MeloXListenTogetherCoordinator.kt`、`core/network/NeteaseListenTogetherTransport.kt` 及 `SettingsScreen.kt:2262`。
+- 删除内存房间 no-op；应用级 coordinator 使用真实鉴权 room status、playback、playlist report、command report、heartbeat 协议。
+- controller 显式命令事件与解码 buffering 分开；远端写入抑制回环、队列报告防抖、串行指令序号、账号/房间 generation 检查、断线 Reconnecting 与后续恢复。
+- 设置及播放器一起听页接入创建/加入/成员/连接状态/邀请分享/结束；页面关闭不停止同步。
+- 正在编译及跑状态机回归；双真实账号、Windows 设备上的长时同步尚未验收。
+
+### 4. 真正的声学听歌识曲
+
+- `SongRecognitionClient` 删除 `emptyList()` 占位实现；麦克风使用 Java Sound 8kHz/16bit/mono，文件使用已打包 FFmpeg 解码真实 PCM 后重采样；交给 pinned AFP 算法生成指纹，发送 Android 同协议的 NetEase `audio/match` 请求。User-Agent 明确标识 Desktop。
+- `tools/export_recognition_resources.py` 从纯 pinned Git 导出 `afp.js`、`afp.wasm.js` 和两个授权文件，4 文件字节核对 PASS；新增 `recognition-source-audit.json`，纳入 source/JAR/image/ZIP 资源校验。
+- 加入 Javet 6.0.2（Apache-2.0）及当前构建平台的 V8 JNI，应用无需外部 Node/浏览器；不在启动时初始化 V8，每次提取关闭 isolate 和 WASM heap。查阅官方 Installation/Hello Javet/API 文档；Context7 本月配额已耗尽。
+- `RecognitionSettings` 接入 3/6/9 秒、录音中/停止/结果/失败状态和真实播放；系统设备/权限错误原样呈现；离页释放录音、解码和请求。
+- `LocalRecognitionCoordinator` 改为真源的中段/开头/末尾三段声学识别，识别后才做元数据/封面/歌词补充；不再用文件标题搜索冒充声学识别。
+- 首次测试发现 JUnit4 的表达式测试返回了异常对象而非 Unit，已修正；WASM 执行/输入相关性/释放测试正在重跑。
+
+### 5. 本地自动验证进展
+
+- 最新 `:shared:desktopTest :desktop:compileKotlinDesktop` **220 tests / 44 suites / 0 failures / 0 errors / 0 skipped，BUILD SUCCESSFUL**。
+- 新增回归含：计时替换/取消/恢复/单次到期；Together 远端队列/进度/无回环、账号切换时丢弃过期读取、断线恢复、绕过本地 shuffle/Smart Queue；Local 喜爱/歌单跨 repository 重建与重扫描持久化；Jellyfin 鉴权喜爱读取与 missing-state 不返回 false；真实 WASM 重复性/不同信号不同输出/isolate 释放；真实 WAV→FFmpeg→PCM→WASM→match 请求协议。
+- 单元测试使用的协议/网络 fixture 仅用于状态机/协议断言；不算线上账号、音乐命中或实机麦克风成功证据。
+- `export_recognition_resources.py --verify` PASS；`verify_pinned_resources.py --sources` **16 resources PASS**；`git diff --check` PASS。
+- 新物理回放前一轮发现 Material ModalBottomSheet 接管 Escape 焦点，应用父层 BackHandler 没收到按键；已在生产弹层添加 Escape down 消费/up 返回处理，正在重跑真实输入。
+- 2026-10-15 再查 `android.device_list`：**0 devices**；同内容 Android 像素/动态证据仍 BLOCKED，见 `evidence/completion-android-reference-check.json`。
+
+### 6. 扩大空实现核查
+
+- 复查所有 `stub`/`no-op`/`未接入` 标记，确认还有 Bilibili、Kuwo、Apple Music 的 provider 搜索/播放空实现、Media3 预取占位、旧独立分段抽取占位，以及部分登录流程/第二播放账号槽 UI。
+- 这意味着“全部缺失功能/UI 已补齐”尚不成立。当前表持续记录这些缺口，避免只验收设置路由就误标整应用完成。
+- Android-only 平台集成仍包括系统歌词/通知、悬浮歌词、横屏桌面歌词、系统字体/剪贴板/沉浸播放及触觉反馈消费者；须逐个接实际桌面能力后再启用。
+
+### 7. 系统字体真实消费者与弹层返回
+
+- 对照 pinned `ui/theme/MeloXMiSansFont.kt`：`system_font=true` 选择 `FontFamily.Default`，false 选择 pinned MiLan。
+- `MeloXMaterialTheme.kt` 和 `MeloXTypography.kt` 接入同一偏好状态，应用 Material/玻璃排版立即响应，保留源端字号/字重/行高；两份 Material Typography 缓存复用，避免逐帧重建整组样式。
+- General 系统字体开关已启用；新增物理开关、字体消费者断言与独立 JVM 重载/还原场景。SF 图标仍走独立 pinned 字体。
+- 歌曲弹层细化源端 46dp ActionItem / 56dp grouped list 行和 grouped chevron，邀请链接按 pinned `st.music.163.com` 与 creatorId 生成。
+- Local controls v4 PASS（真实喜爱写入、创建并添加歌单、定时设置/关闭弹层保留）；reload v4 已证明喜爱与本地歌单跨 JVM 持久化，但在歌单页 Escape 失败。进一步确认 ModalBottomSheet 原生 Back 接管焦点：现在关闭其自动 Back dismissal，给生产弹层显式焦点并派发页面返回，待 v5 全套复跑。
+- controls v5：38 scenes 的全部断言通过（含源端页面返回/创建歌单/定时/未登录一起听/识曲时长/系统字体），但主函数结束后进程未退出。`jstack` 显示 DestroyJavaVM 等待 AWT 自动退出，timer 每秒重新唤醒 AWT；已终止该验证进程（exit 143，不记 PASS）。新增应用根节点 dispose 时停止 Together/计时 worker，保留定时偏好值；加停进程→重启恢复到期回归，重跑完整流程。
+
+### 8. 歌曲操作完整物理输入与持久化核验
+
+- `capture_song_actions.py` controls v6 **exit 0**，同一 home 的独立 JVM reload v6 **exit 0**；汇总 **68 scenes / 63 assertions PASS**。修复后的生产 Escape 子页返回、弹层关闭及进程退出通过。
+- 验证 Local 未喜爱→写入喜爱→新进程读取已喜爱，创建歌单并真实添加→新进程仍含同一首原生曲目，15 分钟定时设置→关闭弹层仍有效→新进程恢复→点击取消，未登录 Together 返回真实登录错误及无效邀请提示，识曲 3 秒偏好重载，系统字体切换→新进程仍为系统字体→恢复 pinned。
+- 回放通过鼠标/滚轮/键盘进行，无 semantics action 或直接偏好变更；UTF-8 steps/expect 原件、全量截图、capture JSON 和日志已归档到 `evidence/song-actions-local/{controls,reload}`，汇总 `song-actions-local-validation.json`。
+- 两进程都解码真实生成 WAV 并输出非零 PCM；独立读取 PCM 校验帧数字节数/RMS/SHA，归档 `pcm-readback.json`。软件端点仅验证 PCM，不作物理听感成功声明。
+- Windows CI 新增同一 controls/reload 与汇总门禁，上传完整新增回放证据。
+- lifecycle 修正后的全量 `:shared:desktopTest` **221 tests / 44 suites / 0 failures / 0 errors / 0 skipped，BUILD SUCCESSFUL**。

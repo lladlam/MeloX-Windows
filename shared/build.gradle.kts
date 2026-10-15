@@ -29,6 +29,10 @@ kotlin {
                 implementation(libs.compose.material3)
                 implementation(libs.okhttp)
                 implementation("net.java.dev.jna:jna-platform:5.17.0")
+                // Recognition runs the pinned JS/WASM only when requested; no external Node install.
+                implementation("com.caoccao.javet:javet:6.0.2")
+                val javetOs = if (System.getProperty("os.name").startsWith("Windows")) "windows" else "linux"
+                runtimeOnly("com.caoccao.javet:javet-v8-$javetOs-x86_64:6.0.2")
                 implementation(project(":innertube"))
                 implementation("com.github.TeamNewPipe:NewPipeExtractor:v0.26.4") {
                     exclude(group = "com.google.protobuf")

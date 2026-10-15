@@ -293,10 +293,10 @@ private fun GeneralSettings() {
         }
         SettingsToggleRow("settings_general_clipboard", "general_clipboard_links", true, enabled = false)
         SettingsToggleRow("settings_general_haptics", "general_haptic_feedback", true, enabled = false)
-        SettingsToggleRow("settings_general_system_font", "system_font", false, enabled = false)
+        SettingsToggleRow("settings_general_system_font", "system_font", false)
         SettingsToggleRow("settings_general_tabbar", "general_disable_auto_tabbar_shrink", false)
     }
-    SettingsPlatformNote(pinnedString("settings_general_clipboard"), pinnedString("settings_general_haptics"), pinnedString("settings_general_system_font"))
+    SettingsPlatformNote(pinnedString("settings_general_clipboard"), pinnedString("settings_general_haptics"))
 }
 
 @Composable

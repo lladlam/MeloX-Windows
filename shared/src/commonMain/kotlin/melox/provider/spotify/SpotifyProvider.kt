@@ -16,7 +16,7 @@ class SpotifyProvider(
     private val httpClient: OkHttpClient = melox.network.MeloXHttpClient.shared,
     private val playbackProviders: () -> List<MusicProvider> = { emptyList() },
 ) : MusicProvider, SearchCapability, CatalogSearchCapability, PlaybackCapability, DownloadCapability,
-    FavoriteCapability, UserLibraryCapability, PlaylistCapability, PlaylistWriteCapability,
+    FavoriteCapability, FavoriteStateCapability, UserLibraryCapability, PlaylistCapability, PlaylistWriteCapability,
     AlbumCapability, ArtistCapability, LyricsCapability, LibraryCollectionCapability, PlaylistSyncCapability {
     private val api = SpotifyApiClient(clientId, httpClient)
     private val lyricsClient = LrcLibLyricsClient(httpClient)
@@ -44,6 +44,8 @@ class SpotifyProvider(
         return lyricsClient.lyrics(track.title, track.artists.firstOrNull()?.name.orEmpty(), track.durationMs ?: 0L)
     }
     override suspend fun setFavorite(track: MusicTrack, favorite: Boolean) = api.setFavorite(track, favorite)
+    override suspend fun isFavorite(track: MusicTrack): Boolean = containsNativeTrack(
+        MusicPlaylistSummary(MusicResourceId(source, SpotifyApiClient.LikedSongsPlaylistId), "Liked songs"), track)
     override suspend fun addTrackToPlaylist(track: MusicTrack, playlist: MusicPlaylistSummary) = api.addTrackToPlaylist(track, playlist)
     override suspend fun savedAlbums(page: Int, pageSize: Int) = api.savedAlbums(page, pageSize)
     override suspend fun followedArtists(page: Int, pageSize: Int) = api.followedArtists(page, pageSize)

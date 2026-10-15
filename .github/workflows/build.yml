@@ -105,6 +105,20 @@ jobs:
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - name: Audit production lyric glyph raster at Windows DPI scales
         run: gradle :desktop:auditLyricRaster
+      - name: Replay real song actions and independent persisted service settings
+        shell: pwsh
+        run: |
+          python -m pip install --quiet Pillow
+          $fixtures = "$pwd/desktop/build/parity/song-action-media"
+          python tools/generate_pcm_fixtures.py "$fixtures"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          $homeDir = "$pwd/desktop/build/parity/song-actions-home"
+          python tools/capture_song_actions.py "$homeDir" desktop/build/parity/song-actions-controls "$fixtures"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python tools/capture_song_actions.py "$homeDir" desktop/build/parity/song-actions-reload "$fixtures" reload
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python tools/verify_song_actions_capture.py desktop/build/parity/song-actions-controls desktop/build/parity/song-actions-reload --output desktop/build/verification/song-actions.json
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - name: Audit pinned font outlines and independent HarfBuzz advances
         run: gradle :desktop:auditFontMetrics
       - name: Get jar info
@@ -159,6 +173,8 @@ jobs:
             desktop/build/parity/settings-*/gradle.log
             desktop/build/parity/settings-*/*.txt
             desktop/build/parity/startup-memory/*.json
+            desktop/build/parity/song-actions-controls/*
+            desktop/build/parity/song-actions-reload/*
             desktop/build/verification/artwork-memory/*.json
             desktop/build/parity/lyrics-controls/*.json
             desktop/build/parity/lyrics-controls/*.png

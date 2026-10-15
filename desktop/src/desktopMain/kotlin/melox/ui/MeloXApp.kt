@@ -104,7 +104,11 @@ fun MeloXApp(onExit: () -> Unit = { kotlin.system.exitProcess(0) }) {
         melox.remoteconfig.MeloXRemoteConfigRuntime.initializeAndRefresh()
     }
     androidx.compose.runtime.DisposableEffect(Unit) {
-        onDispose { melox.remoteconfig.MeloXRemoteConfigRuntime.stop() }
+        onDispose {
+            melox.remoteconfig.MeloXRemoteConfigRuntime.stop()
+            melox.playback.MeloXSleepTimer.shutdown()
+            melox.playback.MeloXListenTogetherCoordinator.shutdown()
+        }
     }
     var selectedTab by remember { mutableStateOf(AppTab.Home) }
     var selectedSource by remember { mutableStateOf(MusicProviderSelectionStore.selectedSource()) }
@@ -128,6 +132,8 @@ fun MeloXApp(onExit: () -> Unit = { kotlin.system.exitProcess(0) }) {
         MeloXSettingsPreferences.initialize()
         melox.playback.MeloXPlaybackModePreferences.initialize()
         PlaybackCommands.restoreLastQueue()
+        melox.playback.MeloXSleepTimer.initialize()
+        melox.playback.MeloXListenTogetherCoordinator.ensureStarted()
         val restored = if (MeloXSettingsRuntime.rememberLastTab) {
             MeloXSettingsPreferences.string("general_last_tab", MeloXSettingsRuntime.defaultTab)
         } else {

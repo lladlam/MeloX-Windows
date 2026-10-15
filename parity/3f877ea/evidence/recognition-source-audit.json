@@ -1,0 +1,26 @@
+{
+  "pinned_android": "3f877eaffe30c82eb6d24eb3647702f5bc554dd3",
+  "verified_against_pure_export": true,
+  "resources": {
+    "AudioFingerprint/afp.js": {
+      "source": "android/app/src/main/assets/AudioFingerprint/afp.js",
+      "bytes": 58815,
+      "sha256": "5adcf5479a882689f627e095d108d5fe34165ebb63383a2468057041498458a9"
+    },
+    "AudioFingerprint/afp.wasm.js": {
+      "source": "android/app/src/main/assets/AudioFingerprint/afp.wasm.js",
+      "bytes": 308355,
+      "sha256": "4926a6d69527a1afbc7f7d120b9c21947e677d80c484c8b65572fa7d4ce3b99f"
+    },
+    "AudioFingerprint/NeteaseAPI-LICENSE.txt": {
+      "source": "android/app/src/main/assets/AudioFingerprint/NeteaseAPI-LICENSE.txt",
+      "bytes": 1081,
+      "sha256": "e463bb821c363e6182f16ec1bf24405af3315b4adc72fc1402232fa98b9a0b12"
+    },
+    "AudioFingerprint/NeteaseAudioFingerprint-NOTICE.txt": {
+      "source": "android/app/src/main/assets/AudioFingerprint/NeteaseAudioFingerprint-NOTICE.txt",
+      "bytes": 397,
+      "sha256": "49f519decb43364a19327b299001ceb8d27bafc74ec8c1ebd701745264f07cda"
+    }
+  }
+}

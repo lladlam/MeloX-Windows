@@ -68,6 +68,8 @@ fun PlaylistDetailScreen(
     var filter by remember(playlist.id) { mutableStateOf("") }
     var showSearch by remember(playlist.id, MeloXSettingsRuntime.playlistSearchBarHidden) { mutableStateOf(!MeloXSettingsRuntime.playlistSearchBarHidden) }
     var actionSong by remember(playlist.id) { mutableStateOf<SearchSong?>(null) }
+    var refreshRevision by remember(playlist.id) { mutableStateOf(0) }
+    var accountUserId by remember { mutableStateOf<Long?>(null) }
     var subscribed by remember(playlist.id) { mutableStateOf<Boolean?>(null) }
     var operation by remember(playlist.id) { mutableStateOf<String?>(null) }
     var busy by remember(playlist.id) { mutableStateOf(false) }
@@ -79,7 +81,13 @@ fun PlaylistDetailScreen(
         }
     } }
 
-    LaunchedEffect(playlist.id, playlist.providerPlaylist?.id) {
+    LaunchedEffect(Unit) {
+        if (NeteaseSessionStore.containsMusicU(NeteaseSessionStore.readCookie())) {
+            runCatching { melox.network.NeteaseSearchClient(cookieProvider = { NeteaseSessionStore.readCookie() }).accountProfile().userId }
+                .onSuccess { accountUserId = it }
+        }
+    }
+    LaunchedEffect(playlist.id, playlist.providerPlaylist?.id, refreshRevision) {
         loading = true
         error = null
         val backing = playlist.providerPlaylist
@@ -299,7 +307,13 @@ fun PlaylistDetailScreen(
             }
         }
     }
-    actionSong?.let { song -> MeloXSongActionsOverlay(song, songs, true, { actionSong = null }) }
+    actionSong?.let { song ->
+        MeloXSongActionsOverlay(song, songs, true, { actionSong = null },
+            sourcePlaylist = if (playlist.providerPlaylist == null) melox.download.MeloXDownloadPlaylistRef(shown.id, shown.name, shown.coverUrl) else null,
+            sourceOwnedPlaylistId = shown.id.takeIf { playlist.providerPlaylist == null && accountUserId != null && shown.creatorUserId == accountUserId },
+            sourceProviderPlaylist = playlist.providerPlaylist,
+            onSourcePlaylistChanged = { refreshRevision++ })
+    }
 }
 
 @Composable

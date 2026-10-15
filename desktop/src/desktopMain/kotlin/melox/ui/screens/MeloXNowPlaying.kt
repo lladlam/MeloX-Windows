@@ -255,6 +255,7 @@ fun MeloXNowPlayingScreen(
                     queue = actionQueue,
                     visible = showActions,
                     onDismiss = { showActions = false },
+                    fromPlayer = true,
                 )
             }
         }
@@ -538,6 +539,7 @@ private fun ClassicPlayerScene(
                 queue = actionQueue,
                 visible = showActions,
                 onDismiss = onDismissActions,
+                fromPlayer = true,
             )
         }
     }

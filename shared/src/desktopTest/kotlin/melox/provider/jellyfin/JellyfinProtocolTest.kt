@@ -130,6 +130,19 @@ class JellyfinProtocolTest {
         assertFailsWith<CancellationException> { search.await() }
     }
 
+    @Test fun favoriteReadIsAuthenticatedServerBoundAndMissingStateIsNotFalse() = runBlocking<Unit> {
+        val track = MusicTrack(MusicResourceId(MusicSource.Jellyfin, "audio-one"), "tone", emptyList(), providerMetadata = ProviderTrackMetadata.Jellyfin("server-one"))
+        server.enqueue(json("""{"UserData":{"IsFavorite":true}}"""))
+        assertTrue(provider().isFavorite(track))
+        val read = request()
+        assertEquals("/jellyfin/Users/user-one/Items/audio-one", read.path)
+        assertEquals("synthetic-token", read.getHeader("X-Emby-Token"))
+        server.enqueue(json("""{"UserData":{}}"""))
+        assertFailsWith<IllegalStateException> { provider().isFavorite(track) }
+        request()
+        assertFailsWith<IllegalArgumentException> { provider().isFavorite(track.copy(providerMetadata = ProviderTrackMetadata.Jellyfin("another-server"))) }
+    }
+
     @Test fun responseBoundsErrorsAndAuthenticationRedirectsAreEnforced() = runBlocking<Unit> {
         server.enqueue(MockResponse().setResponseCode(401).setBody("do-not-display-body-token"))
         val error = assertFailsWith<java.io.IOException> { provider().searchSongs("q", 1, 10) }

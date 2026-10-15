@@ -12,6 +12,14 @@ import melox.settings.*
 import melox.music.model.MusicSource
 import melox.ui.glass.MeloXGlassTextField
 import melox.ui.legal.pinnedString
+import melox.account.NeteaseSessionStore
+import melox.network.NeteaseMusicOperationsClient
+import melox.network.parseNeteaseListenTogetherInvitation
+import melox.playback.MeloXListenTogetherCoordinator
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.isActive
 
 /** Source layout retained; unavailable OS adapters are disabled instead of stored no-op enables. */
 @Composable
@@ -58,29 +66,147 @@ internal fun FloatingLyricsSettings() {
 
 @Composable
 internal fun RecognitionSettings() {
-    val duration = MeloXSettingsPreferences.string("recognition_duration", "6").toIntOrNull() ?: 6
+    val client = remember { melox.recognition.SongRecognitionClient() }
+    val scope = rememberCoroutineScope()
+    var duration by remember { mutableStateOf(MeloXSettingsPreferences.string("recognition_duration", "6").toIntOrNull() ?: 6) }
+    var working by remember { mutableStateOf(false) }
+    var status by remember { mutableStateOf(pinnedString("settings_recognition_ready")) }
+    var error by remember { mutableStateOf<String?>(null) }
+    var results by remember { mutableStateOf<List<melox.recognition.SongRecognitionClient.SongRecognitionResult>>(emptyList()) }
+    var job by remember { mutableStateOf<Job?>(null) }
+    DisposableEffect(client) { onDispose { job?.cancel(); client.close() } }
     Spacer(Modifier.height(14.dp))
     SettingsGlassGroup {
         listOf(3 to "fast", 6 to "recommended", 9 to "noisy").forEach { (value, label) ->
-            SettingsChoiceRow(pinnedString("settings_recognition_seconds_$label"), duration == value, "recognition-duration-$value", enabled = false) {}
+            SettingsChoiceRow(pinnedString("settings_recognition_seconds_$label"), duration == value, "recognition-duration-$value", enabled = !working) {
+                duration = value
+                MeloXSettingsPreferences.setString("recognition_duration", value.toString())
+            }
         }
     }
     Spacer(Modifier.height(14.dp))
-    SettingsActionButton(pinnedString("settings_recognition_start"), Modifier.testTag("recognition-start"), enabled = false) {}
-    SettingsPlatformNote(pinnedString("settings_route_recognition"))
+    SettingsActionButton(pinnedString(if (working) "settings_recognition_stop" else "settings_recognition_start"), Modifier.testTag("recognition-start")) {
+        if (working) job?.cancel() else {
+            working = true; error = null
+            if (duration != 0) results = emptyList()
+            job = scope.launch {
+                try {
+                    if (duration == 0) {
+                        status = pinnedString("settings_recognition_continuous")
+                        while (isActive) {
+                            val found = client.recognize(9)
+                            results = (found + results).distinctBy { it.song.id }.take(100)
+                        }
+                    } else {
+                        status = pinnedString("settings_recognition_listening", duration)
+                        results = client.recognize(duration)
+                        status = pinnedString(if (results.isEmpty()) "settings_recognition_none" else "settings_recognition_done")
+                    }
+                } catch (cancelled: CancellationException) {
+                    status = pinnedString(if (results.isEmpty()) "settings_recognition_stopped" else "settings_recognition_stopped_kept")
+                    throw cancelled
+                } catch (failure: Exception) {
+                    error = failure.message ?: pinnedString("settings_recognition_failed")
+                    status = pinnedString("settings_recognition_incomplete")
+                } finally { working = false }
+            }
+        }
+    }
+    Row(Modifier.fillMaxWidth().padding(vertical = 16.dp), verticalAlignment = androidx.compose.ui.Alignment.CenterVertically) {
+        if (working) {
+            androidx.compose.material3.CircularProgressIndicator(Modifier.size(22.dp), strokeWidth = 2.dp)
+            Spacer(Modifier.size(10.dp))
+        }
+        Text(status, Modifier.testTag("recognition-status"), color = MaterialTheme.colorScheme.onSurface.copy(alpha = .62f), fontSize = 13.sp)
+    }
+    error?.let { Text(it, Modifier.testTag("recognition-error"), color = MaterialTheme.colorScheme.error, fontSize = 12.sp) }
+    results.forEach { result ->
+        melox.ui.foundation.MeloXIosListRow(title = result.song.name, subtitle = result.song.artists,
+            modifier = Modifier.testTag("recognition-result-${result.song.id}"), onClick = {
+                melox.playback.PlaybackCommands.playQueue(results.map { it.song }, result.song.id)
+            })
+    }
 }
 
 @Composable
 internal fun ListenTogetherSettings() {
+    val state by MeloXListenTogetherCoordinator.state.collectAsState()
+    val scope = rememberCoroutineScope()
+    val ops = remember { NeteaseMusicOperationsClient(cookieProvider = { NeteaseSessionStore.readCookie() }) }
+    var invitation by remember { mutableStateOf("") }
+    var busy by remember { mutableStateOf(false) }
+    var message by remember { mutableStateOf<String?>(null) }
+    LaunchedEffect(Unit) { MeloXListenTogetherCoordinator.ensureStarted() }
+    fun request(fallback: String, block: suspend (String) -> Unit) {
+        if (busy) return
+        busy = true; message = null
+        val cookie = NeteaseSessionStore.readCookie()
+        scope.launch {
+            try { block(cookie) }
+            catch (cancelled: CancellationException) { throw cancelled }
+            catch (failure: Exception) { message = failure.message ?: pinnedString(fallback) }
+            finally { busy = false }
+        }
+    }
     SettingsInfoCard(pinnedString("settings_listen_info"))
     Spacer(Modifier.height(12.dp))
-    SettingsActionButton(pinnedString("settings_listen_start"), Modifier.testTag("listen-together-start"), enabled = false) {}
-    Spacer(Modifier.height(10.dp))
-    MeloXGlassTextField("", onValueChange = {}, enabled = false, modifier = Modifier.fillMaxWidth(),
-        placeholder = { Text(pinnedString("settings_listen_paste"), color = MaterialTheme.colorScheme.onSurface.copy(alpha = .4f)) })
-    Spacer(Modifier.height(10.dp))
-    SettingsActionButton(pinnedString("settings_listen_join"), Modifier.testTag("listen-together-join"), enabled = false) {}
-    SettingsPlatformNote(pinnedString("settings_route_listen_together"))
+    val room = state.room
+    if (room == null) {
+        SettingsActionButton(pinnedString("settings_listen_start"), Modifier.testTag("listen-together-start"), enabled = !busy) {
+            request("settings_listen_create_failed") { cookie ->
+                val created = ops.createListenTogetherRoom()
+                check(cookie == NeteaseSessionStore.readCookie()) { "账号已切换，请重新连接" }
+                MeloXListenTogetherCoordinator.adoptRoom(created)
+            }
+        }
+        Spacer(Modifier.height(10.dp))
+        MeloXGlassTextField(invitation, onValueChange = { invitation = it }, enabled = !busy,
+            modifier = Modifier.fillMaxWidth().testTag("listen-together-invitation"),
+            placeholder = { Text(pinnedString("settings_listen_paste"), color = MaterialTheme.colorScheme.onSurface.copy(alpha = .4f)) })
+        Spacer(Modifier.height(10.dp))
+        SettingsActionButton(pinnedString("settings_listen_join"), Modifier.testTag("listen-together-join"), enabled = !busy) {
+            val parsed = parseNeteaseListenTogetherInvitation(invitation)
+            if (parsed == null) message = pinnedString("settings_listen_invite_invalid")
+            else request("settings_listen_join_failed") { cookie ->
+                val joined = ops.joinListenTogetherRoom(parsed.roomId, parsed.inviterId)
+                check(cookie == NeteaseSessionStore.readCookie()) { "账号已切换，请重新连接" }
+                MeloXListenTogetherCoordinator.adoptRoom(joined)
+            }
+        }
+    } else {
+        SettingsGlassGroup {
+            melox.ui.foundation.MeloXIosListRow(title = pinnedString("settings_listen_room"), detail = room.id)
+            melox.ui.foundation.MeloXIosListRow(title = pinnedString("settings_listen_members"), detail = pinnedString("settings_listen_member_count", room.users.size.coerceAtLeast(1)))
+            room.users.forEach { melox.ui.foundation.MeloXIosListRow(title = it.name) }
+            melox.ui.foundation.MeloXIosListRow(title = pinnedString("settings_listen_connection"), detail = pinnedString(when (state.phase) {
+                MeloXListenTogetherCoordinator.Phase.Connected -> "settings_listen_synced"
+                MeloXListenTogetherCoordinator.Phase.Reconnecting -> "settings_listen_reconnecting"
+                MeloXListenTogetherCoordinator.Phase.Idle -> "settings_listen_resuming"
+            }))
+        }
+        Spacer(Modifier.height(10.dp))
+        SettingsActionButton(pinnedString("settings_listen_share"), Modifier.testTag("listen-together-share")) {
+            try {
+                val inviter = room.creatorId.ifBlank { room.users.firstOrNull()?.id.orEmpty() }
+                val player = melox.playback.PlaybackCommands.playerController()
+                val songId = player?.snapshot()?.getOrNull(player.currentMediaItemIndex)?.neteaseSongId ?: 0L
+                val url = "https://st.music.163.com/listen-together/share/?songId=$songId&roomId=${java.net.URLEncoder.encode(room.id, "UTF-8")}&inviterId=${java.net.URLEncoder.encode(inviter, "UTF-8")}"
+                java.awt.Toolkit.getDefaultToolkit().systemClipboard.setContents(java.awt.datatransfer.StringSelection(url), null)
+                message = "邀请链接已复制"
+            } catch (failure: Exception) { message = failure.message ?: "分享失败" }
+        }
+        Spacer(Modifier.height(10.dp))
+        SettingsDangerButton(pinnedString("settings_listen_end"), Modifier.testTag("listen-together-end"), enabled = !busy) {
+            request("settings_listen_leave_failed") { cookie ->
+                ops.endListenTogetherRoom(room.id)
+                if (cookie == NeteaseSessionStore.readCookie()) MeloXListenTogetherCoordinator.clearRoom()
+            }
+        }
+    }
+    if (busy) Row(Modifier.fillMaxWidth().padding(top = 12.dp), horizontalArrangement = Arrangement.Center) {
+        androidx.compose.material3.CircularProgressIndicator(Modifier.size(22.dp), strokeWidth = 2.dp)
+    }
+    (message ?: state.lastError)?.let { Text(it, Modifier.testTag("listen-together-message").padding(top = 12.dp), color = MaterialTheme.colorScheme.error, fontSize = 13.sp) }
 }
 
 @Composable

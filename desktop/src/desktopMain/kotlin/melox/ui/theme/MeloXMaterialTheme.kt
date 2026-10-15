@@ -6,8 +6,11 @@ import androidx.compose.material3.Typography
 import androidx.compose.ui.unit.dp
 
 /** Android main 94e17c9 ui/theme/MeloXTheme.kt, including the app-wide font. */
-val MeloXMaterialTypography = Typography().let { base ->
-    val family = MeloXLanTingProFontFamily
+private val pinnedTypography by lazy { materialTypography(MeloXLanTingProFontFamily) }
+private val systemTypography by lazy { materialTypography(androidx.compose.ui.text.font.FontFamily.Default) }
+val MeloXMaterialTypography: Typography get() = if (melox.settings.MeloXSettingsRuntime.systemFontEnabled) systemTypography else pinnedTypography
+
+private fun materialTypography(family: androidx.compose.ui.text.font.FontFamily): Typography = Typography().let { base ->
     Typography(
         displayLarge = base.displayLarge.copy(fontFamily = family),
         displayMedium = base.displayMedium.copy(fontFamily = family),
@@ -18,12 +21,12 @@ val MeloXMaterialTypography = Typography().let { base ->
         labelLarge = base.labelLarge.copy(fontFamily = family),
         labelMedium = base.labelMedium.copy(fontFamily = family),
         labelSmall = base.labelSmall.copy(fontFamily = family),
-        headlineLarge = MeloXTypography.largeTitle,
-        headlineMedium = MeloXTypography.title2,
-        headlineSmall = MeloXTypography.headline,
-        bodyLarge = MeloXTypography.body,
-        bodyMedium = MeloXTypography.subheadline,
-        bodySmall = MeloXTypography.caption,
+        headlineLarge = MeloXTypography.largeTitle.copy(fontFamily = family),
+        headlineMedium = MeloXTypography.title2.copy(fontFamily = family),
+        headlineSmall = MeloXTypography.headline.copy(fontFamily = family),
+        bodyLarge = MeloXTypography.body.copy(fontFamily = family),
+        bodyMedium = MeloXTypography.subheadline.copy(fontFamily = family),
+        bodySmall = MeloXTypography.caption.copy(fontFamily = family),
     )
 }
 

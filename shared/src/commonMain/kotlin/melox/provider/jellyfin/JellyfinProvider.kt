@@ -13,7 +13,7 @@ class JellyfinProvider(
     httpClient: OkHttpClient = melox.network.MeloXHttpClient.shared,
 ) : MusicProvider, SearchCapability, PlaybackCapability, CatalogSearchCapability,
     AlbumCapability, ArtistCapability, PlaylistCapability, UserLibraryCapability, FavoriteCapability,
-    PlaylistWriteCapability, PlaylistSyncCapability {
+    PlaylistWriteCapability, PlaylistSyncCapability, FavoriteStateCapability {
     private val api = JellyfinApiClient(httpClient)
     override val source: MusicSource = MusicSource.Jellyfin
     override val displayName: String = source.displayName
@@ -72,6 +72,16 @@ class JellyfinProvider(
         requireServer(track, session)
         val endpoint = path("Users", session.userId, "FavoriteItems", track.id.value)
         if (favorite) api.post(session, endpoint) else api.delete(session, endpoint)
+    }
+    override suspend fun isFavorite(track: MusicTrack): Boolean {
+        requireResource(track.id)
+        val session = requireSession()
+        requireServer(track, session)
+        val item = api.get(session, path("Users", session.userId, "Items", track.id.value))
+        requireCurrentSession(session)
+        val data = requireNotNull(item.optJSONObject("UserData")) { "Jellyfin 未返回曲目喜爱状态" }
+        check(data.has("IsFavorite")) { "Jellyfin 未返回曲目喜爱状态" }
+        return data.getBoolean("IsFavorite")
     }
     override suspend fun writablePlaylists(page: Int, pageSize: Int) = userPlaylists(page, pageSize)
     override suspend fun addTrackToPlaylist(track: MusicTrack, playlist: MusicPlaylistSummary) {

@@ -49,11 +49,15 @@ def main():
     pages = json.loads((repo / 'parity/3f877ea/evidence/settings-pages-source-audit.json').read_text(encoding='utf-8'))
     assert pages['pinned_android'] == baseline['pinned_android'] and pages['verified_against_pure_export']
     expected.update(pages['resource_sha256'])
+    recognition = json.loads((repo / 'parity/3f877ea/evidence/recognition-source-audit.json').read_text(encoding='utf-8'))
+    assert recognition['pinned_android'] == baseline['pinned_android'] and recognition['verified_against_pure_export']
+    expected.update({name: value['sha256'] for name, value in recognition['resources'].items()})
     records = []
     archive = zipfile.ZipFile(io.BytesIO(packaged_bytes(args.artifact))) if args.artifact else None
     try:
         for name, digest in sorted(expected.items()):
-            data = (repo / 'desktop/src/main/resources' / name).read_bytes() if args.sources else archive.read(name)
+            source_root = 'shared/src/desktopMain/resources' if name in recognition['resources'] else 'desktop/src/main/resources'
+            data = (repo / source_root / name).read_bytes() if args.sources else archive.read(name)
             actual = hashlib.sha256(data).hexdigest()
             records.append({'resource': name, 'bytes': len(data), 'sha256': actual,
                             'expected_sha256': digest, 'crlf_count': data.count(b'\r\n'), 'verified': actual == digest})

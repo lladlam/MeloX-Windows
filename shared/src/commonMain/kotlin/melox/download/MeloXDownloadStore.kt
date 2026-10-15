@@ -222,6 +222,15 @@ class MeloXDownloadStore private constructor() {
         quality: MusicQuality,
         sourcePlaylist: MeloXDownloadPlaylistRef? = null,
     ) {
+        val nativeId = song.neteaseSongId
+        if (nativeId == null) {
+            errorMessage = "当前下载存储仅支持网易云音乐原生曲目"
+            return
+        }
+        startNetease(song.copy(id = nativeId), quality, sourcePlaylist)
+    }
+
+    private fun startNetease(song: SearchSong, quality: MusicQuality, sourcePlaylist: MeloXDownloadPlaylistRef?) {
         sourcePlaylist?.let { rememberPendingPlaylist(song.id, it) }
         val existing = recordFor(song.id)
         if (existing != null) {

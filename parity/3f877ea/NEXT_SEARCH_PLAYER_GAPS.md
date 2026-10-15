@@ -48,9 +48,10 @@ actual UI input, persisted reload and changed production rendering with real PCM
   Windows CI ownership checks pass on the actual API; physical Windows idle/sleep
   acceptance remains required. Linux reports unsupported rather than simulating
   power success.
-- Complete provider-native action capabilities and favorite-state reads; the
-  common overlay currently handles NetEase IDs but full source-specific actions
-  still require work. Provider bridge negative IDs must remain stable.
+- Provider-native action capabilities and favorite-state reads now have an active
+  implementation and real Local write/reload verification; see `COMPLETION_LOG.md`.
+  Live authorized-provider operations remain outstanding. Provider bridge negative
+  IDs stay stable; NetEase writes/downloads use the native ID.
 - Complete Search shared-element/overlay/back animations and source catalog
   details; do not upgrade current ImageComposeScene evidence to Android parity.
 - Test genuine authorized online playback and podcast programs. Public track

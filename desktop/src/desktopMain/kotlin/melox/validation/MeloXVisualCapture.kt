@@ -167,6 +167,7 @@ fun main(args: Array<String>) = runBlocking {
                 "tag" -> semantics.tagged(expected) != null
                 "text" -> semantics.any { node -> node.config.getOrNull(SemanticsProperties.Text)?.any { it.text == expected } == true }
                 "disabled" -> semantics.tagged(expected)?.config?.contains(SemanticsProperties.Disabled) == true
+                "enabled" -> semantics.tagged(expected)?.config?.contains(SemanticsProperties.Disabled) == false
                 "full-tag" -> semantics.tagged(expected)?.boundsInWindow?.let { it.width >= width * .97f && it.height >= height * .97f } == true
                 "absent" -> semantics.tagged(expected) == null
                 "selected" -> semantics.tagged(expected)?.config?.getOrNull(SemanticsProperties.Selected) == true
@@ -212,6 +213,10 @@ fun main(args: Array<String>) = runBlocking {
                 "word-lines-min" -> (semantics.tagged("player-lyrics")?.config?.getOrNull(melox.ui.screens.MeloXLyricWordLinesKey) ?: 0) >= expected.toInt()
                 "play-ready" -> melox.playback.PlaybackCommands.playerController()?.playWhenReady == expected.toBooleanStrict()
                 "playing" -> melox.player.AudioPlayer.state.value.isPlaying == expected.toBooleanStrict()
+                "sleep-timer" -> (melox.playback.MeloXSleepTimer.endEpochMs.value > System.currentTimeMillis()) == expected.toBooleanStrict()
+                "ui-font" -> (melox.ui.theme.MeloXMaterialTypography.bodyLarge.fontFamily == androidx.compose.ui.text.font.FontFamily.Default) == (expected == "system")
+                "local-playlist-size" -> melox.provider.local.LocalMusicRepository().playlists()
+                    .firstOrNull { it.name == expected.substringBeforeLast(':') }?.trackKeys?.size == expected.substringAfterLast(':').toInt()
                 "title" -> melox.player.AudioPlayer.currentTrack.value?.title == expected
                 "track" -> melox.player.AudioPlayer.currentTrack.value?.id?.let { "${it.source.storageValue}:${it.value}" } == expected
                 "error-kind" -> melox.player.AudioPlayer.state.value.errorKind?.name == expected
