@@ -64,6 +64,15 @@ class PinnedAudioFingerprintTest {
                 .body("""{"code":200,"data":{"result":[]}}""".toResponseBody("application/json".toMediaType())).build()
         }.build()
         try {
+            // The standalone extractor must produce real non-silent 8 kHz PCM from FFmpeg,
+            // with a sample count derived from decoded audio rather than fabricated padding.
+            val pcm = LocalAudioSegmentExtractor.extractBlocking(file.toURI().toString(), segmentStartMs = 0, segmentLengthMs = 3_000)
+            assertTrue(pcm.size in 23_000..24_100, "unexpected decoded length ${pcm.size}")
+            assertTrue(pcm.any { kotlin.math.abs(it) > .01f }, "decoded segment is silent")
+            assertTrue(pcm.all { it.isFinite() && it in -1f..1f })
+            assertEquals(pcm.size, LocalAudioSegmentExtractor.extractBlocking(file.absolutePath, 0, 3_000).size)
+            assertEquals(0, melox.player.FfmpegPcmDecoder.activeProcesses())
+
             SongRecognitionClient(client).use { assertTrue(it.recognizeLocal(file.toURI().toString(), 3_000, 0).isEmpty()) }
             val request = assertNotNull(captured)
             assertEquals("interface.music.163.com", request.url.host)

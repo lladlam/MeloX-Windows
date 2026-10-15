@@ -4,14 +4,11 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import melox.model.SearchSong
-import melox.player.FfmpegPcmDecoder
 import okhttp3.*
 import okhttp3.HttpUrl.Companion.toHttpUrl
 import org.json.JSONArray
 import org.json.JSONObject
-import java.io.File
 import java.io.IOException
-import java.net.URI
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.util.concurrent.Executors
@@ -29,7 +26,6 @@ class SongRecognitionClient(
     private val closed = AtomicBoolean(false)
     private val operation = Mutex()
     private val microphone = AtomicReference<TargetDataLine?>()
-    private val decoder = AtomicReference<FfmpegPcmDecoder?>()
     private val request = AtomicReference<Call?>()
 
     suspend fun recognize(durationSeconds: Int): List<SongRecognitionResult> = operation.withLock {
@@ -41,37 +37,25 @@ class SongRecognitionClient(
 
     suspend fun recognizeLocal(uri: String, durationMs: Long, segmentStartMs: Long? = null): List<SongRecognitionResult> = operation.withLock {
         check(!closed.get()) { "听歌识曲已关闭" }
-        val file = if (uri.startsWith("file:")) File(URI(uri)) else File(uri)
-        require(file.isFile) { "本地音频文件不存在" }
-        val length = durationMs.takeIf { it > 0 } ?: 30_000L
-        val slice = minOf(9_000L, length).coerceAtLeast(1_000L)
-        val maximumStart = (length - slice).coerceAtLeast(0L)
+        val sourceMs = durationMs.takeIf { it > 0 } ?: LocalAudioSegmentExtractor.SegmentLengthMs
+        val lengthMs = LocalAudioSegmentExtractor.SegmentLengthMs.coerceAtMost(sourceMs.coerceAtLeast(1_000L))
+        val maximumStart = (sourceMs - lengthMs).coerceAtLeast(0L)
         val start = (segmentStartMs ?: maximumStart / 2).coerceIn(0L, maximumStart)
         val samples = cancellableWork {
-            FfmpegPcmDecoder(file.canonicalPath, startMs = start, durationMs = slice).use { session ->
-                decoder.set(session)
-                try {
-                    if (closed.get() || Thread.currentThread().isInterrupted) throw IOException("听歌识曲已取消")
-                    val bytes = ByteArray((slice * 44_100L / 1_000L).toInt() * 4)
-                    val count = session.read(bytes)
-                    session.verifyExit()
-                    check(count >= 44_100 * 4) { "没有足够的本地音频" }
-                    val pcm = ByteBuffer.wrap(bytes, 0, count).order(ByteOrder.LITTLE_ENDIAN).asShortBuffer()
-                    val frames = count / 4
-                    val mono = FloatArray(frames) { (pcm.get(it * 2).toInt() + pcm.get(it * 2 + 1).toInt()) / 65536f }
-                    resample(mono, 44_100)
-                } finally { decoder.compareAndSet(session, null) }
-            }
+            if (closed.get() || Thread.currentThread().isInterrupted) throw IOException("听歌识曲已取消")
+            LocalAudioSegmentExtractor.extractBlocking(uri, start, lengthMs)
         }
         recognizeSamples(samples)
     }
 
     internal suspend fun recognizeSamples(samples: FloatArray): List<SongRecognitionResult> {
         check(!closed.get()) { "听歌识曲已关闭" }
+        require(samples.size * 1_000L / SampleRate >= 1_000L) { "本地音频片段不足 1 秒，无法生成音频指纹" }
         val fingerprint = withContext(Dispatchers.IO) { PinnedAudioFingerprint.generate(samples) }
         currentCoroutineContext().ensureActive()
         check(!closed.get()) { "听歌识曲已关闭" }
-        val duration = (samples.size / SampleRate).coerceAtLeast(1)
+        // Segment duration is rounded from the real decoded sample count (never padded to a claim).
+        val duration = ((samples.size + SampleRate / 2) / SampleRate).coerceAtLeast(1)
         val url = "https://interface.music.163.com/api/music/audio/match".toHttpUrl().newBuilder()
             .addQueryParameter("sessionId", "0123456789abcdef")
             .addQueryParameter("algorithmCode", "shazam_v2")
@@ -123,7 +107,7 @@ class SongRecognitionClient(
 
     private fun abortActive() {
         runCatching { microphone.getAndSet(null)?.close() }
-        runCatching { decoder.getAndSet(null)?.close() }
+        LocalAudioSegmentExtractor.abortActive()
         request.getAndSet(null)?.cancel()
     }
     override fun close() { closed.set(true); abortActive() }
@@ -133,6 +117,7 @@ class SongRecognitionClient(
         private val worker = Executors.newCachedThreadPool { task -> Thread(task, "melox-recognition").apply { isDaemon = true } }
         internal fun resample(input: FloatArray, inputRate: Int): FloatArray {
             require(inputRate > 0)
+            if (input.isEmpty()) return FloatArray(0)
             val count = (input.size.toLong() * SampleRate / inputRate).toInt()
             return FloatArray(count) { index ->
                 val position = index * inputRate.toDouble() / SampleRate
