@@ -26,7 +26,7 @@
 | Recognition 原有空实现 | 已替换，验证中 | Java Sound 麦克风/FFmpeg 本地 PCM → pinned JS/WASM → 真实 match API |
 | Android 同内容截图/动态帧 | 缺参考证据 | 不用桌面自比对冒充验收 |
 | Bilibili / Kuwo / Apple Music 原生 provider | 目录/协议已接，live 账号待验 | Kuwo 搜索/播放/歌词/歌单；Bilibili WBI 搜索/收藏夹/DASH；Apple 官方 REST 目录/资料库/歌词。Apple 全曲明确不声明 Playback 能力 |
-| 播放预取 / 独立本地音频分段抽取 | 确认仍有空实现 | `MeloXMediaPrefetcher` no-op，旧 `LocalAudioSegmentExtractor` 返回空 PCM；本轮识曲直接使用真实 FFmpeg 路径 |
+| 播放预取 / 独立本地音频分段抽取 | 预取仍缺；分段抽取已接真实解码 | `MeloXMediaPrefetcher` 仍 no-op（无 Media3 桌面等价物，待接真实预解码或明确禁用）；`LocalAudioSegmentExtractor` 已用打包 FFmpeg 输出真实 8kHz 单声道 PCM，不做静音填充 |
 | 播放后 549→1431MB 持续增长 | 未定位 | 仍需 Windows 复测/长时采样；本轮不继承旧启动内存结果为增长修复 |
 
 ## 步骤记录
@@ -122,3 +122,10 @@
 - 新增 `AppleMusicProtocolTest` 5 项：token 不进日志、目录原生 ID/preview 元数据但拒绝全曲播放、凭据验证与不完整凭据拒绝、目录身份路径校验、TTML/纯文本/回落/空歌词。
 - 全量 `:shared:desktopTest :desktop:compileKotlinDesktop` **230 tests / 47 suites / 0 failures / 0 errors / 0 skipped，BUILD SUCCESSFUL**。
 - 上一批 Windows CI **`38702385103` SUCCESS**（song actions/reload 回放门禁进入 CI 并通过，22m27s）。Apple/多音源改动尚未跑 CI。
+
+### 11. 本地分段抽取去占位
+
+- `LocalAudioSegmentExtractor` 删除“返回 `FloatArray(0)`”占位，改为真实 FFmpeg PCM 解码：输入 44.1kHz 立体声，混为单声道，线性重采样到 8kHz，输出长度只由实际解码帧数决定，**不补静音凑长度**。
+- 与识别客户端共用取消通道：协程取消/关闭客户端会关闭在跑的解码器并中断工作线程；`activeProcesses()` 断言解码进程已退出。
+- `SongRecognitionClient.recognizeLocal` 改为调用该抽取器，固定 pinned 的 9 秒片段上限与中点起始；发送给 match 的 duration 由真实样本数四舍五入得出，不写死、不虚报。
+- 新增回归：真实 3 秒 WAV → 23,000–24,100 个 8kHz 样本、含非静音信号、URI 与绝对路径两种解析结果一致、解码进程归零；全量 **230 tests / 47 suites / 0 failures**。
