@@ -1031,6 +1031,7 @@ private fun remoteLoginCapability(capability: String): Boolean {
 
 @Composable
 private fun TokenInputForm(provider: LoginProvider, state: LoginScreenState, onLoginSuccess: (String) -> Unit) {
+    val scope = rememberCoroutineScope()
     Column {
         Text(
             text = "输入您的Apple Music Token",
@@ -1091,8 +1092,17 @@ private fun TokenInputForm(provider: LoginProvider, state: LoginScreenState, onL
         ) {
             state.dialogLoading = true
             state.dialogMessage = null
-            state.dialogLoading = false
-            state.dialogMessage = "该来源的登录尚未接入，不会假装登录成功"
+            val credentials = melox.provider.applemusic.AppleMusicSession(state.dialogInput.trim(), state.dialogPassword.trim(),
+                melox.provider.applemusic.AppleMusicSessionStore.read().storefront)
+            scope.launch {
+                try {
+                    val verified = melox.provider.applemusic.AppleMusicApiClient({ credentials }).validateSession()
+                    melox.provider.applemusic.AppleMusicSessionStore.write(verified)
+                    onLoginSuccess(if (verified.hasUserAuthorization) "Apple Music 资料库已授权" else "Apple Music 目录已配置")
+                } catch (cancelled: kotlinx.coroutines.CancellationException) { throw cancelled }
+                catch (failure: Exception) { state.dialogMessage = failure.message ?: "Apple Music 授权验证失败" }
+                finally { state.dialogLoading = false }
+            }
         }
     }
 }
