@@ -291,12 +291,12 @@ private fun GeneralSettings() {
                 melox.settings.MeloXSwipeFullAction.AddToQueue to pinnedString("settings_general_add_queue"))) {
             MeloXSettingsPreferences.setString("general_swipe_full_action", it.name)
         }
-        SettingsToggleRow("settings_general_clipboard", "general_clipboard_links", true, enabled = false)
+        SettingsToggleRow("settings_general_clipboard", "general_clipboard_links", true)
         SettingsToggleRow("settings_general_haptics", "general_haptic_feedback", true, enabled = false)
         SettingsToggleRow("settings_general_system_font", "system_font", false)
         SettingsToggleRow("settings_general_tabbar", "general_disable_auto_tabbar_shrink", false)
     }
-    SettingsPlatformNote(pinnedString("settings_general_clipboard"), pinnedString("settings_general_haptics"))
+    SettingsPlatformNote(pinnedString("settings_general_haptics"))
 }
 
 @Composable

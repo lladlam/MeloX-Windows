@@ -25,6 +25,9 @@ def source(path):
 
 screen = source('kotlin/com/lladlam/melox/ui/settings/SettingsScreen.kt').decode()
 keys = set(re.findall(r'R\.string\.(\w+)', screen))
+# App-level strings consumed outside SettingsScreen (clipboard confirmation dialog).
+# They come from the same pure pinned strings.xml trees and must not be hand-typed.
+keys.update({'app_clipboard_title', 'app_clipboard_song', 'app_clipboard_playlist', 'app_confirm'})
 # SF Symbol inventory used by every settings row icon.
 symbols = source('kotlin/com/lladlam/melox/ui/glass/MeloXSymbol.kt').decode()
 sf_name = dict(re.findall(r'^\s+(\w+)\("([^"]+)",', symbols, re.M))

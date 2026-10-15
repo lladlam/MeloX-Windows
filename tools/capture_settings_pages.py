@@ -85,7 +85,7 @@ if mode == 'routes':
                     'FloatingLyrics': 'floating', 'ListenTogether': 'listen_together', 'RemoteConfig': 'remote_config',
                 }.get(route, route.lower())]]
                 if route == 'General':
-                    checks += ['disabled:setting-general_clipboard_links', 'disabled:setting-general_haptic_feedback', 'enabled:setting-system_font']
+                    checks += ['enabled:setting-general_clipboard_links', 'disabled:setting-general_haptic_feedback', 'enabled:setting-system_font']
                 if route == 'Recognition':
                     checks += ['enabled:recognition-start', 'tag:recognition-status']
                 if route == 'FloatingLyrics':

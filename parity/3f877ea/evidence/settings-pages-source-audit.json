@@ -10,12 +10,12 @@
     "res/values-ja/strings.xml": "414475406d6c4a8b4d604b8dd8d7f2d3fc36b5c1836fa226027af2863d37a51f"
   },
   "resource_sha256": {
-    "parity/pinned-settings-pages.properties": "a46855aaf06004ff52d9142b14b5665e11d6e215850ea2ddc6db609dd8bed4b8",
-    "parity/pinned-settings-pages-zh-rCN.properties": "0e21323368d9e8bbf97d2c23b22615c66ad8d7084291eaaf036ca3488c8124dd",
-    "parity/pinned-settings-pages-zh-rTW.properties": "5cc19eb20f2f6e3c81517229b22fd455117c9c7316c3190034bb19195c61d218",
-    "parity/pinned-settings-pages-ja.properties": "d9181161f6e3ee2fd73319576a3af14b832a0861153eaa9e3210a5c9aeb8de5c"
+    "parity/pinned-settings-pages.properties": "224470d8a443340007f3fd376dfa768472a251a59cf95f54cdb3930610b18aad",
+    "parity/pinned-settings-pages-zh-rCN.properties": "4baa0606d628999f4b960e9ea8961d91038fcefc0644638b04077cdbe26b8015",
+    "parity/pinned-settings-pages-zh-rTW.properties": "295fba795423cb6ebe666dda662f9fcc3151470973dd0bb1ad8c9ff0c23f2f3f",
+    "parity/pinned-settings-pages-ja.properties": "1c17bb3b7326d5eb459294e5359bf71f3622cfb01908c5f09a64ee77aaba24a5"
   },
-  "string_keys": 797,
+  "string_keys": 801,
   "sections": [
     {
       "title": "settings_section_app",

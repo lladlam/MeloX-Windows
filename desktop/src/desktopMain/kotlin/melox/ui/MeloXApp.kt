@@ -22,10 +22,15 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.focusable
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Text
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
@@ -55,6 +60,9 @@ import androidx.compose.ui.input.key.type
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import kotlinx.coroutines.launch
 import melox.library.NeteasePlaylistSummary
@@ -140,6 +148,34 @@ fun MeloXApp(onExit: () -> Unit = { kotlin.system.exitProcess(0) }) {
             MeloXSettingsRuntime.defaultTab
         }
         selectedTab = runCatching { AppTab.valueOf(restored) }.getOrDefault(AppTab.Home)
+    }
+
+    // Pinned clipboard handling (`general_clipboard_links`): a single scan shortly after the
+    // first frame, deduplicated against the last text seen in this process. The AWT clipboard
+    // is unavailable in the offscreen/headless capture harness, so that path stays inert.
+    var clipboardRequest by remember { mutableStateOf<String?>(null) }
+    val lastClipboardText = remember { java.util.concurrent.atomic.AtomicReference("") }
+    val clipboardTarget = remember(clipboardRequest, selectedSource) {
+        if (selectedSource == MusicSource.Netease) clipboardRequest?.let(melox.network.NeteaseClipboardLink::parse) else null
+    }
+    LaunchedEffect(clipboardRequest, clipboardTarget, selectedSource) {
+        if (clipboardRequest != null && clipboardTarget == null) clipboardRequest = null
+    }
+    LaunchedEffect(Unit) {
+        androidx.compose.runtime.withFrameNanos { }
+        kotlinx.coroutines.delay(100)
+        if (!MeloXSettingsRuntime.clipboardLinksEnabled) return@LaunchedEffect
+        if (java.awt.GraphicsEnvironment.isHeadless()) return@LaunchedEffect
+        val text = runCatching {
+            java.awt.Toolkit.getDefaultToolkit().systemClipboard
+                .getData(java.awt.datatransfer.DataFlavor.stringFlavor) as? String
+        }.getOrNull()?.trim().orEmpty()
+        if (text.isBlank() || text == lastClipboardText.getAndSet(text)) return@LaunchedEffect
+        if (melox.network.parseNeteaseListenTogetherInvitation(text) != null) {
+            if (selectedSource == MusicSource.Netease) settingsRouteRequest = "ListenTogether"
+            return@LaunchedEffect
+        }
+        clipboardRequest = text
     }
 
     LaunchedEffect(selectedTab) {
@@ -280,6 +316,46 @@ fun MeloXApp(onExit: () -> Unit = { kotlin.system.exitProcess(0) }) {
     ) {
         CompositionLocalProvider(androidx.compose.material3.LocalContentColor provides MaterialTheme.colorScheme.onBackground) {
         if (onboarding.stage == melox.legal.MeloXOnboardingStage.Complete) melox.ui.screens.RemoteCompatibilityNotice()
+        clipboardTarget?.let { target ->
+            melox.ui.foundation.MeloXGlassDialog(
+                visible = true,
+                onDismiss = { clipboardRequest = null },
+                title = melox.ui.legal.pinnedString("app_clipboard_title"),
+            ) {
+                Text(
+                    text = melox.ui.legal.pinnedString(
+                        if (target is melox.network.NeteaseClipboardTarget.Song) "app_clipboard_song" else "app_clipboard_playlist",
+                    ),
+                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = .72f),
+                    fontSize = 15.sp,
+                    modifier = Modifier.testTag("clipboard-link-message").padding(bottom = 14.dp),
+                )
+                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                    melox.ui.screens.SettingsActionButton(
+                        melox.ui.legal.pinnedString("action_cancel"),
+                        Modifier.weight(1f).testTag("clipboard-cancel"),
+                    ) { clipboardRequest = null }
+                    melox.ui.screens.SettingsActionButton(
+                        melox.ui.legal.pinnedString("app_confirm"),
+                        Modifier.weight(1f).testTag("clipboard-confirm"),
+                    ) {
+                        clipboardRequest = null
+                        playerScope.launch {
+                            val client = melox.library.NeteaseLibraryClient(cookieProvider = { melox.account.NeteaseSessionStore.readCookie() })
+                            val songs = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
+                                runCatching {
+                                    when (target) {
+                                        is melox.network.NeteaseClipboardTarget.Song -> client.songDetailsBlocking(listOf(target.id))
+                                        is melox.network.NeteaseClipboardTarget.Playlist -> client.playlistDetailBlocking(target.id).songs
+                                    }
+                                }.getOrElse { emptyList() }
+                            }
+                            songs.firstOrNull()?.let { PlaybackCommands.playQueue(songs, it.id) }
+                        }
+                    }
+                }
+            }
+        }
         SharedTransitionLayout(modifier = Modifier.fillMaxSize()) {
             val sharedScope = this
             Box(
