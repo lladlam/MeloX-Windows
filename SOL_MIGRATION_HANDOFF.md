@@ -18,14 +18,20 @@ scope and restores its deadline. Together uses actual status/command/playlist/he
 Recognition executes byte-identical pinned JS/WASM over actual microphone/file PCM, then calls
 NetEase match; no metadata-only search is presented as acoustic recognition.
 
-Latest full local test/compile: **221 tests / 44 suites / 0 failures** (including process-disposal
-timer restore regression). Source resource gate: **16 exact-byte resources PASS**. New physical controls
+Latest full local test/compile: **230 tests / 47 suites / 0 failures** (including process-disposal
+timer restore, Kuwo/Bilibili/Apple protocol regressions). Source resource gate: **16 exact-byte
+resources PASS**. New physical controls
 and independent JVM reload now both exit 0: **68 scenes / 63 assertions PASS**, including Local
 favorite/playlist persistence, sleep timer restore/cancel and system font reload. Lifecycle teardown
 preserves the timer preference while stopping its AWT worker. Complete evidence is archived in
-`evidence/song-actions-local/`. Windows build/package validation for this batch is still pending.
+`evidence/song-actions-local/`.
 
-Remaining confirmed gaps include Bilibili/Kuwo/Apple Music provider stubs, legacy segment/prefetch
+Windows CI for that batch: run **38702385103 / SUCCESS** at `38b6756`, including the new song-actions
+controls/reload gate. A later provider-catalog batch (Kuwo/Bilibili/Apple REST) is committed locally
+and still awaits its own CI run.
+
+Remaining confirmed gaps include the desktop Apple MusicKit full-song backend (Apple REST catalog is
+wired; Playback capability is intentionally not advertised), legacy segment/prefetch
 stubs, several OS settings/login flows, full Search/Library/collection animation acceptance,
 live provider accounts/two-user Together/microphone, long-run Windows memory growth and same-content
 pinned Android frames (0 connected devices). No whole-app 1:1 completion or new release is claimed.

@@ -25,7 +25,7 @@
 | ListenTogether 原有空实现 | 已替换，验证中 | 应用级轮询/指令/心跳/队列状态机；设置和播放器入口接入 |
 | Recognition 原有空实现 | 已替换，验证中 | Java Sound 麦克风/FFmpeg 本地 PCM → pinned JS/WASM → 真实 match API |
 | Android 同内容截图/动态帧 | 缺参考证据 | 不用桌面自比对冒充验收 |
-| Bilibili / Kuwo / Apple Music 原生 provider | 确认仍有空实现 | Search 返回空页，Playback 返回 Unavailable；不能称全部音源迁移完成 |
+| Bilibili / Kuwo / Apple Music 原生 provider | 目录/协议已接，live 账号待验 | Kuwo 搜索/播放/歌词/歌单；Bilibili WBI 搜索/收藏夹/DASH；Apple 官方 REST 目录/资料库/歌词。Apple 全曲明确不声明 Playback 能力 |
 | 播放预取 / 独立本地音频分段抽取 | 确认仍有空实现 | `MeloXMediaPrefetcher` no-op，旧 `LocalAudioSegmentExtractor` 返回空 PCM；本轮识曲直接使用真实 FFmpeg 路径 |
 | 播放后 549→1431MB 持续增长 | 未定位 | 仍需 Windows 复测/长时采样；本轮不继承旧启动内存结果为增长修复 |
 
@@ -81,6 +81,7 @@
 
 - 复查所有 `stub`/`no-op`/`未接入` 标记，确认还有 Bilibili、Kuwo、Apple Music 的 provider 搜索/播放空实现、Media3 预取占位、旧独立分段抽取占位，以及部分登录流程/第二播放账号槽 UI。
 - 这意味着“全部缺失功能/UI 已补齐”尚不成立。当前表持续记录这些缺口，避免只验收设置路由就误标整应用完成。
+  （后续：本表第 9、10 步已接通 Kuwo/Bilibili/Apple 的真实目录协议；Apple 全曲仍因缺桌面 MusicKit 而不声明 Playback。）
 - Android-only 平台集成仍包括系统歌词/通知、悬浮歌词、横屏桌面歌词、系统字体/剪贴板/沉浸播放及触觉反馈消费者；须逐个接实际桌面能力后再启用。
 
 ### 7. 系统字体真实消费者与弹层返回
@@ -110,3 +111,14 @@
 - 新增协议测试：WBI 签名/原始查询/cid、-403 重签/替代关联/质量/鉴权头、收藏夹多 P、API 错误不假装空库；酷我搜索/播放/鉴权歌单调用链。全量编译/回归正在执行。
 - 识曲文件片段修正到 pinned 的最多 9 秒、中点默认起始，避免 12 秒指纹 GET 请求比源端更长。
 - 全量 `:shared:desktopTest :desktop:compileKotlinDesktop` **225 tests / 46 suites / 0 failures，BUILD SUCCESSFUL**。协议测试不代表线上登录/音乐播放成功；这两类 live 证据仍缺。
+
+### 10. Apple Music 官方 REST 目录与凭据验证
+
+- 对照 pinned `core/provider/applemusic/AppleMusicApiClient.kt`：实现 catalog 搜索（songs/playlists/albums/artists）、charts 推荐、资料库歌单、目录/资料库歌单详情、专辑详情、艺人详情与真实 TTML/纯文本歌词。
+- 新能力集合只声明实际实现的 Search/Lyrics/Library/Playlists/Albums/Artists/HomeRecommendations；**不声明 Playback**——REST preview 不能冒充全曲，`resolvePlayback` 仍返回明确 Unavailable，后续若接入桌面 MusicKit 再单独声明。
+- 凭据存储改为 secure `developer_token` / `music_user_token` / `storefront`，`toString()` 只暴露 configured/authorized/storefront，不泄漏 token；登录表单从“尚未接入”改为真实调用 API 验证：目录请求成功且已授权时读取 `/v1/me/storefront` 并持久化，失败原样显示，绝不假装登录成功。
+- 资源身份走白名单校验（拒绝 `/ ? # %`），防止目录 ID 拼入 URL 路径；每请求使用 Bearer + 可选 Music-User-Token + 系统 Locale，返回后检查凭据未变化。
+- 歌词优先真实 TTML（`TtmlLyricsParser`，无命名空间/解析失败时回落到真实 text 字段）；Apple 的无时间文本保持单个原始行且 `pseudoTimingAllowed=false`，不编造逐字时间。
+- 新增 `AppleMusicProtocolTest` 5 项：token 不进日志、目录原生 ID/preview 元数据但拒绝全曲播放、凭据验证与不完整凭据拒绝、目录身份路径校验、TTML/纯文本/回落/空歌词。
+- 全量 `:shared:desktopTest :desktop:compileKotlinDesktop` **230 tests / 47 suites / 0 failures / 0 errors / 0 skipped，BUILD SUCCESSFUL**。
+- 上一批 Windows CI **`38702385103` SUCCESS**（song actions/reload 回放门禁进入 CI 并通过，22m27s）。Apple/多音源改动尚未跑 CI。
