@@ -123,6 +123,15 @@
 - 全量 `:shared:desktopTest :desktop:compileKotlinDesktop` **230 tests / 47 suites / 0 failures / 0 errors / 0 skipped，BUILD SUCCESSFUL**。
 - 上一批 Windows CI **`38702385103` SUCCESS**（song actions/reload 回放门禁进入 CI 并通过，22m27s）。
 - 多音源批次 Windows CI **`38710418775` SUCCESS**（`5b4e980`，Kuwo/Bilibili/Apple REST 与全部既有门禁通过）。
+- 内存回放批次 Windows CI **`38716111866` SUCCESS**（`a0c8b79`，21m，**230 tests / 47 suites / 0 failures / 0 errors / 0 skipped**，由下载到的 Verification 产物 XML 独立汇总）。
+
+### 16. 独立下载核验当前发行
+
+- 新增 `tools/verify_delivery_artifact.py`：不信任 CI 自述，直接对下载到的发行 ZIP 做字节/SHA-256、逐条 CRC、JAR 内 `build-info` 版本号与 run head SHA 对齐、pinned 资源字节、打包 FFmpeg 字节与 PE x64 magic、启动 exe/JAR/`ffmpeg.exe` 齐全性校验。
+- 下载方式：`gh run download`，并把 `TMPDIR` 指到主盘（`/tmp` 上一次因配额写满而失败：`disk quota exceeded`）。
+- **当前独立核验通过的发行**：run **38716111866 / SUCCESS**，head **`a0c8b79a59a54c5e963a0b8c15496ac7f6de9ce0`**；发行 ZIP **320,739,222 bytes**，SHA-256 `23774c898aad1f761e1eb413bad41764c8d1e21e6ab07a2a781e470ee5651d02`；357 个 ZIP 条目 CRC 全通过；`build-info` 版本号与 run head 一致；pinned 资源与打包解码器校验 PASS；Windows 侧 230/47/0。
+- 说明：`a0c8b79` 之后的 3 个提交（`ccbdd59`/`a3c16ff`/`0fee536`）与本地 `c855210` 只改工具/证据/文档，**不改应用代码**，因此该 ZIP 就是本轮全部应用改动的发行实体。
+- 仍明确 BLOCKED：本机（Linux）无法执行 Windows `ffmpeg.exe`（仅做字节/PE 核验，执行由 Windows CI 的 `--run` 覆盖）、物理听感、DPAPI/设备切换、Windows 实机内存，以及 pinned Android 同内容像素/动态帧。证据：`evidence/windows-ci-a0c8b79/`（`run.json`、`windows-tests.json`、`download-verification.json`、`download-pinned-resources.json`、`download-decoder-bundle.json`）。
 
 ### 11. 本地分段抽取去占位
 

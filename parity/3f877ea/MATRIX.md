@@ -46,6 +46,22 @@ Historical `parity/94e17c9/` evidence is reference material, not new acceptance.
 ## Evidence levels
 
 Latest independently verified Windows distribution:
+**a0c8b79a59a54c5e963a0b8c15496ac7f6de9ce0**, run **38716111866 / SUCCESS**,
+artifacts **11963836414 / 11964570793**. **230 tests / 47 suites / zero failures,
+errors or skipped** (aggregated from the downloaded verification artifact's XML).
+Delivery ZIP **320,739,222 bytes**, SHA-256
+`23774c898aad1f761e1eb413bad41764c8d1e21e6ab07a2a781e470ee5651d02`.
+Independently re-downloaded and verified with `tools/verify_delivery_artifact.py`:
+357 ZIP entries CRC-pass, stamped revision equals the run head SHA, pinned resources
+and packaged native decoder bytes/PE magic pass. This distribution adds the real
+song-action sheet with native favorite state and Local playlist writes, background
+sleep timer, process-level ListenTogether protocol runtime, real acoustic recognition
+(pinned AFP JS/WASM over microphone/file PCM), native Kuwo/Bilibili/Apple catalogs,
+system-font consumer and a real local-segment decoder. See `COMPLETION_LOG.md`.
+Physical Windows execution/audible/DPAPI/device behaviour, whole-process user-memory
+plateau and pinned Android pixel/motion acceptance remain pending/blocked.
+
+Previously latest independently verified Windows distribution:
 **f3e3a83d63d0d12c36723aee974ebf3dc2a530d1**, run **38653215039 / SUCCESS**,
 artifact **11936083521**. **206 tests / 40 suites / zero failures**, all 17 Skyline
 keys + four awake scopes/source reset / 342 assertions, prior 60 lyrics keys /

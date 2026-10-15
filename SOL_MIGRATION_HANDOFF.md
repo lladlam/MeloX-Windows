@@ -27,8 +27,17 @@ preserves the timer preference while stopping its AWT worker. Complete evidence 
 `evidence/song-actions-local/`.
 
 Windows CI for that batch: run **38702385103 / SUCCESS** at `38b6756`, including the new song-actions
-controls/reload gate. A later provider-catalog batch (Kuwo/Bilibili/Apple REST) is committed locally
-and still awaits its own CI run.
+controls/reload gate. The follow-up provider-catalog batch then passed run **38710418775 / SUCCESS**
+at `5b4e980` (Kuwo/Bilibili/Apple REST), and the memory-replay batch passed run **38716111866 /
+SUCCESS** at `a0c8b79` with **230 tests / 47 suites / zero failures**.
+
+Current independently verified distribution: **`a0c8b79`**, run **38716111866**, delivery ZIP
+**320,739,222 bytes**, SHA-256
+`23774c898aad1f761e1eb413bad41764c8d1e21e6ab07a2a781e470ee5651d02`. The ZIP was re-downloaded
+outside CI and re-verified end to end (`evidence/windows-ci-a0c8b79/`): CRC of all 357 entries,
+stamped revision, pinned resource bytes and packaged native decoder bytes/PE magic. Commits after
+`a0c8b79` (`ccbdd59`, `a3c16ff`, `0fee536`, `c855210`) touch only tools, evidence and docs, so that
+ZIP remains the shipping application binary for this round.
 
 Remaining confirmed gaps include the desktop Apple MusicKit full-song backend (Apple REST catalog is
 wired; Playback capability is intentionally not advertised), legacy segment/prefetch
