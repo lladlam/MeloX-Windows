@@ -27,7 +27,7 @@
 | Android 同内容截图/动态帧 | 缺参考证据 | 不用桌面自比对冒充验收 |
 | Bilibili / Kuwo / Apple Music 原生 provider | 目录/协议已接，live 账号待验 | Kuwo 搜索/播放/歌词/歌单；Bilibili WBI 搜索/收藏夹/DASH；Apple 官方 REST 目录/资料库/歌词。Apple 全曲明确不声明 Playback 能力 |
 | 播放预取 / 独立本地音频分段抽取 | 预取仍缺；分段抽取已接真实解码 | `MeloXMediaPrefetcher` 仍 no-op（无 Media3 桌面等价物，待接真实预解码或明确禁用）；`LocalAudioSegmentExtractor` 已用打包 FFmpeg 输出真实 8kHz 单声道 PCM，不做静音填充 |
-| 播放后 549→1431MB 持续增长 | 未定位 | 仍需 Windows 复测/长时采样；本轮不继承旧启动内存结果为增长修复 |
+| 播放后 549→1431MB 持续增长 | 已缩小到非 JVM 堆，具体源码未定 | 真实 14 轮播放器释放回放：常驻 247.4→732.3MB（峰值 752.6）；JVM 堆+非堆仅 225.2MB，**未解释原生 +360MB**；Skia font/resource/artwork 缓存都有界；播放器关闭后静置 10s 回收 0MB / 0 个 Skia 对象 |
 
 ## 步骤记录
 
@@ -121,7 +121,8 @@
 - 歌词优先真实 TTML（`TtmlLyricsParser`，无命名空间/解析失败时回落到真实 text 字段）；Apple 的无时间文本保持单个原始行且 `pseudoTimingAllowed=false`，不编造逐字时间。
 - 新增 `AppleMusicProtocolTest` 5 项：token 不进日志、目录原生 ID/preview 元数据但拒绝全曲播放、凭据验证与不完整凭据拒绝、目录身份路径校验、TTML/纯文本/回落/空歌词。
 - 全量 `:shared:desktopTest :desktop:compileKotlinDesktop` **230 tests / 47 suites / 0 failures / 0 errors / 0 skipped，BUILD SUCCESSFUL**。
-- 上一批 Windows CI **`38702385103` SUCCESS**（song actions/reload 回放门禁进入 CI 并通过，22m27s）。Apple/多音源改动尚未跑 CI。
+- 上一批 Windows CI **`38702385103` SUCCESS**（song actions/reload 回放门禁进入 CI 并通过，22m27s）。
+- 多音源批次 Windows CI **`38710418775` SUCCESS**（`5b4e980`，Kuwo/Bilibili/Apple REST 与全部既有门禁通过）。
 
 ### 11. 本地分段抽取去占位
 
@@ -129,3 +130,15 @@
 - 与识别客户端共用取消通道：协程取消/关闭客户端会关闭在跑的解码器并中断工作线程；`activeProcesses()` 断言解码进程已退出。
 - `SongRecognitionClient.recognizeLocal` 改为调用该抽取器，固定 pinned 的 9 秒片段上限与中点起始；发送给 match 的 duration 由真实样本数四舍五入得出，不写死、不虚报。
 - 新增回归：真实 3 秒 WAV → 23,000–24,100 个 8kHz 样本、含非静音信号、URI 与绝对路径两种解析结果一致、解码进程归零；全量 **230 tests / 47 suites / 0 failures**。
+
+### 12. 播放后内存增长：定位到非 JVM 堆
+
+- 工具：`tools/capture_playback_memory.py`（真实网易曲 `3334421408`、生产 UI、真实 FFmpeg PCM、`--skia-stats`、强制 GC 关闭）。新增 `--analyze OUTPUT` 可在不重跑回放的前提下重建汇总。
+- 第一轮失败不是播放缺陷：歌词页控件在源端 5 秒 `lyrics_interface_auto_hide_ms` 后隐藏，脚本随后点击的坐标被 reveal 层消费。回放改为 `autohide`（断言 `lyrics-reveal-controls` 出现）→ `reveal`（断言 `player-controls` 恢复）→ 再点播放。
+- 第二轮跑完 68 场景后停在 `position == duration == 177435ms`，即歌曲正常播完；据此把周期数收敛到 14（每轮约 7.7 秒：settle + PNG 场景证据），保证收尾的“暂停 → 关闭 → 静置 10 秒”采样能完成。
+- 最终 PASS：**57 scenes / 14 player-disposal cycles**，真实 23.0MB 解码 PCM，结束时 `position=149191ms / duration=177435ms / is_playing=false`（真暂停，非曲终）。`verify_lyrics_layout` 与 `verify_online_playback_capture` 双双 PASS。
+- 增长数据（同一进程、`-Xmx1g -XX:+UseSerialGC`）：常驻 **247.4 → 732.3 MB**（峰值 752.6，+484.9）；JVM heap used +78.5、heap committed 终值 122.4、非堆 +43.0 → **JVM 可解释部分终值 225.2 MB**；**未解释的原生内存终值 507.2 MB、净增 +360.0 MB**，占增长主体。
+- 排除项（均有界）：Skia font cache 仅 +1.7MB、Skia resource cache 0、封面缓存 5.2MB / 64MB 预算、direct buffer 仅 +74KB、线程 22→25。
+- 主要嫌疑（Skiko `Stats.allocated` 存活计数）：`Paint +647`、`RenderNode +643`、`ManagedString +489`、`Paragraph +489`、`TextStyle +523`、`Font +469`、`ImageFilter +174`、`Shader +93`、`ParagraphBuilder/ParagraphStyle +141`。基线 64/80/82（Paragraph/Paint/RenderNode）→ 收尾 553/727/725。
+- 关键判别：播放器关闭后**再静置 10 秒**（`settled` 场景）常驻变化 **0.0MB**，Paragraph/Paint/RenderNode 变化 **0/0/0** → 不是“等 GC/引用清理”的假象，对象及其原生内存确实仍被持有。
+- 结论边界：这只证明增长发生在 JVM 堆之外并集中在 UI 文本/绘制/渲染节点对象上；尚未指认具体持有者（候选：歌词行布局与模糊/遮罩对象在播放器关闭后仍被引用）。未在 Windows 实机复测，未继承启动内存结果作为修复证据。证据：`evidence/playback-memory-v3/`（汇总、参数、两份独立校验，不提交图片与 PCM）。
