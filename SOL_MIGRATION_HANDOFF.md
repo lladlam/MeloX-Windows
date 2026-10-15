@@ -40,8 +40,8 @@ stamped revision, pinned resource bytes and packaged native decoder bytes/PE mag
 ZIP remains the shipping application binary for this round.
 
 Remaining confirmed gaps include the desktop Apple MusicKit full-song backend (Apple REST catalog is
-wired; Playback capability is intentionally not advertised), legacy segment/prefetch
-stubs, several OS settings/login flows, full Search/Library/collection animation acceptance,
+wired; Playback capability is intentionally not advertised), several OS settings/login
+flows, full Search/Library/collection animation acceptance,
 live provider accounts/two-user Together/microphone, long-run Windows memory growth and same-content
 pinned Android frames (0 connected devices). No whole-app 1:1 completion or new release is claimed.
 

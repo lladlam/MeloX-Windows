@@ -26,7 +26,7 @@
 | Recognition 原有空实现 | 已替换，验证中 | Java Sound 麦克风/FFmpeg 本地 PCM → pinned JS/WASM → 真实 match API |
 | Android 同内容截图/动态帧 | 缺参考证据 | 不用桌面自比对冒充验收 |
 | Bilibili / Kuwo / Apple Music 原生 provider | 目录/协议已接，live 账号待验 | Kuwo 搜索/播放/歌词/歌单；Bilibili WBI 搜索/收藏夹/DASH；Apple 官方 REST 目录/资料库/歌词。Apple 全曲明确不声明 Playback 能力 |
-| 播放预取 / 独立本地音频分段抽取 | 预取仍缺；分段抽取已接真实解码 | `MeloXMediaPrefetcher` 仍 no-op（无 Media3 桌面等价物，待接真实预解码或明确禁用）；`LocalAudioSegmentExtractor` 已用打包 FFmpeg 输出真实 8kHz 单声道 PCM，不做静音填充 |
+| 播放预取 / 独立本地音频分段抽取 | 预取死代码已删除；分段抽取已接真实解码 | 删除 `MeloXMediaPrefetcher`：它会创建**空占位文件**并返回，却全仓库无调用方，属于可产生假数据的陷阱；桌面按需拉取，无 Media3 预取缓存（如将来需要，应实现真实预解码并设上限）。`LocalAudioSegmentExtractor` 已用打包 FFmpeg 输出真实 8kHz 单声道 PCM，不做静音填充 |
 | 播放后 549→1431MB 持续增长 | 已定位为有界原生平台期；未复现无界增长 | 三组对照：播放 vs 暂停 +400.6 / +385.6MB（差 15MB）；含/不含歌词均 +484.9MB；15→51 场景只多 +84MB；长跑 194s 已在 ~795MB 平台；关闭播放器后静置仍 +18~53MB（JVM 堆同时被回收）|
 
 ## 步骤记录
@@ -132,6 +132,13 @@
 - **当前独立核验通过的发行**：run **38716111866 / SUCCESS**，head **`a0c8b79a59a54c5e963a0b8c15496ac7f6de9ce0`**；发行 ZIP **320,739,222 bytes**，SHA-256 `23774c898aad1f761e1eb413bad41764c8d1e21e6ab07a2a781e470ee5651d02`；357 个 ZIP 条目 CRC 全通过；`build-info` 版本号与 run head 一致；pinned 资源与打包解码器校验 PASS；Windows 侧 230/47/0。
 - 说明：`a0c8b79` 之后的 3 个提交（`ccbdd59`/`a3c16ff`/`0fee536`）与本地 `c855210` 只改工具/证据/文档，**不改应用代码**，因此该 ZIP 就是本轮全部应用改动的发行实体。
 - 仍明确 BLOCKED：本机（Linux）无法执行 Windows `ffmpeg.exe`（仅做字节/PE 核验，执行由 Windows CI 的 `--run` 覆盖）、物理听感、DPAPI/设备切换、Windows 实机内存，以及 pinned Android 同内容像素/动态帧。证据：`evidence/windows-ci-a0c8b79/`（`run.json`、`windows-tests.json`、`download-verification.json`、`download-pinned-resources.json`、`download-decoder-bundle.json`）。
+
+### 17. 删除会产生假数据的预取死代码
+
+- 复查空实现时发现 `shared/.../playback/MeloXMediaPrefetcher.kt`：`materialize()` 会**创建空文件并返回**（注释自述“create an empty placeholder so callers don't crash”），一旦被接上就会把空文件当成音频交给分析管线，属于典型的“看起来有功能、实际是假数据”。
+- 全仓库检索确认**没有任何调用方**（`MeloXMediaPrefetcher(` / `.materialize(` 零命中），因此直接删除该文件，而不是把它留在树里当陷阱。
+- 删除后全量 `:shared:desktopTest :desktop:compileKotlinDesktop` **230 tests / 47 suites / 0 failures，BUILD SUCCESSFUL**。
+- 桌面目前不做 Media3 式预取缓存（按需拉取）；若将来需要，应实现真实预解码并设上限/淘汰，而不是占位文件。
 
 ### 11. 本地分段抽取去占位
 
