@@ -23,15 +23,22 @@ fun main(args: Array<String>) {
     val manifest = JSONObject(manifestFile.readText(Charsets.UTF_8))
     check(manifest.getString("pinned_android") == "3f877eaffe30c82eb6d24eb3647702f5bc554dd3")
     val pinnedTokens = manifest.getJSONObject("action_icon_tokens")
+    // Route leading icons plus the tab-layout ordering arrows, which pinned
+    // Android also draws with SF Symbols rather than text arrows.
     val routeTokens = manifest.getJSONArray("settings_route_symbols")
+    val required = buildList {
+        for (index in 0 until routeTokens.length()) add(routeTokens.getString(index))
+        add("↑")
+        add("↓")
+    }
+    check(required.all { pinnedTokens.has(it) }) { "Pinned Android has no icon token for a settings control" }
     val samples = JSONArray()
     val shaping = ShapingOptions.DEFAULT.withFeatures(arrayOf(FontFeature("ss16", 1)))
     val font = Font(meloXSfTypeface(androidx.compose.ui.text.font.FontWeight.Normal), 22f).apply {
         isSubpixel = true
     }
     try {
-        for (index in 0 until routeTokens.length()) {
-            val token = routeTokens.getString(index)
+        for (token in required) {
             val symbol = meloXActionIconSymbol(token)
             val expected = pinnedTokens.getString(token)
             check(symbol.sfName == expected) {

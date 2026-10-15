@@ -157,7 +157,7 @@ jobs:
             desktop/build/verification/settings-icons.json
             desktop/build/parity/settings-*/*.json
             desktop/build/parity/settings-*/gradle.log
-            desktop/build/parity/settings-*/arguments.txt
+            desktop/build/parity/settings-*/*.txt
             desktop/build/parity/startup-memory/*.json
             desktop/build/verification/artwork-memory/*.json
             desktop/build/parity/lyrics-controls/*.json

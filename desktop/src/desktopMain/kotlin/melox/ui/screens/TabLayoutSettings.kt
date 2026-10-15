@@ -117,13 +117,15 @@ private fun LayoutOrderRows(key: String, order: List<String>) {
                 listOf(-1 to "↑", 1 to "↓").forEach { (direction, label) ->
                     val target = index + direction
                     val enabled = target in order.indices
-                    Text(label, Modifier.testTag("layout-$key-$page-${if (direction < 0) "up" else "down"}")
+                    // Pinned Android draws these with SF Symbols, not text arrows.
+                    MeloXActionIcon(label, Modifier.size(18.dp)
+                        .testTag("layout-$key-$page-${if (direction < 0) "up" else "down"}")
                         .semantics { contentDescription = "${layoutPageTitle(page)}${if (direction < 0) "上移" else "下移"}" }
                         .clickable(enabled = enabled, role = Role.Button) {
                             val moved = order.toMutableList().apply { add(target, removeAt(index)) }
                             MeloXSettingsPreferences.setString(key, moved.joinToString(","))
-                        }.padding(horizontal = 12.dp, vertical = 10.dp),
-                        color = MaterialTheme.colorScheme.primary.copy(alpha = if (enabled) 1f else .25f))
+                        }.padding(10.dp),
+                        MaterialTheme.colorScheme.primary.copy(alpha = if (enabled) 1f else .25f))
                 }
             }
     }

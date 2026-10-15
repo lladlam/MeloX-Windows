@@ -139,6 +139,13 @@ elif mode == 'controls':
     reveal('storage-clear-all'); add('confirm-clear', 'tap@storage-clear-all', ['tag:settings-confirmation'])
     add('cancel-clear', 'tap@settings-confirm-cancel', ['absent:settings-confirmation'])
     add('back-storage', 'escape')
+    open_route('TabLayout')
+    reveal('layout-tab_order')
+    add('tab-order-before', 'wait@200', ['state:layout-tab_order:Home>Explore>Library>Podcasts>Downloads>Cloud>Settings'])
+    reveal('layout-tab_order-Podcasts-up')
+    add('tab-order-up', 'tap@layout-tab_order-Podcasts-up',
+        ['state:layout-tab_order:Home>Explore>Podcasts>Library>Downloads>Cloud>Settings'])
+    add('back-tabs', 'escape')
     add('reload', 'reload-settings', ['runtime:flowingLightSpeed:2.0', 'runtime:playlistSearchBarHidden:true', 'runtime:musicArea:日本'])
 else:
     expected['00-settings'] = ['runtime:flowingLightSpeed:2.0', 'runtime:flowingLightSaturation:2.0', 'runtime:flowingLightBrightness:1.6',
@@ -150,9 +157,15 @@ else:
     reveal('setting-library_playlist_show_artwork')
     add('persisted-library', 'wait@200', ['checked:setting-library_playlist_show_artwork'])
 
+# Non-ASCII pinned labels never cross the process boundary as argv: Windows
+# CreateProcess encodes the child command line with sun.jnu.encoding.
+steps_file = output / 'steps.txt'
+expect_file = output / 'expect.txt'
+steps_file.write_text('\n'.join(steps) + '\n', encoding='utf-8')
+expect_file.write_text('\n'.join(name + '=' + ','.join(checks) for name, checks in expected.items()) + '\n', encoding='utf-8')
 args = ['--locale', locale, '--source', 'Local', '--start-tab', 'Settings', '--theme', theme, '--width', width, '--height', height,
-    '--output', str(output), '--wait-ms', '180', '--startup-wait-ms', '1200', '--steps', ';'.join(steps),
-    '--expect', ';'.join(name + '=' + ','.join(checks) for name, checks in expected.items())]
+    '--output', str(output), '--wait-ms', '180', '--startup-wait-ms', '1200',
+    '--steps-file', str(steps_file), '--expect-file', str(expect_file)]
 argfile = output / 'arguments.txt'
 argfile.write_text('\n'.join(args) + '\n', encoding='utf-8')
 (output / 'control-inputs.json').write_text(json.dumps(changed, indent=2) + '\n', encoding='utf-8')

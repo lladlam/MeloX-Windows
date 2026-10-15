@@ -47,6 +47,20 @@ and the cold-start audit share one flag set, moving first-frame resident **218.4
 heap committed **38.8 MB → 19.3 MB**. This is startup-only and does **not** resolve the post-playback
 549→1431 MB growth, which is still being located. See `parity/3f877ea/SETTINGS_PAGES.md`.
 
+Follow-up: settings icons are pinned SF Symbols drawn from the bundled `sf_pro_subset.ttf`. Two
+desktop deviations were corrected against pinned Android: the `✉` Messages token now resolves to SF
+`paperplane` (it was the `message` bubble) and the TabLayout `↑`/`↓` order controls are SF
+`arrow.up.circle.fill` / `arrow.down.circle` instead of text arrows; an unmapped token now fails fast
+instead of drawing a question mark. `:desktop:auditSettingsIcons` compares all 19 route tokens plus
+the arrows with the token→SF-name table exported from the pinned Android Git tree and checks each
+glyph really has ink (18 tokens PASS).
+
+The Windows CI failure of the four-locale replay was not a UI defect: `CreateProcess` encodes the
+child command line with `sun.jnu.encoding`, so pinned CJK labels arrived in the harness as `??`.
+Steps and assertions now travel through UTF-8 `steps.txt`/`expect.txt` files and the harness takes
+`--steps-file`/`--expect-file`, leaving argv ASCII-only. Evidence upload now includes those files and
+the harness log tail is mirrored into the CI step output on failure.
+
 Still BLOCKED: pinned Android pixel/motion comparison (no pinned Android screenshots/frames here), real
 Windows standby/DPAPI/SMTC/device switching, physical audible acceptance, and the whole-process
 native renderer/text/allocator growth.

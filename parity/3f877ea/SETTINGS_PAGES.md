@@ -60,6 +60,20 @@
 
 Developer 页：pinned release 构建不含 DEBUG-only 控件，因此按源保持空内容。
 
+## 3b. 设置页图标 = Android 的 SF Symbols
+
+* 根页/子页所有行首图标都走 pinned `fonts/sf_pro_subset.ttf`（与 Android 同一份字节），用原生 Skia `TextLine` + `ss16` 绘制；
+  General/底栏齿轮与 Android 一样替换为品牌矢量 `ic_melox_brand_gear.svg`。
+* token → SF Symbol 的映射抽成 `meloXActionIconSymbol()`，分支顺序与 pinned Android `MeloXActionIcon` 的 `when` 一致（首个匹配生效）。
+* 修正两处与 Android 不一致的地方：
+  * `✉`（消息）Android 是 SF **paperplane**，Windows 之前画成 `message` 气泡 → 已改为 paperplane；
+  * TabLayout 顺序的 `↑`/`↓` Android 用 SF `arrow.up.circle.fill` / `arrow.down.circle`，Windows 之前是纯文本箭头 → 已改为 SF 图标。
+* 未映射 token 由原来的“静默画问号”改为**直接报错**（与 Android 行为一致），杜绝“看着像图标但其实是错的”。
+* 新增 `:desktop:auditSettingsIcons`：导出器从 pinned Android Git 树导出 token→SF 名称表（连同源 SHA），
+  审计对 19 个根路由 token + TabLayout 箭头逐个校验 **SF 名称一致**且**在 pinned 字体里确实有墨迹**（不是豆腐块/空字形），
+  CI 已接入。当前 **18 个 token 全部通过**。
+* controls 回放新增物理点击 `↑` 箭头并断言 `tab_order` 状态改变，图标改动由真实输入覆盖。
+
 ## 4. 真实消费者
 
 所有仍可操作的开关/滑杆/下拉都写入 canonical key，并由既有消费者立即生效，例如：
@@ -79,7 +93,10 @@ Developer 页：pinned release 构建不含 DEBUG-only 控件，因此按源保�
     EQ 开启+Custom+第 10 段、AutoMix 模式与时长、下载歌词、清理确认/取消）；
   * **reload**：**独立 JVM** 重新读取同一 home，校验运行时与偏好确实持久化且条件控件按新状态显隐。
 * `tools/verify_settings_pages_capture.py` 汇总为 `desktop/build/verification/settings-pages.json`：
-  **6 captures / 395 scenes / 316 assertions**（4 locale 路由 + controls + 独立 JVM reload）。
+  **6 captures / 402 scenes / 319 assertions**（4 locale 路由 + controls + 独立 JVM reload）。
+* **Windows 命令行编码**：`CreateProcess` 按 `sun.jnu.encoding` 编码子进程 argv，pinned 中文/日文标签会变成 `??`。
+  因此 steps 与断言改由 UTF-8 文件（`steps.txt` / `expect.txt`）传给 harness，argv 只保留 ASCII 路径与尺寸；
+  harness 端新增 `--steps-file` / `--expect-file`。这是 Windows CI 上 zh-CN 路由回放失败的根因。
 * 旧回放适配新页头后重新执行：60-key 歌词控件 + 独立 JVM reload（PASS，全部由指针输入改变）、
   17-key Skyline 控件 + 4 种亮屏范围 + 精确重置 + 2 次独立 JVM 重载（PASS）。
 * `:shared:desktopTest` **208 tests / 40 suites / 0 failures / 0 errors**（新增：恢复队列延迟准备、Local 队列元数据持久化）；

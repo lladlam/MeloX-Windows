@@ -44,12 +44,21 @@ fun main(args: Array<String>) = runBlocking {
         melox.player.AudioPlayer::class.java.getDeclaredField("outputLineFactory").apply { isAccessible = true }
             .set(null, { pcmOutput.open() })
     }
-    val steps = option("--steps", "").split(';').filter { it.isNotBlank() }
+    // Windows CreateProcess encodes the child command line with sun.jnu.encoding,
+    // so pinned non-ASCII labels must travel through UTF-8 files, not argv.
+    val stepsFile = option("--steps-file", "")
+    val steps = if (stepsFile.isNotBlank()) File(stepsFile).readLines(Charsets.UTF_8).filter { it.isNotBlank() }
+        else option("--steps", "").split(';').filter { it.isNotBlank() }
     val frameOffsets = option("--frames-ms", "").split(',').filter { it.isNotBlank() }.map { it.toLong() }
     require(frameOffsets.all { it >= 0 } && frameOffsets == frameOffsets.distinct().sorted())
     val frameEvidence = JSONArray()
     val sceneEvidence = JSONArray()
-    val expectations = option("--expect", "").split(';').filter(String::isNotBlank).associate { entry ->
+    val expectations = if (option("--expect-file", "").isNotBlank()) {
+        File(option("--expect-file", "")).readLines(Charsets.UTF_8).filter(String::isNotBlank).associate { entry ->
+            val (step, assertions) = entry.split('=', limit = 2)
+            step to assertions.split(',')
+        }
+    } else option("--expect", "").split(';').filter(String::isNotBlank).associate { entry ->
         val (step, assertions) = entry.split('=', limit = 2)
         step to assertions.split(',')
     }
