@@ -32,20 +32,21 @@ def main():
     # This committed manifest is from the pure pinned export audit, not from the
     # platform checkout being inspected. Intentional string additions require a
     # new pure-source audit/manifest; platform line-ending conversion cannot pass.
-    baseline = json.loads((repo / 'parity/3f877ea/evidence/search-player-validation.json').read_text())
+    baseline = json.loads((repo / 'parity/3f877ea/evidence/search-player-validation.json').read_text(encoding='utf-8'))
     expected = dict(baseline['packaged_legal_sha256'])
     strings = 'parity/pinned-settings-strings.properties'
     expected[strings] = baseline['source_sha256']['desktop/src/main/resources/' + strings]
-    font = json.loads((repo / 'parity/3f877ea/evidence/lyrics-font-source-audit.json').read_text())
+    font = json.loads((repo / 'parity/3f877ea/evidence/lyrics-font-source-audit.json').read_text(encoding='utf-8'))
     assert font['pinned_android'] == baseline['pinned_android'] and font['verified_against_pure_git_blob']
     expected[font['resource']] = font['sha256']
-    lyrics = json.loads((repo / 'parity/3f877ea/evidence/lyrics-settings-source-audit.json').read_text())
+    lyrics = json.loads((repo / 'parity/3f877ea/evidence/lyrics-settings-source-audit.json').read_text(encoding='utf-8'))
     assert lyrics['pinned_android'] == baseline['pinned_android'] and lyrics['verified_against_pure_export']
     expected[lyrics['resource']] = lyrics['sha256']
-    skyline = json.loads((repo / 'parity/3f877ea/evidence/skyline-settings-source-audit.json').read_text())
+    skyline = json.loads((repo / 'parity/3f877ea/evidence/skyline-settings-source-audit.json').read_text(encoding='utf-8'))
     assert skyline['pinned_android'] == baseline['pinned_android'] and skyline['verified_against_pure_export']
     expected[skyline['resource']] = skyline['sha256']
-    pages = json.loads((repo / 'parity/3f877ea/evidence/settings-pages-source-audit.json').read_text())
+    # UTF-8 manifest: the row symbols are non-ASCII and cp1252 cannot decode them on Windows runners.
+    pages = json.loads((repo / 'parity/3f877ea/evidence/settings-pages-source-audit.json').read_text(encoding='utf-8'))
     assert pages['pinned_android'] == baseline['pinned_android'] and pages['verified_against_pure_export']
     expected.update(pages['resource_sha256'])
     records = []
@@ -62,7 +63,7 @@ def main():
                   'status': 'PASSED' if all(record['verified'] for record in records) else 'FAILED',
                   'resources': records}
         args.output.parent.mkdir(parents=True, exist_ok=True)
-        args.output.write_text(json.dumps(result, indent=2) + '\n')
+        args.output.write_text(json.dumps(result, indent=2, ensure_ascii=False) + '\n', encoding='utf-8')
         assert result['status'] == 'PASSED', 'Pinned resource bytes changed: ' + ', '.join(record['resource'] for record in records if not record['verified'])
         print(f'PASS: {len(expected)} pinned resources match exact source bytes, including Android MiLan Pro')
     finally:
