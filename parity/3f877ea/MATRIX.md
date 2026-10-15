@@ -46,6 +46,20 @@ Historical `parity/94e17c9/` evidence is reference material, not new acceptance.
 ## Evidence levels
 
 Latest independently verified Windows distribution:
+**d4fb9de70acc5849b7220de157cd8084eb965b30**, run **38721634269 / SUCCESS**,
+artifacts **11967094846 / 11967064773**. **230 tests / 47 suites / zero failures,
+errors or skipped** (aggregated from the downloaded verification artifact's XML by
+`tools/record_ci_evidence.py`). Delivery ZIP **320,734,877 bytes**, SHA-256
+`3499f59b2dfcdd9d0a6f982093e378a1382214b52209fd20925b0f2646e3096a`.
+Independently re-downloaded and verified with `tools/verify_delivery_artifact.py`:
+357 ZIP entries CRC-pass, stamped revision equals the run head SHA, pinned resources
+and packaged native decoder bytes/PE magic pass. Compared with the previous verified
+delivery, this one additionally removes the dead `MeloXMediaPrefetcher` that returned
+fabricated empty audio files. Evidence: `evidence/windows-ci-d4fb9de/`.
+Physical Windows execution/audible/DPAPI/device behaviour, whole-process user-memory
+plateau and pinned Android pixel/motion acceptance remain pending/blocked.
+
+Previously latest independently verified Windows distribution:
 **a0c8b79a59a54c5e963a0b8c15496ac7f6de9ce0**, run **38716111866 / SUCCESS**,
 artifacts **11963836414 / 11964570793**. **230 tests / 47 suites / zero failures,
 errors or skipped** (aggregated from the downloaded verification artifact's XML).
@@ -61,7 +75,7 @@ system-font consumer and a real local-segment decoder. See `COMPLETION_LOG.md`.
 Physical Windows execution/audible/DPAPI/device behaviour, whole-process user-memory
 plateau and pinned Android pixel/motion acceptance remain pending/blocked.
 
-Previously latest independently verified Windows distribution:
+Earlier independently verified Windows distribution:
 **f3e3a83d63d0d12c36723aee974ebf3dc2a530d1**, run **38653215039 / SUCCESS**,
 artifact **11936083521**. **206 tests / 40 suites / zero failures**, all 17 Skyline
 keys + four awake scopes/source reset / 342 assertions, prior 60 lyrics keys /

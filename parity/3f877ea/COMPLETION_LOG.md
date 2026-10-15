@@ -159,6 +159,15 @@
 
 结论：这批禁用项目前都不是“存开关但没消费者”，下一轮按 B→A 顺序逐个接真实消费者后再启用。
 
+### 19. 最终发行独立核验（取代第 16 步的 a0c8b79）
+
+- 删除预取死代码后重新出包：Windows CI **`38721634269` / SUCCESS**（25m37s，head `d4fb9de70acc5849b7220de157cd8084eb965b30`）。
+- 独立下载（`TMPDIR` 指向主盘）+ `tools/verify_delivery_artifact.py`：发行 ZIP **320,734,877 bytes**，SHA-256 `3499f59b2dfcdd9d0a6f982093e378a1382214b52209fd20925b0f2646e3096a`；357 条目 CRC 全通过；`build-info` 版本号 == run head SHA；pinned 资源与打包 FFmpeg 字节/PE x64 magic PASS。
+- `tools/record_ci_evidence.py` 直接读取下载到的 47 份 Windows `TEST-*.xml`：**230 tests / 47 suites / 0 failures / 0 errors / 0 skipped**。
+- 与上一份 `a0c8b79` 发行的唯一应用代码差异是删除空占位预取器；其余差异均为工具/证据/文档。
+- 证据：`evidence/windows-ci-d4fb9de/`（`run.json`、`windows-tests.json`、`download-verification.json`、`download-pinned-resources.json`、`download-decoder-bundle.json`）。
+- 仍 BLOCKED：本机执行 Windows `ffmpeg.exe`、物理听感、DPAPI/设备切换、Windows 实机内存平台值、pinned Android 同内容像素/动态帧。
+
 ### 11. 本地分段抽取去占位
 
 - `LocalAudioSegmentExtractor` 删除“返回 `FloatArray(0)`”占位，改为真实 FFmpeg PCM 解码：输入 44.1kHz 立体声，混为单声道，线性重采样到 8kHz，输出长度只由实际解码帧数决定，**不补静音凑长度**。

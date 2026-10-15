@@ -31,13 +31,14 @@ controls/reload gate. The follow-up provider-catalog batch then passed run **387
 at `5b4e980` (Kuwo/Bilibili/Apple REST), and the memory-replay batch passed run **38716111866 /
 SUCCESS** at `a0c8b79` with **230 tests / 47 suites / zero failures**.
 
-Current independently verified distribution: **`a0c8b79`**, run **38716111866**, delivery ZIP
-**320,739,222 bytes**, SHA-256
-`23774c898aad1f761e1eb413bad41764c8d1e21e6ab07a2a781e470ee5651d02`. The ZIP was re-downloaded
-outside CI and re-verified end to end (`evidence/windows-ci-a0c8b79/`): CRC of all 357 entries,
-stamped revision, pinned resource bytes and packaged native decoder bytes/PE magic. Commits after
-`a0c8b79` (`ccbdd59`, `a3c16ff`, `0fee536`, `c855210`) touch only tools, evidence and docs, so that
-ZIP remains the shipping application binary for this round.
+Current independently verified distribution: **`d4fb9de`**, run **38721634269 / SUCCESS**, delivery ZIP
+**320,734,877 bytes**, SHA-256
+`3499f59b2dfcdd9d0a6f982093e378a1382214b52209fd20925b0f2646e3096a`. The ZIP was re-downloaded
+outside CI and re-verified end to end (`evidence/windows-ci-d4fb9de/`): CRC of all 357 entries,
+stamped revision, pinned resource bytes and packaged native decoder bytes/PE magic; the Windows
+test totals (230/47/0) were re-aggregated from the downloaded `TEST-*.xml` reports rather than
+taken from CI's own summary. The previous verified point `a0c8b79` (run 38716111866) differs only
+by the dead-prefetcher removal and tooling/docs.
 
 Remaining confirmed gaps include the desktop Apple MusicKit full-song backend (Apple REST catalog is
 wired; Playback capability is intentionally not advertised), several OS settings/login
