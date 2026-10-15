@@ -46,6 +46,21 @@ Historical `parity/94e17c9/` evidence is reference material, not new acceptance.
 ## Evidence levels
 
 Latest independently verified Windows distribution:
+**1f25501fb0eb21f336d6de5426a9fe5a3ffb5383**, run **38732079740 / SUCCESS**,
+artifacts **11971915297 / 11971800398**. **232 tests / 48 suites / zero failures,
+errors or skipped** (re-aggregated from the downloaded verification artifact's XML).
+Delivery ZIP **320,738,222 bytes**, SHA-256
+`58f7f6006e604667811c30c9723273765046b7a286b64a358c6dd3ede8c40bd0`.
+Independently re-downloaded and verified with `tools/verify_delivery_artifact.py`:
+357 ZIP entries CRC-pass, stamped revision equals the run head SHA, pinned resources
+and packaged native decoder bytes/PE magic pass. On top of the previous verified
+delivery this adds the real `playback_remember_last_song` consumer (single-song
+fallback, only when queue persistence is off) and its enabled settings row.
+Evidence: `evidence/windows-ci-1f25501/`.
+Physical Windows execution/audible/DPAPI/device behaviour, whole-process user-memory
+plateau and pinned Android pixel/motion acceptance remain pending/blocked.
+
+Previously latest independently verified Windows distribution:
 **d4fb9de70acc5849b7220de157cd8084eb965b30**, run **38721634269 / SUCCESS**,
 artifacts **11967094846 / 11967064773**. **230 tests / 47 suites / zero failures,
 errors or skipped** (aggregated from the downloaded verification artifact's XML by
@@ -59,7 +74,7 @@ fabricated empty audio files. Evidence: `evidence/windows-ci-d4fb9de/`.
 Physical Windows execution/audible/DPAPI/device behaviour, whole-process user-memory
 plateau and pinned Android pixel/motion acceptance remain pending/blocked.
 
-Previously latest independently verified Windows distribution:
+Earlier independently verified Windows distribution:
 **a0c8b79a59a54c5e963a0b8c15496ac7f6de9ce0**, run **38716111866 / SUCCESS**,
 artifacts **11963836414 / 11964570793**. **230 tests / 47 suites / zero failures,
 errors or skipped** (aggregated from the downloaded verification artifact's XML).

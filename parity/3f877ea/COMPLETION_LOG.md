@@ -178,6 +178,14 @@
 - 期间修掉一个真实回归：把 `id==0` 当无效会丢掉 provider 桥接歌曲（测试 `persistedProviderQueue...` 立刻抓到），已保留 0/负 legacy ID 的原行为。
 - 全量 `:shared:desktopTest :desktop:compileKotlinDesktop` **232 tests / 48 suites / 0 failures，BUILD SUCCESSFUL**。
 
+### 21. 最终发行独立核验（1f25501）
+
+- Windows CI **`38732079740` / SUCCESS**（18m12s，head `1f25501fb0eb21f336d6de5426a9fe5a3ffb5383`）。
+- 独立下载 + 核验：发行 ZIP **320,738,222 bytes**，SHA-256 `58f7f6006e604667811c30c9723273765046b7a286b64a358c6dd3ede8c40bd0`；357 条目 CRC 全通过；`build-info` == run head；pinned 资源与打包 FFmpeg 字节/PE PASS。
+- 从下载到的 48 份 Windows `TEST-*.xml` 重新汇总：**232 tests / 48 suites / 0 failures / 0 errors / 0 skipped**（含新增 2 项 last-song 测试）。
+- 相对上一份已核验发行的唯一应用代码差异：新增 `playback_remember_last_song` 真实消费者与启用的设置行。
+- 证据：`evidence/windows-ci-1f25501/`。仍 BLOCKED：Windows 实机执行/听感/DPAPI/设备切换、实机内存平台值、pinned Android 同内容像素与动态帧。
+
 ### 11. 本地分段抽取去占位
 
 - `LocalAudioSegmentExtractor` 删除“返回 `FloatArray(0)`”占位，改为真实 FFmpeg PCM 解码：输入 44.1kHz 立体声，混为单声道，线性重采样到 8kHz，输出长度只由实际解码帧数决定，**不补静音凑长度**。

@@ -31,14 +31,15 @@ controls/reload gate. The follow-up provider-catalog batch then passed run **387
 at `5b4e980` (Kuwo/Bilibili/Apple REST), and the memory-replay batch passed run **38716111866 /
 SUCCESS** at `a0c8b79` with **230 tests / 47 suites / zero failures**.
 
-Current independently verified distribution: **`d4fb9de`**, run **38721634269 / SUCCESS**, delivery ZIP
-**320,734,877 bytes**, SHA-256
-`3499f59b2dfcdd9d0a6f982093e378a1382214b52209fd20925b0f2646e3096a`. The ZIP was re-downloaded
-outside CI and re-verified end to end (`evidence/windows-ci-d4fb9de/`): CRC of all 357 entries,
+Current independently verified distribution: **`1f25501`**, run **38732079740 / SUCCESS**, delivery ZIP
+**320,738,222 bytes**, SHA-256
+`58f7f6006e604667811c30c9723273765046b7a286b64a358c6dd3ede8c40bd0`. The ZIP was re-downloaded
+outside CI and re-verified end to end (`evidence/windows-ci-1f25501/`): CRC of all 357 entries,
 stamped revision, pinned resource bytes and packaged native decoder bytes/PE magic; the Windows
-test totals (230/47/0) were re-aggregated from the downloaded `TEST-*.xml` reports rather than
-taken from CI's own summary. The previous verified point `a0c8b79` (run 38716111866) differs only
-by the dead-prefetcher removal and tooling/docs.
+test totals (**232 / 48 / 0**) were re-aggregated from the downloaded `TEST-*.xml` reports rather than
+taken from CI's own summary. Versus the previous verified point `d4fb9de` this adds the real
+`playback_remember_last_song` consumer (single-song fallback, only when queue persistence is off)
+and enables its settings row.
 
 Remaining confirmed gaps include the desktop Apple MusicKit full-song backend (Apple REST catalog is
 wired; Playback capability is intentionally not advertised), several OS settings/login
