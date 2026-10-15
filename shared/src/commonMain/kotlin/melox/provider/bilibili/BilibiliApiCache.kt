@@ -84,9 +84,15 @@ class BilibiliApiCache private constructor() {
     private fun fileFor(key: String) = File(directory, sha256(key) + ".json")
 
     companion object {
-        const val MaxMemoryEntries = 200
-        const val MixinTtlMs = 5_000L
-        fun shared(): BilibiliApiCache = BilibiliApiCache()
+        val Account = Policy(5 * 60_000L, 30 * 60_000L)
+        val Folders = Policy(2 * 60_000L, 15 * 60_000L)
+        val FolderDetail = Policy(2 * 60_000L, 10 * 60_000L)
+        val View = Policy(6 * 60 * 60_000L, 24 * 60 * 60_000L)
+        val Search = Policy(3 * 60_000L)
+        const val MaxMemoryEntries = 128
+        const val MixinTtlMs = 6 * 60 * 60_000L
+        private val sharedInstance by lazy { BilibiliApiCache() }
+        fun shared(): BilibiliApiCache = sharedInstance
 
         fun cacheKey(scope: String, operation: String, params: Map<String, String>): String =
             "$scope|$operation|" + params.toSortedMap().entries.joinToString("&") { "${it.key}=${it.value}" }

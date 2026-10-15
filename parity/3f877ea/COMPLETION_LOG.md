@@ -100,3 +100,13 @@
 - 两进程都解码真实生成 WAV 并输出非零 PCM；独立读取 PCM 校验帧数字节数/RMS/SHA，归档 `pcm-readback.json`。软件端点仅验证 PCM，不作物理听感成功声明。
 - Windows CI 新增同一 controls/reload 与汇总门禁，上传完整新增回放证据。
 - lifecycle 修正后的全量 `:shared:desktopTest` **221 tests / 44 suites / 0 failures / 0 errors / 0 skipped，BUILD SUCCESSFUL**。
+
+### 9. 剩余原生音源：酷我与 Bilibili
+
+- 歌曲操作功能提交 `0fca73c` 与证据提交 `38b6756` 已推送 main，Windows CI `38702385103` 运行中。
+- 对照 pinned `core/provider/kuwo/KuwoProvider.kt`，移除 Search 空页/Playback Unavailable，占位改为实际 KuwoApiClient、LyricsClient、PlaylistClient 与真实账号摘要，IO 跑在后台；User-Agent 明确标识 MeloX Desktop。
+- 对照 pinned `core/provider/bilibili/BilibiliProvider.kt`，迁移 WBI 搜索、cid 回查、账号/收藏夹/多 P 详情、DASH 质量选择和真实带鉴权头的音频请求；保留 bvid:cid 逻辑身份，替代关联只影响物理解析。
+- Bilibili 缓存恢复源端 policies/128 条上限/6 小时 key TTL 和单例；缓存键按账号、会话修订和 cookie 摘要隔离；-403 时丢弃 key 并真正重取 nav，避免缓存的旧 nav 再导出旧 key。请求完成后检查账号未切换。
+- 新增协议测试：WBI 签名/原始查询/cid、-403 重签/替代关联/质量/鉴权头、收藏夹多 P、API 错误不假装空库；酷我搜索/播放/鉴权歌单调用链。全量编译/回归正在执行。
+- 识曲文件片段修正到 pinned 的最多 9 秒、中点默认起始，避免 12 秒指纹 GET 请求比源端更长。
+- 全量 `:shared:desktopTest :desktop:compileKotlinDesktop` **225 tests / 46 suites / 0 failures，BUILD SUCCESSFUL**。协议测试不代表线上登录/音乐播放成功；这两类 live 证据仍缺。

@@ -44,9 +44,9 @@ class SongRecognitionClient(
         val file = if (uri.startsWith("file:")) File(URI(uri)) else File(uri)
         require(file.isFile) { "本地音频文件不存在" }
         val length = durationMs.takeIf { it > 0 } ?: 30_000L
-        val slice = minOf(12_000L, length).coerceAtLeast(3_000L)
+        val slice = minOf(9_000L, length).coerceAtLeast(1_000L)
         val maximumStart = (length - slice).coerceAtLeast(0L)
-        val start = (segmentStartMs ?: minOf(30_000L, length / 5)).coerceIn(0L, maximumStart)
+        val start = (segmentStartMs ?: maximumStart / 2).coerceIn(0L, maximumStart)
         val samples = cancellableWork {
             FfmpegPcmDecoder(file.canonicalPath, startMs = start, durationMs = slice).use { session ->
                 decoder.set(session)

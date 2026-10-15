@@ -1,27 +1,34 @@
 package melox.provider.kuwo
 
-import melox.music.model.AudioQualityTier
-import melox.music.model.MusicPage
-import melox.music.model.MusicSource
-import melox.music.model.MusicTrack
-import melox.music.model.PlaybackResolution
-import melox.music.provider.MusicCapability
-import melox.music.provider.MusicProvider
-import melox.music.provider.PlaybackCapability
-import melox.music.provider.SearchCapability
+import melox.music.model.*
+import melox.music.provider.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
 
 class KuwoProvider(
-    sessionProvider: () -> KuwoSession = { KuwoSession("", "") },
+    private val sessionProvider: () -> KuwoSession = { KuwoSession("", "") },
     httpClient: OkHttpClient = melox.network.MeloXHttpClient.shared,
-) : MusicProvider, SearchCapability, PlaybackCapability {
+) : MusicProvider, SearchCapability, PlaybackCapability, LyricsCapability, UserLibraryCapability, PlaylistCapability {
     override val source: MusicSource = MusicSource.Kuwo
     override val displayName: String = source.displayName
-    override val capabilities: Set<MusicCapability> = setOf(MusicCapability.Playback)
+    override val capabilities: Set<MusicCapability> = setOf(MusicCapability.Search, MusicCapability.Playback,
+        MusicCapability.Lyrics, MusicCapability.Library, MusicCapability.Playlists)
+
+    private val api = KuwoApiClient(httpClient)
+    private val playlists = KuwoPlaylistClient(sessionProvider, httpClient)
+    private val lyricsClient = KuwoLyricsClient(httpClient)
 
     override suspend fun searchSongs(query: String, page: Int, pageSize: Int): MusicPage<MusicTrack> =
-        MusicPage(emptyList(), page, pageSize, 0)
+        withContext(Dispatchers.IO) { api.searchSongs(query, page, pageSize) }
 
     override suspend fun resolvePlayback(track: MusicTrack, quality: AudioQualityTier): PlaybackResolution =
-        PlaybackResolution.Unavailable("Kuwo provider not yet implemented on desktop")
+        withContext(Dispatchers.IO) { api.resolvePlayback(track, quality) }
+
+    override suspend fun lyrics(track: MusicTrack) = withContext(Dispatchers.IO) { lyricsClient.lyrics(track) }
+    override suspend fun accountSummary(): MusicAccountSummary? = sessionProvider().takeIf(KuwoSession::isLoggedIn)?.let {
+        MusicAccountSummary(source, it.userId, "酷我用户 ${it.userId}", subtitle = "手机号登录")
+    }
+    override suspend fun userPlaylists(page: Int, pageSize: Int) = withContext(Dispatchers.IO) { playlists.userPlaylists(page, pageSize) }
+    override suspend fun playlistDetail(playlist: MusicPlaylistSummary, page: Int, pageSize: Int) = withContext(Dispatchers.IO) { playlists.detail(playlist, page, pageSize) }
 }

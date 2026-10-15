@@ -51,7 +51,7 @@ object MeloXMusicProviders {
             AppleMusicApiClient({ AppleMusicSessionStore.read() }, httpClient),
             BilibiliProvider(
                 { BilibiliSessionStore.read() }, httpClient,
-                { bvid, cid -> BilibiliPlaybackAssociationStore.read(bvid, cid.toLongOrNull() ?: 0L) },
+                BilibiliPlaybackAssociationStore::read,
                 BilibiliApiCache.shared(),
             ),
             JellyfinProvider({ JellyfinSessionStore.read() }, httpClient),
@@ -88,7 +88,7 @@ object MeloXMusicProviders {
             BilibiliProvider(
                 sessionProvider = { BilibiliSessionStore.read() },
                 httpClient = httpClient,
-                associationProvider = { bvid, cid -> BilibiliPlaybackAssociationStore.read(bvid, cid.toLongOrNull() ?: 0L) },
+                associationProvider = BilibiliPlaybackAssociationStore::read,
                 apiCache = BilibiliApiCache.shared(),
             ),
             JellyfinProvider({ JellyfinSessionStore.read() }, httpClient),
