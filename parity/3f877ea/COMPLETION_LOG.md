@@ -153,7 +153,7 @@
 **B. 可落地但缺真实生产端，暂不启用**
 - 剪贴板链接 `general_clipboard_links`：解析器（`NeteaseClipboardLink`、一起听邀请）与消费者（播放/一起听）都已存在，缺的是桌面剪贴板轮询与确认弹窗（源端是启动后一次扫描 + `lastClipboardText` 去重）。
 - 沉浸播放 `immersive_playback`：需要把播放器展开绑定到窗口全屏/无边框状态，需 Windows 实机验收。
-- 记住上次歌曲 `playback_remember_last_song`：队列恢复已存在，需确认该键是否应真正控制恢复行为，避免“开关无效”。
+- 记住上次歌曲 `playback_remember_last_song`：**本轮已接真实消费者**，见第 20 步，已启用开关。
 - Bilibili 歌词/音频对齐 `bilibili_lyric_audio_alignment`：**引擎与存储都在**（`BilibiliLyricAlignment`、`BilibiliPlaybackAssociationStore`，播放解析已消费关联），但桌面**没有任何生产端**写入关联（`searchReplacementCandidates` 无调用方），因此保持禁用是对的。
 - 自动更新检查 `update_auto_check`：桌面无定时器消费者。
 
@@ -167,6 +167,16 @@
 - 与上一份 `a0c8b79` 发行的唯一应用代码差异是删除空占位预取器；其余差异均为工具/证据/文档。
 - 证据：`evidence/windows-ci-d4fb9de/`（`run.json`、`windows-tests.json`、`download-verification.json`、`download-pinned-resources.json`、`download-decoder-bundle.json`）。
 - 仍 BLOCKED：本机执行 Windows `ffmpeg.exe`、物理听感、DPAPI/设备切换、Windows 实机内存平台值、pinned Android 同内容像素/动态帧。
+
+### 20. 记住上次歌曲：接真实消费者并启用开关
+
+- 真源：`ui/player/MeloXPlayerUi.kt:291`（每次状态更新时保存当前曲目）与 `:482`（仅在 `playback_save_queue=false` 且 `playback_remember_last_song=true` 时作为回退恢复单曲）。
+- 桌面此前**没有**这个单曲存储，开关只是禁用行。本轮新增 `MeloXLastPlaybackStore`：保存当前曲目 + 播放位置，受同一偏好键控制；从 `MeloXPlaybackQueueStore` 抽出 `songToJson/songFromJson` 共用序列化，避免两套格式漂移。
+- 接线：`publishQueue()` 保存当前曲目、周期位置更新保存位置、`restoreLastQueue()` 增加回退分支——**只有关掉队列持久化时**才恢复单曲，队列持久化开着时永远优先队列，两个开关互不越权。
+- 启用设置行 `settings_remember_last_song`。
+- 新增 `LastPlaybackStoreTest` 2 项：负 legacy ID/标题/歌手/时长/位置往返保存与开关关闭后不再覆盖；队列关闭→单曲回退（1 首、暂停、位置 500ms），队列开启→队列优先（2 首、index 1），两个开关都关→不恢复。
+- 期间修掉一个真实回归：把 `id==0` 当无效会丢掉 provider 桥接歌曲（测试 `persistedProviderQueue...` 立刻抓到），已保留 0/负 legacy ID 的原行为。
+- 全量 `:shared:desktopTest :desktop:compileKotlinDesktop` **232 tests / 48 suites / 0 failures，BUILD SUCCESSFUL**。
 
 ### 11. 本地分段抽取去占位
 
