@@ -8,6 +8,49 @@ Settings/legal closing fetch (2026-10-13): `5b52a92022a5943e238ffc5d3121c536b2f2
 
 ## Landed in this batch
 
+### Settings pages pinned replica + cold-start memory (2026-10-15)
+
+**No distribution has been issued from this batch yet.**
+
+`tools/export_settings_page_resources.py` derives the settings contract from the pure pinned Git tree only:
+**19 root routes / 3 sections / 797 keys / 4 resource locales** (en, zh-rCN, zh-rTW, ja), plus the
+`parity/3f877ea/evidence/settings-pages-source-audit.json` source/resource SHA manifest. `pinnedString()`
+now selects the bundle from `Locale.getDefault()` with default fallback, and
+`tools/verify_pinned_resources.py` covers all four bundles byte-for-byte.
+
+Every detail page now uses `MeloXPinnedListPage` (collapsed large title + 62dp toolbar) exactly like the
+Android `SettingsDetailScreen`; the legacy per-page extra 20dp horizontal / 10dp top padding was removed.
+Root sections/order and all 19 entries match the source (Privacy is no longer a root entry). General,
+Appearance, Content, Playback, AutoMix, EQ, Storage, About, RemoteConfig and TabLayout text no longer
+hard-code Chinese; Content areas are the source `全部/华语/欧美/日本/韩国`.
+
+Controls whose OS backend does not exist on desktop (clipboard links, haptics, system font, immersive
+playback, system notification lyrics, floating overlay, recognition, listen-together, auto-update
+scheduler, playback second account, Bilibili A/V alignment) stay **disabled with an explicit
+`settings-platform-availability` note**. They never persist an enable, so there is no "toggle works but
+does nothing" state. Recognition/ListenTogether remain the pinned empty/stub backends and are not
+presented as functional.
+
+Verification on the **same JVM flags as the shipped package** (`-Xms16m -Xmx1g -XX:+UseSerialGC`):
+4 locale route replays (19 routes each, physical mouse + real keyboard no-match search) + controls +
+independent-JVM reload = **6 captures / 395 scenes / 316 assertions**; the pinned **60-key lyrics** and
+**17-key Skyline + 4 awake scopes + exact reset** replays both re-pass on the new page header;
+`:shared:desktopTest` **208 tests / 40 suites / 0 failures**; artwork memory and new
+`:desktop:auditArtworkDecode` (48 codec/viewport cases incl. alpha and invalid input) pass.
+
+Cold-start memory, measured with `tools/capture_startup_memory.py` on an isolated home (3-run medians,
+same jar): restored queues no longer resolve audio or start a decoder before Play (`isLoading=false`,
+`isPaused=true`, position preserved; unit tests assert zero resolution for 10s, and Local queue
+`contentUri/fileKey` now persist). Artwork decodes at the physical Crop viewport instead of full
+resolution with a 2-decode concurrency cap. Production `jpackage --java-options`, `captureUi` replays
+and the cold-start audit share one flag set, moving first-frame resident **218.4 MB → 195.9 MB** and
+heap committed **38.8 MB → 19.3 MB**. This is startup-only and does **not** resolve the post-playback
+549→1431 MB growth, which is still being located. See `parity/3f877ea/SETTINGS_PAGES.md`.
+
+Still BLOCKED: pinned Android pixel/motion comparison (no pinned Android screenshots/frames here), real
+Windows standby/DPAPI/SMTC/device switching, physical audible acceptance, and the whole-process
+native renderer/text/allocator growth.
+
 ### Current verified Skyline/native power delivery (2026-10-15)
 
 **Current independently verified distribution:**
