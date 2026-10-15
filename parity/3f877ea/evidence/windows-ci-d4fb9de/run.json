@@ -1,0 +1,52 @@
+{
+  "run_id": "38721634269",
+  "url": "https://github.com/lladlam/MeloX-Windows/actions/runs/38721634269",
+  "head_sha": "d4fb9de70acc5849b7220de157cd8084eb965b30",
+  "runner": "windows-latest",
+  "status": "completed",
+  "conclusion": "success",
+  "started_at": "2026-10-15T10:37:53Z",
+  "completed_at": "2026-10-15T11:03:30Z",
+  "artifacts": [
+    {
+      "id": 11967094846,
+      "name": "MeloX-Desktop-Windows",
+      "size_in_bytes": 320020540
+    },
+    {
+      "id": 11967064773,
+      "name": "Verification-Windows",
+      "size_in_bytes": 18630224
+    }
+  ],
+  "windows_tests": {
+    "suites": 47,
+    "tests": 230,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "duration": "25m37s",
+  "independent_download_verification": {
+    "method": "gh run download (TMPDIR redirected off /tmp) then tools/verify_delivery_artifact.py",
+    "delivery_zip": {
+      "name": "MeloX-Desktop-Windows.zip",
+      "bytes": 320734877,
+      "sha256": "3499f59b2dfcdd9d0a6f982093e378a1382214b52209fd20925b0f2646e3096a"
+    },
+    "build_info_revision": "d4fb9de70acc5849b7220de157cd8084eb965b30",
+    "zip_crc_all_entries": "PASSED",
+    "zip_entry_count": 357,
+    "pinned_resource_check": "PASSED",
+    "decoder_bundle_check": "PASSED",
+    "status": "PASSED"
+  },
+  "app_code_changes_since_previous_verified_delivery": [
+    "removed the dead MeloXMediaPrefetcher that returned fabricated empty audio files"
+  ],
+  "still_blocked": [
+    "physical Windows execution of ffmpeg.exe (bytes/PE magic verified here; execution covered by the Windows CI gate)",
+    "physical audible playback, DPAPI/session/device switching on a Windows machine",
+    "pinned Android same-content pixel/motion acceptance (0 connected devices)"
+  ]
+}
