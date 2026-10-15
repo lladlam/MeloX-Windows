@@ -1,0 +1,9 @@
+[
+  {
+    "file": "pcm-output-0.s16le",
+    "bytes": 469968,
+    "sha256": "b4f036edfc63de05479b4aca47a27809806e1144cc3f7897c313ee0771ee8981",
+    "rms": 4242.599367107355,
+    "generated_signal": true
+  }
+]

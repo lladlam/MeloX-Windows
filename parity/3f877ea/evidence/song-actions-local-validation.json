@@ -1,0 +1,25 @@
+{
+  "status": "PASSED",
+  "captures": [
+    {
+      "capture": "actions-local-v6",
+      "scenes": 38,
+      "steps": 37,
+      "assertions": 34,
+      "capture_sha256": "1e7226c56e4110b080115bb99b41af5dc1bcc39be9bb0029a84524a1e774a5d0",
+      "pcm_written_frames": 117492
+    },
+    {
+      "capture": "actions-local-v6-reload",
+      "scenes": 30,
+      "steps": 29,
+      "assertions": 29,
+      "capture_sha256": "d2cb2c5a196849442597b1b4c69932004fdf11055e8d1a6048881e01ab62c676",
+      "pcm_written_frames": 82122
+    }
+  ],
+  "android_pixel_motion_acceptance": "BLOCKED: no same-content pinned Android frames",
+  "live_recognition_hit_and_microphone": "NOT_TESTED_BY_THIS_REPLAY",
+  "two_account_listen_together": "NOT_TESTED_BY_THIS_REPLAY",
+  "physical_audible_acceptance": "BLOCKED"
+}

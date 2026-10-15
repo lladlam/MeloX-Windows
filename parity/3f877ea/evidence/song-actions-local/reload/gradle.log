@@ -1,0 +1,139 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.5.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :desktop:kmpPartiallyResolvedDependenciesChecker
+> Task :desktop:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :desktop:convertXmlValueResourcesForCommonMain NO-SOURCE
+> Task :desktop:copyNonXmlValueResourcesForCommonMain NO-SOURCE
+> Task :desktop:prepareComposeResourcesTaskForCommonMain NO-SOURCE
+> Task :desktop:generateResourceAccessorsForCommonMain SKIPPED
+> Task :desktop:convertXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :desktop:copyNonXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :desktop:prepareComposeResourcesTaskForDesktopMain NO-SOURCE
+> Task :desktop:generateResourceAccessorsForDesktopMain SKIPPED
+> Task :desktop:generateActualResourceCollectorsForDesktopMain SKIPPED
+> Task :desktop:generateComposeResClass SKIPPED
+> Task :desktop:generateExpectResourceCollectorsForCommonMain SKIPPED
+> Task :innertube:kmpPartiallyResolvedDependenciesChecker
+> Task :innertube:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :innertube:extractAndroidInnerTube UP-TO-DATE
+> Task :innertube:compileKotlinDesktop UP-TO-DATE
+> Task :innertube:compileDesktopMainJava NO-SOURCE
+> Task :innertube:desktopProcessResources NO-SOURCE
+> Task :innertube:processDesktopMainResources SKIPPED
+> Task :innertube:desktopMainClasses UP-TO-DATE
+> Task :innertube:desktopJar UP-TO-DATE
+> Task :shared:kmpPartiallyResolvedDependenciesChecker
+> Task :shared:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :shared:convertXmlValueResourcesForCommonMain NO-SOURCE
+> Task :shared:copyNonXmlValueResourcesForCommonMain NO-SOURCE
+> Task :shared:prepareComposeResourcesTaskForCommonMain NO-SOURCE
+> Task :shared:generateResourceAccessorsForCommonMain SKIPPED
+> Task :shared:convertXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :shared:copyNonXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :shared:prepareComposeResourcesTaskForDesktopMain NO-SOURCE
+> Task :shared:generateResourceAccessorsForDesktopMain SKIPPED
+> Task :shared:generateActualResourceCollectorsForDesktopMain SKIPPED
+> Task :shared:generateComposeResClass SKIPPED
+> Task :shared:generateExpectResourceCollectorsForCommonMain SKIPPED
+> Task :shared:compileKotlinDesktop UP-TO-DATE
+> Task :shared:compileDesktopMainJava NO-SOURCE
+> Task :shared:assembleDesktopMainResources UP-TO-DATE
+> Task :shared:desktopProcessResources UP-TO-DATE
+> Task :shared:processDesktopMainResources SKIPPED
+> Task :shared:desktopMainClasses UP-TO-DATE
+> Task :shared:desktopJar UP-TO-DATE
+> Task :desktop:compileKotlinDesktop UP-TO-DATE
+> Task :desktop:compileDesktopMainJava NO-SOURCE
+> Task :desktop:assembleDesktopMainResources UP-TO-DATE
+> Task :desktop:desktopProcessResources UP-TO-DATE
+> Task :desktop:processDesktopMainResources SKIPPED
+> Task :desktop:desktopMainClasses UP-TO-DATE
+
+> Task :desktop:captureUi
+Production Local scanner indexed 2 real files
+SLF4J(W): No SLF4J providers were found.
+SLF4J(W): Defaulting to no-operation (NOP) logger implementation
+SLF4J(W): See https://www.slf4j.org/codes.html#noProviders for further details.
+[DEBUG MeloXThirdParty] resolve detail source=local id=3b56d87b title=generated-1000hz artists=Generated PCM fixture durationMs=20000 metadata=Local
+[INFO MeloXThirdParty] Resolve start source=local quality=Standard thirdParty=false
+[INFO MeloXThirdParty] Resolve fallback source=local stage=provider chksz=disabled
+[INFO MeloXFont] Android MiLan Pro static instances loaded: CSS=[100, 200, 300, 400, 500, 600, 700, 800, 900] files=mi_lan_pro_w{100..800}.ttf (CSS 900 shares frozen axis-700 instance)
+Captured 00-settings: 427x924 density=1.0
+[DEBUG AudioPlayer] Bundled FFmpeg verified: sha256=ee930e8def21a993f4b8c680757df15054da1c8f2698da0fdf87f1f3b15bd633 bytes=172690600
+[DEBUG AudioPlayer] FFmpeg binary=/tmp/melox-decoder-ffmpeg os=Linux sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+Physical click player: mini-player-expand at Offset(166.0, 826.0)
+Captured 01-player: 427x924 density=1.0
+Verified player: tag:now-playing
+Physical click pause: player-play-pause at Offset(213.0, 757.0)
+Captured 02-pause: 427x924 density=1.0
+Verified pause: playing:false
+Physical click actions: player-actions at Offset(375.0, 612.0)
+Captured 03-actions: 427x924 density=1.0
+Verified actions: tag:song-actions
+Captured 04-favorite-reveal: 427x924 density=1.0
+Captured 05-favorite-read: 427x924 density=1.0
+Verified favorite-read: state:song-action-取消喜爱:liked
+Captured 06-playlist-reveal: 427x924 density=1.0
+Physical click playlist: song-action-添加到歌单 at Offset(213.5, 491.0)
+Captured 07-playlist: 427x924 density=1.0
+Verified playlist: tag:song-playlist-Replay generated list
+Verified playlist: local-playlist-size:Replay generated list:1
+Captured 08-playlist-back: 427x924 density=1.0
+Verified playlist-back: state:song-actions:Main-idle
+Captured 09-sleep-reveal: 427x924 density=1.0
+Physical click sleep: song-action-定时关闭 at Offset(213.5, 255.0)
+Captured 10-sleep: 427x924 density=1.0
+Verified sleep: state:song-actions:Sleep-idle
+Verified sleep: sleep-timer:true
+Physical click cancel-sleep: song-action-取消定时 at Offset(213.5, 837.0)
+Captured 11-cancel-sleep: 427x924 density=1.0
+Verified cancel-sleep: absent:song-actions
+Verified cancel-sleep: sleep-timer:false
+Physical click reopen: player-actions at Offset(375.0, 612.0)
+Captured 12-reopen: 427x924 density=1.0
+Verified reopen: tag:song-actions
+Captured 13-close: 427x924 density=1.0
+Verified close: absent:song-actions
+Captured 14-collapse: 427x924 density=1.0
+Verified collapse: tag:settings-root
+Captured 15-listen-reveal: 427x924 density=1.0
+Physical click listen: settings-open-listentogether at Offset(213.5, 726.0)
+Captured 16-listen: 427x924 density=1.0
+Verified listen: enabled:listen-together-start
+Physical click listen-create-needs-account: listen-together-start at Offset(213.5, 303.0)
+Captured 17-listen-create-needs-account: 427x924 density=1.0
+Verified listen-create-needs-account: text:请先登录网易云音乐
+Verified listen-create-needs-account: tag:listen-together-message
+Physical click listen-invalid-invitation: listen-together-join at Offset(213.5, 423.0)
+Captured 18-listen-invalid-invitation: 427x924 density=1.0
+Verified listen-invalid-invitation: tag:listen-together-message
+Captured 19-listen-back: 427x924 density=1.0
+Verified listen-back: tag:settings-root
+Captured 20-recognition-reveal: 427x924 density=1.0
+Physical click recognition: settings-open-recognition at Offset(213.5, 614.0)
+Captured 21-recognition: 427x924 density=1.0
+Verified recognition: enabled:recognition-start
+Verified recognition: tag:recognition-status
+Captured 22-recognition-persisted: 427x924 density=1.0
+Verified recognition-persisted: pref-string:recognition_duration:3
+Captured 23-recognition-back: 427x924 density=1.0
+Verified recognition-back: tag:settings-root
+Captured 24-general-reveal: 427x924 density=1.0
+Physical click general: settings-open-general at Offset(213.5, 162.0)
+Captured 25-general: 427x924 density=1.0
+Verified general: tag:settings-general
+Captured 26-font-reveal: 427x924 density=1.0
+Captured 27-font-persisted: 427x924 density=1.0
+Verified font-persisted: pref-bool:system_font:true
+Verified font-persisted: ui-font:system
+Physical click font-reset: setting-system_font at Offset(359.0, 510.0)
+Captured 28-font-reset: 427x924 density=1.0
+Verified font-reset: pref-bool:system_font:false
+Verified font-reset: ui-font:pinned
+Captured 29-general-back: 427x924 density=1.0
+Verified general-back: tag:settings-root
+
+BUILD SUCCESSFUL in 33s
+14 actionable tasks: 4 executed, 10 up-to-date
+Consider enabling configuration cache to speed up this build: https://docs.gradle.org/9.5.1/userguide/configuration_cache_enabling.html

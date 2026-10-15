@@ -1,0 +1,8 @@
+{
+  "date": "2026-10-15",
+  "pinned_android": "3f877eaffe30c82eb6d24eb3647702f5bc554dd3",
+  "method": "android.device_list",
+  "result": { "count": 0, "devices": [] },
+  "same_content_pixel_motion_acceptance": "BLOCKED_NO_REFERENCE_DEVICE_OR_FRAMES",
+  "desktop_replay_does_not_replace_android_reference": true
+}
