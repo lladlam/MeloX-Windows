@@ -26,7 +26,7 @@ import kotlin.math.round
 @Composable
 internal fun EqualizerSettings() {
     val settings by MeloXEqualizerSettings.current.collectAsState()
-    Column(Modifier.padding(horizontal = 20.dp).testTag("equalizer-settings").semantics {
+    Column(Modifier.testTag("equalizer-settings").semantics {
         stateDescription = "${settings.enabled}:${settings.preset}:${settings.preampDb}"
     }) {
         MeloXIosGroupedList(surfaceColor = MaterialTheme.colorScheme.surface) {

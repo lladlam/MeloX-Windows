@@ -63,6 +63,9 @@ compose.desktop {
     }
 }
 
+// Production JVM flags (jpackage java-options) must be the flags every replay runs under.
+val productionJvmArgs = listOf("-Xms16m", "-Xmx1g", "-XX:+UseSerialGC", "-Dfile.encoding=UTF-8")
+
 tasks.register<JavaExec>("captureUi") {
     group = "verification"
     description = "Capture the production app offscreen and replay coordinate clicks."
@@ -70,6 +73,8 @@ tasks.register<JavaExec>("captureUi") {
     val compilation = kotlin.targets.getByName("desktop").compilations.getByName("main")
     classpath = files(compilation.output.allOutputs, compilation.runtimeDependencyFiles)
     mainClass.set("melox.validation.MeloXVisualCaptureKt")
+    jvmArgs(providers.gradleProperty("captureJvmArgs").orNull?.split(' ')?.filter(String::isNotBlank)
+        ?: productionJvmArgs)
     systemProperty("java.awt.headless", "true")
     systemProperty("user.home", providers.gradleProperty("captureHome").getOrElse(layout.buildDirectory.dir("parity/home").get().asFile.absolutePath))
     val argumentFile = providers.gradleProperty("captureArgsFile").orNull
@@ -109,6 +114,16 @@ tasks.register<JavaExec>("auditArtworkMemory") {
     mainClass.set("melox.validation.MeloXArtworkMemoryAuditKt")
     systemProperty("java.awt.headless", "true")
     args(layout.buildDirectory.dir("verification/artwork-memory").get().asFile.absolutePath)
+}
+
+tasks.register<JavaExec>("auditArtworkDecode") {
+    group = "verification"
+    dependsOn("desktopMainClasses")
+    val compilation = kotlin.targets.getByName("desktop").compilations.getByName("main")
+    classpath = files(compilation.output.allOutputs, compilation.runtimeDependencyFiles)
+    mainClass.set("melox.validation.MeloXArtworkDecodeAuditKt")
+    systemProperty("java.awt.headless", "true")
+    args(layout.buildDirectory.file("verification/artwork-decode.json").get().asFile.absolutePath)
 }
 
 tasks.register<JavaExec>("auditDisplayAwake") {

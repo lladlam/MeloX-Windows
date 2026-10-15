@@ -103,7 +103,7 @@ else:
     add('root-skyline', 'reveal@settings-open-skylinelyrics')
     add('open', 'tap@settings-open-skylinelyrics', ['tag:skyline-settings'] + all_checks(values))
 
-args = ['--source', 'Local', '--start-tab', 'Settings', '--theme', 'Dark', '--width', '1100', '--height', '780',
+args = ['--locale', 'en-US', '--source', 'Local', '--start-tab', 'Settings', '--theme', 'Dark', '--width', '1100', '--height', '780',
         '--output', str(output), '--wait-ms', '180', '--startup-wait-ms', '1000',
         '--steps', ';'.join(steps), '--expect', ';'.join(k + '=' + ','.join(v) for k, v in expected.items())]
 argfile = output / 'arguments.txt'

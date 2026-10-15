@@ -40,9 +40,43 @@ jobs:
       - name: Verify native equalizer PCM
         run: python tools/verify_native_equalizer.py shared/build/parity/test-home/native-pcm-evidence --output desktop/build/verification/equalizer-pcm.json
       - name: Audit decoded artwork memory budget and Windows process memory
-        run: gradle :desktop:auditArtworkMemory
+        run: gradle :desktop:auditArtworkMemory :desktop:auditArtworkDecode
       - name: Audit real Windows display power request ownership
         run: gradle :desktop:auditDisplayAwake
+      - name: Replay pinned settings routes in four locales and verify real preference consumers
+        shell: pwsh
+        run: |
+          $cases = @(
+            @("en-US", "Dark", "1100", "780"),
+            @("zh-CN", "Light", "427", "924"),
+            @("zh-TW", "Dark", "800", "600"),
+            @("ja-JP", "Light", "1100", "780")
+          )
+          foreach ($case in $cases) {
+            $locale = $case[0]
+            $homeDir = "$pwd/desktop/build/parity/settings-$locale-home"
+            New-Item -ItemType Directory -Force "$homeDir/.melox" | Out-Null
+            [System.IO.File]::WriteAllText("$homeDir/.melox/prefs_melox_app_settings.properties", "onboarding_completed=true`n", [System.Text.UTF8Encoding]::new($false))
+            Remove-Item -Recurse -Force "desktop/build/parity/settings-$locale" -ErrorAction SilentlyContinue
+            python tools/capture_settings_pages.py routes "$homeDir" "desktop/build/parity/settings-$locale" @case
+            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          }
+          $homeDir = "$pwd/desktop/build/parity/settings-controls-home"
+          New-Item -ItemType Directory -Force "$homeDir/.melox" | Out-Null
+          [System.IO.File]::WriteAllText("$homeDir/.melox/prefs_melox_app_settings.properties", "onboarding_completed=true`n", [System.Text.UTF8Encoding]::new($false))
+          Remove-Item -Recurse -Force "desktop/build/parity/settings-controls","desktop/build/parity/settings-reload" -ErrorAction SilentlyContinue
+          python tools/capture_settings_pages.py controls "$homeDir" desktop/build/parity/settings-controls
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python tools/capture_settings_pages.py reload "$homeDir" desktop/build/parity/settings-reload
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python tools/verify_settings_pages_capture.py desktop/build/parity desktop/build/verification/settings-pages.json
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Measure cold-start memory of the production app
+        shell: pwsh
+        run: |
+          $homeDir = "$pwd/desktop/build/parity/startup-memory-home"
+          python tools/capture_startup_memory.py fresh "$homeDir" desktop/build/parity/startup-memory
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - name: Replay all pinned lyrics controls and reload them in a new process
         shell: pwsh
         run: |
@@ -96,7 +130,7 @@ jobs:
             --main-jar "$name" `
             --name MeloX-Desktop `
             --dest desktop/build/releases `
-            --java-options "-Xmx1g -Dfile.encoding=UTF-8"
+            --java-options "-Xms16m -Xmx1g -XX:+UseSerialGC -Dfile.encoding=UTF-8"
       - name: Verify app-image decoder
         run: python tools/verify_decoder_bundle.py --artifact desktop/build/releases/MeloX-Desktop --run --output desktop/build/verification/image-decoder.json
       - name: Verify app-image pinned resources
@@ -118,6 +152,8 @@ jobs:
           name: Verification-${{ runner.os }}
           path: |
             desktop/build/verification/*.json
+            desktop/build/parity/settings-*/*.json
+            desktop/build/parity/startup-memory/*.json
             desktop/build/verification/artwork-memory/*.json
             desktop/build/parity/lyrics-controls/*.json
             desktop/build/parity/lyrics-controls/*.png

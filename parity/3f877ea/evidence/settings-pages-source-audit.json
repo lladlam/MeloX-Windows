@@ -1,0 +1,149 @@
+{
+  "pinned_android": "3f877eaffe30c82eb6d24eb3647702f5bc554dd3",
+  "verified_against_pure_export": true,
+  "source_sha256": {
+    "kotlin/com/lladlam/melox/ui/settings/SettingsScreen.kt": "5325c809720af94a15034e615714a003a8c48dfe6b8dee771ff1c4d2292b22c3",
+    "res/values/strings.xml": "920ba9684ce585713be0dbc7256eea248ca1ad65dd1e723fbf0d91effb21f841",
+    "res/values-zh-rCN/strings.xml": "8e1aae368e0433d0aa7a24f3054542b0d656cd614238b6a75a28e86e8134aad1",
+    "res/values-zh-rTW/strings.xml": "aaa901907d9dabc97327d94293aad313fab207454696f16276b72b2fe7a55461",
+    "res/values-ja/strings.xml": "414475406d6c4a8b4d604b8dd8d7f2d3fc36b5c1836fa226027af2863d37a51f"
+  },
+  "resource_sha256": {
+    "parity/pinned-settings-pages.properties": "a46855aaf06004ff52d9142b14b5665e11d6e215850ea2ddc6db609dd8bed4b8",
+    "parity/pinned-settings-pages-zh-rCN.properties": "0e21323368d9e8bbf97d2c23b22615c66ad8d7084291eaaf036ca3488c8124dd",
+    "parity/pinned-settings-pages-zh-rTW.properties": "5cc19eb20f2f6e3c81517229b22fd455117c9c7316c3190034bb19195c61d218",
+    "parity/pinned-settings-pages-ja.properties": "d9181161f6e3ee2fd73319576a3af14b832a0861153eaa9e3210a5c9aeb8de5c"
+  },
+  "string_keys": 797,
+  "sections": [
+    {
+      "title": "settings_section_app",
+      "items": [
+        {
+          "route": "General",
+          "subtitle": "settings_sub_general",
+          "symbol": "⚙",
+          "keywords": "settings_kw_general"
+        },
+        {
+          "route": "PlayerAppearance",
+          "subtitle": "settings_sub_appearance",
+          "symbol": "✦",
+          "keywords": "settings_kw_appearance"
+        },
+        {
+          "route": "Content",
+          "subtitle": "settings_sub_content",
+          "symbol": "▦",
+          "keywords": "settings_kw_content"
+        },
+        {
+          "route": "Playback",
+          "subtitle": "settings_sub_playback",
+          "symbol": "♫",
+          "keywords": "settings_kw_playback"
+        },
+        {
+          "route": "Lyrics",
+          "subtitle": "settings_sub_lyrics",
+          "symbol": "❞",
+          "keywords": "settings_kw_lyrics"
+        },
+        {
+          "route": "Storage",
+          "subtitle": "settings_sub_storage",
+          "symbol": "▰",
+          "keywords": "settings_kw_storage"
+        }
+      ]
+    },
+    {
+      "title": "settings_section_more",
+      "items": [
+        {
+          "route": "ContentFeatures",
+          "subtitle": "settings_sub_features",
+          "symbol": "☷",
+          "keywords": "settings_kw_features"
+        },
+        {
+          "route": "Recognition",
+          "subtitle": "settings_sub_recognition",
+          "symbol": "⌁",
+          "keywords": "settings_kw_recognition"
+        },
+        {
+          "route": "Messages",
+          "subtitle": "settings_sub_messages",
+          "symbol": "✉",
+          "keywords": "settings_kw_messages"
+        },
+        {
+          "route": "ListenTogether",
+          "subtitle": "settings_sub_listen_together",
+          "symbol": "◎",
+          "keywords": "settings_kw_listen_together"
+        },
+        {
+          "route": "TabLayout",
+          "subtitle": "settings_sub_tabs",
+          "symbol": "▥",
+          "keywords": "settings_kw_tabs"
+        },
+        {
+          "route": "SystemPlayback",
+          "subtitle": "settings_sub_system_playback",
+          "symbol": "▣",
+          "keywords": "settings_kw_system_playback"
+        },
+        {
+          "route": "SkylineLyrics",
+          "subtitle": "settings_sub_skyline",
+          "symbol": "▱",
+          "keywords": "settings_kw_skyline"
+        },
+        {
+          "route": "FloatingLyrics",
+          "subtitle": "settings_sub_floating",
+          "symbol": "▤",
+          "keywords": "settings_kw_floating"
+        }
+      ]
+    },
+    {
+      "title": "settings_section_about",
+      "items": [
+        {
+          "route": "RemoteConfig",
+          "subtitle": "settings_sub_remote_config",
+          "symbol": "⌁",
+          "keywords": "settings_kw_remote_config"
+        },
+        {
+          "route": "About",
+          "subtitle": "settings_sub_about",
+          "symbol": "ⓘ",
+          "keywords": "settings_kw_about"
+        },
+        {
+          "route": "Legal",
+          "subtitle": "settings_sub_legal",
+          "symbol": "▤",
+          "keywords": "settings_kw_legal"
+        },
+        {
+          "route": "Developer",
+          "subtitle": "settings_sub_developer",
+          "symbol": "⌘",
+          "keywords": "settings_kw_developer"
+        },
+        {
+          "route": "Experimental",
+          "subtitle": "settings_sub_experimental",
+          "symbol": "✦",
+          "keywords": "settings_kw_experimental"
+        }
+      ]
+    }
+  ]
+}

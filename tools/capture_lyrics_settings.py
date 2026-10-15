@@ -123,7 +123,7 @@ if mode == 'controls':
 else:
     steps = ['open:tap@settings-open-lyrics']
     expectations = {'00-settings': all_checks, 'open': ['tag:advanced-lyrics-settings'] + all_checks}
-args = ['--source', 'Local', '--start-tab', 'Settings', '--theme', 'Dark', '--width', '1100', '--height', '780',
+args = ['--locale', 'en-US', '--source', 'Local', '--start-tab', 'Settings', '--theme', 'Dark', '--width', '1100', '--height', '780',
         '--output', str(output), '--wait-ms', '180', '--startup-wait-ms', '1000',
         '--steps', ';'.join(steps), '--expect', ';'.join(name + '=' + ','.join(values) for name, values in expectations.items())]
 argfile = output / 'arguments.txt'

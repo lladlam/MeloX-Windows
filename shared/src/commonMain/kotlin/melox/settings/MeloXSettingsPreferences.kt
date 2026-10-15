@@ -28,6 +28,7 @@ object MeloXSettingsPreferences {
 
     fun setBoolean(key: String, value: Boolean) {
         prefs().putBoolean(key, value)
+        if (key == "download_lyrics") getPreferences("melox_downloads").putBoolean(key, value)
         if (key.startsWith("equalizer_")) melox.playback.MeloXEqualizerSettings.refresh()
         if (key == "lyrics_auto_select" && !value) {
             prefs().putBoolean("experimental_lyric_strong_binding", false)
@@ -92,8 +93,8 @@ object MeloXSettingsPreferences {
             "general_remember_tab" -> MeloXSettingsRuntime.rememberLastTab = value
             "general_disable_auto_tabbar_shrink" -> MeloXSettingsRuntime.disableAutomaticTabBarShrink = value
             "library_remember_page" -> MeloXSettingsRuntime.rememberLibraryPage = value
-            "playlist_show_artwork" -> MeloXSettingsRuntime.playlistShowArtwork = value
-            "playlist_search_bar_hidden" -> MeloXSettingsRuntime.playlistSearchBarHidden = value
+            "playlist_show_artwork", "library_playlist_show_artwork" -> MeloXSettingsRuntime.playlistShowArtwork = value
+            "playlist_search_bar_hidden", "library_playlist_search_hidden" -> MeloXSettingsRuntime.playlistSearchBarHidden = value
             "download_lyrics" -> MeloXSettingsRuntime.downloadLyricsEnabled = value
             "content_playlist_play_count" -> MeloXSettingsRuntime.showPlaylistPlayCount = value
             "content_high_quality_playlist" -> MeloXSettingsRuntime.showHighQualityPlaylists = value
@@ -134,6 +135,9 @@ object MeloXSettingsPreferences {
         prefs().putFloat(key, value)
         if (key.startsWith("equalizer_")) melox.playback.MeloXEqualizerSettings.refresh()
         when (key) {
+            "player_flowing_speed" -> MeloXSettingsRuntime.flowingLightSpeed = value.coerceIn(.25f, 2f)
+            "player_flowing_saturation" -> MeloXSettingsRuntime.flowingLightSaturation = value.coerceIn(0f, 2f)
+            "player_flowing_brightness" -> MeloXSettingsRuntime.flowingLightBrightness = value.coerceIn(.4f, 1.6f)
             "lyrics_font_scale" -> MeloXSettingsRuntime.lyricFontScale = value.coerceIn(.8f, 1.25f)
             "lyrics_focus_position" -> MeloXSettingsRuntime.lyricFocusPosition = value.coerceIn(.05f, .8f)
             "lyrics_spacing_scale" -> MeloXSettingsRuntime.lyricSpacingScale = value.coerceIn(.7f, 1.5f)

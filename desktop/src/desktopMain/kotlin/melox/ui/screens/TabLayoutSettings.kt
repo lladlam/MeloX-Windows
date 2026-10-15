@@ -20,26 +20,24 @@ import melox.settings.MeloXSettingsPreferences
 import melox.settings.MeloXSettingsRuntime
 import melox.ui.foundation.MeloXIosGroupedList
 import melox.ui.glass.MeloXSettingsDropdown
+import melox.ui.legal.pinnedString
 
-internal fun layoutPageTitle(page: String): String = when (page) {
-    "Home" -> "首页"; "Explore" -> "发现"; "Library" -> "音乐库"; "Settings" -> "设置"
-    "Podcasts" -> "播客"; "Downloads" -> "下载"; "Cloud" -> "云盘"; "History" -> "最近播放"
-    "Songs" -> "歌曲"; "Playlists" -> "歌单"; "QuickActions" -> "快捷入口"; "NewSongs" -> "推荐新歌"
-    else -> page
-}
+internal fun layoutPageTitle(page: String): String = pinnedString("settings_tabs_" + when (page) {
+    "Playlists" -> "playlist_page"; "QuickActions" -> "shortcuts"; "NewSongs" -> "new_songs"; else -> page.lowercase()
+})
 
 @Composable
 internal fun TabLayoutSettings(source: MusicSource) {
     val runtime = MeloXSettingsRuntime
-    LayoutGroup {
-        PreferenceToggle("首页", runtime.homeTabEnabled, "tab_home")
-        PreferenceToggle("发现", runtime.exploreTabEnabled, "tab_explore", showTopSeparator = true)
-        PreferenceToggle("音乐库", runtime.libraryTabEnabled, "tab_library", showTopSeparator = true)
+    LayoutGroup(topSpacing = false) {
+        PreferenceToggle(layoutPageTitle("Home"), runtime.homeTabEnabled, "tab_home")
+        PreferenceToggle(layoutPageTitle("Explore"), runtime.exploreTabEnabled, "tab_explore", showTopSeparator = true)
+        PreferenceToggle(layoutPageTitle("Library"), runtime.libraryTabEnabled, "tab_library", showTopSeparator = true)
     }
     listOf(
-        Triple("播客", "podcasts", runtime.podcastsEnabled),
-        Triple("下载", "downloads", runtime.downloadsEnabled),
-        Triple("云盘", "cloud", runtime.cloudMusicEnabled),
+        Triple(layoutPageTitle("Podcasts"), "podcasts", runtime.podcastsEnabled),
+        Triple(layoutPageTitle("Downloads"), "downloads", runtime.downloadsEnabled),
+        Triple(layoutPageTitle("Cloud"), "cloud", runtime.cloudMusicEnabled),
     ).forEach { (title, key, enabled) ->
         val home = when (key) {
             "podcasts" -> runtime.podcastsHomePlacement
@@ -58,48 +56,53 @@ internal fun TabLayoutSettings(source: MusicSource) {
         }
         LayoutGroup {
             LayoutGroupTitle(title)
-            PreferenceToggle("首页快捷入口", home,
-                "placement_${key}_home", if (enabled) null else "请先在功能模块中启用$title")
-            PreferenceToggle("音乐库子页", library,
+            PreferenceToggle(pinnedString("settings_tabs_home_shortcut"), home,
+                "placement_${key}_home")
+            PreferenceToggle(pinnedString("settings_tabs_library_page"), library,
                 "placement_${key}_library", showTopSeparator = true)
-            PreferenceToggle("独立标签页", tab,
+            PreferenceToggle(pinnedString("settings_tabs_own_tab"), tab,
                 "placement_${key}_tab", showTopSeparator = true)
         }
     }
-    LayoutOrderGroup("标签栏顺序", "tab_order", runtime.tabOrder)
+    LayoutOrderGroup(pinnedString("settings_tabs_order"), "tab_order", runtime.tabOrder)
     LayoutGroup(Modifier.testTag("layout-home_section_order").semantics {
         stateDescription = runtime.homeSectionOrder.joinToString(">")
     }) {
-        LayoutGroupTitle("首页区块")
-        PreferenceToggle("快捷入口", runtime.homeQuickActionsEnabled, "home_quick_actions")
-        PreferenceToggle("推荐歌单", runtime.homePlaylistsEnabled, "home_playlists", showTopSeparator = true)
-        PreferenceToggle("推荐新歌", runtime.homeNewSongsEnabled, "home_new_songs", showTopSeparator = true)
-        PreferenceToggle("记住音乐库子页面", runtime.rememberLibraryPage, "library_remember_page", showTopSeparator = true)
+        LayoutGroupTitle(pinnedString("settings_tabs_home_sections"))
+        PreferenceToggle(pinnedString("settings_tabs_shortcuts"), runtime.homeQuickActionsEnabled, "home_quick_actions")
+        PreferenceToggle(pinnedString("settings_tabs_playlists"), runtime.homePlaylistsEnabled, "home_playlists", showTopSeparator = true)
+        PreferenceToggle(pinnedString("settings_tabs_new_songs"), runtime.homeNewSongsEnabled, "home_new_songs", showTopSeparator = true)
+        PreferenceToggle(pinnedString("settings_tabs_remember_library"), runtime.rememberLibraryPage, "library_remember_page", showTopSeparator = true)
         LayoutOrderRows("home_section_order", runtime.homeSectionOrder)
     }
     val pages = MeloXContentLayout.libraryPages(source)
-    MeloXSettingsDropdown("音乐库默认页", runtime.defaultLibraryPage.takeIf { it in pages } ?: pages.first(),
+    Spacer(Modifier.height(10.dp))
+    SettingsGlassGroup {
+    MeloXSettingsDropdown(pinnedString("settings_tabs_default_library"), runtime.defaultLibraryPage.takeIf { it in pages } ?: pages.first(),
         pages.map { it to layoutPageTitle(it) },
         onSelected = { MeloXSettingsPreferences.setString("library_default_page", it) },
-        modifier = Modifier.padding(horizontal = 20.dp, vertical = 8.dp))
-    Text("搜索保持为独立的右侧 Liquid Glass 按钮。\n关闭记住子页面时，音乐库使用默认页。", Modifier.padding(horizontal = 36.dp, vertical = 8.dp),
+        grouped = true)
+    Text(pinnedString("settings_tabs_search_note"), Modifier.padding(horizontal = 18.dp, vertical = 4.dp),
         color = MaterialTheme.colorScheme.onSurface.copy(alpha = .46f), fontSize = 12.sp)
+    }
 }
 
 @Composable
-private fun LayoutGroup(modifier: Modifier = Modifier, content: @Composable ColumnScope.() -> Unit) {
-    MeloXIosGroupedList(modifier.padding(horizontal = 20.dp, vertical = 5.dp), content = content)
+private fun LayoutGroup(modifier: Modifier = Modifier, topSpacing: Boolean = true, content: @Composable ColumnScope.() -> Unit) {
+    if (topSpacing) Spacer(Modifier.height(10.dp))
+    MeloXIosGroupedList(modifier, surfaceColor = MaterialTheme.colorScheme.surface, content = content)
 }
 
 @Composable
 private fun LayoutGroupTitle(title: String) {
-    Text(title, Modifier.padding(horizontal = 18.dp, vertical = 8.dp), fontSize = 13.sp,
+    Text(title, Modifier.padding(horizontal = 18.dp, vertical = 4.dp), fontSize = 13.sp,
         color = MaterialTheme.colorScheme.onSurface.copy(alpha = .48f))
 }
 
 @Composable
 private fun LayoutOrderGroup(title: String, key: String, order: List<String>) {
-    MeloXIosGroupedList(Modifier.padding(horizontal = 20.dp, vertical = 5.dp)
+    Spacer(Modifier.height(10.dp))
+    MeloXIosGroupedList(Modifier
         .testTag("layout-$key").semantics { stateDescription = order.joinToString(">") }) {
         LayoutGroupTitle(title)
         LayoutOrderRows(key, order)
@@ -109,8 +112,8 @@ private fun LayoutOrderGroup(title: String, key: String, order: List<String>) {
 @Composable
 private fun LayoutOrderRows(key: String, order: List<String>) {
     order.forEachIndexed { index, page ->
-            Row(Modifier.fillMaxWidth().padding(horizontal = 14.dp, vertical = 2.dp), verticalAlignment = Alignment.CenterVertically) {
-                Text(if (key == "home_section_order" && page == "Playlists") "推荐歌单" else layoutPageTitle(page), Modifier.weight(1f))
+            Row(Modifier.fillMaxWidth().padding(horizontal = 14.dp, vertical = if (key == "tab_order") 10.dp else 8.dp), verticalAlignment = Alignment.CenterVertically) {
+                Text(if (key == "home_section_order" && page == "Playlists") pinnedString("settings_tabs_playlists") else layoutPageTitle(page), Modifier.weight(1f))
                 listOf(-1 to "↑", 1 to "↓").forEach { (direction, label) ->
                     val target = index + direction
                     val enabled = target in order.indices

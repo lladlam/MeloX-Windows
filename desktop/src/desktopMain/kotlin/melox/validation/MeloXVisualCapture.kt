@@ -30,6 +30,7 @@ import org.json.JSONArray
 @OptIn(ExperimentalComposeUiApi::class, InternalComposeUiApi::class)
 fun main(args: Array<String>) = runBlocking {
     fun option(name: String, default: String) = args.indexOf(name).takeIf { it >= 0 }?.let { args.getOrNull(it + 1) } ?: default
+    option("--locale", "").takeIf(String::isNotBlank)?.let { java.util.Locale.setDefault(java.util.Locale.forLanguageTag(it)) }
     org.jetbrains.skia.impl.Stats.enabled = "--skia-stats" in args
     val width = option("--width", "427").toInt()
     val height = option("--height", "924").toInt()
@@ -155,6 +156,8 @@ fun main(args: Array<String>) = runBlocking {
                 "algorithm" -> melox.recommendation.LocalRecommendationStore.isAlgorithmEnabled() == expected.toBooleanStrict()
                 "index" -> melox.playback.PlaybackCommands.queue.value.index == expected.toInt()
                 "tag" -> semantics.tagged(expected) != null
+                "text" -> semantics.any { node -> node.config.getOrNull(SemanticsProperties.Text)?.any { it.text == expected } == true }
+                "disabled" -> semantics.tagged(expected)?.config?.contains(SemanticsProperties.Disabled) == true
                 "full-tag" -> semantics.tagged(expected)?.boundsInWindow?.let { it.width >= width * .97f && it.height >= height * .97f } == true
                 "absent" -> semantics.tagged(expected) == null
                 "selected" -> semantics.tagged(expected)?.config?.getOrNull(SemanticsProperties.Selected) == true
@@ -168,6 +171,9 @@ fun main(args: Array<String>) = runBlocking {
                 "quality" -> melox.audio.MusicQualityPreferences.read().apiLevel == expected
                 "eq-enabled" -> melox.playback.MeloXEqualizerSettings.current.value.enabled == expected.toBooleanStrict()
                 "eq-preset" -> melox.playback.MeloXEqualizerSettings.current.value.preset == expected
+                "automix-mode" -> melox.playback.MeloXAutoMixSettings.read().mode.name == expected
+                "automix-duration-ms" -> melox.playback.MeloXAutoMixSettings.read().fixedDurationMs == expected.toLong()
+                "download-lyrics" -> melox.platform.getPreferences("melox_downloads").getBoolean("download_lyrics", true) == expected.toBooleanStrict()
                 "player-shell" -> melox.settings.MeloXSettingsRuntime.playerShell.name == expected
                 "pv-style" -> melox.settings.MeloXSettingsRuntime.textPVStyle.name == expected
                 "pv-speed" -> melox.settings.MeloXSettingsRuntime.textPVAnimationSpeed == expected.toFloat()
@@ -298,6 +304,17 @@ fun main(args: Array<String>) = runBlocking {
                     // Synthetic input is confined to this version-pinned capture harness.
                     scene.sendKeyEvent(KeyEvent(key = Key.Escape, type = KeyEventType.KeyDown))
                     check(scene.sendKeyEvent(KeyEvent(key = Key.Escape, type = KeyEventType.KeyUp))) { "Escape was not handled at $name" }
+                } else if (coordinates.startsWith("type@")) {
+                    val keyboard = java.awt.Canvas()
+                    coordinates.substringAfter('@').forEach { character ->
+                        val typed = java.awt.event.KeyEvent(keyboard, java.awt.event.KeyEvent.KEY_TYPED,
+                            System.currentTimeMillis(), 0, java.awt.event.KeyEvent.VK_UNDEFINED, character)
+                        // Compose Desktop models AWT KEY_TYPED as an Unknown key
+                        // event carrying the UTF-16 code point; text fields consume it.
+                        scene.sendKeyEvent(KeyEvent(key = Key.Unknown, type = KeyEventType.Unknown,
+                            codePoint = character.code, nativeEvent = typed))
+                        settle(16)
+                    }
                 } else if (coordinates.startsWith("tap@") || coordinates.startsWith("tap-first@") || coordinates.startsWith("hold-tag@")) {
                     val requested = coordinates.substringAfter('@')
                     val prefix = coordinates.startsWith("tap-first@")
@@ -454,7 +471,8 @@ fun main(args: Array<String>) = runBlocking {
                 .put("physical_audible_acceptance", "BLOCKED")
                 .put("pcm_outputs", JSONArray(pcmOutput?.evidence().orEmpty()))
                 .put("width", width).put("height", height).put("density", density)
-                .put("theme", theme).put("home", System.getProperty("user.home"))
+                .put("theme", theme).put("locale", java.util.Locale.getDefault().toLanguageTag())
+                .put("home", System.getProperty("user.home"))
                 .put("start_tab", startTab)
                 .put("enabled_start_tab", "--enable-start-tab" in args)
                 .put("play_id", playId ?: JSONObject.NULL)

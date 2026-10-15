@@ -513,7 +513,11 @@ internal fun MeloXFlowingLightBackdrop(
         targetPalette = ArtworkDynamicPaletteProvider.paletteFor(artworkUrl)
     }
 
-    LaunchedEffect(isPlaying, artworkUrl, mediaId, quality, frameRate, meshBitmaps, targetPalette, reduceMotion) {
+    val controls = melox.settings.MeloXSettingsRuntime
+    val speed = controls.flowingLightSpeed
+    val saturation = controls.flowingLightSaturation
+    val brightness = controls.flowingLightBrightness
+    LaunchedEffect(isPlaying, artworkUrl, mediaId, quality, frameRate, meshBitmaps, targetPalette, reduceMotion, speed, saturation, brightness) {
         val requestedFrameDelayMs = (1_000L / frameRate.toLong()).coerceAtLeast(1L)
         val frameDelayMs = when (quality) {
             MeloXLyricsRenderingQuality.Low -> requestedFrameDelayMs.coerceAtLeast(50L)
@@ -545,6 +549,7 @@ internal fun MeloXFlowingLightBackdrop(
                     downbeatPulse = downbeatPulse,
                     centersX = centersX,
                     centersY = centersY,
+                    saturation = saturation, brightness = brightness,
                 )
                 installArgbPixels(meshBitmaps[writeIndex], pixels, meshWidth, meshHeight)
             }
@@ -563,7 +568,7 @@ internal fun MeloXFlowingLightBackdrop(
             beatPulse += (sample.beat - beatPulse) * .32f
             downbeatPulse += (sample.downbeat - downbeatPulse) * .24f
             val motion = .026f + energy.coerceIn(0f, 1f) * .038f + beatPulse * .016f
-            phase[0] = (phase[0] + motion * elapsedMs / (1_000f / 60f)) % (Math.PI.toFloat() * 2f)
+            phase[0] = (phase[0] + motion * speed * elapsedMs / (1_000f / 60f)) % (Math.PI.toFloat() * 2f)
             val paletteBlend = (elapsedMs / 800f).coerceIn(.02f, .18f)
             currentColors.indices.forEach { index ->
                 currentColors[index] = lerpColor(
@@ -587,6 +592,7 @@ internal fun MeloXFlowingLightBackdrop(
                     downbeatPulse = downbeatPulse,
                     centersX = centersX,
                     centersY = centersY,
+                    saturation = saturation, brightness = brightness,
                 )
                 installArgbPixels(bitmap, pixels, meshWidth, meshHeight)
             }
@@ -652,6 +658,8 @@ private fun fillFlowingMeshPixels(
     downbeatPulse: Float,
     centersX: FloatArray,
     centersY: FloatArray,
+    saturation: Float = 1f,
+    brightness: Float = 1f,
 ) {
     val radiusNormalized = (0.58f + energy.coerceIn(0f, 1f) * .08f + beatPulse * .035f)
         .coerceAtLeast(.01f)
@@ -692,9 +700,18 @@ private fun fillFlowingMeshPixels(
                 green += color.green * weight
                 blue += color.blue * weight
             }
-            val r = ((red / totalWeight) * pulseGain * downbeatShade).coerceIn(0f, 1f)
-            val g = ((green / totalWeight) * pulseGain * downbeatShade).coerceIn(0f, 1f)
-            val b = ((blue / totalWeight) * pulseGain * downbeatShade).coerceIn(0f, 1f)
+            var r = ((red / totalWeight) * pulseGain * downbeatShade).coerceIn(0f, 1f)
+            var g = ((green / totalWeight) * pulseGain * downbeatShade).coerceIn(0f, 1f)
+            var b = ((blue / totalWeight) * pulseGain * downbeatShade).coerceIn(0f, 1f)
+            if (saturation != 1f) {
+                val luminance = r * .2126f + g * .7152f + b * .0722f
+                r = luminance + (r - luminance) * saturation
+                g = luminance + (g - luminance) * saturation
+                b = luminance + (b - luminance) * saturation
+            }
+            r = (r * brightness).coerceIn(0f, 1f)
+            g = (g * brightness).coerceIn(0f, 1f)
+            b = (b * brightness).coerceIn(0f, 1f)
             pixels[pixelIndex++] = (0xFF shl 24) or
                 ((r * 255f).toInt() shl 16) or
                 ((g * 255f).toInt() shl 8) or

@@ -58,6 +58,10 @@ internal object MeloXPlaybackQueueStore {
                     (track.providerMetadata as? ProviderTrackMetadata.YouTube)?.let {
                         put("youtubeSetVideoId", it.setVideoId)
                     }
+                    (track.providerMetadata as? ProviderTrackMetadata.Local)?.let {
+                        put("localContentUri", it.contentUri)
+                        put("localFileKey", it.fileKey)
+                    }
                     (track.providerMetadata as? ProviderTrackMetadata.Jellyfin)?.let {
                         put("jellyfinServer", it.serverIdentity)
                         put("jellyfinPlaylist", it.playlistId)
@@ -121,6 +125,8 @@ internal object MeloXPlaybackQueueStore {
                             value.optString("jellyfinServer"),
                             value.optString("jellyfinPlaylist").takeIf { it.isNotBlank() && it != "null" },
                             value.optString("jellyfinEntry").takeIf { it.isNotBlank() && it != "null" },
+                        ) else if (source == MusicSource.Local && value.optString("localContentUri").isNotBlank()) ProviderTrackMetadata.Local(
+                            value.getString("localContentUri"), value.optString("localFileKey", providerId),
                         ) else ProviderTrackMetadata.Empty,
                     )
                 } else {

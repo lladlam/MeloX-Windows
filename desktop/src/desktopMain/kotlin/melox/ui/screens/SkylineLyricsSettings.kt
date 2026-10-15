@@ -18,7 +18,7 @@ import melox.ui.legal.pinnedString
 internal fun SkylineLyricsSettings() {
     val r = MeloXSettingsRuntime
     Column(Modifier.testTag("skyline-settings")) {
-        LyricsGroup {
+        LyricsGroup(topSpacing = false) {
             LyricsToggle("settings_skyline_auto", "lyrics_skyline_enabled", r.skylineEnabled, "settings_skyline_auto_note")
             LyricsToggle("settings_skyline_song_info", "lyrics_skyline_song_info", r.skylineShowSongInfo)
             LyricsToggle("settings_skyline_keep_awake", "lyrics_skyline_keep_awake", r.skylineKeepsScreenAwake, "settings_skyline_keep_awake_note")
@@ -44,7 +44,7 @@ internal fun SkylineLyricsSettings() {
             LyricsFloatSlider("settings_skyline_drift", "lyrics_skyline_ambient_drift", r.skylineAmbientDrift, 0f..2f, 19) { pinnedString("settings_unit_times_1", it) }
         }
         Text(pinnedString("settings_skyline_reset"), color = MaterialTheme.colorScheme.primary, fontSize = 15.sp,
-            modifier = Modifier.padding(horizontal = 36.dp, vertical = 16.dp).testTag("skyline-reset").clickable {
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 16.dp).testTag("skyline-reset").clickable {
                 // The source reset preserves enabled, song info, keep awake and ambient line count.
                 listOf("lyrics_skyline_current_font_size" to 54f, "lyrics_skyline_current_max_scale" to 1.1f,
                     "lyrics_skyline_next_font_size" to 24f, "lyrics_skyline_current_spacing" to 14f,

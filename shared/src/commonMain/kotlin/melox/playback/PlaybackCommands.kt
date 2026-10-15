@@ -222,7 +222,7 @@ object PlaybackCommands {
             startIndex = persisted.index,
             startPositionMs = persisted.positionMs,
         )
-        player.prepare()
+        player.prepare(resolveAudio = false)
         player.pause()
         publishQueue(player)
     }
@@ -308,6 +308,7 @@ class MeloXDesktopPlayer internal constructor(
     private var currentResolved: DesktopPlaybackRequest? = null
     @Volatile private var playingEntryId: String? = null
     private val autoMixAnalyzer = MeloXAutoMixAudioAnalyzer()
+    fun clearAnalysisCache() { autoMixAnalyzer.clear() }
     private val smartQueue = MeloXSmartQueueBuilder()
     @Volatile private var generation = 0
     @Volatile private var actionRevision = 0
@@ -501,7 +502,9 @@ class MeloXDesktopPlayer internal constructor(
         playWhenReady = false
     }
 
-    fun prepare() {
+    private var deferredRestore = false
+
+    fun prepare(resolveAudio: Boolean = true) {
         val entry = items.getOrNull(currentMediaItemIndex) ?: return
         val token = ++generation
         resolveJob?.cancel()
@@ -509,7 +512,12 @@ class MeloXDesktopPlayer internal constructor(
         awaitingAutoplay = false
         val song = entry.song
         val track = trackFor(song)
-        AudioPlayer.selectTrack(track, pendingSeekMs, song.durationMs)
+        AudioPlayer.selectTrack(track, pendingSeekMs, song.durationMs, loading = resolveAudio)
+        deferredRestore = !resolveAudio
+        // A restored queue is paused. Publish its song/position immediately, but
+        // defer provider URL resolution, FFmpeg/PCM buffers and recommendations
+        // until the user actually presses Play.
+        if (!resolveAudio) return
         autoplay.selectionChanged()
         if (currentMediaItemIndex >= items.lastIndex) autoplay.ensure()
         if (!playWhenReady) AudioPlayer.pause()
@@ -675,6 +683,11 @@ class MeloXDesktopPlayer internal constructor(
 
     fun play() {
         playWhenReady = true
+        if (deferredRestore) {
+            prepare()
+            persistSnapshot()
+            return
+        }
         val ended = AudioPlayer.state.value.isFinished || AudioPlayer.state.value.error != null
         if (ended) {
             resetFailureRecovery()

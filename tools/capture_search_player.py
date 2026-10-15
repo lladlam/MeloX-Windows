@@ -22,7 +22,8 @@ name, home = sys.argv[1:3]
 fixtures = Path(os.environ.get('MELOX_FIXTURES', '/tmp/opencode/melox-search-player-fixtures')).resolve()
 output = Path(os.environ.get('MELOX_CAPTURE_OUTPUT', str(repo / f'parity/3f877ea/evidence/search-player-{name}-ui'))).resolve()
 output.mkdir(parents=True, exist_ok=True)
-args = ['--source', 'Local', '--start-tab', 'Settings', '--theme', 'Dark', '--output', str(output), '--wait-ms', '650', '--startup-wait-ms', '1000', '--frames-ms', '0,160,400']
+# Pinned settings strings follow the JVM locale; these cases assert the pinned English labels.
+args = ['--locale', 'en-US', '--source', 'Local', '--start-tab', 'Settings', '--theme', 'Dark', '--output', str(output), '--wait-ms', '650', '--startup-wait-ms', '1000', '--frames-ms', '0,160,400']
 if name == 'eq':
     steps = 'open:tap@settings-open-playback;reveal-enable:reveal@equalizer-enabled;enable:tap@equalizer-enabled;reveal-rock:reveal@equalizer-preset-rock;rock:tap@equalizer-preset-rock;reveal-custom:reveal@equalizer-preset-custom;custom:tap@equalizer-preset-custom;reveal-band:reveal@equalizer-band-5;gain:slider@equalizer-band-5,0.75;reveal-preamp:reveal@equalizer-preamp;preamp:slider@equalizer-preamp,0.25;reveal-disable:reveal@equalizer-enabled;disable:tap@equalizer-enabled;back:escape'
     expect = '00-settings=tag:settings-root;open=tag:settings-playback;enable=checked:equalizer-enabled,eq-enabled:true;rock=selected:equalizer-preset-rock,eq-preset:Rock;custom=selected:equalizer-preset-custom,eq-preset:Custom;gain=eq-band:5:6;preamp=eq-preamp:-6;disable=eq-enabled:false;back=tag:settings-root'

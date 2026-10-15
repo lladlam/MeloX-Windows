@@ -6,6 +6,8 @@ import androidx.compose.runtime.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.awaitCancellation
 import kotlinx.coroutines.withContext
+import kotlinx.coroutines.sync.Semaphore
+import kotlinx.coroutines.sync.withPermit
 import melox.cache.MeloXResourceLruCache
 
 /** One decoded-image budget shared by list/detail artwork and the player backdrop.
@@ -14,6 +16,9 @@ import melox.cache.MeloXResourceLruCache
  * cache/UI owner releases them, without forcing Java garbage collection.
  */
 internal object MeloXArtworkMemoryCache {
+    // A fresh home can request several covers together. Bound transient native
+    // decoder memory as well as the retained cache; waiting jobs remain cancellable.
+    val decodePermits = Semaphore(2)
     private val cache = MeloXResourceLruCache<String, ImageBitmap>(128, 64L * 1024 * 1024,
         { it.width.toLong() * it.height.toLong() * 8L }, { it.asSkiaBitmap().close() })
 
@@ -36,12 +41,18 @@ internal fun rememberMeloXArtworkBitmap(key: String?, decode: () -> ImageBitmap?
         try {
             lease = MeloXArtworkMemoryCache.acquire(key)
             if (lease == null) {
-                withContext(Dispatchers.IO) { unpublished = decode() }
-                val decoded = unpublished ?: return@LaunchedEffect
-                lease = MeloXArtworkMemoryCache.publishAndAcquire(key, decoded)
-                unpublished = null
+                MeloXArtworkMemoryCache.decodePermits.withPermit {
+                    // Another visible owner may have loaded this image while we waited.
+                    lease = MeloXArtworkMemoryCache.acquire(key)
+                    if (lease == null) {
+                        withContext(Dispatchers.IO) { unpublished = decode() }
+                        val decoded = unpublished ?: return@LaunchedEffect
+                        lease = MeloXArtworkMemoryCache.publishAndAcquire(key, decoded)
+                        unpublished = null
+                    }
+                }
             }
-            bitmap = lease.value
+            bitmap = checkNotNull(lease).value
             awaitCancellation()
         } finally {
             lease?.close()

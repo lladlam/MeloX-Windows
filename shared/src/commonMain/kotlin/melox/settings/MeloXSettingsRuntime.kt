@@ -76,6 +76,9 @@ object MeloXSettingsRuntime {
     var cloudLibraryPlacement by mutableStateOf(true)
         internal set
     var flowingBackdropEnabled by mutableStateOf(true)
+    var flowingLightSpeed by mutableStateOf(1f)
+    var flowingLightSaturation by mutableStateOf(1f)
+    var flowingLightBrightness by mutableStateOf(1f)
         internal set
     var playerBackgroundMode by mutableStateOf(MeloXPlayerBackgroundMode.FlowingLight)
         internal set
@@ -369,8 +372,8 @@ object MeloXSettingsRuntime {
             .let { order -> (order + listOf("Home", "Explore", "Library", "Podcasts", "Downloads", "Cloud", "Settings")).distinct() }
         defaultTab = (prefs().getString("general_default_tab", "Home") ?: "Home")
         rememberLibraryPage = prefs().getBoolean("library_remember_page", true)
-        playlistShowArtwork = prefs().getBoolean("playlist_show_artwork", false)
-        playlistSearchBarHidden = prefs().getBoolean("playlist_search_bar_hidden", false)
+        playlistShowArtwork = prefs().getBoolean("library_playlist_show_artwork", prefs().getBoolean("playlist_show_artwork", false))
+        playlistSearchBarHidden = prefs().getBoolean("library_playlist_search_hidden", prefs().getBoolean("playlist_search_bar_hidden", false))
         defaultLibraryPage = (prefs().getString("library_default_page", "Songs") ?: "Songs")
         clipboardLinksEnabled = prefs().getBoolean("general_clipboard_links", true)
         systemFontEnabled = prefs().getBoolean("system_font", false)
@@ -397,6 +400,9 @@ object MeloXSettingsRuntime {
         cloudTabPlacement = prefs().getBoolean("placement_cloud_tab", false)
         cloudLibraryPlacement = prefs().getBoolean("placement_cloud_library", true)
         val legacyFlowingBackdropEnabled = prefs().getBoolean("player_flowing_backdrop", true)
+        flowingLightSpeed = prefs().getFloat("player_flowing_speed", 1f).coerceIn(.25f, 2f)
+        flowingLightSaturation = prefs().getFloat("player_flowing_saturation", 1f).coerceIn(0f, 2f)
+        flowingLightBrightness = prefs().getFloat("player_flowing_brightness", 1f).coerceIn(.4f, 1.6f)
         playerBackgroundMode = (prefs().getString("player_background_mode", "") ?: "")
             .takeIf { it.isNotBlank() }
             ?.let { value -> runCatching { MeloXPlayerBackgroundMode.valueOf(value) }.getOrNull() }
@@ -570,8 +576,8 @@ object MeloXSettingsRuntime {
             .let { order -> (order + listOf("Home", "Explore", "Library", "Podcasts", "Downloads", "Cloud", "Settings")).distinct() }
         defaultTab = (prefs().getString("general_default_tab", "Home") ?: "Home")
         rememberLibraryPage = prefs().getBoolean("library_remember_page", true)
-        playlistShowArtwork = prefs().getBoolean("playlist_show_artwork", false)
-        playlistSearchBarHidden = prefs().getBoolean("playlist_search_bar_hidden", false)
+        playlistShowArtwork = prefs().getBoolean("library_playlist_show_artwork", prefs().getBoolean("playlist_show_artwork", false))
+        playlistSearchBarHidden = prefs().getBoolean("library_playlist_search_hidden", prefs().getBoolean("playlist_search_bar_hidden", false))
         defaultLibraryPage = (prefs().getString("library_default_page", "Songs") ?: "Songs")
         downloadLyricsEnabled = prefs().getBoolean("download_lyrics", true)
         musicArea = (prefs().getString("music_area", "全部") ?: "全部")

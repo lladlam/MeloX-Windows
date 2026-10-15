@@ -79,7 +79,7 @@ add('controls-hidden', 'wait@5500', 'absent:player-controls', 'tag:lyrics-reveal
 add('controls-revealed', 'tap@lyrics-reveal-controls', 'tag:player-controls', 'playing:true')
 add('pause-again', 'tap@player-play-pause', 'playing:false', 'no-playback-error:true')
 
-args = ['--source', 'Netease', '--start-tab', 'Settings', '--theme', 'Dark',
+args = ['--locale', 'en-US', '--source', 'Netease', '--start-tab', 'Settings', '--theme', 'Dark',
         '--output', str(out), '--width', '666', '--height', '1334', '--density', '1.75',
         '--wait-ms', '650', '--startup-wait-ms', '1200', '--frames-ms', '0,160,400',
         '--play-id', '3334421408', '--capture-pcm', '--steps', ';'.join(steps),

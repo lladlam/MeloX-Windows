@@ -79,7 +79,7 @@ add('final-exit', 'tap@player-skyline-exit', 'absent:player-skyline')
 add('final-collapse', 'tap@player-collapse', 'absent:now-playing')
 add('final-pause', 'tap@mini-player-play-pause', 'playing:false', 'no-playback-error:true')
 
-args = ['--source', 'Netease', '--start-tab', 'Settings', '--theme', 'Dark', '--width', '1100', '--height', '780',
+args = ['--locale', 'en-US', '--source', 'Netease', '--start-tab', 'Settings', '--theme', 'Dark', '--width', '1100', '--height', '780',
         '--output', str(out), '--wait-ms', '650', '--startup-wait-ms', '1200', '--frames-ms', '0,160,400',
         '--play-id', '3334421408', '--capture-pcm', '--steps', ';'.join(steps),
         '--expect', ';'.join(k + '=' + ','.join(v) for k, v in expected.items())]

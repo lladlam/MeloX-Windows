@@ -45,6 +45,9 @@ def main():
     skyline = json.loads((repo / 'parity/3f877ea/evidence/skyline-settings-source-audit.json').read_text())
     assert skyline['pinned_android'] == baseline['pinned_android'] and skyline['verified_against_pure_export']
     expected[skyline['resource']] = skyline['sha256']
+    pages = json.loads((repo / 'parity/3f877ea/evidence/settings-pages-source-audit.json').read_text())
+    assert pages['pinned_android'] == baseline['pinned_android'] and pages['verified_against_pure_export']
+    expected.update(pages['resource_sha256'])
     records = []
     archive = zipfile.ZipFile(io.BytesIO(packaged_bytes(args.artifact))) if args.artifact else None
     try:

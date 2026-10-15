@@ -37,12 +37,29 @@ private object PinnedSettingsStrings {
             .reader(Charsets.UTF_8).use(::load)
         checkNotNull(PinnedSettingsStrings::class.java.classLoader.getResourceAsStream("parity/pinned-skyline-strings.properties"))
             .reader(Charsets.UTF_8).use(::load)
+        checkNotNull(PinnedSettingsStrings::class.java.classLoader.getResourceAsStream("parity/pinned-settings-pages.properties"))
+            .reader(Charsets.UTF_8).use(::load)
+    }
+    private val localized = java.util.concurrent.ConcurrentHashMap<String, Properties>()
+    fun forLocale(locale: Locale): Properties {
+        val suffix = when (locale.language) {
+            "zh" -> if (locale.script == "Hant" || locale.country in setOf("TW", "HK", "MO")) "zh-rTW" else "zh-rCN"
+            "ja" -> "ja"
+            else -> return values
+        }
+        return localized.getOrPut(suffix) {
+            Properties(values).apply {
+                checkNotNull(PinnedSettingsStrings::class.java.classLoader.getResourceAsStream("parity/pinned-settings-pages-$suffix.properties"))
+                    .reader(Charsets.UTF_8).use(::load)
+            }
+        }
     }
 }
 
 internal fun pinnedString(key: String, vararg args: Any): String {
-    val value = checkNotNull(PinnedSettingsStrings.values.getProperty(key)) { "Missing pinned Android string: $key" }
-    return if (args.isEmpty()) value else String.format(Locale.ROOT, value, *args)
+    val locale = Locale.getDefault()
+    val value = checkNotNull(PinnedSettingsStrings.forLocale(locale).getProperty(key)) { "Missing pinned Android string: $key" }
+    return if (args.isEmpty()) value else String.format(locale, value, *args)
 }
 
 internal enum class MeloXLegalDocument(val titleKey: String, val asset: String, val tag: String) {

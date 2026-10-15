@@ -44,6 +44,32 @@ class DesktopPlaybackStateTest {
 
     @BeforeTest fun resetModes() { MeloXPlaybackModePreferences.reset() }
 
+    @Test fun startupQueueRestoreDoesNotResolveOrStartAudioUntilPlayAndRetainsSeek() = runTest {
+        var resolutions = 0
+        val starts = mutableListOf<DesktopPlaybackStart>()
+        val player = player({ resolutions++; DesktopPlaybackRequest("resolved") }, starts)
+        PlaybackCommands.adoptController(player)
+        // Use the public startup entry point, with the actual persisted queue.
+        player.setMediaItems(listOf(song(1), song(2)), 1, 42_000)
+        MeloXPlaybackQueueStore.save(player)
+        player.restore(emptyList(), 0, 0)
+        MeloXSettingsPreferences.setBoolean("playback_save_queue", true)
+        PlaybackCommands.restoreLastQueue()
+        advanceTimeBy(10_000); runCurrent()
+        assertEquals(0, resolutions)
+        assertTrue(starts.isEmpty())
+        assertEquals("2", AudioPlayer.currentTrack.value?.id?.value)
+        assertEquals(42_000L, AudioPlayer.getCurrentPositionMs())
+        assertFalse(AudioPlayer.state.value.isLoading)
+        assertTrue(AudioPlayer.state.value.isPaused)
+        player.seekTo(65_000)
+        player.play(); runCurrent()
+        assertEquals(1, resolutions)
+        assertEquals(65_000L, starts.single().positionMs)
+        assertTrue(starts.single().playWhenReady)
+        assertEquals("2", starts.single().track.id.value)
+    }
+
     @Test fun collectionIdsSurviveQueuePersistenceAndBecomePlaybackMetadata() = runTest {
         val player = player({ DesktopPlaybackRequest("unused") })
         PlaybackCommands.adoptController(player)
@@ -72,6 +98,18 @@ class DesktopPlaybackStateTest {
         assertEquals(tracks.map { it.providerMetadata }, saved.items.map { it.song.providerTrack!!.providerMetadata })
         assertEquals(1, saved.index)
         assertEquals(2400L, saved.positionMs)
+    }
+
+    @Test fun localContentLocationSurvivesQueuePersistenceForDeferredPlayback() = runTest {
+        val player = player({ DesktopPlaybackRequest("unused") })
+        PlaybackCommands.adoptController(player)
+        val metadata = ProviderTrackMetadata.Local("file:///C:/Music/%E6%AD%8C%20%2B.wav", "local-key")
+        val track = MusicTrack(MusicResourceId(MusicSource.Local, "local-key"), "local", emptyList(), providerMetadata = metadata)
+        player.setMediaItems(listOf(song(1).copy(providerTrack = track)), 0, 4200)
+        MeloXPlaybackQueueStore.save(player)
+        val restored = assertNotNull(MeloXPlaybackQueueStore.read())
+        assertEquals(metadata, restored.items.single().song.providerTrack?.providerMetadata)
+        assertEquals(4200L, restored.positionMs)
     }
 
     @Test fun explicitClearStopsAudioAndCannotRestoreStaleQueueOrAcceptLateCallbacks() = runTest {
@@ -234,12 +272,17 @@ class DesktopPlaybackStateTest {
             assertEquals(youtube.id, reader.snapshot()[1].providerTrack?.id)
             assertEquals("playlist-entry-9", (reader.snapshot()[1].providerTrack?.providerMetadata as? ProviderTrackMetadata.YouTube)?.setVideoId)
             assertFalse(reader.playWhenReady)
-            assertFalse(starts.single().playWhenReady)
-            assertEquals(17_000L, starts.single().positionMs)
+            assertTrue(starts.isEmpty(), "Paused startup must not allocate a decoder")
+            assertEquals(17_000L, AudioPlayer.getCurrentPositionMs())
+            assertTrue(AudioPlayer.state.value.isPaused)
             // A second initialization must not overwrite a live queue/seek.
             reader.seekTo(0)
             PlaybackCommands.restoreLastQueue()
             assertEquals(0L, reader.currentPosition)
+            reader.play(); runCurrent()
+            assertTrue(starts.single().playWhenReady)
+            assertEquals(0L, starts.single().positionMs)
+            assertEquals(youtube.id, starts.single().track.id)
             reader.release()
         } finally {
             writer.release()

@@ -78,13 +78,13 @@ object AudioPlayer {
     internal val playbackOffsetMs = AtomicLong(0L)
 
     /** Publish the selected item before URL resolution; never leave old audio running. */
-    fun selectTrack(track: MusicTrack, startPositionMs: Long = 0L, knownDurationMs: Long = 0L) {
+    fun selectTrack(track: MusicTrack, startPositionMs: Long = 0L, knownDurationMs: Long = 0L, loading: Boolean = true) {
         stop(clearTrack = false)
         _currentTrack.value = track
         _durationMs.value = (knownDurationMs.takeIf { it > 0L } ?: track.durationMs ?: 0L).coerceAtLeast(0L)
         _positionMs.value = startPositionMs.coerceAtLeast(0L)
         _progress.value = if (_durationMs.value > 0L) (_positionMs.value.toFloat() / _durationMs.value).coerceIn(0f, 1f) else 0f
-        _state.value = PlayerState(isLoading = true, trackTitle = track.title, trackArtist = track.artistText)
+        _state.value = PlayerState(isLoading = loading, isPaused = !loading, trackTitle = track.title, trackArtist = track.artistText)
     }
 
     fun reportFailure(error: Throwable): Unit = synchronized(playbackLock) {

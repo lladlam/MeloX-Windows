@@ -20,7 +20,7 @@ import kotlin.math.roundToInt
 internal fun AdvancedLyricsSettings() {
     val r = MeloXSettingsRuntime
     Column(Modifier.testTag("advanced-lyrics-settings")) {
-        LyricsGroup {
+        LyricsGroup(topSpacing = false) {
             Box(Modifier.testTag("lyrics_style")) {
                 MeloXSettingsDropdown(pinnedString("settings_lyrics_style"), r.lyricsStyle,
                     listOf(MeloXLyricsStyle.AppleMusic to "Apple Music", MeloXLyricsStyle.Eva to pinnedString("settings_lyrics_style_eva"),
@@ -138,22 +138,23 @@ private fun percent(value: Float) = pinnedString("settings_unit_percent", (value
 private fun offOrPercent(value: Float) = if (value == 0f) pinnedString("settings_skyline_off") else percent(value)
 
 @Composable
-internal fun LyricsGroup(content: @Composable ColumnScope.() -> Unit) {
-    Spacer(Modifier.height(10.dp))
+internal fun LyricsGroup(topSpacing: Boolean = true, content: @Composable ColumnScope.() -> Unit) {
+    if (topSpacing) Spacer(Modifier.height(10.dp))
     CompositionLocalProvider(LocalSettingsGroupRowIndex provides mutableIntStateOf(0)) {
-        MeloXIosGroupedList(Modifier.padding(horizontal = 20.dp), surfaceColor = MaterialTheme.colorScheme.surface, content = content)
+        MeloXIosGroupedList(surfaceColor = MaterialTheme.colorScheme.surface, content = content)
     }
 }
 
 @Composable
 internal fun LyricsSliderGroup(content: @Composable ColumnScope.() -> Unit) {
     Spacer(Modifier.height(10.dp))
-    Column(Modifier.padding(horizontal = 20.dp), content = content)
+    Column(content = content)
 }
 
 @Composable
 internal fun LyricsToggle(title: String, key: String, checked: Boolean, note: String? = null) {
-    MeloXIosListRow(title = pinnedString(title), subtitle = note?.let { pinnedString(it) }, showChevron = false,
+    // Pinned SettingsToggleRow accepts `note` but intentionally renders only the title.
+    MeloXIosListRow(title = pinnedString(title), showChevron = false,
         showTopSeparator = LocalSettingsGroupRowIndex.current.intValue++ > 0,
         trailingContent = { MeloXGlassToggle(checked, onCheckedChange = { MeloXSettingsPreferences.setBoolean(key, it) }, modifier = Modifier.testTag(key)) })
 }
