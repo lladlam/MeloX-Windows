@@ -140,6 +140,25 @@
 - 删除后全量 `:shared:desktopTest :desktop:compileKotlinDesktop` **230 tests / 47 suites / 0 failures，BUILD SUCCESSFUL**。
 - 桌面目前不做 Media3 式预取缓存（按需拉取）；若将来需要，应实现真实预解码并设上限/淘汰，而不是占位文件。
 
+### 18. 剩余禁用设置的逐项盘点（本轮不改代码，只定性）
+
+当前共 **15 行禁用控件**，按“能否在桌面落地”分两类，避免以后误把它们当已完成：
+
+**A. 平台能力缺失，保持禁用（诚实禁用，不写开关）**
+- 系统歌词 `system_lyrics_enabled`、歌词通知 `lyrics_notifications_enabled` + 5 个通知子项 + `notification-test`、HyperOS 灵动岛：Android 专属系统集成。
+- 悬浮歌词 `floating_lyrics_enabled` / 副歌词模式 / 字号 / 高对比：需要桌面悬浮置顶窗口。
+- 触觉反馈 `general_haptic_feedback`：桌面无振动设备。
+- 音频焦点 `playback_allow_other_apps`：Android AudioFocus 的桌面等价物是 SMTC，语义不同，需单独设计而不是照抄开关。
+
+**B. 可落地但缺真实生产端，暂不启用**
+- 剪贴板链接 `general_clipboard_links`：解析器（`NeteaseClipboardLink`、一起听邀请）与消费者（播放/一起听）都已存在，缺的是桌面剪贴板轮询与确认弹窗（源端是启动后一次扫描 + `lastClipboardText` 去重）。
+- 沉浸播放 `immersive_playback`：需要把播放器展开绑定到窗口全屏/无边框状态，需 Windows 实机验收。
+- 记住上次歌曲 `playback_remember_last_song`：队列恢复已存在，需确认该键是否应真正控制恢复行为，避免“开关无效”。
+- Bilibili 歌词/音频对齐 `bilibili_lyric_audio_alignment`：**引擎与存储都在**（`BilibiliLyricAlignment`、`BilibiliPlaybackAssociationStore`，播放解析已消费关联），但桌面**没有任何生产端**写入关联（`searchReplacementCandidates` 无调用方），因此保持禁用是对的。
+- 自动更新检查 `update_auto_check`：桌面无定时器消费者。
+
+结论：这批禁用项目前都不是“存开关但没消费者”，下一轮按 B→A 顺序逐个接真实消费者后再启用。
+
 ### 11. 本地分段抽取去占位
 
 - `LocalAudioSegmentExtractor` 删除“返回 `FloatArray(0)`”占位，改为真实 FFmpeg PCM 解码：输入 44.1kHz 立体声，混为单声道，线性重采样到 8kHz，输出长度只由实际解码帧数决定，**不补静音凑长度**。
