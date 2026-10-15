@@ -36,7 +36,7 @@ internal fun PinnedPlaybackSettings() {
         SettingsToggleRow("settings_allow_other_apps", "playback_allow_other_apps", false, enabled = false)
         SettingsToggleRow("settings_remember_player_page", "playback_remember_page", true)
         SettingsToggleRow("settings_save_queue_on_exit", "playback_save_queue", true)
-        SettingsToggleRow("settings_remember_last_song", "playback_remember_last_song", true, enabled = false)
+        SettingsToggleRow("settings_remember_last_song", "playback_remember_last_song", true)
         SettingsToggleRow("settings_heart_mode_on_launch", "playback_heart_mode_on_launch", false)
         SettingsToggleRow("settings_previous_restarts", "playback_previous_restarts", true)
         SettingsToggleRow("settings_show_quality_tip", "player_show_quality_tip", true)

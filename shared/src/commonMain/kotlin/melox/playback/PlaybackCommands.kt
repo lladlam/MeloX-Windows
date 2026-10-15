@@ -97,6 +97,7 @@ object PlaybackCommands {
             entryIds = entries.map { it.entryId },
         )
         player.persistSnapshot()
+        MeloXLastPlaybackStore.save(player)
         MeloXPlaybackEvents.publish(player, MeloXPlaybackEvents.Kind.Queue)
     }
 
@@ -213,15 +214,30 @@ object PlaybackCommands {
     }
 
     fun restoreLastQueue() {
-        if (!MeloXSettingsPreferences.boolean("playback_save_queue", true)) return
         if (playerController()?.mediaItemCount?.let { it > 0 } == true) return
-        val persisted = MeloXPlaybackQueueStore.read() ?: return
+        val items: List<QueueEntry>
+        val startIndex: Int
+        val startPositionMs: Long
+        if (MeloXSettingsPreferences.boolean("playback_save_queue", true)) {
+            val persisted = MeloXPlaybackQueueStore.read() ?: return
+            items = persisted.items
+            startIndex = persisted.index
+            startPositionMs = persisted.positionMs
+        } else {
+            // Pinned single-song fallback: only when queue persistence is off, so
+            // disabling queue saving never silently restores a full queue again.
+            if (!MeloXSettingsPreferences.boolean("playback_remember_last_song", true)) return
+            val last = MeloXLastPlaybackStore.read() ?: return
+            items = listOf(QueueEntry(last.first, QUEUE_ORIGIN_BASE, 0, UUID.randomUUID().toString()))
+            startIndex = 0
+            startPositionMs = last.second
+        }
         val player = activeController as? MeloXDesktopPlayer ?: MeloXDesktopPlayer()
         activeController = player
         player.restore(
-            items = persisted.items,
-            startIndex = persisted.index,
-            startPositionMs = persisted.positionMs,
+            items = items,
+            startIndex = startIndex,
+            startPositionMs = startPositionMs,
         )
         player.prepare(resolveAudio = false)
         player.pause()
@@ -385,6 +401,7 @@ class MeloXDesktopPlayer internal constructor(
                         currentPosition = AudioPlayer.getCurrentPositionMs().coerceAtLeast(0L)
                     }
                     savePosition(currentMediaItemIndex, currentPosition)
+                    MeloXLastPlaybackStore.savePosition(currentPosition)
                 }
             }
         }
