@@ -38,6 +38,8 @@ import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import melox.account.NeteaseSessionStore
+import melox.account.NeteaseOfficialCookieReader
+import melox.account.NeteaseOfficialProfile
 import melox.music.model.MusicSource
 import melox.music.provider.ProviderAccountManager
 import melox.network.NeteasePhoneAuthClient
@@ -78,7 +80,7 @@ private fun LoginProvider.musicSource(): MusicSource = when (id) {
 }
 
 private val allProviders = listOf(
-    LoginProvider("netease", "网易云音乐", Color(0xFFFF2442), "手机号登录 / 扫码登录"),
+    LoginProvider("netease", "网易云音乐", Color(0xFFFF2442), "手机号登录 / 本机客户端"),
     LoginProvider("qq", "QQ音乐", Color(0xFF12B7F5), "扫码登录"),
     LoginProvider("kugou", "酷狗音乐", Color(0xFF2CA2F9), "扫码登录"),
     LoginProvider("kuwo", "酷我音乐", Color(0xFFFF6600), "手机号登录"),
@@ -383,7 +385,7 @@ private fun LoginDialog(
     )
 }
 
-// ── Netease: tabs for phone / QR ──
+// ── Netease: phone / one-shot official client Cookie import ──
 
 @Composable
 private fun NeteaseLoginForm(state: LoginScreenState, onLoginSuccess: (String) -> Unit) {
@@ -399,7 +401,8 @@ private fun NeteaseLoginForm(state: LoginScreenState, onLoginSuccess: (String) -
         ) {
             Tab(
                 selected = state.dialogTab == 0,
-                onClick = { state.dialogTab = 0 },
+                onClick = { state.dialogTab = 0; state.dialogMessage = null },
+                enabled = !state.dialogLoading,
                 text = {
                     Text(
                         text = "手机号登录",
@@ -410,10 +413,11 @@ private fun NeteaseLoginForm(state: LoginScreenState, onLoginSuccess: (String) -
             )
             Tab(
                 selected = state.dialogTab == 1,
-                onClick = { state.dialogTab = 1 },
+                onClick = { state.dialogTab = 1; state.dialogMessage = null },
+                enabled = !state.dialogLoading,
                 text = {
                     Text(
-                        text = "扫码登录",
+                        text = "本机客户端",
                         fontFamily = MeloXLanTingProFontFamily,
                         fontSize = 13.sp,
                     )
@@ -515,32 +519,62 @@ private fun NeteaseLoginForm(state: LoginScreenState, onLoginSuccess: (String) -
                 }
             }
         } else {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(200.dp)
-                    .clip(RoundedCornerShape(12.dp))
-                    .background(MeloXColors.SurfaceVariant),
-                contentAlignment = Alignment.Center,
-            ) {
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Text(
-                        text = "网易云请使用手机验证码登录",
-                        color = MeloXColors.TextSecondary,
-                        fontFamily = MeloXLanTingProFontFamily,
-                        fontSize = 13.sp,
-                        textAlign = TextAlign.Center,
-                    )
-                    Spacer(modifier = Modifier.height(12.dp))
-                    TextButton(onClick = { state.dialogTab = 0 }) {
-                        Text(
-                            text = "手机号登录",
-                            color = MeloXColors.Primary,
-                            fontFamily = MeloXLanTingProFontFamily,
-                            fontSize = 13.sp,
-                        )
-                    }
+            NeteaseOfficialClientLoginPane(state, onLoginSuccess)
+        }
+    }
+}
+
+@Composable
+private fun NeteaseOfficialClientLoginPane(state: LoginScreenState, onLoginSuccess: (String) -> Unit) {
+    val reader = remember { NeteaseOfficialCookieReader() }
+    val scope = rememberCoroutineScope()
+    var profiles by remember { mutableStateOf<List<NeteaseOfficialProfile>>(emptyList()) }
+    var selectedName by remember { mutableStateOf<String?>(null) }
+    Text(
+        text = if (reader.isSupported) "读取当前 Windows 用户的网易云音乐客户端 Cookie，验证后用于 MeloX 登录。"
+            else "本机客户端登录仅支持 Windows。",
+        color = MeloXColors.TextSecondary,
+        fontFamily = MeloXLanTingProFontFamily,
+        fontSize = 13.sp,
+    )
+    profiles.takeIf { it.size > 1 }?.forEach { profile ->
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            RadioButton(selected = selectedName == profile.name, enabled = !state.dialogLoading, onClick = { selectedName = profile.name })
+            Text(profile.name, color = MeloXColors.pageOnSurface(), fontSize = 13.sp)
+        }
+    }
+    LoginButton(
+        color = Color(0xFFFF2442),
+        enabled = reader.isSupported && !state.dialogLoading,
+        text = "读取客户端登录态",
+        modifier = Modifier.testTag("account-netease-import-official"),
+    ) {
+        state.dialogLoading = true
+        state.dialogMessage = null
+        scope.launch {
+            try {
+                val available = withContext(Dispatchers.IO) { reader.findProfiles() }
+                if (available.isEmpty()) {
+                    state.dialogMessage = "未找到网易云音乐客户端登录数据，请先在客户端登录"
+                    return@launch
                 }
+                val target = if (available.size == 1) available.single() else {
+                    available.firstOrNull { it.name == selectedName }
+                }
+                profiles = available
+                if (target == null) {
+                    state.dialogMessage = "发现多个客户端数据目录，请选择后再读取"
+                    return@launch
+                }
+                val cookie = withContext(Dispatchers.IO) { reader.readCookie(target) }
+                val account = NeteaseSessionStore().acceptAuthenticatedCookie(cookie).getOrThrow()
+                onLoginSuccess(account.nickname)
+            } catch (error: kotlinx.coroutines.CancellationException) {
+                throw error
+            } catch (error: Exception) {
+                state.dialogMessage = error.message ?: "客户端登录态验证失败，请重试"
+            } finally {
+                state.dialogLoading = false
             }
         }
     }
