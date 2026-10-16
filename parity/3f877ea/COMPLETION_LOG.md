@@ -238,3 +238,13 @@
   3. **空闲时仍在涨**（暂停组最大单步增幅出现在关闭播放器后的静置 +53.3MB，同期 JVM 堆被 GC 回收）→ 增长在原生侧，且不随活动停止而停止；但随后 v2 长跑显示最终会停在 ~795MB。
 - 汇总（四组真实回放）：增长 = 启动/播放器图形初始化的约 +300MB 一次性开销 + 每场景 2~3MB + 歌词页关闭后约 67MB 的文本对象滞留，随后饱和；**播放 ≤15MB、歌词不改变总增长**。
 - 仍未解决：Windows 实机上 549→1431MB 的无界复现（本环境最长 194s 未出现），以及原生分配的具体持有者/分配器。证据：`evidence/playback-memory-v3/`、`evidence/playback-memory-bisect/{no-lyrics,c2-playing,p2-paused}/`（只存汇总与参数，不提交图片/PCM）。
+
+### 22. 本机网易云音乐 Cookie 一次性导入
+
+- 用户确认范围：**只获取 Cookie，然后走已有 API**。依据上传的官方 Windows `3.1.41.205564` / Cookies schema 14 研究交接接入一次性读取。
+- 新增 `shared/src/desktopMain/kotlin/melox/account/NeteaseOfficialCookieReader.kt`：定位当前 Windows 用户的 `NetEase/CloudMusic/webapp*`；仅读官方文件，将加密 Cookies 及存在的 WAL/journal 复制到 MeloX 私有临时目录；检查复制前后文件元数据，检测到变化则提示重试。SQLite 只打开私有副本，不打开官方库。复用 `WindowsDpapi.unprotect` 解封主密钥，AES-GCM 解出根路径下未过期的 `MUSIC_U` / `__csrf`；拒绝未知 schema/加密前缀、认证标签错误、重复主会话和 Cookie 分隔符注入。主密钥缓冲区用后清零，正常/异常路径均删除私有副本，错误不附带底层秘密或原始输入。
+- `LoginScreen.kt` 原未实现的网易扫码页替换为“本机客户端”页，用户点击“读取客户端登录态”触发；多 profile 时显式选择，非 Windows 明确禁用。读取结果直接交给已有 `NeteaseSessionStore.acceptAuthenticatedCookie()`，继续用已有 EAPI 账号验证和 DPAPI 会话保存；成功只向 UI 返回昵称。导入后的业务调用、退出和失效行为沿用现有链路。
+- 依赖：增加 Xerial `sqlite-jdbc:3.53.4.0` 读取 SQLite 副本；既有发行模块已包含 `java.sql`。Context7 月额度已耗尽，已核对 Maven Central 版本元数据和该版本官方 `SQLiteConfig` 源码的只读打开方式。
+- 新增 `NeteaseOfficialCookieReaderTest` **9 项**：真实 SQLite + AES-GCM 合成数据覆盖导入→既有 SessionStore、拒绝时不覆盖旧账号、profile 探测/选择、过期、前缀/GCM 破坏、分隔符/重复会话、DPAPI/JSON 失败脱敏、schema/非法目录，以及打开中的 WAL 提交。Windows 上 fixture 使用真实 CurrentUser DPAPI 包裹/解封测试 AES key；Linux 注入只用于测试的解封函数。原文件字节/mtime、临时副本清理和密钥清零有断言。
+- 本地验证：`:shared:desktopTest :desktop:compileKotlinDesktop` **241 tests / 49 suites / 0 failures / 0 errors / 0 skipped，BUILD SUCCESSFUL**；`git diff --check` PASS。
+- 验收边界：当前本地环境为 Linux，尚未用真实 Windows 网易账号完成导入和线上 API 验证；Windows CI、发行打包与独立下载核验另记。Android UI 验收基线仍为 `3f877ea`。
