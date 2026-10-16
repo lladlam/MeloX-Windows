@@ -1,0 +1,16 @@
+{
+  "run_id": "38858654884",
+  "head_sha": "aeafd724ebece906b52040a8790c066414ccb75f",
+  "status": "PASSED",
+  "application_jar": "app/MeloX-Desktop-windows-x64-1.0.0.jar",
+  "required_entries": [
+    "melox/account/NeteaseOfficialCookieReader.class",
+    "org/sqlite/SQLiteConfig.class",
+    "org/sqlite/native/Windows/x86_64/sqlitejdbc.dll"
+  ],
+  "application_jar_crc_all_entries": "PASSED",
+  "sqlite_windows_x64_dll_bytes": 1014784,
+  "sqlite_windows_x64_dll_sha256": "f16882d2eded914edd1e1d313e7c8579e040b0da090a52ea99ad7b0c5d961c45",
+  "native_library_format": "PE_AMD64",
+  "physical_windows_import": "PENDING_REAL_ACCOUNT_VALIDATION"
+}

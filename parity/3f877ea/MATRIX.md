@@ -42,10 +42,26 @@ Historical `parity/94e17c9/` evidence is reference material, not new acceptance.
 | Background sleep timer and ListenTogether | Pinned playback coordinator/player/settings | Persistent process-owned deadline, actual pause; real room/status/command/playlist/heartbeat protocol and queue synchronization with echo/account guards | COMPLETION_LOG.md; state-machine tests and timer set/persist/restart/cancel + missing-account Together physical replay pass; live two-account sync outstanding | PARTIAL |
 | General system font consumer | `ui/theme/MeloXMiSansFont.kt` | Same `system_font` chooses Default vs pinned MiLan in Material and glass typography; enabled setting | COMPLETION_LOG.md; physical change/actual typography consumer, independent reload and reset pass | PARTIAL |
 | Native multi-provider catalogs (Kuwo / Bilibili / Apple Music) | `core/provider/kuwo/*`, `bilibili/*`, `applemusic/*` | Kuwo search/playback/lyrics/playlists; Bilibili WBI search + favourite folders + DASH auth playback; Apple official REST catalog/library/lyrics with validated tokens; Apple declares no Playback capability | COMPLETION_LOG.md; 9 new protocol regressions plus full 230-test suite pass. Live authorized accounts, real music playback and pinned frames pending | PARTIAL |
+| Windows official NetEase client Cookie import | User-supplied 3.1.41.205564 research handoff; Windows extension | One-shot read-only profile/cookie copy, CurrentUser DPAPI + AES-GCM; existing SessionStore validation/save and existing API clients; explicit profile selection | COMPLETION_LOG.md steps 22–23; 9 SQLite/crypto/session tests pass locally and on Windows with real DPAPI over synthetic keys; packaged x64 SQLite DLL verified. Real-account import and physical login UI pending | PARTIAL |
 
 ## Evidence levels
 
 Latest independently verified Windows distribution:
+**aeafd724ebece906b52040a8790c066414ccb75f**, run **38858654884 / SUCCESS**,
+artifacts **12029157838 / 12029038255**. **241 tests / 49 suites / zero failures,
+errors or skipped** (re-aggregated from downloaded Windows XML). Delivery ZIP
+**332,746,834 bytes**, SHA-256
+`e0607284a65a7254891840df96a2a78067bc425c7b781db14430f42ca8b6c5f2`.
+Independent full-download verification passes all 357 ZIP CRCs, source revision,
+pinned resources and decoder bytes/PE checks. Application JAR CRC and bundled
+Windows AMD64 SQLite DLL pass. The one-shot Cookie reader uses existing login/API
+paths; its 9 tests exercise actual Windows DPAPI with synthetic credentials.
+Evidence: `evidence/windows-ci-aeafd72/`. Real-account import, physical login UI,
+audible/device/user-memory behaviour and pinned Android pixels/motion remain pending.
+The earlier clipboard-link consumer is included but its OS clipboard interaction
+and complete Together invitation routing remain unaccepted.
+
+Previously latest independently verified Windows distribution:
 **1f25501fb0eb21f336d6de5426a9fe5a3ffb5383**, run **38732079740 / SUCCESS**,
 artifacts **11971915297 / 11971800398**. **232 tests / 48 suites / zero failures,
 errors or skipped** (re-aggregated from the downloaded verification artifact's XML).

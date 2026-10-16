@@ -31,15 +31,17 @@ controls/reload gate. The follow-up provider-catalog batch then passed run **387
 at `5b4e980` (Kuwo/Bilibili/Apple REST), and the memory-replay batch passed run **38716111866 /
 SUCCESS** at `a0c8b79` with **230 tests / 47 suites / zero failures**.
 
-Current independently verified distribution: **`1f25501`**, run **38732079740 / SUCCESS**, delivery ZIP
-**320,738,222 bytes**, SHA-256
-`58f7f6006e604667811c30c9723273765046b7a286b64a358c6dd3ede8c40bd0`. The ZIP was re-downloaded
-outside CI and re-verified end to end (`evidence/windows-ci-1f25501/`): CRC of all 357 entries,
+Current independently verified distribution: **`aeafd72`**, run **38858654884 / SUCCESS**, delivery ZIP
+**332,746,834 bytes**, SHA-256
+`e0607284a65a7254891840df96a2a78067bc425c7b781db14430f42ca8b6c5f2`. The ZIP was re-downloaded
+outside CI and re-verified end to end (`evidence/windows-ci-aeafd72/`): CRC of all 357 entries,
 stamped revision, pinned resource bytes and packaged native decoder bytes/PE magic; the Windows
-test totals (**232 / 48 / 0**) were re-aggregated from the downloaded `TEST-*.xml` reports rather than
-taken from CI's own summary. Versus the previous verified point `d4fb9de` this adds the real
-`playback_remember_last_song` consumer (single-song fallback, only when queue persistence is off)
-and enables its settings row.
+test totals (**241 / 49 / 0**) were re-aggregated from downloaded `TEST-*.xml` reports. Application
+JAR CRC and the bundled SQLite Windows x64 DLL also pass. The added one-shot official-client Cookie
+reader hands `MUSIC_U`/`__csrf` to the existing `NeteaseSessionStore` validation/persistence and existing
+API clients. Nine synthetic-data tests pass on Windows, using real CurrentUser DPAPI; real-account
+import and the login UI's physical Windows click remain pending. This delivery also includes the earlier
+clipboard-link consumer (`49f15d7`), whose actual OS clipboard behaviour remains unaccepted.
 
 Remaining confirmed gaps include the desktop Apple MusicKit full-song backend (Apple REST catalog is
 wired; Playback capability is intentionally not advertised), several OS settings/login

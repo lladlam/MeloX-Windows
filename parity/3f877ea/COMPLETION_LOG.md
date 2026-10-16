@@ -248,3 +248,10 @@
 - 新增 `NeteaseOfficialCookieReaderTest` **9 项**：真实 SQLite + AES-GCM 合成数据覆盖导入→既有 SessionStore、拒绝时不覆盖旧账号、profile 探测/选择、过期、前缀/GCM 破坏、分隔符/重复会话、DPAPI/JSON 失败脱敏、schema/非法目录，以及打开中的 WAL 提交。Windows 上 fixture 使用真实 CurrentUser DPAPI 包裹/解封测试 AES key；Linux 注入只用于测试的解封函数。原文件字节/mtime、临时副本清理和密钥清零有断言。
 - 本地验证：`:shared:desktopTest :desktop:compileKotlinDesktop` **241 tests / 49 suites / 0 failures / 0 errors / 0 skipped，BUILD SUCCESSFUL**；`git diff --check` PASS。
 - 验收边界：当前本地环境为 Linux，尚未用真实 Windows 网易账号完成导入和线上 API 验证；Windows CI、发行打包与独立下载核验另记。Android UI 验收基线仍为 `3f877ea`。
+
+### 23. Cookie 导入的 Windows CI 与发行独立核验
+
+- 功能提交 `f443fe6`，步骤记录提交 `aeafd72`；Windows run **`38858654884` / SUCCESS**，head **`aeafd724ebece906b52040a8790c066414ccb75f`**。下载的 Windows XML 重新汇总为 **241 tests / 49 suites / 0 failures / 0 errors / 0 skipped**；Cookie 导入 suite 的 9 项均通过，包含 Windows CurrentUser DPAPI 对合成密钥的真实包裹/解封。
+- 完整独立下载 artifacts **`12029157838`（发行）/ `12029038255`（验证）**。发行 ZIP **332,746,834 bytes**，SHA-256 **`e0607284a65a7254891840df96a2a78067bc425c7b781db14430f42ca8b6c5f2`**。
+- `tools/verify_delivery_artifact.py`：357 个 ZIP 条目 CRC、版本戳与 head SHA、16 个 pinned 资源、打包 FFmpeg 字节与 PE magic 均 PASS。额外打开下载包内应用 JAR，全部 JAR 条目 CRC PASS，确认 `NeteaseOfficialCookieReader.class`、`SQLiteConfig.class` 和 Windows x64 `sqlitejdbc.dll` 确实打包；DLL **1,014,784 bytes / PE AMD64**，SHA-256 `f16882d2eded914edd1e1d313e7c8579e040b0da090a52ea99ad7b0c5d961c45`。
+- 证据：`evidence/windows-ci-aeafd72/`（run、完整测试汇总、导入 suite XML、独立下载核验、Cookie 导入打包核验）。当前独立核验发行更新为 `aeafd72`；真实官方账号导入→现有线上 API、物理 Windows 登录点击、同内容 Android 像素/动态验收仍待实机。
