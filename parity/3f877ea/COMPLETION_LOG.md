@@ -27,7 +27,7 @@
 | Android 同内容截图/动态帧 | 缺参考证据 | 不用桌面自比对冒充验收 |
 | Bilibili / Kuwo / Apple Music 原生 provider | 目录/协议已接，live 账号待验 | Kuwo 搜索/播放/歌词/歌单；Bilibili WBI 搜索/收藏夹/DASH；Apple 官方 REST 目录/资料库/歌词。Apple 全曲明确不声明 Playback 能力 |
 | 播放预取 / 独立本地音频分段抽取 | 预取死代码已删除；分段抽取已接真实解码 | 删除 `MeloXMediaPrefetcher`：它会创建**空占位文件**并返回，却全仓库无调用方，属于可产生假数据的陷阱；桌面按需拉取，无 Media3 预取缓存（如将来需要，应实现真实预解码并设上限）。`LocalAudioSegmentExtractor` 已用打包 FFmpeg 输出真实 8kHz 单声道 PCM，不做静音填充 |
-| 播放后 549→1431MB 持续增长 | 已定位为有界原生平台期；未复现无界增长 | 三组对照：播放 vs 暂停 +400.6 / +385.6MB（差 15MB）；含/不含歌词均 +484.9MB；15→51 场景只多 +84MB；长跑 194s 已在 ~795MB 平台；关闭播放器后静置仍 +18~53MB（JVM 堆同时被回收）|
+| 播放后 549→1431MB 持续增长 | 未复现、未修复；具体持有者待查 | Linux 短跑观测不足以证明永久有界平台期；播放/暂停、歌词和截图数量同时存在时长、GC 等混杂，不能将组间差值直接归因为各模块开销。历史步骤 12–15 的强因果判断由本行及步骤 25 更正 |
 
 ## 步骤记录
 
@@ -255,3 +255,20 @@
 - 完整独立下载 artifacts **`12029157838`（发行）/ `12029038255`（验证）**。发行 ZIP **332,746,834 bytes**，SHA-256 **`e0607284a65a7254891840df96a2a78067bc425c7b781db14430f42ca8b6c5f2`**。
 - `tools/verify_delivery_artifact.py`：357 个 ZIP 条目 CRC、版本戳与 head SHA、16 个 pinned 资源、打包 FFmpeg 字节与 PE magic 均 PASS。额外打开下载包内应用 JAR，全部 JAR 条目 CRC PASS，确认 `NeteaseOfficialCookieReader.class`、`SQLiteConfig.class` 和 Windows x64 `sqlitejdbc.dll` 确实打包；DLL **1,014,784 bytes / PE AMD64**，SHA-256 `f16882d2eded914edd1e1d313e7c8579e040b0da090a52ea99ad7b0c5d961c45`。
 - 证据：`evidence/windows-ci-aeafd72/`（run、完整测试汇总、导入 suite XML、独立下载核验、Cookie 导入打包核验）。当前独立核验发行更新为 `aeafd72`；真实官方账号导入→现有线上 API、物理 Windows 登录点击、同内容 Android 像素/动态验收仍待实机。
+
+### 24. 前台剪贴板、邀请确认与沉浸播放消费者
+
+- 真源：纯 pinned `MainActivity.onResume`、`MeloXApp.kt` 的链接确认框、`MeloXListenTogetherInviteActivity.kt`、`MeloXImmersivePlaybackEffect.kt`、`MeloXPlayerInsets.kt`。纠正初版“启动只扫描一次”的描述：Android 每次 resume 取消旧扫描，等首帧、延迟 100ms，检查开关并按进程内最后文本去重。
+- `MeloXApp.kt` 改用生产窗口焦点/最小化状态触发扫描，并等待 onboarding 完成；仍读取真实 AWT 系统剪贴板。新增 `NeteaseClipboardIntake`，trim/去重、一起听邀请优先于 songId，邀请可从其他 music source 打开；普通歌曲/歌单仍限网易来源。关闭开关不消耗文本。
+- 新增 `MeloXClipboardDialogs.kt`：普通链接使用 pinned glass 布局、按钮样式及间距；一起听直接弹源端确认框并传递 roomId/inviterId，确认才走既有真实 join API，成功后 adoptRoom。失败保留错误与重试，busy 时禁止重复加入/取消；请求期间账号变化不采纳过时结果。歌曲/歌单请求不再将异常吞成空列表，空响应及播放失败都有错误反馈，协程取消继续传播。
+- 沉浸播放接入 `MeloXImmersiveWindowOwner` 与真实 Compose `WindowState`：全屏播放器打开且偏好开启时进入桌面 Fullscreen；关闭/禁用/销毁恢复原先 Floating/Maximized/Fullscreen，保留用户主动改变的 placement。设置项启用。Android 的状态栏隐藏对应桌面全屏，平台窗口表现须独立验证。
+- 新增 `NeteaseClipboardIntakeTest` 3 项，覆盖前台重复扫描/取消后去重、开关与来源、含 songId 的跨来源邀请优先级。新增 `:desktop:auditImmersiveWindow`，在原生窗口读取实际 placement，验证 Floating bounds、三类原状态恢复、手动变更与销毁；Windows CI 已接入。
+- 本地 `:shared:desktopTest :desktop:compileKotlinDesktop` **BUILD SUCCESSFUL**；从 XML 汇总 **244 tests / 50 suites / 0 failures / 0 errors / 0 skipped**。设置鼠标/滚轮/键盘回放 **controls 74 scenes / 55 assertions、独立进程 reload 8 scenes / 18 assertions，全 PASS**，包含沉浸开关的真实偏好、runtime 和重载；semantics 仅定位与断言。
+- 本机原生窗口初测失败后确认前置环境异常：当前 rootless Xwayland 向 JDK 17 报告屏幕 **0×0**，不能据此验证全屏。audit 增加正尺寸显示检查，Linux 此环境明确记 `UNSUPPORTED`，Windows 若无可用显示则失败；正常路径额外验证全屏覆盖真实屏幕，不能只读枚举就报 PASS。Windows 原生结果待 CI。
+- Context7 月额度耗尽；窗口 API 已查阅 JetBrains 官方 top-level windows 文档及当前缓存 Compose 1.8.1 类签名。真实 OS 剪贴板生命周期/播放器物理输入、真实账号加入、双账号同步、Android 同内容像素/动态帧仍待验收；不继承旧发行结果证明本次新增代码。
+- 设备状态更新：2026-10-18 ADB 已出现一台在线设备，但设备现有 release/dev 均为 **0.6.5 / versionCode 24**，不是 pinned **0.6.2 / versionCode 20**，不能直接用来归档 pinned 参考帧。准备独立包名的 pinned 参考构建，保留现有应用和数据。
+
+### 25. 内存历史结论的证据边界更正
+
+- 保留步骤 12–15 的原始观测数字供复核；撤回其中“确定存活/持有”“播放 ≤15MB”“歌词独立滞留约 67MB”“永久有界饱和曲线”等强判断。未确认 Skiko `Stats.allocated` 的计数语义，不能直接称其为存活对象数；组间差值也不是模块开销的因果估计。
+- 当前可确认的事实仅为：这些 Linux 回放在给定时长内有常驻增长，部分短跑末段趋缓，暂停和无歌词路径也能增长；用户 Windows 549→1431MB 尚未复现/修复。下一步需控制截图、运行时长、GC 等因素，确认统计语义，再查真实原生分配/持有者。

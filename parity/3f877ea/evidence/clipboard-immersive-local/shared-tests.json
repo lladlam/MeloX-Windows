@@ -1,0 +1,14 @@
+{
+  "status": "PASSED",
+  "pinned_android": "3f877eaffe30c82eb6d24eb3647702f5bc554dd3",
+  "suites": 50,
+  "totals": {
+    "tests": 244,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "clipboard_xml_sha256": "2072ac7b85ffe7f726b997b7e7867a0283164034919c59469653a3e6a914b5f4",
+  "native_windows_acceptance": "PENDING",
+  "android_pixel_acceptance": "BLOCKED: no pinned same-content frames"
+}

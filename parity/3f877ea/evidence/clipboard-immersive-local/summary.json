@@ -1,0 +1,51 @@
+{
+  "feature_sha": "d09315d8f5516da9125b3faa550ca05003aeafeb",
+  "pinned_android": "3f877eaffe30c82eb6d24eb3647702f5bc554dd3",
+  "captures": [
+    {
+      "mode": "controls",
+      "scenes": 74,
+      "assertions": 55,
+      "all_passed": true,
+      "capture_sha256": "1e428da17729c6f4b421c3dc959f8a88c47113473c8308ee003e3c522f752f1f",
+      "immersive_assertions": [
+        {
+          "expected": "pref-bool:immersive_playback:true",
+          "passed": true
+        },
+        {
+          "expected": "checked:setting-immersive_playback",
+          "passed": true
+        },
+        {
+          "expected": "runtime:immersivePlaybackEnabled:true",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "mode": "reload",
+      "scenes": 8,
+      "assertions": 18,
+      "all_passed": true,
+      "capture_sha256": "b71badd945fde0397afd3bfafc44e16ce60493c0c0e01489986c920a10f4ee3d",
+      "immersive_assertions": [
+        {
+          "expected": "pref-bool:immersive_playback:true",
+          "passed": true
+        },
+        {
+          "expected": "runtime:immersivePlaybackEnabled:true",
+          "passed": true
+        },
+        {
+          "expected": "checked:setting-immersive_playback",
+          "passed": true
+        }
+      ]
+    }
+  ],
+  "native_windows_acceptance": "PENDING",
+  "os_clipboard_lifecycle": "PENDING: production OS replay not yet recorded",
+  "android_pixel_acceptance": "PENDING: existing device apps are 0.6.5, not pinned 0.6.2"
+}
