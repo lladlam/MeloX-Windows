@@ -86,6 +86,9 @@ if mode == 'routes':
                 }.get(route, route.lower())]]
                 if route == 'General':
                     checks += ['enabled:setting-general_clipboard_links', 'disabled:setting-general_haptic_feedback', 'enabled:setting-system_font']
+                if route == 'Appearance':
+                    reveal('setting-immersive_playback')
+                    checks += ['enabled:setting-immersive_playback']
                 if route == 'Recognition':
                     checks += ['enabled:recognition-start', 'tag:recognition-status']
                 if route == 'FloatingLyrics':
@@ -111,6 +114,7 @@ elif mode == 'controls':
         add('set-' + key, f'slider@{key},1', [f'pref-float:{key}:{value}', f'runtime:{runtime}:{value}'])
     choose('player_background_mode', strings['settings_bg_blurred_artwork'], 'string', 'BlurredArtwork', 'playerBackgroundMode')
     add('conditional-background', 'wait@100', ['absent:player_flowing_speed'])
+    toggle('immersive_playback', 'true', 'immersivePlaybackEnabled')
     toggle('library_playlist_search_hidden', 'true', 'playlistSearchBarHidden')
     toggle('library_playlist_show_artwork', 'true', 'playlistShowArtwork')
     add('back-appearance', 'escape')
@@ -150,10 +154,13 @@ elif mode == 'controls':
 else:
     expected['00-settings'] = ['runtime:flowingLightSpeed:2.0', 'runtime:flowingLightSaturation:2.0', 'runtime:flowingLightBrightness:1.6',
         'runtime:playlistSearchBarHidden:true', 'runtime:playlistShowArtwork:true', 'runtime:musicArea:日本', 'eq-enabled:true', 'eq-preset:Custom',
-        'pref-bool:download_lyrics:false', 'download-lyrics:false', 'automix-mode:Fixed', 'automix-duration-ms:12000']
+        'pref-bool:download_lyrics:false', 'download-lyrics:false', 'automix-mode:Fixed', 'automix-duration-ms:12000',
+        'pref-bool:immersive_playback:true', 'runtime:immersivePlaybackEnabled:true']
     open_route('Appearance')
     # Fresh reload starts at the top of the page, where the background group is laid out.
     add('persisted-background', 'wait@200', ['absent:player_flowing_speed'])
+    reveal('setting-immersive_playback')
+    add('persisted-immersive', 'wait@200', ['checked:setting-immersive_playback'])
     reveal('setting-library_playlist_show_artwork')
     add('persisted-library', 'wait@200', ['checked:setting-library_playlist_show_artwork'])
 

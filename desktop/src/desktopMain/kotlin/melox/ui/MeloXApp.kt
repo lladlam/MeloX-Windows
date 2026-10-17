@@ -150,32 +150,37 @@ fun MeloXApp(onExit: () -> Unit = { kotlin.system.exitProcess(0) }) {
         selectedTab = runCatching { AppTab.valueOf(restored) }.getOrDefault(AppTab.Home)
     }
 
-    // Pinned clipboard handling (`general_clipboard_links`): a single scan shortly after the
-    // first frame, deduplicated against the last text seen in this process. The AWT clipboard
-    // is unavailable in the offscreen/headless capture harness, so that path stays inert.
+    // MainActivity.onResume: scan after the first frame on each foreground entry.
+    // Wait for onboarding before reading; offscreen/headless scenes have no OS clipboard.
     var clipboardRequest by remember { mutableStateOf<String?>(null) }
-    val lastClipboardText = remember { java.util.concurrent.atomic.AtomicReference("") }
+    var clipboardInvitation by remember { mutableStateOf<melox.network.MeloXListenTogetherInvitation?>(null) }
+    var clipboardFailure by remember { mutableStateOf<String?>(null) }
+    val clipboardIntake = remember { melox.network.NeteaseClipboardIntake() }
+    val clipboardSource by androidx.compose.runtime.rememberUpdatedState(selectedSource)
+    val windowForeground = melox.ui.player.LocalMeloXWindowForeground.current
     val clipboardTarget = remember(clipboardRequest, selectedSource) {
         if (selectedSource == MusicSource.Netease) clipboardRequest?.let(melox.network.NeteaseClipboardLink::parse) else null
     }
     LaunchedEffect(clipboardRequest, clipboardTarget, selectedSource) {
         if (clipboardRequest != null && clipboardTarget == null) clipboardRequest = null
     }
-    LaunchedEffect(Unit) {
+    LaunchedEffect(windowForeground, onboarding.stage, MeloXSettingsRuntime.clipboardLinksEnabled) {
+        if (!windowForeground || onboarding.stage != melox.legal.MeloXOnboardingStage.Complete) return@LaunchedEffect
         androidx.compose.runtime.withFrameNanos { }
         kotlinx.coroutines.delay(100)
         if (!MeloXSettingsRuntime.clipboardLinksEnabled) return@LaunchedEffect
         if (java.awt.GraphicsEnvironment.isHeadless()) return@LaunchedEffect
-        val text = runCatching {
-            java.awt.Toolkit.getDefaultToolkit().systemClipboard
-                .getData(java.awt.datatransfer.DataFlavor.stringFlavor) as? String
-        }.getOrNull()?.trim().orEmpty()
-        if (text.isBlank() || text == lastClipboardText.getAndSet(text)) return@LaunchedEffect
-        if (melox.network.parseNeteaseListenTogetherInvitation(text) != null) {
-            if (selectedSource == MusicSource.Netease) settingsRouteRequest = "ListenTogether"
-            return@LaunchedEffect
+        val text = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
+            runCatching {
+                java.awt.Toolkit.getDefaultToolkit().systemClipboard
+                    .getData(java.awt.datatransfer.DataFlavor.stringFlavor) as? String
+            }.getOrNull()
         }
-        clipboardRequest = text
+        when (val request = clipboardIntake.consume(text, MeloXSettingsRuntime.clipboardLinksEnabled, clipboardSource)) {
+            is melox.network.NeteaseClipboardRequest.Together -> clipboardInvitation = request.invitation
+            is melox.network.NeteaseClipboardRequest.Media -> clipboardRequest = text
+            null -> Unit
+        }
     }
 
     LaunchedEffect(selectedTab) {
@@ -217,6 +222,7 @@ fun MeloXApp(onExit: () -> Unit = { kotlin.system.exitProcess(0) }) {
     }
 
     val playerOpen = playerTransitionState.currentState || playerTransitionState.targetState
+    melox.ui.player.MeloXImmersivePlaybackEffect(hasMedia && playerOpen && MeloXSettingsRuntime.immersivePlaybackEnabled)
     LaunchedEffect(searchLaunch) {
         if (searchLaunch != null) {
             closePlayer()
@@ -316,45 +322,52 @@ fun MeloXApp(onExit: () -> Unit = { kotlin.system.exitProcess(0) }) {
     ) {
         CompositionLocalProvider(androidx.compose.material3.LocalContentColor provides MaterialTheme.colorScheme.onBackground) {
         if (onboarding.stage == melox.legal.MeloXOnboardingStage.Complete) melox.ui.screens.RemoteCompatibilityNotice()
+        clipboardInvitation?.let { invitation ->
+            androidx.compose.runtime.key(invitation) {
+                MeloXListenTogetherInviteDialog(invitation, onDismiss = { clipboardInvitation = null })
+            }
+        }
+        clipboardFailure?.let { message ->
+            androidx.compose.material3.AlertDialog(
+                modifier = Modifier.testTag("clipboard-playback-error"),
+                onDismissRequest = { clipboardFailure = null },
+                title = { Text(melox.ui.legal.pinnedString("search_play_failed")) },
+                text = { Text(message) },
+                confirmButton = {
+                    androidx.compose.material3.TextButton(onClick = { clipboardFailure = null }, modifier = Modifier.testTag("clipboard-error-close")) {
+                        Text(melox.ui.legal.pinnedString("app_confirm"))
+                    }
+                },
+            )
+        }
         clipboardTarget?.let { target ->
-            melox.ui.foundation.MeloXGlassDialog(
-                visible = true,
+            MeloXClipboardLinkDialog(
+                target = target,
                 onDismiss = { clipboardRequest = null },
-                title = melox.ui.legal.pinnedString("app_clipboard_title"),
-            ) {
-                Text(
-                    text = melox.ui.legal.pinnedString(
-                        if (target is melox.network.NeteaseClipboardTarget.Song) "app_clipboard_song" else "app_clipboard_playlist",
-                    ),
-                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = .72f),
-                    fontSize = 15.sp,
-                    modifier = Modifier.testTag("clipboard-link-message").padding(bottom = 14.dp),
-                )
-                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                    melox.ui.screens.SettingsActionButton(
-                        melox.ui.legal.pinnedString("action_cancel"),
-                        Modifier.weight(1f).testTag("clipboard-cancel"),
-                    ) { clipboardRequest = null }
-                    melox.ui.screens.SettingsActionButton(
-                        melox.ui.legal.pinnedString("app_confirm"),
-                        Modifier.weight(1f).testTag("clipboard-confirm"),
-                    ) {
-                        clipboardRequest = null
-                        playerScope.launch {
+                onConfirm = {
+                    clipboardRequest = null
+                    val revision = melox.account.NeteaseSessionStore.revision.value
+                    playerScope.launch {
+                        try {
                             val client = melox.library.NeteaseLibraryClient(cookieProvider = { melox.account.NeteaseSessionStore.readCookie() })
                             val songs = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
-                                runCatching {
-                                    when (target) {
-                                        is melox.network.NeteaseClipboardTarget.Song -> client.songDetailsBlocking(listOf(target.id))
-                                        is melox.network.NeteaseClipboardTarget.Playlist -> client.playlistDetailBlocking(target.id).songs
-                                    }
-                                }.getOrElse { emptyList() }
+                                when (target) {
+                                    is melox.network.NeteaseClipboardTarget.Song -> client.songDetailsBlocking(listOf(target.id))
+                                    is melox.network.NeteaseClipboardTarget.Playlist -> client.playlistDetailBlocking(target.id).songs
+                                }
                             }
-                            songs.firstOrNull()?.let { PlaybackCommands.playQueue(songs, it.id) }
+                            if (clipboardSource != MusicSource.Netease || revision != melox.account.NeteaseSessionStore.revision.value) return@launch
+                            val first = songs.firstOrNull() ?: error("链接未返回可播放的歌曲")
+                            PlaybackCommands.playQueue(songs, first.id, onFailure = { failure ->
+                                playerScope.launch { clipboardFailure = failure.message ?: "播放失败" }
+                            })
+                        } catch (cancelled: kotlinx.coroutines.CancellationException) { throw cancelled }
+                        catch (failure: Exception) {
+                            clipboardFailure = failure.message ?: "读取链接失败"
                         }
                     }
-                }
-            }
+                },
+            )
         }
         SharedTransitionLayout(modifier = Modifier.fillMaxSize()) {
             val sharedScope = this

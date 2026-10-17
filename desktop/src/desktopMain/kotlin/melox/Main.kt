@@ -57,6 +57,8 @@ fun main() {
                 height = 924.dp,
                 position = WindowPosition.PlatformDefault,
             )
+            val immersiveOwner = androidx.compose.runtime.remember(windowState) { melox.ui.player.MeloXImmersiveWindowOwner(windowState) }
+            androidx.compose.runtime.DisposableEffect(immersiveOwner) { onDispose { immersiveOwner.close() } }
             androidx.compose.runtime.LaunchedEffect(windowState.isMinimized) {
                 melox.remoteconfig.MeloXRemoteConfigRuntime.setForeground(!windowState.isMinimized)
             }
@@ -89,6 +91,7 @@ fun main() {
                 androidx.compose.runtime.CompositionLocalProvider(
                     melox.ui.player.LocalMeloXDisplayAwakeOwner provides displayAwake,
                     melox.ui.player.LocalMeloXWindowForeground provides (focused && !windowState.isMinimized),
+                    melox.ui.player.LocalMeloXImmersiveWindowOwner provides immersiveOwner,
                 ) {
                     MeloXApp(onExit = ::exitApplication)
                 }

@@ -341,7 +341,7 @@ private fun AppearanceSettings() {
             ) { MeloXSettingsPreferences.setString("player_screen_awake_mode", it.name) }
     }
     Spacer(Modifier.height(10.dp))
-    SettingsGlassGroup { SettingsToggleRow("settings_immersive_playback", "immersive_playback", false, enabled = false) }
+    SettingsGlassGroup { SettingsToggleRow("settings_immersive_playback", "immersive_playback", false) }
     Spacer(Modifier.height(10.dp))
     SettingsGlassGroup {
         // These two source labels are literal Chinese even in the default Android locale.
@@ -352,7 +352,6 @@ private fun AppearanceSettings() {
             MeloXSettingsPreferences.setBoolean("library_playlist_show_artwork", it)
         }
     }
-    SettingsPlatformNote(pinnedString("settings_immersive_playback"))
 }
 
 @Composable

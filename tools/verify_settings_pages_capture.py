@@ -67,7 +67,7 @@ for scene in controls_capture['scenes']:
             changed_keys.add(assertion.split(':')[1])
 required = {'player_flowing_speed', 'player_flowing_saturation', 'player_flowing_brightness', 'music_area',
             'general_swipe_full_action', 'general_remember_tab', 'library_playlist_search_hidden',
-            'library_playlist_show_artwork', 'content_playlist_play_count', 'download_lyrics'}
+            'library_playlist_show_artwork', 'content_playlist_play_count', 'download_lyrics', 'immersive_playback'}
 assert required <= changed_keys, sorted(required - changed_keys)
 
 result = {

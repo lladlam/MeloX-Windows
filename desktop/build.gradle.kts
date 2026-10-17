@@ -147,3 +147,13 @@ tasks.register<JavaExec>("auditDisplayAwake") {
     mainClass.set("melox.validation.MeloXDisplayAwakeAuditKt")
     args(layout.buildDirectory.file("verification/display-awake.json").get().asFile.absolutePath)
 }
+
+tasks.register<JavaExec>("auditImmersiveWindow") {
+    group = "verification"
+    description = "Verify native fullscreen and restoration of floating/maximized/user-controlled placement."
+    dependsOn("desktopMainClasses")
+    val compilation = kotlin.targets.getByName("desktop").compilations.getByName("main")
+    classpath = files(compilation.output.allOutputs, compilation.runtimeDependencyFiles)
+    mainClass.set("melox.validation.MeloXImmersiveWindowAuditKt")
+    args(layout.buildDirectory.file("verification/immersive-window.json").get().asFile.absolutePath)
+}

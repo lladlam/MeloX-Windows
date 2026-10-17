@@ -43,6 +43,8 @@ jobs:
         run: gradle :desktop:auditArtworkMemory :desktop:auditArtworkDecode
       - name: Audit real Windows display power request ownership
         run: gradle :desktop:auditDisplayAwake
+      - name: Audit native immersive fullscreen and placement restoration
+        run: gradle :desktop:auditImmersiveWindow
       - name: Audit pinned settings icons against the Android SF Symbol mapping
         run: gradle :desktop:auditSettingsIcons
       - name: Replay pinned settings routes in four locales and verify real preference consumers
