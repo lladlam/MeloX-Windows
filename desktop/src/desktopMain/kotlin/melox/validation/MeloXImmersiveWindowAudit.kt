@@ -32,8 +32,8 @@ fun main(args: Array<String>) {
     val samples = JSONArray()
     application(exitProcessOnExit = false) {
         val state = rememberWindowState(width = 600.dp, height = 400.dp)
-        val owner = remember(state) { MeloXImmersiveWindowOwner(state) }
         Window(onCloseRequest = ::exitApplication, state = state, title = "MeloX native immersive audit") {
+            val owner = remember(state, window) { MeloXImmersiveWindowOwner(state, window) }
             Text("Native fullscreen / placement restore audit")
             LaunchedEffect(window) {
                 suspend fun await(placement: WindowPlacement) {
@@ -64,6 +64,9 @@ fun main(args: Array<String>) {
                     await(WindowPlacement.Floating)
                     owner.setEnabled(true)
                     await(WindowPlacement.Fullscreen)
+                    // Native placement change independent of the owner's restoration.
+                    window.placement = WindowPlacement.Floating
+                    window.placement = WindowPlacement.Maximized
                     state.placement = WindowPlacement.Maximized
                     await(WindowPlacement.Maximized)
                     owner.setEnabled(false)
