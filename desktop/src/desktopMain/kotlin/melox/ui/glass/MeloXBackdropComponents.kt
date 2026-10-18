@@ -9,16 +9,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
-import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.BlendMode
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.luminance
-import androidx.compose.ui.graphics.drawscope.Stroke
-import androidx.compose.ui.graphics.drawscope.translate
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -36,12 +31,9 @@ import kotlin.math.tanh
  * Android samples a recorded layer (Kyant backdrop library) with vibrancy +
  * blur + lens refraction + chromatic aberration. Desktop records the page
  * through GraphicsLayer and samples it at each control's root coordinates:
- *   Background → recorded page crop → GPU blur
- *   → Tint      → tint Hue/normal blend
- *   → Highlight → top-edge specular gradient
- *   → Border    → 0.5dp inner white stroke
- *   → Shadow    → outer soft shadow
- *   → Content   → press/drag transform (graphicsLayer, exact Android math)
+ * The sampled pixels pass through vibrancy, blur and a real SkSL lens. Cached
+ * normal-based rim and inner/outer shadow layers follow pinned geometry; the
+ * press/drag transform encloses the complete surface and its content.
  */
 
 /** The screen backdrop sampled by all MeloX liquid controls (Android parity token). */
@@ -74,12 +66,14 @@ fun Modifier.meloXLiquidButton(
     lensRadius: Dp? = null,
     refractionHeight: Dp? = null,
     interaction: MeloXLiquidInteraction? = null,
-    dark: Boolean = true,
-): Modifier {
-    val pressProgress = if (enabled) interaction?.highlight?.pressProgress ?: 0f else 0f
-    val dragOffset = if (enabled) interaction?.highlight?.offset ?: Offset.Zero else Offset.Zero
+    dark: Boolean? = null,
+): Modifier = composed {
+    val activeInteraction = interaction ?: rememberMeloXLiquidInteraction()
+    val frosted = melox.settings.MeloXSettingsRuntime.frostedGlassEnabled
+    val pressProgress = if (enabled) activeInteraction.highlight.pressProgress else 0f
+    val dragOffset = if (enabled) activeInteraction.highlight.offset else Offset.Zero
     // Regular material spec: blur 2dp, lens 24dp, refraction 12dp (MeloXGlassSpec)
-    return meloXGlassSurface(
+    Modifier.meloXGlassSurface(
         shape = shape,
         enabled = enabled,
         tint = tint,
@@ -87,13 +81,13 @@ fun Modifier.meloXLiquidButton(
         pressProgress = pressProgress,
         dragOffset = dragOffset,
         blurRadius = blurRadius ?: 2.dp,
-        lensRadius = lensRadius ?: 0.dp,
-        refractionHeight = refractionHeight ?: 0.dp,
+        lensRadius = lensRadius ?: 24.dp,
+        refractionHeight = refractionHeight ?: 12.dp,
         dark = dark,
     ).then(
-        if (enabled && interaction != null) interaction.highlight.modifier else Modifier
+        if (enabled && !frosted) activeInteraction.highlight.modifier else Modifier
     ).then(
-        if (enabled && interaction != null) interaction.highlight.gestureModifier else Modifier
+        if (enabled && !frosted) activeInteraction.highlight.gestureModifier else Modifier
     )
 }
 
@@ -101,13 +95,13 @@ fun Modifier.meloXLiquidButton(
 fun Modifier.meloXLiquidContentTransform(interaction: MeloXLiquidInteraction?): Modifier =
     if (interaction == null) this else graphicsLayer {
         val controlHeight = size.height.coerceAtLeast(1f)
-        val dragOffset = interaction.highlight.offset
-        val pressProgress = interaction.highlight.pressProgress
-        val baseScale = 1f + (4f / controlHeight * 12f) * pressProgress // 4dp in px-ish terms
+        val dragOffset = interaction.highlight.offset.let { Offset(it.x.glassFinite(), it.y.glassFinite()) }
+        val pressProgress = safeGlassProgress(interaction.highlight.pressProgress)
+        val baseScale = 1f + (4.dp.toPx() / controlHeight) * pressProgress
         val maxOffset = size.minDimension.coerceAtLeast(1f)
         translationX = maxOffset * tanh(0.05f * dragOffset.x / maxOffset)
         translationY = maxOffset * tanh(0.05f * dragOffset.y / maxOffset)
-        val maxDragScale = 4f / controlHeight * 12f
+        val maxDragScale = 4.dp.toPx() / controlHeight
         val angle = atan2(dragOffset.y, dragOffset.x)
         scaleX = baseScale + maxDragScale * abs(cos(angle) * dragOffset.x / size.maxDimension.coerceAtLeast(1f)) *
             (size.width / controlHeight).coerceAtMost(1f)
@@ -127,11 +121,12 @@ fun Modifier.meloXGlassSurface(
     pressProgress: Float = 0f,
     dragOffset: Offset = Offset.Zero,
     blurRadius: Dp = 2.dp,
-    lensRadius: Dp = 0.dp,
-    refractionHeight: Dp = 0.dp,
+    lensRadius: Dp = 24.dp,
+    refractionHeight: Dp = 12.dp,
     dark: Boolean? = null,
 ): Modifier = composed {
     val dark = dark ?: (MaterialTheme.colorScheme.background.luminance() < 0.5f)
+    val progress = safeGlassProgress(pressProgress)
     val alphaScale = if (enabled) 1f else 0.48f
     val isPlain = surfaceColor == Color.Transparent && tint == Color.Unspecified
     if (isPlain) return@composed Modifier
@@ -153,90 +148,40 @@ fun Modifier.meloXGlassSurface(
     }
 
     Modifier
-        .shadowLike(shape, pressProgress, enabled)
+        .then(dragTransformLike(dragOffset, progress))
+        .meloXGlassShadow(shape, (.08f + .22f * progress) * if (enabled) 1f else .35f)
+        .meloXGlassDecoration(shape, ((if (dark) .32f else .48f) + .30f * progress).coerceAtMost(1f),
+            4.dp + 8.dp * progress, (.10f + .30f * progress) * if (enabled) 1f else .35f)
         .clip(shape)
-        .meloXSampleBackdrop(blurRadius)
+        .meloXSampleBackdrop(blurRadius, shape = shape, lensHeight = lensRadius, lensAmount = refractionHeight,
+            depth = progress > .01f, dispersion = true, vibrant = true)
         .drawBehind {
-            val optical = melox.settings.meloXGlassDraw(
-                blurRadius.toPx(),
-                lensRadius.toPx(),
-                refractionHeight.toPx(),
-                dark,
-            )
-            val fill = when {
-                surfaceColor != Color.Unspecified -> surfaceColor.copy(alpha = surfaceColor.alpha * alphaScale)
-                tint != Color.Unspecified -> tint.copy(alpha = tint.alpha * alphaScale)
-                else -> null
-            }
-            if (fill != null) drawRect(fill)
             drawRect(
                 Color.White.copy(alpha = if (dark) 0.045f else 0.12f),
                 blendMode = BlendMode.Screen,
             )
-            if (optical.lensShiftPx > 0f) {
-                translate(-optical.lensShiftPx * 0.35f, -optical.refractionPx * 0.25f) {
-                    drawRect(
-                        Color.White.copy(alpha = (0.05f + optical.refractionPx / 180f).coerceIn(0.05f, 0.22f)),
-                        blendMode = BlendMode.Screen,
-                    )
-                }
+            if (progress > 0.001f) {
+                drawRect(Color.White.copy(alpha = 0.08f * progress), blendMode = BlendMode.Plus)
             }
-            if (pressProgress > 0.001f) {
-                drawRect(Color.White.copy(alpha = 0.08f * pressProgress), blendMode = BlendMode.Plus)
+            if (tint != Color.Unspecified && tint.alpha > .001f) {
+                drawRect(tint.copy(alpha = tint.alpha * alphaScale), blendMode = BlendMode.Hue)
+                drawRect(tint.copy(alpha = tint.alpha * .75f * alphaScale))
             }
+            if (surfaceColor != Color.Unspecified) drawRect(surfaceColor.copy(alpha = surfaceColor.alpha * alphaScale))
         }
-        .drawWithContent {
-            drawContent()
-            val optical = melox.settings.meloXGlassDraw(
-                blurRadius.toPx(),
-                lensRadius.toPx(),
-                refractionHeight.toPx(),
-                dark,
-            )
-            val hAlpha = (optical.highlightAlpha + 0.30f * pressProgress).coerceAtMost(1f)
-            val shift = (optical.refractionPx / size.height.coerceAtLeast(1f)).coerceIn(0f, 0.35f)
-            drawRect(
-                brush = Brush.verticalGradient(
-                    0f to Color.White.copy(alpha = hAlpha * 0.55f),
-                    (0.5f + shift).coerceAtMost(0.92f) to Color.White.copy(alpha = hAlpha * 0.10f),
-                    1f to Color.White.copy(alpha = 0f),
-                ),
-                blendMode = BlendMode.Plus,
-            )
-            // Border stage: inner hairline
-            drawPath(
-                outlineToPath(shape.createOutline(size, layoutDirection, this)),
-                Color.White.copy(alpha = if (dark) 0.22f else 0.60f),
-                style = Stroke(width = 0.75f),
-            )
-        }
-        .then(dragTransformLike(dragOffset, pressProgress))
 }
 
-
-private fun outlineToPath(outline: androidx.compose.ui.graphics.Outline): Path = when (outline) {
-    is androidx.compose.ui.graphics.Outline.Generic -> outline.path
-    is androidx.compose.ui.graphics.Outline.Rounded -> Path().apply { addRoundRect(outline.roundRect) }
-    is androidx.compose.ui.graphics.Outline.Rectangle -> Path().apply { addRect(outline.rect) }
-}
-
-private fun Modifier.shadowLike(shape: Shape, pressProgress: Float, enabled: Boolean): Modifier =
-    graphicsLayer {
-        shadowElevation = 24f * ((0.08f + 0.22f * pressProgress) * if (enabled) 1f else 0.35f)
-        this.shape = shape.let { s ->
-            // graphicsLayer needs a concrete shape; RoundedCornerShape works for capsules
-            s
-        }
-    }
 
 private fun Modifier.dragTransformLike(dragOffset: Offset, pressProgress: Float): Modifier =
     graphicsLayer {
+        val dragOffset = Offset(dragOffset.x.glassFinite(), dragOffset.y.glassFinite())
+        val pressProgress = safeGlassProgress(pressProgress)
         val controlHeight = size.height.coerceAtLeast(1f)
-        val scale = 1f + (48f / controlHeight) * pressProgress
+        val scale = 1f + (4.dp.toPx() / controlHeight) * pressProgress
         val maxOffset = size.minDimension.coerceAtLeast(1f)
         translationX = maxOffset * tanh(0.05f * dragOffset.x / maxOffset)
         translationY = maxOffset * tanh(0.05f * dragOffset.y / maxOffset)
-        val maxDragScale = 48f / controlHeight
+        val maxDragScale = 4.dp.toPx() / controlHeight
         val angle = atan2(dragOffset.y, dragOffset.x)
         scaleX = scale + maxDragScale * abs(cos(angle) * dragOffset.x / size.maxDimension.coerceAtLeast(1f)) *
             (size.width / controlHeight).coerceAtMost(1f)
@@ -254,34 +199,32 @@ fun Modifier.meloXLiquidBottomBar(
     refractionHeight: Dp = 24.dp,
 ): Modifier = composed {
     val frosted = melox.settings.MeloXSettingsRuntime.frostedGlassEnabled
-    val p = pressProgress.takeIf { it.isFinite() }?.coerceIn(0f, 1f) ?: 0f
+    val p = safeGlassProgress(pressProgress)
     val tone = bottomBarTone()
     Modifier
         .graphicsLayer {
-            val scale = 1f + 16.dp.toPx() / size.width.coerceAtLeast(1f) * p
+            val scale = if (frosted) 1f else 1f + 16.dp.toPx() / size.width.coerceAtLeast(1f) * p
             scaleX = scale
             scaleY = scale
         }
-        .then(if (frosted) Modifier else Modifier.shadowLike(shape, p, true))
+        .then(if (frosted) Modifier else Modifier.meloXGlassShadow(shape, .08f + .22f * p))
+        .then(if (frosted) Modifier else Modifier.meloXGlassDecoration(shape,
+            (.48f - .16f * tone + .30f * p).coerceAtMost(1f), 4.dp + 8.dp * p, .10f + .30f * p))
         .clip(shape)
-        .meloXSampleBackdrop(if (frosted) 8.dp else 2.dp)
+        .meloXSampleBackdrop(if (frosted) 8.dp else 2.dp, shape = shape,
+            lensHeight = if (frosted) 0.dp else 24.dp, lensAmount = if (frosted) 0.dp else 24.dp, vibrant = !frosted)
         .drawBehind { drawRect(surfaceColor) }
-        .drawWithContent {
-            drawContent()
-            if (!frosted) {
-                val rim = (0.48f + (0.32f - 0.48f) * tone + 0.30f * p).coerceAtMost(1f)
-                drawPath(
-                    outlineToPath(shape.createOutline(size, layoutDirection, this)),
-                    Brush.verticalGradient(listOf(Color.White.copy(alpha = rim), Color.White.copy(alpha = rim * 0.12f))),
-                    style = Stroke(width = 0.5.dp.toPx()),
-                )
-            }
-        }
 }
 
 /** Hidden red tab capture; the moving droplet samples these actual pixels. */
-fun Modifier.meloXLiquidCaptureLayer(shape: Shape, surfaceColor: Color): Modifier =
-    clip(shape).meloXSampleBackdrop(2.dp).drawBehind { drawRect(surfaceColor) }
+fun Modifier.meloXLiquidCaptureLayer(shape: Shape, surfaceColor: Color, pressProgress: Float = 0f): Modifier = composed {
+    val frosted = melox.settings.MeloXSettingsRuntime.frostedGlassEnabled
+    val p = safeGlassProgress(pressProgress)
+    val lens = if (!frosted && p > .001f) 24.dp * p else 0.dp
+    Modifier.then(if (frosted || p <= .001f) Modifier else Modifier.meloXGlassDecoration(shape, p, 0.dp, 0f))
+        .clip(shape).meloXSampleBackdrop(if (frosted) 8.dp else 2.dp, shape = shape,
+        lensHeight = lens, lensAmount = lens, vibrant = !frosted).drawBehind { drawRect(surfaceColor) }
+}
 
 /** Moving/selected tab lens used inside the bottom panel (Android meloXLiquidTabSelection). */
 fun Modifier.meloXLiquidTabSelection(
@@ -294,38 +237,35 @@ fun Modifier.meloXLiquidTabSelection(
     scaleY: Float = 1f,
     velocity: Float = 0f,
     dark: Boolean = true,
-): Modifier {
-    if (!selected) return this
-    return this
+): Modifier = composed {
+    if (!selected) return@composed Modifier
+    val p = safeGlassProgress(pressProgress)
+    val frosted = melox.settings.MeloXSettingsRuntime.frostedGlassEnabled
+    val pageBackdrop = LocalMeloXLayerBackdrop.current
+    val tone = bottomBarTone()
+    val lens = !frosted && p > .001f
+    Modifier
         .graphicsLayer {
-            this.scaleX = scaleX
-            this.scaleY = scaleY
-            val normalizedVelocity = velocity / 10f
+            this.scaleX = if (frosted) 1f else scaleX.glassFinite()
+            this.scaleY = if (frosted) 1f else scaleY.glassFinite()
+            val normalizedVelocity = if (frosted) 0f else velocity.glassFinite() / 10f
             this.scaleX /= 1f - (normalizedVelocity * 0.75f).coerceIn(-0.2f, 0.2f)
             this.scaleY *= 1f - (normalizedVelocity * 0.25f).coerceIn(-0.2f, 0.2f)
-            shadowElevation = 24f * 0.84f * pressProgress
             this.shape = shape
         }
+        .then(if (frosted) Modifier else Modifier.meloXGlassShadow(shape, .5f + .5f * p, .10f))
+        .then(if (frosted) Modifier else Modifier.meloXGlassDecoration(shape,
+            .48f - .16f * tone + (1f - (.48f - .16f * tone)) * p,
+            4.dp + 4.dp * p, .60f + .40f * p, .15f))
         .clip(shape)
-        .meloXSampleBackdrop(0.dp, panelBackdrop)
+        .meloXSampleBackdrop(if (frosted) 8.dp else 0.dp, if (frosted) pageBackdrop else panelBackdrop,
+            shape = shape, lensHeight = if (lens) 8.75.dp * p else 0.dp,
+            lensAmount = if (lens) 12.25.dp * p else 0.dp, dispersion = !frosted,
+            underlay = if (frosted) null else pageBackdrop)
         .drawBehind {
-            drawRect(tint, alpha = 1f - pressProgress)
-            drawRect(Color.Black.copy(alpha = 0.03f * pressProgress))
-        }
-        .drawWithContent {
-            drawContent()
-            drawRect(
-                brush = Brush.verticalGradient(
-                    0f to Color.White.copy(alpha = 0.90f * pressProgress * 0.5f),
-                    1f to Color.White.copy(alpha = 0f),
-                ),
-                blendMode = BlendMode.Plus,
-            )
-            drawPath(
-                outlineToPath(shape.createOutline(size, layoutDirection, this)),
-                Color.White.copy(alpha = (if (dark) 0.32f else 0.48f) + 0.35f * pressProgress),
-                style = Stroke(width = 0.75f),
-            )
+            val selectedTint = androidx.compose.ui.graphics.lerp(Color.Black.copy(alpha = .1f), Color.White.copy(alpha = .1f), tone)
+            drawRect(if (frosted) tint else selectedTint, alpha = if (frosted) 1f else 1f - p)
+            if (!frosted) drawRect(Color.Black.copy(alpha = 0.03f * p))
         }
 }
 

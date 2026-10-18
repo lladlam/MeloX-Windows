@@ -6,21 +6,21 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.dp
+import com.kyant.capsule.ContinuousRoundedRectangle
+import com.kyant.shapes.Capsule
 
 /**
  * 1:1 port of Android MeloXGlassTokens.kt (ui/glass/MeloXGlassTokens.kt).
  */
 
 /**
- * Same continuous/capsule geometry tokens as Android MeloXShapes.
- * Desktop has no continuous-corner (squircle) renderer, so the same radii
- * ride on RoundedCornerShape; Capsule and Circle are identical primitives.
+ * Same pinned continuous/capsule geometry; source algorithms are compiled for desktop.
  */
 object MeloXShapes {
-    val capsule: Shape = RoundedCornerShape(50)
-    val compact: Shape = RoundedCornerShape(16.dp)
-    val card: Shape = RoundedCornerShape(22.dp)
-    val largeCard: Shape = RoundedCornerShape(28.dp)
+    val capsule: Shape = Capsule()
+    val compact: Shape = ContinuousRoundedRectangle(16.dp)
+    val card: Shape = ContinuousRoundedRectangle(22.dp)
+    val largeCard: Shape = ContinuousRoundedRectangle(28.dp)
     val sheet: Shape = RoundedCornerShape(topStart = 36.dp, topEnd = 36.dp)
     val circle: Shape = CircleShape
 }

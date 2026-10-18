@@ -1,11 +1,44 @@
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import java.security.MessageDigest
 
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.kotlin.plugin.serialization)
     alias(libs.plugins.compose.gradle.plugin)
     alias(libs.plugins.kotlin.plugin.compose)
+}
+
+// Compile the exact pinned geometry sources against our Compose version. Capsule's
+// published binary is Android-only; neither artifact may upgrade the desktop UI stack.
+val pinnedGlassGeometrySources = configurations.create("pinnedGlassGeometrySources") { isTransitive = false }
+dependencies {
+    add(pinnedGlassGeometrySources.name, "io.github.kyant0:capsule:2.1.3:sources@jar")
+    add(pinnedGlassGeometrySources.name, "io.github.kyant0:shapes:1.2.0:sources@jar")
+}
+val extractPinnedGlassGeometry by tasks.registering(Sync::class) {
+    from(provider { pinnedGlassGeometrySources.files.map { zipTree(it) } }) {
+        include("**/*.kt")
+        exclude("**/PathSegment.kt") // Local adapter replaces Android Path/RectF calls.
+        eachFile { path = path.removePrefix("commonMain/") }
+        filter { line: String ->
+            line.replace(Regex("import androidx\\.annotation\\.(FloatRange|IntRange)"), "")
+                .replace(Regex("@(?:param:)?(FloatRange|IntRange)\\([^)]*\\)\\s*"), "")
+        }
+        includeEmptyDirs = false
+    }
+    into(layout.buildDirectory.dir("generated/pinnedGlassGeometry"))
+    doFirst {
+        val hashes = mapOf(
+            "capsule-2.1.3-sources.jar" to "219abe78d1c13b11d3fa976b527e4988e85c8b59ecabdb3b245293712fcfac79",
+            "shapes-1.2.0-sources.jar" to "014405aac8faf374a9ee2fcd27aec7540a15562de3a1cc90c7835b6cca728738",
+        )
+        pinnedGlassGeometrySources.files.forEach { source ->
+            val hash = MessageDigest.getInstance("SHA-256").digest(source.readBytes())
+                .joinToString("") { "%02x".format(it) }
+            check(hash == hashes[source.name]) { "Pinned glass geometry source hash mismatch: ${source.name}" }
+        }
+    }
 }
 
 kotlin {
@@ -17,6 +50,7 @@ kotlin {
 
     sourceSets {
         val desktopMain by getting {
+            kotlin.srcDir(extractPinnedGlassGeometry)
             resources.srcDir("src/main/resources")
             dependencies {
                 implementation(project(":shared"))
@@ -156,4 +190,17 @@ tasks.register<JavaExec>("auditImmersiveWindow") {
     classpath = files(compilation.output.allOutputs, compilation.runtimeDependencyFiles)
     mainClass.set("melox.validation.MeloXImmersiveWindowAuditKt")
     args(layout.buildDirectory.file("verification/immersive-window.json").get().asFile.absolutePath)
+}
+
+tasks.register<JavaExec>("auditGlassOptics") {
+    group = "verification"
+    description = "Verify real Skia glass optics pixels, stable filter reuse and native ownership."
+    dependsOn("desktopMainClasses")
+    val compilation = kotlin.targets.getByName("desktop").compilations.getByName("main")
+    classpath = files(compilation.output.allOutputs, compilation.runtimeDependencyFiles)
+    mainClass.set("melox.validation.MeloXGlassOpticsAuditKt")
+    jvmArgs(productionJvmArgs)
+    systemProperty("java.awt.headless", "true")
+    systemProperty("user.home", layout.buildDirectory.dir("verification/glass-home").get().asFile.absolutePath)
+    args(layout.buildDirectory.file("verification/glass-optics.json").get().asFile.absolutePath)
 }

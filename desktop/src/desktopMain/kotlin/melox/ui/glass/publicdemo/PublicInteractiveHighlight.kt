@@ -14,12 +14,16 @@ import androidx.compose.animation.core.spring
 import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.composed
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ShaderBrush
 import androidx.compose.ui.input.pointer.AwaitPointerEventScope
 import androidx.compose.ui.input.pointer.PointerEventPass
 import androidx.compose.ui.input.pointer.PointerId
@@ -30,6 +34,9 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.input.pointer.positionChange
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import melox.ui.glass.safeGlassProgress
+import org.jetbrains.skia.RuntimeEffect
+import org.jetbrains.skia.RuntimeShaderBuilder
 
 /** Public-demo press highlight with a moving optical focus point. */
 class PublicInteractiveHighlight(
@@ -45,29 +52,18 @@ class PublicInteractiveHighlight(
     val pressProgress: Float get() = pressAnimation.value
     val offset: Offset get() = positionAnimation.value - startPosition
 
-    val modifier: Modifier = Modifier.drawWithContent {
-        val progress = pressAnimation.value
+    val modifier: Modifier = Modifier.composed {
+      val shaderOwner = remember { FocusShaderOwner() }
+      DisposableEffect(shaderOwner) { onDispose { shaderOwner.close() } }
+      Modifier.drawWithContent {
+        val progress = safeGlassProgress(pressAnimation.value)
         if (progress > 0f) {
-            // Desktop fallback for the AGSL focus shader: radial gradient
-            // centered on the moving focus point, additive blend.
             val focus = position(size, positionAnimation.value)
-            val radius = size.minDimension * 1.5f
-            drawCircle(
-                brush = Brush.radialGradient(
-                    colors = listOf(
-                        Color.White.copy(alpha = 0.15f * progress),
-                        Color.White.copy(alpha = 0f),
-                    ),
-                    center = focus,
-                    radius = radius,
-                ),
-                radius = radius,
-                center = focus,
-                blendMode = BlendMode.Plus,
-            )
             drawRect(Color.White.copy(alpha = 0.08f * progress), blendMode = BlendMode.Plus)
+            shaderOwner.shader(progress, size, focus).use { shader -> drawRect(ShaderBrush(shader), blendMode = BlendMode.Plus) }
         }
         drawContent()
+      }
     }
 
     val gestureModifier: Modifier = Modifier.pointerInput(animationScope) {
@@ -96,6 +92,34 @@ class PublicInteractiveHighlight(
         }
     }
 }
+
+/** No native shader compilation for controls that have never been pressed. */
+private class FocusShaderOwner : AutoCloseable {
+    private var effect: RuntimeEffect? = null
+    private var builder: RuntimeShaderBuilder? = null
+    fun shader(progress: Float, size: Size, focus: Offset): org.jetbrains.skia.Shader {
+        val shader = builder ?: RuntimeShaderBuilder(RuntimeEffect.makeForShader(FocusShader).also { effect = it }).also { builder = it }
+        // Skia runtime output is premultiplied, matching Backdrop's Skiko
+        // setColorUniform implementation. Unpremultiplied white clips the panel.
+        val alpha = .15f * progress
+        shader.uniform("color", alpha, alpha, alpha, alpha)
+        shader.uniform("radius", (size.minDimension * 1.5f).coerceAtLeast(.001f))
+        shader.uniform("position", focus.x.coerceIn(0f, size.width), focus.y.coerceIn(0f, size.height))
+        return shader.makeShader()
+    }
+    override fun close() { builder?.close(); effect?.close(); builder = null; effect = null }
+}
+
+// Same focus falloff and clamped focus coordinates as pinned PublicInteractiveHighlight.
+private const val FocusShader = """
+layout(color) uniform half4 color;
+uniform float radius;
+uniform float2 position;
+half4 main(float2 coord) {
+    float dist = distance(coord, position);
+    return color * smoothstep(radius, radius * 0.5, dist);
+}
+"""
 
 internal suspend fun PointerInputScope.publicInspectDragGestures(
     onDragStart: (Offset) -> Unit,
@@ -126,7 +150,8 @@ private suspend inline fun AwaitPointerEventScope.drag(
     while (true) {
         val change = awaitDragOrUp(pointer) ?: return null
         if (change.changedToUpIgnoreConsumed()) return change
-        if (change.isConsumed) return null
+        // This observer follows absolute position even when the inner liquid
+        // drag consumes movement; cancellation would extinguish its highlight.
         onDrag(change)
         pointer = change.id
     }

@@ -21,8 +21,12 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.platform.LocalLayoutDirection
@@ -43,11 +47,12 @@ fun MeloXLiquidSlider(
     onValueChange: (Float) -> Unit,
     onTransientValueChange: (Float) -> Unit = {},
     valueRange: ClosedFloatingPointRange<Float>,
-    stepSize: Float = 100f,
+    stepSize: Float = 0f,
     visibilityThreshold: Float = 0.01f,
     modifier: Modifier = Modifier,
     contentDescription: String,
     onValueChangeFinished: () -> Unit = {},
+    enabled: Boolean = true,
 ) {
     require(valueRange.endInclusive > valueRange.start) { "valueRange must not be empty" }
     require(stepSize >= 0f) { "stepSize must be non-negative" }
@@ -76,14 +81,14 @@ fun MeloXLiquidSlider(
     val semantics = Modifier.semantics(mergeDescendants = true) {
         this.contentDescription = contentDescription
         progressBarRangeInfo = ProgressBarRangeInfo(transientValue, valueRange, steps)
-        setProgress { requested ->
+        if (enabled) setProgress { requested ->
             transientValue = quantizeMeloXSliderValue(requested, valueRange, stepSize)
             finish()
             true
         }
     }
-    val backdrop = LocalMeloXBackdrop.current
-    if (!backdrop) {
+    val backdrop = LocalMeloXLayerBackdrop.current
+    if (backdrop == null || melox.settings.MeloXSettingsRuntime.frostedGlassEnabled) {
         Slider(
             value = transientValue,
             onValueChange = {
@@ -94,6 +99,7 @@ fun MeloXLiquidSlider(
             onValueChangeFinished = ::finish,
             valueRange = valueRange,
             steps = steps,
+            enabled = enabled,
             modifier = modifier.then(semantics),
         )
         return
@@ -110,6 +116,7 @@ fun MeloXLiquidSlider(
         valueRange = valueRange,
         visibilityThreshold = visibilityThreshold,
         modifier = modifier.then(semantics),
+        enabled = enabled,
     )
 }
 
@@ -121,19 +128,25 @@ private fun MeloXDesktopLiquidSlider(
     visibilityThreshold: Float,
     modifier: Modifier = Modifier,
     onValueChangeFinished: () -> Unit = {},
+    enabled: Boolean = true,
 ) {
-    val accentColor = Color(0xFF0091FF)
-    val trackColor = Color(0xFF787880).copy(0.36f)
+    val dark = MaterialTheme.colorScheme.background.luminance() < .5f
+    val accentColor = if (dark) Color(0xFF0091FF) else Color(0xFF0088FF)
+    val trackColor = if (dark) Color(0xFF787880).copy(.36f) else Color(0xFF787878).copy(.20f)
+    val trackBackdrop = rememberMeloXLayerBackdrop()
+    val pageBackdrop = LocalMeloXLayerBackdrop.current
 
     BoxWithConstraints(
-        modifier.fillMaxWidth(),
+        modifier.fillMaxWidth().graphicsLayer { alpha = if (enabled) 1f else .45f },
         contentAlignment = Alignment.CenterStart,
     ) {
         val trackWidth = constraints.maxWidth
         val isLtr = LocalLayoutDirection.current == LayoutDirection.Ltr
         val animationScope = rememberCoroutineScope()
         var didDrag by remember { mutableStateOf(false) }
-        val dampedDragAnimation = remember(animationScope) {
+        val latestOnValueChange by rememberUpdatedState(onValueChange)
+        val latestOnFinished by rememberUpdatedState(onValueChangeFinished)
+        val dampedDragAnimation = remember(animationScope, valueRange, visibilityThreshold, isLtr) {
             PublicDampedDragAnimation(
                 animationScope = animationScope,
                 initialValue = value(),
@@ -141,14 +154,16 @@ private fun MeloXDesktopLiquidSlider(
                 visibilityThreshold = visibilityThreshold,
                 initialScale = 1f,
                 pressedScale = 1.5f,
+                onDragStarted = { didDrag = false },
                 onDragStopped = {
-                    if (didDrag) onValueChange(targetValue)
-                    onValueChangeFinished()
+                    if (didDrag) latestOnValueChange(targetValue)
+                    latestOnFinished()
                 },
+                onTap = { latestOnFinished() },
                 onDrag = { _, dragAmount ->
                     if (!didDrag) didDrag = dragAmount.x != 0f
-                    val delta = (valueRange.endInclusive - valueRange.start) * (dragAmount.x / trackWidth)
-                    onValueChange(
+                    val delta = (valueRange.endInclusive - valueRange.start) * (dragAmount.x / trackWidth.coerceAtLeast(1))
+                    latestOnValueChange(
                         if (isLtr) (targetValue + delta).coerceIn(valueRange)
                         else (targetValue - delta).coerceIn(valueRange),
                     )
@@ -164,18 +179,20 @@ private fun MeloXDesktopLiquidSlider(
                 }
         }
 
+        Box(Modifier.meloXRecordBackdrop(trackBackdrop)) {
         Box(
             Modifier
                 .clip(MeloXShapes.capsule)
                 .background(trackColor)
-                .pointerInput(animationScope) {
+                .pointerInput(animationScope, enabled, isLtr) {
+                    if (!enabled) return@pointerInput
                     detectTapGestures { position ->
-                        val delta = (valueRange.endInclusive - valueRange.start) * (position.x / trackWidth)
+                        val delta = (valueRange.endInclusive - valueRange.start) * (position.x / trackWidth.coerceAtLeast(1))
                         val targetValue = (if (isLtr) valueRange.start + delta
                         else valueRange.endInclusive - delta).coerceIn(valueRange)
                         dampedDragAnimation.animateToValue(targetValue)
-                        onValueChange(targetValue)
-                        onValueChangeFinished()
+                        latestOnValueChange(targetValue)
+                        latestOnFinished()
                     }
                 }
                 .height(6.dp)
@@ -188,28 +205,34 @@ private fun MeloXDesktopLiquidSlider(
                 .height(6.dp)
                 .layout { measurable, constraints ->
                     val placeable = measurable.measure(constraints)
-                    val width = (constraints.maxWidth * dampedDragAnimation.progress).roundToInt()
+                    val width = (constraints.maxWidth * safeGlassProgress(dampedDragAnimation.progress)).roundToInt()
                     layout(width, placeable.height) {
                         placeable.place(0, 0)
                     }
                 },
         )
+        }
+        val p = safeGlassProgress(dampedDragAnimation.pressProgress)
         Box(
             Modifier
                 .graphicsLayer {
                     translationX =
-                        (-size.width / 2f + trackWidth * dampedDragAnimation.progress)
+                        (-size.width / 2f + trackWidth * safeGlassProgress(dampedDragAnimation.progress))
                             .coerceIn(-size.width / 4f, trackWidth - size.width * 3f / 4f) * if (isLtr) 1f else -1f
-                    val velocity = dampedDragAnimation.velocity / 10f
-                    scaleX = dampedDragAnimation.scaleX / (1f - (velocity * 0.75f).coerceIn(-0.2f, 0.2f))
-                    scaleY = dampedDragAnimation.scaleY * (1f - (velocity * 0.25f).coerceIn(-0.2f, 0.2f))
+                    val velocity = dampedDragAnimation.velocity.glassFinite() / 10f
+                    scaleX = (dampedDragAnimation.scaleX.glassFinite() / (1f - (velocity * 0.75f).coerceIn(-0.2f, 0.2f))).glassFinite()
+                    scaleY = (dampedDragAnimation.scaleY.glassFinite() * (1f - (velocity * 0.25f).coerceIn(-0.2f, 0.2f))).glassFinite()
                 }
-                .then(dampedDragAnimation.modifier)
-                .meloXLiquidButton(
-                    shape = MeloXShapes.capsule,
-                    surfaceColor = Color.White.copy(alpha = 1f - dampedDragAnimation.pressProgress),
-                    blurRadius = 8.dp * (1f - dampedDragAnimation.pressProgress),
-                )
+                .then(if (enabled) dampedDragAnimation.modifier else Modifier)
+                .meloXGlassShadow(MeloXShapes.capsule, 1f, .05f, 4.dp)
+                .meloXGlassDecoration(MeloXShapes.capsule, p, 4.dp * p, p, .15f,
+                    rimWidth = .5.dp / 1.5f, ambient = true)
+                .clip(MeloXShapes.capsule)
+                .meloXSampleBackdrop(8.dp * (1f - p), trackBackdrop, shape = MeloXShapes.capsule,
+                    lensHeight = if (p > .001f) 10.dp * p else 0.dp,
+                    lensAmount = if (p > .001f) 14.dp * p else 0.dp,
+                    dispersion = true, underlay = pageBackdrop, sampleScale = Offset(2f / 3f + p / 3f, p))
+                .drawBehind { drawRect(Color.White.copy(alpha = 1f - p)) }
                 .size(40.dp, 24.dp),
         )
     }

@@ -1,0 +1,18 @@
+MeloX desktop glass optics contains adaptations of Kyant Backdrop 2.0.0.
+Copyright 2025 Kyant.
+Licensed under the Apache License, Version 2.0:
+https://www.apache.org/licenses/LICENSE-2.0
+Upstream: https://github.com/Kyant0/AndroidLiquidGlass
+Source artifact: io.github.kyant0:backdrop:2.0.0 (sources)
+SHA-256: 8277e21a2dc270931a3dfb175805dac5303f541e20e01bf05d1a714e8f6c032a
+Adaptations include Skia resource ownership, finite-coordinate guards and a shared dispersion switch.
+
+Pinned geometry sources are compiled against the desktop Compose stack:
+io.github.kyant0:capsule:2.1.3, Copyright 2025 Kyant, Apache-2.0
+https://github.com/Kyant0/Capsule
+sources SHA-256: 219abe78d1c13b11d3fa976b527e4988e85c8b59ecabdb3b245293712fcfac79
+io.github.kyant0:shapes:1.2.0, Copyright 2026 Kyant, Apache-2.0
+https://github.com/Kyant0/Shapes
+sources SHA-256: 014405aac8faf374a9ee2fcd27aec7540a15562de3a1cc90c7835b6cca728738
+Only Android-only source annotations are removed. Capsule's Android Path/RectF
+operations are adapted to Compose Path/Rect; curve math and profiles are unchanged.

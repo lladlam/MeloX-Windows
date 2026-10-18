@@ -45,6 +45,18 @@ jobs:
         run: gradle :desktop:auditDisplayAwake
       - name: Audit native immersive fullscreen and placement restoration
         run: gradle :desktop:auditImmersiveWindow
+      - name: Audit real glass optics, native ownership and stable filter reuse
+        run: gradle :desktop:auditGlassOptics
+      - name: Replay the real glass dock and moving selection in both themes
+        shell: pwsh
+        run: |
+          foreach ($theme in @("Dark", "Light")) {
+            $homeDir = "$pwd/desktop/build/parity/glass-dock-$theme-home"
+            New-Item -ItemType Directory -Force "$homeDir/.melox" | Out-Null
+            [System.IO.File]::WriteAllText("$homeDir/.melox/prefs_melox_app_settings.properties", "onboarding_completed=true`n", [System.Text.UTF8Encoding]::new($false))
+            python tools/capture_glass_navigation.py "$homeDir" "desktop/build/parity/glass-dock-$theme" "$theme"
+            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          }
       - name: Audit pinned settings icons against the Android SF Symbol mapping
         run: gradle :desktop:auditSettingsIcons
       - name: Replay pinned settings routes in four locales and verify real preference consumers
@@ -81,6 +93,16 @@ jobs:
           $homeDir = "$pwd/desktop/build/parity/startup-memory-home"
           python tools/capture_startup_memory.py fresh "$homeDir" desktop/build/parity/startup-memory
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Replay Bilibili alignment setting and independent preference reload
+        shell: pwsh
+        run: |
+          $homeDir = "$pwd/desktop/build/parity/bilibili-alignment-home"
+          New-Item -ItemType Directory -Force "$homeDir/.melox" | Out-Null
+          [System.IO.File]::WriteAllText("$homeDir/.melox/prefs_melox_app_settings.properties", "onboarding_completed=true`n", [System.Text.UTF8Encoding]::new($false))
+          foreach ($mode in @("controls", "reload")) {
+            python tools/capture_bilibili_alignment.py "$mode" "$homeDir" "desktop/build/parity/bilibili-alignment-$mode"
+            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          }
       - name: Replay all pinned lyrics controls and reload them in a new process
         shell: pwsh
         run: |
@@ -170,11 +192,17 @@ jobs:
           name: Verification-${{ runner.os }}
           path: |
             desktop/build/verification/*.json
+            desktop/build/verification/glass-scene/*.json
+            desktop/build/verification/glass-scene/*.png
+            desktop/build/parity/glass-dock-Dark/*
+            desktop/build/parity/glass-dock-Light/*
             desktop/build/verification/settings-icons.json
             desktop/build/parity/settings-*/*.json
             desktop/build/parity/settings-*/gradle.log
             desktop/build/parity/settings-*/*.txt
             desktop/build/parity/startup-memory/*.json
+            desktop/build/parity/bilibili-alignment-controls/*
+            desktop/build/parity/bilibili-alignment-reload/*
             desktop/build/parity/song-actions-controls/*
             desktop/build/parity/song-actions-reload/*
             desktop/build/verification/artwork-memory/*.json

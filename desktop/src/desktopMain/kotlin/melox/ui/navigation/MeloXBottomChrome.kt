@@ -10,7 +10,7 @@ import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
+import melox.ui.glass.MeloXShapes
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
@@ -113,7 +113,7 @@ fun MeloXBottomChrome(
             val expandedNavWidth = maxWidth - horizontalMargin * 2 - expandedGap - MeloXChromeTokens.ExpandedSize
             val navWidth = lerpDp(expandedNavWidth, compactSize, bounceFrac).coerceAtLeast(1.dp)
             val navOffsetX = horizontalMargin - (navWidth - expandedNavWidth).coerceAtLeast(0.dp) * MeloXChromeTokens.NavExpandLeftShare
-            val navShape = RoundedCornerShape(50)
+            val navShape = MeloXShapes.capsule
             val primaryTabs = visibleRootTabs
 
             val desiredCompactMiniVisibleWidth =
@@ -280,7 +280,7 @@ fun MeloXBottomChrome(
                             .height(dropletHeight)
                             .clearAndSetSemantics { }
                             .meloXRecordBackdrop(tabsBackdrop, visible = false)
-                            .meloXLiquidCaptureLayer(navShape, bottomGlassSurfaceColor())
+                             .meloXLiquidCaptureLayer(navShape, bottomGlassSurfaceColor(), dampedDock.pressProgress)
                             .padding(horizontal = 10.dp),
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
@@ -317,7 +317,7 @@ fun MeloXBottomChrome(
                                 )
                             }
                             .meloXLiquidTabSelection(
-                                shape = RoundedCornerShape(50),
+                                 shape = MeloXShapes.capsule,
                                  selected = lensVisibility > 0.001f,
                                  panelBackdrop = tabsBackdrop,
                                 pressProgress = dampedDock.pressProgress,
@@ -338,7 +338,7 @@ fun MeloXBottomChrome(
                     .offset(x = -horizontalMargin)
                     .size(searchSize)
                     .meloXLiquidBottomBar(
-                        shape = RoundedCornerShape(50),
+                        shape = MeloXShapes.capsule,
                         tint = bottomLiquidGlassTint(),
                         refractionHeight = lerpDp(10.dp, 8.dp, bounceFrac),
                         surfaceColor = bottomGlassSurfaceColor(),
