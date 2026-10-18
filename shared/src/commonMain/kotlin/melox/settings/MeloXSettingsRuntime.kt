@@ -104,6 +104,8 @@ object MeloXSettingsRuntime {
         internal set
     var automaticLyricSelectionEnabled by mutableStateOf(true)
         internal set
+    var bilibiliLyricAudioAlignmentEnabled by mutableStateOf(false)
+        internal set
     var lyricStrongBindingEnabled by mutableStateOf(false)
         internal set
     var showLyricRomanization by mutableStateOf(true)
@@ -438,6 +440,7 @@ object MeloXSettingsRuntime {
         transitionUiEnabled = prefs().getBoolean("transition_ui_enabled", false)
         showLyricTranslation = prefs().getBoolean("lyrics_translation", true)
         automaticLyricSelectionEnabled = prefs().getBoolean("lyrics_auto_select", true)
+        bilibiliLyricAudioAlignmentEnabled = prefs().getBoolean("bilibili_lyric_audio_alignment", false)
         lyricStrongBindingEnabled = prefs().getBoolean("experimental_lyric_strong_binding", false)
         showLyricRomanization = prefs().getBoolean("lyrics_romanization", false)
         lyricWordByWordEnabled = prefs().getBoolean("lyrics_word_by_word", true)

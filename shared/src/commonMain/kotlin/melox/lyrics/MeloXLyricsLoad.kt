@@ -28,6 +28,7 @@ class MeloXLyricsLoad(
         val binding: LyricBinding?,
         val script: MeloXLyricScript,
         val registry: MusicProviderRegistry?,
+        val bilibiliAlignment: Boolean,
     )
     private val lock = Any()
     private val cache = object : LinkedHashMap<Key, LyricsDocument>(24, 0.75f, true) {
@@ -39,7 +40,7 @@ class MeloXLyricsLoad(
         val automatic = MeloXSettingsRuntime.automaticLyricSelectionEnabled || track.id.source == MusicSource.Local
         return Key(track, automatic,
             if (automatic && MeloXSettingsRuntime.lyricStrongBindingEnabled) LyricBindingStore.read(track.id) else null,
-            MeloXLyricScript.fromSystem(), registry)
+            MeloXLyricScript.fromSystem(), registry, MeloXSettingsRuntime.bilibiliLyricAudioAlignmentEnabled)
     }
 
     /** Collection belongs to the screen's media identity; cancellation suppresses stale upgrades. */
@@ -47,7 +48,7 @@ class MeloXLyricsLoad(
         val key = key(track, registry)
         val initial = load(key)
         emit(initial)
-        if (!key.automatic || initial.source == LyricSource.AmlL || initial.lines.isEmpty()) return@flow
+        if (track.id.source == MusicSource.Bilibili || !key.automatic || initial.source == LyricSource.AmlL || initial.lines.isEmpty()) return@flow
         val upgrade = workerScope.async { safe { sources.amll(track, registry) } }
         try {
             val authored = withTimeoutOrNull(15_000L) { upgrade.await() } ?: return@flow
@@ -87,6 +88,9 @@ class MeloXLyricsLoad(
     private suspend fun loadDocument(key: Key): LyricsDocument {
         val (track, automatic, binding, _, registry) = key
         if (!automatic) return safe { sources.provider(track, registry) }
+        if (track.id.source == MusicSource.Bilibili) {
+            return sources.bilibili(track, registry, key.bilibiliAlignment)
+        }
         if (binding != null) {
             val bound = safe { sources.binding(binding) }
             if (hasWordTiming(bound)) return bound
@@ -177,6 +181,9 @@ internal fun selectAutomaticLyricCandidate(candidates: List<AutoLyricCandidate>)
 }
 
 open class LyricDocumentSources {
+    open suspend fun bilibili(track: MusicTrack, registry: MusicProviderRegistry?, alignment: Boolean): LyricsDocument =
+        BilibiliMatchedLyrics(BilibiliLyricSources(registry)).load(track, alignment)
+
     open suspend fun binding(binding: LyricBinding): LyricsDocument = when (binding.source) {
         BoundLyricSource.AmlL -> {
             val query = AmlldbLyricQuery.fromBinding(binding.resourceValue) ?: return LyricsDocument(emptyList())

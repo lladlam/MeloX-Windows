@@ -219,7 +219,7 @@ internal fun DeveloperSettings() {
 internal fun ExperimentalSettings(source: MusicSource) {
     var confirm by remember { mutableStateOf<String?>(null) }
     if (source == MusicSource.Bilibili) {
-        SettingsGlassGroup { SettingsToggleRow("settings_bilibili_align", "bilibili_lyric_audio_alignment", false, enabled = false) }
+        SettingsGlassGroup { SettingsToggleRow("settings_bilibili_align", "bilibili_lyric_audio_alignment", false) }
         SettingsInfoCard(pinnedString("settings_bilibili_align_warning"))
         Spacer(Modifier.height(10.dp))
         SettingsActionButton(pinnedString("settings_bilibili_clear"), Modifier.testTag("bilibili-associations-clear")) { confirm = "bilibili" }

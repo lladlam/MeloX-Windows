@@ -57,6 +57,7 @@ object MeloXSettingsPreferences {
             "player_keep_screen_on" -> MeloXSettingsRuntime.keepScreenOn = value
             "lyrics_translation" -> MeloXSettingsRuntime.showLyricTranslation = value
             "lyrics_auto_select" -> MeloXSettingsRuntime.automaticLyricSelectionEnabled = value
+            "bilibili_lyric_audio_alignment" -> MeloXSettingsRuntime.bilibiliLyricAudioAlignmentEnabled = value
             "experimental_lyric_strong_binding" -> MeloXSettingsRuntime.lyricStrongBindingEnabled = value
             "lyrics_romanization" -> MeloXSettingsRuntime.showLyricRomanization = value
             "lyrics_word_by_word" -> MeloXSettingsRuntime.lyricWordByWordEnabled = value

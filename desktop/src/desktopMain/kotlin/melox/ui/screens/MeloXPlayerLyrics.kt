@@ -100,7 +100,8 @@ private class LyricTouchInteractionSource : MutableInteractionSource {
 @Composable
 internal fun rememberMeloXPlayerLyrics(track: MusicTrack): MeloXPlayerLyricsState {
     val state = remember(track.id) { MeloXPlayerLyricsState(track) }
-    LaunchedEffect(track.id, MeloXSettingsRuntime.automaticLyricSelectionEnabled, MeloXSettingsRuntime.lyricStrongBindingEnabled) {
+    LaunchedEffect(track, MeloXSettingsRuntime.automaticLyricSelectionEnabled, MeloXSettingsRuntime.lyricStrongBindingEnabled,
+        MeloXSettingsRuntime.bilibiliLyricAudioAlignmentEnabled) {
         state.loading = true
         state.error = null
         try {
