@@ -276,5 +276,37 @@
 ### 26. Windows 原生沉浸检查发现并修复最大化恢复问题
 
 - Windows run `39061015821` / head `79d721af256e4b60d5794291cc8d3ed402c147d7` **FAILED**，停在 `auditImmersiveWindow`。独立下载 Verification-Windows：Floating → Fullscreen（1024×768）→ Floating（600×400）成功；Maximized → Fullscreen 后恢复超时，actual/requested 仍为 Fullscreen。此 run 没有通过发行验收。
-- 核对 Compose 1.8.1 官方 `ComposeWindow.desktop.kt`：`placement = Maximized` 只设置 `MAXIMIZED_BOTH`，不会清除独立 `isFullscreen` 标志。修复 `MeloXImmersiveWindowOwner` 使用真实 ComposeWindow，退出全屏先设 Floating 清除该标志，再应用目标 placement；原生检查保留尺寸及状态断言。功能提交 `037ed52`；本地 `:desktop:compileKotlinDesktop` **BUILD SUCCESSFUL**，Windows 复验待记录。
+- 核对 [Compose 1.8.1 官方 `ComposeWindow.desktop.kt`](https://github.com/JetBrains/compose-multiplatform-core/blob/v1.8.1/compose/ui/ui/src/desktopMain/kotlin/androidx/compose/ui/awt/ComposeWindow.desktop.kt)：`placement = Maximized` 只设置 `MAXIMIZED_BOTH`，不会清除独立 `isFullscreen` 标志。修复 `MeloXImmersiveWindowOwner` 使用真实 ComposeWindow，退出全屏先设 Floating 清除该标志，再应用目标 placement；原生检查保留尺寸及状态断言。功能提交 `037ed52`；本地 `:desktop:compileKotlinDesktop` **BUILD SUCCESSFUL**，Windows 复验待记录。
 - pinned Android 参考 worktree 为 `../MeloX-Android-parity-3f877ea`；仅将 debug applicationIdSuffix 改为 `.parity3f877ea`，生成 BuildConfig 的 GIT_SHA 为完整 pinned SHA，版本 0.6.2 / 20。`:app:assembleDebug` 成功，独立包已安装；启动后设备处于锁屏，未采集参考截图。随后设备离线，待重连/解锁，未覆盖现有 0.6.5 应用。
+
+### 27. Bilibili 歌词时长验证与替代音源关联生产链路
+
+- 真源：纯 pinned `MeloXProviderLyricsLoader.kt:307–521, 967–979`。原桌面已有时长/候选评分算法及关联存储，但加载器走通用跨平台匹配，实验开关禁用，缺少生产写入路径。
+- 新增 `BilibiliMatchedLyrics.kt`：正时长 + 自动歌词开启时提取最多三个标题候选，使用现有真实 QQ/网易搜索、QQ 歌词和 AMLL；网易目录仅用于 AMLL 寻址，初始阶段不调用网易歌词。主歌词时长不匹配/未知时进入校验；AMLL/QQ/网易三个独立来源的高置信度时长达成共识、当前音频明显不符且开关开启，才搜索替代 Bilibili 音源并写入真实关联。
+- 替代关联保留原 bvid:cid 逻辑身份，沿用播放 resolver 在下次打开音源时读取关联；不直接打断当前播放。取消继续传播；请求完成前用户关闭自动匹配/对齐或清空关联时，生产存储不写入晚到结果。
+- `MeloXLyricsLoad` 对 Bilibili 使用该专用链路、将对齐开关纳入缓存键并阻止通用迟到 AMLL 升级绕过校验；时长/元数据变化及开关变化触发 UI 歌词重载。实验设置项启用并接入 runtime/真实偏好。
+- 新增八项回归：匹配主歌词不触发网易校验、三源共识保存物理关联、关闭对齐仍取歌词而不写关联、缺源/低置信/分歧拒绝替代、未知时长及取消、危险版本匹配拒绝、缓存开关变化及通用升级隔离、生产存储拒绝清空后晚到写入。功能提交 `d1e8bd2`。本地 XML 汇总 **252 tests / 51 suites / 0 failures / 0 errors / 0 skipped**。
+- 中文设置物理回放 **controls 10 scenes / 15 assertions、独立进程 reload 6 scenes / 6 assertions** 通过。修正脚本直接寻找实验路由而未先点击设置 tab 的问题；semantics 只定位和断言，实际鼠标/滚轮输入与真实偏好重载。Windows 新 CI 结果另记；真实线上曲目与账号、同内容 Android 帧仍待验收。
+
+### 28. Windows 沉浸恢复修复复验与完整发行独立下载
+
+- Windows run **`39099205289` / SUCCESS**，head **`fdd1392dff14ad19226c7fcf96b8943e1f4d371e`**。完整下载发行和验证 artifacts；重新汇总 XML：**244 tests / 50 suites / 0 failures / 0 errors / 0 skipped**。
+- `immersive-window.json` 原生检查 **PASSED**：1024×768 实际全屏；Floating 恢复 600×400，Maximized 恢复 1040×736；原 Fullscreen、手动 placement、销毁后忽略迟到请求均通过。`physical_player_input` 仍为 PENDING。
+- 发行 ZIP **332,793,860 bytes**，SHA-256 **`305f6cdaf290366041913f405f7378c412a69ce48fd67ebcdd230bdbcb836908`**。独立验证 357 个 ZIP 条目及内嵌应用 JAR 全部条目 CRC、head 版本戳、16 个 pinned 资源、FFmpeg 大小/SHA/PE magic 均 PASS。
+- 证据：`evidence/windows-ci-fdd1392/`。该发行包含沉浸恢复修复，不包含本轮 Bilibili 或液态玻璃新代码。
+
+### 29. 真实液态玻璃光学、连续圆角与稳定帧复用
+
+- 详细来源、参数、性能口径及验收边界见 `GLASS_PORT.md`。固定使用 pinned Android 对应的 Backdrop 2.0.0、Capsule 2.1.3、Shapes 1.2.0；形状源码依赖在构建时核对 SHA-256，只适配 Android Path 调用及移除静态范围注解。
+- 用真实背景 SkSL lens/七采样色散替换白层假折射；补振色、按压 smoothstep 光斑、法线 rim、内外阴影，接入面板/捕获层/水珠。修复 48px 按压误差为 4dp，变换包住完整材质，frost 分支关闭液态变换。连续圆角通用路径提取实际角半径后仍可应用透镜。
+- 稳定参数 sampler 复用一条有界滤镜链，动态变化替换并释放；静态阴影与 rim 只在缓存失效时录制。无效果链不创建滤镜；交互高光首次按压才编译。开关补页面/轨道组合采样、按压透镜、环境高光，保留真实 checked 状态对确认/拒绝后的回弹约束。
+- 进一步将装饰 blur 纳入显式 native owner（DECAL 边界、仅 alpha 变化复用），并在组件 scene 销毁后核对 owned owner/chain 基线。专用滑杆恢复轨道组合采样和变换、10/14dp×p 透镜、环境 rim/阴影及 enabled/frosted 分支；采样采用真实相对坐标映射抵消控件/祖先缩放。
+- 已通过的早期光学检查和页面回放不替代最终修改复验。新增真实组件 fixture 的物理按压/拖动、背景更新、不同密度/明暗及反复挂载销毁检查；最终结果另记。用户 Windows 549→1431MB 增长仍未复现/修复，Android 同内容帧仍缺失。
+- 最终本地 `auditGlassOptics` 通过：真实 blur/零 lens 逐像素一致，lens/dispersion/vibrancy 分别改变实际背景、零尺寸 lens 跳过、600 稳定帧无新链；64×16 参数变更及重复释放检查通过。组件检查 **12 组**（density 1/1.25/2 × 明暗 × liquid/frosted），覆盖物理 button press/click、switch tap/拒绝 drag、slider tap/drag/禁用、背景更新与每组 8 次重新挂载。缩放取样的全部受检像素对齐；每组 scene 释放后 owned owner=0、created chains=released chains。
+- 生产回放复验：设置 **74 scenes / 55 assertions**，独立重载 **8 scenes / 18 assertions**；Bilibili **10+6 scenes / 15+6 assertions**。明暗底栏各 **7 scenes / 9 assertions**，最终 pinned capsule 接线 v3 针对性复验同样通过。功能提交 `ae8408a`。证据 `evidence/glass-optics-local/` 含来源哈希、真实组件图、回放参数/断言/截图和准确的性能适用范围。新 Windows CI 与发行另记。
+
+### 30. 底栏回放发现 Local Library 缺少真实聚合接口
+
+- 初次 Local 来源底栏回放失败：脚本误用了 Bilibili 两-tab 布局的坐标，实际为 Home/Explore/Library/Settings 四 tab。拒绝该次回放结果并保留原始失败画面/断言；更正物理坐标和单段拖动距离，不以直接改导航状态绕过。
+- 同时发现 Library 显示“本地音乐不可用”。桌面 `LocalProvider` 声明 Library capability，但未实现 Library 消费的 `LocalAggregationCapability`；纯 pinned Android `core/provider/local/LocalProvider.kt` 已实现该接口，并将 `aggregationTracks` 委托给真实目录 `searchSongs("", page, pageSize)`。
+- 补齐相同接口接线，使用现有持久化索引/真实本地身份，未增加假 catalog 或在线回退。功能提交 `1552ba4`。新增回归通过真实 provider registry 读取空索引、三份生成 WAV 对应的持久化记录、两页结果与原文件 URI。最终 XML 汇总 **253 tests / 51 suites / 0 failures / 0 errors / 0 skipped**；Local Library 生产回放明暗各 7 scenes / 9 assertions 通过，完整 pinned Capsule 接线 v3 复验也通过。

@@ -1,0 +1,6 @@
+remote-reject=cloud-enabled:false
+settings=tag:settings-root,state:bottom-root-tabs:Home>Explore>Library>Settings
+drag-library=absent:settings-root,tag:library-pages
+drag-settings=tag:settings-root
+repeat-library=absent:settings-root,tag:library-pages
+repeat-settings=tag:settings-root

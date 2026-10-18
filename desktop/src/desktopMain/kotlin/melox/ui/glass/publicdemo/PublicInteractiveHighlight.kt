@@ -3,8 +3,8 @@ package melox.ui.glass.publicdemo
 /*
  * Based on the InteractiveHighlight demo shipped with
  * Kyant0/AndroidLiquidGlass (Apache-2.0). Desktop port of Android
- * ui/glass/publicdemo/PublicInteractiveHighlight.kt — the Android AGSL
- * RuntimeShader focus spot is replaced by a radial gradient brush.
+ * ui/glass/publicdemo/PublicInteractiveHighlight.kt — the pinned AGSL focus
+ * spot runs as a Skia runtime shader with explicitly owned native resources.
  */
 
 import androidx.compose.animation.core.Animatable
@@ -21,7 +21,6 @@ import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.BlendMode
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ShaderBrush
 import androidx.compose.ui.input.pointer.AwaitPointerEventScope

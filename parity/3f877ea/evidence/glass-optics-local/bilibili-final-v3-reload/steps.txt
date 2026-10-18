@@ -1,0 +1,5 @@
+settings-tab:765,745
+find-experimental:reveal@settings-open-experimental
+experimental:tap@settings-open-experimental
+find-alignment:reveal@setting-bilibili_lyric_audio_alignment
+reloaded:wait@100

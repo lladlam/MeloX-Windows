@@ -43,10 +43,25 @@ Historical `parity/94e17c9/` evidence is reference material, not new acceptance.
 | General system font consumer | `ui/theme/MeloXMiSansFont.kt` | Same `system_font` chooses Default vs pinned MiLan in Material and glass typography; enabled setting | COMPLETION_LOG.md; physical change/actual typography consumer, independent reload and reset pass | PARTIAL |
 | Native multi-provider catalogs (Kuwo / Bilibili / Apple Music) | `core/provider/kuwo/*`, `bilibili/*`, `applemusic/*` | Kuwo search/playback/lyrics/playlists; Bilibili WBI search + favourite folders + DASH auth playback; Apple official REST catalog/library/lyrics with validated tokens; Apple declares no Playback capability | COMPLETION_LOG.md; 9 new protocol regressions plus full 230-test suite pass. Live authorized accounts, real music playback and pinned frames pending | PARTIAL |
 | Windows official NetEase client Cookie import | User-supplied 3.1.41.205564 research handoff; Windows extension | One-shot read-only profile/cookie copy, CurrentUser DPAPI + AES-GCM; existing SessionStore validation/save and existing API clients; explicit profile selection | COMPLETION_LOG.md steps 22–23; 9 SQLite/crypto/session tests pass locally and on Windows with real DPAPI over synthetic keys; packaged x64 SQLite DLL verified. Real-account import and physical login UI pending | PARTIAL |
+| Foreground clipboard invitations and desktop immersive placement | Pinned onResume / Together invite / immersive consumer | Real clipboard intake, prioritized invitation confirmation with existing join API; native fullscreen owner and maximized restoration correction | COMPLETION_LOG.md steps 24–28; Windows run 39099205289 native placement audit and independent full delivery verification pass. Physical clipboard/player/account input pending | PARTIAL |
+| Bilibili matched lyrics and verified physical audio association | Pinned MeloXProviderLyricsLoader | Dedicated AMLL/QQ + conditional NetEase verification; three-source duration consensus; real association write with cancellation/settings/removal guards | COMPLETION_LOG.md step 27; 8 new regressions, 252 total local tests; physical settings 10+6 scenes / 21 assertions. Live catalog/audio and pinned frames pending | PARTIAL |
+| Real glass optics, continuous geometry and stable-frame resource reuse | Pinned glass + Backdrop 2.0.0 / Capsule 2.1.3 / Shapes 1.2.0 | SkSL lens/dispersion/vibrancy, sampled capture/drop layers, dedicated switch/slider materials, inverse sampling transforms, normal rim and shadow layers; bounded replaceable native chains | GLASS_PORT.md; 12 component scenarios, 600-frame cache/ownership audit and settings/dock physical replay pass locally. No whole-process Windows memory or pinned-pixel acceptance | PARTIAL |
+| Persisted Local Library aggregation | Pinned LocalProvider.aggregationTracks | Missing LocalAggregationCapability restored through real indexed search and page identity | COMPLETION_LOG.md step 30; new registry/persistence/pagination regression, 253 total local tests; Local Library dock replay both themes passes | IMPLEMENTED; PINNED FRAMES PENDING |
 
 ## Evidence levels
 
 Latest independently verified Windows distribution:
+**fdd1392dff14ad19226c7fcf96b8943e1f4d371e**, run **39099205289 / SUCCESS**.
+**244 tests / 50 suites / zero failures, errors or skipped**, re-aggregated from
+the downloaded Windows XML. ZIP **332,793,860 bytes**, SHA-256
+`305f6cdaf290366041913f405f7378c412a69ce48fd67ebcdd230bdbcb836908`.
+All 357 ZIP entry CRCs, application JAR CRCs, revision stamp, pinned resource and
+decoder checks pass. Native immersive restoration passes Floating, Maximized,
+Fullscreen, manual-placement and disposal cases. Evidence: `evidence/windows-ci-fdd1392/`.
+This package predates the current Bilibili/glass changes. Physical Windows player
+input, accounts, user-memory behaviour and pinned Android frames remain pending.
+
+Previously latest independently verified Windows distribution:
 **aeafd724ebece906b52040a8790c066414ccb75f**, run **38858654884 / SUCCESS**,
 artifacts **12029157838 / 12029038255**. **241 tests / 49 suites / zero failures,
 errors or skipped** (re-aggregated from downloaded Windows XML). Delivery ZIP

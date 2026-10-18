@@ -1,0 +1,6 @@
+remote-reject:tap@remote-reject
+settings:890,745
+drag-library:hold-drag@bottom-root-tabs,-248,0
+drag-settings:hold-drag@bottom-root-tabs,248,0
+repeat-library:hold-drag@bottom-root-tabs,-248,0
+repeat-settings:hold-drag@bottom-root-tabs,248,0

@@ -1,0 +1,54 @@
+{
+  "theme_mode": [
+    "string",
+    "Light"
+  ],
+  "general_swipe_full_action": [
+    "string",
+    "AddToQueue"
+  ],
+  "general_remember_tab": [
+    "bool",
+    "false"
+  ],
+  "player_flowing_speed": [
+    "float",
+    2
+  ],
+  "player_flowing_saturation": [
+    "float",
+    2
+  ],
+  "player_flowing_brightness": [
+    "float",
+    1.6
+  ],
+  "player_background_mode": [
+    "string",
+    "BlurredArtwork"
+  ],
+  "immersive_playback": [
+    "bool",
+    "true"
+  ],
+  "library_playlist_search_hidden": [
+    "bool",
+    "true"
+  ],
+  "library_playlist_show_artwork": [
+    "bool",
+    "true"
+  ],
+  "music_area": [
+    "string",
+    "\u65e5\u672c"
+  ],
+  "content_playlist_play_count": [
+    "bool",
+    "false"
+  ],
+  "download_lyrics": [
+    "bool",
+    "false"
+  ]
+}
