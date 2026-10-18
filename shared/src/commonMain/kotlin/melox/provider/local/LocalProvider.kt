@@ -27,7 +27,7 @@ class LocalProvider(
 ) : MusicProvider, SearchCapability, PlaybackCapability, LyricsCapability,
     melox.music.provider.FavoriteCapability, melox.music.provider.FavoriteStateCapability,
     melox.music.provider.PlaylistWriteCapability, melox.music.provider.PlaylistSyncCapability,
-    melox.music.provider.PlaylistCapability {
+    melox.music.provider.PlaylistCapability, melox.music.provider.LocalAggregationCapability {
     override val source: MusicSource = MusicSource.Local
     override val displayName: String = source.displayName
     override val capabilities: Set<MusicCapability> = setOf(MusicCapability.Playback, MusicCapability.Library, MusicCapability.Search, MusicCapability.Lyrics, MusicCapability.Favorites, MusicCapability.Playlists, MusicCapability.PlaylistWrite)
@@ -119,6 +119,10 @@ class LocalProvider(
         val result = all.drop((page.coerceAtLeast(1) - 1) * pageSize.coerceAtLeast(1)).take(pageSize.coerceAtLeast(1)).map(::musicTrack)
         MusicPage(result, page, pageSize, all.size.toLong())
     }
+
+    // Pinned LocalProvider exposes the same indexed songs to Library and unified aggregation.
+    override suspend fun aggregationTracks(page: Int, pageSize: Int): MusicPage<MusicTrack> =
+        searchSongs("", page, pageSize)
 
     override suspend fun resolvePlayback(track: MusicTrack, quality: AudioQualityTier): PlaybackResolution = withContext(Dispatchers.IO) {
         val location = (track.providerMetadata as? ProviderTrackMetadata.Local)?.contentUri?.takeIf(String::isNotBlank)
