@@ -1,0 +1,454 @@
+{
+  "fixture": "generated checkerboard; real production glass components",
+  "android_pixel_acceptance": "PENDING_PINNED_REFERENCE",
+  "memory_scope": "observations only; no forced GC and no whole-process plateau assertion",
+  "owned_filter_disposal": [
+    {
+      "before": {
+        "released_chains": 1031,
+        "owners": 0,
+        "created_chains": 1031
+      },
+      "after": {
+        "released_chains": 1290,
+        "owners": 0,
+        "created_chains": 1290
+      },
+      "case": "1.0-light-liquid"
+    },
+    {
+      "before": {
+        "released_chains": 1290,
+        "owners": 0,
+        "created_chains": 1290
+      },
+      "after": {
+        "released_chains": 1406,
+        "owners": 0,
+        "created_chains": 1406
+      },
+      "case": "1.0-light-frosted"
+    },
+    {
+      "before": {
+        "released_chains": 1406,
+        "owners": 0,
+        "created_chains": 1406
+      },
+      "after": {
+        "released_chains": 1665,
+        "owners": 0,
+        "created_chains": 1665
+      },
+      "case": "1.0-dark-liquid"
+    },
+    {
+      "before": {
+        "released_chains": 1665,
+        "owners": 0,
+        "created_chains": 1665
+      },
+      "after": {
+        "released_chains": 1781,
+        "owners": 0,
+        "created_chains": 1781
+      },
+      "case": "1.0-dark-frosted"
+    },
+    {
+      "before": {
+        "released_chains": 1781,
+        "owners": 0,
+        "created_chains": 1781
+      },
+      "after": {
+        "released_chains": 2037,
+        "owners": 0,
+        "created_chains": 2037
+      },
+      "case": "1.25-light-liquid"
+    },
+    {
+      "before": {
+        "released_chains": 2037,
+        "owners": 0,
+        "created_chains": 2037
+      },
+      "after": {
+        "released_chains": 2155,
+        "owners": 0,
+        "created_chains": 2155
+      },
+      "case": "1.25-light-frosted"
+    },
+    {
+      "before": {
+        "released_chains": 2155,
+        "owners": 0,
+        "created_chains": 2155
+      },
+      "after": {
+        "released_chains": 2410,
+        "owners": 0,
+        "created_chains": 2410
+      },
+      "case": "1.25-dark-liquid"
+    },
+    {
+      "before": {
+        "released_chains": 2410,
+        "owners": 0,
+        "created_chains": 2410
+      },
+      "after": {
+        "released_chains": 2526,
+        "owners": 0,
+        "created_chains": 2526
+      },
+      "case": "1.25-dark-frosted"
+    },
+    {
+      "before": {
+        "released_chains": 2526,
+        "owners": 0,
+        "created_chains": 2526
+      },
+      "after": {
+        "released_chains": 2703,
+        "owners": 0,
+        "created_chains": 2703
+      },
+      "case": "2.0-light-liquid"
+    },
+    {
+      "before": {
+        "released_chains": 2703,
+        "owners": 0,
+        "created_chains": 2703
+      },
+      "after": {
+        "released_chains": 2817,
+        "owners": 0,
+        "created_chains": 2817
+      },
+      "case": "2.0-light-frosted"
+    },
+    {
+      "before": {
+        "released_chains": 2817,
+        "owners": 0,
+        "created_chains": 2817
+      },
+      "after": {
+        "released_chains": 2993,
+        "owners": 0,
+        "created_chains": 2993
+      },
+      "case": "2.0-dark-liquid"
+    },
+    {
+      "before": {
+        "released_chains": 2993,
+        "owners": 0,
+        "created_chains": 2993
+      },
+      "after": {
+        "released_chains": 3107,
+        "owners": 0,
+        "created_chains": 3107
+      },
+      "case": "2.0-dark-frosted"
+    }
+  ],
+  "samples": [
+    {
+      "scaled_background_aligned_pixels": 468,
+      "memory": {
+        "direct_buffer_bytes": 8192,
+        "heap_used_bytes": 9813832,
+        "resident_bytes": 136638464,
+        "private_commit_bytes": 128782336,
+        "uptime_ms": 18224,
+        "heap_max_bytes": 1037959168,
+        "threads": 17,
+        "heap_committed_bytes": 18767872,
+        "non_heap_used_bytes": 36406104
+      },
+      "density": 1,
+      "mount_dispose_cycles": 8,
+      "frosted": false,
+      "changed_pixels_inside_glass": 4973,
+      "disabled_slider_preserved_value": true,
+      "rejected_switch_drag_restored": true,
+      "dark": false,
+      "physical_button_clicks": 1,
+      "slider_value": 0.5979918,
+      "scaled_background_checked_pixels": 468
+    },
+    {
+      "scaled_background_aligned_pixels": 468,
+      "memory": {
+        "direct_buffer_bytes": 8192,
+        "heap_used_bytes": 10555920,
+        "resident_bytes": 149381120,
+        "private_commit_bytes": 136019968,
+        "uptime_ms": 24668,
+        "heap_max_bytes": 1037959168,
+        "threads": 18,
+        "heap_committed_bytes": 18767872,
+        "non_heap_used_bytes": 42011648
+      },
+      "density": 1,
+      "mount_dispose_cycles": 8,
+      "frosted": true,
+      "changed_pixels_inside_glass": 4976,
+      "disabled_slider_preserved_value": true,
+      "rejected_switch_drag_restored": true,
+      "dark": false,
+      "physical_button_clicks": 1,
+      "slider_value": 0.80508476,
+      "scaled_background_checked_pixels": 468
+    },
+    {
+      "scaled_background_aligned_pixels": 468,
+      "memory": {
+        "direct_buffer_bytes": 8192,
+        "heap_used_bytes": 9994568,
+        "resident_bytes": 144015360,
+        "private_commit_bytes": 132177920,
+        "uptime_ms": 32406,
+        "heap_max_bytes": 1037959168,
+        "threads": 18,
+        "heap_committed_bytes": 18767872,
+        "non_heap_used_bytes": 44656160
+      },
+      "density": 1,
+      "mount_dispose_cycles": 8,
+      "frosted": false,
+      "changed_pixels_inside_glass": 4973,
+      "disabled_slider_preserved_value": true,
+      "rejected_switch_drag_restored": true,
+      "dark": true,
+      "physical_button_clicks": 1,
+      "slider_value": 0.59776634,
+      "scaled_background_checked_pixels": 468
+    },
+    {
+      "scaled_background_aligned_pixels": 468,
+      "memory": {
+        "direct_buffer_bytes": 8192,
+        "heap_used_bytes": 11601352,
+        "resident_bytes": 135663616,
+        "private_commit_bytes": 119472128,
+        "uptime_ms": 38602,
+        "heap_max_bytes": 1037959168,
+        "threads": 18,
+        "heap_committed_bytes": 18767872,
+        "non_heap_used_bytes": 45684064
+      },
+      "density": 1,
+      "mount_dispose_cycles": 8,
+      "frosted": true,
+      "changed_pixels_inside_glass": 4975,
+      "disabled_slider_preserved_value": true,
+      "rejected_switch_drag_restored": true,
+      "dark": true,
+      "physical_button_clicks": 1,
+      "slider_value": 0.80508476,
+      "scaled_background_checked_pixels": 468
+    },
+    {
+      "scaled_background_aligned_pixels": 816,
+      "memory": {
+        "direct_buffer_bytes": 8192,
+        "heap_used_bytes": 12595352,
+        "resident_bytes": 275968000,
+        "private_commit_bytes": 259375104,
+        "uptime_ms": 46569,
+        "heap_max_bytes": 1037959168,
+        "threads": 18,
+        "heap_committed_bytes": 18767872,
+        "non_heap_used_bytes": 47334920
+      },
+      "density": 1.25,
+      "mount_dispose_cycles": 8,
+      "frosted": false,
+      "changed_pixels_inside_glass": 7800,
+      "disabled_slider_preserved_value": true,
+      "rejected_switch_drag_restored": true,
+      "dark": false,
+      "physical_button_clicks": 1,
+      "slider_value": 0.5952847,
+      "scaled_background_checked_pixels": 816
+    },
+    {
+      "scaled_background_aligned_pixels": 816,
+      "memory": {
+        "direct_buffer_bytes": 8192,
+        "heap_used_bytes": 10800032,
+        "resident_bytes": 292691968,
+        "private_commit_bytes": 275390464,
+        "uptime_ms": 52732,
+        "heap_max_bytes": 1037959168,
+        "threads": 18,
+        "heap_committed_bytes": 18767872,
+        "non_heap_used_bytes": 48019024
+      },
+      "density": 1.25,
+      "mount_dispose_cycles": 8,
+      "frosted": true,
+      "changed_pixels_inside_glass": 7802,
+      "disabled_slider_preserved_value": true,
+      "rejected_switch_drag_restored": true,
+      "dark": false,
+      "physical_button_clicks": 1,
+      "slider_value": 0.80508476,
+      "scaled_background_checked_pixels": 816
+    },
+    {
+      "scaled_background_aligned_pixels": 816,
+      "memory": {
+        "direct_buffer_bytes": 8192,
+        "heap_used_bytes": 11379144,
+        "resident_bytes": 154841088,
+        "private_commit_bytes": 156274688,
+        "uptime_ms": 60622,
+        "heap_max_bytes": 1037959168,
+        "threads": 18,
+        "heap_committed_bytes": 18767872,
+        "non_heap_used_bytes": 45621912
+      },
+      "density": 1.25,
+      "mount_dispose_cycles": 8,
+      "frosted": false,
+      "changed_pixels_inside_glass": 7800,
+      "disabled_slider_preserved_value": true,
+      "rejected_switch_drag_restored": true,
+      "dark": true,
+      "physical_button_clicks": 1,
+      "slider_value": 0.5976328,
+      "scaled_background_checked_pixels": 816
+    },
+    {
+      "scaled_background_aligned_pixels": 816,
+      "memory": {
+        "direct_buffer_bytes": 8192,
+        "heap_used_bytes": 14196976,
+        "resident_bytes": 178737152,
+        "private_commit_bytes": 169504768,
+        "uptime_ms": 66828,
+        "heap_max_bytes": 1037959168,
+        "threads": 18,
+        "heap_committed_bytes": 18767872,
+        "non_heap_used_bytes": 46211424
+      },
+      "density": 1.25,
+      "mount_dispose_cycles": 8,
+      "frosted": true,
+      "changed_pixels_inside_glass": 7799,
+      "disabled_slider_preserved_value": true,
+      "rejected_switch_drag_restored": true,
+      "dark": true,
+      "physical_button_clicks": 1,
+      "slider_value": 0.80508476,
+      "scaled_background_checked_pixels": 816
+    },
+    {
+      "scaled_background_aligned_pixels": 2494,
+      "memory": {
+        "direct_buffer_bytes": 8192,
+        "heap_used_bytes": 14807888,
+        "resident_bytes": 175288320,
+        "private_commit_bytes": 172896256,
+        "uptime_ms": 76027,
+        "heap_max_bytes": 1037959168,
+        "threads": 18,
+        "heap_committed_bytes": 18767872,
+        "non_heap_used_bytes": 46858416
+      },
+      "density": 2,
+      "mount_dispose_cycles": 8,
+      "frosted": false,
+      "changed_pixels_inside_glass": 19844,
+      "disabled_slider_preserved_value": true,
+      "rejected_switch_drag_restored": true,
+      "dark": false,
+      "physical_button_clicks": 1,
+      "slider_value": 0.60001415,
+      "scaled_background_checked_pixels": 2494
+    },
+    {
+      "scaled_background_aligned_pixels": 2494,
+      "memory": {
+        "direct_buffer_bytes": 8192,
+        "heap_used_bytes": 15698000,
+        "resident_bytes": 155774976,
+        "private_commit_bytes": 138035200,
+        "uptime_ms": 82432,
+        "heap_max_bytes": 1037959168,
+        "threads": 18,
+        "heap_committed_bytes": 18767872,
+        "non_heap_used_bytes": 47181256
+      },
+      "density": 2,
+      "mount_dispose_cycles": 8,
+      "frosted": true,
+      "changed_pixels_inside_glass": 19866,
+      "disabled_slider_preserved_value": true,
+      "rejected_switch_drag_restored": true,
+      "dark": false,
+      "physical_button_clicks": 1,
+      "slider_value": 0.80508476,
+      "scaled_background_checked_pixels": 2494
+    },
+    {
+      "scaled_background_aligned_pixels": 2494,
+      "memory": {
+        "direct_buffer_bytes": 8192,
+        "heap_used_bytes": 11124432,
+        "resident_bytes": 146726912,
+        "private_commit_bytes": 130674688,
+        "uptime_ms": 91765,
+        "heap_max_bytes": 1037959168,
+        "threads": 18,
+        "heap_committed_bytes": 25350144,
+        "non_heap_used_bytes": 47558648
+      },
+      "density": 2,
+      "mount_dispose_cycles": 8,
+      "frosted": false,
+      "changed_pixels_inside_glass": 19836,
+      "disabled_slider_preserved_value": true,
+      "rejected_switch_drag_restored": true,
+      "dark": true,
+      "physical_button_clicks": 1,
+      "slider_value": 0.59992886,
+      "scaled_background_checked_pixels": 2494
+    },
+    {
+      "scaled_background_aligned_pixels": 2494,
+      "memory": {
+        "direct_buffer_bytes": 8192,
+        "heap_used_bytes": 11603280,
+        "resident_bytes": 214560768,
+        "private_commit_bytes": 197574656,
+        "uptime_ms": 98150,
+        "heap_max_bytes": 1037959168,
+        "threads": 18,
+        "heap_committed_bytes": 25350144,
+        "non_heap_used_bytes": 48053088
+      },
+      "density": 2,
+      "mount_dispose_cycles": 8,
+      "frosted": true,
+      "changed_pixels_inside_glass": 19862,
+      "disabled_slider_preserved_value": true,
+      "rejected_switch_drag_restored": true,
+      "dark": true,
+      "physical_button_clicks": 1,
+      "slider_value": 0.80508476,
+      "scaled_background_checked_pixels": 2494
+    }
+  ],
+  "status": "PASSED"
+}

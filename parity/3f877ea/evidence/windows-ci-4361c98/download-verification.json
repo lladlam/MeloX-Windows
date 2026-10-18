@@ -1,0 +1,39 @@
+{
+  "run_id": "39140967234",
+  "expected_head_sha": "4361c9866be659ddc9145979c2b55688d1e068a4",
+  "delivery_zip": {
+    "name": "MeloX-Desktop-Windows.zip",
+    "bytes": 333065608,
+    "sha256": "2bdc3803d1a37d83fa2a81f3704cb9c33d9fd0b2e2aa12436e2442d414b63297"
+  },
+  "zip_crc_all_entries": "PASSED",
+  "jar_crc_all_entries": "PASSED",
+  "zip_entry_count": 357,
+  "launcher_entries": [
+    "MeloX-Desktop.exe"
+  ],
+  "application_jar": "app/MeloX-Desktop-windows-x64-1.0.0.jar",
+  "decoder_entry": "app/MeloX-Desktop-windows-x64-1.0.0.jar!/decoder/ffmpeg.exe",
+  "decoder_bytes": 164352000,
+  "build_info_revision": "4361c9866be659ddc9145979c2b55688d1e068a4",
+  "pinned_resource_check": "PASSED",
+  "decoder_bundle_check": "PASSED",
+  "tools": [
+    {
+      "label": "pinned_resources",
+      "exit_code": 0,
+      "stdout_tail": "PASS: 16 pinned resources match exact source bytes, including Android MiLan Pro\n",
+      "stderr_tail": ""
+    },
+    {
+      "label": "decoder_bundle",
+      "exit_code": 0,
+      "stdout_tail": "{\n  \"check\": \"source/packaged decoder integrity\",\n  \"resources\": [\n    {\n      \"location\": \"build/downloads/windows-ci-4361c98/MeloX-Desktop-Windows/MeloX-Desktop-Windows.zip!/app/MeloX-Desktop-windows-x64-1.0.0.jar!/decoder/ffmpeg.exe\",\n      \"bytes\": 164352000,\n      \"sha256\": \"af7913b7ddc324bf02b8af72fe8612b1471455ef8d9e04e45466510742abcff9\",\n      \"magic\": \"PE\",\n      \"verified\": true\n    }\n  ],\n  \"native\": {\n    \"decoder_native_run\": \"NOT_RUN\"\n  },\n  \"audible_acceptance\": \"BLOCKED\"\n}\n",
+      "stderr_tail": ""
+    }
+  ],
+  "physical_windows_execution": "BLOCKED_NOT_RUN_HERE",
+  "pinned_android_pixel_acceptance": "BLOCKED_NO_REFERENCE_FRAMES",
+  "failures": [],
+  "status": "PASSED"
+}

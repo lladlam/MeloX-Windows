@@ -315,4 +315,13 @@
 
 - Windows run **`39140317064` / FAILURE**，head **`68f964bf5e566ff504b184a8304be1c7761e5e53`**。下载验证 artifact 后独立汇总 shared XML：**253 tests / 51 suites / 0 failures / 0 errors / 0 skipped**；但桌面 `compileKotlinDesktop` 在独立 Kotlin daemon 报 `java.lang.OutOfMemoryError: GC overhead limit exceeded`。后续玻璃/UI 检查未运行、发行包未生成，不能称为 Windows 通过。
 - 新增根 `gradle.properties`，将普通 Gradle/CI 构建也固定为本地已使用的 **1024m / SerialGC / UTF-8 / max-workers=1 / Kotlin in-process**；不再让 Kotlin daemon 继承未显式指定的较小默认堆。配置只约束构建进程，打包应用 JVM 选项仍由 `desktop/build.gradle.kts` 定义，不能将此变更声称为播放器内存修复。
-- 失败日志、run 元数据、下载 XML 汇总及失败边界保留于 `evidence/windows-ci-68f964b/`。本地不带临时内存覆盖的强制重新编译及新 Windows 结果另记。
+- 失败日志、run 元数据、下载 XML 汇总及失败边界保留于 `evidence/windows-ci-68f964b/`。构建修复提交 `c08949d`、记录提交 `4361c98`。本地不带临时内存/编译器覆盖执行 `:desktop:compileKotlinDesktop --rerun-tasks --no-daemon --console=plain`，**1m36s / 12 tasks executed / BUILD SUCCESSFUL**；日志与配置哈希在 `evidence/build-heap-local/`。新 Windows run `39140967234` 结果另记。
+
+### 32. 液态玻璃新 Windows CI、完整发行独立下载核验
+
+- Windows run **`39140967234` / SUCCESS**，head **`4361c9866be659ddc9145979c2b55688d1e068a4`**。编译/打包 **4m10s** 成功，后续玻璃、明暗底栏、四 Locale 设置、Bilibili/歌词/Skyline/歌曲操作与重载、原生电源和沉浸恢复、封面/字形/字体/PCM、全部发行层检查均成功。完整下载两个 artifacts 后重新汇总 Windows XML：**253 tests / 51 suites / 0 failures / 0 errors / 0 skipped**。
+- Windows 真实 Skia optical audit：模糊/零 lens 像素一致、lens/色散/vibrancy 独立改变背景，600 稳定帧新链数 **0**，64×16 替换/释放压力通过。12 组生产组件 fixture（3 密度×明暗×liquid/frosted）全部通过，全部缩放取样受检像素对齐，scene 销毁后 owned owner=0 且 owned created chains=released chains。该计数只覆盖显式管理的最终链，不代表所有 Skia/GPU 内存。
+- 重新读取下载包中全部 capture.json：**18 组生产回放 / 731 scenes / 1,278 assertions，全部通过**。其中设置 controls/reload 74/8 scenes、55/18 assertions；Bilibili 10/6 scenes、15/6 assertions；底栏明暗各 7 scenes、9 assertions。原生沉浸 placement 和释放通过，`physical_player_input` 仍 PENDING。
+- 发行 ZIP **333,065,608 bytes**，SHA-256 **`2bdc3803d1a37d83fa2a81f3704cb9c33d9fd0b2e2aa12436e2442d414b63297`**。独立检查 **357 ZIP entries CRC + 内嵌 JAR 全条目 CRC**、精确 head 版本戳、16 个 pinned 资源均 PASS；另确认 glass owner/decoration/geometry/slider、Capsule/Continuous 形状、Bilibili/Local 类及 Apache/NOTICE 均实际打包。
+- 修正独立核验脚本的跨主机选择：显式传 `--native-resource ffmpeg.exe`，不让 Linux 核验主机默认选择包内 ELF。新发行的 Windows FFmpeg **164,352,000 bytes**、SHA-256 **`af7913b7ddc324bf02b8af72fe8612b1471455ef8d9e04e45466510742abcff9`**、PE AMD64 均通过。脚本未在 Linux 执行 Windows EXE，实际 native decode 由 Windows CI 完成；不由此宣称物理听感通过。
+- 证据：`evidence/windows-ci-4361c98/`，包含 run/artifact 元数据、完整 XML 汇总、下载核验、打包类/许可证、Windows optical/组件/沉浸原始 JSON、生产回放汇总和关键原始输入/截图。最新已独立核验发行更新为 `4361c98`。Android 仍离线缺 pinned 同内容帧；原生用户设备长时 GPU/内存、549→1431MB、听感/账号/设备切换仍未验收。

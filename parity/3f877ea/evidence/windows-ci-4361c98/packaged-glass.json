@@ -1,0 +1,62 @@
+{
+  "status": "PASSED",
+  "application_jar": "app/MeloX-Desktop-windows-x64-1.0.0.jar",
+  "required_entries": [
+    {
+      "entry": "melox/ui/glass/MeloXGlassFilterOwner.class",
+      "bytes": 13427,
+      "sha256": "c5e698ffa4f5f3ea08a8628468ef6d3d420a6515370120c103c93fe80e6d18a6"
+    },
+    {
+      "entry": "melox/ui/glass/MeloXGlassDecorationKt.class",
+      "bytes": 35658,
+      "sha256": "240568f5af8d9f4be77c2545bf07059b23a622c7baa14c5c7efdec099b421252"
+    },
+    {
+      "entry": "melox/ui/glass/MeloXGlassGeometryKt.class",
+      "bytes": 7491,
+      "sha256": "13cd8e8ad476dc541d6c07e29574278513fb3e938d6033e91351cda85f20c2df"
+    },
+    {
+      "entry": "melox/ui/glass/MeloXLiquidSliderKt.class",
+      "bytes": 64801,
+      "sha256": "1143bd83bd2934014fb04bba911fd478cad05a993cb7eb22257d71e846f0a7cb"
+    },
+    {
+      "entry": "com/kyant/capsule/ContinuousRoundedRectangle.class",
+      "bytes": 10540,
+      "sha256": "4802e020357082a11b34fbdce5b0622120404fd838c6e23f4fe44c058d93ffa4"
+    },
+    {
+      "entry": "com/kyant/shapes/Capsule.class",
+      "bytes": 4365,
+      "sha256": "ad423eb9391667b27229528914aa69f82a7a08823839086f020b9ec2f4f624a8"
+    },
+    {
+      "entry": "com/kyant/capsule/path/PathSegment$Arc.class",
+      "bytes": 4888,
+      "sha256": "3f3fe8a225fe92f71a5db031a759acdfde65c786e9364616b1cbc9d1f0da09e5"
+    },
+    {
+      "entry": "melox/lyrics/BilibiliMatchedLyrics.class",
+      "bytes": 4743,
+      "sha256": "62e7a37bbf2ebfa5d2eca923a4d77bd81ef2e1123ac55a96ee2f3ae3261cb4ba"
+    },
+    {
+      "entry": "melox/provider/local/LocalProvider.class",
+      "bytes": 19638,
+      "sha256": "09cb7443044834bb1a9a38f1adfbe39001e044a332dbf5cacffd0a0f29864d9f"
+    },
+    {
+      "entry": "parity/glass-optics-NOTICE.txt",
+      "bytes": 1091,
+      "sha256": "6f6b875945a6fdf2c02c7e94813416f25ada479dc66d205275ffb04fac9c5ee6"
+    },
+    {
+      "entry": "parity/glass-Apache-2.0.txt",
+      "bytes": 11557,
+      "sha256": "52b612fef6cb450f213d942ed14ef630272e94ac4643a273105640b1037bf1b6"
+    }
+  ],
+  "meaning": "presence/byte identity in independently downloaded distribution; pinned Android visual acceptance pending"
+}

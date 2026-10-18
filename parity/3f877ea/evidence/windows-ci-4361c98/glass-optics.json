@@ -1,0 +1,176 @@
+{
+  "ownership_stress": "64 owners x 16 parameter changes; plain transition and double close",
+  "android_pixels": "PENDING: requires pinned reference frames",
+  "blur_cached_pixels_identical": true,
+  "os": "Windows Server 2025",
+  "zero_lens_pixels_identical": true,
+  "timing": [{
+    "frames": 600,
+    "uncached_filter_creations": 600,
+    "uncached_ns": 208666500,
+    "cached_ns": 9814200,
+    "cached_filter_creations": 0
+  }],
+  "windows_549_to_1431_memory": "UNRESOLVED",
+  "dispersion_changes_pixels": true,
+  "benchmark_scope": "fixed-input raster including Skia filter-result cache; not isolated construction cost",
+  "production_frame_time": "PENDING: raster microbenchmark is not app FPS",
+  "cache_hits": 629,
+  "lens_changes_background_pixels": true,
+  "owned_creations": 7,
+  "geometry": [
+    {
+      "radii": [
+        40,
+        40,
+        40,
+        40
+      ],
+      "shape": "capsule",
+      "density": 1
+    },
+    {
+      "radii": [
+        50,
+        50,
+        50,
+        50
+      ],
+      "shape": "capsule",
+      "density": 1.25
+    },
+    {
+      "radii": [
+        80,
+        80,
+        80,
+        80
+      ],
+      "shape": "capsule",
+      "density": 2
+    },
+    {
+      "radii": [
+        16,
+        16,
+        16,
+        16
+      ],
+      "shape": "compact",
+      "density": 1
+    },
+    {
+      "radii": [
+        20,
+        20,
+        20,
+        20
+      ],
+      "shape": "compact",
+      "density": 1.25
+    },
+    {
+      "radii": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "shape": "compact",
+      "density": 2
+    },
+    {
+      "radii": [
+        22,
+        22,
+        22,
+        22
+      ],
+      "shape": "card",
+      "density": 1
+    },
+    {
+      "radii": [
+        27.5,
+        27.5,
+        27.5,
+        27.5
+      ],
+      "shape": "card",
+      "density": 1.25
+    },
+    {
+      "radii": [
+        44,
+        44,
+        44,
+        44
+      ],
+      "shape": "card",
+      "density": 2
+    },
+    {
+      "radii": [
+        28,
+        28,
+        28,
+        28
+      ],
+      "shape": "largeCard",
+      "density": 1
+    },
+    {
+      "radii": [
+        35,
+        35,
+        35,
+        35
+      ],
+      "shape": "largeCard",
+      "density": 1.25
+    },
+    {
+      "radii": [
+        56,
+        56,
+        56,
+        56
+      ],
+      "shape": "largeCard",
+      "density": 2
+    },
+    {
+      "radii": [
+        36,
+        36,
+        0,
+        0
+      ],
+      "shape": "sheet",
+      "density": 1
+    },
+    {
+      "radii": [
+        45,
+        45,
+        0,
+        0
+      ],
+      "shape": "sheet",
+      "density": 1.25
+    },
+    {
+      "radii": [
+        72,
+        72,
+        0,
+        0
+      ],
+      "shape": "sheet",
+      "density": 2
+    }
+  ],
+  "vibrancy_changes_pixels": true,
+  "owned_releases": 7,
+  "status": "PASSED"
+}

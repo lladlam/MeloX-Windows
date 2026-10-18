@@ -33,6 +33,7 @@
 - 新增专用滑杆 tap/drag/disabled 与非均匀缩放下无光学采样的逐像素对齐检查；每个 scene 销毁后 owned owner/chain 计数必须回到创建前的基线。最终结果以 `glass-scene/audit.json` 为准。
 - 生产页面仍需鼠标/滚轮/键盘回放与截图检查；Android 同内容截图/帧尚未采集。不能因 shader 测试通过就标记 1:1 完成。
 - 本地最终结果归档 `evidence/glass-optics-local/`：12 组真实组件检查通过；每组 scene 关闭后 owned owner 与未释放链均为 0。设置 74/55、reload 8/18，Bilibili 10/15 + reload 6/6，底栏明暗各 7/9；数字依次为 scenes/assertions。全量 shared XML 为 253 tests / 51 suites、零失败/错误/跳过。Windows 新 CI 和完整发行独立验证另记。
+- Windows run **39140967234 / head 4361c98 / SUCCESS** 完成同款 optical 和 12 组组件检查；600 稳定帧新链为 0、每个 scene 释放后 owned owner/链余额归零。独立下载重新汇总为 **253 tests / 51 suites** 及 **18 组生产回放 / 731 scenes / 1,278 assertions**，全部通过。发行 ZIP **333,065,608 bytes**、SHA-256 `2bdc3803d1a37d83fa2a81f3704cb9c33d9fd0b2e2aa12436e2442d414b63297`，ZIP/JAR CRC、版本/资源和显式 Windows PE 解码器检查通过；新形状/光学类及许可证已确认打包。证据 `evidence/windows-ci-4361c98/`。这些是 Windows CI raster/组件/打包证据，仍不替代 pinned Android 或用户设备 GPU/FPS/常驻内存验收。
 
 ## 尚待补齐或验收
 

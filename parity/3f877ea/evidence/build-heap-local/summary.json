@@ -1,0 +1,10 @@
+{
+  "configuration_commit": "c08949d",
+  "configuration_sha256": "9b1135dad832beda4a9be82a98df419537a9a6c43aff56d2fdee211603047c48",
+  "command": ":desktop:compileKotlinDesktop --rerun-tasks --no-daemon --console=plain",
+  "temporary_memory_or_compiler_overrides": false,
+  "status": "PASSED",
+  "elapsed": "1m 36s",
+  "tasks_executed": 12,
+  "runtime_memory_claim": false
+}
