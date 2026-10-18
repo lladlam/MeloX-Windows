@@ -86,7 +86,10 @@ tool_status = {}
 tools = []
 for label, command, output in (
     ('pinned_resources', [sys.executable, 'tools/verify_pinned_resources.py', '--artifact', str(zip_path), '--output', str(pinned_output)], pinned_output),
-    ('decoder_bundle', [sys.executable, 'tools/verify_decoder_bundle.py', '--artifact', str(zip_path), '--output', str(decoder_output)], decoder_output),
+    # This verifier targets a Windows delivery even when run independently on
+    # Linux. Do not let the decoder tool default to the verifier host's ELF.
+    ('decoder_bundle', [sys.executable, 'tools/verify_decoder_bundle.py', '--artifact', str(zip_path),
+                        '--native-resource', 'ffmpeg.exe', '--output', str(decoder_output)], decoder_output),
 ):
     completed = subprocess.run(command, cwd=repo, capture_output=True, text=True)
     passed = completed.returncode == 0 and output.exists()
