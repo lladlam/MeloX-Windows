@@ -59,6 +59,9 @@ with zipfile.ZipFile(io.BytesIO(raw)) as archive:
     revision = None
     decoder_bytes = None
     with zipfile.ZipFile(io.BytesIO(archive.read(jars[0]))) as jar:
+        bad_jar_entry = jar.testzip()
+        if bad_jar_entry is not None:
+            failures.append(f'JAR CRC failure at {bad_jar_entry}')
         jar_names = jar.namelist()
         build_info = [name for name in jar_names if name.endswith('build-info.properties')]
         assert build_info, 'no build-info.properties in the application JAR'
@@ -97,7 +100,8 @@ report = {
     'run_id': args.run_id,
     'expected_head_sha': args.expected_sha,
     'delivery_zip': {'name': zip_path.name, 'bytes': size, 'sha256': digest},
-    'zip_crc_all_entries': 'PASSED' if not any('CRC failure' in f for f in failures) else 'FAILED',
+    'zip_crc_all_entries': 'PASSED' if bad is None else 'FAILED',
+    'jar_crc_all_entries': 'PASSED' if bad_jar_entry is None else 'FAILED',
     'zip_entry_count': len(entry_sizes),
     'launcher_entries': launchers,
     'application_jar': jars[0],

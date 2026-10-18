@@ -1,0 +1,3 @@
+settings-tab=tag:settings-root
+experimental=tag:settings-experimental
+reloaded=enabled:setting-bilibili_lyric_audio_alignment,checked:setting-bilibili_lyric_audio_alignment,pref-bool:bilibili_lyric_audio_alignment:true,runtime:bilibiliLyricAudioAlignmentEnabled:true

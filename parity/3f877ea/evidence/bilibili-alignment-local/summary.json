@@ -1,0 +1,13 @@
+{
+  "feature_commit": "d1e8bd2",
+  "local_tests": {
+    "suites": 51,
+    "tests": 252,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "bilibili_suite_tests": 8,
+  "pinned_android": "3f877eaffe30c82eb6d24eb3647702f5bc554dd3",
+  "real_account_and_catalog_acceptance": "PENDING"
+}
