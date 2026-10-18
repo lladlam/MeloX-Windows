@@ -272,3 +272,9 @@
 
 - 保留步骤 12–15 的原始观测数字供复核；撤回其中“确定存活/持有”“播放 ≤15MB”“歌词独立滞留约 67MB”“永久有界饱和曲线”等强判断。未确认 Skiko `Stats.allocated` 的计数语义，不能直接称其为存活对象数；组间差值也不是模块开销的因果估计。
 - 当前可确认的事实仅为：这些 Linux 回放在给定时长内有常驻增长，部分短跑末段趋缓，暂停和无歌词路径也能增长；用户 Windows 549→1431MB 尚未复现/修复。下一步需控制截图、运行时长、GC 等因素，确认统计语义，再查真实原生分配/持有者。
+
+### 26. Windows 原生沉浸检查发现并修复最大化恢复问题
+
+- Windows run `39061015821` / head `79d721af256e4b60d5794291cc8d3ed402c147d7` **FAILED**，停在 `auditImmersiveWindow`。独立下载 Verification-Windows：Floating → Fullscreen（1024×768）→ Floating（600×400）成功；Maximized → Fullscreen 后恢复超时，actual/requested 仍为 Fullscreen。此 run 没有通过发行验收。
+- 核对 Compose 1.8.1 官方 `ComposeWindow.desktop.kt`：`placement = Maximized` 只设置 `MAXIMIZED_BOTH`，不会清除独立 `isFullscreen` 标志。修复 `MeloXImmersiveWindowOwner` 使用真实 ComposeWindow，退出全屏先设 Floating 清除该标志，再应用目标 placement；原生检查保留尺寸及状态断言。功能提交 `037ed52`；本地 `:desktop:compileKotlinDesktop` **BUILD SUCCESSFUL**，Windows 复验待记录。
+- pinned Android 参考 worktree 为 `../MeloX-Android-parity-3f877ea`；仅将 debug applicationIdSuffix 改为 `.parity3f877ea`，生成 BuildConfig 的 GIT_SHA 为完整 pinned SHA，版本 0.6.2 / 20。`:app:assembleDebug` 成功，独立包已安装；启动后设备处于锁屏，未采集参考截图。随后设备离线，待重连/解锁，未覆盖现有 0.6.5 应用。

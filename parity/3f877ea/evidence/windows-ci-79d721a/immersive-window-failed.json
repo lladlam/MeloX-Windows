@@ -1,0 +1,34 @@
+{
+  "error": "kotlinx.coroutines.TimeoutCancellationException: Timed out waiting for 10000 ms",
+  "samples": [
+    {
+      "actual": "Fullscreen",
+      "requested": "Fullscreen",
+      "stage": "Floating-entered",
+      "width": 1024,
+      "height": 768
+    },
+    {
+      "actual": "Floating",
+      "requested": "Floating",
+      "stage": "Floating-restored",
+      "width": 600,
+      "height": 400
+    },
+    {
+      "actual": "Fullscreen",
+      "requested": "Fullscreen",
+      "stage": "Maximized-entered",
+      "width": 1024,
+      "height": 768
+    },
+    {
+      "actual": "Fullscreen",
+      "requested": "Fullscreen",
+      "stage": "failed-current-state",
+      "width": 1040,
+      "height": 736
+    }
+  ],
+  "status": "FAILED"
+}

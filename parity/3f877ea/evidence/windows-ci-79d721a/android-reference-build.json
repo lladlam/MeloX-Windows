@@ -1,0 +1,11 @@
+{
+  "pinned_sha": "3f877eaffe30c82eb6d24eb3647702f5bc554dd3",
+  "application_id": "com.lladlam.melox.android.parity3f877ea",
+  "version_name": "0.6.2",
+  "version_code": 20,
+  "apk_sha256": "caf0ece400665dab60f1a25af1b0993fcca42f485c255ba3ae9967d25766e55a",
+  "apk_bytes": 49366695,
+  "source_adjustment": "debug applicationIdSuffix only: .dev -> .parity3f877ea",
+  "install": "SUCCESS",
+  "reference_frames": "PENDING: device locked, subsequently offline"
+}
