@@ -310,3 +310,9 @@
 - 初次 Local 来源底栏回放失败：脚本误用了 Bilibili 两-tab 布局的坐标，实际为 Home/Explore/Library/Settings 四 tab。拒绝该次回放结果并保留原始失败画面/断言；更正物理坐标和单段拖动距离，不以直接改导航状态绕过。
 - 同时发现 Library 显示“本地音乐不可用”。桌面 `LocalProvider` 声明 Library capability，但未实现 Library 消费的 `LocalAggregationCapability`；纯 pinned Android `core/provider/local/LocalProvider.kt` 已实现该接口，并将 `aggregationTracks` 委托给真实目录 `searchSongs("", page, pageSize)`。
 - 补齐相同接口接线，使用现有持久化索引/真实本地身份，未增加假 catalog 或在线回退。功能提交 `1552ba4`。新增回归通过真实 provider registry 读取空索引、三份生成 WAV 对应的持久化记录、两页结果与原文件 URI。最终 XML 汇总 **253 tests / 51 suites / 0 failures / 0 errors / 0 skipped**；Local Library 生产回放明暗各 7 scenes / 9 assertions 通过，完整 pinned Capsule 接线 v3 复验也通过。
+
+### 31. 新 Windows CI 的编译内存失败与显式构建预算
+
+- Windows run **`39140317064` / FAILURE**，head **`68f964bf5e566ff504b184a8304be1c7761e5e53`**。下载验证 artifact 后独立汇总 shared XML：**253 tests / 51 suites / 0 failures / 0 errors / 0 skipped**；但桌面 `compileKotlinDesktop` 在独立 Kotlin daemon 报 `java.lang.OutOfMemoryError: GC overhead limit exceeded`。后续玻璃/UI 检查未运行、发行包未生成，不能称为 Windows 通过。
+- 新增根 `gradle.properties`，将普通 Gradle/CI 构建也固定为本地已使用的 **1024m / SerialGC / UTF-8 / max-workers=1 / Kotlin in-process**；不再让 Kotlin daemon 继承未显式指定的较小默认堆。配置只约束构建进程，打包应用 JVM 选项仍由 `desktop/build.gradle.kts` 定义，不能将此变更声称为播放器内存修复。
+- 失败日志、run 元数据、下载 XML 汇总及失败边界保留于 `evidence/windows-ci-68f964b/`。本地不带临时内存覆盖的强制重新编译及新 Windows 结果另记。

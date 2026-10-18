@@ -1,0 +1,13 @@
+{
+  "run_id": "39140317064",
+  "head_sha": "68f964bf5e566ff504b184a8304be1c7761e5e53",
+  "result": "FAILED_AT_DESKTOP_COMPILATION",
+  "failure_task": ":desktop:compileKotlinDesktop",
+  "failure": "java.lang.OutOfMemoryError: GC overhead limit exceeded",
+  "compiler_execution": "Kotlin daemon (RMI stack in runner log)",
+  "shared_tests": "253 tests / 51 suites, zero failures/errors/skipped; independently aggregated from downloaded XML",
+  "glass_and_production_ui_checks": "NOT_RUN",
+  "distribution": "NOT_CREATED",
+  "correction": "Explicit build-only 1024m JVM, sequential workers and in-process Kotlin compiler in gradle.properties",
+  "runtime_memory_claim": false
+}
