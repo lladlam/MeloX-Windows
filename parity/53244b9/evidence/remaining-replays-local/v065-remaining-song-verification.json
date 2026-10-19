@@ -1,0 +1,25 @@
+{
+  "status": "PASSED",
+  "captures": [
+    {
+      "capture": "remaining-song-actions-controls",
+      "scenes": 38,
+      "steps": 37,
+      "assertions": 34,
+      "capture_sha256": "f11fb1b6e220957386ddb21cd9f909973d0bd7f67a83fcf6c9aa104a3b744106",
+      "pcm_written_frames": 257983
+    },
+    {
+      "capture": "remaining-song-actions-reload",
+      "scenes": 30,
+      "steps": 29,
+      "assertions": 29,
+      "capture_sha256": "e5fecc954547c45a2fd65d510defea4bfaef5b643562dcaa3868a09cef35c21d",
+      "pcm_written_frames": 156332
+    }
+  ],
+  "android_pixel_motion_acceptance": "BLOCKED: no same-content pinned Android frames",
+  "live_recognition_hit_and_microphone": "NOT_TESTED_BY_THIS_REPLAY",
+  "two_account_listen_together": "NOT_TESTED_BY_THIS_REPLAY",
+  "physical_audible_acceptance": "BLOCKED"
+}

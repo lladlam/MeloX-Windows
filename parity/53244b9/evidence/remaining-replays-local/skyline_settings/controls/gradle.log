@@ -1,0 +1,223 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.5.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :desktop:kmpPartiallyResolvedDependenciesChecker
+> Task :desktop:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :desktop:extractPinnedGlassGeometry UP-TO-DATE
+> Task :desktop:convertXmlValueResourcesForCommonMain NO-SOURCE
+> Task :desktop:copyNonXmlValueResourcesForCommonMain NO-SOURCE
+> Task :desktop:prepareComposeResourcesTaskForCommonMain NO-SOURCE
+> Task :desktop:generateResourceAccessorsForCommonMain SKIPPED
+> Task :desktop:convertXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :desktop:copyNonXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :desktop:prepareComposeResourcesTaskForDesktopMain NO-SOURCE
+> Task :desktop:generateResourceAccessorsForDesktopMain SKIPPED
+> Task :desktop:generateActualResourceCollectorsForDesktopMain SKIPPED
+> Task :desktop:generateComposeResClass SKIPPED
+> Task :desktop:generateExpectResourceCollectorsForCommonMain SKIPPED
+> Task :innertube:kmpPartiallyResolvedDependenciesChecker
+> Task :innertube:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :innertube:extractAndroidInnerTube UP-TO-DATE
+> Task :innertube:compileKotlinDesktop UP-TO-DATE
+> Task :innertube:compileDesktopMainJava NO-SOURCE
+> Task :innertube:desktopProcessResources NO-SOURCE
+> Task :innertube:processDesktopMainResources SKIPPED
+> Task :innertube:desktopMainClasses UP-TO-DATE
+> Task :innertube:desktopJar UP-TO-DATE
+> Task :shared:kmpPartiallyResolvedDependenciesChecker
+> Task :shared:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :shared:convertXmlValueResourcesForCommonMain NO-SOURCE
+> Task :shared:copyNonXmlValueResourcesForCommonMain NO-SOURCE
+> Task :shared:prepareComposeResourcesTaskForCommonMain NO-SOURCE
+> Task :shared:generateResourceAccessorsForCommonMain SKIPPED
+> Task :shared:convertXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :shared:copyNonXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :shared:prepareComposeResourcesTaskForDesktopMain NO-SOURCE
+> Task :shared:generateResourceAccessorsForDesktopMain SKIPPED
+> Task :shared:generateActualResourceCollectorsForDesktopMain SKIPPED
+> Task :shared:generateComposeResClass SKIPPED
+> Task :shared:generateExpectResourceCollectorsForCommonMain SKIPPED
+> Task :shared:compileKotlinDesktop UP-TO-DATE
+> Task :shared:compileDesktopMainJava NO-SOURCE
+> Task :shared:assembleDesktopMainResources UP-TO-DATE
+> Task :shared:desktopProcessResources UP-TO-DATE
+> Task :shared:processDesktopMainResources SKIPPED
+> Task :shared:desktopMainClasses UP-TO-DATE
+> Task :shared:desktopJar UP-TO-DATE
+> Task :desktop:compileKotlinDesktop UP-TO-DATE
+> Task :desktop:compileDesktopMainJava NO-SOURCE
+> Task :desktop:assembleDesktopMainResources UP-TO-DATE
+> Task :desktop:desktopProcessResources UP-TO-DATE
+> Task :desktop:processDesktopMainResources SKIPPED
+> Task :desktop:desktopMainClasses UP-TO-DATE
+
+> Task :desktop:captureUi
+[INFO MeloXFont] Android MiLan Pro static instances loaded: CSS=[100, 200, 300, 400, 500, 600, 700, 800, 900] files=mi_lan_pro_w{100..800}.ttf (CSS 900 shares frozen axis-700 instance)
+Captured 00-settings: 1100x780 density=1.0
+Physical click remote-reject: remote-reject at Offset(295.5, 468.0)
+Captured 01-remote-reject: 1100x780 density=1.0
+Verified remote-reject: cloud-choice:true
+Verified remote-reject: cloud-enabled:false
+Captured 02-root-skyline: 1100x780 density=1.0
+Physical click open: settings-open-skylinelyrics at Offset(275.0, 581.0)
+Captured 03-open: 1100x780 density=1.0
+Verified open: tag:skyline-settings
+Captured 04-reveal-lyrics_skyline_enabled: 1100x780 density=1.0
+Physical click set-lyrics_skyline_enabled: lyrics_skyline_enabled at Offset(1032.0, 173.0)
+Captured 05-set-lyrics_skyline_enabled: 1100x780 density=1.0
+Verified set-lyrics_skyline_enabled: pref-bool:lyrics_skyline_enabled:false
+Verified set-lyrics_skyline_enabled: runtime:skylineEnabled:false
+Verified set-lyrics_skyline_enabled: unchecked:lyrics_skyline_enabled
+Captured 06-reveal-lyrics_skyline_song_info: 1100x780 density=1.0
+Physical click set-lyrics_skyline_song_info: lyrics_skyline_song_info at Offset(1032.0, 229.0)
+Captured 07-set-lyrics_skyline_song_info: 1100x780 density=1.0
+Verified set-lyrics_skyline_song_info: pref-bool:lyrics_skyline_song_info:false
+Verified set-lyrics_skyline_song_info: runtime:skylineShowSongInfo:false
+Verified set-lyrics_skyline_song_info: unchecked:lyrics_skyline_song_info
+Captured 08-reveal-lyrics_skyline_keep_awake: 1100x780 density=1.0
+Physical click set-lyrics_skyline_keep_awake: lyrics_skyline_keep_awake at Offset(1032.0, 285.0)
+Captured 09-set-lyrics_skyline_keep_awake: 1100x780 density=1.0
+Verified set-lyrics_skyline_keep_awake: pref-bool:lyrics_skyline_keep_awake:false
+Verified set-lyrics_skyline_keep_awake: runtime:skylineKeepsScreenAwake:false
+Verified set-lyrics_skyline_keep_awake: unchecked:lyrics_skyline_keep_awake
+Captured 10-reveal-lyrics_skyline_ambient_lines: 1100x780 density=1.0
+Physical click open-lyrics_skyline_ambient_lines: lyrics_skyline_ambient_lines at Offset(1028.0, 341.5)
+Captured 11-open-lyrics_skyline_ambient_lines: 1100x780 density=1.0
+Physical click set-lyrics_skyline_ambient_lines: settings-option:4 lines at Offset(945.0, 530.0)
+Captured 12-set-lyrics_skyline_ambient_lines: 1100x780 density=1.0
+Verified set-lyrics_skyline_ambient_lines: pref-int:lyrics_skyline_ambient_lines:4
+Verified set-lyrics_skyline_ambient_lines: runtime:skylineAmbientLines:4
+Captured 13-reveal-lyrics_skyline_ambient_max_characters: 1100x780 density=1.0
+Physical click open-lyrics_skyline_ambient_max_characters: lyrics_skyline_ambient_max_characters at Offset(1003.5, 407.5)
+Captured 14-open-lyrics_skyline_ambient_max_characters: 1100x780 density=1.0
+Physical click set-lyrics_skyline_ambient_max_characters: settings-option:2 characters at Offset(945.0, 464.0)
+Captured 15-set-lyrics_skyline_ambient_max_characters: 1100x780 density=1.0
+Verified set-lyrics_skyline_ambient_max_characters: pref-int:lyrics_skyline_ambient_max_characters:2
+Verified set-lyrics_skyline_ambient_max_characters: runtime:skylineAmbientMaximumCharacters:2
+Captured 16-reveal-lyrics_skyline_ambient_max_visible: 1100x780 density=1.0
+Physical click open-lyrics_skyline_ambient_max_visible: lyrics_skyline_ambient_max_visible at Offset(1015.0, 463.5)
+Captured 17-open-lyrics_skyline_ambient_max_visible: 1100x780 density=1.0
+Physical click set-lyrics_skyline_ambient_max_visible: settings-option:8 groups at Offset(945.0, 497.0)
+Captured 18-set-lyrics_skyline_ambient_max_visible: 1100x780 density=1.0
+Verified set-lyrics_skyline_ambient_max_visible: pref-int:lyrics_skyline_ambient_max_visible:8
+Verified set-lyrics_skyline_ambient_max_visible: runtime:skylineAmbientMaximumVisibleTexts:8
+Captured 19-reveal-lyrics_skyline_current_font_size: 1100x780 density=1.0
+Captured 20-set-lyrics_skyline_current_font_size: 1100x780 density=1.0
+Verified set-lyrics_skyline_current_font_size: pref-float:lyrics_skyline_current_font_size:84
+Verified set-lyrics_skyline_current_font_size: runtime:skylineCurrentFontSize:84
+Captured 21-reveal-lyrics_skyline_current_max_scale: 1100x780 density=1.0
+Captured 22-set-lyrics_skyline_current_max_scale: 1100x780 density=1.0
+Verified set-lyrics_skyline_current_max_scale: pref-float:lyrics_skyline_current_max_scale:1.2
+Verified set-lyrics_skyline_current_max_scale: runtime:skylineCurrentMaximumScale:1.2
+Captured 23-reveal-lyrics_skyline_current_width: 1100x780 density=1.0
+Captured 24-set-lyrics_skyline_current_width: 1100x780 density=1.0
+Verified set-lyrics_skyline_current_width: pref-float:lyrics_skyline_current_width:0.4
+Verified set-lyrics_skyline_current_width: runtime:skylineCurrentWidth:0.4
+Captured 25-reveal-lyrics_skyline_next_font_size: 1100x780 density=1.0
+Captured 26-set-lyrics_skyline_next_font_size: 1100x780 density=1.0
+Verified set-lyrics_skyline_next_font_size: pref-float:lyrics_skyline_next_font_size:44
+Verified set-lyrics_skyline_next_font_size: runtime:skylineNextFontSize:44
+Captured 27-reveal-lyrics_skyline_next_opacity: 1100x780 density=1.0
+Captured 28-set-lyrics_skyline_next_opacity: 1100x780 density=1.0
+Verified set-lyrics_skyline_next_opacity: pref-float:lyrics_skyline_next_opacity:0.2
+Verified set-lyrics_skyline_next_opacity: runtime:skylineNextOpacity:0.2
+Captured 29-reveal-lyrics_skyline_current_spacing: 1100x780 density=1.0
+Captured 30-set-lyrics_skyline_current_spacing: 1100x780 density=1.0
+Verified set-lyrics_skyline_current_spacing: pref-float:lyrics_skyline_current_spacing:36
+Verified set-lyrics_skyline_current_spacing: runtime:skylineCurrentSpacing:36
+Captured 31-reveal-lyrics_skyline_ambient_font_size: 1100x780 density=1.0
+Captured 32-set-lyrics_skyline_ambient_font_size: 1100x780 density=1.0
+Verified set-lyrics_skyline_ambient_font_size: pref-float:lyrics_skyline_ambient_font_size:24
+Verified set-lyrics_skyline_ambient_font_size: runtime:skylineAmbientFontSize:24
+Captured 33-reveal-lyrics_skyline_ambient_opacity: 1100x780 density=1.0
+Captured 34-set-lyrics_skyline_ambient_opacity: 1100x780 density=1.0
+Verified set-lyrics_skyline_ambient_opacity: pref-float:lyrics_skyline_ambient_opacity:1.8
+Verified set-lyrics_skyline_ambient_opacity: runtime:skylineAmbientOpacity:1.8
+Captured 35-reveal-lyrics_skyline_ambient_blur: 1100x780 density=1.0
+Captured 36-set-lyrics_skyline_ambient_blur: 1100x780 density=1.0
+Verified set-lyrics_skyline_ambient_blur: pref-float:lyrics_skyline_ambient_blur:0
+Verified set-lyrics_skyline_ambient_blur: runtime:skylineAmbientBlur:0
+Captured 37-reveal-lyrics_skyline_ambient_max_tilt: 1100x780 density=1.0
+Captured 38-set-lyrics_skyline_ambient_max_tilt: 1100x780 density=1.0
+Verified set-lyrics_skyline_ambient_max_tilt: pref-float:lyrics_skyline_ambient_max_tilt:20
+Verified set-lyrics_skyline_ambient_max_tilt: runtime:skylineAmbientMaximumTilt:20
+Captured 39-reveal-lyrics_skyline_ambient_drift: 1100x780 density=1.0
+Captured 40-set-lyrics_skyline_ambient_drift: 1100x780 density=1.0
+Verified set-lyrics_skyline_ambient_drift: pref-float:lyrics_skyline_ambient_drift:0
+Verified set-lyrics_skyline_ambient_drift: runtime:skylineAmbientDrift:0
+Captured 41-back: 1100x780 density=1.0
+Verified back: tag:settings-root
+Captured 42-root-appearance: 1100x780 density=1.0
+Physical click appearance: settings-open-appearance at Offset(275.0, 156.0)
+Captured 43-appearance: 1100x780 density=1.0
+Verified appearance: tag:settings-appearance
+Captured 44-Player-reveal-player_screen_awake_mode: 1100x780 density=1.0
+Physical click Player-open-player_screen_awake_mode: player_screen_awake_mode at Offset(1039.5, 562.5)
+Captured 45-Player-open-player_screen_awake_mode: 1100x780 density=1.0
+Physical click Player-set-player_screen_awake_mode: settings-option:While the player is open at Offset(945.0, 599.0)
+Captured 46-Player-set-player_screen_awake_mode: 1100x780 density=1.0
+Verified Player-set-player_screen_awake_mode: pref-string:player_screen_awake_mode:Player
+Verified Player-set-player_screen_awake_mode: runtime:screenAwakeMode:Player
+Captured 47-Lyrics-reveal-player_screen_awake_mode: 1100x780 density=1.0
+Physical click Lyrics-open-player_screen_awake_mode: player_screen_awake_mode at Offset(954.5, 562.5)
+Captured 48-Lyrics-open-player_screen_awake_mode: 1100x780 density=1.0
+Physical click Lyrics-set-player_screen_awake_mode: settings-option:On the lyrics page at Offset(945.0, 643.0)
+Captured 49-Lyrics-set-player_screen_awake_mode: 1100x780 density=1.0
+Verified Lyrics-set-player_screen_awake_mode: pref-string:player_screen_awake_mode:Lyrics
+Verified Lyrics-set-player_screen_awake_mode: runtime:screenAwakeMode:Lyrics
+Captured 50-Disabled-reveal-player_screen_awake_mode: 1100x780 density=1.0
+Physical click Disabled-open-player_screen_awake_mode: player_screen_awake_mode at Offset(979.0, 562.5)
+Captured 51-Disabled-open-player_screen_awake_mode: 1100x780 density=1.0
+Physical click Disabled-set-player_screen_awake_mode: settings-option:Off at Offset(945.0, 555.0)
+Captured 52-Disabled-set-player_screen_awake_mode: 1100x780 density=1.0
+Verified Disabled-set-player_screen_awake_mode: pref-string:player_screen_awake_mode:Disabled
+Verified Disabled-set-player_screen_awake_mode: runtime:screenAwakeMode:Disabled
+Captured 53-HiddenLyricsInterface-reveal-player_screen_awake_mode: 1100x780 density=1.0
+Physical click HiddenLyricsInterface-open-player_screen_awake_mode: player_screen_awake_mode at Offset(1039.5, 562.5)
+Captured 54-HiddenLyricsInterface-open-player_screen_awake_mode: 1100x780 density=1.0
+Physical click HiddenLyricsInterface-set-player_screen_awake_mode: settings-option:After the lyrics UI is hidden at Offset(945.0, 687.0)
+Captured 55-HiddenLyricsInterface-set-player_screen_awake_mode: 1100x780 density=1.0
+Verified HiddenLyricsInterface-set-player_screen_awake_mode: pref-string:player_screen_awake_mode:HiddenLyricsInterface
+Verified HiddenLyricsInterface-set-player_screen_awake_mode: runtime:screenAwakeMode:HiddenLyricsInterface
+Captured 56-back-appearance: 1100x780 density=1.0
+Verified back-appearance: tag:settings-root
+Captured 57-reload: 1100x780 density=1.0
+Verified reload: pref-bool:lyrics_skyline_enabled:false
+Verified reload: runtime:skylineEnabled:false
+Verified reload: pref-bool:lyrics_skyline_song_info:false
+Verified reload: runtime:skylineShowSongInfo:false
+Verified reload: pref-bool:lyrics_skyline_keep_awake:false
+Verified reload: runtime:skylineKeepsScreenAwake:false
+Verified reload: pref-int:lyrics_skyline_ambient_lines:4
+Verified reload: runtime:skylineAmbientLines:4
+Verified reload: pref-int:lyrics_skyline_ambient_max_characters:2
+Verified reload: runtime:skylineAmbientMaximumCharacters:2
+Verified reload: pref-int:lyrics_skyline_ambient_max_visible:8
+Verified reload: runtime:skylineAmbientMaximumVisibleTexts:8
+Verified reload: pref-float:lyrics_skyline_current_font_size:84
+Verified reload: runtime:skylineCurrentFontSize:84
+Verified reload: pref-float:lyrics_skyline_current_max_scale:1.2
+Verified reload: runtime:skylineCurrentMaximumScale:1.2
+Verified reload: pref-float:lyrics_skyline_current_width:0.4
+Verified reload: runtime:skylineCurrentWidth:0.4
+Verified reload: pref-float:lyrics_skyline_next_font_size:44
+Verified reload: runtime:skylineNextFontSize:44
+Verified reload: pref-float:lyrics_skyline_next_opacity:0.2
+Verified reload: runtime:skylineNextOpacity:0.2
+Verified reload: pref-float:lyrics_skyline_current_spacing:36
+Verified reload: runtime:skylineCurrentSpacing:36
+Verified reload: pref-float:lyrics_skyline_ambient_font_size:24
+Verified reload: runtime:skylineAmbientFontSize:24
+Verified reload: pref-float:lyrics_skyline_ambient_opacity:1.8
+Verified reload: runtime:skylineAmbientOpacity:1.8
+Verified reload: pref-float:lyrics_skyline_ambient_blur:0
+Verified reload: runtime:skylineAmbientBlur:0
+Verified reload: pref-float:lyrics_skyline_ambient_max_tilt:20
+Verified reload: runtime:skylineAmbientMaximumTilt:20
+Verified reload: pref-float:lyrics_skyline_ambient_drift:0
+Verified reload: runtime:skylineAmbientDrift:0
+Verified reload: pref-string:player_screen_awake_mode:HiddenLyricsInterface
+Verified reload: runtime:screenAwakeMode:HiddenLyricsInterface
+
+BUILD SUCCESSFUL in 1m 3s
+15 actionable tasks: 4 executed, 11 up-to-date
+Consider enabling configuration cache to speed up this build: https://docs.gradle.org/9.5.1/userguide/configuration_cache_enabling.html

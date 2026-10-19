@@ -1,0 +1,10 @@
+reveal-lyrics:reveal@settings-open-lyrics
+open-lyrics:tap@settings-open-lyrics
+reveal-persisted:reveal@lyric_language
+persisted:wait@100
+reveal-0:reveal@lyric_language
+menu-0:tap@lyric_language
+choose-0:tap@settings-option:Follow system
+reveal-1:reveal@lyric_language
+menu-1:tap@lyric_language
+choose-1:tap@settings-option:Türkçe

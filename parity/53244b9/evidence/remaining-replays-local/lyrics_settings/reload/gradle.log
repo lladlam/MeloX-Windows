@@ -1,0 +1,302 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.5.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :desktop:kmpPartiallyResolvedDependenciesChecker
+> Task :desktop:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :desktop:extractPinnedGlassGeometry UP-TO-DATE
+> Task :desktop:convertXmlValueResourcesForCommonMain NO-SOURCE
+> Task :desktop:copyNonXmlValueResourcesForCommonMain NO-SOURCE
+> Task :desktop:prepareComposeResourcesTaskForCommonMain NO-SOURCE
+> Task :desktop:generateResourceAccessorsForCommonMain SKIPPED
+> Task :desktop:convertXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :desktop:copyNonXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :desktop:prepareComposeResourcesTaskForDesktopMain NO-SOURCE
+> Task :desktop:generateResourceAccessorsForDesktopMain SKIPPED
+> Task :desktop:generateActualResourceCollectorsForDesktopMain SKIPPED
+> Task :desktop:generateComposeResClass SKIPPED
+> Task :desktop:generateExpectResourceCollectorsForCommonMain SKIPPED
+> Task :innertube:kmpPartiallyResolvedDependenciesChecker
+> Task :innertube:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :innertube:extractAndroidInnerTube UP-TO-DATE
+> Task :innertube:compileKotlinDesktop UP-TO-DATE
+> Task :innertube:compileDesktopMainJava NO-SOURCE
+> Task :innertube:desktopProcessResources NO-SOURCE
+> Task :innertube:processDesktopMainResources SKIPPED
+> Task :innertube:desktopMainClasses UP-TO-DATE
+> Task :innertube:desktopJar UP-TO-DATE
+> Task :shared:kmpPartiallyResolvedDependenciesChecker
+> Task :shared:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :shared:convertXmlValueResourcesForCommonMain NO-SOURCE
+> Task :shared:copyNonXmlValueResourcesForCommonMain NO-SOURCE
+> Task :shared:prepareComposeResourcesTaskForCommonMain NO-SOURCE
+> Task :shared:generateResourceAccessorsForCommonMain SKIPPED
+> Task :shared:convertXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :shared:copyNonXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :shared:prepareComposeResourcesTaskForDesktopMain NO-SOURCE
+> Task :shared:generateResourceAccessorsForDesktopMain SKIPPED
+> Task :shared:generateActualResourceCollectorsForDesktopMain SKIPPED
+> Task :shared:generateComposeResClass SKIPPED
+> Task :shared:generateExpectResourceCollectorsForCommonMain SKIPPED
+> Task :shared:compileKotlinDesktop UP-TO-DATE
+> Task :shared:compileDesktopMainJava NO-SOURCE
+> Task :shared:assembleDesktopMainResources UP-TO-DATE
+> Task :shared:desktopProcessResources UP-TO-DATE
+> Task :shared:processDesktopMainResources SKIPPED
+> Task :shared:desktopMainClasses UP-TO-DATE
+> Task :shared:desktopJar UP-TO-DATE
+> Task :desktop:compileKotlinDesktop UP-TO-DATE
+> Task :desktop:compileDesktopMainJava NO-SOURCE
+> Task :desktop:assembleDesktopMainResources UP-TO-DATE
+> Task :desktop:desktopProcessResources UP-TO-DATE
+> Task :desktop:processDesktopMainResources SKIPPED
+> Task :desktop:desktopMainClasses UP-TO-DATE
+
+> Task :desktop:captureUi
+[INFO MeloXFont] Android MiLan Pro static instances loaded: CSS=[100, 200, 300, 400, 500, 600, 700, 800, 900] files=mi_lan_pro_w{100..800}.ttf (CSS 900 shares frozen axis-700 instance)
+Captured 00-settings: 1100x780 density=1.0
+Verified 00-settings: pref-string:lyrics_rendering_quality:Low
+Verified 00-settings: runtime:lyricRenderingQuality:Low
+Verified 00-settings: pref-bool:lyrics_auto_select:false
+Verified 00-settings: runtime:automaticLyricSelectionEnabled:false
+Verified 00-settings: pref-bool:lyrics_word_by_word:false
+Verified 00-settings: runtime:lyricWordByWordEnabled:false
+Verified 00-settings: pref-bool:lyrics_pseudo_timing:true
+Verified 00-settings: runtime:lyricPseudoTimingEnabled:true
+Verified 00-settings: pref-bool:lyrics_tap_seek:false
+Verified 00-settings: runtime:lyricTapSeekEnabled:false
+Verified 00-settings: pref-bool:lyrics_long_press_share:false
+Verified 00-settings: runtime:lyricLongPressShareEnabled:false
+Verified 00-settings: pref-bool:lyrics_interlude_countdown:false
+Verified 00-settings: runtime:lyricInterludeCountdownEnabled:false
+Verified 00-settings: pref-bool:lyrics_auto_follow:false
+Verified 00-settings: runtime:lyricAutoFollowEnabled:false
+Verified 00-settings: pref-int:lyrics_follow_delay_ms:5000
+Verified 00-settings: runtime:lyricFollowDelayMs:5000
+Verified 00-settings: pref-bool:lyrics_reduce_motion:true
+Verified 00-settings: runtime:lyricReduceMotion:true
+Verified 00-settings: pref-bool:lyrics_translation:false
+Verified 00-settings: runtime:showLyricTranslation:false
+Verified 00-settings: pref-float:lyrics_translation_font_scale:0.8
+Verified 00-settings: runtime:lyricTranslationFontScale:0.8
+Verified 00-settings: pref-float:lyrics_translation_opacity:0.4
+Verified 00-settings: runtime:lyricTranslationOpacity:0.4
+Verified 00-settings: pref-string:lyrics_translation_display_mode:FocusedLine
+Verified 00-settings: runtime:lyricTranslationDisplayMode:FocusedLine
+Verified 00-settings: pref-bool:lyrics_romanization:true
+Verified 00-settings: runtime:showLyricRomanization:true
+Verified 00-settings: pref-string:lyrics_romanization_display_mode:AllLines
+Verified 00-settings: runtime:lyricRomanizationDisplayMode:AllLines
+Verified 00-settings: pref-float:lyrics_romanization_font_scale:0.5
+Verified 00-settings: runtime:lyricRomanizationFontScale:0.5
+Verified 00-settings: pref-float:lyrics_romanization_opacity:0.5
+Verified 00-settings: runtime:lyricRomanizationOpacity:0.5
+Verified 00-settings: pref-int:lyrics_advance_ms:500
+Verified 00-settings: runtime:lyricAdvanceMs:500
+Verified 00-settings: pref-bool:lyrics_advance_word_by_word:true
+Verified 00-settings: runtime:lyricAdvanceAppliesToWordByWord:true
+Verified 00-settings: pref-int:lyrics_refresh_rate:120
+Verified 00-settings: runtime:lyricRefreshRate:120
+Verified 00-settings: pref-float:lyrics_font_scale:1.12
+Verified 00-settings: runtime:lyricFontScale:1.12
+Verified 00-settings: pref-string:lyrics_font_weight:Regular
+Verified 00-settings: runtime:lyricFontWeight:Regular
+Verified 00-settings: pref-string:lyrics_lift_mode:Word
+Verified 00-settings: runtime:lyricLiftMode:Word
+Verified 00-settings: pref-string:lyrics_long_tone_detection:Word
+Verified 00-settings: runtime:lyricLongToneDetectionMode:Word
+Verified 00-settings: pref-bool:lyrics_glow_enabled:false
+Verified 00-settings: runtime:lyricGlowEnabled:false
+Verified 00-settings: pref-bool:lyrics_glow_long_tones_only:false
+Verified 00-settings: runtime:lyricGlowLongTonesOnly:false
+Verified 00-settings: pref-float:lyrics_glow_strength:1.4
+Verified 00-settings: runtime:lyricGlowStrength:1.4
+Verified 00-settings: pref-float:lyrics_long_tone_strength:0
+Verified 00-settings: runtime:lyricLongToneStrength:0
+Verified 00-settings: pref-int:lyrics_long_tone_threshold_ms:300
+Verified 00-settings: runtime:lyricLongToneThresholdMs:300
+Verified 00-settings: pref-float:lyrics_spacing_scale:1.4
+Verified 00-settings: runtime:lyricSpacingScale:1.4
+Verified 00-settings: pref-float:lyrics_blur_strength:0
+Verified 00-settings: runtime:lyricBlurStrength:0
+Verified 00-settings: pref-float:lyrics_focus_scale:1.08
+Verified 00-settings: runtime:lyricFocusScale:1.08
+Verified 00-settings: pref-float:lyrics_inactive_opacity:0.6
+Verified 00-settings: runtime:lyricInactiveOpacity:0.6
+Verified 00-settings: pref-int:lyrics_interface_auto_hide_ms:15000
+Verified 00-settings: runtime:lyricInterfaceAutoHideDelayMs:15000
+Verified 00-settings: pref-int:lyrics_scroll_hide_threshold_dp:40
+Verified 00-settings: runtime:lyricScrollHideThresholdDp:40
+Verified 00-settings: pref-bool:lyrics_cascade_bounce_enabled:false
+Verified 00-settings: runtime:lyricCascadeBounceEnabled:false
+Verified 00-settings: pref-bool:lyrics_scale_bounce_enabled:false
+Verified 00-settings: runtime:lyricScaleBounceEnabled:false
+Verified 00-settings: pref-int:lyrics_scale_bounce_duration_ms:150
+Verified 00-settings: runtime:lyricScaleBounceDurationMs:150
+Verified 00-settings: pref-int:lyrics_focus_color_lead_ms:-300
+Verified 00-settings: runtime:lyricFocusColorLeadMs:-300
+Verified 00-settings: pref-float:lyrics_cascade_bounce:0.8
+Verified 00-settings: runtime:lyricCascadeBounce:0.8
+Verified 00-settings: pref-float:lyrics_cascade_bounce_gradient:0
+Verified 00-settings: runtime:lyricCascadeBounceGradient:0
+Verified 00-settings: pref-float:lyrics_scale_bounce:0.5
+Verified 00-settings: runtime:lyricScaleBounce:0.5
+Verified 00-settings: pref-float:lyrics_highlight_gradient_width:3
+Verified 00-settings: runtime:lyricHighlightGradientWidth:3
+Verified 00-settings: pref-float:lyrics_highlight_gradient_reduction:0
+Verified 00-settings: runtime:lyricHighlightGradientReduction:0
+Verified 00-settings: pref-float:lyrics_focus_position:0.8
+Verified 00-settings: runtime:lyricFocusPosition:0.8
+Verified 00-settings: pref-float:lyrics_distance_blur_scale:1.5
+Verified 00-settings: runtime:lyricDistanceBlurScale:1.5
+Verified 00-settings: pref-float:lyrics_hidden_blur_scale:1.5
+Verified 00-settings: runtime:lyricHiddenInterfaceBlurScale:1.5
+Verified 00-settings: pref-float:lyrics_dim_amount:0
+Verified 00-settings: runtime:lyricDimAmount:0
+Verified 00-settings: pref-float:lyrics_cascade_delay_ms:100
+Verified 00-settings: runtime:lyricCascadeDelayMs:100
+Verified 00-settings: pref-float:lyrics_cascade_delay_increase_ms:100
+Verified 00-settings: runtime:lyricCascadeDelayIncreaseMs:100
+Verified 00-settings: pref-float:lyrics_cascade_following_delay_ms:200
+Verified 00-settings: runtime:lyricCascadeFollowingDelayMs:200
+Verified 00-settings: pref-float:lyrics_cascade_catch_up_ratio:0.5
+Verified 00-settings: runtime:lyricCascadeCatchUpRatio:0.5
+Verified 00-settings: pref-float:lyrics_cascade_chase_gradient:1
+Verified 00-settings: runtime:lyricCascadeChaseSpeedGradient:1
+Verified 00-settings: pref-float:lyrics_cascade_duration_ms:1200
+Verified 00-settings: runtime:lyricCascadeDurationMs:1200
+Verified 00-settings: pref-float:lyrics_snap_threshold_ms:500
+Verified 00-settings: runtime:lyricSnapThresholdMs:500
+Verified 00-settings: pref-string:lyrics_style:TextPV
+Verified 00-settings: runtime:lyricsStyle:TextPV
+Verified 00-settings: pref-string:lyrics_text_pv_style:KineticSplit
+Verified 00-settings: runtime:textPVStyle:KineticSplit
+Verified 00-settings: pref-float:lyrics_text_pv_motion_intensity:1.5
+Verified 00-settings: runtime:textPVMotionIntensity:1.5
+Verified 00-settings: pref-float:lyrics_text_pv_animation_speed:3
+Verified 00-settings: runtime:textPVAnimationSpeed:3
+Physical click open: settings-open-lyrics at Offset(275.0, 659.0)
+Captured 01-open: 1100x780 density=1.0
+Verified open: tag:advanced-lyrics-settings
+Verified open: pref-string:lyrics_rendering_quality:Low
+Verified open: runtime:lyricRenderingQuality:Low
+Verified open: pref-bool:lyrics_auto_select:false
+Verified open: runtime:automaticLyricSelectionEnabled:false
+Verified open: pref-bool:lyrics_word_by_word:false
+Verified open: runtime:lyricWordByWordEnabled:false
+Verified open: pref-bool:lyrics_pseudo_timing:true
+Verified open: runtime:lyricPseudoTimingEnabled:true
+Verified open: pref-bool:lyrics_tap_seek:false
+Verified open: runtime:lyricTapSeekEnabled:false
+Verified open: pref-bool:lyrics_long_press_share:false
+Verified open: runtime:lyricLongPressShareEnabled:false
+Verified open: pref-bool:lyrics_interlude_countdown:false
+Verified open: runtime:lyricInterludeCountdownEnabled:false
+Verified open: pref-bool:lyrics_auto_follow:false
+Verified open: runtime:lyricAutoFollowEnabled:false
+Verified open: pref-int:lyrics_follow_delay_ms:5000
+Verified open: runtime:lyricFollowDelayMs:5000
+Verified open: pref-bool:lyrics_reduce_motion:true
+Verified open: runtime:lyricReduceMotion:true
+Verified open: pref-bool:lyrics_translation:false
+Verified open: runtime:showLyricTranslation:false
+Verified open: pref-float:lyrics_translation_font_scale:0.8
+Verified open: runtime:lyricTranslationFontScale:0.8
+Verified open: pref-float:lyrics_translation_opacity:0.4
+Verified open: runtime:lyricTranslationOpacity:0.4
+Verified open: pref-string:lyrics_translation_display_mode:FocusedLine
+Verified open: runtime:lyricTranslationDisplayMode:FocusedLine
+Verified open: pref-bool:lyrics_romanization:true
+Verified open: runtime:showLyricRomanization:true
+Verified open: pref-string:lyrics_romanization_display_mode:AllLines
+Verified open: runtime:lyricRomanizationDisplayMode:AllLines
+Verified open: pref-float:lyrics_romanization_font_scale:0.5
+Verified open: runtime:lyricRomanizationFontScale:0.5
+Verified open: pref-float:lyrics_romanization_opacity:0.5
+Verified open: runtime:lyricRomanizationOpacity:0.5
+Verified open: pref-int:lyrics_advance_ms:500
+Verified open: runtime:lyricAdvanceMs:500
+Verified open: pref-bool:lyrics_advance_word_by_word:true
+Verified open: runtime:lyricAdvanceAppliesToWordByWord:true
+Verified open: pref-int:lyrics_refresh_rate:120
+Verified open: runtime:lyricRefreshRate:120
+Verified open: pref-float:lyrics_font_scale:1.12
+Verified open: runtime:lyricFontScale:1.12
+Verified open: pref-string:lyrics_font_weight:Regular
+Verified open: runtime:lyricFontWeight:Regular
+Verified open: pref-string:lyrics_lift_mode:Word
+Verified open: runtime:lyricLiftMode:Word
+Verified open: pref-string:lyrics_long_tone_detection:Word
+Verified open: runtime:lyricLongToneDetectionMode:Word
+Verified open: pref-bool:lyrics_glow_enabled:false
+Verified open: runtime:lyricGlowEnabled:false
+Verified open: pref-bool:lyrics_glow_long_tones_only:false
+Verified open: runtime:lyricGlowLongTonesOnly:false
+Verified open: pref-float:lyrics_glow_strength:1.4
+Verified open: runtime:lyricGlowStrength:1.4
+Verified open: pref-float:lyrics_long_tone_strength:0
+Verified open: runtime:lyricLongToneStrength:0
+Verified open: pref-int:lyrics_long_tone_threshold_ms:300
+Verified open: runtime:lyricLongToneThresholdMs:300
+Verified open: pref-float:lyrics_spacing_scale:1.4
+Verified open: runtime:lyricSpacingScale:1.4
+Verified open: pref-float:lyrics_blur_strength:0
+Verified open: runtime:lyricBlurStrength:0
+Verified open: pref-float:lyrics_focus_scale:1.08
+Verified open: runtime:lyricFocusScale:1.08
+Verified open: pref-float:lyrics_inactive_opacity:0.6
+Verified open: runtime:lyricInactiveOpacity:0.6
+Verified open: pref-int:lyrics_interface_auto_hide_ms:15000
+Verified open: runtime:lyricInterfaceAutoHideDelayMs:15000
+Verified open: pref-int:lyrics_scroll_hide_threshold_dp:40
+Verified open: runtime:lyricScrollHideThresholdDp:40
+Verified open: pref-bool:lyrics_cascade_bounce_enabled:false
+Verified open: runtime:lyricCascadeBounceEnabled:false
+Verified open: pref-bool:lyrics_scale_bounce_enabled:false
+Verified open: runtime:lyricScaleBounceEnabled:false
+Verified open: pref-int:lyrics_scale_bounce_duration_ms:150
+Verified open: runtime:lyricScaleBounceDurationMs:150
+Verified open: pref-int:lyrics_focus_color_lead_ms:-300
+Verified open: runtime:lyricFocusColorLeadMs:-300
+Verified open: pref-float:lyrics_cascade_bounce:0.8
+Verified open: runtime:lyricCascadeBounce:0.8
+Verified open: pref-float:lyrics_cascade_bounce_gradient:0
+Verified open: runtime:lyricCascadeBounceGradient:0
+Verified open: pref-float:lyrics_scale_bounce:0.5
+Verified open: runtime:lyricScaleBounce:0.5
+Verified open: pref-float:lyrics_highlight_gradient_width:3
+Verified open: runtime:lyricHighlightGradientWidth:3
+Verified open: pref-float:lyrics_highlight_gradient_reduction:0
+Verified open: runtime:lyricHighlightGradientReduction:0
+Verified open: pref-float:lyrics_focus_position:0.8
+Verified open: runtime:lyricFocusPosition:0.8
+Verified open: pref-float:lyrics_distance_blur_scale:1.5
+Verified open: runtime:lyricDistanceBlurScale:1.5
+Verified open: pref-float:lyrics_hidden_blur_scale:1.5
+Verified open: runtime:lyricHiddenInterfaceBlurScale:1.5
+Verified open: pref-float:lyrics_dim_amount:0
+Verified open: runtime:lyricDimAmount:0
+Verified open: pref-float:lyrics_cascade_delay_ms:100
+Verified open: runtime:lyricCascadeDelayMs:100
+Verified open: pref-float:lyrics_cascade_delay_increase_ms:100
+Verified open: runtime:lyricCascadeDelayIncreaseMs:100
+Verified open: pref-float:lyrics_cascade_following_delay_ms:200
+Verified open: runtime:lyricCascadeFollowingDelayMs:200
+Verified open: pref-float:lyrics_cascade_catch_up_ratio:0.5
+Verified open: runtime:lyricCascadeCatchUpRatio:0.5
+Verified open: pref-float:lyrics_cascade_chase_gradient:1
+Verified open: runtime:lyricCascadeChaseSpeedGradient:1
+Verified open: pref-float:lyrics_cascade_duration_ms:1200
+Verified open: runtime:lyricCascadeDurationMs:1200
+Verified open: pref-float:lyrics_snap_threshold_ms:500
+Verified open: runtime:lyricSnapThresholdMs:500
+Verified open: pref-string:lyrics_style:TextPV
+Verified open: runtime:lyricsStyle:TextPV
+Verified open: pref-string:lyrics_text_pv_style:KineticSplit
+Verified open: runtime:textPVStyle:KineticSplit
+Verified open: pref-float:lyrics_text_pv_motion_intensity:1.5
+Verified open: runtime:textPVMotionIntensity:1.5
+Verified open: pref-float:lyrics_text_pv_animation_speed:3
+Verified open: runtime:textPVAnimationSpeed:3
+
+BUILD SUCCESSFUL in 20s
+15 actionable tasks: 4 executed, 11 up-to-date
+Consider enabling configuration cache to speed up this build: https://docs.gradle.org/9.5.1/userguide/configuration_cache_enabling.html

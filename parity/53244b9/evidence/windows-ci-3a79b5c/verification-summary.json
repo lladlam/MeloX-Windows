@@ -1,0 +1,121 @@
+{
+  "run_id": "39277455043",
+  "head_sha": "3a79b5c2e520eb5cad6c1f9214e0e4e7cc38ec06",
+  "conclusion": "failure",
+  "downloaded_artifact": "Verification-Windows",
+  "windows_suites": 55,
+  "windows_tests": {
+    "tests": 270,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "flowing_light_audit": "PASSED",
+  "replays": [
+    {
+      "path": "bilibili-alignment-controls",
+      "scenes": 3,
+      "assertions": 2,
+      "complete_and_passed": false
+    },
+    {
+      "path": "glass-dock-Dark",
+      "scenes": 7,
+      "assertions": 9,
+      "complete_and_passed": true
+    },
+    {
+      "path": "glass-dock-Light",
+      "scenes": 7,
+      "assertions": 9,
+      "complete_and_passed": true
+    },
+    {
+      "path": "lyric-language-controls",
+      "scenes": 22,
+      "assertions": 22,
+      "complete_and_passed": true
+    },
+    {
+      "path": "lyric-language-reload",
+      "scenes": 11,
+      "assertions": 13,
+      "complete_and_passed": true
+    },
+    {
+      "path": "settings-controls",
+      "scenes": 74,
+      "assertions": 55,
+      "complete_and_passed": true
+    },
+    {
+      "path": "settings-en-US",
+      "scenes": 88,
+      "assertions": 65,
+      "complete_and_passed": true
+    },
+    {
+      "path": "settings-ja-JP",
+      "scenes": 88,
+      "assertions": 65,
+      "complete_and_passed": true
+    },
+    {
+      "path": "settings-reload",
+      "scenes": 8,
+      "assertions": 18,
+      "complete_and_passed": true
+    },
+    {
+      "path": "settings-zh-CN",
+      "scenes": 88,
+      "assertions": 65,
+      "complete_and_passed": true
+    },
+    {
+      "path": "settings-zh-TW",
+      "scenes": 88,
+      "assertions": 65,
+      "complete_and_passed": true
+    },
+    {
+      "path": "smartqueue-limit-controls",
+      "scenes": 26,
+      "assertions": 13,
+      "complete_and_passed": true
+    },
+    {
+      "path": "smartqueue-limit-reload",
+      "scenes": 5,
+      "assertions": 4,
+      "complete_and_passed": true
+    },
+    {
+      "path": "split-layout-controls",
+      "scenes": 58,
+      "assertions": 69,
+      "complete_and_passed": true
+    },
+    {
+      "path": "split-layout-portrait",
+      "scenes": 6,
+      "assertions": 12,
+      "complete_and_passed": true
+    },
+    {
+      "path": "split-layout-reload",
+      "scenes": 6,
+      "assertions": 14,
+      "complete_and_passed": true
+    }
+  ],
+  "complete_passed_totals": {
+    "replays": 15,
+    "scenes": 582,
+    "assertions": 498
+  },
+  "failure": "Bilibili settings-tab click used fixed 765,745 coordinates from full-width dock; split dock moved the actual Settings tab",
+  "remaining_steps": "SKIPPED",
+  "distribution_zip": "NOT_PRODUCED",
+  "delivery_acceptance": "NOT_PASSED"
+}

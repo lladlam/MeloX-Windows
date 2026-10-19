@@ -1,0 +1,74 @@
+{
+  "lyrics_skyline_enabled": [
+    "bool",
+    "false"
+  ],
+  "lyrics_skyline_song_info": [
+    "bool",
+    "false"
+  ],
+  "lyrics_skyline_keep_awake": [
+    "bool",
+    "false"
+  ],
+  "lyrics_skyline_ambient_lines": [
+    "int",
+    "4"
+  ],
+  "lyrics_skyline_ambient_max_characters": [
+    "int",
+    "2"
+  ],
+  "lyrics_skyline_ambient_max_visible": [
+    "int",
+    "8"
+  ],
+  "lyrics_skyline_current_font_size": [
+    "float",
+    "84"
+  ],
+  "lyrics_skyline_current_max_scale": [
+    "float",
+    "1.2"
+  ],
+  "lyrics_skyline_current_width": [
+    "float",
+    "0.4"
+  ],
+  "lyrics_skyline_next_font_size": [
+    "float",
+    "44"
+  ],
+  "lyrics_skyline_next_opacity": [
+    "float",
+    "0.2"
+  ],
+  "lyrics_skyline_current_spacing": [
+    "float",
+    "36"
+  ],
+  "lyrics_skyline_ambient_font_size": [
+    "float",
+    "24"
+  ],
+  "lyrics_skyline_ambient_opacity": [
+    "float",
+    "1.8"
+  ],
+  "lyrics_skyline_ambient_blur": [
+    "float",
+    "0"
+  ],
+  "lyrics_skyline_ambient_max_tilt": [
+    "float",
+    "20"
+  ],
+  "lyrics_skyline_ambient_drift": [
+    "float",
+    "0"
+  ],
+  "player_screen_awake_mode": [
+    "string",
+    "HiddenLyricsInterface"
+  ]
+}

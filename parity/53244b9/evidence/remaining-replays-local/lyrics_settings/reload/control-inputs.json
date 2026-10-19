@@ -1,0 +1,242 @@
+{
+  "lyrics_rendering_quality": [
+    "string",
+    "Low"
+  ],
+  "lyrics_auto_select": [
+    "bool",
+    "false"
+  ],
+  "lyrics_word_by_word": [
+    "bool",
+    "false"
+  ],
+  "lyrics_pseudo_timing": [
+    "bool",
+    "true"
+  ],
+  "lyrics_tap_seek": [
+    "bool",
+    "false"
+  ],
+  "lyrics_long_press_share": [
+    "bool",
+    "false"
+  ],
+  "lyrics_interlude_countdown": [
+    "bool",
+    "false"
+  ],
+  "lyrics_auto_follow": [
+    "bool",
+    "false"
+  ],
+  "lyrics_follow_delay_ms": [
+    "int",
+    "5000"
+  ],
+  "lyrics_reduce_motion": [
+    "bool",
+    "true"
+  ],
+  "lyrics_translation": [
+    "bool",
+    "false"
+  ],
+  "lyrics_translation_font_scale": [
+    "float",
+    "0.8"
+  ],
+  "lyrics_translation_opacity": [
+    "float",
+    "0.4"
+  ],
+  "lyrics_translation_display_mode": [
+    "string",
+    "FocusedLine"
+  ],
+  "lyrics_romanization": [
+    "bool",
+    "true"
+  ],
+  "lyrics_romanization_display_mode": [
+    "string",
+    "AllLines"
+  ],
+  "lyrics_romanization_font_scale": [
+    "float",
+    "0.5"
+  ],
+  "lyrics_romanization_opacity": [
+    "float",
+    "0.5"
+  ],
+  "lyrics_advance_ms": [
+    "int",
+    "500"
+  ],
+  "lyrics_advance_word_by_word": [
+    "bool",
+    "true"
+  ],
+  "lyrics_refresh_rate": [
+    "int",
+    "120"
+  ],
+  "lyrics_font_scale": [
+    "float",
+    "1.12"
+  ],
+  "lyrics_font_weight": [
+    "string",
+    "Regular"
+  ],
+  "lyrics_lift_mode": [
+    "string",
+    "Word"
+  ],
+  "lyrics_long_tone_detection": [
+    "string",
+    "Word"
+  ],
+  "lyrics_glow_enabled": [
+    "bool",
+    "false"
+  ],
+  "lyrics_glow_long_tones_only": [
+    "bool",
+    "false"
+  ],
+  "lyrics_glow_strength": [
+    "float",
+    "1.4"
+  ],
+  "lyrics_long_tone_strength": [
+    "float",
+    "0"
+  ],
+  "lyrics_long_tone_threshold_ms": [
+    "int",
+    "300"
+  ],
+  "lyrics_spacing_scale": [
+    "float",
+    "1.4"
+  ],
+  "lyrics_blur_strength": [
+    "float",
+    "0"
+  ],
+  "lyrics_focus_scale": [
+    "float",
+    "1.08"
+  ],
+  "lyrics_inactive_opacity": [
+    "float",
+    "0.6"
+  ],
+  "lyrics_interface_auto_hide_ms": [
+    "int",
+    "15000"
+  ],
+  "lyrics_scroll_hide_threshold_dp": [
+    "int",
+    "40"
+  ],
+  "lyrics_cascade_bounce_enabled": [
+    "bool",
+    "false"
+  ],
+  "lyrics_scale_bounce_enabled": [
+    "bool",
+    "false"
+  ],
+  "lyrics_scale_bounce_duration_ms": [
+    "int",
+    "150"
+  ],
+  "lyrics_focus_color_lead_ms": [
+    "int",
+    "-300"
+  ],
+  "lyrics_cascade_bounce": [
+    "float",
+    "0.8"
+  ],
+  "lyrics_cascade_bounce_gradient": [
+    "float",
+    "0"
+  ],
+  "lyrics_scale_bounce": [
+    "float",
+    "0.5"
+  ],
+  "lyrics_highlight_gradient_width": [
+    "float",
+    "3"
+  ],
+  "lyrics_highlight_gradient_reduction": [
+    "float",
+    "0"
+  ],
+  "lyrics_focus_position": [
+    "float",
+    "0.8"
+  ],
+  "lyrics_distance_blur_scale": [
+    "float",
+    "1.5"
+  ],
+  "lyrics_hidden_blur_scale": [
+    "float",
+    "1.5"
+  ],
+  "lyrics_dim_amount": [
+    "float",
+    "0"
+  ],
+  "lyrics_cascade_delay_ms": [
+    "float",
+    "100"
+  ],
+  "lyrics_cascade_delay_increase_ms": [
+    "float",
+    "100"
+  ],
+  "lyrics_cascade_following_delay_ms": [
+    "float",
+    "200"
+  ],
+  "lyrics_cascade_catch_up_ratio": [
+    "float",
+    "0.5"
+  ],
+  "lyrics_cascade_chase_gradient": [
+    "float",
+    "1"
+  ],
+  "lyrics_cascade_duration_ms": [
+    "float",
+    "1200"
+  ],
+  "lyrics_snap_threshold_ms": [
+    "float",
+    "500"
+  ],
+  "lyrics_style": [
+    "string",
+    "TextPV"
+  ],
+  "lyrics_text_pv_style": [
+    "string",
+    "KineticSplit"
+  ],
+  "lyrics_text_pv_motion_intensity": [
+    "float",
+    "1.5"
+  ],
+  "lyrics_text_pv_animation_speed": [
+    "float",
+    "3"
+  ]
+}

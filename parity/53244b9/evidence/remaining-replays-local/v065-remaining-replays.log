@@ -1,0 +1,12 @@
+PASS controls: 10 scenes / 15 assertions
+PASS reload: 6 scenes / 6 assertions
+controls 0
+reload 0
+controls 0
+reload 0
+reset 0
+reload-reset 0
+PASS: all 60 keys changed by pointer input and reloaded from disk in a separate JVM
+song-actions controls 0
+song-actions reload 0
+PASS: 68 scenes / 63 assertions

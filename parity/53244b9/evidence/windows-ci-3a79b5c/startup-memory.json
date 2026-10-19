@@ -1,0 +1,268 @@
+{
+  "scenario": "fresh",
+  "jar": "D:\\a\\MeloX-Windows\\MeloX-Windows\\desktop\\build\\compose\\jars\\MeloX-Desktop-windows-x64-1.0.0.jar",
+  "jvm_args": "-Xms16m -Xmx1g -XX:+UseSerialGC -Dfile.encoding=UTF-8 -Djava.awt.headless=true",
+  "runs": 3,
+  "status": "PASSED",
+  "first_frame": {
+    "resident_bytes_median": 162238464,
+    "heap_used_bytes_median": 13905048,
+    "heap_committed_bytes_median": 19320832,
+    "non_heap_used_bytes_median": 43738944,
+    "threads_median": 17
+  },
+  "last_frame": {
+    "resident_bytes_median": 278097920,
+    "heap_used_bytes_median": 16946456,
+    "heap_committed_bytes_median": 19320832,
+    "threads_median": 18
+  },
+  "runs_detail": [
+    {
+      "index": 0,
+      "scenes": [
+        {
+          "file": "00-settings.png",
+          "memory": {
+            "direct_buffer_bytes": 8192,
+            "heap_used_bytes": 13915120,
+            "resident_bytes": 164831232,
+            "private_commit_bytes": 141799424,
+            "uptime_ms": 3243,
+            "heap_max_bytes": 1037959168,
+            "threads": 17,
+            "heap_committed_bytes": 19316736,
+            "non_heap_used_bytes": 43738944
+          },
+          "is_loading": false,
+          "is_playing": false,
+          "is_paused": false,
+          "has_track": false
+        },
+        {
+          "file": "01-warm.png",
+          "memory": {
+            "direct_buffer_bytes": 8192,
+            "heap_used_bytes": 15147512,
+            "resident_bytes": 210206720,
+            "private_commit_bytes": 187166720,
+            "uptime_ms": 4775,
+            "heap_max_bytes": 1037959168,
+            "threads": 18,
+            "heap_committed_bytes": 19316736,
+            "non_heap_used_bytes": 45995312
+          },
+          "is_loading": false,
+          "is_playing": false,
+          "is_paused": false,
+          "has_track": false
+        },
+        {
+          "file": "02-idle-5.png",
+          "memory": {
+            "direct_buffer_bytes": 8192,
+            "heap_used_bytes": 16050168,
+            "resident_bytes": 275906560,
+            "private_commit_bytes": 252874752,
+            "uptime_ms": 10144,
+            "heap_max_bytes": 1037959168,
+            "threads": 18,
+            "heap_committed_bytes": 19316736,
+            "non_heap_used_bytes": 46584504
+          },
+          "is_loading": false,
+          "is_playing": false,
+          "is_paused": false,
+          "has_track": false
+        },
+        {
+          "file": "03-idle-10.png",
+          "memory": {
+            "direct_buffer_bytes": 8192,
+            "heap_used_bytes": 16952920,
+            "resident_bytes": 277405696,
+            "private_commit_bytes": 254308352,
+            "uptime_ms": 15484,
+            "heap_max_bytes": 1037959168,
+            "threads": 18,
+            "heap_committed_bytes": 19316736,
+            "non_heap_used_bytes": 47098512
+          },
+          "is_loading": false,
+          "is_playing": false,
+          "is_paused": false,
+          "has_track": false
+        }
+      ],
+      "steps": [
+        "warm:wait@1000",
+        "idle-5:wait@5000",
+        "idle-10:wait@5000"
+      ]
+    },
+    {
+      "index": 1,
+      "scenes": [
+        {
+          "file": "00-settings.png",
+          "memory": {
+            "direct_buffer_bytes": 8192,
+            "heap_used_bytes": 13873928,
+            "resident_bytes": 160673792,
+            "private_commit_bytes": 137977856,
+            "uptime_ms": 3409,
+            "heap_max_bytes": 1037959168,
+            "threads": 17,
+            "heap_committed_bytes": 19333120,
+            "non_heap_used_bytes": 43847808
+          },
+          "is_loading": false,
+          "is_playing": false,
+          "is_paused": false,
+          "has_track": false
+        },
+        {
+          "file": "01-warm.png",
+          "memory": {
+            "direct_buffer_bytes": 8192,
+            "heap_used_bytes": 15089432,
+            "resident_bytes": 202358784,
+            "private_commit_bytes": 179412992,
+            "uptime_ms": 4977,
+            "heap_max_bytes": 1037959168,
+            "threads": 18,
+            "heap_committed_bytes": 19333120,
+            "non_heap_used_bytes": 46126280
+          },
+          "is_loading": false,
+          "is_playing": false,
+          "is_paused": false,
+          "has_track": false
+        },
+        {
+          "file": "02-idle-5.png",
+          "memory": {
+            "direct_buffer_bytes": 8192,
+            "heap_used_bytes": 15994392,
+            "resident_bytes": 274993152,
+            "private_commit_bytes": 252039168,
+            "uptime_ms": 10357,
+            "heap_max_bytes": 1037959168,
+            "threads": 18,
+            "heap_committed_bytes": 19333120,
+            "non_heap_used_bytes": 46598288
+          },
+          "is_loading": false,
+          "is_playing": false,
+          "is_paused": false,
+          "has_track": false
+        },
+        {
+          "file": "03-idle-10.png",
+          "memory": {
+            "direct_buffer_bytes": 8192,
+            "heap_used_bytes": 16901472,
+            "resident_bytes": 278097920,
+            "private_commit_bytes": 255041536,
+            "uptime_ms": 15742,
+            "heap_max_bytes": 1037959168,
+            "threads": 18,
+            "heap_committed_bytes": 19333120,
+            "non_heap_used_bytes": 47177728
+          },
+          "is_loading": false,
+          "is_playing": false,
+          "is_paused": false,
+          "has_track": false
+        }
+      ],
+      "steps": [
+        "warm:wait@1000",
+        "idle-5:wait@5000",
+        "idle-10:wait@5000"
+      ]
+    },
+    {
+      "index": 2,
+      "scenes": [
+        {
+          "file": "00-settings.png",
+          "memory": {
+            "direct_buffer_bytes": 8192,
+            "heap_used_bytes": 13905048,
+            "resident_bytes": 162238464,
+            "private_commit_bytes": 139341824,
+            "uptime_ms": 3080,
+            "heap_max_bytes": 1037959168,
+            "threads": 17,
+            "heap_committed_bytes": 19320832,
+            "non_heap_used_bytes": 43700208
+          },
+          "is_loading": false,
+          "is_playing": false,
+          "is_paused": false,
+          "has_track": false
+        },
+        {
+          "file": "01-warm.png",
+          "memory": {
+            "direct_buffer_bytes": 8192,
+            "heap_used_bytes": 15134864,
+            "resident_bytes": 205676544,
+            "private_commit_bytes": 182743040,
+            "uptime_ms": 4801,
+            "heap_max_bytes": 1037959168,
+            "threads": 18,
+            "heap_committed_bytes": 19320832,
+            "non_heap_used_bytes": 45951352
+          },
+          "is_loading": false,
+          "is_playing": false,
+          "is_paused": false,
+          "has_track": false
+        },
+        {
+          "file": "02-idle-5.png",
+          "memory": {
+            "direct_buffer_bytes": 8192,
+            "heap_used_bytes": 16039504,
+            "resident_bytes": 274173952,
+            "private_commit_bytes": 251322368,
+            "uptime_ms": 10169,
+            "heap_max_bytes": 1037959168,
+            "threads": 18,
+            "heap_committed_bytes": 19320832,
+            "non_heap_used_bytes": 46459864
+          },
+          "is_loading": false,
+          "is_playing": false,
+          "is_paused": false,
+          "has_track": false
+        },
+        {
+          "file": "03-idle-10.png",
+          "memory": {
+            "direct_buffer_bytes": 8192,
+            "heap_used_bytes": 16946456,
+            "resident_bytes": 278241280,
+            "private_commit_bytes": 255246336,
+            "uptime_ms": 15538,
+            "heap_max_bytes": 1037959168,
+            "threads": 18,
+            "heap_committed_bytes": 19320832,
+            "non_heap_used_bytes": 47003056
+          },
+          "is_loading": false,
+          "is_playing": false,
+          "is_paused": false,
+          "has_track": false
+        }
+      ],
+      "steps": [
+        "warm:wait@1000",
+        "idle-5:wait@5000",
+        "idle-10:wait@5000"
+      ]
+    }
+  ]
+}

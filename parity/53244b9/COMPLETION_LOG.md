@@ -46,3 +46,10 @@
 - 一般页新增分屏设置后，短pane中的触感反馈行在视口之外，旧回放在同一帧断言三行可用性。修复保留全部启用/禁用检查，改为逐项真实滚轮滚入可视区后检查，不修改生产偏好或语义动作。
 - JDK17顺序回归四种Locale（en-US/zh-CN/zh-TW/ja-JP），各 **88 scenes / 65 assertions**；controls **74/55**、独立reload **8/18**，合计 **6组 / 434 scenes / 333 assertions** 全通过。原始参数、capture、日志及一般页检查截图见 `evidence/settings-visible-local/`。
 - 修复 **`3a79b5c`** 已正常推main，新的Windows全流程及发行独立核验仍待完成；整体0.6.5迁移保持PARTIAL。
+
+## 6. Bilibili设置回放定位与剩余回归（14b4df0）
+
+- Windows **39277455043 / head 3a79b5c** 已通过四Locale设置全路由、controls/reload及先前Dock/歌词语言/分屏回放。完整下载Verification-Windows后独立重计 **270 tests / 55 suites / 0 failures/errors/skipped**、流光审计PASSED，完整回放 **15组 / 582 scenes / 498 assertions** 通过；Bilibili controls在点击底栏设置时失败，后续跳过，**未生成发行ZIP**。原始输入、capture、失败语义/截图与汇总在 `evidence/windows-ci-3a79b5c/`。
+- Bilibili脚本仍以全宽时代的765,745坐标点击设置；分屏后改为读取 `root-tab:Settings` 的实际位置并发送物理点击。检索其余capture脚本，未再发现同类固定底栏点击或固定Dock拖动。
+- JDK17顺序实跑Bilibili controls/reload **16 scenes / 21 assertions**、完整歌词controls/reload **153/501**、Skyline四模式 **70/342**、真实生成WAV歌曲操作/独立reload **68/63**，共 **10组 / 307 scenes / 927 assertions** 全通过。歌词60键、Skyline17键/四awake范围/重置保留边界、歌曲操作聚合验证均通过；仅为各报告范围，不代替已登录账号、硬件播放或Android同内容验收。
+- 修复 **`14b4df0`** 已正常推main；本地原始输入、语义、capture和日志在 `evidence/remaining-replays-local/`。新的Windows全量发行及完整下载后独立核验仍待完成，最近独立核验发行仍为13d275c。

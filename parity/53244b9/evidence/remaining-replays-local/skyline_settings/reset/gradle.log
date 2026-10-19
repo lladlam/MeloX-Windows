@@ -1,0 +1,175 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.5.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :desktop:kmpPartiallyResolvedDependenciesChecker
+> Task :desktop:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :desktop:extractPinnedGlassGeometry UP-TO-DATE
+> Task :desktop:convertXmlValueResourcesForCommonMain NO-SOURCE
+> Task :desktop:copyNonXmlValueResourcesForCommonMain NO-SOURCE
+> Task :desktop:prepareComposeResourcesTaskForCommonMain NO-SOURCE
+> Task :desktop:generateResourceAccessorsForCommonMain SKIPPED
+> Task :desktop:convertXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :desktop:copyNonXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :desktop:prepareComposeResourcesTaskForDesktopMain NO-SOURCE
+> Task :desktop:generateResourceAccessorsForDesktopMain SKIPPED
+> Task :desktop:generateActualResourceCollectorsForDesktopMain SKIPPED
+> Task :desktop:generateComposeResClass SKIPPED
+> Task :desktop:generateExpectResourceCollectorsForCommonMain SKIPPED
+> Task :innertube:kmpPartiallyResolvedDependenciesChecker
+> Task :innertube:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :innertube:extractAndroidInnerTube UP-TO-DATE
+> Task :innertube:compileKotlinDesktop UP-TO-DATE
+> Task :innertube:compileDesktopMainJava NO-SOURCE
+> Task :innertube:desktopProcessResources NO-SOURCE
+> Task :innertube:processDesktopMainResources SKIPPED
+> Task :innertube:desktopMainClasses UP-TO-DATE
+> Task :innertube:desktopJar UP-TO-DATE
+> Task :shared:kmpPartiallyResolvedDependenciesChecker
+> Task :shared:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :shared:convertXmlValueResourcesForCommonMain NO-SOURCE
+> Task :shared:copyNonXmlValueResourcesForCommonMain NO-SOURCE
+> Task :shared:prepareComposeResourcesTaskForCommonMain NO-SOURCE
+> Task :shared:generateResourceAccessorsForCommonMain SKIPPED
+> Task :shared:convertXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :shared:copyNonXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :shared:prepareComposeResourcesTaskForDesktopMain NO-SOURCE
+> Task :shared:generateResourceAccessorsForDesktopMain SKIPPED
+> Task :shared:generateActualResourceCollectorsForDesktopMain SKIPPED
+> Task :shared:generateComposeResClass SKIPPED
+> Task :shared:generateExpectResourceCollectorsForCommonMain SKIPPED
+> Task :shared:compileKotlinDesktop UP-TO-DATE
+> Task :shared:compileDesktopMainJava NO-SOURCE
+> Task :shared:assembleDesktopMainResources UP-TO-DATE
+> Task :shared:desktopProcessResources UP-TO-DATE
+> Task :shared:processDesktopMainResources SKIPPED
+> Task :shared:desktopMainClasses UP-TO-DATE
+> Task :shared:desktopJar UP-TO-DATE
+> Task :desktop:compileKotlinDesktop UP-TO-DATE
+> Task :desktop:compileDesktopMainJava NO-SOURCE
+> Task :desktop:assembleDesktopMainResources UP-TO-DATE
+> Task :desktop:desktopProcessResources UP-TO-DATE
+> Task :desktop:processDesktopMainResources SKIPPED
+> Task :desktop:desktopMainClasses UP-TO-DATE
+
+> Task :desktop:captureUi
+[INFO MeloXFont] Android MiLan Pro static instances loaded: CSS=[100, 200, 300, 400, 500, 600, 700, 800, 900] files=mi_lan_pro_w{100..800}.ttf (CSS 900 shares frozen axis-700 instance)
+Captured 00-settings: 1100x780 density=1.0
+Verified 00-settings: pref-bool:lyrics_skyline_enabled:false
+Verified 00-settings: runtime:skylineEnabled:false
+Verified 00-settings: pref-bool:lyrics_skyline_song_info:false
+Verified 00-settings: runtime:skylineShowSongInfo:false
+Verified 00-settings: pref-bool:lyrics_skyline_keep_awake:false
+Verified 00-settings: runtime:skylineKeepsScreenAwake:false
+Verified 00-settings: pref-int:lyrics_skyline_ambient_lines:4
+Verified 00-settings: runtime:skylineAmbientLines:4
+Verified 00-settings: pref-int:lyrics_skyline_ambient_max_characters:2
+Verified 00-settings: runtime:skylineAmbientMaximumCharacters:2
+Verified 00-settings: pref-int:lyrics_skyline_ambient_max_visible:8
+Verified 00-settings: runtime:skylineAmbientMaximumVisibleTexts:8
+Verified 00-settings: pref-float:lyrics_skyline_current_font_size:84
+Verified 00-settings: runtime:skylineCurrentFontSize:84
+Verified 00-settings: pref-float:lyrics_skyline_current_max_scale:1.2
+Verified 00-settings: runtime:skylineCurrentMaximumScale:1.2
+Verified 00-settings: pref-float:lyrics_skyline_current_width:0.4
+Verified 00-settings: runtime:skylineCurrentWidth:0.4
+Verified 00-settings: pref-float:lyrics_skyline_next_font_size:44
+Verified 00-settings: runtime:skylineNextFontSize:44
+Verified 00-settings: pref-float:lyrics_skyline_next_opacity:0.2
+Verified 00-settings: runtime:skylineNextOpacity:0.2
+Verified 00-settings: pref-float:lyrics_skyline_current_spacing:36
+Verified 00-settings: runtime:skylineCurrentSpacing:36
+Verified 00-settings: pref-float:lyrics_skyline_ambient_font_size:24
+Verified 00-settings: runtime:skylineAmbientFontSize:24
+Verified 00-settings: pref-float:lyrics_skyline_ambient_opacity:1.8
+Verified 00-settings: runtime:skylineAmbientOpacity:1.8
+Verified 00-settings: pref-float:lyrics_skyline_ambient_blur:0
+Verified 00-settings: runtime:skylineAmbientBlur:0
+Verified 00-settings: pref-float:lyrics_skyline_ambient_max_tilt:20
+Verified 00-settings: runtime:skylineAmbientMaximumTilt:20
+Verified 00-settings: pref-float:lyrics_skyline_ambient_drift:0
+Verified 00-settings: runtime:skylineAmbientDrift:0
+Verified 00-settings: pref-string:player_screen_awake_mode:HiddenLyricsInterface
+Verified 00-settings: runtime:screenAwakeMode:HiddenLyricsInterface
+Captured 01-root-skyline: 1100x780 density=1.0
+Physical click open: settings-open-skylinelyrics at Offset(275.0, 581.0)
+Captured 02-open: 1100x780 density=1.0
+Verified open: tag:skyline-settings
+Captured 03-reveal-reset: 1100x780 density=1.0
+Physical click reset: skyline-reset at Offset(730.0, 597.0)
+Captured 04-reset: 1100x780 density=1.0
+Verified reset: pref-bool:lyrics_skyline_enabled:false
+Verified reset: runtime:skylineEnabled:false
+Verified reset: pref-bool:lyrics_skyline_song_info:false
+Verified reset: runtime:skylineShowSongInfo:false
+Verified reset: pref-bool:lyrics_skyline_keep_awake:false
+Verified reset: runtime:skylineKeepsScreenAwake:false
+Verified reset: pref-int:lyrics_skyline_ambient_lines:4
+Verified reset: runtime:skylineAmbientLines:4
+Verified reset: pref-int:lyrics_skyline_ambient_max_characters:4
+Verified reset: runtime:skylineAmbientMaximumCharacters:4
+Verified reset: pref-int:lyrics_skyline_ambient_max_visible:16
+Verified reset: runtime:skylineAmbientMaximumVisibleTexts:16
+Verified reset: pref-float:lyrics_skyline_current_font_size:54
+Verified reset: runtime:skylineCurrentFontSize:54
+Verified reset: pref-float:lyrics_skyline_current_max_scale:1.1
+Verified reset: runtime:skylineCurrentMaximumScale:1.1
+Verified reset: pref-float:lyrics_skyline_current_width:0.64
+Verified reset: runtime:skylineCurrentWidth:0.64
+Verified reset: pref-float:lyrics_skyline_next_font_size:24
+Verified reset: runtime:skylineNextFontSize:24
+Verified reset: pref-float:lyrics_skyline_next_opacity:0.48
+Verified reset: runtime:skylineNextOpacity:0.48
+Verified reset: pref-float:lyrics_skyline_current_spacing:14
+Verified reset: runtime:skylineCurrentSpacing:14
+Verified reset: pref-float:lyrics_skyline_ambient_font_size:44
+Verified reset: runtime:skylineAmbientFontSize:44
+Verified reset: pref-float:lyrics_skyline_ambient_opacity:1
+Verified reset: runtime:skylineAmbientOpacity:1
+Verified reset: pref-float:lyrics_skyline_ambient_blur:1
+Verified reset: runtime:skylineAmbientBlur:1
+Verified reset: pref-float:lyrics_skyline_ambient_max_tilt:8
+Verified reset: runtime:skylineAmbientMaximumTilt:8
+Verified reset: pref-float:lyrics_skyline_ambient_drift:1
+Verified reset: runtime:skylineAmbientDrift:1
+Verified reset: pref-string:player_screen_awake_mode:HiddenLyricsInterface
+Verified reset: runtime:screenAwakeMode:HiddenLyricsInterface
+Captured 05-reload: 1100x780 density=1.0
+Verified reload: pref-bool:lyrics_skyline_enabled:false
+Verified reload: runtime:skylineEnabled:false
+Verified reload: pref-bool:lyrics_skyline_song_info:false
+Verified reload: runtime:skylineShowSongInfo:false
+Verified reload: pref-bool:lyrics_skyline_keep_awake:false
+Verified reload: runtime:skylineKeepsScreenAwake:false
+Verified reload: pref-int:lyrics_skyline_ambient_lines:4
+Verified reload: runtime:skylineAmbientLines:4
+Verified reload: pref-int:lyrics_skyline_ambient_max_characters:4
+Verified reload: runtime:skylineAmbientMaximumCharacters:4
+Verified reload: pref-int:lyrics_skyline_ambient_max_visible:16
+Verified reload: runtime:skylineAmbientMaximumVisibleTexts:16
+Verified reload: pref-float:lyrics_skyline_current_font_size:54
+Verified reload: runtime:skylineCurrentFontSize:54
+Verified reload: pref-float:lyrics_skyline_current_max_scale:1.1
+Verified reload: runtime:skylineCurrentMaximumScale:1.1
+Verified reload: pref-float:lyrics_skyline_current_width:0.64
+Verified reload: runtime:skylineCurrentWidth:0.64
+Verified reload: pref-float:lyrics_skyline_next_font_size:24
+Verified reload: runtime:skylineNextFontSize:24
+Verified reload: pref-float:lyrics_skyline_next_opacity:0.48
+Verified reload: runtime:skylineNextOpacity:0.48
+Verified reload: pref-float:lyrics_skyline_current_spacing:14
+Verified reload: runtime:skylineCurrentSpacing:14
+Verified reload: pref-float:lyrics_skyline_ambient_font_size:44
+Verified reload: runtime:skylineAmbientFontSize:44
+Verified reload: pref-float:lyrics_skyline_ambient_opacity:1
+Verified reload: runtime:skylineAmbientOpacity:1
+Verified reload: pref-float:lyrics_skyline_ambient_blur:1
+Verified reload: runtime:skylineAmbientBlur:1
+Verified reload: pref-float:lyrics_skyline_ambient_max_tilt:8
+Verified reload: runtime:skylineAmbientMaximumTilt:8
+Verified reload: pref-float:lyrics_skyline_ambient_drift:1
+Verified reload: runtime:skylineAmbientDrift:1
+Verified reload: pref-string:player_screen_awake_mode:HiddenLyricsInterface
+Verified reload: runtime:screenAwakeMode:HiddenLyricsInterface
+
+BUILD SUCCESSFUL in 18s
+15 actionable tasks: 4 executed, 11 up-to-date
+Consider enabling configuration cache to speed up this build: https://docs.gradle.org/9.5.1/userguide/configuration_cache_enabling.html

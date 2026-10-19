@@ -1,0 +1,72 @@
+{
+  "source_commit": "14b4df0",
+  "jdk": 17,
+  "replays": [
+    {
+      "path": "bilibili_alignment/controls",
+      "scenes": 10,
+      "assertions": 15,
+      "passed": true
+    },
+    {
+      "path": "bilibili_alignment/reload",
+      "scenes": 6,
+      "assertions": 6,
+      "passed": true
+    },
+    {
+      "path": "lyrics_settings/controls",
+      "scenes": 151,
+      "assertions": 260,
+      "passed": true
+    },
+    {
+      "path": "lyrics_settings/reload",
+      "scenes": 2,
+      "assertions": 241,
+      "passed": true
+    },
+    {
+      "path": "skyline_settings/controls",
+      "scenes": 58,
+      "assertions": 87,
+      "passed": true
+    },
+    {
+      "path": "skyline_settings/reload",
+      "scenes": 3,
+      "assertions": 73,
+      "passed": true
+    },
+    {
+      "path": "skyline_settings/reset",
+      "scenes": 6,
+      "assertions": 109,
+      "passed": true
+    },
+    {
+      "path": "skyline_settings/reload-reset",
+      "scenes": 3,
+      "assertions": 73,
+      "passed": true
+    },
+    {
+      "path": "song-actions/controls",
+      "scenes": 38,
+      "assertions": 34,
+      "passed": true
+    },
+    {
+      "path": "song-actions/reload",
+      "scenes": 30,
+      "assertions": 29,
+      "passed": true
+    }
+  ],
+  "totals": {
+    "replays": 10,
+    "scenes": 307,
+    "assertions": 927
+  },
+  "status": "PASSED"
+}
