@@ -23,3 +23,13 @@
 - 实现 **`13d275cc4bfa600fe3c7f7b6a963fc2a1c6b21bc`** 的 Windows **39243293868** 已成功；两个artifact完整下载并通过全部CRC，实际XML重计 **265 tests / 54 suites / 0 failures/errors/skipped**。下载到的 **20组 / 762 scenes / 1,295 assertions** 全通过；新语言controls/reload步骤在CI成功，但上传清单漏了两个目录，因此不能记为22组原始回放独立通过。核验脚本最初因22组预期失败，定位遗漏后按实际20组继续检查，缺失边界另记 `independent-recount.json`。上传清单在下一实现批修复，不能补写历史原始帧。
 - 独立发行ZIP **333,109,728 bytes**，SHA-256 **`defd979629d93631e6c9cf82e36442bdcff390c2b67473c2a6fe815b6920ccb0`**；357条目与JAR全CRC、精确版本戳、该提交17项pinned资源、新语言类/资源和Windows PE FFmpeg均通过。玻璃光学、组件/Popup复用释放和Windows沉浸placement报告均PASSED。证据 `evidence/windows-ci-13d275c/`；发行来源仍为实现13d275c，歌词语言Windows原始回放验收因漏传保持PARTIAL。
 - 行为说明 `LYRIC_LANGUAGE.md`，真源与验证证据 `evidence/lyric-language/`。固定Android 0.6.5同内容帧与网络账号实机验收仍待完成，整体保持PARTIAL。
+
+## 3. 分屏与独立Chrome首批、背景流光修复（8684c2e）
+
+- 固定0.6.5纯树迁移分屏默认开关、物理左右等分、设置子页可移动composition，以及Dock/迷你播放器独立六位置、同位置联动/不同位置展开、72dp侧栏和8dp安全间距、顶部/侧边页面避让；单栏回退保留偏好。Library分屏详情和退场内容保留已接线；Local本身只有Songs入口，账号Library回放、其他详情入口和完整播放器双栏仍待完成。
+- 按用户反馈修复背景流光旧版小幅移动/亮度闪动：迁移颜色源游走、两层warp、8π连续周期和固定亮度；真实分析才驱动形状，无分析恒速漂移。CPU数组计算与原生位图安装分开，安装/释放同属UI线程；双缓冲索引跨effect保留，字节数组复用。
+- 10条新设置文案与右栏launcher图来自固定Git树；所有Locale无覆盖，默认回退。新增资源清单19项验证通过，旧13d275c发行仍以其精确源提交按17项验证通过。
+- 最终显式JDK17全量 **270 tests / 55 suites / 0 failures/errors/skipped**，桌面编译与流光生产Canvas审计通过。三档画质均有连续帧变化，暂停/减少动态冻结，恢复继续流动；相位回卷连续、无伪节拍亮度脉动、合计36次卸载/重建通过。没有以该短跑证明用户549→1431MB常驻增长已解决。
+- 分屏controls **58 scenes / 69 assertions**、独立reload **6/14**、竖屏 **6/12**，合计 **70/95** 全通过；实际生产FFmpeg/播放器向明确标注的软件验收端点写入真实PCM，硬件听感未代验。当前分屏指针回放使用环境JDK21，Windows CI固定JDK17；不隐去平台差异。
+- 新布局下歌词语言controls/reload再次通过 **33 scenes / 35 assertions**；本批已完成本地回放共 **5组 / 103 scenes / 130 assertions**。另一次完整设置route回放未生成capture.json，不计通过。初次位置回放遇到目标稳定等待不足，扩大物理点击的等待预算后完整回放通过；并发Gradle编译曾发生backup冲突，最终顺序以JDK17验证成功。
+- 实现已正常推main **`8684c2e`**，本地原始XML、日志、capture/语义/UTF-8参数和选定截图在 `evidence/split-layout/local/`，行为及边界见 `SPLIT_LAYOUT_AND_FLOW.md`。CI新增流光审计与3组分屏回放，同时修复歌词语言两目录漏传；本实现Windows发行尚待成功构建、完整下载后独立核验。

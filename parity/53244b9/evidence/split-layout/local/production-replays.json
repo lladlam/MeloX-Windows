@@ -1,0 +1,51 @@
+{
+  "implementation": "8684c2e",
+  "replays": [
+    {
+      "path": "split-layout-controls",
+      "scenes": 58,
+      "assertions": 69,
+      "passed": true,
+      "jvm_version": "not recorded by harness"
+    },
+    {
+      "path": "split-layout-reload",
+      "scenes": 6,
+      "assertions": 14,
+      "passed": true,
+      "jvm_version": "not recorded by harness"
+    },
+    {
+      "path": "split-layout-portrait",
+      "scenes": 6,
+      "assertions": 12,
+      "passed": true,
+      "jvm_version": "not recorded by harness"
+    },
+    {
+      "path": "split-language-controls",
+      "scenes": 22,
+      "assertions": 22,
+      "passed": true,
+      "jvm_version": "not recorded by harness"
+    },
+    {
+      "path": "split-language-reload",
+      "scenes": 11,
+      "assertions": 13,
+      "passed": true,
+      "jvm_version": "not recorded by harness"
+    }
+  ],
+  "totals": {
+    "replays": 5,
+    "scenes": 103,
+    "assertions": 130
+  },
+  "status": "PASSED",
+  "not_completed": [
+    "authenticated provider Library playlist replay",
+    "split-settings-en-US full route run did not produce capture.json"
+  ],
+  "runtime_note": "Final shared tests, compilation and Flowing Light audit were run with explicit JDK17. Local split pointer runs used the environment JDK21; Windows CI pins JDK17."
+}

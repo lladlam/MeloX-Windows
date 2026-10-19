@@ -1,0 +1,317 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.5.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :desktop:kmpPartiallyResolvedDependenciesChecker
+> Task :desktop:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :desktop:extractPinnedGlassGeometry
+> Task :desktop:convertXmlValueResourcesForCommonMain NO-SOURCE
+> Task :desktop:copyNonXmlValueResourcesForCommonMain NO-SOURCE
+> Task :desktop:prepareComposeResourcesTaskForCommonMain NO-SOURCE
+> Task :desktop:generateResourceAccessorsForCommonMain SKIPPED
+> Task :desktop:convertXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :desktop:copyNonXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :desktop:prepareComposeResourcesTaskForDesktopMain NO-SOURCE
+> Task :desktop:generateResourceAccessorsForDesktopMain SKIPPED
+> Task :desktop:generateActualResourceCollectorsForDesktopMain SKIPPED
+> Task :desktop:generateComposeResClass SKIPPED
+> Task :desktop:generateExpectResourceCollectorsForCommonMain SKIPPED
+> Task :innertube:kmpPartiallyResolvedDependenciesChecker
+> Task :innertube:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :innertube:extractAndroidInnerTube UP-TO-DATE
+> Task :innertube:compileKotlinDesktop
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/innertube/build/generated/androidMain/com/metrolist/innertube/YouTube.kt:2579:103 Unnecessary safe call on a non-null receiver of type 'List<MusicCarouselShelfRenderer.Content>'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/innertube/build/generated/androidMain/com/metrolist/innertube/YouTube.kt:2606:109 Unnecessary safe call on a non-null receiver of type 'List<MusicShelfRenderer.Content>'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/innertube/build/generated/androidMain/com/metrolist/innertube/YouTube.kt:2628:131 Unnecessary safe call on a non-null receiver of type 'List<MusicCarouselShelfRenderer.Content>'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/innertube/build/generated/androidMain/com/metrolist/innertube/YouTube.kt:2707:38 Unnecessary safe call on a non-null receiver of type 'List<MusicCarouselShelfRenderer.Content>'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/innertube/build/generated/androidMain/com/metrolist/innertube/YouTube.kt:3394:25 Redundant creation of Json format. Creating instances for each usage can be slow.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/innertube/build/generated/androidMain/com/metrolist/innertube/pages/ArtistItemsPage.kt:118:63 Unnecessary safe call on a non-null receiver of type 'Runs'.
+
+> Task :innertube:compileDesktopMainJava NO-SOURCE
+> Task :innertube:desktopProcessResources NO-SOURCE
+> Task :innertube:processDesktopMainResources SKIPPED
+> Task :innertube:desktopMainClasses
+> Task :innertube:desktopJar UP-TO-DATE
+> Task :shared:kmpPartiallyResolvedDependenciesChecker
+> Task :shared:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :shared:convertXmlValueResourcesForCommonMain NO-SOURCE
+> Task :shared:copyNonXmlValueResourcesForCommonMain NO-SOURCE
+> Task :shared:prepareComposeResourcesTaskForCommonMain NO-SOURCE
+> Task :shared:generateResourceAccessorsForCommonMain SKIPPED
+> Task :shared:convertXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :shared:copyNonXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :shared:prepareComposeResourcesTaskForDesktopMain NO-SOURCE
+> Task :shared:generateResourceAccessorsForDesktopMain SKIPPED
+> Task :shared:generateActualResourceCollectorsForDesktopMain SKIPPED
+> Task :shared:generateComposeResClass SKIPPED
+> Task :shared:generateExpectResourceCollectorsForCommonMain SKIPPED
+> Task :shared:compileKotlinDesktop
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/audio/NeteaseQualityClient.kt:317:37 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/download/MeloXDownloadStore.kt:381:46 Elvis operator (?:) always returns the left operand of non-nullable type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/download/MeloXDownloadStore.kt:517:46 Elvis operator (?:) always returns the left operand of non-nullable type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/library/NeteaseLibraryClient.kt:473:37 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/lyrics/AmlldbLyricsClient.kt:84:75 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/lyrics/LrcLibLyricsClient.kt:44:64 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/network/NeteaseAuthenticatedEapi.kt:30:36 Elvis operator (?:) always returns the left operand of non-nullable type 'JSONObject'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/network/NeteaseAuthenticatedEapi.kt:67:37 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/network/NeteaseAuthenticatedWeapi.kt:77:37 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/network/NeteaseCloudUploadClient.kt:95:70 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/network/NeteaseCloudUploadClient.kt:124:34 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/network/NeteaseMusicOperationsClient.kt:572:35 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/network/NeteaseSearchClient.kt:319:37 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/network/NeteaseUniversalSearchClient.kt:175:17 'when' is exhaustive so 'else' is redundant here.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/network/NeteaseUniversalSearchClient.kt:208:25 'when' is exhaustive so 'else' is redundant here.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/network/NeteaseUniversalSearchClient.kt:454:37 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/platform/MeloXPreferences.kt:10:1 'expect'/'actual' classes (including interfaces, objects, annotations, enums, and 'actual' typealiases) are in Beta. Consider using the '-Xexpect-actual-classes' flag to suppress this warning. Also see: https://youtrack.jetbrains.com/issue/KT-61573
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/playback/PlaybackCommands.kt:280:43 Unnecessary safe call on a non-null receiver of type 'MusicTrack'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/playback/ProviderPlaybackResolver.kt:235:69 Elvis operator (?:) always returns the left operand of non-nullable type 'String'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/playback/ProviderPlaybackResolver.kt:265:17 Elvis operator (?:) always returns the left operand of non-nullable type 'Pair<String, Long>'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/player/MeloXDualDecodeSession.kt:129:68 Return in function with expression body and without explicit return type. Use block body '{...}' or add an explicit return type. This will become an error in language version 2.5. See https://youtrack.jetbrains.com/issue/KTLC-288.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/player/MeloXDualDecodeSession.kt:130:44 Return in function with expression body and without explicit return type. Use block body '{...}' or add an explicit return type. This will become an error in language version 2.5. See https://youtrack.jetbrains.com/issue/KTLC-288.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/player/MeloXDualDecodeSession.kt:148:72 Return in function with expression body and without explicit return type. Use block body '{...}' or add an explicit return type. This will become an error in language version 2.5. See https://youtrack.jetbrains.com/issue/KTLC-288.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/player/MeloXDualDecodeSession.kt:207:34 Unnecessary safe call on a non-null receiver of type 'MeloXBufferedPcmDeck'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/player/MeloXDualDecodeSession.kt:248:51 Condition is always 'true'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/player/MeloXDualDecodeSession.kt:249:30 Unnecessary safe call on a non-null receiver of type 'MeloXBufferedPcmDeck'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/jellyfin/JellyfinApiClient.kt:89:17 Condition is always 'true'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/jellyfin/JellyfinApiClient.kt:90:29 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/jellyfin/JellyfinArtworkAccess.kt:31:98 'constructor(p0: String!): URL' is deprecated. Deprecated in Java.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/kugou/KugouApiClient.kt:337:62 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/kugou/KugouLoginClient.kt:129:37 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/kugou/KugouRequestClient.kt:113:45 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/kuwo/KuwoPhoneAuthClient.kt:95:38 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/kuwo/KuwoRequestClient.kt:36:42 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/kuwo/KuwoRequestClient.kt:63:33 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/local/LocalRecognitionCoordinator.kt:46:58 Unnecessary safe call on a non-null receiver of type 'LyricsDocument'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/lxuser/ChkszApiClient.kt:40:59 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicApiClient.kt:380:37 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicApiClient.kt:555:37 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicCatalogClient.kt:331:37 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicFavoriteClient.kt:111:62 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicFavoriteClient.kt:182:37 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicFavoriteClient.kt:252:38 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicPhoneAuthClient.kt:62:41 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicPlaybackVkeyClient.kt:126:37 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicPlaylistClient.kt:158:37 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicQrLoginClient.kt:137:38 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicQrLoginClient.kt:170:51 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicQrLoginClient.kt:182:38 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicQrLoginClient.kt:247:51 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicQrLoginClient.kt:264:53 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicQrLoginClient.kt:381:62 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicQrLoginClient.kt:411:62 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicRankingClient.kt:151:37 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicRichLyricsClient.kt:140:38 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicRichLyricsClient.kt:254:37 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicRichLyricsClient.kt:303:67 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/spotify/SpotifyApiClient.kt:371:45 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/spotify/SpotifyOAuth.kt:169:45 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/youtubemusic/YouTubeMusicProvider.kt:247:106 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/update/MeloXUpdateClient.kt:42:48 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/update/MeloXUpdateClient.kt:58:48 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/update/UpdateChecker.kt:51:37 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/update/UpdateChecker.kt:102:46 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/update/UpdateChecker.kt:105:26 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/desktopMain/kotlin/melox/platform/MeloXDisplayAwakeController.kt:53:129 'val id: Long' is deprecated. Deprecated in Java.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/desktopMain/kotlin/melox/platform/MeloXPreferences.kt:7:1 'expect'/'actual' classes (including interfaces, objects, annotations, enums, and 'actual' typealiases) are in Beta. Consider using the '-Xexpect-actual-classes' flag to suppress this warning. Also see: https://youtrack.jetbrains.com/issue/KT-61573
+
+> Task :shared:compileDesktopMainJava NO-SOURCE
+> Task :shared:assembleDesktopMainResources UP-TO-DATE
+> Task :shared:desktopProcessResources UP-TO-DATE
+> Task :shared:processDesktopMainResources SKIPPED
+> Task :shared:desktopMainClasses
+> Task :shared:desktopJar
+> Task :desktop:compileKotlinDesktop
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/desktop/src/desktopMain/kotlin/melox/ui/foundation/MeloXSymbol.kt:154:23 'fun painterResource(resourcePath: String): Painter' is deprecated. Migrate to the Compose resources library. See https://www.jetbrains.com/help/kotlin-multiplatform-dev/compose-images-resources.html If you need to load resources specificly from Java classpath, you should still use the new resource library and use a snippet from https://github.com/JetBrains/compose-multiplatform-core/pull/1457.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/desktop/src/desktopMain/kotlin/melox/ui/layout/MeloXListDetailLayout.kt:84:27 'fun painterResource(resourcePath: String): Painter' is deprecated. Migrate to the Compose resources library. See https://www.jetbrains.com/help/kotlin-multiplatform-dev/compose-images-resources.html If you need to load resources specificly from Java classpath, you should still use the new resource library and use a snippet from https://github.com/JetBrains/compose-multiplatform-core/pull/1457.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/desktop/src/desktopMain/kotlin/melox/ui/player/MeloXFlowingLightBackdrop.kt:135:38 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/desktop/src/desktopMain/kotlin/melox/ui/player/MeloXFlowingLightBackdrop.kt:769:30 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/desktop/src/desktopMain/kotlin/melox/ui/screens/AlbumDetailScreen.kt:182:49 'val outlinedButtonBorder: BorderStroke' is deprecated. Please use the version that takes an `enabled` param to get the `BorderStroke` with the correct opacity.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/desktop/src/desktopMain/kotlin/melox/ui/screens/AlbumDetailScreen.kt:195:49 'val outlinedButtonBorder: BorderStroke' is deprecated. Please use the version that takes an `enabled` param to get the `BorderStroke` with the correct opacity.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/desktop/src/desktopMain/kotlin/melox/ui/screens/LoginScreen.kt:1:16 Suppression of error 'INVISIBLE_REFERENCE' might compile and work, but the compiler behavior is UNSPECIFIED and WILL NOT BE PRESERVED. Please report your use case to the Kotlin issue tracker instead: https://kotl.in/issue
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXDetailPalette.kt:56:34 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXLibraryDownloads.kt:511:70 'fun loadImageBitmap(inputStream: InputStream): ImageBitmap' is deprecated. Migrate to the Compose resources library. See https://www.jetbrains.com/help/kotlin-multiplatform-dev/compose-images-resources.html.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXSongActionsOverlay.kt:353:82 Redundant call of conversion method.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/desktop/src/desktopMain/kotlin/melox/ui/screens/PlaylistDetailScreen.kt:227:49 'val outlinedButtonBorder: BorderStroke' is deprecated. Please use the version that takes an `enabled` param to get the `BorderStroke` with the correct opacity.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/desktop/src/desktopMain/kotlin/melox/ui/screens/PlaylistDetailScreen.kt:246:49 'val outlinedButtonBorder: BorderStroke' is deprecated. Please use the version that takes an `enabled` param to get the `BorderStroke` with the correct opacity.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/desktop/src/desktopMain/kotlin/melox/validation/MeloXSceneSemantics.kt:27:58 'val InvisibleToUser: SemanticsPropertyKey<Unit>' is deprecated. Use `hideFromAccessibility` instead.
+
+> Task :desktop:compileDesktopMainJava NO-SOURCE
+> Task :desktop:assembleDesktopMainResources UP-TO-DATE
+> Task :desktop:desktopProcessResources UP-TO-DATE
+> Task :desktop:processDesktopMainResources SKIPPED
+> Task :desktop:desktopMainClasses
+
+> Task :desktop:captureUi
+SLF4J(W): No SLF4J providers were found.
+SLF4J(W): Defaulting to no-operation (NOP) logger implementation
+SLF4J(W): See https://www.slf4j.org/codes.html#noProviders for further details.
+[DEBUG MeloXThirdParty] resolve detail source=local id=68c6e27b title=generated-split-pcm artists=Generated PCM fixture durationMs=420000 metadata=Local
+[INFO MeloXThirdParty] Resolve start source=local quality=Standard thirdParty=false
+[INFO MeloXThirdParty] Resolve fallback source=local stage=provider chksz=disabled
+[INFO MeloXFont] Android MiLan Pro static instances loaded: CSS=[100, 200, 300, 400, 500, 600, 700, 800, 900] files=mi_lan_pro_w{100..800}.ttf (CSS 900 shares frozen axis-700 instance)
+Captured 00-settings: 1100x780 density=1.0
+[DEBUG AudioPlayer] Bundled FFmpeg verified: sha256=ee930e8def21a993f4b8c680757df15054da1c8f2698da0fdf87f1f3b15bd633 bytes=172690600
+[DEBUG AudioPlayer] FFmpeg binary=/tmp/melox-decoder-ffmpeg-ee930e8def21a993 os=Linux sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+Physical click remote-reject: remote-reject at Offset(295.5, 468.0)
+Captured 01-remote-reject: 1100x780 density=1.0
+Verified remote-reject: cloud-enabled:false
+Captured 02-reveal-general: 1100x780 density=1.0
+Physical click open-general: settings-open-general at Offset(275.0, 435.0)
+Captured 03-open-general: 1100x780 density=1.0
+Verified open-general: tag:settings-general
+Captured 04-split-default: 1100x780 density=1.0
+Verified split-default: runtime:splitScreenEnabled:true
+Verified split-default: tag:layout-list-detail
+Verified split-default: in-half:settings-general:right
+Captured 05-reveal-toggle: 1100x780 density=1.0
+Physical click disable: setting-general_split_screen at Offset(1032.0, 235.0)
+Captured 06-disable: 1100x780 density=1.0
+Verified disable: runtime:splitScreenEnabled:false
+Verified disable: tag:layout-single-pane
+Verified disable: full-tag:settings-general
+Verified disable: absent:general_split_navigation_position
+Verified disable: absent:general_split_mini_player_position
+Physical click enable: setting-general_split_screen at Offset(1032.0, 235.0)
+Captured 07-enable: 1100x780 density=1.0
+Verified enable: runtime:splitScreenEnabled:true
+Verified enable: tag:layout-list-detail
+Verified enable: in-half:settings-general:right
+Captured 08-reveal-nav-0: 1100x780 density=1.0
+Physical click menu-nav-0: general_split_navigation_position at Offset(1005.5, 297.5)
+Captured 09-menu-nav-0: 1100x780 density=1.0
+Physical click choose-nav-0: settings-option:Bottom right at Offset(945.0, 354.0)
+Captured 10-choose-nav-0: 1100x780 density=1.0
+Verified choose-nav-0: pref-string:general_split_navigation_position:BottomRight
+Verified choose-nav-0: runtime:splitNavigationPosition:BottomRight
+Captured 11-reveal-mini-0: 1100x780 density=1.0
+Physical click menu-mini-0: general_split_mini_player_position at Offset(1005.5, 353.5)
+Captured 12-menu-mini-0: 1100x780 density=1.0
+Physical click choose-mini-0: settings-option:Right edge (vertical) at Offset(945.0, 498.0)
+Captured 13-choose-mini-0: 1100x780 density=1.0
+Verified choose-mini-0: pref-string:general_split_mini_player_position:Right
+Verified choose-mini-0: runtime:splitMiniPlayerPosition:Right
+Captured 14-placement-0: 1100x780 density=1.0
+Verified placement-0: tag:layout-list-detail
+Verified placement-0: in-half:settings-general:right
+Verified placement-0: chrome-placement:positioned-navigation:BottomRight
+Verified placement-0: chrome-placement:positioned-mini-player:Right
+Captured 15-reveal-nav-1: 1100x780 density=1.0
+Physical click menu-nav-1: general_split_navigation_position at Offset(921.0, 297.5)
+Captured 16-menu-nav-1: 1100x780 density=1.0
+Physical click choose-nav-1: settings-option:Left edge (vertical) at Offset(865.0, 398.0)
+Captured 17-choose-nav-1: 1100x780 density=1.0
+Verified choose-nav-1: pref-string:general_split_navigation_position:Left
+Verified choose-nav-1: runtime:splitNavigationPosition:Left
+Captured 18-reveal-mini-1: 1100x780 density=1.0
+Physical click menu-mini-1: general_split_mini_player_position at Offset(888.5, 353.5)
+Captured 19-menu-mini-1: 1100x780 density=1.0
+Physical click choose-mini-1: settings-option:Top left at Offset(865.0, 542.0)
+Captured 20-choose-mini-1: 1100x780 density=1.0
+Verified choose-mini-1: pref-string:general_split_mini_player_position:TopLeft
+Verified choose-mini-1: runtime:splitMiniPlayerPosition:TopLeft
+Captured 21-placement-1: 1100x780 density=1.0
+Verified placement-1: tag:layout-list-detail
+Verified placement-1: in-half:settings-general:right
+Verified placement-1: chrome-placement:positioned-navigation:Left
+Verified placement-1: chrome-placement:positioned-mini-player:TopLeft
+Captured 22-reveal-nav-2: 1100x780 density=1.0
+Physical click menu-nav-2: general_split_navigation_position at Offset(973.5, 297.5)
+Captured 23-menu-nav-2: 1100x780 density=1.0
+Physical click choose-nav-2: settings-option:Right edge (vertical) at Offset(945.0, 442.0)
+Captured 24-choose-nav-2: 1100x780 density=1.0
+Verified choose-nav-2: pref-string:general_split_navigation_position:Right
+Verified choose-nav-2: runtime:splitNavigationPosition:Right
+Captured 25-reveal-mini-2: 1100x780 density=1.0
+Physical click menu-mini-2: general_split_mini_player_position at Offset(942.0, 353.5)
+Captured 26-menu-mini-2: 1100x780 density=1.0
+Physical click choose-mini-2: settings-option:Top right at Offset(865.0, 586.0)
+Captured 27-choose-mini-2: 1100x780 density=1.0
+Verified choose-mini-2: pref-string:general_split_mini_player_position:TopRight
+Verified choose-mini-2: runtime:splitMiniPlayerPosition:TopRight
+Captured 28-placement-2: 1100x780 density=1.0
+Verified placement-2: tag:layout-list-detail
+Verified placement-2: in-half:settings-general:right
+Verified placement-2: chrome-placement:positioned-navigation:Right
+Verified placement-2: chrome-placement:positioned-mini-player:TopRight
+Captured 29-reveal-nav-3: 1100x780 density=1.0
+Physical click menu-nav-3: general_split_navigation_position at Offset(888.5, 377.5)
+Captured 30-menu-nav-3: 1100x780 density=1.0
+Physical click choose-nav-3: settings-option:Top left at Offset(865.0, 566.0)
+Captured 31-choose-nav-3: 1100x780 density=1.0
+Verified choose-nav-3: pref-string:general_split_navigation_position:TopLeft
+Verified choose-nav-3: runtime:splitNavigationPosition:TopLeft
+Captured 32-reveal-mini-3: 1100x780 density=1.0
+Physical click menu-mini-3: general_split_mini_player_position at Offset(1017.0, 433.5)
+Captured 33-menu-mini-3: 1100x780 density=1.0
+Physical click choose-mini-3: settings-option:Bottom left at Offset(945.0, 446.0)
+Captured 34-choose-mini-3: 1100x780 density=1.0
+Verified choose-mini-3: pref-string:general_split_mini_player_position:BottomLeft
+Verified choose-mini-3: runtime:splitMiniPlayerPosition:BottomLeft
+Captured 35-placement-3: 1100x780 density=1.0
+Verified placement-3: tag:layout-list-detail
+Verified placement-3: in-half:settings-general:right
+Verified placement-3: chrome-placement:positioned-navigation:TopLeft
+Verified placement-3: chrome-placement:positioned-mini-player:BottomLeft
+Captured 36-reveal-nav-4: 1100x780 density=1.0
+Physical click menu-nav-4: general_split_navigation_position at Offset(1022.0, 297.5)
+Captured 37-menu-nav-4: 1100x780 density=1.0
+Physical click choose-nav-4: settings-option:Top right at Offset(945.0, 530.0)
+Captured 38-choose-nav-4: 1100x780 density=1.0
+Verified choose-nav-4: pref-string:general_split_navigation_position:TopRight
+Verified choose-nav-4: runtime:splitNavigationPosition:TopRight
+Captured 39-reveal-mini-4: 1100x780 density=1.0
+Physical click menu-mini-4: general_split_mini_player_position at Offset(1005.5, 433.5)
+Captured 40-menu-mini-4: 1100x780 density=1.0
+Physical click choose-mini-4: settings-option:Bottom right at Offset(945.0, 490.0)
+Captured 41-choose-mini-4: 1100x780 density=1.0
+Verified choose-mini-4: pref-string:general_split_mini_player_position:BottomRight
+Verified choose-mini-4: runtime:splitMiniPlayerPosition:BottomRight
+Captured 42-placement-4: 1100x780 density=1.0
+Verified placement-4: tag:layout-list-detail
+Verified placement-4: in-half:settings-general:right
+Verified placement-4: chrome-placement:positioned-navigation:TopRight
+Verified placement-4: chrome-placement:positioned-mini-player:BottomRight
+Captured 43-reveal-nav-5: 1100x780 density=1.0
+Physical click menu-nav-5: general_split_navigation_position at Offset(1017.0, 377.5)
+Captured 44-menu-nav-5: 1100x780 density=1.0
+Physical click choose-nav-5: settings-option:Bottom left at Offset(945.0, 390.0)
+Captured 45-choose-nav-5: 1100x780 density=1.0
+Verified choose-nav-5: pref-string:general_split_navigation_position:BottomLeft
+Verified choose-nav-5: runtime:splitNavigationPosition:BottomLeft
+Captured 46-reveal-mini-5: 1100x780 density=1.0
+Physical click menu-mini-5: general_split_mini_player_position at Offset(1001.0, 353.5)
+Captured 47-menu-mini-5: 1100x780 density=1.0
+Physical click choose-mini-5: settings-option:Left edge (vertical) at Offset(945.0, 454.0)
+Captured 48-choose-mini-5: 1100x780 density=1.0
+Verified choose-mini-5: pref-string:general_split_mini_player_position:Left
+Verified choose-mini-5: runtime:splitMiniPlayerPosition:Left
+Captured 49-placement-5: 1100x780 density=1.0
+Verified placement-5: tag:layout-list-detail
+Verified placement-5: in-half:settings-general:right
+Verified placement-5: chrome-placement:positioned-navigation:BottomLeft
+Verified placement-5: chrome-placement:positioned-mini-player:Left
+Captured 50-reveal-final-nav: 1100x780 density=1.0
+Physical click menu-final-nav: general_split_navigation_position at Offset(1005.5, 297.5)
+Captured 51-menu-final-nav: 1100x780 density=1.0
+Physical click choose-final-nav: settings-option:Left edge (vertical) at Offset(945.0, 398.0)
+Captured 52-choose-final-nav: 1100x780 density=1.0
+Verified choose-final-nav: pref-string:general_split_navigation_position:Left
+Verified choose-final-nav: runtime:splitNavigationPosition:Left
+Captured 53-reveal-final-mini: 1100x780 density=1.0
+Physical click menu-final-mini: general_split_mini_player_position at Offset(973.5, 353.5)
+Captured 54-menu-final-mini: 1100x780 density=1.0
+Physical click choose-final-mini: settings-option:Right edge (vertical) at Offset(945.0, 498.0)
+Captured 55-choose-final-mini: 1100x780 density=1.0
+Verified choose-final-mini: pref-string:general_split_mini_player_position:Right
+Verified choose-final-mini: runtime:splitMiniPlayerPosition:Right
+Physical click pause: mini-player-play-pause at Offset(1056.0, 413.0)
+Captured 56-pause: 1100x780 density=1.0
+Verified pause: play-ready:false
+Verified pause: no-playback-error:true
+Physical click resume: mini-player-play-pause at Offset(1056.0, 413.0)
+Captured 57-resume: 1100x780 density=1.0
+Verified resume: play-ready:true
+Verified resume: no-playback-error:true
+
+BUILD SUCCESSFUL in 10m 34s
+15 actionable tasks: 9 executed, 6 up-to-date
+Consider enabling configuration cache to speed up this build: https://docs.gradle.org/9.5.1/userguide/configuration_cache_enabling.html

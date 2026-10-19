@@ -1,0 +1,5 @@
+reveal-general:reveal@settings-open-general
+open-general:tap@settings-open-general
+persisted:wait@100
+pause:tap@mini-player-play-pause
+resume:tap@mini-player-play-pause

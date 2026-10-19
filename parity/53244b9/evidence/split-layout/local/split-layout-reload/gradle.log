@@ -1,0 +1,90 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.5.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :desktop:kmpPartiallyResolvedDependenciesChecker
+> Task :desktop:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :desktop:extractPinnedGlassGeometry UP-TO-DATE
+> Task :desktop:convertXmlValueResourcesForCommonMain NO-SOURCE
+> Task :desktop:copyNonXmlValueResourcesForCommonMain NO-SOURCE
+> Task :desktop:prepareComposeResourcesTaskForCommonMain NO-SOURCE
+> Task :desktop:generateResourceAccessorsForCommonMain SKIPPED
+> Task :desktop:convertXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :desktop:copyNonXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :desktop:prepareComposeResourcesTaskForDesktopMain NO-SOURCE
+> Task :desktop:generateResourceAccessorsForDesktopMain SKIPPED
+> Task :desktop:generateActualResourceCollectorsForDesktopMain SKIPPED
+> Task :desktop:generateComposeResClass SKIPPED
+> Task :desktop:generateExpectResourceCollectorsForCommonMain SKIPPED
+> Task :innertube:kmpPartiallyResolvedDependenciesChecker
+> Task :innertube:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :innertube:extractAndroidInnerTube UP-TO-DATE
+> Task :innertube:compileKotlinDesktop UP-TO-DATE
+> Task :innertube:compileDesktopMainJava NO-SOURCE
+> Task :innertube:desktopProcessResources NO-SOURCE
+> Task :innertube:processDesktopMainResources SKIPPED
+> Task :innertube:desktopMainClasses UP-TO-DATE
+> Task :innertube:desktopJar UP-TO-DATE
+> Task :shared:kmpPartiallyResolvedDependenciesChecker
+> Task :shared:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :shared:convertXmlValueResourcesForCommonMain NO-SOURCE
+> Task :shared:copyNonXmlValueResourcesForCommonMain NO-SOURCE
+> Task :shared:prepareComposeResourcesTaskForCommonMain NO-SOURCE
+> Task :shared:generateResourceAccessorsForCommonMain SKIPPED
+> Task :shared:convertXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :shared:copyNonXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :shared:prepareComposeResourcesTaskForDesktopMain NO-SOURCE
+> Task :shared:generateResourceAccessorsForDesktopMain SKIPPED
+> Task :shared:generateActualResourceCollectorsForDesktopMain SKIPPED
+> Task :shared:generateComposeResClass SKIPPED
+> Task :shared:generateExpectResourceCollectorsForCommonMain SKIPPED
+> Task :shared:compileKotlinDesktop UP-TO-DATE
+> Task :shared:compileDesktopMainJava NO-SOURCE
+> Task :shared:assembleDesktopMainResources UP-TO-DATE
+> Task :shared:desktopProcessResources UP-TO-DATE
+> Task :shared:processDesktopMainResources SKIPPED
+> Task :shared:desktopMainClasses UP-TO-DATE
+> Task :shared:desktopJar UP-TO-DATE
+> Task :desktop:compileKotlinDesktop UP-TO-DATE
+> Task :desktop:compileDesktopMainJava NO-SOURCE
+> Task :desktop:assembleDesktopMainResources UP-TO-DATE
+> Task :desktop:desktopProcessResources UP-TO-DATE
+> Task :desktop:processDesktopMainResources SKIPPED
+> Task :desktop:desktopMainClasses UP-TO-DATE
+
+> Task :desktop:captureUi
+SLF4J(W): No SLF4J providers were found.
+SLF4J(W): Defaulting to no-operation (NOP) logger implementation
+SLF4J(W): See https://www.slf4j.org/codes.html#noProviders for further details.
+[DEBUG MeloXThirdParty] resolve detail source=local id=68c6e27b title=generated-split-pcm artists=Generated PCM fixture durationMs=420000 metadata=Local
+[INFO MeloXThirdParty] Resolve start source=local quality=Standard thirdParty=false
+[INFO MeloXThirdParty] Resolve fallback source=local stage=provider chksz=disabled
+[INFO MeloXFont] Android MiLan Pro static instances loaded: CSS=[100, 200, 300, 400, 500, 600, 700, 800, 900] files=mi_lan_pro_w{100..800}.ttf (CSS 900 shares frozen axis-700 instance)
+Captured 00-settings: 1100x780 density=1.0
+Captured 01-reveal-general: 1100x780 density=1.0
+Physical click open-general: settings-open-general at Offset(315.0, 435.0)
+[DEBUG AudioPlayer] Bundled FFmpeg verified: sha256=ee930e8def21a993f4b8c680757df15054da1c8f2698da0fdf87f1f3b15bd633 bytes=172690600
+[DEBUG AudioPlayer] FFmpeg binary=/tmp/melox-decoder-ffmpeg-ee930e8def21a993 os=Linux sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+Captured 02-open-general: 1100x780 density=1.0
+Verified open-general: tag:settings-general
+Captured 03-persisted: 1100x780 density=1.0
+Verified persisted: runtime:splitScreenEnabled:true
+Verified persisted: runtime:splitNavigationPosition:Left
+Verified persisted: runtime:splitMiniPlayerPosition:Right
+Verified persisted: pref-string:general_split_navigation_position:Left
+Verified persisted: pref-string:general_split_mini_player_position:Right
+Verified persisted: tag:layout-list-detail
+Verified persisted: in-half:settings-general:right
+Verified persisted: chrome-placement:positioned-navigation:Left
+Verified persisted: chrome-placement:positioned-mini-player:Right
+Physical click pause: mini-player-play-pause at Offset(1056.0, 413.0)
+Captured 04-pause: 1100x780 density=1.0
+Verified pause: play-ready:false
+Verified pause: no-playback-error:true
+Physical click resume: mini-player-play-pause at Offset(1056.0, 413.0)
+Captured 05-resume: 1100x780 density=1.0
+Verified resume: play-ready:true
+Verified resume: no-playback-error:true
+
+BUILD SUCCESSFUL in 1m 19s
+15 actionable tasks: 4 executed, 11 up-to-date
+Consider enabling configuration cache to speed up this build: https://docs.gradle.org/9.5.1/userguide/configuration_cache_enabling.html

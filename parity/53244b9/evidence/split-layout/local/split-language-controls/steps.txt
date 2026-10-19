@@ -1,0 +1,21 @@
+remote-reject:tap@remote-reject
+reveal-lyrics:reveal@settings-open-lyrics
+open-lyrics:tap@settings-open-lyrics
+reveal-0:reveal@lyric_language
+menu-0:tap@lyric_language
+choose-0:tap@settings-option:简体中文
+reveal-1:reveal@lyric_language
+menu-1:tap@lyric_language
+choose-1:tap@settings-option:繁體中文
+reveal-2:reveal@lyric_language
+menu-2:tap@lyric_language
+choose-2:tap@settings-option:English
+reveal-3:reveal@lyric_language
+menu-3:tap@lyric_language
+choose-3:tap@settings-option:Türkçe
+reveal-4:reveal@lyric_language
+menu-4:tap@lyric_language
+choose-4:tap@settings-option:Follow system
+reveal-5:reveal@lyric_language
+menu-5:tap@lyric_language
+choose-5:tap@settings-option:Türkçe
