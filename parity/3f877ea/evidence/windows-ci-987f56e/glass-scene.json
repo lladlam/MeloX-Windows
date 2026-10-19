@@ -1,0 +1,478 @@
+{
+  "fixture": "generated checkerboard; real production glass components",
+  "android_pixel_acceptance": "PENDING_PINNED_REFERENCE",
+  "memory_scope": "observations only; no forced GC and no whole-process plateau assertion",
+  "owned_filter_disposal": [
+    {
+      "before": {
+        "released_chains": 1031,
+        "owners": 0,
+        "created_chains": 1031
+      },
+      "after": {
+        "released_chains": 1368,
+        "owners": 0,
+        "created_chains": 1368
+      },
+      "case": "1.0-light-liquid"
+    },
+    {
+      "before": {
+        "released_chains": 1368,
+        "owners": 0,
+        "created_chains": 1368
+      },
+      "after": {
+        "released_chains": 1486,
+        "owners": 0,
+        "created_chains": 1486
+      },
+      "case": "1.0-light-frosted"
+    },
+    {
+      "before": {
+        "released_chains": 1486,
+        "owners": 0,
+        "created_chains": 1486
+      },
+      "after": {
+        "released_chains": 1825,
+        "owners": 0,
+        "created_chains": 1825
+      },
+      "case": "1.0-dark-liquid"
+    },
+    {
+      "before": {
+        "released_chains": 1825,
+        "owners": 0,
+        "created_chains": 1825
+      },
+      "after": {
+        "released_chains": 1943,
+        "owners": 0,
+        "created_chains": 1943
+      },
+      "case": "1.0-dark-frosted"
+    },
+    {
+      "before": {
+        "released_chains": 1943,
+        "owners": 0,
+        "created_chains": 1943
+      },
+      "after": {
+        "released_chains": 2279,
+        "owners": 0,
+        "created_chains": 2279
+      },
+      "case": "1.25-light-liquid"
+    },
+    {
+      "before": {
+        "released_chains": 2279,
+        "owners": 0,
+        "created_chains": 2279
+      },
+      "after": {
+        "released_chains": 2397,
+        "owners": 0,
+        "created_chains": 2397
+      },
+      "case": "1.25-light-frosted"
+    },
+    {
+      "before": {
+        "released_chains": 2397,
+        "owners": 0,
+        "created_chains": 2397
+      },
+      "after": {
+        "released_chains": 2732,
+        "owners": 0,
+        "created_chains": 2732
+      },
+      "case": "1.25-dark-liquid"
+    },
+    {
+      "before": {
+        "released_chains": 2732,
+        "owners": 0,
+        "created_chains": 2732
+      },
+      "after": {
+        "released_chains": 2848,
+        "owners": 0,
+        "created_chains": 2848
+      },
+      "case": "1.25-dark-frosted"
+    },
+    {
+      "before": {
+        "released_chains": 2848,
+        "owners": 0,
+        "created_chains": 2848
+      },
+      "after": {
+        "released_chains": 3063,
+        "owners": 0,
+        "created_chains": 3063
+      },
+      "case": "2.0-light-liquid"
+    },
+    {
+      "before": {
+        "released_chains": 3063,
+        "owners": 0,
+        "created_chains": 3063
+      },
+      "after": {
+        "released_chains": 3177,
+        "owners": 0,
+        "created_chains": 3177
+      },
+      "case": "2.0-light-frosted"
+    },
+    {
+      "before": {
+        "released_chains": 3177,
+        "owners": 0,
+        "created_chains": 3177
+      },
+      "after": {
+        "released_chains": 3396,
+        "owners": 0,
+        "created_chains": 3396
+      },
+      "case": "2.0-dark-liquid"
+    },
+    {
+      "before": {
+        "released_chains": 3396,
+        "owners": 0,
+        "created_chains": 3396
+      },
+      "after": {
+        "released_chains": 3510,
+        "owners": 0,
+        "created_chains": 3510
+      },
+      "case": "2.0-dark-frosted"
+    }
+  ],
+  "samples": [
+    {
+      "scaled_background_aligned_pixels": 468,
+      "memory": {
+        "direct_buffer_bytes": 8192,
+        "heap_used_bytes": 8694840,
+        "resident_bytes": 129642496,
+        "private_commit_bytes": 124125184,
+        "uptime_ms": 22988,
+        "heap_max_bytes": 1037959168,
+        "threads": 17,
+        "heap_committed_bytes": 18788352,
+        "non_heap_used_bytes": 38341408
+      },
+      "density": 1,
+      "mount_dispose_cycles": 8,
+      "disabled_slider_preserved_value": true,
+      "rejected_switch_drag_restored": true,
+      "cancel_edge_coverage_changed_pixels": 438,
+      "frosted": false,
+      "changed_pixels_inside_glass": 4973,
+      "dark": false,
+      "physical_button_clicks": 1,
+      "resize_and_inflight_cancel": "PASSED",
+      "slider_value": 0.6939762,
+      "scaled_background_checked_pixels": 468
+    },
+    {
+      "scaled_background_aligned_pixels": 468,
+      "memory": {
+        "direct_buffer_bytes": 8192,
+        "heap_used_bytes": 10128912,
+        "resident_bytes": 162422784,
+        "private_commit_bytes": 145989632,
+        "uptime_ms": 29414,
+        "heap_max_bytes": 1037959168,
+        "threads": 18,
+        "heap_committed_bytes": 18788352,
+        "non_heap_used_bytes": 43201768
+      },
+      "density": 1,
+      "mount_dispose_cycles": 8,
+      "disabled_slider_preserved_value": true,
+      "rejected_switch_drag_restored": true,
+      "cancel_edge_coverage_changed_pixels": 0,
+      "frosted": true,
+      "changed_pixels_inside_glass": 4976,
+      "dark": false,
+      "physical_button_clicks": 1,
+      "resize_and_inflight_cancel": "not exercised: Material fallback",
+      "slider_value": 0.80508476,
+      "scaled_background_checked_pixels": 468
+    },
+    {
+      "scaled_background_aligned_pixels": 468,
+      "memory": {
+        "direct_buffer_bytes": 8192,
+        "heap_used_bytes": 13088552,
+        "resident_bytes": 149954560,
+        "private_commit_bytes": 133103616,
+        "uptime_ms": 41577,
+        "heap_max_bytes": 1037959168,
+        "threads": 18,
+        "heap_committed_bytes": 18788352,
+        "non_heap_used_bytes": 46112888
+      },
+      "density": 1,
+      "mount_dispose_cycles": 8,
+      "disabled_slider_preserved_value": true,
+      "rejected_switch_drag_restored": true,
+      "cancel_edge_coverage_changed_pixels": 334,
+      "frosted": false,
+      "changed_pixels_inside_glass": 4973,
+      "dark": true,
+      "physical_button_clicks": 1,
+      "resize_and_inflight_cancel": "PASSED",
+      "slider_value": 0.6947185,
+      "scaled_background_checked_pixels": 468
+    },
+    {
+      "scaled_background_aligned_pixels": 468,
+      "memory": {
+        "direct_buffer_bytes": 8192,
+        "heap_used_bytes": 14930632,
+        "resident_bytes": 139862016,
+        "private_commit_bytes": 124694528,
+        "uptime_ms": 47782,
+        "heap_max_bytes": 1037959168,
+        "threads": 18,
+        "heap_committed_bytes": 18788352,
+        "non_heap_used_bytes": 47029608
+      },
+      "density": 1,
+      "mount_dispose_cycles": 8,
+      "disabled_slider_preserved_value": true,
+      "rejected_switch_drag_restored": true,
+      "cancel_edge_coverage_changed_pixels": 0,
+      "frosted": true,
+      "changed_pixels_inside_glass": 4975,
+      "dark": true,
+      "physical_button_clicks": 1,
+      "resize_and_inflight_cancel": "not exercised: Material fallback",
+      "slider_value": 0.80508476,
+      "scaled_background_checked_pixels": 468
+    },
+    {
+      "scaled_background_aligned_pixels": 816,
+      "memory": {
+        "direct_buffer_bytes": 8192,
+        "heap_used_bytes": 14766144,
+        "resident_bytes": 181559296,
+        "private_commit_bytes": 164220928,
+        "uptime_ms": 59971,
+        "heap_max_bytes": 1037959168,
+        "threads": 18,
+        "heap_committed_bytes": 18788352,
+        "non_heap_used_bytes": 48552824
+      },
+      "density": 1.25,
+      "mount_dispose_cycles": 8,
+      "disabled_slider_preserved_value": true,
+      "rejected_switch_drag_restored": true,
+      "cancel_edge_coverage_changed_pixels": 561,
+      "frosted": false,
+      "changed_pixels_inside_glass": 7800,
+      "dark": false,
+      "physical_button_clicks": 1,
+      "resize_and_inflight_cancel": "PASSED",
+      "slider_value": 0.6934617,
+      "scaled_background_checked_pixels": 816
+    },
+    {
+      "scaled_background_aligned_pixels": 816,
+      "memory": {
+        "direct_buffer_bytes": 8192,
+        "heap_used_bytes": 12867840,
+        "resident_bytes": 153845760,
+        "private_commit_bytes": 136654848,
+        "uptime_ms": 66313,
+        "heap_max_bytes": 1037959168,
+        "threads": 18,
+        "heap_committed_bytes": 18788352,
+        "non_heap_used_bytes": 46011520
+      },
+      "density": 1.25,
+      "mount_dispose_cycles": 8,
+      "disabled_slider_preserved_value": true,
+      "rejected_switch_drag_restored": true,
+      "cancel_edge_coverage_changed_pixels": 0,
+      "frosted": true,
+      "changed_pixels_inside_glass": 7802,
+      "dark": false,
+      "physical_button_clicks": 1,
+      "resize_and_inflight_cancel": "not exercised: Material fallback",
+      "slider_value": 0.80508476,
+      "scaled_background_checked_pixels": 816
+    },
+    {
+      "scaled_background_aligned_pixels": 816,
+      "memory": {
+        "direct_buffer_bytes": 8192,
+        "heap_used_bytes": 12185504,
+        "resident_bytes": 278188032,
+        "private_commit_bytes": 261718016,
+        "uptime_ms": 78630,
+        "heap_max_bytes": 1037959168,
+        "threads": 18,
+        "heap_committed_bytes": 18788352,
+        "non_heap_used_bytes": 46617808
+      },
+      "density": 1.25,
+      "mount_dispose_cycles": 8,
+      "disabled_slider_preserved_value": true,
+      "rejected_switch_drag_restored": true,
+      "cancel_edge_coverage_changed_pixels": 487,
+      "frosted": false,
+      "changed_pixels_inside_glass": 7800,
+      "dark": true,
+      "physical_button_clicks": 1,
+      "resize_and_inflight_cancel": "PASSED",
+      "slider_value": 0.70139873,
+      "scaled_background_checked_pixels": 816
+    },
+    {
+      "scaled_background_aligned_pixels": 816,
+      "memory": {
+        "direct_buffer_bytes": 8192,
+        "heap_used_bytes": 15153360,
+        "resident_bytes": 287002624,
+        "private_commit_bytes": 268627968,
+        "uptime_ms": 84786,
+        "heap_max_bytes": 1037959168,
+        "threads": 18,
+        "heap_committed_bytes": 18788352,
+        "non_heap_used_bytes": 47344864
+      },
+      "density": 1.25,
+      "mount_dispose_cycles": 8,
+      "disabled_slider_preserved_value": true,
+      "rejected_switch_drag_restored": true,
+      "cancel_edge_coverage_changed_pixels": 0,
+      "frosted": true,
+      "changed_pixels_inside_glass": 7799,
+      "dark": true,
+      "physical_button_clicks": 1,
+      "resize_and_inflight_cancel": "not exercised: Material fallback",
+      "slider_value": 0.80508476,
+      "scaled_background_checked_pixels": 816
+    },
+    {
+      "scaled_background_aligned_pixels": 2494,
+      "memory": {
+        "direct_buffer_bytes": 8192,
+        "heap_used_bytes": 15327016,
+        "resident_bytes": 174247936,
+        "private_commit_bytes": 159473664,
+        "uptime_ms": 99126,
+        "heap_max_bytes": 1037959168,
+        "threads": 18,
+        "heap_committed_bytes": 18788352,
+        "non_heap_used_bytes": 48104840
+      },
+      "density": 2,
+      "mount_dispose_cycles": 8,
+      "disabled_slider_preserved_value": true,
+      "rejected_switch_drag_restored": true,
+      "cancel_edge_coverage_changed_pixels": 8,
+      "frosted": false,
+      "changed_pixels_inside_glass": 19844,
+      "dark": false,
+      "physical_button_clicks": 1,
+      "resize_and_inflight_cancel": "PASSED",
+      "slider_value": 0.6985405,
+      "scaled_background_checked_pixels": 2494
+    },
+    {
+      "scaled_background_aligned_pixels": 2494,
+      "memory": {
+        "direct_buffer_bytes": 8192,
+        "heap_used_bytes": 15570496,
+        "resident_bytes": 221913088,
+        "private_commit_bytes": 211632128,
+        "uptime_ms": 105605,
+        "heap_max_bytes": 1037959168,
+        "threads": 18,
+        "heap_committed_bytes": 24813568,
+        "non_heap_used_bytes": 48456680
+      },
+      "density": 2,
+      "mount_dispose_cycles": 8,
+      "disabled_slider_preserved_value": true,
+      "rejected_switch_drag_restored": true,
+      "cancel_edge_coverage_changed_pixels": 0,
+      "frosted": true,
+      "changed_pixels_inside_glass": 19866,
+      "dark": false,
+      "physical_button_clicks": 1,
+      "resize_and_inflight_cancel": "not exercised: Material fallback",
+      "slider_value": 0.80508476,
+      "scaled_background_checked_pixels": 2494
+    },
+    {
+      "scaled_background_aligned_pixels": 2494,
+      "memory": {
+        "direct_buffer_bytes": 8192,
+        "heap_used_bytes": 13843040,
+        "resident_bytes": 178188288,
+        "private_commit_bytes": 165134336,
+        "uptime_ms": 119978,
+        "heap_max_bytes": 1037959168,
+        "threads": 18,
+        "heap_committed_bytes": 24813568,
+        "non_heap_used_bytes": 48822176
+      },
+      "density": 2,
+      "mount_dispose_cycles": 8,
+      "disabled_slider_preserved_value": true,
+      "rejected_switch_drag_restored": true,
+      "cancel_edge_coverage_changed_pixels": 18,
+      "frosted": false,
+      "changed_pixels_inside_glass": 19836,
+      "dark": true,
+      "physical_button_clicks": 1,
+      "resize_and_inflight_cancel": "PASSED",
+      "slider_value": 0.6985694,
+      "scaled_background_checked_pixels": 2494
+    },
+    {
+      "scaled_background_aligned_pixels": 2494,
+      "memory": {
+        "direct_buffer_bytes": 8192,
+        "heap_used_bytes": 14913968,
+        "resident_bytes": 230203392,
+        "private_commit_bytes": 216317952,
+        "uptime_ms": 126381,
+        "heap_max_bytes": 1037959168,
+        "threads": 18,
+        "heap_committed_bytes": 24813568,
+        "non_heap_used_bytes": 49326632
+      },
+      "density": 2,
+      "mount_dispose_cycles": 8,
+      "disabled_slider_preserved_value": true,
+      "rejected_switch_drag_restored": true,
+      "cancel_edge_coverage_changed_pixels": 0,
+      "frosted": true,
+      "changed_pixels_inside_glass": 19862,
+      "dark": true,
+      "physical_button_clicks": 1,
+      "resize_and_inflight_cancel": "not exercised: Material fallback",
+      "slider_value": 0.80508476,
+      "scaled_background_checked_pixels": 2494
+    }
+  ],
+  "status": "PASSED"
+}

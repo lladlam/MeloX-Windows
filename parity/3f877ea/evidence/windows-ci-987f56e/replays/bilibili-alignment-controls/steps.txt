@@ -1,0 +1,9 @@
+remote-reject:tap@remote-reject
+settings-tab:765,745
+find-experimental:reveal@settings-open-experimental
+experimental:tap@settings-open-experimental
+find-alignment:reveal@setting-bilibili_lyric_audio_alignment
+off-before:wait@100
+on:tap@setting-bilibili_lyric_audio_alignment
+off:tap@setting-bilibili_lyric_audio_alignment
+on-persisted:tap@setting-bilibili_lyric_audio_alignment

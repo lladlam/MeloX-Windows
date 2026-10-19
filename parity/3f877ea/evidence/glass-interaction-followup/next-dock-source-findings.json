@@ -1,0 +1,36 @@
+{
+  "pinned_android": "3f877eaffe30c82eb6d24eb3647702f5bc554dd3",
+  "desktop_source": "987f56e9c1c391f4ef70010c98149cd49652c919",
+  "sources": [
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/MeloXApp.kt",
+      "sha256": "78e861d6d4f412da3d8e1111ecb75aa5fdc08b5e8fc6ecfb418be519114ce24f"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/glass/publicdemo/PublicDampedDragAnimation.kt",
+      "sha256": "3654aef83fd157ca144c864ecf8676f786c3dffba4c09877d58bece7e59ef0ab"
+    }
+  ],
+  "status": "OPEN_SOURCE_LEVEL_DIFFERENCES",
+  "findings": [
+    {
+      "id": "dock-search-return-bounce",
+      "pinned": "MeloXApp.kt:1473–1485 selects animateToValueBouncy when returning from Search; helper spring(.6,380) changes position without press/release",
+      "desktop": "MeloXBottomChrome.kt:201–205 always animateToValue; helper currently lacks bouncy method",
+      "scope": "Source-proven wiring mismatch; no pinned visual acceptance"
+    },
+    {
+      "id": "dock-gesture-layer",
+      "pinned": "MeloXApp.kt:1666–1698 attaches highlight.gestureModifier + dampedDock.modifier to L3 droplet; panel has independent logic",
+      "desktop": "MeloXBottomChrome.kt:220–225 attaches both to full panel container",
+      "scope": "Current whole-panel drag replay proves desktop behaviour, not pinned hit-target parity"
+    },
+    {
+      "id": "dock-capture-highlight",
+      "pinned": "MeloXApp.kt:1612–1625 applies dockHighlight.modifier to invisible capture layer as well as its material",
+      "desktop": "MeloXBottomChrome.kt:276–295 records capture material and tabs without that modifier",
+      "scope": "Captured highlight wiring absent; visual consequence needs reference frames"
+    }
+  ],
+  "acceptance": "Not fixed by 987f56e; keep bottom-dock Android dynamic acceptance pending"
+}

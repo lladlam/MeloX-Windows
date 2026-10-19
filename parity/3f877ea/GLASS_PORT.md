@@ -23,6 +23,8 @@
 8. **光斑预乘修复**：真实组件截图发现白色光斑覆盖过亮，按 Backdrop Skiko `setColorUniform` 对 RGB 乘 alpha，防止直接输出未预乘白色导致 Plus 混合饱和；组件检查加入中心过曝回归。
 9. **装饰滤镜所有权**：rim/内阴影/外阴影的 blur 也使用显式 owner；透明边界为 DECAL，采样背景为 CLAMP。仅 alpha/形状变化时复用同一 blur，半径变化替换并释放，移除组件时先清除 layer 引用再释放 native chain。诊断计数仅表示这些 owned final chains，不能代表所有 Skia/GPU 内存。
 10. **专用滑杆与采样坐标**：滑杆恢复 10dp×p / 14dp×p 色散透镜、组合轨道取样及 `(2/3→1, 0→1)` 轨道变换、环境 rim 和 4dp 阴影；frosted/无背景使用真实 Material Slider，支持 enabled，默认连续步长为 0。sample 使用 source-local→control-local 映射抵消按压/祖先缩放，防止背景跟控件一起被重复放大。
+11. **resize 与手势取消**：`987f56e` 修复 remembered drag 捕获旧轨道宽度；禁用进行中的滑杆时从当前状态读取 enabled/外部值，防止旧 detector 收尾提交临时值。只读 drag observer 用 finally 补齐节点移除的取消收尾，滑杆取消与正常完成分别处理。
+12. **专用下拉弹层**：对齐 pinned 34dp 连续圆角、3→16dp blur、10→18dp / 16→26dp 动态 lens、pulse/depth/色散、15dp 阴影及不透明 Material surface；修正上游默认外/内阴影颜色 alpha 为 .10/.15。Sheet/Dialog/Dropdown 依据实际可采样 layer 选择材质。
 
 ## 验证
 
@@ -31,6 +33,8 @@
 - 固定输入的时间差同时包含 Skia 滤镜结果复用，不是“滤镜构造单项提速”测量。可严格确认的是相同参数下 600 帧新链创建数为 0；64 owners×16 参数变化/转为无效果/重复 close 都完成链释放。
 - `MeloXGlassSceneAudit` 用明确标注的生成棋盘背景包裹真实生产组件，物理指针操作覆盖按压、点击、拒绝的开关拖动、背景更新、重复挂载/销毁及密度 1/1.25/2、明暗/frosted；不向生产 app 注入假歌曲或假播放。观察常驻内存只记录数值，不对短跑平台期做断言。
 - 新增专用滑杆 tap/drag/disabled 与非均匀缩放下无光学采样的逐像素对齐检查；每个 scene 销毁后 owned owner/chain 计数必须回到创建前的基线。最终结果以 `glass-scene/audit.json` 为准。
+- `987f56e` 本地续查：同一 composition 240→120dp resize、进行中禁用不得 commit、恢复外部值及 press/scale 弹簧静息断言通过；像素差仅记录为观察值，不把速度相关边缘覆盖差当作 pinned 匹配。另 4 组明暗×真实背板/无背板 Popup 检查验证不透明中心、非有限动画值和全部 owned chain 释放。设置 controls 74/55、独立 reload 8/18、底栏明暗各 7/9。证据 `evidence/glass-interaction-followup/`；Windows run 39222447680 验证另记。
+- Windows **39222447680 / head 987f56e / SUCCESS**：完整下载的两个 artifacts 字节数与元数据一致，外层归档全 CRC 通过；独立 XML 为 **253 tests / 51 suites / 0 failures/errors/skipped**，重新汇总 18 组回放 **731 scenes / 1,278 assertions** 全通过。原 optical/600 稳定帧、12 组组件新增 resize/cancel、4 组 Popup 材质和销毁检查均通过。发行 ZIP **333,092,061 bytes**、SHA-256 `8345e68031fb3a964f0cd37e8c415865a2f5c4af6c287c857bbbe67c28fe8f7f`，357 ZIP 条目及 JAR 全 CRC、版本戳、16 pinned 资源、Windows PE 解码器和新增类/许可独立核验通过。证据 `evidence/windows-ci-987f56e/`。
 - 生产页面仍需鼠标/滚轮/键盘回放与截图检查；Android 同内容截图/帧尚未采集。不能因 shader 测试通过就标记 1:1 完成。
 - 本地最终结果归档 `evidence/glass-optics-local/`：12 组真实组件检查通过；每组 scene 关闭后 owned owner 与未释放链均为 0。设置 74/55、reload 8/18，Bilibili 10/15 + reload 6/6，底栏明暗各 7/9；数字依次为 scenes/assertions。全量 shared XML 为 253 tests / 51 suites、零失败/错误/跳过。Windows 新 CI 和完整发行独立验证另记。
 - Windows run **39140967234 / head 4361c98 / SUCCESS** 完成同款 optical 和 12 组组件检查；600 稳定帧新链为 0、每个 scene 释放后 owned owner/链余额归零。独立下载重新汇总为 **253 tests / 51 suites** 及 **18 组生产回放 / 731 scenes / 1,278 assertions**，全部通过。发行 ZIP **333,065,608 bytes**、SHA-256 `2bdc3803d1a37d83fa2a81f3704cb9c33d9fd0b2e2aa12436e2442d414b63297`，ZIP/JAR CRC、版本/资源和显式 Windows PE 解码器检查通过；新形状/光学类及许可证已确认打包。证据 `evidence/windows-ci-4361c98/`。这些是 Windows CI raster/组件/打包证据，仍不替代 pinned Android 或用户设备 GPU/FPS/常驻内存验收。
@@ -40,6 +44,7 @@
 - 普通/环境高光、阴影及连续形状的代码迁移已落地；Android 同内容像素/动态对照仍未完成，不能把桌面 checkerboard 自检当作 pinned 像素通过。
 - slider/switch/segmented/dropdown/sheet 的全部状态与原生 Popup/Dialog 坐标/组合层级仍需逐一核验。开关继续保留桌面已验证的状态所有权/拒绝回弹逻辑，其运动曲线还需 pinned 动态对照。
 - Windows 原生 GPU 帧时分布、真实 DPI/resize、长时播放与 549→1431MB 报告尚未完成。
+- 续查确认三处底栏源码接线差异尚未迁移：搜索返回缺 `animateToValueBouncy`（仅位置 `.6/380` 弹簧，不触发 press）；拖动观察器挂在整面板而 pinned 挂在 L3 水珠；隐形捕获层缺 pinned 的按压高光修饰符。纯 Git 真源哈希与具体行号见 `evidence/glass-interaction-followup/next-dock-source-findings.json`。当前底栏回放通过只证明现有桌面行为。
 
 ## 组件接线审计
 
@@ -48,9 +53,9 @@
 | Button / IconButton / Toolbar / TextField / Card | 共享真实 glass surface、连续形状、rim、内外阴影；Plain/无背景保留 pinned 分支 | 组件 fixture 包含实际 Button；真实页面回放覆盖导航/输入/按钮，未完成 Android 帧对照 |
 | 底栏面板、隐形捕获层、水珠 | 独立材质、正确的 p 门、页面+捕获层组合采样；捕获层不烘入阴影 | 生产 tab 交互仍需同内容动态对照 |
 | Toggle | 页面+轨道组合采样、环境高光、5/10dp×p 透镜；真实 checked 拒绝回弹 | fixture 覆盖按压、tap、消费移动后的拒绝 drag；桌面状态动画保留现有曲线 |
-| LiquidSlider | 独立轨道录制/变换、10/14dp×p 透镜、环境高光与 enabled/frosted 分支 | 组件 fixture 验证真实 tap/drag/禁用；同内容动态帧仍待验收 |
+| LiquidSlider | 独立轨道录制/变换、10/14dp×p 透镜、环境高光与 enabled/frosted 分支；resize 使用实时宽度，取消不提交 | 组件 fixture 验证真实 tap/drag/禁用/resize/中途取消与按压复位；同内容动态帧仍待验收 |
 | Segmented | 实际共享 Button/surface 和 pinned capsule 形状 | 选中切换/Popup 遮挡与 pinned 动态帧待验收 |
-| Dropdown | 内容组不是玻璃；选择弹层使用真实 shared surface 和原生 Popup | 四 Locale 的路由/选择/偏好检查可验证行为，不能证明跨窗口采样坐标等价 |
+| Dropdown | 内容组不是玻璃；原生 Popup 使用 pinned 专用 34dp 形状及动态 lens/阴影/不透明表面 | 路由/选择/偏好和 4 组实际材质 fixture 可验证行为，不能证明跨窗口采样坐标等价 |
 | Sheet / Dialog | shared surface、pinned 非对称 sheet 形状；Dialog 内容按真源保持不透明 | 原生 Dialog 坐标/背景、dismiss/拖动及 Android 帧对照待验收 |
 
 ## Skiko 计数语义

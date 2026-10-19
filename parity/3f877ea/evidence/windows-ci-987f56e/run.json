@@ -1,0 +1,29 @@
+{
+  "run_id": "39222447680",
+  "url": "https://github.com/lladlam/MeloX-Windows/actions/runs/39222447680",
+  "head_sha": "987f56e9c1c391f4ef70010c98149cd49652c919",
+  "runner": "windows-latest",
+  "status": "completed",
+  "conclusion": "success",
+  "started_at": "2026-10-19T08:23:42Z",
+  "completed_at": "2026-10-19T08:53:02Z",
+  "artifacts": [
+    {
+      "id": 12174065685,
+      "name": "Verification-Windows",
+      "size_in_bytes": 22292202
+    },
+    {
+      "id": 12173676539,
+      "name": "MeloX-Desktop-Windows",
+      "size_in_bytes": 332381966
+    }
+  ],
+  "windows_tests": {
+    "suites": 51,
+    "tests": 253,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  }
+}

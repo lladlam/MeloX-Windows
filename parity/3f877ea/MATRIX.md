@@ -45,12 +45,28 @@ Historical `parity/94e17c9/` evidence is reference material, not new acceptance.
 | Windows official NetEase client Cookie import | User-supplied 3.1.41.205564 research handoff; Windows extension | One-shot read-only profile/cookie copy, CurrentUser DPAPI + AES-GCM; existing SessionStore validation/save and existing API clients; explicit profile selection | COMPLETION_LOG.md steps 22–23; 9 SQLite/crypto/session tests pass locally and on Windows with real DPAPI over synthetic keys; packaged x64 SQLite DLL verified. Real-account import and physical login UI pending | PARTIAL |
 | Foreground clipboard invitations and desktop immersive placement | Pinned onResume / Together invite / immersive consumer | Real clipboard intake, prioritized invitation confirmation with existing join API; native fullscreen owner and maximized restoration correction | COMPLETION_LOG.md steps 24–28; Windows run 39099205289 native placement audit and independent full delivery verification pass. Physical clipboard/player/account input pending | PARTIAL |
 | Bilibili matched lyrics and verified physical audio association | Pinned MeloXProviderLyricsLoader | Dedicated AMLL/QQ + conditional NetEase verification; three-source duration consensus; real association write with cancellation/settings/removal guards | COMPLETION_LOG.md steps 27/32; 8 new regressions, 253 total Windows/local tests; physical settings 10+6 scenes / 21 assertions pass on Windows. Live catalog/audio and pinned frames pending | PARTIAL |
-| Real glass optics, continuous geometry and stable-frame resource reuse | Pinned glass + Backdrop 2.0.0 / Capsule 2.1.3 / Shapes 1.2.0 | SkSL lens/dispersion/vibrancy, sampled capture/drop layers, dedicated switch/slider materials, inverse sampling transforms, normal rim and shadow layers; bounded replaceable native chains | GLASS_PORT.md; 12 component scenarios, 600-frame cache/ownership audit and settings/dock physical replay pass locally and Windows run 39140967234; new geometry/optics classes verified inside full downloaded delivery. No whole-process Windows memory or pinned-pixel acceptance | PARTIAL |
+| Real glass optics, continuous geometry and stable-frame resource reuse | Pinned glass + Backdrop 2.0.0 / Capsule 2.1.3 / Shapes 1.2.0 | SkSL lens/dispersion/vibrancy, sampled capture/drop layers, dedicated switch/slider/popup materials, inverse sampling transforms, normal rim and shadow layers; bounded replaceable native chains; slider resize/cancel cleanup | GLASS_PORT.md; Windows run 39222447680: 12 component scenarios including resize/cancel, 4 popup materials, 600-frame ownership audit and settings/dock physical replay pass; classes/resources checked in complete downloaded delivery. Dock source gaps, user-device memory and pinned pixels remain pending | PARTIAL |
 | Persisted Local Library aggregation | Pinned LocalProvider.aggregationTracks | Missing LocalAggregationCapability restored through real indexed search and page identity | COMPLETION_LOG.md step 30; new registry/persistence/pagination regression, 253 total local tests; Local Library dock replay both themes passes | IMPLEMENTED; PINNED FRAMES PENDING |
 
 ## Evidence levels
 
 Latest independently verified Windows distribution:
+**987f56e9c1c391f4ef70010c98149cd49652c919**, run **39222447680 / SUCCESS**.
+**253 tests / 51 suites / zero failures, errors or skipped**, re-aggregated
+from the complete downloaded Windows verification artifact. **18 production
+replays / 731 scenes / 1,278 assertions**, 12 glass component scenarios including
+slider resize/in-flight cancellation, 4 popup material scenarios, 600-frame stable
+filter reuse/ownership and native immersive checks pass.
+ZIP **333,092,061 bytes**, SHA-256
+`8345e68031fb3a964f0cd37e8c415865a2f5c4af6c287c857bbbe67c28fe8f7f`.
+Both complete outer artifact archives match API byte sizes and pass all CRCs.
+All 357 delivery ZIP entry CRCs, application JAR CRCs, exact revision, 16 pinned
+resources, explicit Windows ffmpeg.exe SHA/PE and updated glass classes/licenses
+pass. Evidence: `evidence/windows-ci-987f56e/`. Search-return dock motion and gesture
+layer source gaps remain open; native popup coordinates, physical user-device
+audio/accounts/GPU, 549→1431MB memory and pinned Android pixels remain pending.
+
+Previously latest independently verified Windows distribution:
 **4361c9866be659ddc9145979c2b55688d1e068a4**, run **39140967234 / SUCCESS**.
 **253 tests / 51 suites / zero failures, errors or skipped**, independently
 aggregated from the complete downloaded Windows verification artifact.

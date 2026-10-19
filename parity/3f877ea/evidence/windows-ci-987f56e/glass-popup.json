@@ -1,0 +1,26 @@
+{
+  "cases": [
+    {
+      "nonfinite_animation_values": "PASSED",
+      "opaque_center": true,
+      "case": "light-fallback"
+    },
+    {
+      "nonfinite_animation_values": "PASSED",
+      "opaque_center": true,
+      "case": "light-sampled"
+    },
+    {
+      "nonfinite_animation_values": "PASSED",
+      "opaque_center": true,
+      "case": "dark-fallback"
+    },
+    {
+      "nonfinite_animation_values": "PASSED",
+      "opaque_center": true,
+      "case": "dark-sampled"
+    }
+  ],
+  "scope": "production popup material; native cross-window placement and pinned Android pixels pending",
+  "status": "PASSED"
+}

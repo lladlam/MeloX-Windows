@@ -325,3 +325,20 @@
 - 发行 ZIP **333,065,608 bytes**，SHA-256 **`2bdc3803d1a37d83fa2a81f3704cb9c33d9fd0b2e2aa12436e2442d414b63297`**。独立检查 **357 ZIP entries CRC + 内嵌 JAR 全条目 CRC**、精确 head 版本戳、16 个 pinned 资源均 PASS；另确认 glass owner/decoration/geometry/slider、Capsule/Continuous 形状、Bilibili/Local 类及 Apache/NOTICE 均实际打包。
 - 修正独立核验脚本的跨主机选择：显式传 `--native-resource ffmpeg.exe`，不让 Linux 核验主机默认选择包内 ELF。新发行的 Windows FFmpeg **164,352,000 bytes**、SHA-256 **`af7913b7ddc324bf02b8af72fe8612b1471455ef8d9e04e45466510742abcff9`**、PE AMD64 均通过。脚本未在 Linux 执行 Windows EXE，实际 native decode 由 Windows CI 完成；不由此宣称物理听感通过。
 - 证据：`evidence/windows-ci-4361c98/`，包含 run/artifact 元数据、完整 XML 汇总、下载核验、打包类/许可证、Windows optical/组件/沉浸原始 JSON、生产回放汇总和关键原始输入/截图。最新已独立核验发行更新为 `4361c98`。Android 仍离线缺 pinned 同内容帧；原生用户设备长时 GPU/内存、549→1431MB、听感/账号/设备切换仍未验收。
+
+### 33. 玻璃交互续查：resize、取消收尾与专用 Popup（987f56e）
+
+- 继续从纯 pinned 树导出 NativeGlass/Sheet/Dropdown/Slider/Backdrop/Tokens，哈希记于 `evidence/glass-interaction-followup/pinned-intake.json`。新增保留同一 composition 的滑杆缩宽物理拖动检查，旧实现真实失败于 `Resized slider used its old track width: 0.4996342`；拒绝日志保留，不将旧通过结果套用到新增场景。
+- 滑杆 animation 的 remembered onDrag 捕获初次 trackWidth；改用最新宽度，轨道点按 detector 的 key 同时包含宽度/range。拖动节点移除时原观察器未进入 cancel 收尾；补 try/finally，使每个已开始 press 在取消时也释放。PublicDamped 可分别处理完成和取消，滑杆取消恢复外部真实值、不提交；禁用状态明确提供 disabled semantics。
+- 续查 Popup 原实现仍用通用按钮材质：28dp 圆角、固定 lens 和 72% 表面，与 pinned 的 34dp 连续圆角、动态 10→18/16→26dp lens、pulse、固定 15dp 阴影及不透明表面不同。按真源接专用链，清洗非有限动画值。
+- Sheet/Dialog/Dropdown 原用 legacy Boolean 当实际可采样背板，存在页面禁用自采样后仍选择透明材质的可能；改以实际 acyclic layer 判定。核对 Backdrop 2.0.0 官方默认值并修正外阴影颜色 alpha 为 .10、内阴影为 .15。
+- 本地最终 `:desktop:auditGlassOptics` 成功：原 optical/600 帧链复用/所有权压力、12 组实际组件和 4 组 Popup 材质均通过；新增取消检查断言外部值恢复、未提交、press<=.001 与 scale 距 1<=.001，像素差单独保留为观察。生产设置 controls **74 scenes / 55 assertions**，独立 reload **8/18**，底栏明暗各 **7/9**。拒绝日志、原始最终 JSON/回放及滑杆 resize/cancel/Popup 截图保留于 `evidence/glass-interaction-followup/`。
+- Windows 新 run **39222447680 / head 987f56e / SUCCESS**。Android `adb devices` 仍为空，连接原地址报 `No route to host`；原生 Popup/Dialog 跨窗口坐标及 pinned Android 同内容动态验收仍须实机证据。
+- 后续纯真源续查发现底栏 Search 返回缺 `.6/380` bouncy 分支（不得触发 press）、手势仍挂整个面板而非 L3 水珠、捕获层缺 pinned 高光修饰符。源码哈希/行号及未实现范围记录于 `next-dock-source-findings.json`；不把已通过的底栏桌面回放视作这三处迁移完成。
+
+### 34. Windows 987f56e 完整发行下载与独立核验
+
+- Run **39222447680** 成功；head **987f56e9c1c391f4ef70010c98149cd49652c919**。完整下载 `Verification-Windows`（22,292,202 bytes）和 `MeloX-Desktop-Windows`（332,381,966 bytes），与 API 元数据精确一致，外层 artifact 归档全 CRC 通过。初次下载超时后对未完成文件断点续传，仅在完成全 CRC 后提取和核验。
+- 独立读取下载的 XML：**253 tests / 51 suites / 0 failures/errors/skipped**；重新读取所有 capture：**18 组 / 731 scenes / 1,278 assertions，全通过**。Windows optical/600 稳定帧无新链、12 组生产组件含 resize/中途取消、4 组 Popup 材质、owned owner/chain 全释放及原生沉浸 audit 均通过；`physical_player_input` 仍为 PENDING。
+- 最新独立核验发行 ZIP **333,092,061 bytes**，SHA-256 **`8345e68031fb3a964f0cd37e8c415865a2f5c4af6c287c857bbbe67c28fe8f7f`**。357 ZIP 条目及应用 JAR 全 CRC、精确版本戳、16 项 pinned 资源、Windows FFmpeg 的 164,352,000 bytes / SHA-256 `af7913b7ddc324bf02b8af72fe8612b1471455ef8d9e04e45466510742abcff9` / PE 签名，以及更新的 Slider/Dropdown/gesture 类与形状/许可证均通过。
+- 证据 `evidence/windows-ci-987f56e/`；完整下载 `build/downloads/windows-ci-987f56e/`。发行验收仍明确指向实现 head `987f56e`；证据/文档提交不冒充该 run 打包源码。Android 同内容像素/动态、原生 Popup/Dialog 跨窗口坐标、用户 Windows GPU/长时内存及真实账号/音频仍待补。

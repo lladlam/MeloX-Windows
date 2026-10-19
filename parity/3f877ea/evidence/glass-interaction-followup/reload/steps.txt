@@ -1,0 +1,7 @@
+reveal-0:reveal@settings-open-appearance
+open-appearance:tap@settings-open-appearance
+persisted-background:wait@200
+reveal-3:reveal@setting-immersive_playback
+persisted-immersive:wait@200
+reveal-5:reveal@setting-library_playlist_show_artwork
+persisted-library:wait@200

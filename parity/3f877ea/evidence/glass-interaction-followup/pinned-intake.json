@@ -1,0 +1,16 @@
+{
+  "pinned_android": "3f877eaffe30c82eb6d24eb3647702f5bc554dd3",
+  "exports": {
+    "MeloXBackdropComponents.kt": "9b6c1a0a53e7ba08970f40336ebcca8c8c44d46aea3ae6ff433ac956048d9929",
+    "MeloXGlassSheet.kt": "b8d7b14947bd985460945f4c2245ccdefab5999571a1c0ec58cd189b70a3e10a",
+    "MeloXGlassTokens.kt": "b83dca8d8573f8542a6bf3458b7074965326ada2b5a5823502a9ba5a30e61899",
+    "MeloXLiquidSlider.kt": "045101bdf0216cd694060e9a5b4af0846544686bfd0d0fe681f849c8b9a74b17",
+    "MeloXNativeGlassComponents.kt": "a62fda5bc3be2cbbd3f8359d84f6158bb916a029cbf2b686f23bec5a4f7eeb3a",
+    "MeloXSettingsDropdown.kt": "dc6d489117ed7a1ff1caa5512bf1a1357211258c5771079c45c8b6efec2728b1"
+  },
+  "windows_baseline": "2506ff6",
+  "baseline_failure": "Resized slider used its old track width: 0.4996342",
+  "test_scope": "Existing composition resized from 240dp to 120dp; physical pointer drag; no semantic actions",
+  "pinned_popup": "34dp continuous corner; blur 3\u219216dp, lens height 10\u219218dp +2dp*pulse; amount16\u219226dp +4dp*pulse; opaque Material surface",
+  "shader_shadow_defaults": "Backdrop 2.0.0 Shadow color alpha .10, InnerShadow .15"
+}

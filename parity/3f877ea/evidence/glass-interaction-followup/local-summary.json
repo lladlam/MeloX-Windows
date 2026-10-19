@@ -1,0 +1,37 @@
+{
+  "implementation_commit": "987f56e9c1c391f4ef70010c98149cd49652c919",
+  "replays": [
+    {
+      "replay": "controls",
+      "scenes": 74,
+      "assertions": 55,
+      "status": "PASSED"
+    },
+    {
+      "replay": "reload",
+      "scenes": 8,
+      "assertions": 18,
+      "status": "PASSED"
+    },
+    {
+      "replay": "dock-Dark",
+      "scenes": 7,
+      "assertions": 9,
+      "status": "PASSED"
+    },
+    {
+      "replay": "dock-Light",
+      "scenes": 7,
+      "assertions": 9,
+      "status": "PASSED"
+    }
+  ],
+  "component_scenarios": 12,
+  "popup_material_cases": 4,
+  "optical_assertion": "cancelled slider has external true value, no commit, press progress<=.001 and scale within .001 of 1",
+  "pixel_difference_scope": "observational only: no pinned Android reference, velocity-dependent edge coverage is not a strict equality assertion",
+  "android_device": "adb devices empty; connect 192.168.1.144:5555: No route to host",
+  "windows_run": 39222447680,
+  "windows_status": "SUCCESS; independently downloaded and verified",
+  "windows_evidence": "../windows-ci-987f56e"
+}
