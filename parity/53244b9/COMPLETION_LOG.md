@@ -42,7 +42,7 @@
 
 ## 5. 短分屏设置逐项滚入后断言（3a79b5c）
 
-- Windows **39272967752 / head 7fca71b** 的原始Verification-Windows已完整下载并重计：**270 tests / 55 suites / 0 failures/errors/skipped**、三档流光审计PASSED，已完整通过 **11组 / 312 scenes / 295 assertions**，包括Dock两主题、歌词语言、三个分屏回放与en-US/zh-CN设置路由。zh-TW 800×600设置路由未完成，不计入通过数；后续步骤跳过，**未生成发行ZIP**。原始输入、完整/失败capture及失败截图在 `evidence/windows-ci-7fca71b/`。
+- Windows **39272967752 / head 7fca71b** 的原始Verification-Windows已完整下载并重计：**270 tests / 55 suites / 0 failures/errors/skipped**、三档流光审计PASSED，已完整通过 **11组 / 312 scenes / 295 assertions**，包括Dock两主题、歌词语言、三个分屏回放与en-US/zh-CN设置路由。zh-TW 800×600设置路由未完成，不计入通过数；后续步骤跳过，**未生成发行ZIP**。原始输入、完整/失败capture及失败语义快照在 `evidence/windows-ci-7fca71b/`；该CI上传清单未包含回放PNG。
 - 一般页新增分屏设置后，短pane中的触感反馈行在视口之外，旧回放在同一帧断言三行可用性。修复保留全部启用/禁用检查，改为逐项真实滚轮滚入可视区后检查，不修改生产偏好或语义动作。
 - JDK17顺序回归四种Locale（en-US/zh-CN/zh-TW/ja-JP），各 **88 scenes / 65 assertions**；controls **74/55**、独立reload **8/18**，合计 **6组 / 434 scenes / 333 assertions** 全通过。原始参数、capture、日志及一般页检查截图见 `evidence/settings-visible-local/`。
 - 修复 **`3a79b5c`** 已正常推main，新的Windows全流程及发行独立核验仍待完成；整体0.6.5迁移保持PARTIAL。
