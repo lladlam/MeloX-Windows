@@ -1,0 +1,8 @@
+remote-reject=cloud-enabled:false,lyric-language:system,lyric-preference:en:Original
+open-lyrics=tag:settings-lyrics
+choose-0=lyric-language:zh-Hans,pref-string:lyric_language:zh-Hans,lyric-preference:zh:Simplified
+choose-1=lyric-language:zh-Hant,pref-string:lyric_language:zh-Hant,lyric-preference:zh:Traditional
+choose-2=lyric-language:en,pref-string:lyric_language:en,lyric-preference:en:Original
+choose-3=lyric-language:tr,pref-string:lyric_language:tr,lyric-preference:tr:Original
+choose-4=lyric-language:system,pref-string:lyric_language:system,lyric-preference:en:Original
+choose-5=lyric-language:tr,pref-string:lyric_language:tr,lyric-preference:tr:Original

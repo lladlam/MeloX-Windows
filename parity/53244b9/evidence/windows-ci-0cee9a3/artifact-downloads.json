@@ -1,0 +1,18 @@
+[
+  {
+    "id": 12182360324,
+    "name": "Verification-Windows",
+    "reported_bytes": 24063118,
+    "downloaded_bytes": 24063118,
+    "sha256": "74f77741ba153498f1822932db9589cd8ecdc7478ae657d71f6d966b14b40c44",
+    "all_entry_crc": "PASSED"
+  },
+  {
+    "id": 12182255475,
+    "name": "MeloX-Desktop-Windows",
+    "reported_bytes": 332388221,
+    "downloaded_bytes": 332388221,
+    "sha256": "40d46b15bad799545e5d3c63f631c835edd62771abbc24d515a7a03c36e522a8",
+    "all_entry_crc": "PASSED"
+  }
+]

@@ -1,0 +1,7 @@
+remote-reject=cloud-enabled:false
+settings-tab=tag:settings-root
+experimental=tag:settings-experimental
+off-before=enabled:setting-bilibili_lyric_audio_alignment,unchecked:setting-bilibili_lyric_audio_alignment,runtime:bilibiliLyricAudioAlignmentEnabled:false
+on=checked:setting-bilibili_lyric_audio_alignment,pref-bool:bilibili_lyric_audio_alignment:true,runtime:bilibiliLyricAudioAlignmentEnabled:true
+off=unchecked:setting-bilibili_lyric_audio_alignment,pref-bool:bilibili_lyric_audio_alignment:false,runtime:bilibiliLyricAudioAlignmentEnabled:false
+on-persisted=checked:setting-bilibili_lyric_audio_alignment,pref-bool:bilibili_lyric_audio_alignment:true,runtime:bilibiliLyricAudioAlignmentEnabled:true

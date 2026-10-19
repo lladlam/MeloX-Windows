@@ -1,0 +1,502 @@
+{
+  "implementation_commit": "13d275cc4bfa600fe3c7f7b6a963fc2a1c6b21bc",
+  "android_commit": "53244b9d6b21d7e3a609e8cb11876efef70f218b",
+  "platform": "Linux JVM17",
+  "command": ":shared:desktopTest :desktop:compileKotlinDesktop --no-daemon --console=plain",
+  "totals": {
+    "suites": 54,
+    "tests": 265,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "status": "PASSED",
+  "suites": [
+    {
+      "file": "TEST-melox.account.NeteaseAccountLifecycleTest.xml",
+      "name": "NeteaseAccountLifecycleTest[desktop]",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "sha256": "45150bbc4888a1ee75b05d7e77825d911f8c0dcd183970da1477eac31eed1c33"
+    },
+    {
+      "file": "TEST-melox.account.NeteaseOfficialCookieReaderTest.xml",
+      "name": "NeteaseOfficialCookieReaderTest[desktop]",
+      "tests": 9,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "sha256": "729abf152d04631f09cb31b6529bb5ae38b2d2775c7cbf44c10a0fab3f97f430"
+    },
+    {
+      "file": "TEST-melox.cache.ResourceLruCacheTest.xml",
+      "name": "ResourceLruCacheTest[desktop]",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "sha256": "fc07223cf192fed6b412b8a7665ba6794eaae9721381d1b8fceadc5533e80385"
+    },
+    {
+      "file": "TEST-melox.cache.WeightedLruCacheTest.xml",
+      "name": "WeightedLruCacheTest[desktop]",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "sha256": "07c5d4d03873c5ed4b335e8503ea644b1527cc49f536383d5ce74029ae605d28"
+    },
+    {
+      "file": "TEST-melox.diagnostics.DesktopProcessLogsTest.xml",
+      "name": "DesktopProcessLogsTest[desktop]",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "sha256": "5d64dd84541fe8b02bc50dffce18de0b1fe2cb397165a6be1c7a8b3f150a76e8"
+    },
+    {
+      "file": "TEST-melox.diagnostics.MemoryDiagnosticsTest.xml",
+      "name": "MemoryDiagnosticsTest[desktop]",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "sha256": "0956bad4d6ead5617690dd4f62a1621a01d5b31c85def622c9e94441e66842d1"
+    },
+    {
+      "file": "TEST-melox.legal.OnboardingPersistenceTest.xml",
+      "name": "OnboardingPersistenceTest[desktop]",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "sha256": "ccdc1bd7b3559c5f9f550a1d7a4d24ec2a65a7b1c676e0c35039cc23a07edde3"
+    },
+    {
+      "file": "TEST-melox.lyrics.BilibiliMatchedLyricsTest.xml",
+      "name": "BilibiliMatchedLyricsTest[desktop]",
+      "tests": 8,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "sha256": "9f2d6b67ec86087d4f471f7d529a24a8f5b45c88aa7c059efc1ae928eb7ece6a"
+    },
+    {
+      "file": "TEST-melox.lyrics.LyricAnnotationAlignmentTest.xml",
+      "name": "LyricAnnotationAlignmentTest[desktop]",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "sha256": "4325cac27d394abe8015ec35f56483b15c625175e627f67a46003fba597511dc"
+    },
+    {
+      "file": "TEST-melox.lyrics.LyricLanguageLoadingTest.xml",
+      "name": "LyricLanguageLoadingTest[desktop]",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "sha256": "d663159e444f5d9ca7480e6a7e7c97fa15974c82251b6283d39ecd29e497cd4f"
+    },
+    {
+      "file": "TEST-melox.lyrics.LyricLanguageTest.xml",
+      "name": "LyricLanguageTest[desktop]",
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "sha256": "2563be9457598972db7ea8ef18324b748dc21c0190969824240fb5a3bd331275"
+    },
+    {
+      "file": "TEST-melox.lyrics.LyricPresentationTest.xml",
+      "name": "LyricPresentationTest[desktop]",
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "sha256": "226f2988417ca283bb64a59c92c6da6c85dae8dc96e48fec35e1f2c58a12e530"
+    },
+    {
+      "file": "TEST-melox.lyrics.LyricsLoadTest.xml",
+      "name": "LyricsLoadTest[desktop]",
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "sha256": "07e87026d49a081c0cdfc940e7179b5cab74298b9951298f40fe333034f6e417"
+    },
+    {
+      "file": "TEST-melox.lyrics.ProviderFirstLyricsTest.xml",
+      "name": "ProviderFirstLyricsTest[desktop]",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "sha256": "647590038b9591c186b95260450d712a210946c69a4ebe18cee0337de83954be"
+    },
+    {
+      "file": "TEST-melox.lyrics.TtmlLyricsParserTest.xml",
+      "name": "TtmlLyricsParserTest[desktop]",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "sha256": "a73c77088d170eb520ee77e8e2970ab6fcf9ac7d2f3841ede9801d979c42af7a"
+    },
+    {
+      "file": "TEST-melox.music.UnifiedSearchLifecycleTest.xml",
+      "name": "UnifiedSearchLifecycleTest[desktop]",
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "sha256": "fadd3160dee6694ca47ebd31c6a782c3caf2bbf427684e837a4b9e2ec91a0dd3"
+    },
+    {
+      "file": "TEST-melox.network.CloudUploadProtocolTest.xml",
+      "name": "CloudUploadProtocolTest[desktop]",
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "sha256": "dcd501d628cf10856c587a5084db255be53a0bb2c2d95c3c0265f35c253df35e"
+    },
+    {
+      "file": "TEST-melox.network.DesktopSearchProtocolTest.xml",
+      "name": "DesktopSearchProtocolTest[desktop]",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "sha256": "c403dab3337f9443c8e668cbb7e2fe6cb6390d11a53d9faa2f18c932f35f6ef8"
+    },
+    {
+      "file": "TEST-melox.network.NeteaseClipboardIntakeTest.xml",
+      "name": "NeteaseClipboardIntakeTest[desktop]",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "sha256": "1ff3e4bf65033df91ffe5b1158c37cdc77d095dbe5b2baf1167d02cec45a4faf"
+    },
+    {
+      "file": "TEST-melox.network.NeteaseResponseJsonTest.xml",
+      "name": "NeteaseResponseJsonTest[desktop]",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "sha256": "96411fd4e37b304c85a6eb6c1d8c79f96e565eb4d70f7ba7c9b0f7a31e9f5b34"
+    },
+    {
+      "file": "TEST-melox.platform.JellyfinSessionPersistenceTest.xml",
+      "name": "JellyfinSessionPersistenceTest[desktop]",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "sha256": "e1ceb924d0de8172335997d6927dd494aac0b5102b84a81746727198c90396a2"
+    },
+    {
+      "file": "TEST-melox.platform.SecurePreferenceFileTest.xml",
+      "name": "SecurePreferenceFileTest[desktop]",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "sha256": "d44321695624fd7d64e7213f5d81be1104ddef815d0776dc1cadbcfd69df46ec"
+    },
+    {
+      "file": "TEST-melox.playback.DesktopAutoMixIntegrationTest.xml",
+      "name": "DesktopAutoMixIntegrationTest[desktop]",
+      "tests": 9,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "sha256": "8d5199206eac3c58e34933e451f78315cb2065c95bc135d6cf2734ed9558bd15"
+    },
+    {
+      "file": "TEST-melox.playback.DesktopAutoplayTest.xml",
+      "name": "DesktopAutoplayTest[desktop]",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "sha256": "75deebac634a198715d89bc0c2fd740b4c4085d49899340027f23b128e5384bd"
+    },
+    {
+      "file": "TEST-melox.playback.DesktopEqualizerDspTest.xml",
+      "name": "DesktopEqualizerDspTest[desktop]",
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "sha256": "a7a27c2943411a96ce2f7205889910cf10b3e6c91ad6843460eb419f1cde6ca7"
+    },
+    {
+      "file": "TEST-melox.playback.DesktopLocalLyricsPersistenceTest.xml",
+      "name": "DesktopLocalLyricsPersistenceTest[desktop]",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "sha256": "25df440c784af4abd23fd95ec1cc537a58262b674c01a9a49f2d82a0cdc141e5"
+    },
+    {
+      "file": "TEST-melox.playback.DesktopPcmAnalysisTest.xml",
+      "name": "DesktopPcmAnalysisTest[desktop]",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "sha256": "d4edcd26f244a068f6ae883d96dda6e836f7fae16f18042af7d769f823a5dc7f"
+    },
+    {
+      "file": "TEST-melox.playback.DesktopPlaybackStateTest.xml",
+      "name": "DesktopPlaybackStateTest[desktop]",
+      "tests": 25,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "sha256": "873cc45ce9ee0b590c102205b046a38bb8ff78bf9c3b3bd7ad686b5623cc4f38"
+    },
+    {
+      "file": "TEST-melox.playback.DesktopSongOperationIdentityTest.xml",
+      "name": "DesktopSongOperationIdentityTest[desktop]",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "sha256": "6ead40c29f44fb5c6ef5caf2f33864d25fe05bdf307cb435cc6bfb09b52f3e5b"
+    },
+    {
+      "file": "TEST-melox.playback.LastPlaybackStoreTest.xml",
+      "name": "LastPlaybackStoreTest[desktop]",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "sha256": "86709657eaec8f6c85b8cbc5376de12306b164966c11a44c112f6b3414b7a1a8"
+    },
+    {
+      "file": "TEST-melox.playback.ListenTogetherRuntimeTest.xml",
+      "name": "ListenTogetherRuntimeTest[desktop]",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "sha256": "7da20d39e65eb993d1adcfdf11ce89d265ef1ab5cbd831f156de051f12674f0f"
+    },
+    {
+      "file": "TEST-melox.playback.LocalProviderPlaybackTest.xml",
+      "name": "LocalProviderPlaybackTest[desktop]",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "sha256": "99a4842b4c6594a68cdbe96b40be524a99df372f4324d4cb402a0a4298f9cd4b"
+    },
+    {
+      "file": "TEST-melox.playback.NeteasePlaybackRequestTest.xml",
+      "name": "NeteasePlaybackRequestTest[desktop]",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "sha256": "464ba08525e7518bcd2283fa88dfa661b6f79856c0194ba566a2590e0595aab8"
+    },
+    {
+      "file": "TEST-melox.playback.PlaybackSleepTimerTest.xml",
+      "name": "PlaybackSleepTimerTest[desktop]",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "sha256": "8c8642683db811fb5bfdc87385076c1277df1943546bce53014eab377f400711"
+    },
+    {
+      "file": "TEST-melox.playback.SmartQueueBudgetTest.xml",
+      "name": "SmartQueueBudgetTest[desktop]",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "sha256": "837e993da94e91bd9eed7f50e682a900d8239058f5aee7ff4c362ae99d405417"
+    },
+    {
+      "file": "TEST-melox.player.DecoderExtractionCacheTest.xml",
+      "name": "DecoderExtractionCacheTest[desktop]",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "sha256": "5fc345f36efdeac78efdbc844eff8c316640d60d5aadb1d2de2a101f4179a217"
+    },
+    {
+      "file": "TEST-melox.player.DesktopAudioSessionTest.xml",
+      "name": "DesktopAudioSessionTest[desktop]",
+      "tests": 14,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "sha256": "b8ef4e77e8da0138de005f6f1a732137b40221e9a3b4130c6b06cf191c738749"
+    },
+    {
+      "file": "TEST-melox.player.DesktopDualPcmTest.xml",
+      "name": "DesktopDualPcmTest[desktop]",
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "sha256": "5d3c577f36e55d670bd359f9c9177444d0f5d0719403febab694855a2ccd3615"
+    },
+    {
+      "file": "TEST-melox.player.DesktopPcmOutputTest.xml",
+      "name": "DesktopPcmOutputTest[desktop]",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "sha256": "2550e47a10a77391a3f9f5f868aa36fb7a7dc5ff24503ae0c746c6885e6b73a9"
+    },
+    {
+      "file": "TEST-melox.player.DesktopStreamingAudioSessionTest.xml",
+      "name": "DesktopStreamingAudioSessionTest[desktop]",
+      "tests": 14,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "sha256": "3f23dfb002bd8d1e5c423afe00cc450384ffe2c9eab2751348e7a18086e26917"
+    },
+    {
+      "file": "TEST-melox.player.PlaybackLinkTest.xml",
+      "name": "PlaybackLinkTest[desktop]",
+      "tests": 9,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "sha256": "bd86b58197ab10d1eca64c5d3730799f653d2665115b4e7a279a20a047ea8a5f"
+    },
+    {
+      "file": "TEST-melox.provider.applemusic.AppleMusicProtocolTest.xml",
+      "name": "AppleMusicProtocolTest[desktop]",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "sha256": "27aa6ff9dd71637cd8fc49fc68bac1acfe1b06756cb4b58a98fc2a4aacd90146"
+    },
+    {
+      "file": "TEST-melox.provider.bilibili.BilibiliProviderProtocolTest.xml",
+      "name": "BilibiliProviderProtocolTest[desktop]",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "sha256": "b9c72ae48f3f59f7ce6d9de23845cdff3452c283024e1511ba969d3faf1e4947"
+    },
+    {
+      "file": "TEST-melox.provider.jellyfin.JellyfinProtocolTest.xml",
+      "name": "JellyfinProtocolTest[desktop]",
+      "tests": 11,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "sha256": "243ea9bfb74baac89dad84e4d1ea2fb70ed9e28a76c5e113618b8ad7ec29c26f"
+    },
+    {
+      "file": "TEST-melox.provider.kuwo.KuwoProviderProtocolTest.xml",
+      "name": "KuwoProviderProtocolTest[desktop]",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "sha256": "61e5522f2cd75407b2d161a5483ce0e2d8312fb96bc6016484d5c74d62913f79"
+    },
+    {
+      "file": "TEST-melox.provider.local.LocalSongActionsTest.xml",
+      "name": "LocalSongActionsTest[desktop]",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "sha256": "fee17772a167e5f23e283db52784d842c0f1a6f970967f0782634dd9d80ea0a7"
+    },
+    {
+      "file": "TEST-melox.provider.lxuser.ChkszProtocolTest.xml",
+      "name": "ChkszProtocolTest[desktop]",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "sha256": "e242f57d6845cf7301d3863c4c3b33921de56f5d7384fda0b54eb0f8a733ae0f"
+    },
+    {
+      "file": "TEST-melox.provider.spotify.SpotifyDesktopLoginTest.xml",
+      "name": "SpotifyDesktopLoginTest[desktop]",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "sha256": "47fd4cefd035c59474f99e7d96d5bbeaac7666ea0251303e110893439f7e0688"
+    },
+    {
+      "file": "TEST-melox.recognition.PinnedAudioFingerprintTest.xml",
+      "name": "PinnedAudioFingerprintTest[desktop]",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "sha256": "f08ada19d30e68fd783f2041b1f0caa7407c5a9c92bb2522f1690b6f8b2b386e"
+    },
+    {
+      "file": "TEST-melox.recommendation.PersonalizationEraseBoundaryTest.xml",
+      "name": "PersonalizationEraseBoundaryTest[desktop]",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "sha256": "c5b31cc5a2a0f2f8e094a04335ea4e78fbee7ddadb7206ee26594d7a50215e5e"
+    },
+    {
+      "file": "TEST-melox.remoteconfig.RemoteConfigProtocolTest.xml",
+      "name": "RemoteConfigProtocolTest[desktop]",
+      "tests": 10,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "sha256": "46c9ec93972ca8507ce5627b3cfbce40794949f758ba3d3093f06f0808849ab3"
+    },
+    {
+      "file": "TEST-melox.settings.ContentLayoutRestorationTest.xml",
+      "name": "ContentLayoutRestorationTest[desktop]",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "sha256": "dfdafce05912227f2ace396fa0b1244d5c6d1c1fe457c9c6e8c1af70a96756f5"
+    },
+    {
+      "file": "TEST-melox.settings.PlayerAppearanceTest.xml",
+      "name": "PlayerAppearanceTest[desktop]",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "sha256": "5fc30891617ce9c9eb33dc2a54b9af6bb3d037b686544caf6bbdb83021bbedca"
+    },
+    {
+      "file": "TEST-melox.settings.ScreenAwakePolicyTest.xml",
+      "name": "ScreenAwakePolicyTest[desktop]",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "sha256": "bbd25482f0549f4d81b53d3289c78a199a67c67d3cabc56b1942c756cb70c43a"
+    }
+  ]
+}

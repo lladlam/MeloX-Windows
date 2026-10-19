@@ -1,0 +1,119 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.5.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :desktop:kmpPartiallyResolvedDependenciesChecker
+> Task :desktop:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :desktop:extractPinnedGlassGeometry UP-TO-DATE
+> Task :desktop:convertXmlValueResourcesForCommonMain NO-SOURCE
+> Task :desktop:copyNonXmlValueResourcesForCommonMain NO-SOURCE
+> Task :desktop:prepareComposeResourcesTaskForCommonMain NO-SOURCE
+> Task :desktop:generateResourceAccessorsForCommonMain SKIPPED
+> Task :desktop:convertXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :desktop:copyNonXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :desktop:prepareComposeResourcesTaskForDesktopMain NO-SOURCE
+> Task :desktop:generateResourceAccessorsForDesktopMain SKIPPED
+> Task :desktop:generateActualResourceCollectorsForDesktopMain SKIPPED
+> Task :desktop:generateComposeResClass SKIPPED
+> Task :desktop:generateExpectResourceCollectorsForCommonMain SKIPPED
+> Task :innertube:kmpPartiallyResolvedDependenciesChecker
+> Task :innertube:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :innertube:extractAndroidInnerTube UP-TO-DATE
+> Task :innertube:compileKotlinDesktop UP-TO-DATE
+> Task :innertube:compileDesktopMainJava NO-SOURCE
+> Task :innertube:desktopProcessResources NO-SOURCE
+> Task :innertube:processDesktopMainResources SKIPPED
+> Task :innertube:desktopMainClasses UP-TO-DATE
+> Task :innertube:desktopJar UP-TO-DATE
+> Task :shared:kmpPartiallyResolvedDependenciesChecker
+> Task :shared:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :shared:convertXmlValueResourcesForCommonMain NO-SOURCE
+> Task :shared:copyNonXmlValueResourcesForCommonMain NO-SOURCE
+> Task :shared:prepareComposeResourcesTaskForCommonMain NO-SOURCE
+> Task :shared:generateResourceAccessorsForCommonMain SKIPPED
+> Task :shared:convertXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :shared:copyNonXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :shared:prepareComposeResourcesTaskForDesktopMain NO-SOURCE
+> Task :shared:generateResourceAccessorsForDesktopMain SKIPPED
+> Task :shared:generateActualResourceCollectorsForDesktopMain SKIPPED
+> Task :shared:generateComposeResClass SKIPPED
+> Task :shared:generateExpectResourceCollectorsForCommonMain SKIPPED
+> Task :shared:compileKotlinDesktop UP-TO-DATE
+> Task :shared:compileDesktopMainJava NO-SOURCE
+> Task :shared:assembleDesktopMainResources UP-TO-DATE
+> Task :shared:desktopProcessResources UP-TO-DATE
+> Task :shared:processDesktopMainResources SKIPPED
+> Task :shared:desktopMainClasses UP-TO-DATE
+> Task :shared:desktopJar UP-TO-DATE
+> Task :desktop:compileKotlinDesktop UP-TO-DATE
+> Task :desktop:compileDesktopMainJava NO-SOURCE
+> Task :desktop:assembleDesktopMainResources UP-TO-DATE
+> Task :desktop:desktopProcessResources UP-TO-DATE
+> Task :desktop:processDesktopMainResources SKIPPED
+> Task :desktop:desktopMainClasses UP-TO-DATE
+
+> Task :desktop:captureUi
+[INFO MeloXFont] Android MiLan Pro static instances loaded: CSS=[100, 200, 300, 400, 500, 600, 700, 800, 900] files=mi_lan_pro_w{100..800}.ttf (CSS 900 shares frozen axis-700 instance)
+SLF4J(W): No SLF4J providers were found.
+SLF4J(W): Defaulting to no-operation (NOP) logger implementation
+SLF4J(W): See https://www.slf4j.org/codes.html#noProviders for further details.
+Captured 00-settings: 1100x780 density=1.0
+Physical click remote-reject: remote-reject at Offset(295.5, 468.0)
+Captured 01-remote-reject: 1100x780 density=1.0
+Verified remote-reject: cloud-enabled:false
+Verified remote-reject: lyric-language:system
+Verified remote-reject: lyric-preference:en:Original
+Captured 02-reveal-lyrics: 1100x780 density=1.0
+Physical click open-lyrics: settings-open-lyrics at Offset(550.0, 575.0)
+Captured 03-open-lyrics: 1100x780 density=1.0
+Verified open-lyrics: tag:settings-lyrics
+Captured 04-reveal-0: 1100x780 density=1.0
+Physical click menu-0: lyric_language at Offset(994.5, 285.5)
+Captured 05-menu-0: 1100x780 density=1.0
+Physical click choose-0: settings-option:简体中文 at Offset(945.0, 342.0)
+Captured 06-choose-0: 1100x780 density=1.0
+Verified choose-0: lyric-language:zh-Hans
+Verified choose-0: pref-string:lyric_language:zh-Hans
+Verified choose-0: lyric-preference:zh:Simplified
+Captured 07-reveal-1: 1100x780 density=1.0
+Physical click menu-1: lyric_language at Offset(1020.5, 285.5)
+Captured 08-menu-1: 1100x780 density=1.0
+Physical click choose-1: settings-option:繁體中文 at Offset(945.0, 386.0)
+Captured 09-choose-1: 1100x780 density=1.0
+Verified choose-1: lyric-language:zh-Hant
+Verified choose-1: pref-string:lyric_language:zh-Hant
+Verified choose-1: lyric-preference:zh:Traditional
+Captured 10-reveal-2: 1100x780 density=1.0
+Physical click menu-2: lyric_language at Offset(1020.5, 285.5)
+Captured 11-menu-2: 1100x780 density=1.0
+Physical click choose-2: settings-option:English at Offset(945.0, 430.0)
+Captured 12-choose-2: 1100x780 density=1.0
+Verified choose-2: lyric-language:en
+Verified choose-2: pref-string:lyric_language:en
+Verified choose-2: lyric-preference:en:Original
+Captured 13-reveal-3: 1100x780 density=1.0
+Physical click menu-3: lyric_language at Offset(1025.0, 285.5)
+Captured 14-menu-3: 1100x780 density=1.0
+Physical click choose-3: settings-option:Türkçe at Offset(945.0, 474.0)
+Captured 15-choose-3: 1100x780 density=1.0
+Verified choose-3: lyric-language:tr
+Verified choose-3: pref-string:lyric_language:tr
+Verified choose-3: lyric-preference:tr:Original
+Captured 16-reveal-4: 1100x780 density=1.0
+Physical click menu-4: lyric_language at Offset(1026.0, 285.5)
+Captured 17-menu-4: 1100x780 density=1.0
+Physical click choose-4: settings-option:Follow system at Offset(945.0, 297.0)
+Captured 18-choose-4: 1100x780 density=1.0
+Verified choose-4: lyric-language:system
+Verified choose-4: pref-string:lyric_language:system
+Verified choose-4: lyric-preference:en:Original
+Captured 19-reveal-5: 1100x780 density=1.0
+Physical click menu-5: lyric_language at Offset(994.5, 285.5)
+Captured 20-menu-5: 1100x780 density=1.0
+Physical click choose-5: settings-option:Türkçe at Offset(945.0, 474.0)
+Captured 21-choose-5: 1100x780 density=1.0
+Verified choose-5: lyric-language:tr
+Verified choose-5: pref-string:lyric_language:tr
+Verified choose-5: lyric-preference:tr:Original
+
+BUILD SUCCESSFUL in 44s
+15 actionable tasks: 4 executed, 11 up-to-date
+Consider enabling configuration cache to speed up this build: https://docs.gradle.org/9.5.1/userguide/configuration_cache_enabling.html

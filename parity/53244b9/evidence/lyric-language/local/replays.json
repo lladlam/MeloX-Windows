@@ -1,0 +1,30 @@
+{
+  "implementation_commit": "13d275cc4bfa600fe3c7f7b6a963fc2a1c6b21bc",
+  "status": "PASSED",
+  "renderer": "production ImageComposeScene",
+  "input": "pointer coordinates and wheel; semantics for location/assertions only",
+  "independent_jvm_reload": true,
+  "results": [
+    {
+      "mode": "controls",
+      "locale": "en-US",
+      "scenes": 22,
+      "assertions": 22,
+      "all_assertions_passed": true,
+      "capture_sha256": "32a2fcd8590d4ecc4ba811c0629a6cc8c4450edff290afc0b86c7b3a9721cad0"
+    },
+    {
+      "mode": "reload",
+      "locale": "zh-TW",
+      "scenes": 11,
+      "assertions": 13,
+      "all_assertions_passed": true,
+      "capture_sha256": "66a771372a7b6d18d311be78e956829438d044c5cd18e315b41a438d2bfeeaa5"
+    }
+  ],
+  "totals": {
+    "scenes": 33,
+    "assertions": 35
+  },
+  "android_same_content_pixel_acceptance": "BLOCKED_NO_V065_REFERENCE_FRAMES"
+}

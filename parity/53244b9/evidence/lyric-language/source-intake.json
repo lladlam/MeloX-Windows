@@ -22,6 +22,10 @@
       "sha256": "f0e044aea907ff08dbb15b8cefa6d2ff263cd30146aa02cfadf455cc52035cf3"
     },
     {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXIOSLyricsPanel.kt",
+      "sha256": "73c50a827e56fab54c4966fae9583191649ed56432b040ac0d599a4d4d2f0fc0"
+    },
+    {
       "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXIOSNowPlayingSharedHost.kt",
       "sha256": "6de42e06e68f89b1ef954627450363e42047b7434c25e406f030d0d9fe99f669"
     },
