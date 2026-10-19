@@ -1,0 +1,17 @@
+{
+  "source": "independent raw downloaded XML and capture recount",
+  "suites": 54,
+  "tests": 265,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "captures": 20,
+  "scenes": 762,
+  "assertions": 1295,
+  "missing_capture_uploads": [
+    "lyric-language-controls",
+    "lyric-language-reload"
+  ],
+  "lyric_language_raw_replay_acceptance": "PARTIAL_MISSING_UPLOADS",
+  "note": "The CI steps succeeded, but their two output directories were omitted from the upload manifest. Do not report 22 independently verified replays."
+}

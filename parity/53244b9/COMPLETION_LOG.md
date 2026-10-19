@@ -20,5 +20,6 @@
 - 本地全量 **265 tests / 54 suites / 0 failures/errors/skipped**，桌面编译成功。新增8项覆盖语言/简繁/地区归一化、缺译文、metadata与伴唱、中文端点过滤、晚返回缓存隔离与升级取消。
 - 生产指针输入controls **22 scenes / 22 assertions**；独立JVM从en-US换到zh-TW重载 **11 scenes / 13 assertions**，共 **33 scenes / 35 assertions** 全部通过。验证持久化tr覆盖新系统语言，切回system即时解析为zh:Traditional；650ms等待保留展开完成的菜单帧，不把过渡中截图作为静态外观验收。
 - 原始本地XML、全量测试/编译日志、17项资源与历史清单回查、两次回放/语义/UTF-8参数及选定截图在 `evidence/lyric-language/local/`。回归延迟源仅存在测试中，生产链仍使用实际provider与AMLL。
-- 实现 **`13d275cc4bfa600fe3c7f7b6a963fc2a1c6b21bc`** 已推main；Windows **39243293868** 运行中，包含新增两次歌词语言回放。后台已串联成功后完整下载两个artifacts、XML/全部22组capture、ZIP/JAR CRC、精确版本/17项资源、Windows解码器和新语言类/资源独立核验，实际完成结果后续另记。
+- 实现 **`13d275cc4bfa600fe3c7f7b6a963fc2a1c6b21bc`** 的 Windows **39243293868** 已成功；两个artifact完整下载并通过全部CRC，实际XML重计 **265 tests / 54 suites / 0 failures/errors/skipped**。下载到的 **20组 / 762 scenes / 1,295 assertions** 全通过；新语言controls/reload步骤在CI成功，但上传清单漏了两个目录，因此不能记为22组原始回放独立通过。核验脚本最初因22组预期失败，定位遗漏后按实际20组继续检查，缺失边界另记 `independent-recount.json`。上传清单在下一实现批修复，不能补写历史原始帧。
+- 独立发行ZIP **333,109,728 bytes**，SHA-256 **`defd979629d93631e6c9cf82e36442bdcff390c2b67473c2a6fe815b6920ccb0`**；357条目与JAR全CRC、精确版本戳、该提交17项pinned资源、新语言类/资源和Windows PE FFmpeg均通过。玻璃光学、组件/Popup复用释放和Windows沉浸placement报告均PASSED。证据 `evidence/windows-ci-13d275c/`；发行来源仍为实现13d275c，歌词语言Windows原始回放验收因漏传保持PARTIAL。
 - 行为说明 `LYRIC_LANGUAGE.md`，真源与验证证据 `evidence/lyric-language/`。固定Android 0.6.5同内容帧与网络账号实机验收仍待完成，整体保持PARTIAL。

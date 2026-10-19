@@ -1,0 +1,37 @@
+consent:tap@remote-reject
+player:tap@mini-player-expand
+pause:tap@player-play-pause
+actions:tap@player-actions
+favorite-reveal:reveal@song-action-喜爱
+favorite-read:wait@200
+favorite-write:tap@song-action-喜爱
+download-unavailable:wait@100
+playlist-reveal:reveal@song-action-添加到歌单
+playlist:tap@song-action-添加到歌单
+create:tap@song-action-新建歌单
+name-focus:tap@song-new-playlist-name
+name:type@Replay generated list
+create-and-add:tap@song-action-创建并添加歌曲
+reopen-playlist:tap@player-actions
+sleep-reveal:reveal@song-action-定时关闭
+sleep:tap@song-action-定时关闭
+set-sleep:tap@song-action-15 分钟后
+reopen:tap@player-actions
+sleep-again:tap@song-action-定时关闭
+sleep-back:escape
+close:escape
+collapse:escape
+listen-reveal:reveal@settings-open-listentogether
+listen:tap@settings-open-listentogether
+listen-create-needs-account:tap@listen-together-start
+listen-invalid-invitation:tap@listen-together-join
+listen-back:escape
+recognition-reveal:reveal@settings-open-recognition
+recognition:tap@settings-open-recognition
+recognition-duration:tap@recognition-duration-3
+recognition-back:escape
+general-reveal:reveal@settings-open-general
+general:tap@settings-open-general
+font-reveal:reveal@setting-system_font
+font-enable:tap@setting-system_font
+general-back:escape
