@@ -31,6 +31,7 @@ class PublicDampedDragAnimation(
     val onDragStarted: PublicDampedDragAnimation.(position: Offset) -> Unit = {},
     val onDragStopped: PublicDampedDragAnimation.() -> Unit = {},
     val onTap: (position: Offset) -> Unit = {},
+    val onDragCancelled: PublicDampedDragAnimation.() -> Unit = onDragStopped,
     val onDrag: PublicDampedDragAnimation.(size: IntSize, dragAmount: Offset) -> Unit,
 ) {
 
@@ -70,7 +71,7 @@ class PublicDampedDragAnimation(
     val scaleY: Float get() = scaleYAnimation.value
     val velocity: Float get() = velocityAnimation.value
 
-    val modifier: Modifier = Modifier.pointerInput(Unit) {
+    val modifier: Modifier = Modifier.pointerInput(this@PublicDampedDragAnimation) {
         publicInspectDragGestures(
             onDragStart = { down ->
                 downPosition = down
@@ -82,7 +83,7 @@ class PublicDampedDragAnimation(
                 if (movedDuringGesture) onDragStopped() else onTap(downPosition)
                 release()
             },
-            onDragCancel = { onDragStopped(); release() },
+            onDragCancel = { onDragCancelled(); release() },
         ) { change, dragAmount ->
             if (dragAmount != Offset.Zero) movedDuringGesture = true
             onDrag(size, dragAmount)

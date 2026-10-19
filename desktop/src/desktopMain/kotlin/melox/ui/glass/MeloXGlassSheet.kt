@@ -69,7 +69,7 @@ fun MeloXGlassSheet(
     }
     val requestDismiss = { onDismiss() }
     val dark = isDark(MaterialTheme.colorScheme.background)
-    val hasBackdrop = LocalMeloXBackdrop.current
+    val hasBackdrop = meloXGlassAvailable()
     val sheetTint = when {
         hasBackdrop && dark -> Color.White.copy(alpha = 0.08f)
         hasBackdrop -> Color.White.copy(alpha = 0.34f)
@@ -157,7 +157,7 @@ fun MeloXGlassDialog(
     }
     val requestDismiss = { onDismiss() }
     val dark = isDark(MaterialTheme.colorScheme.background)
-    val hasBackdrop = LocalMeloXBackdrop.current
+    val hasBackdrop = meloXGlassAvailable()
     val dialogTint = when {
         hasBackdrop && dark -> Color.White.copy(alpha = 0.08f)
         hasBackdrop -> Color.White.copy(alpha = 0.34f)

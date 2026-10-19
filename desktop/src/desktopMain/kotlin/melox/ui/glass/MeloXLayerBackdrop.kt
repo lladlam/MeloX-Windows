@@ -37,6 +37,10 @@ class MeloXLayerBackdrop(val layer: GraphicsLayer) {
 
 val LocalMeloXLayerBackdrop = staticCompositionLocalOf<MeloXLayerBackdrop?> { null }
 
+/** The legacy visual-context flag is not evidence that an acyclic sampler exists. */
+@Composable
+internal fun meloXGlassAvailable(): Boolean = LocalMeloXLayerBackdrop.current != null
+
 @Composable
 fun rememberMeloXLayerBackdrop(): MeloXLayerBackdrop {
     val layer = rememberGraphicsLayer()

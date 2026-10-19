@@ -22,7 +22,7 @@ import kotlin.math.ceil
 
 /** Geometry and native shader stay cached while only the background pixels change. */
 internal fun Modifier.meloXGlassDecoration(
-    shape: Shape, rimAlpha: Float, innerRadius: Dp, innerAlpha: Float, innerColorAlpha: Float = .12f,
+    shape: Shape, rimAlpha: Float, innerRadius: Dp, innerAlpha: Float, innerColorAlpha: Float = .15f,
     rimWidth: Dp = .5.dp, ambient: Boolean = false,
 ): Modifier = composed {
     val inner = rememberGraphicsLayer()
@@ -74,7 +74,7 @@ internal fun Modifier.meloXGlassDecoration(
 }
 
 /** Source outer shadow: blurred silhouette, 24dp radius and 4dp downward offset. */
-internal fun Modifier.meloXGlassShadow(shape: Shape, alpha: Float, colorAlpha: Float = .12f, radius: Dp = 24.dp): Modifier = composed {
+internal fun Modifier.meloXGlassShadow(shape: Shape, alpha: Float, colorAlpha: Float = .10f, radius: Dp = 24.dp): Modifier = composed {
     val layer = rememberGraphicsLayer()
     val filter = remember { MeloXGlassFilterOwner() }
     DisposableEffect(filter, layer) { onDispose { layer.renderEffect = null; filter.close() } }

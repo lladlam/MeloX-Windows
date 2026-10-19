@@ -194,6 +194,8 @@ jobs:
             desktop/build/verification/*.json
             desktop/build/verification/glass-scene/*.json
             desktop/build/verification/glass-scene/*.png
+            desktop/build/verification/glass-popup/*.json
+            desktop/build/verification/glass-popup/*.png
             desktop/build/parity/glass-dock-Dark/*
             desktop/build/parity/glass-dock-Light/*
             desktop/build/verification/settings-icons.json

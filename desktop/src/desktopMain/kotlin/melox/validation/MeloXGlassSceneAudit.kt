@@ -54,6 +54,10 @@ internal fun auditMeloXGlassScene(output: File) = runBlocking {
             var clicks = 0
             var sliderValue by mutableFloatStateOf(.4f)
             var sliderEnabled by mutableStateOf(true)
+            var sliderWidth by mutableIntStateOf(240)
+            var sliderCommits = 0
+            var cancelChangedPixels = 0
+            val sliderEvents = mutableListOf<String>()
             val beforeOwnership = MeloXGlassFilterOwner.ownershipCounts()
             val prefix = "${density}-${if (dark) "dark" else "light"}-${if (frosted) "frosted" else "liquid"}"
             val scene = ImageComposeScene((360 * density).toInt(), (240 * density).toInt(), Density(density), coroutineContext = coroutineContext) {
@@ -75,8 +79,10 @@ internal fun auditMeloXGlassScene(output: File) = runBlocking {
                                 Spacer(Modifier.height(24.dp))
                                 MeloXGlassToggle(checked, { if (acceptChange) checked = it }, modifier = Modifier.testTag("glass-toggle"))
                                 Spacer(Modifier.height(24.dp))
-                                MeloXLiquidSlider(sliderValue, { sliderValue = it }, valueRange = 0f..1f,
-                                    modifier = Modifier.size(240.dp, 48.dp).testTag("glass-slider"),
+                                MeloXLiquidSlider(sliderValue, { sliderValue = it; sliderCommits++; sliderEvents += "commit:$it enabled=$sliderEnabled" },
+                                    onTransientValueChange = { sliderEvents += "transient:$it enabled=$sliderEnabled" },
+                                    onValueChangeFinished = { sliderEvents += "finished enabled=$sliderEnabled" }, valueRange = 0f..1f,
+                                    modifier = Modifier.size(sliderWidth.dp, 48.dp).testTag("glass-slider"),
                                     contentDescription = "Glass slider", enabled = sliderEnabled)
                             }
                             Box(Modifier.offset(220.dp, 32.dp).size(90.dp, 48.dp)
@@ -172,6 +178,35 @@ internal fun auditMeloXGlassScene(output: File) = runBlocking {
                     repeat(12) { index -> send(PointerEventType.Move, thumb - Offset((index + 1) * 6f * density, 0f)); settle(20) }
                     send(PointerEventType.Release, thumb - Offset(72f * density, 0f)); settle(800)
                     check(sliderValue < .7f && sliderValue > .2f) { "Liquid slider thumb drag failed: $sliderValue" }
+                    // Resize an existing composition, without recreating the control.
+                    // The pressed thumb scales by 1.5, so a 54px physical drag
+                    // contributes ~36px locally: .3 on the new 120px track.
+                    sliderWidth = 120; sliderValue = .4f; settle(800)
+                    val resized = checkNotNull(scene.captureSemantics().tagged("glass-slider")).boundsInWindow
+                    val resizedThumb = Offset(resized.left + resized.width * sliderValue, resized.center.y)
+                    send(PointerEventType.Move, resizedThumb); send(PointerEventType.Press, resizedThumb); settle(250)
+                    repeat(12) { index -> send(PointerEventType.Move, resizedThumb + Offset((index + 1) * 4.5f * density, 0f)); settle(24) }
+                    send(PointerEventType.Release, resizedThumb + Offset(54f * density, 0f)); settle(800)
+                    check(sliderValue in .66f.. .74f) { "Resized slider used its old track width: $sliderValue" }
+                    snapshot("slider-resized")
+                    val restingSlider = snapshot("slider-before-cancel")
+                    val commitsBeforeCancel = sliderCommits
+                    val cancelPoint = Offset(resized.left + resized.width * sliderValue, resized.center.y)
+                    send(PointerEventType.Move, cancelPoint); send(PointerEventType.Press, cancelPoint); settle(250)
+                    repeat(4) { index -> send(PointerEventType.Move, cancelPoint - Offset((index + 1) * 3f * density, 0f)); settle(24) }
+                    sliderEnabled = false; settle(250)
+                    send(PointerEventType.Release, cancelPoint - Offset(12f * density, 0f)); settle(250)
+                    check(sliderCommits == commitsBeforeCancel) { "Disabled in-flight slider gesture committed a value: ${sliderEvents.takeLast(16)}" }
+                    sliderEnabled = true; settle(1000)
+                    val restoredSlider = snapshot("slider-cancel-restored")
+                    val restoredNode = checkNotNull(scene.captureSemantics().tagged("glass-slider"))
+                    val restoredProgress = restoredNode.config.getOrNull(SemanticsProperties.ProgressBarRangeInfo)?.current
+                    check(restoredProgress == sliderValue) { "Cancelled slider retained its uncommitted transient value: $restoredProgress/$sliderValue" }
+                    cancelChangedPixels = restingSlider.indices.count { restingSlider[it] != restoredSlider[it] }
+                    val optics = scene.captureSemantics().mapNotNull { it.config.getOrNull(MeloXSliderOpticalStateKey) }.single()
+                    check(optics[0] <= .001f && kotlin.math.abs(optics[1] - 1f) <= .001f && kotlin.math.abs(optics[2] - 1f) <= .001f) {
+                        "Cancelled slider retained pressed optics: $optics"
+                    }
                 }
                 sliderEnabled = false; settle(100)
                 val disabledValue = sliderValue
@@ -185,6 +220,8 @@ internal fun auditMeloXGlassScene(output: File) = runBlocking {
                     .put("changed_pixels_inside_glass", changedInside).put("rejected_switch_drag_restored", true)
                     .put("scaled_background_aligned_pixels", alignedPixels).put("scaled_background_checked_pixels", sampledPixels)
                     .put("slider_value", sliderValue).put("disabled_slider_preserved_value", true)
+                    .put("resize_and_inflight_cancel", if (frosted) "not exercised: Material fallback" else "PASSED")
+                    .put("cancel_edge_coverage_changed_pixels", cancelChangedPixels)
                     .put("mount_dispose_cycles", 8).put("memory", JSONObject(melox.diagnostics.MeloXMemoryDiagnostics.snapshot())))
             } finally {
                 scene.close()
@@ -199,4 +236,5 @@ internal fun auditMeloXGlassScene(output: File) = runBlocking {
     File(output, "audit.json").writeText(JSONObject().put("status", "PASSED").put("fixture", "generated checkerboard; real production glass components")
         .put("samples", samples).put("owned_filter_disposal", ownership).put("android_pixel_acceptance", "PENDING_PINNED_REFERENCE")
         .put("memory_scope", "observations only; no forced GC and no whole-process plateau assertion").toString(2) + "\n")
+    auditMeloXGlassPopup(File(output.parentFile, "glass-popup"))
 }

@@ -35,11 +35,16 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.progressBarRangeInfo
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.setProgress
+import androidx.compose.ui.semantics.disabled
+import androidx.compose.ui.semantics.SemanticsPropertyKey
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.flow.collectLatest
 import melox.ui.glass.publicdemo.PublicDampedDragAnimation
 import kotlin.math.roundToInt
+
+/** Read-only optical state for assertions; gestures still enter through pointer input. */
+internal val MeloXSliderOpticalStateKey = SemanticsPropertyKey<List<Float>>("MeloXSliderOpticalState")
 
 @Composable
 fun MeloXLiquidSlider(
@@ -57,6 +62,8 @@ fun MeloXLiquidSlider(
     require(valueRange.endInclusive > valueRange.start) { "valueRange must not be empty" }
     require(stepSize >= 0f) { "stepSize must be non-negative" }
     val externalValue = quantizeMeloXSliderValue(value, valueRange, stepSize)
+    val currentEnabled = rememberUpdatedState(enabled)
+    val currentExternalValue = rememberUpdatedState(externalValue)
     var transientValue by remember { mutableFloatStateOf(externalValue) }
     var interacting by remember { mutableStateOf(false) }
     val latestOnValueChange by rememberUpdatedState(onValueChange)
@@ -71,6 +78,13 @@ fun MeloXLiquidSlider(
     }
 
     fun finish() {
+        // Node removal can synchronously finish/cancel the previous detector
+        // before its remembered callback is refreshed. Read current state here.
+        if (!currentEnabled.value) {
+            transientValue = currentExternalValue.value
+            interacting = false
+            return
+        }
         val settled = quantizeMeloXSliderValue(transientValue, valueRange, stepSize)
         transientValue = settled
         interacting = false
@@ -81,6 +95,7 @@ fun MeloXLiquidSlider(
     val semantics = Modifier.semantics(mergeDescendants = true) {
         this.contentDescription = contentDescription
         progressBarRangeInfo = ProgressBarRangeInfo(transientValue, valueRange, steps)
+        if (!enabled) disabled()
         if (enabled) setProgress { requested ->
             transientValue = quantizeMeloXSliderValue(requested, valueRange, stepSize)
             finish()
@@ -108,11 +123,14 @@ fun MeloXLiquidSlider(
     MeloXDesktopLiquidSlider(
         value = { transientValue },
         onValueChange = {
-            interacting = true
-            transientValue = it.coerceIn(valueRange)
-            latestOnTransientValueChange(transientValue)
+            if (currentEnabled.value) {
+                interacting = true
+                transientValue = it.coerceIn(valueRange)
+                latestOnTransientValueChange(transientValue)
+            }
         },
         onValueChangeFinished = ::finish,
+        onValueChangeCancelled = { transientValue = currentExternalValue.value; interacting = false },
         valueRange = valueRange,
         visibilityThreshold = visibilityThreshold,
         modifier = modifier.then(semantics),
@@ -128,6 +146,7 @@ private fun MeloXDesktopLiquidSlider(
     visibilityThreshold: Float,
     modifier: Modifier = Modifier,
     onValueChangeFinished: () -> Unit = {},
+    onValueChangeCancelled: () -> Unit = {},
     enabled: Boolean = true,
 ) {
     val dark = MaterialTheme.colorScheme.background.luminance() < .5f
@@ -141,11 +160,13 @@ private fun MeloXDesktopLiquidSlider(
         contentAlignment = Alignment.CenterStart,
     ) {
         val trackWidth = constraints.maxWidth
+        val latestTrackWidth by rememberUpdatedState(trackWidth)
         val isLtr = LocalLayoutDirection.current == LayoutDirection.Ltr
         val animationScope = rememberCoroutineScope()
         var didDrag by remember { mutableStateOf(false) }
         val latestOnValueChange by rememberUpdatedState(onValueChange)
         val latestOnFinished by rememberUpdatedState(onValueChangeFinished)
+        val latestOnCancelled by rememberUpdatedState(onValueChangeCancelled)
         val dampedDragAnimation = remember(animationScope, valueRange, visibilityThreshold, isLtr) {
             PublicDampedDragAnimation(
                 animationScope = animationScope,
@@ -160,9 +181,10 @@ private fun MeloXDesktopLiquidSlider(
                     latestOnFinished()
                 },
                 onTap = { latestOnFinished() },
+                onDragCancelled = { didDrag = false; latestOnCancelled() },
                 onDrag = { _, dragAmount ->
                     if (!didDrag) didDrag = dragAmount.x != 0f
-                    val delta = (valueRange.endInclusive - valueRange.start) * (dragAmount.x / trackWidth.coerceAtLeast(1))
+                    val delta = (valueRange.endInclusive - valueRange.start) * (dragAmount.x / latestTrackWidth.coerceAtLeast(1))
                     latestOnValueChange(
                         if (isLtr) (targetValue + delta).coerceIn(valueRange)
                         else (targetValue - delta).coerceIn(valueRange),
@@ -184,7 +206,7 @@ private fun MeloXDesktopLiquidSlider(
             Modifier
                 .clip(MeloXShapes.capsule)
                 .background(trackColor)
-                .pointerInput(animationScope, enabled, isLtr) {
+                .pointerInput(animationScope, enabled, isLtr, trackWidth, valueRange) {
                     if (!enabled) return@pointerInput
                     detectTapGestures { position ->
                         val delta = (valueRange.endInclusive - valueRange.start) * (position.x / trackWidth.coerceAtLeast(1))
@@ -224,6 +246,9 @@ private fun MeloXDesktopLiquidSlider(
                     scaleY = (dampedDragAnimation.scaleY.glassFinite() * (1f - (velocity * 0.25f).coerceIn(-0.2f, 0.2f))).glassFinite()
                 }
                 .then(if (enabled) dampedDragAnimation.modifier else Modifier)
+                .semantics {
+                    this[MeloXSliderOpticalStateKey] = listOf(p, dampedDragAnimation.scaleX, dampedDragAnimation.scaleY)
+                }
                 .meloXGlassShadow(MeloXShapes.capsule, 1f, .05f, 4.dp)
                 .meloXGlassDecoration(MeloXShapes.capsule, p, 4.dp * p, p, .15f,
                     rimWidth = .5.dp / 1.5f, ambient = true)

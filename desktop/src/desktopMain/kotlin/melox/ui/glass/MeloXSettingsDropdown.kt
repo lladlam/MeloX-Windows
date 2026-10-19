@@ -61,6 +61,7 @@ import kotlin.math.PI
 import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.sin
+import com.kyant.capsule.ContinuousRoundedRectangle
 
 private const val PopupOvershootScale = 1.15f
 private val PopupOvershootStart = 64.dp
@@ -200,7 +201,7 @@ private fun <T> MeloXPopupSelector(
     var opensAbove by remember { mutableStateOf(false) }
     var anchorSize by remember { mutableStateOf(IntSize.Zero) }
     val progress = remember { Animatable(0f) }
-    val backdrop = LocalMeloXBackdrop.current
+    val backdrop = meloXGlassAvailable()
 
     LaunchedEffect(expanded) {
         if (expanded) {
@@ -282,7 +283,7 @@ private fun <T> MeloXPopupSelector(
 }
 
 @Composable
-private fun MeloXPopupGlassMenu(
+internal fun MeloXPopupGlassMenu(
     hasBackdrop: Boolean,
     progress: Float,
     velocity: Float,
@@ -295,9 +296,9 @@ private fun MeloXPopupGlassMenu(
     val scope = rememberCoroutineScope()
     val highlight = remember(scope) { PublicInteractiveHighlight(scope) }
     val density = LocalDensity.current
-    val geometryProgress = progress.coerceIn(-.04f, 1.06f)
-    val visualProgress = progress.coerceIn(0f, 1f)
-    val normalizedVelocity = (velocity / 18f).coerceIn(-1f, 1f)
+    val geometryProgress = progress.glassFinite().coerceIn(-.04f, 1.06f)
+    val visualProgress = safeGlassProgress(progress)
+    val normalizedVelocity = (velocity.glassFinite() / 18f).coerceIn(-1f, 1f)
     val pulse = max(sin(PI.toFloat() * visualProgress), abs(normalizedVelocity) * .65f).coerceIn(0f, 1f)
     val collapsedWidth = with(density) { collapsedSize.width.toDp() }
     val collapsedHeight = with(density) { collapsedSize.height.toDp() }
@@ -305,7 +306,7 @@ private fun MeloXPopupGlassMenu(
     val menuHeight = 20.dp + 44.dp * itemCount
     val width = lerpDp(collapsedWidth, menuWidth, geometryProgress)
     val height = lerpDp(collapsedHeight, menuHeight, geometryProgress)
-    val shape = MeloXShapes.largeCard
+    val shape = ContinuousRoundedRectangle(34.dp)
     val surface = MaterialTheme.colorScheme.surface
     val blurRadius = lerpDp(3.dp, 16.dp, visualProgress)
 
@@ -328,13 +329,19 @@ private fun MeloXPopupGlassMenu(
                 }
                 .width(width)
                 .height(height)
+                .testTag("settings-popup-surface")
                 .then(
-                    if (hasBackdrop) Modifier.meloXGlassSurface(
-                        shape = shape,
-                        tint = Color.White.copy(alpha = 0.08f + 0.10f * pulse),
-                        surfaceColor = surface.copy(alpha = 0.72f),
-                        blurRadius = blurRadius,
-                    ) else Modifier.meloXContentSurface(shape, surface)
+                    if (hasBackdrop) Modifier
+                        .meloXGlassShadow(shape, .10f, radius = 15.dp)
+                        .meloXGlassDecoration(shape, visualProgress * (.46f + .18f * pulse),
+                            8.dp, .10f * visualProgress)
+                        .clip(shape)
+                        .meloXSampleBackdrop(blurRadius, shape = shape, vibrant = true,
+                            lensHeight = lerpDp(10.dp, 18.dp, visualProgress) + 2.dp * pulse,
+                            lensAmount = lerpDp(16.dp, 26.dp, visualProgress) + 4.dp * pulse,
+                            depth = pulse > .01f, dispersion = true)
+                        .drawBehind { drawRect(surface) }
+                    else Modifier.meloXContentSurface(shape, surface)
                 )
                 .then(if (interactive) highlight.modifier else Modifier)
                 .then(if (interactive) highlight.gestureModifier else Modifier),

@@ -65,7 +65,7 @@ class PublicInteractiveHighlight(
       }
     }
 
-    val gestureModifier: Modifier = Modifier.pointerInput(animationScope) {
+    val gestureModifier: Modifier = Modifier.pointerInput(animationScope, this@PublicInteractiveHighlight) {
         publicInspectDragGestures(
             onDragStart = { down ->
                 startPosition = down
@@ -132,11 +132,19 @@ internal suspend fun PointerInputScope.publicInspectDragGestures(
         val initialDown = awaitFirstDown(false, PointerEventPass.Initial)
         val down = awaitFirstDown(false)
         onDragStart(down.position)
-        onDrag(initialDown, Offset.Zero)
-        val upEvent = drag(initialDown.id) { change ->
-            onDrag(change, change.positionChange())
+        var active = true
+        try {
+            onDrag(initialDown, Offset.Zero)
+            val upEvent = drag(initialDown.id) { change ->
+                onDrag(change, change.positionChange())
+            }
+            active = false
+            if (upEvent == null) onDragCancel() else onDragEnd()
+        } finally {
+            // Removing/replacing a pointerInput node cancels its coroutine,
+            // bypassing the ordinary up event. Every started press needs cleanup.
+            if (active) onDragCancel()
         }
-        if (upEvent == null) onDragCancel() else onDragEnd()
     }
 }
 
