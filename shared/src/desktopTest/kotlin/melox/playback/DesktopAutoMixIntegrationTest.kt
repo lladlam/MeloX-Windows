@@ -26,6 +26,7 @@ class DesktopAutoMixIntegrationTest {
     private val root = Files.createTempDirectory("melox-controller-mix").toFile()
     private val outputs = CopyOnWriteArrayList<Output>()
     private val starts = CopyOnWriteArrayList<DesktopPlaybackStart>()
+    private val resolvedIds = CopyOnWriteArrayList<Long>()
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
     private var player: MeloXDesktopPlayer? = null
     @BeforeTest fun setup() {
@@ -57,8 +58,9 @@ class DesktopAutoMixIntegrationTest {
             providerMetadata = ProviderTrackMetadata.Local(file.toURI().toString(), "fixture-$id"))
         return SearchSong(id, track.title, "generated", "fixture", null, durationMs = ms.toLong(), providerTrack = track)
     }
-    private fun install(songs: List<SearchSong>, immediateResolution: Boolean = false) {
+    private fun install(songs: List<SearchSong>, immediateResolution: Boolean = false, startIndex: Int = 0) {
         val controller = MeloXDesktopPlayer(if (immediateResolution) { entry ->
+            resolvedIds += entry.song.id
             val uri = (entry.song.providerTrack!!.providerMetadata as ProviderTrackMetadata.Local).contentUri
             // Match Local Provider's URI-to-native-path boundary. FFmpeg on
             // Windows cannot open Java's file:/C:/... spelling directly.
@@ -70,7 +72,7 @@ class DesktopAutoMixIntegrationTest {
         }, if (immediateResolution) CoroutineScope(scope.coroutineContext + Dispatchers.Unconfined) else scope,
             if (immediateResolution) Dispatchers.Unconfined else Dispatchers.IO, {}, { _, _ -> })
         player = controller; PlaybackCommands.adoptController(controller)
-        controller.setMediaItems(songs, 0, 0); controller.prepare(); controller.play(); PlaybackCommands.publishQueue(controller)
+        controller.setMediaItems(songs, startIndex, 0); controller.prepare(); controller.play(); PlaybackCommands.publishQueue(controller)
     }
     private suspend fun until(check: () -> Boolean) = withTimeout(30_000) { while (!check()) delay(10) }
     private suspend fun advanceTo(ms: Long) {
@@ -152,16 +154,42 @@ class DesktopAutoMixIntegrationTest {
         val rms = sqrt(samples.sumOf { it * it } / samples.size)
         assertTrue(rms in 2100.0..2140.0, "actual 0.5-gain RMS $rms")
     }
-    @Test fun smartQueueActuallyAnalyzesCandidatePcmAndAppendsCompatibleTempoBeforeOriginalOrder() = runBlocking<Unit> {
+    @Test fun smartQueueActuallyAnalyzesCandidatePcmAndReordersTheCompleteVisibleTimeline() = runBlocking<Unit> {
         MeloXPlaybackModePreferences.setSmartQueue(true)
         val songs = listOf(song(1, 130, 16000, 90.0), song(2, 130, 16000, 140.0), song(3, 130, 16000, 92.0))
         install(songs)
-        until { PlaybackCommands.queue.value.songs.size == 2 }
-        assertEquals(listOf(1L, 3L), PlaybackCommands.queue.value.songs.map { it.id })
+        assertEquals(3, player!!.mediaItemCount, "v0.6.5 retains the complete visible queue before analysis")
+        until { PlaybackCommands.queue.value.songs.map { it.id } == listOf(1L, 3L, 2L) }
         assertEquals(0, PlaybackCommands.queue.value.index)
         player!!.setSmartQueueEnabled(false)
         assertEquals(listOf(1L, 3L, 2L), PlaybackCommands.queue.value.songs.map { it.id })
-        println("Real analyzed Smart Queue: selected 92 BPM candidate over original 140 BPM candidate for 90 BPM source; unconsumed candidate restored on disable")
+        println("Real analyzed Smart Queue: 92 BPM moved before 140 BPM for 90 BPM source; complete timeline retained before/after disable")
+    }
+    @Test fun analysisBudgetResolvesOnlySourceAndFirstFutureTargetsAndDoesNotRestartForEachTrack() = runBlocking<Unit> {
+        MeloXPlaybackModePreferences.setSmartQueue(true)
+        MeloXPlaybackModePreferences.setAutoMixInt("automix_smart_queue_analysis_limit", 10)
+        val songs = (1L..15L).map { song(it, 130, 16000, 90.0 + it % 3) }
+        install(songs, immediateResolution = true, startIndex = 2)
+        assertEquals(15, player!!.mediaItemCount)
+        assertEquals(2, player!!.currentMediaItemIndex)
+        until { resolvedIds.toSet().containsAll((3L..13L).toList()) }
+        until { !player!!.smartAnalysisActive }
+        assertEquals(11, player!!.smartAnalyzedCount, "All quota tracks must finish actual PCM analysis successfully")
+        assertEquals((3L..13L).toSet(), resolvedIds.toSet(), "History and quota tail must not resolve or analyze")
+        assertEquals(listOf(1L, 2L), player!!.snapshot().take(2).map { it.id }, "Do not move history")
+        assertEquals(listOf(14L, 15L), player!!.snapshot().takeLast(2).map { it.id }, "Unanalyzed quota tail keeps source order")
+        val before = resolvedIds.size
+        player!!.seekToIndex(14)
+        until { starts.lastOrNull()?.track?.id == songs.last().providerTrack!!.id }
+        delay(150)
+        assertFalse(player!!.smartAnalysisActive)
+        assertEquals(listOf(15L), resolvedIds.drop(before), "A new playing track must not restart the generation budget")
+        player!!.setSmartQueueEnabled(false)
+        assertEquals(15, player!!.mediaItemCount)
+        assertEquals(15, player!!.snapshot().map { it.id }.distinct().size)
+        player!!.clearQueue()
+        until { FfmpegPcmDecoder.activeProcesses() == 0 }
+        println("v0.6.5 analysis budget: 15 visible tracks, selected index 2, 11 actual analyzed/resolved tracks, no history/tail analysis, no per-track budget restart")
     }
     @Test fun disablingSmartQueueRetainsOriginalUnconsumedTrackEvenWhenItsAnalysisFailed() {
         val entries = listOf(song(1, 130, 16000, 90.0), song(2, 130, 16000, 140.0)).mapIndexed { index, song ->

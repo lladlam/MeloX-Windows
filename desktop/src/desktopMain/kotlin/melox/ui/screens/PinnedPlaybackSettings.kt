@@ -13,6 +13,7 @@ import melox.audio.MusicQualityPreferences
 import melox.playback.*
 import melox.settings.*
 import melox.ui.glass.MeloXGlassDialog
+import melox.ui.glass.MeloXSettingsDropdown
 import melox.ui.legal.pinnedString
 import kotlin.math.abs
 
@@ -88,6 +89,12 @@ private fun PinnedAutoMixSettings() {
             if (settings.mode == MeloXAutoMixMode.Smart) {
                 SettingsExternalToggleRow(pinnedString("settings_skip_quiet_opening"), settings.skipQuietOpening, "automix_skip_quiet_opening") {
                     MeloXPlaybackModePreferences.setAutoMixBoolean("automix_skip_quiet_opening", it); refresh()
+                }
+                // v0.6.5 hardcodes these labels in SettingsScreen.kt:1314–1327.
+                val analysisLimits = listOf(-1 to "不限", 20 to "前 20 首", 40 to "前 40 首", 60 to "前 60 首", 100 to "前 100 首")
+                Box(Modifier.testTag("automix_smart_queue_analysis_limit")) {
+                    MeloXSettingsDropdown("队列分析上限", analysisLimits.minBy { abs(settings.smartQueueAnalysisLimit - it.first) }.first,
+                        analysisLimits, { MeloXPlaybackModePreferences.setAutoMixInt("automix_smart_queue_analysis_limit", it); refresh() }, grouped = true)
                 }
                 SettingsExternalToggleRow(pinnedString("settings_analyze_streaming"), settings.analyzeStreaming, "automix_analyze_streaming") {
                     MeloXPlaybackModePreferences.setAutoMixBoolean("automix_analyze_streaming", it); refresh()

@@ -1,5 +1,7 @@
 # Sol third-round migration — pinned Android 3f877ea
 
+> 历史基线：用户已指定基于正式 Android **0.6.5 / v0.6.5 / 53244b9** 继续迁移。活跃进度见 [`../53244b9/MATRIX.md`](../53244b9/MATRIX.md)；本文件保留0.6.2原始状态与证据归属。
+
 Locked Android acceptance truth: `3f877eaffe30c82eb6d24eb3647702f5bc554dd3` (initial origin/main fetch).
 Windows starting point: `24eb7fffb7f5c01d17baca5b68674bc33b11be86`.
 Previous Android comparison point: `94e17c920bf554966584955afa2bd2ee92580a8b`.

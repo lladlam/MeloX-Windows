@@ -183,6 +183,7 @@ fun main(args: Array<String>) = runBlocking {
                 "eq-preset" -> melox.playback.MeloXEqualizerSettings.current.value.preset == expected
                 "automix-mode" -> melox.playback.MeloXAutoMixSettings.read().mode.name == expected
                 "automix-duration-ms" -> melox.playback.MeloXAutoMixSettings.read().fixedDurationMs == expected.toLong()
+                "smart-queue-analysis-limit" -> melox.playback.MeloXAutoMixSettings.read().smartQueueAnalysisLimit == expected.toInt()
                 "download-lyrics" -> melox.platform.getPreferences("melox_downloads").getBoolean("download_lyrics", true) == expected.toBooleanStrict()
                 "player-shell" -> melox.settings.MeloXSettingsRuntime.playerShell.name == expected
                 "pv-style" -> melox.settings.MeloXSettingsRuntime.textPVStyle.name == expected

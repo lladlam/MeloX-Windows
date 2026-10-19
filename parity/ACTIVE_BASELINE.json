@@ -1,0 +1,12 @@
+{
+  "android_release": "0.6.5",
+  "android_tag": "v0.6.5",
+  "android_sha": "53244b9d6b21d7e3a609e8cb11876efef70f218b",
+  "android_version_code": 24,
+  "matrix": "parity/53244b9/MATRIX.md",
+  "migration_status": "PARTIAL",
+  "previous_android_sha": "3f877eaffe30c82eb6d24eb3647702f5bc554dd3",
+  "implemented_remote_policy_compatibility": 20,
+  "legacy_resource_evidence": "parity/3f877ea",
+  "note": "Active target changed by user request; previous evidence retains its original source and acceptance limits."
+}

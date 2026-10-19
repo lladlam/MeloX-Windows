@@ -59,6 +59,16 @@ jobs:
           }
       - name: Audit pinned settings icons against the Android SF Symbol mapping
         run: gradle :desktop:auditSettingsIcons
+      - name: Replay v0.6.5 Smart Queue analysis limit and independent reload
+        shell: pwsh
+        run: |
+          $homeDir = "$pwd/desktop/build/parity/smartqueue-limit-home"
+          New-Item -ItemType Directory -Force "$homeDir/.melox" | Out-Null
+          [System.IO.File]::WriteAllText("$homeDir/.melox/prefs_melox_app_settings.properties", "onboarding_completed=true`n", [System.Text.UTF8Encoding]::new($false))
+          python tools/capture_smartqueue_limit.py controls "$homeDir" desktop/build/parity/smartqueue-limit-controls
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python tools/capture_smartqueue_limit.py reload "$homeDir" desktop/build/parity/smartqueue-limit-reload
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - name: Replay pinned settings routes in four locales and verify real preference consumers
         shell: pwsh
         run: |
@@ -198,6 +208,8 @@ jobs:
             desktop/build/verification/glass-popup/*.png
             desktop/build/parity/glass-dock-Dark/*
             desktop/build/parity/glass-dock-Light/*
+            desktop/build/parity/smartqueue-limit-controls/*
+            desktop/build/parity/smartqueue-limit-reload/*
             desktop/build/verification/settings-icons.json
             desktop/build/parity/settings-*/*.json
             desktop/build/parity/settings-*/gradle.log

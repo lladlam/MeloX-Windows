@@ -19,6 +19,8 @@
 
 MeloX Windows 基于 [lladlam/MeloX-Android](https://github.com/lladlam/MeloX-Android) 的设计、交互与业务逻辑进行跨平台移植。
 
+当前活跃迁移目标为正式 **Android 0.6.5（`v0.6.5` / `53244b9` / versionCode 24）**，整体仍为部分完成。进度与未完成项见 [0.6.5 迁移矩阵](parity/53244b9/MATRIX.md)；此前 0.6.2 的测试与发行证据保留原始版本归属。
+
 项目目标是将 MeloX 的完整功能带到 Windows 桌面：
 
 - 使用 **Kotlin + Compose Multiplatform Desktop** 重建界面与交互；

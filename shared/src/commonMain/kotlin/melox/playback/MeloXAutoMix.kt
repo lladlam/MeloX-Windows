@@ -73,9 +73,12 @@ data class MeloXAutoMixSettings(
     val skipQuietOpening: Boolean = true,
     val minimumConfidence: Double = 0.42,
     val analyzeStreaming: Boolean = true,
+    val smartQueueAnalysisLimit: Int = 60,
     val fallback: MeloXAutoMixFallback = MeloXAutoMixFallback.Crossfade,
 ) {
     companion object {
+        const val UNLIMITED_ANALYSIS = -1
+
         fun read(): MeloXAutoMixSettings {
             val prefs = getPreferences("melox_playback_modes")
             fun <T : Enum<T>> enumValue(key: String, fallback: T, values: Array<T>): T {
@@ -94,6 +97,9 @@ data class MeloXAutoMixSettings(
                 skipQuietOpening = prefs.getBoolean("automix_skip_quiet_opening", true),
                 minimumConfidence = prefs.getFloat("automix_minimum_confidence", 0.42f).toDouble().coerceIn(0.2, 0.8),
                 analyzeStreaming = prefs.getBoolean("automix_analyze_streaming", true),
+                smartQueueAnalysisLimit = prefs.getInt("automix_smart_queue_analysis_limit", 60).let {
+                    if (it < 0) UNLIMITED_ANALYSIS else it.coerceIn(10, 500)
+                },
                 fallback = enumValue("automix_fallback", MeloXAutoMixFallback.Crossfade, MeloXAutoMixFallback.entries.toTypedArray()),
             )
         }
