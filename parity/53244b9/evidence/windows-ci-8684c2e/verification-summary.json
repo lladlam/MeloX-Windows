@@ -1,0 +1,19 @@
+{
+  "run_id": "39270464456",
+  "head_sha": "8684c2e8e5e13d78cc99e8d08b6e821d20818a1b",
+  "conclusion": "failure",
+  "downloaded_artifact": "Verification-Windows",
+  "windows_suites": 55,
+  "windows_tests": {
+    "tests": 270,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "flowing_light_audit": "PASSED",
+  "failed_step": "Replay the real glass dock and moving selection in both themes",
+  "failure": "fixed -248px drag crossed multiple tabs after split halved the available dock width",
+  "remaining_steps": "SKIPPED",
+  "distribution_zip": "NOT_PRODUCED",
+  "delivery_acceptance": "NOT_PASSED"
+}

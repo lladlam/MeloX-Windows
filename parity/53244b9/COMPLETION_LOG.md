@@ -33,3 +33,9 @@
 - 分屏controls **58 scenes / 69 assertions**、独立reload **6/14**、竖屏 **6/12**，合计 **70/95** 全通过；实际生产FFmpeg/播放器向明确标注的软件验收端点写入真实PCM，硬件听感未代验。当前分屏指针回放使用环境JDK21，Windows CI固定JDK17；不隐去平台差异。
 - 新布局下歌词语言controls/reload再次通过 **33 scenes / 35 assertions**；本批已完成本地回放共 **5组 / 103 scenes / 130 assertions**。另一次完整设置route回放未生成capture.json，不计通过。初次位置回放遇到目标稳定等待不足，扩大物理点击的等待预算后完整回放通过；并发Gradle编译曾发生backup冲突，最终顺序以JDK17验证成功。
 - 实现已正常推main **`8684c2e`**，本地原始XML、日志、capture/语义/UTF-8参数和选定截图在 `evidence/split-layout/local/`，行为及边界见 `SPLIT_LAYOUT_AND_FLOW.md`。CI新增流光审计与3组分屏回放，同时修复歌词语言两目录漏传；本实现Windows发行尚待成功构建、完整下载后独立核验。
+
+## 4. Dock回放适配分屏宽度（7fca71b）
+
+- Windows **39270464456 / head 8684c2e** 失败于旧Dock回放。下载Verification-Windows后重计原始XML：**270 tests / 55 suites / 0 failures/errors/skipped**；三档流光生产Canvas审计PASSED。旧回放固定拖动248px，分屏后实际段宽约减半，跨过多个标签导致Library断言失败；剩余回放/打包被跳过，**未产生发行ZIP，不计发行验收通过**。原始失败回放、截图及Windows流光证据见 `evidence/windows-ci-8684c2e/`。
+- 增加可读的横向根标签定位；`hold-drag-between` 只从semantics读取两个真实按钮的中心坐标，然后发送真实指针按下／移动／释放。深浅两主题共 **14 scenes / 18 assertions** 通过，JDK17下设置全路由回归 **82 scenes / 65 assertions** 通过。该修复未用直接调用语义动作代替拖动。
+- 修复实现 **`7fca71b`** 已正常推main，待新的Windows全量构建与独立发行核验；本地回放在 `evidence/dock-adaptive-local/`。最近可独立验证的发行仍为13d275c，缺失语言原始回放的历史边界保留。

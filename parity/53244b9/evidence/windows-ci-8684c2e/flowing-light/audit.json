@@ -1,0 +1,37 @@
+{
+  "android_commit": "53244b9d6b21d7e3a609e8cb11876efef70f218b",
+  "no_beat_brightness_pulse": true,
+  "no_synthetic_reactivity": true,
+  "source": "production Flowing Light Canvas with generated artwork fixture",
+  "samples": [
+    {
+      "resume_moves": true,
+      "pixels": 76800,
+      "pause_frozen": true,
+      "reduce_motion_frozen": true,
+      "changed_pixels": 76799,
+      "unmount_remount_cycles": 12,
+      "quality": "Low"
+    },
+    {
+      "resume_moves": true,
+      "pixels": 76800,
+      "pause_frozen": true,
+      "reduce_motion_frozen": true,
+      "changed_pixels": 76794,
+      "unmount_remount_cycles": 12,
+      "quality": "Balanced"
+    },
+    {
+      "resume_moves": true,
+      "pixels": 76800,
+      "pause_frozen": true,
+      "reduce_motion_frozen": true,
+      "changed_pixels": 76796,
+      "unmount_remount_cycles": 12,
+      "quality": "High"
+    }
+  ],
+  "status": "PASSED",
+  "phase_wrap_continuous": true
+}
