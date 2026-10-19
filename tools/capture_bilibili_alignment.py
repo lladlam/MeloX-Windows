@@ -26,7 +26,7 @@ tag = 'setting-' + key
 runtime = 'bilibiliLyricAudioAlignmentEnabled'
 if mode == 'controls':
     add('remote-reject', 'tap@remote-reject', ['cloud-enabled:false'])
-add('settings-tab', '765,745', ['tag:settings-root'])
+add('settings-tab', 'tap@root-tab:Settings', ['tag:settings-root'])
 add('find-experimental', 'reveal@settings-open-experimental')
 add('experimental', 'tap@settings-open-experimental', ['tag:settings-experimental'])
 add('find-alignment', 'reveal@' + tag)
