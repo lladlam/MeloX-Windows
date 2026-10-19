@@ -1,0 +1,218 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.5.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :desktop:kmpPartiallyResolvedDependenciesChecker
+> Task :desktop:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :desktop:extractPinnedGlassGeometry UP-TO-DATE
+> Task :desktop:convertXmlValueResourcesForCommonMain NO-SOURCE
+> Task :desktop:copyNonXmlValueResourcesForCommonMain NO-SOURCE
+> Task :desktop:prepareComposeResourcesTaskForCommonMain NO-SOURCE
+> Task :desktop:generateResourceAccessorsForCommonMain SKIPPED
+> Task :desktop:convertXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :desktop:copyNonXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :desktop:prepareComposeResourcesTaskForDesktopMain NO-SOURCE
+> Task :desktop:generateResourceAccessorsForDesktopMain SKIPPED
+> Task :desktop:generateActualResourceCollectorsForDesktopMain SKIPPED
+> Task :desktop:generateComposeResClass SKIPPED
+> Task :desktop:generateExpectResourceCollectorsForCommonMain SKIPPED
+> Task :innertube:kmpPartiallyResolvedDependenciesChecker
+> Task :innertube:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :innertube:extractAndroidInnerTube UP-TO-DATE
+> Task :innertube:compileKotlinDesktop UP-TO-DATE
+> Task :innertube:compileDesktopMainJava NO-SOURCE
+> Task :innertube:desktopProcessResources NO-SOURCE
+> Task :innertube:processDesktopMainResources SKIPPED
+> Task :innertube:desktopMainClasses UP-TO-DATE
+> Task :innertube:desktopJar UP-TO-DATE
+> Task :shared:kmpPartiallyResolvedDependenciesChecker
+> Task :shared:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :shared:convertXmlValueResourcesForCommonMain NO-SOURCE
+> Task :shared:copyNonXmlValueResourcesForCommonMain NO-SOURCE
+> Task :shared:prepareComposeResourcesTaskForCommonMain NO-SOURCE
+> Task :shared:generateResourceAccessorsForCommonMain SKIPPED
+> Task :shared:convertXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :shared:copyNonXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :shared:prepareComposeResourcesTaskForDesktopMain NO-SOURCE
+> Task :shared:generateResourceAccessorsForDesktopMain SKIPPED
+> Task :shared:generateActualResourceCollectorsForDesktopMain SKIPPED
+> Task :shared:generateComposeResClass SKIPPED
+> Task :shared:generateExpectResourceCollectorsForCommonMain SKIPPED
+> Task :shared:compileKotlinDesktop UP-TO-DATE
+> Task :shared:compileDesktopMainJava NO-SOURCE
+> Task :shared:assembleDesktopMainResources UP-TO-DATE
+> Task :shared:desktopProcessResources UP-TO-DATE
+> Task :shared:processDesktopMainResources SKIPPED
+> Task :shared:desktopMainClasses UP-TO-DATE
+> Task :shared:desktopJar UP-TO-DATE
+> Task :desktop:compileKotlinDesktop UP-TO-DATE
+> Task :desktop:compileDesktopMainJava NO-SOURCE
+> Task :desktop:assembleDesktopMainResources UP-TO-DATE
+> Task :desktop:desktopProcessResources UP-TO-DATE
+> Task :desktop:processDesktopMainResources SKIPPED
+> Task :desktop:desktopMainClasses UP-TO-DATE
+
+> Task :desktop:captureUi
+[INFO MeloXFont] Android MiLan Pro static instances loaded: CSS=[100, 200, 300, 400, 500, 600, 700, 800, 900] files=mi_lan_pro_w{100..800}.ttf (CSS 900 shares frozen axis-700 instance)
+Captured 00-settings: 1100x780 density=1.0
+Physical click remote-reject: remote-reject at Offset(295.5, 468.0)
+Captured 01-remote-reject: 1100x780 density=1.0
+Verified remote-reject: cloud-choice:true
+Verified remote-reject: cloud-enabled:false
+Captured 02-reveal-1: 1100x780 density=1.0
+Physical click open-general: settings-open-general at Offset(275.0, 435.0)
+Captured 03-open-general: 1100x780 density=1.0
+Verified open-general: tag:settings-general
+Captured 04-reveal-3: 1100x780 density=1.0
+Physical click menu-4: theme_mode at Offset(1035.0, 173.5)
+Captured 05-menu-4: 1100x780 density=1.0
+Physical click choose-5: settings-option:Light at Offset(945.0, 230.0)
+Captured 06-choose-5: 1100x780 density=1.0
+Verified choose-5: pref-string:theme_mode:Light
+Verified choose-5: runtime:themeMode:Light
+Captured 07-reveal-6: 1100x780 density=1.0
+Physical click menu-7: general_swipe_full_action at Offset(1015.5, 521.5)
+Captured 08-menu-7: 1100x780 density=1.0
+Physical click choose-8: settings-option:Add to queue at Offset(945.0, 578.0)
+Captured 09-choose-8: 1100x780 density=1.0
+Verified choose-8: pref-string:general_swipe_full_action:AddToQueue
+Verified choose-8: runtime:swipeFullAction:AddToQueue
+Captured 10-reveal-9: 1100x780 density=1.0
+Physical click toggle-10: setting-general_remember_tab at Offset(1032.0, 465.0)
+Captured 11-toggle-10: 1100x780 density=1.0
+Verified toggle-10: pref-bool:general_remember_tab:false
+Verified toggle-10: unchecked:setting-general_remember_tab
+Verified toggle-10: runtime:rememberLastTab:false
+Captured 12-back-general: 1100x780 density=1.0
+Captured 13-reveal-12: 1100x780 density=1.0
+Physical click open-appearance: settings-open-appearance at Offset(275.0, 491.0)
+Captured 14-open-appearance: 1100x780 density=1.0
+Verified open-appearance: tag:settings-appearance
+Captured 15-reveal-14: 1100x780 density=1.0
+Captured 16-set-player_flowing_speed: 1100x780 density=1.0
+Verified set-player_flowing_speed: pref-float:player_flowing_speed:2
+Verified set-player_flowing_speed: runtime:flowingLightSpeed:2
+Captured 17-reveal-16: 1100x780 density=1.0
+Captured 18-set-player_flowing_saturation: 1100x780 density=1.0
+Verified set-player_flowing_saturation: pref-float:player_flowing_saturation:2
+Verified set-player_flowing_saturation: runtime:flowingLightSaturation:2
+Captured 19-reveal-18: 1100x780 density=1.0
+Captured 20-set-player_flowing_brightness: 1100x780 density=1.0
+Verified set-player_flowing_brightness: pref-float:player_flowing_brightness:1.6
+Verified set-player_flowing_brightness: runtime:flowingLightBrightness:1.6
+Captured 21-reveal-20: 1100x780 density=1.0
+Physical click menu-21: player_background_mode at Offset(937.0, 305.5)
+Captured 22-menu-21: 1100x780 density=1.0
+Physical click choose-22: settings-option:Static blurred artwork at Offset(945.0, 406.0)
+Captured 23-choose-22: 1100x780 density=1.0
+Verified choose-22: pref-string:player_background_mode:BlurredArtwork
+Verified choose-22: runtime:playerBackgroundMode:BlurredArtwork
+Captured 24-conditional-background: 1100x780 density=1.0
+Verified conditional-background: absent:player_flowing_speed
+Captured 25-reveal-24: 1100x780 density=1.0
+Physical click toggle-25: setting-immersive_playback at Offset(1032.0, 549.0)
+Captured 26-toggle-25: 1100x780 density=1.0
+Verified toggle-25: pref-bool:immersive_playback:true
+Verified toggle-25: checked:setting-immersive_playback
+Verified toggle-25: runtime:immersivePlaybackEnabled:true
+Captured 27-reveal-26: 1100x780 density=1.0
+Physical click toggle-27: setting-library_playlist_search_hidden at Offset(1032.0, 540.0)
+Captured 28-toggle-27: 1100x780 density=1.0
+Verified toggle-27: pref-bool:library_playlist_search_hidden:true
+Verified toggle-27: checked:setting-library_playlist_search_hidden
+Verified toggle-27: runtime:playlistSearchBarHidden:true
+Captured 29-reveal-28: 1100x780 density=1.0
+Physical click toggle-29: setting-library_playlist_show_artwork at Offset(1032.0, 596.0)
+Captured 30-toggle-29: 1100x780 density=1.0
+Verified toggle-29: pref-bool:library_playlist_show_artwork:true
+Verified toggle-29: checked:setting-library_playlist_show_artwork
+Verified toggle-29: runtime:playlistShowArtwork:true
+Captured 31-back-appearance: 1100x780 density=1.0
+Captured 32-reveal-31: 1100x780 density=1.0
+Physical click open-content: settings-open-content at Offset(275.0, 547.0)
+Captured 33-open-content: 1100x780 density=1.0
+Verified open-content: tag:settings-content
+Captured 34-reveal-33: 1100x780 density=1.0
+Physical click menu-34: music_area at Offset(1043.5, 173.5)
+Captured 35-menu-34: 1100x780 density=1.0
+Physical click choose-35: settings-option:Japan at Offset(945.0, 318.0)
+Captured 36-choose-35: 1100x780 density=1.0
+Verified choose-35: pref-string:music_area:日本
+Verified choose-35: runtime:musicArea:日本
+Captured 37-reveal-36: 1100x780 density=1.0
+Physical click toggle-37: setting-content_playlist_play_count at Offset(1032.0, 285.0)
+Captured 38-toggle-37: 1100x780 density=1.0
+Verified toggle-37: pref-bool:content_playlist_play_count:false
+Verified toggle-37: unchecked:setting-content_playlist_play_count
+Verified toggle-37: runtime:showPlaylistPlayCount:false
+Captured 39-back-content: 1100x780 density=1.0
+Captured 40-reveal-39: 1100x780 density=1.0
+Physical click open-playback: settings-open-playback at Offset(275.0, 603.0)
+Captured 41-open-playback: 1100x780 density=1.0
+Verified open-playback: tag:settings-playback
+Captured 42-reveal-41: 1100x780 density=1.0
+Physical click eq-on: equalizer-enabled at Offset(1032.0, 575.0)
+Captured 43-eq-on: 1100x780 density=1.0
+Verified eq-on: eq-enabled:true
+Captured 44-reveal-43: 1100x780 density=1.0
+Physical click eq-custom: equalizer-preset-custom at Offset(825.0, 570.0)
+Captured 45-eq-custom: 1100x780 density=1.0
+Verified eq-custom: eq-preset:Custom
+Captured 46-reveal-45: 1100x780 density=1.0
+Captured 47-eq-band-9: 1100x780 density=1.0
+Verified eq-band-9: tag:equalizer-band-9
+Captured 48-reveal-47: 1100x780 density=1.0
+Physical click automix-on: setting-auto_mix at Offset(1032.0, 581.0)
+Captured 49-automix-on: 1100x780 density=1.0
+Verified automix-on: tag:automix_mode
+Captured 50-reveal-49: 1100x780 density=1.0
+Physical click automix-menu: automix_mode at Offset(1029.5, 602.5)
+Captured 51-automix-menu: 1100x780 density=1.0
+Physical click automix-fixed: settings-option:Fixed length at Offset(945.0, 659.0)
+Captured 52-automix-fixed: 1100x780 density=1.0
+Verified automix-fixed: absent:automix_transition_bars
+Verified automix-fixed: automix-mode:Fixed
+Captured 53-reveal-52: 1100x780 density=1.0
+Physical click duration-menu: automix_fixed_duration_ms at Offset(1013.0, 602.5)
+Captured 54-duration-menu: 1100x780 density=1.0
+Physical click duration-12: settings-option:12 seconds at Offset(945.0, 502.0)
+Captured 55-duration-12: 1100x780 density=1.0
+Verified duration-12: automix-duration-ms:12000
+Captured 56-back-playback: 1100x780 density=1.0
+Captured 57-reveal-56: 1100x780 density=1.0
+Physical click open-storage: settings-open-storage at Offset(275.0, 547.0)
+Captured 58-open-storage: 1100x780 density=1.0
+Verified open-storage: tag:settings-storage
+Captured 59-reveal-58: 1100x780 density=1.0
+Physical click toggle-59: setting-download_lyrics at Offset(1032.0, 548.0)
+Captured 60-toggle-59: 1100x780 density=1.0
+Verified toggle-59: pref-bool:download_lyrics:false
+Verified toggle-59: unchecked:setting-download_lyrics
+Captured 61-download-consumer: 1100x780 density=1.0
+Verified download-consumer: download-lyrics:false
+Captured 62-reveal-61: 1100x780 density=1.0
+Physical click confirm-clear: storage-clear-all at Offset(825.0, 362.0)
+Captured 63-confirm-clear: 1100x780 density=1.0
+Verified confirm-clear: tag:settings-confirmation
+Physical click cancel-clear: settings-confirm-cancel at Offset(295.5, 426.0)
+Captured 64-cancel-clear: 1100x780 density=1.0
+Verified cancel-clear: absent:settings-confirmation
+Captured 65-back-storage: 1100x780 density=1.0
+Captured 66-reveal-65: 1100x780 density=1.0
+Physical click open-tablayout: settings-open-tablayout at Offset(275.0, 552.0)
+Captured 67-open-tablayout: 1100x780 density=1.0
+Verified open-tablayout: tag:settings-tablayout
+Captured 68-reveal-67: 1100x780 density=1.0
+Captured 69-tab-order-before: 1100x780 density=1.0
+Verified tab-order-before: state:layout-tab_order:Home>Explore>Library>Podcasts>Downloads>Cloud>Settings
+Captured 70-reveal-69: 1100x780 density=1.0
+Physical click tab-order-up: layout-tab_order-Podcasts-up at Offset(1039.0, 538.0)
+Captured 71-tab-order-up: 1100x780 density=1.0
+Verified tab-order-up: state:layout-tab_order:Home>Explore>Podcasts>Library>Downloads>Cloud>Settings
+Captured 72-back-tabs: 1100x780 density=1.0
+Captured 73-reload: 1100x780 density=1.0
+Verified reload: runtime:flowingLightSpeed:2.0
+Verified reload: runtime:playlistSearchBarHidden:true
+Verified reload: runtime:musicArea:日本
+
+BUILD SUCCESSFUL in 1m 23s
+15 actionable tasks: 4 executed, 11 up-to-date
+Consider enabling configuration cache to speed up this build: https://docs.gradle.org/9.5.1/userguide/configuration_cache_enabling.html

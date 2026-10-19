@@ -29,3 +29,5 @@
 - 固定Android 0.6.5同内容截图／动态帧仍缺失；本批光栅变化仅用于判断桌面生产渲染是否更新，不作为Android像素MATCH。
 
 Windows `39270464456` 的270项测试和三档流光审计通过，但旧Dock回放的固定248px拖动未适配分屏，剩余流程跳过、未生成发行ZIP。修复 `7fca71b` 改为读取实际根标签中心后发送物理拖动；深浅两主题14 scenes/18 assertions与JDK17完整设置路由82/65通过，新的Windows发行核验仍待完成。
+
+随后Windows `39272967752` 已通过Dock、新歌词语言和三个分屏回放，原始完整回放重计11组/312 scenes/295 assertions；zh-TW 800×600一般页的触感反馈行移出视口，旧聚合断言失败。`3a79b5c` 改为逐项真实滚轮滚入后检查；JDK17四Locale路由和controls/reload共6组/434 scenes/333 assertions通过。本次失败仍未生成发行ZIP，后续Windows全流程待验。

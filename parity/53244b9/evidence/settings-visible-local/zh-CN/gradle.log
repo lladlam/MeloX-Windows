@@ -1,0 +1,232 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.5.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :desktop:kmpPartiallyResolvedDependenciesChecker
+> Task :desktop:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :desktop:extractPinnedGlassGeometry UP-TO-DATE
+> Task :desktop:convertXmlValueResourcesForCommonMain NO-SOURCE
+> Task :desktop:copyNonXmlValueResourcesForCommonMain NO-SOURCE
+> Task :desktop:prepareComposeResourcesTaskForCommonMain NO-SOURCE
+> Task :desktop:generateResourceAccessorsForCommonMain SKIPPED
+> Task :desktop:convertXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :desktop:copyNonXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :desktop:prepareComposeResourcesTaskForDesktopMain NO-SOURCE
+> Task :desktop:generateResourceAccessorsForDesktopMain SKIPPED
+> Task :desktop:generateActualResourceCollectorsForDesktopMain SKIPPED
+> Task :desktop:generateComposeResClass SKIPPED
+> Task :desktop:generateExpectResourceCollectorsForCommonMain SKIPPED
+> Task :innertube:kmpPartiallyResolvedDependenciesChecker
+> Task :innertube:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :innertube:extractAndroidInnerTube UP-TO-DATE
+> Task :innertube:compileKotlinDesktop UP-TO-DATE
+> Task :innertube:compileDesktopMainJava NO-SOURCE
+> Task :innertube:desktopProcessResources NO-SOURCE
+> Task :innertube:processDesktopMainResources SKIPPED
+> Task :innertube:desktopMainClasses UP-TO-DATE
+> Task :innertube:desktopJar UP-TO-DATE
+> Task :shared:kmpPartiallyResolvedDependenciesChecker
+> Task :shared:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :shared:convertXmlValueResourcesForCommonMain NO-SOURCE
+> Task :shared:copyNonXmlValueResourcesForCommonMain NO-SOURCE
+> Task :shared:prepareComposeResourcesTaskForCommonMain NO-SOURCE
+> Task :shared:generateResourceAccessorsForCommonMain SKIPPED
+> Task :shared:convertXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :shared:copyNonXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :shared:prepareComposeResourcesTaskForDesktopMain NO-SOURCE
+> Task :shared:generateResourceAccessorsForDesktopMain SKIPPED
+> Task :shared:generateActualResourceCollectorsForDesktopMain SKIPPED
+> Task :shared:generateComposeResClass SKIPPED
+> Task :shared:generateExpectResourceCollectorsForCommonMain SKIPPED
+> Task :shared:compileKotlinDesktop UP-TO-DATE
+> Task :shared:compileDesktopMainJava NO-SOURCE
+> Task :shared:assembleDesktopMainResources UP-TO-DATE
+> Task :shared:desktopProcessResources UP-TO-DATE
+> Task :shared:processDesktopMainResources SKIPPED
+> Task :shared:desktopMainClasses UP-TO-DATE
+> Task :shared:desktopJar UP-TO-DATE
+> Task :desktop:compileKotlinDesktop UP-TO-DATE
+> Task :desktop:compileDesktopMainJava NO-SOURCE
+> Task :desktop:assembleDesktopMainResources UP-TO-DATE
+> Task :desktop:desktopProcessResources UP-TO-DATE
+> Task :desktop:processDesktopMainResources SKIPPED
+> Task :desktop:desktopMainClasses UP-TO-DATE
+
+> Task :desktop:captureUi
+[INFO MeloXFont] Android MiLan Pro static instances loaded: CSS=[100, 200, 300, 400, 500, 600, 700, 800, 900] files=mi_lan_pro_w{100..800}.ttf (CSS 900 shares frozen axis-700 instance)
+Captured 00-settings: 427x924 density=1.0
+Physical click remote-reject: remote-reject at Offset(127.0, 593.0)
+Captured 01-remote-reject: 427x924 density=1.0
+Verified remote-reject: cloud-choice:true
+Verified remote-reject: cloud-enabled:false
+Captured 02-reveal-1: 427x924 density=1.0
+Physical click open-general: settings-open-general at Offset(213.5, 435.0)
+Captured 03-open-general: 427x924 density=1.0
+Verified open-general: tag:settings-general
+Captured 04-inspect-general: 427x924 density=1.0
+Verified inspect-general: text:通用
+Captured 05-reveal-4: 427x924 density=1.0
+Captured 06-inspect-general-general_clipboard_links: 427x924 density=1.0
+Verified inspect-general-general_clipboard_links: enabled:setting-general_clipboard_links
+Captured 07-reveal-6: 427x924 density=1.0
+Captured 08-inspect-general-general_haptic_feedback: 427x924 density=1.0
+Verified inspect-general-general_haptic_feedback: disabled:setting-general_haptic_feedback
+Captured 09-reveal-8: 427x924 density=1.0
+Captured 10-inspect-general-system_font: 427x924 density=1.0
+Verified inspect-general-system_font: enabled:setting-system_font
+Captured 11-back-general: 427x924 density=1.0
+Verified back-general: tag:settings-root
+Captured 12-reveal-11: 427x924 density=1.0
+Physical click open-appearance: settings-open-appearance at Offset(213.5, 491.0)
+Captured 13-open-appearance: 427x924 density=1.0
+Verified open-appearance: tag:settings-appearance
+Captured 14-reveal-13: 427x924 density=1.0
+Captured 15-inspect-appearance: 427x924 density=1.0
+Verified inspect-appearance: text:外观
+Verified inspect-appearance: enabled:setting-immersive_playback
+Captured 16-back-appearance: 427x924 density=1.0
+Verified back-appearance: tag:settings-root
+Captured 17-reveal-16: 427x924 density=1.0
+Physical click open-content: settings-open-content at Offset(213.5, 547.0)
+Captured 18-open-content: 427x924 density=1.0
+Verified open-content: tag:settings-content
+Captured 19-inspect-content: 427x924 density=1.0
+Verified inspect-content: text:内容
+Captured 20-back-content: 427x924 density=1.0
+Verified back-content: tag:settings-root
+Captured 21-reveal-20: 427x924 density=1.0
+Physical click open-playback: settings-open-playback at Offset(213.5, 603.0)
+Captured 22-open-playback: 427x924 density=1.0
+Verified open-playback: tag:settings-playback
+Captured 23-inspect-playback: 427x924 density=1.0
+Verified inspect-playback: text:播放
+Captured 24-back-playback: 427x924 density=1.0
+Verified back-playback: tag:settings-root
+Captured 25-reveal-24: 427x924 density=1.0
+Physical click open-lyrics: settings-open-lyrics at Offset(213.5, 659.0)
+Captured 26-open-lyrics: 427x924 density=1.0
+Verified open-lyrics: tag:settings-lyrics
+Captured 27-inspect-lyrics: 427x924 density=1.0
+Verified inspect-lyrics: text:歌词
+Captured 28-back-lyrics: 427x924 density=1.0
+Verified back-lyrics: tag:settings-root
+Captured 29-reveal-28: 427x924 density=1.0
+Physical click open-storage: settings-open-storage at Offset(213.5, 715.0)
+Captured 30-open-storage: 427x924 density=1.0
+Verified open-storage: tag:settings-storage
+Captured 31-inspect-storage: 427x924 density=1.0
+Verified inspect-storage: text:存储管理
+Captured 32-back-storage: 427x924 density=1.0
+Verified back-storage: tag:settings-root
+Captured 33-reveal-32: 427x924 density=1.0
+Physical click open-features: settings-open-features at Offset(213.5, 740.0)
+Captured 34-open-features: 427x924 density=1.0
+Verified open-features: tag:settings-features
+Captured 35-inspect-features: 427x924 density=1.0
+Verified inspect-features: text:功能模块
+Captured 36-back-features: 427x924 density=1.0
+Verified back-features: tag:settings-root
+Captured 37-reveal-36: 427x924 density=1.0
+Physical click open-recognition: settings-open-recognition at Offset(213.5, 705.0)
+Captured 38-open-recognition: 427x924 density=1.0
+Verified open-recognition: tag:settings-recognition
+Captured 39-inspect-recognition: 427x924 density=1.0
+Verified inspect-recognition: text:听歌识曲
+Verified inspect-recognition: enabled:recognition-start
+Verified inspect-recognition: tag:recognition-status
+Captured 40-back-recognition: 427x924 density=1.0
+Verified back-recognition: tag:settings-root
+Captured 41-reveal-40: 427x924 density=1.0
+Physical click open-messages: settings-open-messages at Offset(213.5, 669.0)
+Captured 42-open-messages: 427x924 density=1.0
+Captured 43-back-messages: 427x924 density=1.0
+Verified back-messages: tag:settings-root
+Captured 44-reveal-43: 427x924 density=1.0
+Physical click open-listentogether: settings-open-listentogether at Offset(213.5, 725.0)
+Captured 45-open-listentogether: 427x924 density=1.0
+Verified open-listentogether: tag:settings-listentogether
+Captured 46-inspect-listentogether: 427x924 density=1.0
+Verified inspect-listentogether: text:一起听
+Captured 47-back-listentogether: 427x924 density=1.0
+Verified back-listentogether: tag:settings-root
+Captured 48-reveal-47: 427x924 density=1.0
+Physical click open-tablayout: settings-open-tablayout at Offset(213.5, 690.0)
+Captured 49-open-tablayout: 427x924 density=1.0
+Verified open-tablayout: tag:settings-tablayout
+Captured 50-inspect-tablayout: 427x924 density=1.0
+Verified inspect-tablayout: text:页面与标签栏
+Captured 51-back-tablayout: 427x924 density=1.0
+Verified back-tablayout: tag:settings-root
+Captured 52-reveal-51: 427x924 density=1.0
+Physical click open-systemplayback: settings-open-systemplayback at Offset(213.5, 746.0)
+Captured 53-open-systemplayback: 427x924 density=1.0
+Verified open-systemplayback: tag:settings-systemplayback
+Captured 54-inspect-systemplayback: 427x924 density=1.0
+Verified inspect-systemplayback: text:系统歌词显示
+Captured 55-back-systemplayback: 427x924 density=1.0
+Verified back-systemplayback: tag:settings-root
+Captured 56-reveal-55: 427x924 density=1.0
+Physical click open-skylinelyrics: settings-open-skylinelyrics at Offset(213.5, 711.0)
+Captured 57-open-skylinelyrics: 427x924 density=1.0
+Verified open-skylinelyrics: tag:settings-skylinelyrics
+Captured 58-inspect-skylinelyrics: 427x924 density=1.0
+Verified inspect-skylinelyrics: text:全屏天际歌词
+Captured 59-back-skylinelyrics: 427x924 density=1.0
+Verified back-skylinelyrics: tag:settings-root
+Captured 60-reveal-59: 427x924 density=1.0
+Physical click open-floatinglyrics: settings-open-floatinglyrics at Offset(213.5, 676.0)
+Captured 61-open-floatinglyrics: 427x924 density=1.0
+Verified open-floatinglyrics: tag:settings-floatinglyrics
+Captured 62-inspect-floatinglyrics: 427x924 density=1.0
+Verified inspect-floatinglyrics: text:悬浮窗歌词
+Verified inspect-floatinglyrics: disabled:setting-floating_lyrics_enabled
+Captured 63-back-floatinglyrics: 427x924 density=1.0
+Verified back-floatinglyrics: tag:settings-root
+Captured 64-reveal-63: 427x924 density=1.0
+Physical click open-remoteconfig: settings-open-remoteconfig at Offset(213.5, 701.0)
+Captured 65-open-remoteconfig: 427x924 density=1.0
+Verified open-remoteconfig: tag:settings-remoteconfig
+Captured 66-inspect-remoteconfig: 427x924 density=1.0
+Verified inspect-remoteconfig: text:远程兼容性配置
+Captured 67-back-remoteconfig: 427x924 density=1.0
+Verified back-remoteconfig: tag:settings-root
+Captured 68-reveal-67: 427x924 density=1.0
+Physical click open-about: settings-open-about at Offset(213.5, 665.0)
+Captured 69-open-about: 427x924 density=1.0
+Verified open-about: tag:settings-about
+Captured 70-inspect-about: 427x924 density=1.0
+Verified inspect-about: text:关于 MeloX
+Captured 71-back-about: 427x924 density=1.0
+Verified back-about: tag:settings-root
+Captured 72-reveal-71: 427x924 density=1.0
+Physical click open-legal: settings-open-legal at Offset(213.5, 721.0)
+Captured 73-open-legal: 427x924 density=1.0
+Verified open-legal: tag:settings-legal
+Captured 74-inspect-legal: 427x924 density=1.0
+Verified inspect-legal: text:隐私政策与免责声明
+Captured 75-back-legal: 427x924 density=1.0
+Verified back-legal: tag:settings-root
+Captured 76-reveal-75: 427x924 density=1.0
+Physical click open-developer: settings-open-developer at Offset(213.5, 686.0)
+Captured 77-open-developer: 427x924 density=1.0
+Verified open-developer: tag:settings-developer
+Captured 78-inspect-developer: 427x924 density=1.0
+Verified inspect-developer: text:开发者选项
+Captured 79-back-developer: 427x924 density=1.0
+Verified back-developer: tag:settings-root
+Captured 80-reveal-79: 427x924 density=1.0
+Physical click open-experimental: settings-open-experimental at Offset(213.5, 742.0)
+Captured 81-open-experimental: 427x924 density=1.0
+Verified open-experimental: tag:settings-experimental
+Captured 82-inspect-experimental: 427x924 density=1.0
+Verified inspect-experimental: text:测试功能尝鲜
+Captured 83-back-experimental: 427x924 density=1.0
+Verified back-experimental: tag:settings-root
+Captured 84-root-top: 427x924 density=1.0
+Captured 85-reveal-84: 427x924 density=1.0
+Physical click focus-search: settings-search at Offset(228.5, 146.0)
+Captured 86-focus-search: 427x924 density=1.0
+Captured 87-no-match: 427x924 density=1.0
+Verified no-match: tag:settings-search-empty
+
+BUILD SUCCESSFUL in 1m 9s
+15 actionable tasks: 4 executed, 11 up-to-date
+Consider enabling configuration cache to speed up this build: https://docs.gradle.org/9.5.1/userguide/configuration_cache_enabling.html

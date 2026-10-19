@@ -1,0 +1,6 @@
+remote-reject:tap@remote-reject
+settings:tap@root-tab:Settings
+drag-library:hold-drag-between@root-tab:Settings,root-tab:Library
+drag-settings:hold-drag-between@root-tab:Library,root-tab:Settings
+repeat-library:hold-drag-between@root-tab:Settings,root-tab:Library
+repeat-settings:hold-drag-between@root-tab:Library,root-tab:Settings

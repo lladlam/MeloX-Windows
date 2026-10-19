@@ -1,0 +1,48 @@
+{
+  "source_commit": "3a79b5c",
+  "jdk": 17,
+  "replays": [
+    {
+      "path": "en-US",
+      "scenes": 88,
+      "assertions": 65,
+      "passed": true
+    },
+    {
+      "path": "zh-CN",
+      "scenes": 88,
+      "assertions": 65,
+      "passed": true
+    },
+    {
+      "path": "zh-TW",
+      "scenes": 88,
+      "assertions": 65,
+      "passed": true
+    },
+    {
+      "path": "ja-JP",
+      "scenes": 88,
+      "assertions": 65,
+      "passed": true
+    },
+    {
+      "path": "controls",
+      "scenes": 74,
+      "assertions": 55,
+      "passed": true
+    },
+    {
+      "path": "reload",
+      "scenes": 8,
+      "assertions": 18,
+      "passed": true
+    }
+  ],
+  "totals": {
+    "replays": 6,
+    "scenes": 434,
+    "assertions": 333
+  },
+  "status": "PASSED"
+}

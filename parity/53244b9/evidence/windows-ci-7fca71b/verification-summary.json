@@ -1,0 +1,97 @@
+{
+  "run_id": "39272967752",
+  "head_sha": "7fca71b9e3c78c13cfd01d2748af1c5ec0be0944",
+  "conclusion": "failure",
+  "downloaded_artifact": "Verification-Windows",
+  "windows_suites": 55,
+  "windows_tests": {
+    "tests": 270,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "flowing_light_audit": "PASSED",
+  "replays": [
+    {
+      "path": "glass-dock-Dark",
+      "scenes": 7,
+      "assertions": 9,
+      "complete_and_passed": true
+    },
+    {
+      "path": "glass-dock-Light",
+      "scenes": 7,
+      "assertions": 9,
+      "complete_and_passed": true
+    },
+    {
+      "path": "lyric-language-controls",
+      "scenes": 22,
+      "assertions": 22,
+      "complete_and_passed": true
+    },
+    {
+      "path": "lyric-language-reload",
+      "scenes": 11,
+      "assertions": 13,
+      "complete_and_passed": true
+    },
+    {
+      "path": "settings-en-US",
+      "scenes": 82,
+      "assertions": 65,
+      "complete_and_passed": true
+    },
+    {
+      "path": "settings-zh-CN",
+      "scenes": 82,
+      "assertions": 65,
+      "complete_and_passed": true
+    },
+    {
+      "path": "settings-zh-TW",
+      "scenes": 5,
+      "assertions": 7,
+      "complete_and_passed": false
+    },
+    {
+      "path": "smartqueue-limit-controls",
+      "scenes": 26,
+      "assertions": 13,
+      "complete_and_passed": true
+    },
+    {
+      "path": "smartqueue-limit-reload",
+      "scenes": 5,
+      "assertions": 4,
+      "complete_and_passed": true
+    },
+    {
+      "path": "split-layout-controls",
+      "scenes": 58,
+      "assertions": 69,
+      "complete_and_passed": true
+    },
+    {
+      "path": "split-layout-portrait",
+      "scenes": 6,
+      "assertions": 12,
+      "complete_and_passed": true
+    },
+    {
+      "path": "split-layout-reload",
+      "scenes": 6,
+      "assertions": 14,
+      "complete_and_passed": true
+    }
+  ],
+  "complete_passed_totals": {
+    "replays": 11,
+    "scenes": 312,
+    "assertions": 295
+  },
+  "failure": "zh-TW 800x600 General haptic row was outside the visible pane after added split rows; viewport assertions require real wheel reveal",
+  "remaining_steps": "SKIPPED",
+  "distribution_zip": "NOT_PRODUCED",
+  "delivery_acceptance": "NOT_PASSED"
+}

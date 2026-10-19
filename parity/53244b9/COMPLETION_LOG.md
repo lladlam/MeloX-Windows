@@ -39,3 +39,10 @@
 - Windows **39270464456 / head 8684c2e** 失败于旧Dock回放。下载Verification-Windows后重计原始XML：**270 tests / 55 suites / 0 failures/errors/skipped**；三档流光生产Canvas审计PASSED。旧回放固定拖动248px，分屏后实际段宽约减半，跨过多个标签导致Library断言失败；剩余回放/打包被跳过，**未产生发行ZIP，不计发行验收通过**。原始失败回放、截图及Windows流光证据见 `evidence/windows-ci-8684c2e/`。
 - 增加可读的横向根标签定位；`hold-drag-between` 只从semantics读取两个真实按钮的中心坐标，然后发送真实指针按下／移动／释放。深浅两主题共 **14 scenes / 18 assertions** 通过，JDK17下设置全路由回归 **82 scenes / 65 assertions** 通过。该修复未用直接调用语义动作代替拖动。
 - 修复实现 **`7fca71b`** 已正常推main，待新的Windows全量构建与独立发行核验；本地回放在 `evidence/dock-adaptive-local/`。最近可独立验证的发行仍为13d275c，缺失语言原始回放的历史边界保留。
+
+## 5. 短分屏设置逐项滚入后断言（3a79b5c）
+
+- Windows **39272967752 / head 7fca71b** 的原始Verification-Windows已完整下载并重计：**270 tests / 55 suites / 0 failures/errors/skipped**、三档流光审计PASSED，已完整通过 **11组 / 312 scenes / 295 assertions**，包括Dock两主题、歌词语言、三个分屏回放与en-US/zh-CN设置路由。zh-TW 800×600设置路由未完成，不计入通过数；后续步骤跳过，**未生成发行ZIP**。原始输入、完整/失败capture及失败截图在 `evidence/windows-ci-7fca71b/`。
+- 一般页新增分屏设置后，短pane中的触感反馈行在视口之外，旧回放在同一帧断言三行可用性。修复保留全部启用/禁用检查，改为逐项真实滚轮滚入可视区后检查，不修改生产偏好或语义动作。
+- JDK17顺序回归四种Locale（en-US/zh-CN/zh-TW/ja-JP），各 **88 scenes / 65 assertions**；controls **74/55**、独立reload **8/18**，合计 **6组 / 434 scenes / 333 assertions** 全通过。原始参数、capture、日志及一般页检查截图见 `evidence/settings-visible-local/`。
+- 修复 **`3a79b5c`** 已正常推main，新的Windows全流程及发行独立核验仍待完成；整体0.6.5迁移保持PARTIAL。
