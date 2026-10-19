@@ -27,6 +27,12 @@ class AmlldbLyricsClient(
         lyrics(AmlldbLyricQuery.Netease(neteaseSongId), script)
 
     suspend fun lyrics(query: AmlldbLyricQuery, script: MeloXLyricScript = MeloXLyricScript.Original): LyricsDocument =
+        lyrics(query, MeloXLyricPreference(null, script))
+
+    suspend fun lyrics(neteaseSongId: Long, preference: MeloXLyricPreference): LyricsDocument =
+        lyrics(AmlldbLyricQuery.Netease(neteaseSongId), preference)
+
+    suspend fun lyrics(query: AmlldbLyricQuery, preference: MeloXLyricPreference): LyricsDocument =
         coroutineScope {
             val requests = buildList {
                 query.officialParameter()?.let { (name, value) ->
@@ -49,7 +55,7 @@ class AmlldbLyricsClient(
                         val body = httpClient.newCall(request.newBuilder().header("User-Agent", "MeloX-Windows").build()).text()
                         val ttml = if (official) body?.let { JSONObject(it).optJSONObject("data")?.optString("lyrics") } else body
                         ttml?.takeIf { it.contains("http://www.w3.org/ns/ttml") }
-                            ?.let { TtmlLyricsParser.parse(it, script) }?.takeIf { it.lines.isNotEmpty() }
+                            ?.let { TtmlLyricsParser.parse(it, preference) }?.takeIf { it.lines.isNotEmpty() }
                     } catch (cancelled: kotlinx.coroutines.CancellationException) {
                         throw cancelled
                     } catch (_: Exception) { null }

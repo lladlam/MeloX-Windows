@@ -1,0 +1,20 @@
+{
+  "pinned_android": "53244b9d6b21d7e3a609e8cb11876efef70f218b",
+  "verified_against_pure_export": true,
+  "source_sha256": {
+    "android/app/src/main/res/values/strings.xml": "113a961568bd05a324161ef6b7ae4d975b42e86fa0394a3b744759daca261bc9"
+  },
+  "resource_sha256": {
+    "parity/pinned-v065-lyric-language.properties": "3c98e00e44e140c520dae494814b38c15eb2ae2715a13bf3754e2c65015c1a9e"
+  },
+  "strings": {
+    "settings_lyrics_language": "Lyric translation language",
+    "settings_lyrics_language_en": "English",
+    "settings_lyrics_language_system": "Follow system",
+    "settings_lyrics_language_tr": "Türkçe",
+    "settings_lyrics_language_zh_hans": "简体中文",
+    "settings_lyrics_language_zh_hant": "繁體中文"
+  },
+  "localized_overrides": [],
+  "fallback": "Android default strings"
+}

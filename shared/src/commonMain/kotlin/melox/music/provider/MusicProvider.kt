@@ -82,6 +82,8 @@ interface CatalogSearchCapability {
 
 interface LyricsCapability {
     suspend fun lyrics(track: MusicTrack): LyricsDocument
+
+    suspend fun lyrics(track: MusicTrack, preference: melox.lyrics.MeloXLyricPreference): LyricsDocument = lyrics(track)
 }
 
 interface PlaybackCapability {

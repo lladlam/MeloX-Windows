@@ -27,12 +27,12 @@ class ProviderFirstLyricsTest {
             var providerCalls = 0
             var amllCalls = 0
             val loader = MeloXLyricsLoad(object : LyricDocumentSources() {
-                override suspend fun provider(track: MusicTrack, registry: MusicProviderRegistry?): LyricsDocument {
+                override suspend fun provider(track: MusicTrack, registry: MusicProviderRegistry?, preference: MeloXLyricPreference): LyricsDocument {
                     providerCalls++
                     delay(100)
                     return document("provider", LyricSource.Netease)
                 }
-                override suspend fun amll(track: MusicTrack, registry: MusicProviderRegistry?): LyricsDocument {
+                override suspend fun amll(track: MusicTrack, registry: MusicProviderRegistry?, preference: MeloXLyricPreference): LyricsDocument {
                     amllCalls++
                     delay(5_000)
                     return document("authored", LyricSource.AmlL, true)
@@ -59,8 +59,8 @@ class ProviderFirstLyricsTest {
 
     @Test fun cancelledScreenNeverReceivesUpgradeForPreviousTrack() = runTest {
         val loader = MeloXLyricsLoad(object : LyricDocumentSources() {
-            override suspend fun provider(track: MusicTrack, registry: MusicProviderRegistry?) = document("provider", LyricSource.Netease)
-            override suspend fun amll(track: MusicTrack, registry: MusicProviderRegistry?): LyricsDocument {
+            override suspend fun provider(track: MusicTrack, registry: MusicProviderRegistry?, preference: MeloXLyricPreference) = document("provider", LyricSource.Netease)
+            override suspend fun amll(track: MusicTrack, registry: MusicProviderRegistry?, preference: MeloXLyricPreference): LyricsDocument {
                 delay(10_000)
                 return document("old-upgrade", LyricSource.AmlL, true)
             }
@@ -82,8 +82,8 @@ class ProviderFirstLyricsTest {
         MeloXSettingsRuntime.automaticLyricSelectionEnabled = false
         try {
             val loader = MeloXLyricsLoad(object : LyricDocumentSources() {
-                override suspend fun provider(track: MusicTrack, registry: MusicProviderRegistry?) = document("chosen", LyricSource.Netease)
-                override suspend fun amll(track: MusicTrack, registry: MusicProviderRegistry?): LyricsDocument = error("must not fetch")
+                override suspend fun provider(track: MusicTrack, registry: MusicProviderRegistry?, preference: MeloXLyricPreference) = document("chosen", LyricSource.Netease)
+                override suspend fun amll(track: MusicTrack, registry: MusicProviderRegistry?, preference: MeloXLyricPreference): LyricsDocument = error("must not fetch")
                 override suspend fun matchedQq(track: MusicTrack, registry: MusicProviderRegistry?): LyricsDocument = error("must not search")
             }, backgroundScope)
             val result = loader.observe(track).toList()

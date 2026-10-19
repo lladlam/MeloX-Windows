@@ -85,7 +85,7 @@ decoder_output = args.output.parent / 'download-decoder-bundle.json'
 tool_status = {}
 tools = []
 for label, command, output in (
-    ('pinned_resources', [sys.executable, 'tools/verify_pinned_resources.py', '--artifact', str(zip_path), '--output', str(pinned_output)], pinned_output),
+    ('pinned_resources', [sys.executable, 'tools/verify_pinned_resources.py', '--artifact', str(zip_path), '--source-revision', args.expected_sha, '--output', str(pinned_output)], pinned_output),
     # This verifier targets a Windows delivery even when run independently on
     # Linux. Do not let the decoder tool default to the verifier host's ELF.
     ('decoder_bundle', [sys.executable, 'tools/verify_decoder_bundle.py', '--artifact', str(zip_path),

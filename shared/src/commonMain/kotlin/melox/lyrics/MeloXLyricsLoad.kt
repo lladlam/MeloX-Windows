@@ -17,7 +17,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withTimeoutOrNull
 import java.io.IOException
 
-/** Provider-first fast load and authored AMLL upgrade from Android main 94e17c9. */
+/** Provider-first load/AMLL upgrade with Android v0.6.5 translation-language snapshots. */
 class MeloXLyricsLoad(
     private val sources: LyricDocumentSources = LyricDocumentSources(),
     private val workerScope: CoroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.IO),
@@ -26,7 +26,7 @@ class MeloXLyricsLoad(
         val track: MusicTrack,
         val automatic: Boolean,
         val binding: LyricBinding?,
-        val script: MeloXLyricScript,
+        val preference: MeloXLyricPreference,
         val registry: MusicProviderRegistry?,
         val bilibiliAlignment: Boolean,
     )
@@ -36,24 +36,25 @@ class MeloXLyricsLoad(
     }
     private val inFlight = mutableMapOf<Key, Deferred<LyricsDocument>>()
 
-    private fun key(track: MusicTrack, registry: MusicProviderRegistry?): Key {
+    private fun key(track: MusicTrack, registry: MusicProviderRegistry?, preference: MeloXLyricPreference): Key {
         val automatic = MeloXSettingsRuntime.automaticLyricSelectionEnabled || track.id.source == MusicSource.Local
         return Key(track, automatic,
             if (automatic && MeloXSettingsRuntime.lyricStrongBindingEnabled) LyricBindingStore.read(track.id) else null,
-            MeloXLyricScript.fromSystem(), registry, MeloXSettingsRuntime.bilibiliLyricAudioAlignmentEnabled)
+            preference, registry, MeloXSettingsRuntime.bilibiliLyricAudioAlignmentEnabled)
     }
 
-    /** Collection belongs to the screen's media identity; cancellation suppresses stale upgrades. */
-    fun observe(track: MusicTrack, registry: MusicProviderRegistry? = null): Flow<LyricsDocument> = flow {
-        val key = key(track, registry)
+    /** Collection belongs to the screen's media/language identity; cancellation suppresses stale upgrades. */
+    fun observe(track: MusicTrack, registry: MusicProviderRegistry? = null,
+        preference: MeloXLyricPreference = requestedLyricPreference()): Flow<LyricsDocument> = flow {
+        val key = key(track, registry, preference)
         val initial = load(key)
         emit(initial)
         if (track.id.source == MusicSource.Bilibili || !key.automatic || initial.source == LyricSource.AmlL || initial.lines.isEmpty()) return@flow
-        val upgrade = workerScope.async { safe { sources.amll(track, registry) } }
+        val upgrade = workerScope.async { safe { sources.amll(track, registry, key.preference) } }
         try {
             val authored = withTimeoutOrNull(15_000L) { upgrade.await() } ?: return@flow
             if (authored.source != LyricSource.AmlL || !hasWordTiming(authored) || !isLyricUpgradeCompatible(initial, authored)) return@flow
-            val processed = process(authored, key.script)
+            val processed = process(authored, key.preference)
             synchronized(lock) { cache[key] = processed }
             emit(processed)
         } finally {
@@ -61,8 +62,9 @@ class MeloXLyricsLoad(
         }
     }
 
-    suspend fun load(track: MusicTrack, registry: MusicProviderRegistry? = null): LyricsDocument {
-        return load(key(track, registry))
+    suspend fun load(track: MusicTrack, registry: MusicProviderRegistry? = null,
+        preference: MeloXLyricPreference = requestedLyricPreference()): LyricsDocument {
+        return load(key(track, registry, preference))
     }
 
     private suspend fun load(key: Key): LyricsDocument {
@@ -70,7 +72,7 @@ class MeloXLyricsLoad(
             cache[key]?.let { return it }
             inFlight.getOrPut(key) {
                 workerScope.async {
-                    val document = process(loadDocument(key), key.script)
+                    val document = process(loadDocument(key), key.preference)
                     if (document.lines.isNotEmpty()) synchronized(lock) { cache[key] = document }
                     document
                 }
@@ -86,13 +88,13 @@ class MeloXLyricsLoad(
     }
 
     private suspend fun loadDocument(key: Key): LyricsDocument {
-        val (track, automatic, binding, _, registry) = key
-        if (!automatic) return safe { sources.provider(track, registry) }
+        val (track, automatic, binding, preference, registry) = key
+        if (!automatic) return safe { sources.provider(track, registry, preference) }
         if (track.id.source == MusicSource.Bilibili) {
-            return sources.bilibili(track, registry, key.bilibiliAlignment)
+            return sources.bilibili(track, registry, key.bilibiliAlignment, preference)
         }
         if (binding != null) {
-            val bound = safe { sources.binding(binding) }
+            val bound = safe { sources.binding(binding, preference) }
             if (hasWordTiming(bound)) return bound
         }
         val order = automaticLyricSourcesFor(track.id.source)
@@ -102,8 +104,8 @@ class MeloXLyricsLoad(
             workerScope.async {
                 safe {
                     when (source) {
-                        LyricAutoSource.Current -> sources.provider(track, registry)
-                        LyricAutoSource.AmlL -> sources.amll(track, registry)
+                        LyricAutoSource.Current -> sources.provider(track, registry, preference)
+                        LyricAutoSource.AmlL -> sources.amll(track, registry, preference)
                         LyricAutoSource.QQMusic -> sources.matchedQq(track, registry)
                         LyricAutoSource.Netease -> sources.matchedNetease(track, registry)
                     }
@@ -127,8 +129,8 @@ class MeloXLyricsLoad(
         }
     }
 
-    private fun process(document: LyricsDocument, script: MeloXLyricScript): LyricsDocument =
-        MeloXLyricScriptConverter.convert(LyricTimelineProcessor.process(document), script)
+    private fun process(document: LyricsDocument, preference: MeloXLyricPreference): LyricsDocument =
+        applyLyricTranslationPreference(LyricTimelineProcessor.process(document), preference)
 
     private suspend fun safe(block: suspend () -> LyricsDocument): LyricsDocument = try {
         block()
@@ -181,13 +183,14 @@ internal fun selectAutomaticLyricCandidate(candidates: List<AutoLyricCandidate>)
 }
 
 open class LyricDocumentSources {
-    open suspend fun bilibili(track: MusicTrack, registry: MusicProviderRegistry?, alignment: Boolean): LyricsDocument =
-        BilibiliMatchedLyrics(BilibiliLyricSources(registry)).load(track, alignment)
+    open suspend fun bilibili(track: MusicTrack, registry: MusicProviderRegistry?, alignment: Boolean,
+        preference: MeloXLyricPreference): LyricsDocument =
+        BilibiliMatchedLyrics(BilibiliLyricSources(registry, preference)).load(track, alignment)
 
-    open suspend fun binding(binding: LyricBinding): LyricsDocument = when (binding.source) {
+    open suspend fun binding(binding: LyricBinding, preference: MeloXLyricPreference): LyricsDocument = when (binding.source) {
         BoundLyricSource.AmlL -> {
             val query = AmlldbLyricQuery.fromBinding(binding.resourceValue) ?: return LyricsDocument(emptyList())
-            AmlldbLyricsClient().lyrics(query, MeloXLyricScript.fromSystem())
+            AmlldbLyricsClient().lyrics(query, preference)
         }
         BoundLyricSource.Provider -> {
             val source = binding.provider ?: return LyricsDocument(emptyList())
@@ -201,33 +204,34 @@ open class LyricDocumentSources {
                         .filter(String::isNotBlank)
                         .map { melox.music.model.MusicArtistRef(name = it) },
                     durationMs = binding.durationMs.takeIf { it > 0L },
-                ),
+                ), preference,
             )
         }
     }
 
-    open suspend fun amll(track: MusicTrack, registry: MusicProviderRegistry? = null): LyricsDocument {
+    open suspend fun amll(track: MusicTrack, registry: MusicProviderRegistry? = null,
+        preference: MeloXLyricPreference = requestedLyricPreference()): LyricsDocument {
         val direct = when (track.id.source) {
             MusicSource.QQMusic -> AmlldbLyricQuery.QQ(track.id.value)
             MusicSource.Spotify -> AmlldbLyricQuery.Spotify(track.id.value)
             MusicSource.AppleMusic -> AmlldbLyricQuery.AppleMusic(track.id.value)
             else -> null
         }
-        if (direct != null) return fetchAmll(direct)
+        if (direct != null) return fetchAmll(direct, preference)
         val id = neteaseSongIdForAmll(track, registry) ?: return LyricsDocument(emptyList(), LyricSource.AmlL)
-        return fetchAmll(id)
+        return fetchAmll(id, preference)
     }
 
-    open suspend fun fetchAmll(query: AmlldbLyricQuery): LyricsDocument =
-        AmlldbLyricsClient().lyrics(query, MeloXLyricScript.fromSystem())
+    open suspend fun fetchAmll(query: AmlldbLyricQuery, preference: MeloXLyricPreference): LyricsDocument =
+        AmlldbLyricsClient().lyrics(query, preference)
 
     open suspend fun neteaseSongIdForAmll(track: MusicTrack, registry: MusicProviderRegistry?): Long? {
         if (track.id.source == MusicSource.Netease) return track.id.value.toLongOrNull()
         return findMatchedNeteaseTrack(track, registry)?.id?.value?.toLongOrNull()
     }
 
-    open suspend fun fetchAmll(neteaseSongId: Long): LyricsDocument =
-        runCatching { AmlldbLyricsClient().lyrics(neteaseSongId, MeloXLyricScript.fromSystem()) }
+    open suspend fun fetchAmll(neteaseSongId: Long, preference: MeloXLyricPreference): LyricsDocument =
+        runCatching { AmlldbLyricsClient().lyrics(neteaseSongId, preference) }
             .getOrDefault(LyricsDocument(emptyList(), LyricSource.AmlL))
 
     open suspend fun findMatchedNeteaseTrack(track: MusicTrack, registry: MusicProviderRegistry?): MusicTrack? {
@@ -244,10 +248,10 @@ open class LyricDocumentSources {
         return null
     }
 
-    open suspend fun provider(track: MusicTrack, registry: MusicProviderRegistry?): LyricsDocument {
+    open suspend fun provider(track: MusicTrack, registry: MusicProviderRegistry?, preference: MeloXLyricPreference): LyricsDocument {
         val resolved = registry ?: melox.music.provider.MeloXMusicProviders.create()
         val lyrics = resolved.require(track.id.source) as? LyricsCapability ?: return LyricsDocument(emptyList())
-        return lyrics.lyrics(track)
+        return lyrics.lyrics(track, preference)
     }
 
     open suspend fun matchedQq(track: MusicTrack, registry: MusicProviderRegistry?): LyricsDocument =

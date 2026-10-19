@@ -9,3 +9,12 @@
 - 真实鼠标/滚轮操作额度五选项、Smart/Fixed显隐：**26 scenes / 13 assertions**；独立JVM真实偏好重载：**5 scenes / 4 assertions**，均通过。
 - 原始基线、正式release/tag解析、纯Git源文件哈希在 `evidence/baseline/`；最终本地构建日志、XML汇总、新增测试原始XML及生产输入/capture在 `evidence/smartqueue-local/`。
 - Windows新run **39238611894 / head 0cee9a32de9751e582807c88984b44d800d188ba** 验证中，已接入新增额度controls和独立reload。成功后自动完整下载两个artifacts并重新检查XML、全部capture、发行ZIP/JAR CRC、精确版本/16项legacy pinned资源、显式Windows解码器、0.6.5目标元数据及更新类；最终结果另记。本轮不标记整体0.6.5迁移完成。
+
+## 2. 歌词翻译语言路由
+
+- 从正式 `53244b9` 纯树迁移 `MeloXLyricPreference`、5个设置选项、TTML行内/metadata/伴唱轨道选择，以及网易/QQ/酷狗中文译文的目标语言过滤；无目标译文保留原文、罗马音和真实时间线。
+- 缓存和in-flight包含有效语言；同一请求快照传到AMLL查找、强绑定、Bilibili校验链和Apple Music TTML。播放器按新请求建立独立显示状态，切换语言的首个结果可在播放30秒后正常接收，旧请求不能写入新显示状态；三种歌词渲染共用。
+- 6条新增文案及所有Locale回退来自固定Git树，源审计和可复现导出工具已加入；实现版本资源核验新增至17项。独立发行验证按发行精确提交读取清单，旧发行核验仍按原有16项。
+- 本地全量 **265 tests / 54 suites / 0 failures/errors/skipped**，桌面编译成功。新增8项覆盖语言/简繁/地区归一化、缺译文、metadata与伴唱、中文端点过滤、晚返回缓存隔离与升级取消。
+- 新增物理设置controls及独立JVM换Locale reload，已接入Windows CI；实际回放结果和新发行核验另记。
+- 行为说明 `LYRIC_LANGUAGE.md`，真源与验证证据 `evidence/lyric-language/`。固定Android 0.6.5同内容帧与网络账号实机验收仍待完成，整体保持PARTIAL。

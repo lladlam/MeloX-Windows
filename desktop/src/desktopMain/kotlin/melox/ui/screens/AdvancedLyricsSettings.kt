@@ -31,6 +31,10 @@ internal fun AdvancedLyricsSettings() {
                 MeloXLyricsRenderingQuality.entries.map { it.name }) {
                 pinnedString("settings_lyrics_quality_${it.lowercase()}")
             }
+            LyricsStringChoice("settings_lyrics_language", "lyric_language", r.lyricLanguage,
+                listOf("system", "zh-Hans", "zh-Hant", "en", "tr")) {
+                pinnedString("settings_lyrics_language_${when (it) { "zh-Hans" -> "zh_hans"; "zh-Hant" -> "zh_hant"; else -> it }}")
+            }
             LyricsToggle("settings_lyrics_auto_select", "lyrics_auto_select", r.automaticLyricSelectionEnabled)
             LyricsToggle("settings_lyrics_word_by_word", "lyrics_word_by_word", r.lyricWordByWordEnabled)
             LyricsToggle("settings_lyrics_pseudo_timing", "lyrics_pseudo_timing", r.lyricPseudoTimingEnabled, "settings_lyrics_pseudo_timing_note")

@@ -69,6 +69,16 @@ jobs:
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           python tools/capture_smartqueue_limit.py reload "$homeDir" desktop/build/parity/smartqueue-limit-reload
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Replay v0.6.5 lyric languages and reload under a different system locale
+        shell: pwsh
+        run: |
+          $homeDir = "$pwd/desktop/build/parity/lyric-language-home"
+          New-Item -ItemType Directory -Force "$homeDir/.melox" | Out-Null
+          [System.IO.File]::WriteAllText("$homeDir/.melox/prefs_melox_app_settings.properties", "onboarding_completed=true`n", [System.Text.UTF8Encoding]::new($false))
+          python tools/capture_lyric_language.py controls "$homeDir" desktop/build/parity/lyric-language-controls
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python tools/capture_lyric_language.py reload "$homeDir" desktop/build/parity/lyric-language-reload
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - name: Replay pinned settings routes in four locales and verify real preference consumers
         shell: pwsh
         run: |

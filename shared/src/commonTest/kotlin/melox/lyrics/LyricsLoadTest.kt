@@ -17,10 +17,10 @@ class LyricsLoadTest {
         var providerCalls = 0
         var matchedCalls = 0
         val loaded = MeloXLyricsLoad(object : LyricDocumentSources() {
-            override suspend fun amll(track: MusicTrack, registry: melox.music.provider.MusicProviderRegistry?): LyricsDocument =
+            override suspend fun amll(track: MusicTrack, registry: melox.music.provider.MusicProviderRegistry?, preference: MeloXLyricPreference): LyricsDocument =
                 LyricsDocument(emptyList(), LyricSource.AmlL)
 
-            override suspend fun provider(track: MusicTrack, registry: melox.music.provider.MusicProviderRegistry?): LyricsDocument {
+            override suspend fun provider(track: MusicTrack, registry: melox.music.provider.MusicProviderRegistry?, preference: MeloXLyricPreference): LyricsDocument {
                 providerCalls += 1
                 return LyricsDocument(emptyList(), LyricSource.Netease)
             }
@@ -44,8 +44,8 @@ class LyricsLoadTest {
         val wordQq = doc("qq-word", LyricSource.QQMusic, syllables = true)
         val wordAmll = doc("amll-word", LyricSource.AmlL, syllables = true)
         val yielded = MeloXLyricsLoad(object : LyricDocumentSources() {
-            override suspend fun amll(track: MusicTrack, registry: melox.music.provider.MusicProviderRegistry?) = lineAmll
-            override suspend fun provider(track: MusicTrack, registry: melox.music.provider.MusicProviderRegistry?) = wordQq
+            override suspend fun amll(track: MusicTrack, registry: melox.music.provider.MusicProviderRegistry?, preference: MeloXLyricPreference) = lineAmll
+            override suspend fun provider(track: MusicTrack, registry: melox.music.provider.MusicProviderRegistry?, preference: MeloXLyricPreference) = wordQq
             override suspend fun matchedNetease(track: MusicTrack, registry: melox.music.provider.MusicProviderRegistry?) =
                 doc("netease", LyricSource.Netease, syllables = true)
         }).load(qqTrack())
@@ -53,8 +53,8 @@ class LyricsLoadTest {
         assertEquals(LyricSource.QQMusic, yielded.source)
 
         val preferred = MeloXLyricsLoad(object : LyricDocumentSources() {
-            override suspend fun amll(track: MusicTrack, registry: melox.music.provider.MusicProviderRegistry?) = wordAmll
-            override suspend fun provider(track: MusicTrack, registry: melox.music.provider.MusicProviderRegistry?) = wordQq
+            override suspend fun amll(track: MusicTrack, registry: melox.music.provider.MusicProviderRegistry?, preference: MeloXLyricPreference) = wordAmll
+            override suspend fun provider(track: MusicTrack, registry: melox.music.provider.MusicProviderRegistry?, preference: MeloXLyricPreference) = wordQq
         }).load(qqTrack())
         assertEquals("amll-word", preferred.lines.single().text)
         assertEquals(LyricSource.AmlL, preferred.source)
@@ -64,12 +64,12 @@ class LyricsLoadTest {
     fun qqFallsThroughToMatchedNetease() = kotlinx.coroutines.runBlocking {
         val calls = java.util.concurrent.CopyOnWriteArrayList<String>()
         val loaded = MeloXLyricsLoad(object : LyricDocumentSources() {
-            override suspend fun amll(track: MusicTrack, registry: melox.music.provider.MusicProviderRegistry?): LyricsDocument {
+            override suspend fun amll(track: MusicTrack, registry: melox.music.provider.MusicProviderRegistry?, preference: MeloXLyricPreference): LyricsDocument {
                 calls += "amll"
                 return LyricsDocument(emptyList(), LyricSource.AmlL)
             }
 
-            override suspend fun provider(track: MusicTrack, registry: melox.music.provider.MusicProviderRegistry?): LyricsDocument {
+            override suspend fun provider(track: MusicTrack, registry: melox.music.provider.MusicProviderRegistry?, preference: MeloXLyricPreference): LyricsDocument {
                 calls += "provider"
                 return LyricsDocument(emptyList(), LyricSource.QQMusic)
             }
@@ -95,12 +95,12 @@ class LyricsLoadTest {
                 return neteaseTrack().copy(id = MusicResourceId(MusicSource.Netease, "42"))
             }
 
-            override suspend fun fetchAmll(query: AmlldbLyricQuery): LyricsDocument {
+            override suspend fun fetchAmll(query: AmlldbLyricQuery, preference: MeloXLyricPreference): LyricsDocument {
                 calls += "amll:${query.bindingValue()}"
                 return doc("ttml", LyricSource.AmlL, syllables = true)
             }
 
-            override suspend fun provider(track: MusicTrack, registry: melox.music.provider.MusicProviderRegistry?): LyricsDocument {
+            override suspend fun provider(track: MusicTrack, registry: melox.music.provider.MusicProviderRegistry?, preference: MeloXLyricPreference): LyricsDocument {
                 calls += "provider"
                 return LyricsDocument(emptyList(), LyricSource.QQMusic)
             }
@@ -123,12 +123,12 @@ class LyricsLoadTest {
                 return null
             }
 
-            override suspend fun fetchAmll(query: AmlldbLyricQuery): LyricsDocument {
+            override suspend fun fetchAmll(query: AmlldbLyricQuery, preference: MeloXLyricPreference): LyricsDocument {
                 calls += "amll:${query.bindingValue()}"
                 return LyricsDocument(emptyList())
             }
 
-            override suspend fun provider(track: MusicTrack, registry: melox.music.provider.MusicProviderRegistry?): LyricsDocument {
+            override suspend fun provider(track: MusicTrack, registry: melox.music.provider.MusicProviderRegistry?, preference: MeloXLyricPreference): LyricsDocument {
                 calls += "provider"
                 return LyricsDocument(emptyList(), LyricSource.QQMusic)
             }
@@ -156,17 +156,17 @@ class LyricsLoadTest {
         try {
             val lineCalls = java.util.concurrent.CopyOnWriteArrayList<String>()
             val yielded = MeloXLyricsLoad(object : LyricDocumentSources() {
-                override suspend fun binding(binding: LyricBinding): LyricsDocument {
+                override suspend fun binding(binding: LyricBinding, preference: MeloXLyricPreference): LyricsDocument {
                     lineCalls += "binding"
                     return doc("bound-line")
                 }
 
-                override suspend fun amll(track: MusicTrack, registry: melox.music.provider.MusicProviderRegistry?): LyricsDocument {
+                override suspend fun amll(track: MusicTrack, registry: melox.music.provider.MusicProviderRegistry?, preference: MeloXLyricPreference): LyricsDocument {
                     lineCalls += "amll"
                     return doc("amll-line", LyricSource.AmlL)
                 }
 
-                override suspend fun provider(track: MusicTrack, registry: melox.music.provider.MusicProviderRegistry?): LyricsDocument {
+                override suspend fun provider(track: MusicTrack, registry: melox.music.provider.MusicProviderRegistry?, preference: MeloXLyricPreference): LyricsDocument {
                     lineCalls += "provider"
                     return doc("qq-word", LyricSource.QQMusic, syllables = true)
                 }
@@ -176,12 +176,12 @@ class LyricsLoadTest {
 
             val wordCalls = mutableListOf<String>()
             val kept = MeloXLyricsLoad(object : LyricDocumentSources() {
-                override suspend fun binding(binding: LyricBinding): LyricsDocument {
+                override suspend fun binding(binding: LyricBinding, preference: MeloXLyricPreference): LyricsDocument {
                     wordCalls += "binding"
                     return doc("bound-word", syllables = true)
                 }
 
-                override suspend fun amll(track: MusicTrack, registry: melox.music.provider.MusicProviderRegistry?): LyricsDocument {
+                override suspend fun amll(track: MusicTrack, registry: melox.music.provider.MusicProviderRegistry?, preference: MeloXLyricPreference): LyricsDocument {
                     wordCalls += "amll"
                     return doc("amll-word", LyricSource.AmlL, syllables = true)
                 }

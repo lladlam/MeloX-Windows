@@ -93,13 +93,15 @@ class AppleMusicApiClient(
         val root = getJson("v1/catalog/${storefront()}/artists/${segment(artist.id.value)}", mapOf("include" to "albums"))
         MusicArtistDetail(root.array().firstOrNull()?.let(::parseArtist) ?: artist, emptyList(), null)
     }
-    override suspend fun lyrics(track: MusicTrack): LyricsDocument = withContext(Dispatchers.IO) {
+    override suspend fun lyrics(track: MusicTrack): LyricsDocument = lyrics(track, melox.lyrics.requestedLyricPreference())
+
+    override suspend fun lyrics(track: MusicTrack, preference: melox.lyrics.MeloXLyricPreference): LyricsDocument = withContext(Dispatchers.IO) {
         require(track.id.source == source)
         val item = getJson("v1/catalog/${storefront()}/songs/${segment(track.id.value)}", mapOf("include" to "lyrics")).array().firstOrNull()
         val attributes = item?.optJSONObject("relationships")?.optJSONObject("lyrics")?.array()?.firstOrNull()?.optJSONObject("attributes")
             ?: return@withContext LyricsDocument(emptyList(), source = LyricSource.AppleMusic)
         val ttml = attributes.optString("ttml").takeIf { it.isNotBlank() }
-            ?.let { TtmlLyricsParser.parse(it) }?.takeIf { it.lines.isNotEmpty() }
+            ?.let { TtmlLyricsParser.parse(it, preference) }?.takeIf { it.lines.isNotEmpty() }
         if (ttml != null) return@withContext ttml.copy(source = LyricSource.AppleMusic)
         val text = attributes.optString("text").trim()
         // Apple's untimed field is one authored block; do not invent per-line times.

@@ -39,6 +39,8 @@ private object PinnedSettingsStrings {
             .reader(Charsets.UTF_8).use(::load)
         checkNotNull(PinnedSettingsStrings::class.java.classLoader.getResourceAsStream("parity/pinned-settings-pages.properties"))
             .reader(Charsets.UTF_8).use(::load)
+        checkNotNull(PinnedSettingsStrings::class.java.classLoader.getResourceAsStream("parity/pinned-v065-lyric-language.properties"))
+            .reader(Charsets.UTF_8).use(::load)
     }
     private val localized = java.util.concurrent.ConcurrentHashMap<String, Properties>()
     fun forLocale(locale: Locale): Properties {

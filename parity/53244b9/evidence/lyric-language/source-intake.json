@@ -1,0 +1,53 @@
+{
+  "android_sha": "53244b9d6b21d7e3a609e8cb11876efef70f218b",
+  "pure_exports": [
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/core/lyrics/AmlldbLyricsClient.kt",
+      "sha256": "4a4975ce710693a648efc88ae57a8a1956c8dc76f65123b861c771b8ad5ca991"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/core/lyrics/LyricModels.kt",
+      "sha256": "f5b4c8c4ef7bb0cc61b4a06ae9192105d6ce2729036427d63eadb6437e701ce2"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/core/lyrics/MeloXLyricScript.kt",
+      "sha256": "05784149b6a662a45d2bfb10c62d4f9669deff3602c9255d4d914f1d5e58e75e"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/core/lyrics/TtmlLyricsParser.kt",
+      "sha256": "9b1303d2ba3d716457181e7195cecfecba1bf013d72db74d9346b8c934b1cc3e"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXAlternativeLyricsPanels.kt",
+      "sha256": "f0e044aea907ff08dbb15b8cefa6d2ff263cd30146aa02cfadf455cc52035cf3"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXIOSNowPlayingSharedHost.kt",
+      "sha256": "6de42e06e68f89b1ef954627450363e42047b7434c25e406f030d0d9fe99f669"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXProviderLyricsLoader.kt",
+      "sha256": "7e63b721dc4476c0c041c45aff197d865ae4dd910814b5292fa87c8a899e58aa"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/settings/MeloXSettingsPreferences.kt",
+      "sha256": "0443a5de4dc8b16a28a1cb8463e916e9c1904f3434e5f8a79b88262f992c6478"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/settings/SettingsScreen.kt",
+      "sha256": "d422aa164553891c0be20c48352a43f869eadefda3a8c770af3f2a990be2d103"
+    },
+    {
+      "path": "android/app/src/test/kotlin/com/lladlam/melox/core/lyrics/MeloXLyricPreferenceTest.kt",
+      "sha256": "cee40c08976c2559026e2af89da4b057c04f929824ee986f5fcddd878d219ef1"
+    },
+    {
+      "path": "android/app/src/test/kotlin/com/lladlam/melox/core/lyrics/TtmlLyricsParserTest.kt",
+      "sha256": "8b2c31ec37152ded046861bb99770cb1dac557d02e4e9f8596b674a29986fc6c"
+    },
+    {
+      "path": "android/app/src/test/kotlin/com/lladlam/melox/ui/player/MeloXLyricLanguageRoutingTest.kt",
+      "sha256": "b3cd3f5464bddd270e0c774d94a8c193c29ce62f7275473eac12f82015a5f0fa"
+    }
+  ]
+}

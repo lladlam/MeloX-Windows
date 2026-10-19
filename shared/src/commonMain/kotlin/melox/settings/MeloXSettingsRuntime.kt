@@ -134,6 +134,8 @@ object MeloXSettingsRuntime {
         internal set
     var lyricRenderingQuality by mutableStateOf(MeloXLyricsRenderingQuality.High)
         internal set
+    var lyricLanguage by mutableStateOf("system")
+        internal set
     var lyricRomanizationDisplayMode by mutableStateOf(MeloXLyricAnnotationDisplayMode.FocusedLine)
         internal set
     var lyricTranslationDisplayMode by mutableStateOf(MeloXLyricAnnotationDisplayMode.AllLines)
@@ -439,6 +441,7 @@ object MeloXSettingsRuntime {
         smartQueueEnabled = MeloXPlaybackModePreferences.smartQueue()
         transitionUiEnabled = prefs().getBoolean("transition_ui_enabled", false)
         showLyricTranslation = prefs().getBoolean("lyrics_translation", true)
+        lyricLanguage = prefs().getString("lyric_language", "system") ?: "system"
         automaticLyricSelectionEnabled = prefs().getBoolean("lyrics_auto_select", true)
         bilibiliLyricAudioAlignmentEnabled = prefs().getBoolean("bilibili_lyric_audio_alignment", false)
         lyricStrongBindingEnabled = prefs().getBoolean("experimental_lyric_strong_binding", false)

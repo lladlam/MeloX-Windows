@@ -95,15 +95,16 @@ internal class BilibiliMatchedLyrics(private val sources: BilibiliLyricSources =
 }
 
 /** Production methods use the existing real providers; overrides are reserved for regression tests. */
-internal open class BilibiliLyricSources(registry: MusicProviderRegistry? = null) {
+internal open class BilibiliLyricSources(registry: MusicProviderRegistry? = null,
+    private val preference: MeloXLyricPreference = requestedLyricPreference()) {
     private val providers by lazy { registry ?: MeloXMusicProviders.create() }
     private val associationRevision = BilibiliPlaybackAssociationStore.revision()
     open suspend fun search(source: MusicSource, query: String): List<MusicTrack> =
         (providers[source] as? SearchCapability)?.searchSongs(query, 1, 20)?.items.orEmpty()
     open suspend fun lyrics(track: MusicTrack): LyricsDocument =
-        (providers[track.id.source] as? LyricsCapability)?.lyrics(track) ?: LyricsDocument(emptyList())
+        (providers[track.id.source] as? LyricsCapability)?.lyrics(track, preference) ?: LyricsDocument(emptyList())
     open suspend fun amll(track: MusicTrack): LyricsDocument = track.id.value.toLongOrNull()?.let {
-        AmlldbLyricsClient().lyrics(it, MeloXLyricScript.fromSystem())
+        AmlldbLyricsClient().lyrics(it, preference)
     } ?: LyricsDocument(emptyList())
     open suspend fun replacements(query: String): List<MusicTrack> =
         (providers[MusicSource.Bilibili] as? BilibiliProvider)?.searchReplacementCandidates(query, 20).orEmpty()

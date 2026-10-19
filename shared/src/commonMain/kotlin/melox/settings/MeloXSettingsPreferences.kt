@@ -190,6 +190,7 @@ object MeloXSettingsPreferences {
                 MeloXThemeMode.valueOf(value)
             }.getOrDefault(MeloXThemeMode.System)
             "music_area" -> MeloXSettingsRuntime.musicArea = value
+            "lyric_language" -> MeloXSettingsRuntime.lyricLanguage = value
             "tab_order" -> MeloXSettingsRuntime.tabOrder = value.split(',')
                 .filter { it in setOf("Home", "Explore", "Library", "Podcasts", "Downloads", "Cloud", "Settings") }.distinct()
                 .let { order -> (order + listOf("Home", "Explore", "Library", "Podcasts", "Downloads", "Cloud", "Settings")).distinct() }

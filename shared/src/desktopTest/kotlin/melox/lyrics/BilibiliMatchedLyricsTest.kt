@@ -105,12 +105,12 @@ class BilibiliMatchedLyricsTest {
             MeloXSettingsRuntime.bilibiliLyricAudioAlignmentEnabled = false
             val calls = mutableListOf<Boolean>()
             val loader = MeloXLyricsLoad(object : LyricDocumentSources() {
-                override suspend fun bilibili(track: MusicTrack, registry: MusicProviderRegistry?, alignment: Boolean): LyricsDocument {
+                override suspend fun bilibili(track: MusicTrack, registry: MusicProviderRegistry?, alignment: Boolean, preference: MeloXLyricPreference): LyricsDocument {
                     calls += alignment
                     return document(LyricSource.QQMusic)
                 }
-                override suspend fun amll(track: MusicTrack, registry: MusicProviderRegistry?): LyricsDocument = error("generic upgrade bypasses verification")
-                override suspend fun provider(track: MusicTrack, registry: MusicProviderRegistry?) = LyricsDocument(emptyList())
+                override suspend fun amll(track: MusicTrack, registry: MusicProviderRegistry?, preference: MeloXLyricPreference): LyricsDocument = error("generic upgrade bypasses verification")
+                override suspend fun provider(track: MusicTrack, registry: MusicProviderRegistry?, preference: MeloXLyricPreference) = LyricsDocument(emptyList())
             }, backgroundScope)
             loader.observe(original).toList()
             MeloXSettingsRuntime.bilibiliLyricAudioAlignmentEnabled = true
