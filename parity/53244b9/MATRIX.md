@@ -33,3 +33,7 @@
 ## 实现与发行记录
 
 本轮本地结果归档及Windows发行核验另记于 `COMPLETION_LOG.md`。整体完成必须逐项核销；编译、单元测试或桌面自比对不能替代真实业务与Android同内容验收。
+
+- 首批实现 **`0cee9a32de9751e582807c88984b44d800d188ba`**：本地全量 **257 tests / 52 suites / 0 failures/errors/skipped**，桌面编译和额度controls/reload通过。
+- Windows **[39238611894](https://github.com/lladlam/MeloX-Windows/actions/runs/39238611894)** 验证与后续完整发行下载核验正在进行；该版本尚未标记独立发行核验通过。
+- 最近已独立核验的发行仍为旧基线下的 **`987f56e` / run39222447680**；它不包含本轮0.6.5额度迁移。证据 `../3f877ea/evidence/windows-ci-987f56e/`。

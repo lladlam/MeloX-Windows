@@ -1,0 +1,14 @@
+[
+  {
+    "mode": "controls",
+    "scenes": 26,
+    "assertions": 13,
+    "status": "PASSED"
+  },
+  {
+    "mode": "reload",
+    "scenes": 5,
+    "assertions": 4,
+    "status": "PASSED"
+  }
+]

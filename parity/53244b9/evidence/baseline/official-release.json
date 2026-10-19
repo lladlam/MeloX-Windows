@@ -1,0 +1,44 @@
+{
+  "id": 415928677,
+  "tag_name": "v0.6.5",
+  "name": "MeloX Android 0.6.5",
+  "published_at": "2026-10-17T16:49:32Z",
+  "html_url": "https://github.com/lladlam/MeloX-Android/releases/tag/v0.6.5",
+  "draft": false,
+  "prerelease": false,
+  "assets": [
+    {
+      "id": 651087293,
+      "name": "build-info.json",
+      "size": 423,
+      "digest": "sha256:b311b11355b2c2a296a5f8cabb16773cc2a9bd4619ae93ed88c86fee26de5557"
+    },
+    {
+      "id": 651087291,
+      "name": "MeloX-Android-0.6.5.apk",
+      "size": 85557778,
+      "digest": "sha256:e6d129889b8c3a0f91476c6798b6e3447b7ea426484571cbe030ff0a095c8d25"
+    },
+    {
+      "id": 651087292,
+      "name": "SHA256SUMS.txt",
+      "size": 90,
+      "digest": "sha256:6ad6b54b4d42863176508858f999c55a06718d9e1d66aa5ff4a20e39edc24a29"
+    }
+  ],
+  "resolved_commit": "53244b9d6b21d7e3a609e8cb11876efef70f218b",
+  "tag_objects": {
+    "0.6.5": "00dce4629ea43ecb368dad41fab5abce32fba512",
+    "v0.6.5": "9046fb2996ccc2af2c5fdfa526470e0069321598"
+  },
+  "remote_ref": {
+    "ref": "refs/tags/v0.6.5",
+    "object_sha": "9046fb2996ccc2af2c5fdfa526470e0069321598",
+    "object_type": "tag"
+  },
+  "remote_annotated_tag": {
+    "tag": "v0.6.5",
+    "target_sha": "53244b9d6b21d7e3a609e8cb11876efef70f218b",
+    "target_type": "commit"
+  }
+}
