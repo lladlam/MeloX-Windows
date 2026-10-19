@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="NeteasePlaybackRequestTest[desktop]" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-10-19T16:28:30.450Z" hostname="runnervm0xl3a" time="0.062">
+  <properties/>
+  <testcase name="providerSearchUsesNativeDownloadedNeteaseIdAndSeesLocalSourceChanges[desktop]" classname="melox.playback.NeteasePlaybackRequestTest" time="0.003"/>
+  <testcase name="encodedSearchActuallyResolvesOfficialFullAudioAndKeepsLegacyBareUriWorking[desktop]" classname="melox.playback.NeteasePlaybackRequestTest" time="0.02"/>
+  <testcase name="anonymousPreviewAndNoUrlDoNotBecomeFalseFullPlaybackSuccess[desktop]" classname="melox.playback.NeteasePlaybackRequestTest" time="0.011"/>
+  <testcase name="searchMetadataRoundTripsWithoutSpacesQueryInjectionOrDoubleDecoding[desktop]" classname="melox.playback.NeteasePlaybackRequestTest" time="0.002"/>
+  <testcase name="providerAndLegacySearchShareOptInFallbackWithExactDecodedMetadataAndHeaders[desktop]" classname="melox.playback.NeteasePlaybackRequestTest" time="0.026"/>
+  <system-out><![CDATA[[DEBUG MeloXQuality] Resolving playback: song=139774 requested=standard loggedIn=false candidates=standard
+[INFO MeloXQuality] Playback quality resolved: song=139774 requested=standard candidate=standard actual=standard bitrate=128000
+[DEBUG MeloXQuality] Resolving playback: song=139774 requested=standard loggedIn=false candidates=standard
+[INFO MeloXQuality] Playback quality resolved: song=139774 requested=standard candidate=standard actual=standard bitrate=128000
+[DEBUG MeloXQuality] Resolving playback: song=139774 requested=standard loggedIn=false candidates=standard
+[WARN MeloXQuality] Playback candidate rejected: song=139774 quality=standard; IOException: 网易云返回试听音源 standard
+[DEBUG MeloXQuality] Resolving playback: song=139774 requested=standard loggedIn=false candidates=standard
+[WARN MeloXQuality] Playback candidate rejected: song=139774 quality=standard; IOException: no URL for standard
+[DEBUG MeloXQuality] Resolving playback: song=139774 requested=standard loggedIn=false candidates=standard
+[WARN MeloXQuality] Playback candidate rejected: song=139774 quality=standard; IOException: no URL for standard
+[DEBUG MeloXQuality] Resolving playback: song=139774 requested=standard loggedIn=false candidates=standard
+[WARN MeloXQuality] Playback candidate rejected: song=139774 quality=standard; IOException: no URL for standard
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

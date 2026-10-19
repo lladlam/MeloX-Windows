@@ -1,0 +1,544 @@
+{
+  "renderer": "production ImageComposeScene",
+  "start_tab": "Settings",
+  "density": 1,
+  "frames": [],
+  "physical_audible_acceptance": "BLOCKED",
+  "locale": "en-US",
+  "steps": [
+    "root-skyline:reveal@settings-open-skylinelyrics",
+    "open:tap@settings-open-skylinelyrics"
+  ],
+  "home": "D:\\a\\MeloX-Windows\\MeloX-Windows\\desktop\\build\\parity\\skyline-controls-home",
+  "enabled_start_tab": false,
+  "play_id": null,
+  "play_query": "",
+  "pcm_outputs": [],
+  "width": 1100,
+  "scenes": [
+    {
+      "memory": {
+        "direct_buffer_bytes": 8192,
+        "heap_used_bytes": 13809416,
+        "resident_bytes": 170676224,
+        "private_commit_bytes": 150282240,
+        "uptime_ms": 2454,
+        "heap_max_bytes": 1037959168,
+        "threads": 17,
+        "heap_committed_bytes": 21151744,
+        "non_heap_used_bytes": 44141248
+      },
+      "legal_consent_version": "",
+      "skia": {
+        "font_cache_bytes": 52418,
+        "live_objects": null,
+        "resource_cache_bytes": 746544
+      },
+      "cloud_enabled": false,
+      "title": null,
+      "error": null,
+      "onboarding_completed": true,
+      "automix_status": "idle",
+      "file": "00-settings.png",
+      "equalizer": {
+        "bands_db": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "preamp_db": 0,
+        "preset": "Flat",
+        "enabled": false
+      },
+      "text_pv_style": "BlueBold",
+      "artwork_cache": {
+        "entries": 0,
+        "budget_bytes": 67108864,
+        "budgeted_bytes": 0
+      },
+      "is_playing": false,
+      "play_when_ready": false,
+      "selected_quality": "standard",
+      "is_loading": false,
+      "personalization_consent": false,
+      "assertions": [
+        {
+          "expected": "pref-bool:lyrics_skyline_enabled:false",
+          "passed": true
+        },
+        {
+          "expected": "runtime:skylineEnabled:false",
+          "passed": true
+        },
+        {
+          "expected": "pref-bool:lyrics_skyline_song_info:false",
+          "passed": true
+        },
+        {
+          "expected": "runtime:skylineShowSongInfo:false",
+          "passed": true
+        },
+        {
+          "expected": "pref-bool:lyrics_skyline_keep_awake:false",
+          "passed": true
+        },
+        {
+          "expected": "runtime:skylineKeepsScreenAwake:false",
+          "passed": true
+        },
+        {
+          "expected": "pref-int:lyrics_skyline_ambient_lines:4",
+          "passed": true
+        },
+        {
+          "expected": "runtime:skylineAmbientLines:4",
+          "passed": true
+        },
+        {
+          "expected": "pref-int:lyrics_skyline_ambient_max_characters:4",
+          "passed": true
+        },
+        {
+          "expected": "runtime:skylineAmbientMaximumCharacters:4",
+          "passed": true
+        },
+        {
+          "expected": "pref-int:lyrics_skyline_ambient_max_visible:16",
+          "passed": true
+        },
+        {
+          "expected": "runtime:skylineAmbientMaximumVisibleTexts:16",
+          "passed": true
+        },
+        {
+          "expected": "pref-float:lyrics_skyline_current_font_size:54",
+          "passed": true
+        },
+        {
+          "expected": "runtime:skylineCurrentFontSize:54",
+          "passed": true
+        },
+        {
+          "expected": "pref-float:lyrics_skyline_current_max_scale:1.1",
+          "passed": true
+        },
+        {
+          "expected": "runtime:skylineCurrentMaximumScale:1.1",
+          "passed": true
+        },
+        {
+          "expected": "pref-float:lyrics_skyline_current_width:0.64",
+          "passed": true
+        },
+        {
+          "expected": "runtime:skylineCurrentWidth:0.64",
+          "passed": true
+        },
+        {
+          "expected": "pref-float:lyrics_skyline_next_font_size:24",
+          "passed": true
+        },
+        {
+          "expected": "runtime:skylineNextFontSize:24",
+          "passed": true
+        },
+        {
+          "expected": "pref-float:lyrics_skyline_next_opacity:0.48",
+          "passed": true
+        },
+        {
+          "expected": "runtime:skylineNextOpacity:0.48",
+          "passed": true
+        },
+        {
+          "expected": "pref-float:lyrics_skyline_current_spacing:14",
+          "passed": true
+        },
+        {
+          "expected": "runtime:skylineCurrentSpacing:14",
+          "passed": true
+        },
+        {
+          "expected": "pref-float:lyrics_skyline_ambient_font_size:44",
+          "passed": true
+        },
+        {
+          "expected": "runtime:skylineAmbientFontSize:44",
+          "passed": true
+        },
+        {
+          "expected": "pref-float:lyrics_skyline_ambient_opacity:1",
+          "passed": true
+        },
+        {
+          "expected": "runtime:skylineAmbientOpacity:1",
+          "passed": true
+        },
+        {
+          "expected": "pref-float:lyrics_skyline_ambient_blur:1",
+          "passed": true
+        },
+        {
+          "expected": "runtime:skylineAmbientBlur:1",
+          "passed": true
+        },
+        {
+          "expected": "pref-float:lyrics_skyline_ambient_max_tilt:8",
+          "passed": true
+        },
+        {
+          "expected": "runtime:skylineAmbientMaximumTilt:8",
+          "passed": true
+        },
+        {
+          "expected": "pref-float:lyrics_skyline_ambient_drift:1",
+          "passed": true
+        },
+        {
+          "expected": "runtime:skylineAmbientDrift:1",
+          "passed": true
+        },
+        {
+          "expected": "pref-string:player_screen_awake_mode:HiddenLyricsInterface",
+          "passed": true
+        },
+        {
+          "expected": "runtime:screenAwakeMode:HiddenLyricsInterface",
+          "passed": true
+        }
+      ],
+      "track": null,
+      "cloud_choice_made": true,
+      "queue_count": 0,
+      "lyric_style": "AppleMusic",
+      "text_pv_intensity": 1,
+      "error_kind": null,
+      "queue_tracks": [],
+      "lyric_document": null,
+      "automix_progress": 0,
+      "automix_active": false,
+      "duration_ms": 0,
+      "position_ms": 0,
+      "is_paused": false,
+      "captured_elapsed_ms": 1356.6043,
+      "page": null,
+      "queue_entry_ids": [],
+      "lyric_word_lines": null,
+      "queue_index": -1,
+      "text_pv_speed": 2,
+      "controls_visible": false,
+      "autoplay_enabled": false
+    },
+    {
+      "memory": {
+        "direct_buffer_bytes": 8192,
+        "heap_used_bytes": 15521136,
+        "resident_bytes": 198950912,
+        "private_commit_bytes": 177987584,
+        "uptime_ms": 4554,
+        "heap_max_bytes": 1037959168,
+        "threads": 18,
+        "heap_committed_bytes": 21151744,
+        "non_heap_used_bytes": 50347448
+      },
+      "legal_consent_version": "",
+      "skia": {
+        "font_cache_bytes": 63555,
+        "live_objects": null,
+        "resource_cache_bytes": 746544
+      },
+      "cloud_enabled": false,
+      "title": null,
+      "error": null,
+      "onboarding_completed": true,
+      "automix_status": "idle",
+      "file": "01-root-skyline.png",
+      "equalizer": {
+        "bands_db": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "preamp_db": 0,
+        "preset": "Flat",
+        "enabled": false
+      },
+      "text_pv_style": "BlueBold",
+      "artwork_cache": {
+        "entries": 0,
+        "budget_bytes": 67108864,
+        "budgeted_bytes": 0
+      },
+      "is_playing": false,
+      "play_when_ready": false,
+      "selected_quality": "standard",
+      "is_loading": false,
+      "personalization_consent": false,
+      "assertions": [],
+      "track": null,
+      "cloud_choice_made": true,
+      "queue_count": 0,
+      "lyric_style": "AppleMusic",
+      "text_pv_intensity": 1,
+      "error_kind": null,
+      "queue_tracks": [],
+      "lyric_document": null,
+      "automix_progress": 0,
+      "automix_active": false,
+      "duration_ms": 0,
+      "position_ms": 0,
+      "is_paused": false,
+      "captured_elapsed_ms": 3345.3861,
+      "page": null,
+      "queue_entry_ids": [],
+      "lyric_word_lines": null,
+      "queue_index": -1,
+      "text_pv_speed": 2,
+      "controls_visible": false,
+      "autoplay_enabled": false,
+      "action_elapsed_ms": 1943.861
+    },
+    {
+      "memory": {
+        "direct_buffer_bytes": 8192,
+        "heap_used_bytes": 19525960,
+        "resident_bytes": 209760256,
+        "private_commit_bytes": 200781824,
+        "uptime_ms": 5593,
+        "heap_max_bytes": 1037959168,
+        "threads": 18,
+        "heap_committed_bytes": 33595392,
+        "non_heap_used_bytes": 54387240
+      },
+      "legal_consent_version": "",
+      "skia": {
+        "font_cache_bytes": 82087,
+        "live_objects": null,
+        "resource_cache_bytes": 746544
+      },
+      "cloud_enabled": false,
+      "title": null,
+      "error": null,
+      "onboarding_completed": true,
+      "automix_status": "idle",
+      "file": "02-open.png",
+      "equalizer": {
+        "bands_db": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "preamp_db": 0,
+        "preset": "Flat",
+        "enabled": false
+      },
+      "text_pv_style": "BlueBold",
+      "artwork_cache": {
+        "entries": 0,
+        "budget_bytes": 67108864,
+        "budgeted_bytes": 0
+      },
+      "is_playing": false,
+      "play_when_ready": false,
+      "selected_quality": "standard",
+      "is_loading": false,
+      "personalization_consent": false,
+      "assertions": [
+        {
+          "expected": "tag:skyline-settings",
+          "passed": true
+        },
+        {
+          "expected": "pref-bool:lyrics_skyline_enabled:false",
+          "passed": true
+        },
+        {
+          "expected": "runtime:skylineEnabled:false",
+          "passed": true
+        },
+        {
+          "expected": "pref-bool:lyrics_skyline_song_info:false",
+          "passed": true
+        },
+        {
+          "expected": "runtime:skylineShowSongInfo:false",
+          "passed": true
+        },
+        {
+          "expected": "pref-bool:lyrics_skyline_keep_awake:false",
+          "passed": true
+        },
+        {
+          "expected": "runtime:skylineKeepsScreenAwake:false",
+          "passed": true
+        },
+        {
+          "expected": "pref-int:lyrics_skyline_ambient_lines:4",
+          "passed": true
+        },
+        {
+          "expected": "runtime:skylineAmbientLines:4",
+          "passed": true
+        },
+        {
+          "expected": "pref-int:lyrics_skyline_ambient_max_characters:4",
+          "passed": true
+        },
+        {
+          "expected": "runtime:skylineAmbientMaximumCharacters:4",
+          "passed": true
+        },
+        {
+          "expected": "pref-int:lyrics_skyline_ambient_max_visible:16",
+          "passed": true
+        },
+        {
+          "expected": "runtime:skylineAmbientMaximumVisibleTexts:16",
+          "passed": true
+        },
+        {
+          "expected": "pref-float:lyrics_skyline_current_font_size:54",
+          "passed": true
+        },
+        {
+          "expected": "runtime:skylineCurrentFontSize:54",
+          "passed": true
+        },
+        {
+          "expected": "pref-float:lyrics_skyline_current_max_scale:1.1",
+          "passed": true
+        },
+        {
+          "expected": "runtime:skylineCurrentMaximumScale:1.1",
+          "passed": true
+        },
+        {
+          "expected": "pref-float:lyrics_skyline_current_width:0.64",
+          "passed": true
+        },
+        {
+          "expected": "runtime:skylineCurrentWidth:0.64",
+          "passed": true
+        },
+        {
+          "expected": "pref-float:lyrics_skyline_next_font_size:24",
+          "passed": true
+        },
+        {
+          "expected": "runtime:skylineNextFontSize:24",
+          "passed": true
+        },
+        {
+          "expected": "pref-float:lyrics_skyline_next_opacity:0.48",
+          "passed": true
+        },
+        {
+          "expected": "runtime:skylineNextOpacity:0.48",
+          "passed": true
+        },
+        {
+          "expected": "pref-float:lyrics_skyline_current_spacing:14",
+          "passed": true
+        },
+        {
+          "expected": "runtime:skylineCurrentSpacing:14",
+          "passed": true
+        },
+        {
+          "expected": "pref-float:lyrics_skyline_ambient_font_size:44",
+          "passed": true
+        },
+        {
+          "expected": "runtime:skylineAmbientFontSize:44",
+          "passed": true
+        },
+        {
+          "expected": "pref-float:lyrics_skyline_ambient_opacity:1",
+          "passed": true
+        },
+        {
+          "expected": "runtime:skylineAmbientOpacity:1",
+          "passed": true
+        },
+        {
+          "expected": "pref-float:lyrics_skyline_ambient_blur:1",
+          "passed": true
+        },
+        {
+          "expected": "runtime:skylineAmbientBlur:1",
+          "passed": true
+        },
+        {
+          "expected": "pref-float:lyrics_skyline_ambient_max_tilt:8",
+          "passed": true
+        },
+        {
+          "expected": "runtime:skylineAmbientMaximumTilt:8",
+          "passed": true
+        },
+        {
+          "expected": "pref-float:lyrics_skyline_ambient_drift:1",
+          "passed": true
+        },
+        {
+          "expected": "runtime:skylineAmbientDrift:1",
+          "passed": true
+        },
+        {
+          "expected": "pref-string:player_screen_awake_mode:HiddenLyricsInterface",
+          "passed": true
+        },
+        {
+          "expected": "runtime:screenAwakeMode:HiddenLyricsInterface",
+          "passed": true
+        }
+      ],
+      "track": null,
+      "cloud_choice_made": true,
+      "queue_count": 0,
+      "lyric_style": "AppleMusic",
+      "text_pv_intensity": 1,
+      "error_kind": null,
+      "queue_tracks": [],
+      "lyric_document": null,
+      "automix_progress": 0,
+      "automix_active": false,
+      "duration_ms": 0,
+      "position_ms": 0,
+      "is_paused": false,
+      "captured_elapsed_ms": 4384.7156,
+      "page": null,
+      "queue_entry_ids": [],
+      "lyric_word_lines": null,
+      "queue_index": -1,
+      "text_pv_speed": 2,
+      "controls_visible": false,
+      "autoplay_enabled": false,
+      "action_elapsed_ms": 1040.1731
+    }
+  ],
+  "theme": "Dark",
+  "audio_endpoint": "Java Sound physical output",
+  "height": 780
+}

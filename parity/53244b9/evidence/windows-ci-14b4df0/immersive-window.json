@@ -1,0 +1,63 @@
+{
+  "os": "Windows Server 2025",
+  "physical_player_input": "PENDING",
+  "samples": [
+    {
+      "actual": "Fullscreen",
+      "requested": "Fullscreen",
+      "stage": "Floating-entered",
+      "width": 1024,
+      "height": 768
+    },
+    {
+      "actual": "Floating",
+      "requested": "Floating",
+      "stage": "Floating-restored",
+      "width": 600,
+      "height": 400
+    },
+    {
+      "actual": "Fullscreen",
+      "requested": "Fullscreen",
+      "stage": "Maximized-entered",
+      "width": 1024,
+      "height": 768
+    },
+    {
+      "actual": "Maximized",
+      "requested": "Maximized",
+      "stage": "Maximized-restored",
+      "width": 1040,
+      "height": 736
+    },
+    {
+      "actual": "Fullscreen",
+      "requested": "Fullscreen",
+      "stage": "Fullscreen-entered",
+      "width": 1024,
+      "height": 768
+    },
+    {
+      "actual": "Fullscreen",
+      "requested": "Fullscreen",
+      "stage": "Fullscreen-restored",
+      "width": 1024,
+      "height": 768
+    },
+    {
+      "actual": "Maximized",
+      "requested": "Maximized",
+      "stage": "manual-placement-preserved",
+      "width": 1040,
+      "height": 736
+    },
+    {
+      "actual": "Maximized",
+      "requested": "Maximized",
+      "stage": "disposed-and-late-request-ignored",
+      "width": 1040,
+      "height": 736
+    }
+  ],
+  "status": "PASSED"
+}

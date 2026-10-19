@@ -1,0 +1,137 @@
+{
+  "status": "PASSED",
+  "application_jar": "app/MeloX-Desktop-windows-x64-1.0.0.jar",
+  "required_entries": [
+    {
+      "entry": "melox/ui/glass/MeloXLiquidSliderKt.class",
+      "bytes": 72641,
+      "sha256": "29a811245c1628c4df43973d7e33b6c3c532e0863e1848a1532d43db1903c2e5"
+    },
+    {
+      "entry": "melox/ui/glass/MeloXSettingsDropdownKt.class",
+      "bytes": 89998,
+      "sha256": "6d39050306786b1cd4370e3151fd774f9f7a6387119db2f306f5142527f675c2"
+    },
+    {
+      "entry": "melox/ui/glass/publicdemo/PublicDampedDragAnimation.class",
+      "bytes": 17655,
+      "sha256": "fd3a3f02686ae6d5a5558ed893ff80fdd9e93fa60d271ace6954a9f1a37e8c78"
+    },
+    {
+      "entry": "melox/ui/glass/publicdemo/PublicInteractiveHighlightKt.class",
+      "bytes": 9939,
+      "sha256": "0d30e3e59d9d5ed6a291ad9f123b6873aff4d9b524b214a3af701a3026ba7956"
+    },
+    {
+      "entry": "melox/validation/MeloXGlassPopupAuditKt.class",
+      "bytes": 1755,
+      "sha256": "8408c1d3f261b1e90b64e271176f5d97726df0ebe7d2ce25cae6fd5c1f0fba52"
+    },
+    {
+      "entry": "com/kyant/capsule/ContinuousRoundedRectangle.class",
+      "bytes": 10540,
+      "sha256": "4802e020357082a11b34fbdce5b0622120404fd838c6e23f4fe44c058d93ffa4"
+    },
+    {
+      "entry": "com/kyant/shapes/Capsule.class",
+      "bytes": 4365,
+      "sha256": "ad423eb9391667b27229528914aa69f82a7a08823839086f020b9ec2f4f624a8"
+    },
+    {
+      "entry": "parity/glass-optics-NOTICE.txt",
+      "bytes": 1091,
+      "sha256": "6f6b875945a6fdf2c02c7e94813416f25ada479dc66d205275ffb04fac9c5ee6"
+    },
+    {
+      "entry": "parity/glass-Apache-2.0.txt",
+      "bytes": 11557,
+      "sha256": "52b612fef6cb450f213d942ed14ef630272e94ac4643a273105640b1037bf1b6"
+    },
+    {
+      "entry": "melox/playback/MeloXAutoMixSettings.class",
+      "bytes": 8803,
+      "sha256": "6e413951ca2472650e80ecba265c7d008762689b3e61eafc6b01200ef289d097"
+    },
+    {
+      "entry": "melox/playback/MeloXSmartQueueBuilder.class",
+      "bytes": 19074,
+      "sha256": "1b98181b6d8446d24088d2e900ecdfdcccef52a59d31bbafc971e9caae69ac97"
+    },
+    {
+      "entry": "melox/playback/MeloXDesktopPlayer.class",
+      "bytes": 63842,
+      "sha256": "c5471f7506cc7f6581d1faee075d053146be33018d92f1e1ae77129ef6a8bf16"
+    },
+    {
+      "entry": "melox/ui/screens/PinnedPlaybackSettingsKt.class",
+      "bytes": 70822,
+      "sha256": "539056fc1e97f698caf61d0fc798f486407940ee6dd92e126d28a8d3cf9d4cfa"
+    },
+    {
+      "entry": "parity/migration-baseline.properties",
+      "bytes": 316,
+      "sha256": "3e384c4eac5c20e490f4edc0afc20371d54a72c15fd5bd5add43bd1616331137"
+    },
+    {
+      "entry": "melox/lyrics/MeloXLyricPreference.class",
+      "bytes": 3709,
+      "sha256": "d62446ccbb543c75e22c7ecfedf5986338b76958d95af8590dcb5b8201a298df"
+    },
+    {
+      "entry": "melox/lyrics/MeloXLyricScriptKt.class",
+      "bytes": 5590,
+      "sha256": "8a0d13e1c7e98a6f0a84ec010a54a4d6cda2b6549f5a9725330344dd430cc2f3"
+    },
+    {
+      "entry": "melox/lyrics/MeloXLyricsLoad.class",
+      "bytes": 27195,
+      "sha256": "d2a165304be41444a6ca154fcc8e11d4b1fa9e78da1397bff84da7c775944db5"
+    },
+    {
+      "entry": "melox/lyrics/TtmlLyricsParser.class",
+      "bytes": 36804,
+      "sha256": "02c58a4dc0c68b29d0b5a4f60d5ed61f5b5127d005c4c0ef7e925edd58fa66ff"
+    },
+    {
+      "entry": "parity/pinned-v065-lyric-language.properties",
+      "bytes": 441,
+      "sha256": "3c98e00e44e140c520dae494814b38c15eb2ae2715a13bf3754e2c65015c1a9e"
+    },
+    {
+      "entry": "melox/settings/MeloXSplitChromePosition.class",
+      "bytes": 2859,
+      "sha256": "21a837793647c172887e875681959ae6f0ad81fa4861430b6d2bd9e8cb3bdfd2"
+    },
+    {
+      "entry": "melox/layout/MeloXSplitGeometryKt.class",
+      "bytes": 13656,
+      "sha256": "9773db5989acfed3f4f7176b6f7b68f993184f3c1499ff9f7608c56c8ccef6ab"
+    },
+    {
+      "entry": "melox/ui/layout/MeloXListDetailLayoutKt.class",
+      "bytes": 44572,
+      "sha256": "551bf99b019ebee5f6ea0ae59d08d8ca28125326a145ec6d31cd4ba9ce48cea1"
+    },
+    {
+      "entry": "melox/ui/layout/MeloXPositionedChromeKt.class",
+      "bytes": 18482,
+      "sha256": "a5061b13f55a81b15769c3181265538021986dd353b45c48854660a91b1336ee"
+    },
+    {
+      "entry": "melox/validation/MeloXFlowingLightAuditKt.class",
+      "bytes": 1249,
+      "sha256": "3c34bf89239e4efebe86990450474082858c5115a04accb97ba99adee428c441"
+    },
+    {
+      "entry": "parity/pinned-v065-split-layout.properties",
+      "bytes": 702,
+      "sha256": "238b41799d4484a2c4f0020bde34e0a4ec2c2f6d982318bfb7c24fb5c8ca6563"
+    },
+    {
+      "entry": "icons/pinned-v065-launcher-foreground.png",
+      "bytes": 84993,
+      "sha256": "bbb434eb8a186a770cc12bad1a03746e3b21d853baeeb661299a67c9c0e2af37"
+    }
+  ],
+  "meaning": "byte presence in independently downloaded distribution; Android pixels pending"
+}

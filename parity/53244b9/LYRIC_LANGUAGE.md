@@ -23,6 +23,8 @@
 
 ## 验收边界
 
-Windows run `39243293868` / 实现 `13d275c` 构建和265项测试成功；完整下载发行并独立核验版本、CRC、17项资源和新增语言类通过。实际上传证据只有20组/762 scenes/1,295 assertions，新增语言controls/reload两目录遗漏于上传清单；CI步骤成功不能替代缺失的原始capture/帧。该部分Windows独立回放验收保持PARTIAL，后续实现修复上传并重新验证。详情 `evidence/windows-ci-13d275c/independent-recount.json`。
+Windows run `39243293868` / 实现 `13d275c` 构建和265项测试成功；完整下载发行并独立核验版本、CRC、17项资源和新增语言类通过。实际上传证据只有20组/762 scenes/1,295 assertions，新增语言controls/reload两目录遗漏于上传清单；CI步骤成功不能替代缺失的原始capture/帧。该历史发行的语言独立回放验收保持PARTIAL。详情 `evidence/windows-ci-13d275c/independent-recount.json`。
+
+后续 **Windows run `39285046285` / head `14b4df0`** 已修复上传清单并成功发行。两个artifact完整下载，25组/889 scenes/1,425 assertions全部独立通过，其中语言controls/reload为 **33 scenes/35 assertions**；原始capture/输入及语义已归档，19项该版本资源、新语言类和精确版本戳核验通过，见 `evidence/windows-ci-14b4df0/`。本次补齐当前发行语言回放证据，不回填历史缺失输出。
 
 该批不代表完整统一歌词链、所有 0.6.5 功能或像素/动态一致性完成。网络账户实机和固定 Android 0.6.5 同内容帧仍待验收；本地单元回归中的可控延迟源仅用于竞态测试，生产数据源仍为真实 provider/AMLL。

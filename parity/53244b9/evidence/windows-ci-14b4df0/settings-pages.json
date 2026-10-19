@@ -1,0 +1,91 @@
+{
+  "status": "PASSED",
+  "pinned_routes": 19,
+  "locales": [
+    "en-US",
+    "ja-JP",
+    "zh-CN",
+    "zh-TW"
+  ],
+  "captures": [
+    {
+      "name": "settings-en-US",
+      "scenes": 88,
+      "steps": 87,
+      "assertions": 65,
+      "width": 1100,
+      "height": 780,
+      "theme": "Dark",
+      "first_frame_resident_bytes": 181596160,
+      "last_frame_resident_bytes": 345600000,
+      "artwork_budgeted_bytes": 0,
+      "locale": "en-US"
+    },
+    {
+      "name": "settings-ja-JP",
+      "scenes": 88,
+      "steps": 87,
+      "assertions": 65,
+      "width": 1100,
+      "height": 780,
+      "theme": "Light",
+      "first_frame_resident_bytes": 183713792,
+      "last_frame_resident_bytes": 355446784,
+      "artwork_budgeted_bytes": 0,
+      "locale": "ja-JP"
+    },
+    {
+      "name": "settings-zh-CN",
+      "scenes": 88,
+      "steps": 87,
+      "assertions": 65,
+      "width": 427,
+      "height": 924,
+      "theme": "Light",
+      "first_frame_resident_bytes": 176832512,
+      "last_frame_resident_bytes": 353787904,
+      "artwork_budgeted_bytes": 0,
+      "locale": "zh-CN"
+    },
+    {
+      "name": "settings-zh-TW",
+      "scenes": 88,
+      "steps": 87,
+      "assertions": 65,
+      "width": 800,
+      "height": 600,
+      "theme": "Dark",
+      "first_frame_resident_bytes": 182833152,
+      "last_frame_resident_bytes": 352337920,
+      "artwork_budgeted_bytes": 0,
+      "locale": "zh-TW"
+    },
+    {
+      "name": "settings-controls",
+      "scenes": 74,
+      "steps": 73,
+      "assertions": 55,
+      "width": 1100,
+      "height": 780,
+      "theme": "Dark",
+      "first_frame_resident_bytes": 183066624,
+      "last_frame_resident_bytes": 219791360,
+      "artwork_budgeted_bytes": 0
+    },
+    {
+      "name": "settings-reload",
+      "scenes": 8,
+      "steps": 7,
+      "assertions": 18,
+      "width": 1100,
+      "height": 780,
+      "theme": "Dark",
+      "first_frame_resident_bytes": 179204096,
+      "last_frame_resident_bytes": 297000960,
+      "artwork_budgeted_bytes": 0
+    }
+  ],
+  "total_assertions": 333,
+  "android_pixel_acceptance": "BLOCKED: no pinned Android screenshot/frame in this run",
+  "physical_audible_acceptance": "BLOCKED"
+}

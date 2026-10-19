@@ -17,15 +17,15 @@
 | 智能队列分析额度：默认60、负数不限、正数10–500；当前+后续N首，排除历史；按generation调度 | 已接入真实设置、解析和PCM分析链；两个worker限制解析/解码并发和协程分配 | Linux/Windows真实15首生成WAV/FFmpeg回归通过：从第3首开始、额度10，仅11首解析/分析；切到额度尾部不重新启动整批额度；0cee9a3发行独立核验通过 |
 | 完整可见队列与原位DJ排序 | 保留历史/完整列表，按已消费链尾重排；额度尾部维持原序，禁用不重复添加；过渡中不改目标，预备目标变化取消旧mix | 真实90/140/92 BPM样本重排90→92→140通过；generation/fallback/历史与额度尾部回归通过；物理听感待验收 |
 | 额度设置入口和持久化 | 真源同款5选项（不限、20/40/60/100），Smart模式显示、Fixed模式隐藏 | Linux/Windows均通过物理输入26 scenes/13 assertions、独立JVM重载5/4；该项标题/选项在源中为硬编码中文，按原文保留 |
-| 分屏默认开关、list-detail、独立Dock/迷你播放器六种位置与安全区 | 首批已接入：默认开启、设置子页右栏、三种单栏回退、两个独立六位置/真实播放控制/安全区与联动规则；Library分屏接线和其余详情入口待实机补验 | 8684c2e本地270 tests/55 suites通过；开关/六位置/独立重载/竖屏70 scenes/95 assertions通过，真实PCM写入非空；播放器完整双栏及Android同内容验收仍待完成，见SPLIT_LAYOUT_AND_FLOW.md |
+| 分屏默认开关、list-detail、独立Dock/迷你播放器六种位置与安全区 | 首批已接入：默认开启、设置子页右栏、三种单栏回退、两个独立六位置/真实播放控制/安全区与联动规则；Library分屏接线和其余详情入口待实机补验 | 14b4df0发行独立核验通过：Windows270 tests/55 suites；分屏开关/六位置/独立重载/竖屏70 scenes/95 assertions通过，三组真实PCM写入均超过44100帧；播放器完整双栏及Android同内容验收仍待完成，见SPLIT_LAYOUT_AND_FLOW.md |
 | 音乐库歌单打开/关闭共享封面过渡 | 分屏详情退场内容保留已接线，完整共享过渡待对照迁移/回放 | Local只有Songs入口，不能用本地生成歌单替代已登录provider Library回放；原共享封面过渡不自动升级为0.6.5验收 |
 | Provider能力分发、集合分页、可写歌单权限/成员排序 | 旧功能保留，0.6.5增量待审计/迁移 | 同源原始ID及真实API约束继续生效 |
 | YouTube地区/登录上下文/认证头、频道选择/刷新、账号失败不误判退出 | 0.6.5增量待迁移 | 真实账号验收待实机 |
-| 统一歌词链、翻译语言立即刷新与异步覆盖保护 | 语言选择、TTML轨道、语言快照缓存/绑定/升级和播放器新请求状态已接入；完整统一链其余增量待审计 | 本地/Windows265 tests/54 suites通过；本地设置与换Locale独立JVM重载33 scenes/35 assertions通过；13d275c发行独立下载/17项资源通过，Windows新语言两组回放漏传原始输出，不能计入已独立核验的20组，见LYRIC_LANGUAGE.md |
+| 统一歌词链、翻译语言立即刷新与异步覆盖保护 | 语言选择、TTML轨道、语言快照缓存/绑定/升级和播放器新请求状态已接入；完整统一链其余增量待审计 | 14b4df0发行中两组语言回放原始capture已完整下载，33 scenes/35 assertions独立通过；19项精确资源和语言类核验通过。历史13d275c漏传边界保留，不回填历史证据，见LYRIC_LANGUAGE.md |
 | AutoSync ONNX/中文CIF/日文G2P与模型包 | 待迁移真实Windows推理与模型所有权 | 不用均匀字时或伪推理代替；须核对正式release模型索引 |
 | 签名文案/主题/规则、受限QuickJS脚本 | 待迁移 | 现有策略读取不代表新schema和消费者已实现 |
 | 液态玻璃全部组件、底栏搜索返回与命中层 | 旧版修复保留；需重新对照0.6.5后迁移剩余差异 | 历史发现记录保留，不能直接套用0.6.2同内容验收 |
-| 播放器背景流光 | 已迁移正式0.6.5颜色源游走/流场扭曲、无分析恒速/真实分析驱动与稳定亮度；位图写入/释放归属修复 | Linux/Windows三档生产Canvas审计均通过；Windows8684c2e因后续Dock回放失败未出ZIP，7fca71b已修复回放坐标；不是Android像素MATCH或用户Windows长时内存修复证明 |
+| 播放器背景流光 | 已迁移正式0.6.5颜色源游走/流场扭曲、无分析恒速/真实分析驱动与稳定亮度；位图写入/释放归属修复 | 14b4df0发行独立核验通过，Linux/Windows三档生产Canvas运动/暂停恢复/减少动态/周期回卷及36次卸载审计均通过；不是Android像素MATCH或用户Windows长时内存修复证明 |
 | 完整本地化资源与应用语言 | 待纯树逐项导出并接消费者 | 现有四Locale设置验收属于旧资源基线 |
 | Android APK增量更新/系统平台功能 | 需Windows平台等价实现 | APK patch不适用于Windows发行 |
 | 用户Windows549→1431MB内存、GPU/DPI/长时播放、账号/音频实机验收 | 未闭环 | 分析额度仅证明后台工作受限，不是RSS问题已修复 |
@@ -37,5 +37,6 @@
 
 - 首批实现 **`0cee9a32de9751e582807c88984b44d800d188ba`**：本地全量 **257 tests / 52 suites / 0 failures/errors/skipped**，桌面编译和额度controls/reload通过。
 - Windows **[39238611894](https://github.com/lladlam/MeloX-Windows/actions/runs/39238611894)** 已成功，两个artifact完整下载核验通过：257 tests/52 suites，20组回放/762 scenes/1,295 assertions全部通过；发行ZIP/JAR CRC、精确版本、16项legacy资源、Windows FFmpeg和0.6.5目标元数据核验通过。
-- 最近独立核验发行现为 **`0cee9a3`**：ZIP **333,098,400 bytes**，SHA-256 **`33e754b423359d1970a6d09a44db923c389e83ab5f2f0b1cc3e43581a2d011b1`**；证据 `evidence/windows-ci-0cee9a3/`。它包含额度迁移，尚不包含下一批歌词语言实现。
-- 歌词语言实现 **`13d275cc4bfa600fe3c7f7b6a963fc2a1c6b21bc`** 已推送；本地265 tests/54 suites及33 scenes/35 assertions通过。Windows **[39243293868](https://github.com/lladlam/MeloX-Windows/actions/runs/39243293868)** 运行中，成功后自动完整下载并独立核验；不预先标记发行通过。
+- 历史额度发行 **`0cee9a3`**：ZIP **333,098,400 bytes**，SHA-256 **`33e754b423359d1970a6d09a44db923c389e83ab5f2f0b1cc3e43581a2d011b1`**；证据 `evidence/windows-ci-0cee9a3/`。
+- 歌词语言实现 **`13d275cc4bfa600fe3c7f7b6a963fc2a1c6b21bc`**：Windows **[39243293868](https://github.com/lladlam/MeloX-Windows/actions/runs/39243293868)** 成功并完成发行独立核验；265 tests/54 suites、已上传20组原始回放通过，新语言两目录漏传边界见 `evidence/windows-ci-13d275c/independent-recount.json`。
+- 最近独立核验发行 **`14b4df0576b67ffd59a23e6670e76eb53e952caf`**：Windows **[39285046285](https://github.com/lladlam/MeloX-Windows/actions/runs/39285046285)** 成功，两个artifact完整下载及全部CRC通过；270 tests/55 suites零失败，25组/889 scenes/1,425 assertions全部通过，包含新语言与分屏原始回放。ZIP **333,279,974 bytes**，SHA-256 **`6780a498467bced4c9a964dbfa2d22801c54c20a08a9378e1b8eb822dba3c0a0`**；精确版本、19项资源、Windows PE FFmpeg及流光/玻璃/沉浸审计均通过，证据 `evidence/windows-ci-14b4df0/`。发行来源为14b4df0，后续证据文档提交不改变该来源。

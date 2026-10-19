@@ -1,0 +1,5 @@
+00-settings=runtime:flowingLightSpeed:2.0,runtime:flowingLightSaturation:2.0,runtime:flowingLightBrightness:1.6,runtime:playlistSearchBarHidden:true,runtime:playlistShowArtwork:true,runtime:musicArea:日本,eq-enabled:true,eq-preset:Custom,pref-bool:download_lyrics:false,download-lyrics:false,automix-mode:Fixed,automix-duration-ms:12000,pref-bool:immersive_playback:true,runtime:immersivePlaybackEnabled:true
+open-appearance=tag:settings-appearance
+persisted-background=absent:player_flowing_speed
+persisted-immersive=checked:setting-immersive_playback
+persisted-library=checked:setting-library_playlist_show_artwork

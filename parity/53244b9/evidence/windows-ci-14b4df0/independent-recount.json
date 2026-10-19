@@ -1,0 +1,194 @@
+{
+  "run_id": "39285046285",
+  "head_sha": "14b4df0576b67ffd59a23e6670e76eb53e952caf",
+  "replays": [
+    {
+      "path": "bilibili-alignment-controls",
+      "scenes": 10,
+      "assertions": 15,
+      "complete": true,
+      "capture_sha256": "6426dd1c48aa207df4226f12b962530f6a9965733fceba15b58e1b0a759a1f6f"
+    },
+    {
+      "path": "bilibili-alignment-reload",
+      "scenes": 6,
+      "assertions": 6,
+      "complete": true,
+      "capture_sha256": "0280f215b096d391c5baa6600e3cdf523b3106ca02e1bc07a077507dd9a1775b"
+    },
+    {
+      "path": "glass-dock-Dark",
+      "scenes": 7,
+      "assertions": 9,
+      "complete": true,
+      "capture_sha256": "53132561651f38db54bd28d452554bdc53c03f3d792e13fa2918bc00a4625304"
+    },
+    {
+      "path": "glass-dock-Light",
+      "scenes": 7,
+      "assertions": 9,
+      "complete": true,
+      "capture_sha256": "cdb8d823cf1f4b007d1716b4557ac8b2024c35674baf8c36372061b65e99fe9f"
+    },
+    {
+      "path": "lyric-language-controls",
+      "scenes": 22,
+      "assertions": 22,
+      "complete": true,
+      "capture_sha256": "f70ebd184ec516ce1b41d0bedfbd2b9c2bb0c37ac1f2d571cdf73a58a7483622"
+    },
+    {
+      "path": "lyric-language-reload",
+      "scenes": 11,
+      "assertions": 13,
+      "complete": true,
+      "capture_sha256": "55555c0d6af646761e66f510d4a87bb550f341a19b2a0e6f330b0b1ecaab63a6"
+    },
+    {
+      "path": "lyrics-controls",
+      "scenes": 151,
+      "assertions": 260,
+      "complete": true,
+      "capture_sha256": "7f38927c876eaa9ade2f4060e9de9cb38eaec155122071124f56b2f09c90b90b"
+    },
+    {
+      "path": "lyrics-reload",
+      "scenes": 2,
+      "assertions": 241,
+      "complete": true,
+      "capture_sha256": "863ae7f2350e95b2fe1d68331557c7518f4159b2fb7dce5caee67592a3205bbf"
+    },
+    {
+      "path": "settings-controls",
+      "scenes": 74,
+      "assertions": 55,
+      "complete": true,
+      "capture_sha256": "a53cea8f773895ad5f8ddacac88474867ff62c50ca5f3fb9b5e1a02cd5cce82b"
+    },
+    {
+      "path": "settings-en-US",
+      "scenes": 88,
+      "assertions": 65,
+      "complete": true,
+      "capture_sha256": "22669c62ffc4f5a5a560db955c473ade12819a880c8172b8fb2d3c21e9bb6588"
+    },
+    {
+      "path": "settings-ja-JP",
+      "scenes": 88,
+      "assertions": 65,
+      "complete": true,
+      "capture_sha256": "644d84ba2e89162e199217b3e4082ae10bd0c482f03b74f39561b3094a07b5d5"
+    },
+    {
+      "path": "settings-reload",
+      "scenes": 8,
+      "assertions": 18,
+      "complete": true,
+      "capture_sha256": "9730fb70e543f3484cda986a65bd7db512339a0fd943f1753337d4c75c15f667"
+    },
+    {
+      "path": "settings-zh-CN",
+      "scenes": 88,
+      "assertions": 65,
+      "complete": true,
+      "capture_sha256": "4af377b77074b88536819316789e32f75fae99659ce23d75fc88c3747a7b6c27"
+    },
+    {
+      "path": "settings-zh-TW",
+      "scenes": 88,
+      "assertions": 65,
+      "complete": true,
+      "capture_sha256": "aef56511f333c45bd0d5e8f0e3de69a264ff1c0a0e1a26dee04039c72c1200fd"
+    },
+    {
+      "path": "skyline/controls",
+      "scenes": 58,
+      "assertions": 87,
+      "complete": true,
+      "capture_sha256": "e1d063e69ee8b78259f44f7bb5f15742117670a09e7e6f721f77c8344f4f598f"
+    },
+    {
+      "path": "skyline/reload",
+      "scenes": 3,
+      "assertions": 73,
+      "complete": true,
+      "capture_sha256": "a1f2478ecc1fa2b58af8f416f341c4ef484db06ba18a498e903d3c8196248ac0"
+    },
+    {
+      "path": "skyline/reload-reset",
+      "scenes": 3,
+      "assertions": 73,
+      "complete": true,
+      "capture_sha256": "db38ea257231e1deeae64e895c560cad10fb112d3561319e6f7b806ab8393d85"
+    },
+    {
+      "path": "skyline/reset",
+      "scenes": 6,
+      "assertions": 109,
+      "complete": true,
+      "capture_sha256": "34ad113a129e38f438f68dfb57227e68e56b072d8aed8434417fb361fa35fe21"
+    },
+    {
+      "path": "smartqueue-limit-controls",
+      "scenes": 26,
+      "assertions": 13,
+      "complete": true,
+      "capture_sha256": "737523215c04f5d3a2a00bfacd2b30148afe7bdd5f89da980c734e2609789e7f"
+    },
+    {
+      "path": "smartqueue-limit-reload",
+      "scenes": 5,
+      "assertions": 4,
+      "complete": true,
+      "capture_sha256": "634291c2110a2df8949775d4b45410246ec821bfa942669a4ccd6b2d38f8501f"
+    },
+    {
+      "path": "song-actions-controls",
+      "scenes": 38,
+      "assertions": 34,
+      "complete": true,
+      "capture_sha256": "4a0641f1dc94d6365a508d4de6975510192d91d8a0ab5c9564cc50e0f7599cf6"
+    },
+    {
+      "path": "song-actions-reload",
+      "scenes": 30,
+      "assertions": 29,
+      "complete": true,
+      "capture_sha256": "3999f90a738c74c7661c787c6c4285c9d43d59a97f6fa2363e978c86b3ebb7ab"
+    },
+    {
+      "path": "split-layout-controls",
+      "scenes": 58,
+      "assertions": 69,
+      "complete": true,
+      "capture_sha256": "7b3186ce5c8876b000a21ad17c599e19f1703163176de2ca3cef8aab8239f8f3",
+      "pcm_written_frames": 3655433,
+      "hardware_output": false
+    },
+    {
+      "path": "split-layout-portrait",
+      "scenes": 6,
+      "assertions": 12,
+      "complete": true,
+      "capture_sha256": "33e7503482fe1796a2c5cc970caa4c5fcccdd5b4233b98dd2f97876fb4510c4d",
+      "pcm_written_frames": 256022,
+      "hardware_output": false
+    },
+    {
+      "path": "split-layout-reload",
+      "scenes": 6,
+      "assertions": 14,
+      "complete": true,
+      "capture_sha256": "7ecbe6c2442115e2e82cd455419e1e095742a49ef0a1563b26314a037c378901",
+      "pcm_written_frames": 266149,
+      "hardware_output": false
+    }
+  ],
+  "totals": {
+    "replays": 25,
+    "scenes": 889,
+    "assertions": 1425
+  },
+  "status": "PASSED",
+  "acceptance_scope": "Downloaded Windows production pointer replays, software PCM capture and reported audits; not Android pixel or physical hardware/account acceptance"
+}

@@ -1,0 +1,5 @@
+00-settings=lyric-language:tr,lyric-preference:tr:Original,pref-string:lyric_language:tr
+open-lyrics=tag:settings-lyrics
+persisted=lyric-language:tr,text:Türkçe,text:Lyric translation language
+choose-0=lyric-language:system,pref-string:lyric_language:system,lyric-preference:zh:Traditional
+choose-1=lyric-language:tr,pref-string:lyric_language:tr,lyric-preference:tr:Original

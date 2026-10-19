@@ -53,3 +53,12 @@
 - Bilibili脚本仍以全宽时代的765,745坐标点击设置；分屏后改为读取 `root-tab:Settings` 的实际位置并发送物理点击。检索其余capture脚本，未再发现同类固定底栏点击或固定Dock拖动。
 - JDK17顺序实跑Bilibili controls/reload **16 scenes / 21 assertions**、完整歌词controls/reload **153/501**、Skyline四模式 **70/342**、真实生成WAV歌曲操作/独立reload **68/63**，共 **10组 / 307 scenes / 927 assertions** 全通过。歌词60键、Skyline17键/四awake范围/重置保留边界、歌曲操作聚合验证均通过；仅为各报告范围，不代替已登录账号、硬件播放或Android同内容验收。
 - 修复 **`14b4df0`** 已正常推main；本地原始输入、语义、capture和日志在 `evidence/remaining-replays-local/`。新的Windows全量发行及完整下载后独立核验仍待完成，最近独立核验发行仍为13d275c。
+
+## 7. 分屏／流光发行完成独立核验（14b4df0）
+
+- Windows **[39285046285](https://github.com/lladlam/MeloX-Windows/actions/runs/39285046285) / head `14b4df0576b67ffd59a23e6670e76eb53e952caf` / SUCCESS**。完整下载Verification-Windows **40,184,748 bytes** 与MeloX-Desktop-Windows artifact **332,570,046 bytes**，与API报告大小一致、全部条目CRC通过；artifact哈希在 `evidence/windows-ci-14b4df0/artifact-downloads.json`。
+- 独立重计原始XML **270 tests / 55 suites / 0 failures/errors/skipped**；全部 **25组 / 889 scenes / 1,425 assertions** 完整通过，逐组检查场景数等于输入步数+1。新增语言controls/reload原始capture已随本次发行下载，**33/35**独立通过；三个分屏回放 **70/95**，各组真实PCM写入均超过44100帧，验收输出端点明确为软件而非硬件。历史13d275c漏传结果不回填。
+- 内层发行ZIP **333,279,974 bytes**，SHA-256 **`6780a498467bced4c9a964dbfa2d22801c54c20a08a9378e1b8eb822dba3c0a0`**；357条目及应用JAR全部CRC、精确版本戳、按该提交清单核验19项源资源、新分屏/语言类和固定0.6.5目标元数据均通过。
+- Windows PE FFmpeg **164,352,000 bytes / `af7913b7ddc324bf02b8af72fe8612b1471455ef8d9e04e45466510742abcff9`** 核验通过。CI在Windows执行JAR/app-image/ZIP解码器验证成功，下载后的Linux独立检查核对PE字节与哈希，不声称在Linux执行Windows解码器或完成真实硬件听感。
+- Windows三档流光生产Canvas报告及连续帧已下载：每档76789–76797/76800像素变化，暂停/减少动态冻结、恢复移动、周期回卷连续、无伪分析或节拍亮度脉动、36次卸载重建均通过；High两帧已人工查看。玻璃光学、组件/Popup复用释放及Windows原生沉浸placement报告均PASSED。
+- 原始输入/capture、重点分屏/语言语义/截图/日志、55份XML及核验结果在 `evidence/windows-ci-14b4df0/`；资源和解码器按精确发行提交读取。最近独立核验发行升级为 **14b4df0**，不是后续文档HEAD。整体迁移继续 **PARTIAL**：Android同内容帧、账号/硬件闭环、Library账号详情/其余路由/完整播放器双栏及用户Windows长时内存增长仍待完成。

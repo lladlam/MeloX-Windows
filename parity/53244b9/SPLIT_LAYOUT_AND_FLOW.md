@@ -31,3 +31,7 @@
 Windows `39270464456` 的270项测试和三档流光审计通过，但旧Dock回放的固定248px拖动未适配分屏，剩余流程跳过、未生成发行ZIP。修复 `7fca71b` 改为读取实际根标签中心后发送物理拖动；深浅两主题14 scenes/18 assertions与JDK17完整设置路由82/65通过，新的Windows发行核验仍待完成。
 
 随后Windows `39272967752` 已通过Dock、新歌词语言和三个分屏回放，原始完整回放重计11组/312 scenes/295 assertions；zh-TW 800×600一般页的触感反馈行移出视口，旧聚合断言失败。`3a79b5c` 改为逐项真实滚轮滚入后检查；JDK17四Locale路由和controls/reload共6组/434 scenes/333 assertions通过。本次失败仍未生成发行ZIP，后续Windows全流程待验。
+
+最终Windows **39285046285 / head `14b4df0` / SUCCESS**，两个artifact完整下载并独立核验：270 tests/55 suites零失败，**25组/889 scenes/1,425 assertions**全部通过；三个分屏回放70/95，各组生产PCM写入超过44100帧。三档流光运动/暂停恢复/减少动态/周期回卷与36次卸载重建均通过，流光连续帧及原始回放证据在 `evidence/windows-ci-14b4df0/`。
+
+发行ZIP **333,279,974 bytes**，SHA-256 **`6780a498467bced4c9a964dbfa2d22801c54c20a08a9378e1b8eb822dba3c0a0`**；357条目/JAR全部CRC、精确版本、19项资源和Windows PE解码器核验通过。以上为Windows本批实现及交付验收，整体0.6.5迁移仍为PARTIAL，Android同内容像素/动态和用户长时内存增长仍待闭环。

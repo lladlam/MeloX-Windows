@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="DesktopSearchProtocolTest[desktop]" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-10-19T16:28:16.433Z" hostname="runnervm0xl3a" time="0.249">
+  <properties/>
+  <testcase name="providerSearchPreservesNativeCollectionIdsForUnifiedResultActions[desktop]" classname="melox.network.DesktopSearchProtocolTest" time="0.216"/>
+  <testcase name="replacingSearchCancelsTheActualInflightSocketWithoutPublishingOldResults[desktop]" classname="melox.network.DesktopSearchProtocolTest" time="0.014"/>
+  <testcase name="paginatedUniversalSearchUsesRealPinnedRouteAndPropagatesServiceErrors[desktop]" classname="melox.network.DesktopSearchProtocolTest" time="0.011"/>
+  <testcase name="canonicalSearchEnrichesMissingArtworkAndRetainsRealSongArtistAlbumAndDurationIds[desktop]" classname="melox.network.DesktopSearchProtocolTest" time="0.008"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

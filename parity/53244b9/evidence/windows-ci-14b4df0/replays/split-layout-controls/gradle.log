@@ -1,0 +1,229 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.5.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :desktop:kmpPartiallyResolvedDependenciesChecker
+> Task :desktop:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :desktop:extractPinnedGlassGeometry UP-TO-DATE
+> Task :desktop:convertXmlValueResourcesForCommonMain NO-SOURCE
+> Task :desktop:copyNonXmlValueResourcesForCommonMain NO-SOURCE
+> Task :desktop:prepareComposeResourcesTaskForCommonMain NO-SOURCE
+> Task :desktop:generateResourceAccessorsForCommonMain SKIPPED
+> Task :desktop:convertXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :desktop:copyNonXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :desktop:prepareComposeResourcesTaskForDesktopMain NO-SOURCE
+> Task :desktop:generateResourceAccessorsForDesktopMain SKIPPED
+> Task :desktop:generateActualResourceCollectorsForDesktopMain SKIPPED
+> Task :desktop:generateComposeResClass SKIPPED
+> Task :desktop:generateExpectResourceCollectorsForCommonMain SKIPPED
+> Task :innertube:kmpPartiallyResolvedDependenciesChecker
+> Task :innertube:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :innertube:extractAndroidInnerTube UP-TO-DATE
+> Task :innertube:compileKotlinDesktop UP-TO-DATE
+> Task :innertube:compileDesktopMainJava NO-SOURCE
+> Task :innertube:desktopProcessResources NO-SOURCE
+> Task :innertube:processDesktopMainResources SKIPPED
+> Task :innertube:desktopMainClasses UP-TO-DATE
+> Task :innertube:desktopJar UP-TO-DATE
+> Task :shared:kmpPartiallyResolvedDependenciesChecker
+> Task :shared:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :shared:convertXmlValueResourcesForCommonMain NO-SOURCE
+> Task :shared:copyNonXmlValueResourcesForCommonMain NO-SOURCE
+> Task :shared:prepareComposeResourcesTaskForCommonMain NO-SOURCE
+> Task :shared:generateResourceAccessorsForCommonMain SKIPPED
+> Task :shared:convertXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :shared:copyNonXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :shared:prepareComposeResourcesTaskForDesktopMain NO-SOURCE
+> Task :shared:generateResourceAccessorsForDesktopMain SKIPPED
+> Task :shared:generateActualResourceCollectorsForDesktopMain SKIPPED
+> Task :shared:generateComposeResClass SKIPPED
+> Task :shared:generateExpectResourceCollectorsForCommonMain SKIPPED
+> Task :shared:compileKotlinDesktop UP-TO-DATE
+> Task :shared:compileDesktopMainJava NO-SOURCE
+> Task :shared:assembleDesktopMainResources UP-TO-DATE
+> Task :shared:desktopProcessResources UP-TO-DATE
+> Task :shared:processDesktopMainResources SKIPPED
+> Task :shared:desktopMainClasses UP-TO-DATE
+> Task :shared:desktopJar UP-TO-DATE
+> Task :desktop:compileKotlinDesktop UP-TO-DATE
+> Task :desktop:compileDesktopMainJava NO-SOURCE
+> Task :desktop:assembleDesktopMainResources UP-TO-DATE
+> Task :desktop:desktopProcessResources UP-TO-DATE
+> Task :desktop:processDesktopMainResources SKIPPED
+> Task :desktop:desktopMainClasses UP-TO-DATE
+
+> Task :desktop:captureUi
+SLF4J(W): No SLF4J providers were found.
+SLF4J(W): Defaulting to no-operation (NOP) logger implementation
+SLF4J(W): See https://www.slf4j.org/codes.html#noProviders for further details.
+[DEBUG MeloXThirdParty] resolve detail source=local id=53e3d147 title=generated-split-pcm artists=Generated PCM fixture durationMs=420000 metadata=Local
+[INFO MeloXThirdParty] Resolve start source=local quality=Standard thirdParty=false
+[INFO MeloXThirdParty] Resolve fallback source=local stage=provider chksz=disabled
+[INFO MeloXFont] Android MiLan Pro static instances loaded: CSS=[100, 200, 300, 400, 500, 600, 700, 800, 900] files=mi_lan_pro_w{100..800}.ttf (CSS 900 shares frozen axis-700 instance)
+[DEBUG AudioPlayer] Bundled FFmpeg verified: sha256=af7913b7ddc324bf02b8af72fe8612b1471455ef8d9e04e45466510742abcff9 bytes=164352000
+[DEBUG AudioPlayer] FFmpeg binary=C:\Users\runneradmin\AppData\Local\Temp\melox-decoder-ffmpeg-af7913b7ddc324bf.exe os=Windows Server 2025 sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+Captured 00-settings: 1100x780 density=1.0
+Physical click remote-reject: remote-reject at Offset(295.5, 468.0)
+Captured 01-remote-reject: 1100x780 density=1.0
+Verified remote-reject: cloud-enabled:false
+Captured 02-reveal-general: 1100x780 density=1.0
+Physical click open-general: settings-open-general at Offset(275.0, 435.0)
+Captured 03-open-general: 1100x780 density=1.0
+Verified open-general: tag:settings-general
+Captured 04-split-default: 1100x780 density=1.0
+Verified split-default: runtime:splitScreenEnabled:true
+Verified split-default: tag:layout-list-detail
+Verified split-default: in-half:settings-general:right
+Captured 05-reveal-toggle: 1100x780 density=1.0
+Physical click disable: setting-general_split_screen at Offset(1032.0, 235.0)
+Captured 06-disable: 1100x780 density=1.0
+Verified disable: runtime:splitScreenEnabled:false
+Verified disable: tag:layout-single-pane
+Verified disable: full-tag:settings-general
+Verified disable: absent:general_split_navigation_position
+Verified disable: absent:general_split_mini_player_position
+Physical click enable: setting-general_split_screen at Offset(1032.0, 235.0)
+Captured 07-enable: 1100x780 density=1.0
+Verified enable: runtime:splitScreenEnabled:true
+Verified enable: tag:layout-list-detail
+Verified enable: in-half:settings-general:right
+Captured 08-reveal-nav-0: 1100x780 density=1.0
+Physical click menu-nav-0: general_split_navigation_position at Offset(1005.5, 297.5)
+Captured 09-menu-nav-0: 1100x780 density=1.0
+Physical click choose-nav-0: settings-option:Bottom right at Offset(945.0, 354.0)
+Captured 10-choose-nav-0: 1100x780 density=1.0
+Verified choose-nav-0: pref-string:general_split_navigation_position:BottomRight
+Verified choose-nav-0: runtime:splitNavigationPosition:BottomRight
+Captured 11-reveal-mini-0: 1100x780 density=1.0
+Physical click menu-mini-0: general_split_mini_player_position at Offset(1005.5, 353.5)
+Captured 12-menu-mini-0: 1100x780 density=1.0
+Physical click choose-mini-0: settings-option:Right edge (vertical) at Offset(945.0, 498.0)
+Captured 13-choose-mini-0: 1100x780 density=1.0
+Verified choose-mini-0: pref-string:general_split_mini_player_position:Right
+Verified choose-mini-0: runtime:splitMiniPlayerPosition:Right
+Captured 14-placement-0: 1100x780 density=1.0
+Verified placement-0: tag:layout-list-detail
+Verified placement-0: in-half:settings-general:right
+Verified placement-0: chrome-placement:positioned-navigation:BottomRight
+Verified placement-0: chrome-placement:positioned-mini-player:Right
+Captured 15-reveal-nav-1: 1100x780 density=1.0
+Physical click menu-nav-1: general_split_navigation_position at Offset(921.0, 297.5)
+Captured 16-menu-nav-1: 1100x780 density=1.0
+Physical click choose-nav-1: settings-option:Left edge (vertical) at Offset(865.0, 398.0)
+Captured 17-choose-nav-1: 1100x780 density=1.0
+Verified choose-nav-1: pref-string:general_split_navigation_position:Left
+Verified choose-nav-1: runtime:splitNavigationPosition:Left
+Captured 18-reveal-mini-1: 1100x780 density=1.0
+Physical click menu-mini-1: general_split_mini_player_position at Offset(888.5, 353.5)
+Captured 19-menu-mini-1: 1100x780 density=1.0
+Physical click choose-mini-1: settings-option:Top left at Offset(865.0, 542.0)
+Captured 20-choose-mini-1: 1100x780 density=1.0
+Verified choose-mini-1: pref-string:general_split_mini_player_position:TopLeft
+Verified choose-mini-1: runtime:splitMiniPlayerPosition:TopLeft
+Captured 21-placement-1: 1100x780 density=1.0
+Verified placement-1: tag:layout-list-detail
+Verified placement-1: in-half:settings-general:right
+Verified placement-1: chrome-placement:positioned-navigation:Left
+Verified placement-1: chrome-placement:positioned-mini-player:TopLeft
+Captured 22-reveal-nav-2: 1100x780 density=1.0
+Physical click menu-nav-2: general_split_navigation_position at Offset(973.5, 297.5)
+Captured 23-menu-nav-2: 1100x780 density=1.0
+Physical click choose-nav-2: settings-option:Right edge (vertical) at Offset(945.0, 442.0)
+Captured 24-choose-nav-2: 1100x780 density=1.0
+Verified choose-nav-2: pref-string:general_split_navigation_position:Right
+Verified choose-nav-2: runtime:splitNavigationPosition:Right
+Captured 25-reveal-mini-2: 1100x780 density=1.0
+Physical click menu-mini-2: general_split_mini_player_position at Offset(942.0, 353.5)
+Captured 26-menu-mini-2: 1100x780 density=1.0
+Physical click choose-mini-2: settings-option:Top right at Offset(865.0, 586.0)
+Captured 27-choose-mini-2: 1100x780 density=1.0
+Verified choose-mini-2: pref-string:general_split_mini_player_position:TopRight
+Verified choose-mini-2: runtime:splitMiniPlayerPosition:TopRight
+Captured 28-placement-2: 1100x780 density=1.0
+Verified placement-2: tag:layout-list-detail
+Verified placement-2: in-half:settings-general:right
+Verified placement-2: chrome-placement:positioned-navigation:Right
+Verified placement-2: chrome-placement:positioned-mini-player:TopRight
+Captured 29-reveal-nav-3: 1100x780 density=1.0
+Physical click menu-nav-3: general_split_navigation_position at Offset(888.5, 377.5)
+Captured 30-menu-nav-3: 1100x780 density=1.0
+Physical click choose-nav-3: settings-option:Top left at Offset(865.0, 566.0)
+Captured 31-choose-nav-3: 1100x780 density=1.0
+Verified choose-nav-3: pref-string:general_split_navigation_position:TopLeft
+Verified choose-nav-3: runtime:splitNavigationPosition:TopLeft
+Captured 32-reveal-mini-3: 1100x780 density=1.0
+Physical click menu-mini-3: general_split_mini_player_position at Offset(1017.0, 433.5)
+Captured 33-menu-mini-3: 1100x780 density=1.0
+Physical click choose-mini-3: settings-option:Bottom left at Offset(945.0, 446.0)
+Captured 34-choose-mini-3: 1100x780 density=1.0
+Verified choose-mini-3: pref-string:general_split_mini_player_position:BottomLeft
+Verified choose-mini-3: runtime:splitMiniPlayerPosition:BottomLeft
+Captured 35-placement-3: 1100x780 density=1.0
+Verified placement-3: tag:layout-list-detail
+Verified placement-3: in-half:settings-general:right
+Verified placement-3: chrome-placement:positioned-navigation:TopLeft
+Verified placement-3: chrome-placement:positioned-mini-player:BottomLeft
+Captured 36-reveal-nav-4: 1100x780 density=1.0
+Physical click menu-nav-4: general_split_navigation_position at Offset(1022.0, 297.5)
+Captured 37-menu-nav-4: 1100x780 density=1.0
+Physical click choose-nav-4: settings-option:Top right at Offset(945.0, 530.0)
+Captured 38-choose-nav-4: 1100x780 density=1.0
+Verified choose-nav-4: pref-string:general_split_navigation_position:TopRight
+Verified choose-nav-4: runtime:splitNavigationPosition:TopRight
+Captured 39-reveal-mini-4: 1100x780 density=1.0
+Physical click menu-mini-4: general_split_mini_player_position at Offset(1005.5, 433.5)
+Captured 40-menu-mini-4: 1100x780 density=1.0
+Physical click choose-mini-4: settings-option:Bottom right at Offset(945.0, 490.0)
+Captured 41-choose-mini-4: 1100x780 density=1.0
+Verified choose-mini-4: pref-string:general_split_mini_player_position:BottomRight
+Verified choose-mini-4: runtime:splitMiniPlayerPosition:BottomRight
+Captured 42-placement-4: 1100x780 density=1.0
+Verified placement-4: tag:layout-list-detail
+Verified placement-4: in-half:settings-general:right
+Verified placement-4: chrome-placement:positioned-navigation:TopRight
+Verified placement-4: chrome-placement:positioned-mini-player:BottomRight
+Captured 43-reveal-nav-5: 1100x780 density=1.0
+Physical click menu-nav-5: general_split_navigation_position at Offset(1017.0, 377.5)
+Captured 44-menu-nav-5: 1100x780 density=1.0
+Physical click choose-nav-5: settings-option:Bottom left at Offset(945.0, 390.0)
+Captured 45-choose-nav-5: 1100x780 density=1.0
+Verified choose-nav-5: pref-string:general_split_navigation_position:BottomLeft
+Verified choose-nav-5: runtime:splitNavigationPosition:BottomLeft
+Captured 46-reveal-mini-5: 1100x780 density=1.0
+Physical click menu-mini-5: general_split_mini_player_position at Offset(1001.0, 353.5)
+Captured 47-menu-mini-5: 1100x780 density=1.0
+Physical click choose-mini-5: settings-option:Left edge (vertical) at Offset(945.0, 454.0)
+Captured 48-choose-mini-5: 1100x780 density=1.0
+Verified choose-mini-5: pref-string:general_split_mini_player_position:Left
+Verified choose-mini-5: runtime:splitMiniPlayerPosition:Left
+Captured 49-placement-5: 1100x780 density=1.0
+Verified placement-5: tag:layout-list-detail
+Verified placement-5: in-half:settings-general:right
+Verified placement-5: chrome-placement:positioned-navigation:BottomLeft
+Verified placement-5: chrome-placement:positioned-mini-player:Left
+Captured 50-reveal-final-nav: 1100x780 density=1.0
+Physical click menu-final-nav: general_split_navigation_position at Offset(1005.5, 297.5)
+Captured 51-menu-final-nav: 1100x780 density=1.0
+Physical click choose-final-nav: settings-option:Left edge (vertical) at Offset(945.0, 398.0)
+Captured 52-choose-final-nav: 1100x780 density=1.0
+Verified choose-final-nav: pref-string:general_split_navigation_position:Left
+Verified choose-final-nav: runtime:splitNavigationPosition:Left
+Captured 53-reveal-final-mini: 1100x780 density=1.0
+Physical click menu-final-mini: general_split_mini_player_position at Offset(973.5, 353.5)
+Captured 54-menu-final-mini: 1100x780 density=1.0
+Physical click choose-final-mini: settings-option:Right edge (vertical) at Offset(945.0, 498.0)
+Captured 55-choose-final-mini: 1100x780 density=1.0
+Verified choose-final-mini: pref-string:general_split_mini_player_position:Right
+Verified choose-final-mini: runtime:splitMiniPlayerPosition:Right
+Physical click pause: mini-player-play-pause at Offset(1056.0, 413.0)
+Captured 56-pause: 1100x780 density=1.0
+Verified pause: play-ready:false
+Verified pause: no-playback-error:true
+Physical click resume: mini-player-play-pause at Offset(1056.0, 413.0)
+Captured 57-resume: 1100x780 density=1.0
+Verified resume: play-ready:true
+Verified resume: no-playback-error:true
+gradle/actions: Writing build results to D:\a\_temp\.gradle-actions\build-results\__run_16-1792427830242.json
+
+BUILD SUCCESSFUL in 1m 37s
+15 actionable tasks: 4 executed, 11 up-to-date
+Consider enabling configuration cache to speed up this build: https://docs.gradle.org/9.5.1/userguide/configuration_cache_enabling.html
