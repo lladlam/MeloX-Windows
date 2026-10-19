@@ -14,11 +14,11 @@ assert theme in ('Dark', 'Light')
 output.mkdir(parents=True, exist_ok=True)
 steps = [
     ('remote-reject', 'tap@remote-reject', ['cloud-enabled:false']),
-    ('settings', '890,745', ['tag:settings-root', 'state:bottom-root-tabs:Home>Explore>Library>Settings']),
-    ('drag-library', 'hold-drag@bottom-root-tabs,-248,0', ['absent:settings-root', 'tag:library-pages']),
-    ('drag-settings', 'hold-drag@bottom-root-tabs,248,0', ['tag:settings-root']),
-    ('repeat-library', 'hold-drag@bottom-root-tabs,-248,0', ['absent:settings-root', 'tag:library-pages']),
-    ('repeat-settings', 'hold-drag@bottom-root-tabs,248,0', ['tag:settings-root']),
+    ('settings', 'tap@root-tab:Settings', ['tag:settings-root', 'state:bottom-root-tabs:Home>Explore>Library>Settings']),
+    ('drag-library', 'hold-drag-between@root-tab:Settings,root-tab:Library', ['absent:settings-root', 'tag:library-pages']),
+    ('drag-settings', 'hold-drag-between@root-tab:Library,root-tab:Settings', ['tag:settings-root']),
+    ('repeat-library', 'hold-drag-between@root-tab:Settings,root-tab:Library', ['absent:settings-root', 'tag:library-pages']),
+    ('repeat-settings', 'hold-drag-between@root-tab:Library,root-tab:Settings', ['tag:settings-root']),
 ]
 (output / 'steps.txt').write_text('\n'.join(f'{name}:{action}' for name, action, _ in steps) + '\n', encoding='utf-8')
 (output / 'expect.txt').write_text('\n'.join(f'{name}=' + ','.join(checks) for name, _, checks in steps) + '\n', encoding='utf-8')

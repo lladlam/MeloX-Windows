@@ -267,6 +267,7 @@ fun MeloXBottomChrome(
                                     selected = frostedGlass && selectedTab == tab,
                                     labelAlpha = labelAlpha,
                                     interactive = dockExpanded,
+                                    modifier = Modifier.testTag("root-tab:${tab.name}"),
                                     onClick = { onSelect(tab) },
                                 )
                             }
@@ -409,6 +410,7 @@ private fun RowScope.RootTabButton(
     labelAlpha: Float,
     interactive: Boolean = true,
     scale: Float = 1f,
+    modifier: Modifier = Modifier,
     onClick: () -> Unit,
 ) {
     val foreground by animateColorAsState(
@@ -421,7 +423,7 @@ private fun RowScope.RootTabButton(
         label = "melox-tab-foreground",
     )
     Column(
-        modifier = Modifier
+        modifier = modifier
             .weight(1f)
             .fillMaxHeight()
             .graphicsLayer { scaleX = scale; scaleY = scale }

@@ -462,9 +462,17 @@ fun main(args: Array<String>) = runBlocking {
                     scene.sendPointerEvent(PointerEventType.Press, Offset(x, y), button = PointerButton.Primary)
                     settle(700)
                     scene.sendPointerEvent(PointerEventType.Release, Offset(x, y), button = PointerButton.Primary)
-                } else if (coordinates.startsWith("drag@") || coordinates.startsWith("hold-drag@")) {
-                    val hold = coordinates.startsWith("hold-drag@")
-                    val (x, y, endX, endY) = if (hold) {
+                } else if (coordinates.startsWith("drag@") || coordinates.startsWith("hold-drag@") || coordinates.startsWith("hold-drag-between@")) {
+                    val between = coordinates.startsWith("hold-drag-between@")
+                    val hold = between || coordinates.startsWith("hold-drag@")
+                    val (x, y, endX, endY) = if (between) {
+                        val (from, to) = coordinates.substringAfter('@').split(',')
+                        val nodes = scene.captureSemantics()
+                        val start = requireNotNull(nodes.tagged(from)) { "Missing drag source $from" }.boundsInWindow.center
+                        val end = requireNotNull(nodes.tagged(to)) { "Missing drag destination $to" }.boundsInWindow.center
+                        println("Physical drag $name: $from at $start -> $to at $end")
+                        listOf(start.x, start.y, end.x, end.y)
+                    } else if (hold) {
                         val (tag, dx, dy) = coordinates.substringAfter('@').split(',')
                         val center = requireNotNull(scene.captureSemantics().tagged(tag)) { "Missing drag node $tag" }.boundsInWindow.center
                         listOf(center.x, center.y, center.x + dx.toFloat(), center.y + dy.toFloat())
