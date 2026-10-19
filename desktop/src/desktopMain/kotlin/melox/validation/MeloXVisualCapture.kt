@@ -169,6 +169,22 @@ fun main(args: Array<String>) = runBlocking {
                 "disabled" -> semantics.tagged(expected)?.config?.contains(SemanticsProperties.Disabled) == true
                 "enabled" -> semantics.tagged(expected)?.config?.contains(SemanticsProperties.Disabled) == false
                 "full-tag" -> semantics.tagged(expected)?.boundsInWindow?.let { it.width >= width * .97f && it.height >= height * .97f } == true
+                "in-half" -> expected.split(':', limit = 2).let { (tag, half) ->
+                    semantics.tagged(tag)?.boundsInWindow?.let { bounds ->
+                        !bounds.isEmpty && if (half == "right") bounds.left >= width / 2f - 1f else bounds.right <= width / 2f + 1f
+                    } == true
+                }
+                "chrome-placement" -> expected.split(':', limit = 2).let { (tag, name) ->
+                    val position = melox.settings.MeloXSplitChromePosition.valueOf(name)
+                    semantics.tagged(tag)?.boundsInWindow?.let { bounds ->
+                        !bounds.isEmpty && (if (position.right) bounds.left >= width / 2f else bounds.right <= width / 2f) &&
+                            when (position.vertical) {
+                                -1 -> bounds.top < 24f * density
+                                0 -> kotlin.math.abs(bounds.center.y - height / 2f) < 80f * density
+                                else -> bounds.bottom > height - 24f * density
+                            }
+                    } == true
+                }
                 "absent" -> semantics.tagged(expected) == null
                 "selected" -> semantics.tagged(expected)?.config?.getOrNull(SemanticsProperties.Selected) == true
                 "unselected" -> semantics.tagged(expected)?.config?.getOrNull(SemanticsProperties.Selected) == false
@@ -234,8 +250,8 @@ fun main(args: Array<String>) = runBlocking {
                 else -> error("Unknown capture assertion $kind")
             }
         }
-        suspend fun awaitUi(condition: () -> Boolean) {
-            val deadline = System.nanoTime() + 5_000_000_000L
+        suspend fun awaitUi(timeoutMs: Long = 5_000L, condition: () -> Boolean) {
+            val deadline = System.nanoTime() + timeoutMs * 1_000_000L
             while (!condition() && System.nanoTime() < deadline) settle(16)
         }
         fun capture(name: String) {
@@ -355,7 +371,7 @@ fun main(args: Array<String>) = runBlocking {
                     // clipped bounds from the first spring frame.
                     var stableFrames = 0
                     var previousBounds = target.boundsInWindow
-                    awaitUi {
+                    awaitUi(timeoutMs = 15_000L) {
                         val current = scene.captureSemantics().tagged(tag)?.let(::pointerTarget)
                         if (current == null || current.boundsInWindow.isEmpty) {
                             stableFrames = 0
@@ -371,7 +387,7 @@ fun main(args: Array<String>) = runBlocking {
                             stableFrames >= 4
                         }
                     }
-                    check(stableFrames >= 4) { "$tag did not settle before physical click at $name" }
+                    check(stableFrames >= 4) { "$tag did not settle before physical click at $name: stableFrames=$stableFrames bounds=$previousBounds" }
                     val point = target.boundsInWindow.center
                     println("Physical click $name: $tag at $point")
                     // A desktop mouse reaches the target before pressing; render
@@ -407,7 +423,10 @@ fun main(args: Array<String>) = runBlocking {
                         val direction = if (centerY != null && centerY < topGuard) -1f else 1f
                         // Traverse long production settings pages by mouse wheel,
                         // with enough distance to return from their last slider.
-                        scene.sendPointerEvent(PointerEventType.Scroll, Offset(width * .5f, height * .55f), scrollDelta = Offset(0f, direction * 3f))
+                        // Aim inside the owning pane. Window center is the divider
+                        // in list-detail mode and would scroll the other page.
+                        val centerX = node?.let { it.positionInWindow.x + it.size.width / 2f } ?: width * .5f
+                        scene.sendPointerEvent(PointerEventType.Scroll, Offset(centerX.coerceIn(1f, width - 1f), height * .55f), scrollDelta = Offset(0f, direction * 3f))
                         settle(240)
                     }
                     check(revealed) { "Could not reveal production node $tag using mouse wheel at $name" }

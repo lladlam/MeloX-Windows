@@ -41,6 +41,8 @@ jobs:
         run: python tools/verify_native_equalizer.py shared/build/parity/test-home/native-pcm-evidence --output desktop/build/verification/equalizer-pcm.json
       - name: Audit decoded artwork memory budget and Windows process memory
         run: gradle :desktop:auditArtworkMemory :desktop:auditArtworkDecode
+      - name: Audit actual Flowing Light motion and pause ownership
+        run: gradle :desktop:auditFlowingLight
       - name: Audit real Windows display power request ownership
         run: gradle :desktop:auditDisplayAwake
       - name: Audit native immersive fullscreen and placement restoration
@@ -79,6 +81,16 @@ jobs:
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           python tools/capture_lyric_language.py reload "$homeDir" desktop/build/parity/lyric-language-reload
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Replay split layout and independent Dock mini-player positions
+        shell: pwsh
+        run: |
+          $homeDir = "$pwd/desktop/build/parity/split-layout-home"
+          New-Item -ItemType Directory -Force "$homeDir/.melox" | Out-Null
+          [System.IO.File]::WriteAllText("$homeDir/.melox/prefs_melox_app_settings.properties", "onboarding_completed=true`n", [System.Text.UTF8Encoding]::new($false))
+          foreach ($mode in @("controls", "reload", "portrait")) {
+            python tools/capture_split_layout.py $mode "$homeDir" "desktop/build/parity/split-layout-$mode"
+            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          }
       - name: Replay pinned settings routes in four locales and verify real preference consumers
         shell: pwsh
         run: |
@@ -216,10 +228,18 @@ jobs:
             desktop/build/verification/glass-scene/*.png
             desktop/build/verification/glass-popup/*.json
             desktop/build/verification/glass-popup/*.png
+            desktop/build/verification/flowing-light/*.json
+            desktop/build/verification/flowing-light/*.png
             desktop/build/parity/glass-dock-Dark/*
             desktop/build/parity/glass-dock-Light/*
             desktop/build/parity/smartqueue-limit-controls/*
             desktop/build/parity/smartqueue-limit-reload/*
+            desktop/build/parity/lyric-language-controls/*
+            desktop/build/parity/lyric-language-reload/*
+            desktop/build/parity/split-layout-*/*.json
+            desktop/build/parity/split-layout-*/*.txt
+            desktop/build/parity/split-layout-*/gradle.log
+            desktop/build/parity/split-layout-*/*.png
             desktop/build/verification/settings-icons.json
             desktop/build/parity/settings-*/*.json
             desktop/build/parity/settings-*/gradle.log

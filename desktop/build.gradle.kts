@@ -160,6 +160,19 @@ tasks.register<JavaExec>("auditArtworkDecode") {
     args(layout.buildDirectory.file("verification/artwork-decode.json").get().asFile.absolutePath)
 }
 
+tasks.register<JavaExec>("auditFlowingLight") {
+    group = "verification"
+    description = "Verify actual production Flowing Light motion, freeze/resume, wrap and native disposal."
+    dependsOn("desktopMainClasses")
+    val compilation = kotlin.targets.getByName("desktop").compilations.getByName("main")
+    classpath = files(compilation.output.allOutputs, compilation.runtimeDependencyFiles)
+    mainClass.set("melox.validation.MeloXFlowingLightAuditKt")
+    jvmArgs(productionJvmArgs)
+    systemProperty("java.awt.headless", "true")
+    systemProperty("user.home", layout.buildDirectory.dir("verification/flowing-light-home").get().asFile.absolutePath)
+    args(layout.buildDirectory.dir("verification/flowing-light").get().asFile.absolutePath)
+}
+
 tasks.register<JavaExec>("auditSettingsIcons") {
     group = "verification"
     description = "Check every pinned settings row icon against the pinned Android SF Symbol mapping."

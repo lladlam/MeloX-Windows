@@ -1,0 +1,49 @@
+{
+  "android_sha": "53244b9d6b21d7e3a609e8cb11876efef70f218b",
+  "pure_exports": [
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/MeloXApp.kt",
+      "sha256": "5f6dbd62e5d4313803a85e40646b0d2d31683d2fb7d0eeb6d31fa6bbd843b052"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/layout/MeloXAdaptiveLayout.kt",
+      "sha256": "af63108c4fb8e041d3fa7fed84b998e573a2d8ef3953f6b35144b13a4bb10051"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/layout/MeloXListDetailLayout.kt",
+      "sha256": "462d1daa8d6c176997dadb2273b54423243423b7d1cbbaf60f23c0e05718f059"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/layout/MeloXPositionedChrome.kt",
+      "sha256": "8eb2140fbb030c8a1bc4f69dde6996668d40c1349653a53c7a21d7564540ecf2"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/settings/MeloXSettingsPreferences.kt",
+      "sha256": "0443a5de4dc8b16a28a1cb8463e916e9c1904f3434e5f8a79b88262f992c6478"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/settings/MeloXSplitChromePosition.kt",
+      "sha256": "e20393c1f967e8fdea1586341dc4d64a7b509501fc4291b1e674ea42304a69bd"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/settings/SettingsScreen.kt",
+      "sha256": "d422aa164553891c0be20c48352a43f869eadefda3a8c770af3f2a990be2d103"
+    },
+    {
+      "path": "android/app/src/test/kotlin/com/lladlam/melox/ui/layout/MeloXSplitChromeLayoutTest.kt",
+      "sha256": "8a25322fe2c1d660bee2c82165c95078ab6eaf0aa7107ced179e22357b4b8b40"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXIOSMiniPlayer.kt",
+      "sha256": "803f21ca5ae1c08984400b68d70fd61ea86801e72240c7af3fc26043cd478634"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXFlowingLightBackdrop.kt",
+      "sha256": "6ace3c5acf76eade5a1a896c058c4fab942208a089fd8d185803ccf1ac264c6e"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/library/LibraryScreen.kt",
+      "sha256": "79f2df3579d33f0a7a5492e3d6edf7709376870abe9c2a97aae85657450e6077"
+    }
+  ]
+}

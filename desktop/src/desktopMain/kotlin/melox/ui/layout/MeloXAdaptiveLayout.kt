@@ -9,21 +9,22 @@ import androidx.compose.ui.unit.dp
 enum class MeloXWindowWidthClass { Compact, Medium, Expanded }
 
 data class MeloXWindowInfo(val widthClass: MeloXWindowWidthClass, val isLandscape: Boolean,
-    val gutter: Dp, val maxContentWidth: Dp, val gridColumns: Int) {
+    val gutter: Dp, val maxContentWidth: Dp, val gridColumns: Int, val supportsPlayerTwoPane: Boolean = false) {
     val supportsTwoPane get() = widthClass != MeloXWindowWidthClass.Compact
 }
 
 /** The pinned shared window policy, including compact landscape and medium portrait. */
 @Composable
 fun rememberMeloXWindowInfo(): MeloXWindowInfo {
-    val containerSize = LocalWindowInfo.current.containerSize
+    val containerSize = LocalMeloXPaneSize.current ?: LocalWindowInfo.current.containerSize
     val density = LocalDensity.current
     val width = with(density) { containerSize.width.toDp().value.toInt() }
     val height = with(density) { containerSize.height.toDp().value.toInt() }
     val widthClass = when { width >= 840 -> MeloXWindowWidthClass.Expanded; width >= 600 -> MeloXWindowWidthClass.Medium; else -> MeloXWindowWidthClass.Compact }
+    val playerTwoPane = melox.layout.meloXSupportsPlayerTwoPane(width, height, melox.settings.MeloXSettingsRuntime.splitScreenEnabled)
     return when (widthClass) {
         MeloXWindowWidthClass.Compact -> MeloXWindowInfo(widthClass, width > height, 20.dp, 600.dp, 2)
-        MeloXWindowWidthClass.Medium -> MeloXWindowInfo(widthClass, width > height, 28.dp, 920.dp, 3)
-        MeloXWindowWidthClass.Expanded -> MeloXWindowInfo(widthClass, width > height, 36.dp, 1180.dp, 4)
+        MeloXWindowWidthClass.Medium -> MeloXWindowInfo(widthClass, width > height, 28.dp, 920.dp, 3, playerTwoPane)
+        MeloXWindowWidthClass.Expanded -> MeloXWindowInfo(widthClass, width > height, 36.dp, 1180.dp, 4, playerTwoPane)
     }
 }

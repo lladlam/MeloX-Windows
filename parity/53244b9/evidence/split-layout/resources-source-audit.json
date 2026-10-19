@@ -1,0 +1,26 @@
+{
+  "pinned_android": "53244b9d6b21d7e3a609e8cb11876efef70f218b",
+  "verified_against_pure_export": true,
+  "source_sha256": {
+    "android/app/src/main/res/values/strings.xml": "113a961568bd05a324161ef6b7ae4d975b42e86fa0394a3b744759daca261bc9",
+    "android/app/src/main/res/drawable-nodpi/ic_launcher_foreground.png": "bbb434eb8a186a770cc12bad1a03746e3b21d853baeeb661299a67c9c0e2af37"
+  },
+  "resource_sha256": {
+    "parity/pinned-v065-split-layout.properties": "238b41799d4484a2c4f0020bde34e0a4ec2c2f6d982318bfb7c24fb5c8ca6563",
+    "icons/pinned-v065-launcher-foreground.png": "bbb434eb8a186a770cc12bad1a03746e3b21d853baeeb661299a67c9c0e2af37"
+  },
+  "strings": {
+    "settings_position_bottom_left": "Bottom left",
+    "settings_position_bottom_right": "Bottom right",
+    "settings_position_left": "Left edge (vertical)",
+    "settings_position_right": "Right edge (vertical)",
+    "settings_position_top_left": "Top left",
+    "settings_position_top_right": "Top right",
+    "settings_split_mini_player_position": "Split-screen mini-player position",
+    "settings_split_navigation_position": "Split-screen navigation position",
+    "settings_split_screen": "Split-screen mode",
+    "settings_split_screen_hint": "Use two panes in landscape and on supported player screens. Position controls separately below."
+  },
+  "localized_overrides": [],
+  "fallback": "Android default strings"
+}

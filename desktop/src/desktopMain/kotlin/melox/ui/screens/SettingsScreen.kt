@@ -141,7 +141,7 @@ fun SettingsScreen(
     Column(
         Modifier.fillMaxSize().testTag("settings-root").background(MeloXColors.pageBackground()).verticalScroll(scroll)
              .padding(horizontal = 20.dp).padding(top = 18.dp, bottom = MeloXBottomContentClearanceDp)
-            .then(if (route != null) Modifier.clearAndSetSemantics { } else Modifier),
+             .then(if (route != null && !melox.ui.layout.LocalMeloXListDetail.current) Modifier.clearAndSetSemantics { } else Modifier),
     ) {
         MeloXIosTopBar(title = pinnedString("tab_settings"), contentPadding = PaddingValues(0.dp))
         Spacer(Modifier.height(14.dp))
@@ -194,13 +194,15 @@ fun SettingsScreen(
             if (session.isLoggedIn) SettingsDangerButton(pinnedString("settings_sign_out"), Modifier.testTag("settings-sign-out")) { session.clear() }
         }
     }
+    melox.ui.layout.MeloXAdaptiveDetail(route != null, onDismiss = { route = null }) { shown ->
     AnimatedVisibility(
-        visible = route != null,
+        visible = shown,
         enter = meloXPageEnter(fromRight = true),
         exit = meloXPageExit(toRight = true),
         modifier = Modifier.fillMaxSize().zIndex(1f),
     ) {
         detailRoute?.let { SettingsDetail(it, currentSource, onSourceSelected, onOpenMessages, onBack = { route = null }) }
+    }
     }
     }
 }
@@ -281,6 +283,25 @@ private fun GeneralSettings() {
         SettingsChoice("settings_general_theme", "theme_mode", MeloXSettingsRuntime.themeMode,
             listOf(MeloXThemeMode.System to pinnedString("settings_general_theme_system"), MeloXThemeMode.Light to pinnedString("settings_general_theme_light"),
                 MeloXThemeMode.Dark to pinnedString("settings_general_theme_dark"))) { MeloXSettingsPreferences.setString("theme_mode", it.name) }
+        SettingsToggleRow("settings_split_screen", "general_split_screen", true, subtitle = pinnedString("settings_split_screen_hint"))
+        if (MeloXSettingsRuntime.splitScreenEnabled) {
+            val positions = melox.settings.MeloXSplitChromePosition.entries.map { position ->
+                position to pinnedString("settings_position_${when (position) {
+                    melox.settings.MeloXSplitChromePosition.BottomLeft -> "bottom_left"
+                    melox.settings.MeloXSplitChromePosition.BottomRight -> "bottom_right"
+                    melox.settings.MeloXSplitChromePosition.TopLeft -> "top_left"
+                    melox.settings.MeloXSplitChromePosition.TopRight -> "top_right"
+                    melox.settings.MeloXSplitChromePosition.Left -> "left"
+                    melox.settings.MeloXSplitChromePosition.Right -> "right"
+                }}")
+            }
+            SettingsChoice("settings_split_navigation_position", "general_split_navigation_position", MeloXSettingsRuntime.splitNavigationPosition, positions) {
+                MeloXSettingsPreferences.setString("general_split_navigation_position", it.name)
+            }
+            SettingsChoice("settings_split_mini_player_position", "general_split_mini_player_position", MeloXSettingsRuntime.splitMiniPlayerPosition, positions) {
+                MeloXSettingsPreferences.setString("general_split_mini_player_position", it.name)
+            }
+        }
         SettingsChoice("settings_general_launch", "general_default_tab", MeloXSettingsRuntime.defaultTab,
             listOf("Home", "Explore", "Library", "Settings").map { it to pinnedString("settings_tabs_${it.lowercase()}") }) {
             MeloXSettingsPreferences.setString("general_default_tab", it)

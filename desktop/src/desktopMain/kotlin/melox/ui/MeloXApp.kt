@@ -205,6 +205,15 @@ fun MeloXApp(onExit: () -> Unit = { kotlin.system.exitProcess(0) }) {
 
     val currentTrack by AudioPlayer.currentTrack.collectAsState()
     val hasMedia = currentTrack != null
+    val listDetailMode = melox.layout.meloXUsesListDetail(androidx.compose.ui.platform.LocalWindowInfo.current.containerSize,
+        MeloXSettingsRuntime.splitScreenEnabled)
+    val chromeCoupled = melox.settings.meloXChromeScrollCoupled(listDetailMode, MeloXSettingsRuntime.splitNavigationPosition,
+        MeloXSettingsRuntime.splitMiniPlayerPosition)
+    val currentChromeCoupled by androidx.compose.runtime.rememberUpdatedState(chromeCoupled)
+    LaunchedEffect(listDetailMode, MeloXSettingsRuntime.splitNavigationPosition, MeloXSettingsRuntime.splitMiniPlayerPosition) {
+        tabBarMinimized = false
+        scrollAccumulator = 0f
+    }
 
     val openPlayer: () -> Unit = {
         if (hasMedia) {
@@ -263,6 +272,7 @@ fun MeloXApp(onExit: () -> Unit = { kotlin.system.exitProcess(0) }) {
         object : NestedScrollConnection {
             override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
                 if (source != NestedScrollSource.UserInput) return Offset.Zero
+                if (!currentChromeCoupled || MeloXSettingsPreferences.boolean("general_disable_auto_tabbar_shrink", false)) return Offset.Zero
                 val y = available.y
                 if (y < 0f) {
                     if (scrollAccumulator > 0f) scrollAccumulator = 0f
@@ -398,6 +408,8 @@ fun MeloXApp(onExit: () -> Unit = { kotlin.system.exitProcess(0) }) {
                 // above the bottom chrome) ──
                 val pageBackdrop = melox.ui.glass.rememberMeloXLayerBackdrop()
                 CompositionLocalProvider(melox.ui.glass.LocalMeloXLayerBackdrop provides pageBackdrop) {
+                CompositionLocalProvider(melox.ui.glass.LocalMeloXLayerBackdrop provides null) {
+                melox.ui.layout.MeloXListDetailLayout(hasMedia, Modifier.meloXRecordBackdrop(pageBackdrop).nestedScroll(tabBarMinimizeConnection)) {
                 AnimatedContent(
                     targetState = selectedTab,
                     transitionSpec = {
@@ -406,9 +418,7 @@ fun MeloXApp(onExit: () -> Unit = { kotlin.system.exitProcess(0) }) {
                             fadeOut(MeloXMotion.contentExitTween())
                     },
                     modifier = Modifier
-                        .fillMaxSize()
-                        .meloXRecordBackdrop(pageBackdrop)
-                        .nestedScroll(tabBarMinimizeConnection),
+                        .fillMaxSize(),
                     label = "melox-page-transition",
                 ) { tab ->
                     // Descendants being recorded must not sample their own page layer.
@@ -438,6 +448,8 @@ fun MeloXApp(onExit: () -> Unit = { kotlin.system.exitProcess(0) }) {
                     }
                     }
                 }
+                }
+                }
 
                 // ── Bottom chrome overlay (Android: aligned BottomCenter,
                 // not inside a Column) ──
@@ -447,6 +459,7 @@ fun MeloXApp(onExit: () -> Unit = { kotlin.system.exitProcess(0) }) {
                     hasMedia = hasMedia,
                     minimized = tabBarMinimized,
                     visibleRootTabs = visibleTabs,
+                    split = listDetailMode,
                     onSelect = { tab ->
                         tabBarMinimized = false
                         scrollAccumulator = 0f
@@ -461,6 +474,7 @@ fun MeloXApp(onExit: () -> Unit = { kotlin.system.exitProcess(0) }) {
                             val miniVisibility = this
                             MeloXMiniPlayer(
                                 compactProgress = compactProgress,
+                                vertical = listDetailMode && MeloXSettingsRuntime.splitMiniPlayerPosition.isSideRail,
                                 onExpand = openPlayer,
                                 sharedTransitionScope = sharedScope,
                                 animatedVisibilityScope = miniVisibility,

@@ -273,11 +273,15 @@ fun LibraryScreen(
         return
     }
 
+    val splitPlaylistDetail = melox.ui.layout.LocalMeloXListDetail.current && !melox.ui.layout.LocalMeloXInDetailPane.current
+    var retainedPlaylist by remember(source) { mutableStateOf(selectedPlaylist) }
+    androidx.compose.runtime.SideEffect { if (selectedPlaylist != null) retainedPlaylist = selectedPlaylist }
+    melox.ui.navigation.MeloXBackHandler(selectedPlaylist != null) { selectedPlaylist = null }
     SharedTransitionLayout(modifier = Modifier.fillMaxSize()) {
         val sharedScope = this
 
         AnimatedContent(
-            targetState = selectedPlaylist,
+            targetState = selectedPlaylist.takeUnless { splitPlaylistDetail },
             modifier = Modifier.fillMaxSize(),
             transitionSpec = {
                 val openingDetail = targetState != null
@@ -447,6 +451,29 @@ fun LibraryScreen(
 
                             MeloXLibraryPage.Downloads -> MeloXLibraryDownloadsPage()
                         }
+                    }
+                }
+            }
+        }
+    }
+    melox.ui.layout.MeloXAdaptiveDetail(splitPlaylistDetail && selectedPlaylist != null, onDismiss = { selectedPlaylist = null }) { shown ->
+        androidx.compose.animation.AnimatedVisibility(visible = shown,
+            modifier = Modifier.fillMaxSize().testTag("library-split-playlist-detail"),
+            enter = fadeIn(MeloXMotion.contentEnterTween()), exit = fadeOut(MeloXMotion.contentExitTween())) {
+            val detailPlaylist = selectedPlaylist ?: retainedPlaylist
+            if (detailPlaylist != null) androidx.compose.runtime.key(detailPlaylist.id, detailPlaylist.providerPlaylist?.id) {
+                SharedTransitionLayout(Modifier.fillMaxSize()) {
+                    val detailSharedScope = this
+                    androidx.compose.animation.AnimatedVisibility(visible = true) {
+                        MeloXLibraryPlaylistDetailScreen(detailPlaylist, client, onBack = { selectedPlaylist = null },
+                            sharedTransitionScope = detailSharedScope, animatedVisibilityScope = this,
+                            onSongLikeChanged = { song, liked ->
+                                snapshot?.let { current ->
+                                    val updated = current.withSongLiked(song, liked)
+                                    snapshot = updated
+                                    session.profile?.userId?.let { userId -> scope.launch { cache.saveSnapshot(userId, updated) } }
+                                }
+                            })
                     }
                 }
             }
@@ -635,6 +662,7 @@ private fun MeloXLibrarySegmentedPicker(
                     modifier = Modifier
                         .weight(1f)
                         .fillMaxHeight()
+                        .testTag("library-page:${page.name}")
                         .clickable(
                             interactionSource = remember { MutableInteractionSource() },
                             indication = null,
@@ -818,6 +846,7 @@ private fun MeloXLibraryPlaylistsPage(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(66.dp)
+                    .testTag("library-playlist:${playlist.id}")
                     .clickable { onPlaylistClick(playlist) }
                     .padding(start = 18.dp, end = 18.dp),
                 verticalAlignment = Alignment.CenterVertically,

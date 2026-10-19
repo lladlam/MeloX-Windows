@@ -28,17 +28,17 @@ internal fun SettingsGlassGroup(content: @Composable ColumnScope.() -> Unit) {
 }
 
 @Composable
-internal fun SettingsToggleRow(title: String, key: String, default: Boolean, enabled: Boolean = true) {
+internal fun SettingsToggleRow(title: String, key: String, default: Boolean, enabled: Boolean = true, subtitle: String? = null) {
     var value by remember(key) { mutableStateOf(MeloXSettingsPreferences.boolean(key, default)) }
-    SettingsExternalToggleRow(pinnedString(title), value, "setting-$key", enabled) {
+    SettingsExternalToggleRow(pinnedString(title), value, "setting-$key", enabled, subtitle) {
         value = it
         MeloXSettingsPreferences.setBoolean(key, it)
     }
 }
 
 @Composable
-internal fun SettingsExternalToggleRow(title: String, value: Boolean, tag: String, enabled: Boolean = true, onChange: (Boolean) -> Unit) {
-    MeloXIosListRow(title = title, showChevron = false,
+internal fun SettingsExternalToggleRow(title: String, value: Boolean, tag: String, enabled: Boolean = true, subtitle: String? = null, onChange: (Boolean) -> Unit) {
+    MeloXIosListRow(title = title, subtitle = subtitle, showChevron = false,
         showTopSeparator = LocalSettingsGroupRowIndex.current.intValue++ > 0,
         trailingContent = { MeloXGlassToggle(value, onCheckedChange = onChange, enabled = enabled, modifier = Modifier.testTag(tag)) })
 }

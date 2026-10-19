@@ -45,6 +45,12 @@ enum class MeloXLyricsFontWeight(val composeWeight: FontWeight) {
 
 /** Process-visible settings used by UI paths that need immediate recomposition. */
 object MeloXSettingsRuntime {
+    var splitScreenEnabled by mutableStateOf(true)
+        internal set
+    var splitNavigationPosition by mutableStateOf(MeloXSplitChromePosition.BottomLeft)
+        internal set
+    var splitMiniPlayerPosition by mutableStateOf(MeloXSplitChromePosition.BottomLeft)
+        internal set
     var performanceOverlayEnabled by mutableStateOf(false)
         internal set
     var themeMode by mutableStateOf(MeloXThemeMode.System)
@@ -441,6 +447,9 @@ object MeloXSettingsRuntime {
         smartQueueEnabled = MeloXPlaybackModePreferences.smartQueue()
         transitionUiEnabled = prefs().getBoolean("transition_ui_enabled", false)
         showLyricTranslation = prefs().getBoolean("lyrics_translation", true)
+        splitScreenEnabled = prefs().getBoolean("general_split_screen", true)
+        splitNavigationPosition = MeloXSplitChromePosition.fromPreference(prefs().getString("general_split_navigation_position", "BottomLeft") ?: "BottomLeft")
+        splitMiniPlayerPosition = MeloXSplitChromePosition.fromPreference(prefs().getString("general_split_mini_player_position", "BottomLeft") ?: "BottomLeft")
         lyricLanguage = prefs().getString("lyric_language", "system") ?: "system"
         automaticLyricSelectionEnabled = prefs().getBoolean("lyrics_auto_select", true)
         bilibiliLyricAudioAlignmentEnabled = prefs().getBoolean("bilibili_lyric_audio_alignment", false)

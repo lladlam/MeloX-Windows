@@ -90,6 +90,7 @@ object MeloXAudioReactiveRuntime {
             beat = beat,
             downbeat = downbeat,
             isPlaying = playing,
+            hasAnalysis = true,
         )
     }
 
@@ -108,6 +109,7 @@ data class MeloXAudioReactiveSample(
     val beat: Float,
     val downbeat: Float,
     val isPlaying: Boolean,
+    val hasAnalysis: Boolean = false,
 ) {
     companion object {
         val Idle = MeloXAudioReactiveSample(0.18f, 0f, 0f, false)

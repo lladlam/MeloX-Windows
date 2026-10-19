@@ -68,6 +68,7 @@ private fun livePlayer(): MeloXDesktopPlayer? =
 @OptIn(androidx.compose.animation.ExperimentalSharedTransitionApi::class)
 fun MeloXMiniPlayer(
     compactProgress: Float = 0f,
+    vertical: Boolean = false,
     onExpand: () -> Unit = {},
     sharedTransitionScope: androidx.compose.animation.SharedTransitionScope? = null,
     animatedVisibilityScope: androidx.compose.animation.AnimatedVisibilityScope? = null,
@@ -157,6 +158,30 @@ fun MeloXMiniPlayer(
     }
 
     val sharedShell = sharedShellModifier(sharedTransitionScope, animatedVisibilityScope)
+    if (vertical) {
+        Box(Modifier.fillMaxWidth().height(lerpDpF(236.dp, 48.dp, compact)).then(sharedShell)
+            .meloXLiquidBottomBar(shape = RoundedCornerShape(50), tint = bottomLiquidGlassTint(),
+                surfaceColor = bottomGlassSurfaceColor(), dark = bottomBarTone() > .5f)) {
+            if (compact > .75f) {
+                Box(Modifier.fillMaxSize().testTag("mini-player-expand").clickable(onClick = onExpand), contentAlignment = Alignment.Center) {
+                    MiniArtwork(36.dp, track.artworkUrl, sharedElementModifier(sharedTransitionScope, animatedVisibilityScope, mediaId))
+                }
+            } else {
+                Column(Modifier.fillMaxSize().padding(horizontal = 4.dp, vertical = 8.dp), horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.spacedBy(6.dp, Alignment.CenterVertically)) {
+                    Column(Modifier.fillMaxWidth().testTag("mini-player-expand").clickable(onClick = onExpand), horizontalAlignment = Alignment.CenterHorizontally) {
+                        MiniArtwork(40.dp, track.artworkUrl, sharedElementModifier(sharedTransitionScope, animatedVisibilityScope, mediaId), scale = sharedArtworkScale)
+                        Text(track.title, maxLines = 2, overflow = TextOverflow.Ellipsis, fontSize = titleFontSize, lineHeight = lineHeight, color = MeloXColors.pageOnSurface())
+                        Text(track.artistText, maxLines = 1, overflow = TextOverflow.Ellipsis, fontSize = artistFontSize, lineHeight = lineHeight, color = MeloXColors.pageOnSurface())
+                    }
+                    MiniVectorButton(if (playerState.isPlaying) MiniGlyph.Pause else MiniGlyph.Play, true, { player?.togglePlay() },
+                        40.dp, controlIconSize, Modifier.testTag("mini-player-play-pause"), miniChromeAlpha)
+                    MiniVectorButton(MiniGlyph.Forward, hasNext, { player?.next() }, 40.dp, controlIconSize, Modifier.testTag("mini-player-next"), miniChromeAlpha)
+                }
+            }
+        }
+        return
+    }
     Box(
         modifier = Modifier
             .fillMaxWidth()

@@ -66,6 +66,13 @@ def main():
         assert language['pinned_android'] == '53244b9d6b21d7e3a609e8cb11876efef70f218b' and language['verified_against_pure_export']
         expected.update(language['resource_sha256'])
         additional_baselines.append(language['pinned_android'])
+    split_path = 'parity/53244b9/evidence/split-layout/resources-source-audit.json'
+    has_split = not args.source_revision or bool(subprocess.check_output(
+        ['git', 'ls-tree', '--name-only', args.source_revision, '--', split_path], cwd=repo).strip())
+    if has_split:
+        split = manifest(split_path)
+        assert split['pinned_android'] == '53244b9d6b21d7e3a609e8cb11876efef70f218b' and split['verified_against_pure_export']
+        expected.update(split['resource_sha256'])
     records = []
     archive = zipfile.ZipFile(io.BytesIO(packaged_bytes(args.artifact))) if args.artifact else None
     try:

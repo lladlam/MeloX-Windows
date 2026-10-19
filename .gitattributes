@@ -9,4 +9,6 @@ desktop/src/main/resources/parity/pinned-lyrics-strings.properties text eol=lf
 desktop/src/main/resources/parity/pinned-skyline-strings.properties text eol=lf
 desktop/src/main/resources/parity/pinned-settings-pages*.properties text eol=lf
 desktop/src/main/resources/parity/pinned-v065-lyric-language.properties text eol=lf
+desktop/src/main/resources/parity/pinned-v065-split-layout.properties text eol=lf
+desktop/src/main/resources/icons/pinned-v065-launcher-foreground.png -text
 shared/src/desktopMain/resources/AudioFingerprint/* -text -whitespace

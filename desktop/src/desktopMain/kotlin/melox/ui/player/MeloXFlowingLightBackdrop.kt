@@ -502,6 +502,7 @@ internal fun MeloXFlowingLightBackdrop(
     }
     val currentAverage = remember(meshWidth, meshHeight) { arrayOf(ArtworkDynamicPalette.Fallback.average) }
     val phase = remember(meshWidth, meshHeight) { floatArrayOf(0f) }
+    val writeIndex = remember(meshBitmaps) { intArrayOf(1) }
 
     DisposableEffect(meshBitmaps) {
         onDispose { meshBitmaps.forEach { bitmap -> bitmap.close() } }
@@ -526,9 +527,8 @@ internal fun MeloXFlowingLightBackdrop(
         }
         var energy = .18f
         var beatPulse = 0f
-        var downbeatPulse = 0f
-        var writeIndex = 1
         val pixels = IntArray(meshWidth * meshHeight)
+        val bytes = ByteArray(pixels.size * 4)
         val centersX = FloatArray(currentColors.size)
         val centersY = FloatArray(currentColors.size)
         if (reduceMotion || !isPlaying) {
@@ -546,14 +546,17 @@ internal fun MeloXFlowingLightBackdrop(
                     phase = phase[0],
                     energy = energy,
                     beatPulse = beatPulse,
-                    downbeatPulse = downbeatPulse,
+                    reactive = false,
                     centersX = centersX,
                     centersY = centersY,
                     saturation = saturation, brightness = brightness,
                 )
-                installArgbPixels(meshBitmaps[writeIndex], pixels, meshWidth, meshHeight)
             }
-            meshImage = meshImages[writeIndex]
+            // Only CPU arrays cross dispatchers. Installing/disposing native pixels
+            // stays on the composition thread, so leaving the page cannot race a write.
+            installArgbPixels(meshBitmaps[writeIndex[0]], pixels, bytes)
+            meshImage = meshImages[writeIndex[0]]
+            writeIndex[0] = 1 - writeIndex[0]
             awaitCancellation()
         }
         var lastRenderNanos = 0L
@@ -566,10 +569,10 @@ internal fun MeloXFlowingLightBackdrop(
             val sample = MeloXAudioReactiveRuntime.sample(mediaId)
             energy += (sample.energy - energy) * .18f
             beatPulse += (sample.beat - beatPulse) * .32f
-            downbeatPulse += (sample.downbeat - downbeatPulse) * .24f
-            val motion = .026f + energy.coerceIn(0f, 1f) * .038f + beatPulse * .016f
-            phase[0] = (phase[0] + motion * speed * elapsedMs / (1_000f / 60f)) % (Math.PI.toFloat() * 2f)
-            val paletteBlend = (elapsedMs / 800f).coerceIn(.02f, .18f)
+            val reactive = sample.hasAnalysis
+            val motion = if (reactive) .021f + energy.coerceIn(0f, 1f) * .030f + beatPulse * .013f else .032f
+            phase[0] = (phase[0] + motion * speed.coerceIn(.25f, 2f) * elapsedMs / (1_000f / 60f)) % FlowPhasePeriod
+            val paletteBlend = (elapsedMs / 280f).coerceIn(.08f, .45f)
             currentColors.indices.forEach { index ->
                 currentColors[index] = lerpColor(
                     currentColors[index],
@@ -578,7 +581,7 @@ internal fun MeloXFlowingLightBackdrop(
                 )
             }
             currentAverage[0] = lerpColor(currentAverage[0], targetPalette.average, paletteBlend)
-            val bitmap = meshBitmaps[writeIndex]
+            val bitmap = meshBitmaps[writeIndex[0]]
             withContext(Dispatchers.Default) {
                 fillFlowingMeshPixels(
                     pixels = pixels,
@@ -589,15 +592,15 @@ internal fun MeloXFlowingLightBackdrop(
                     phase = phase[0],
                     energy = energy,
                     beatPulse = beatPulse,
-                    downbeatPulse = downbeatPulse,
+                    reactive = reactive,
                     centersX = centersX,
                     centersY = centersY,
                     saturation = saturation, brightness = brightness,
                 )
-                installArgbPixels(bitmap, pixels, meshWidth, meshHeight)
             }
-            meshImage = meshImages[writeIndex]
-            writeIndex = 1 - writeIndex
+            installArgbPixels(bitmap, pixels, bytes)
+            meshImage = meshImages[writeIndex[0]]
+            writeIndex[0] = 1 - writeIndex[0]
         }
     }
 
@@ -626,8 +629,7 @@ private fun allocMeshBitmap(width: Int, height: Int): Bitmap {
     return bitmap
 }
 
-private fun installArgbPixels(bitmap: Bitmap, pixels: IntArray, width: Int, height: Int) {
-    val bytes = ByteArray(width * height * 4)
+private fun installArgbPixels(bitmap: Bitmap, pixels: IntArray, bytes: ByteArray) {
     var offset = 0
     for (pixel in pixels) {
         bytes[offset] = (pixel and 0xFF).toByte()
@@ -646,7 +648,13 @@ private fun lerpColor(from: Color, to: Color, amount: Float): Color = Color(
     alpha = 1f,
 )
 
-private fun fillFlowingMeshPixels(
+// All temporal frequencies below are quarter-turn multiples: wrapping at 8π
+// is seamless. This is the official v0.6.5 field, not a brightness pulse.
+internal const val FlowPhasePeriod = 25.132742f
+private val RoamFrequencyX = floatArrayOf(.50f, .25f, .75f, .50f, .25f, .75f, .50f, .25f, .75f)
+private val RoamFrequencyY = floatArrayOf(.25f, .75f, .50f, .75f, .50f, .25f, .50f, .25f, .75f)
+
+internal fun fillFlowingMeshPixels(
     pixels: IntArray,
     meshWidth: Int,
     meshHeight: Int,
@@ -655,42 +663,46 @@ private fun fillFlowingMeshPixels(
     phase: Float,
     energy: Float,
     beatPulse: Float,
-    downbeatPulse: Float,
+    reactive: Boolean,
     centersX: FloatArray,
     centersY: FloatArray,
     saturation: Float = 1f,
     brightness: Float = 1f,
 ) {
-    val radiusNormalized = (0.58f + energy.coerceIn(0f, 1f) * .08f + beatPulse * .035f)
+    val energyDrive = if (reactive) energy.coerceIn(0f, 1f) else 0f
+    val beatDrive = if (reactive) beatPulse else 0f
+    val radiusNormalized = (0.45f + energyDrive * .07f + beatDrive * .03f)
         .coerceAtLeast(.01f)
     for (index in colors.indices) {
-        val row = index / 3
-        val column = index % 3
-        val baseX = when (column) { 0 -> .08f; 1 -> .50f; else -> .92f }
-        val baseY = when (row) { 0 -> .10f; 1 -> .50f; else -> .90f }
-        val localPhase = phase + index * .71f
-        val displacement = .052f + energy.coerceIn(0f, 1f) * .045f
-        centersX[index] = baseX + sin(localPhase) * displacement
-        centersY[index] = baseY + cos(localPhase * .83f) * displacement * .87f
+        centersX[index] = .5f + .3f * sin(phase * RoamFrequencyX[index] + index * 1.7f)
+        centersY[index] = .5f + .3f * cos(phase * RoamFrequencyY[index] + index * .9f)
     }
     val maxDimension = maxOf(meshWidth, meshHeight).toFloat()
     val widthScale = meshWidth / maxDimension
     val heightScale = meshHeight / maxDimension
-    val baseWeight = .22f
-    val pulseGain = 1f + energy.coerceIn(0f, 1f) * .10f + beatPulse * .07f
-    val downbeatShade = 1f - (downbeatPulse * .16f).coerceIn(0f, .16f)
+    val baseWeight = .16f
+    val warp = .15f + energyDrive * .05f + beatDrive * .02f
+    val t = phase
     var pixelIndex = 0
     for (yIndex in 0 until meshHeight) {
         val v = yIndex.toFloat() / (meshHeight - 1).coerceAtLeast(1).toFloat()
         for (xIndex in 0 until meshWidth) {
             val u = xIndex.toFloat() / (meshWidth - 1).coerceAtLeast(1).toFloat()
+            val warpX = sin(v * 3.1f + t) * cos(u * 2.3f - t * .75f) +
+                .5f * sin((u + v) * 4.9f - t * 1.25f)
+            val warpY = cos(u * 2.9f - t) * sin(v * 2.6f + t * .5f) +
+                .5f * cos((u - v) * 5.4f + t)
+            var sampleU = u + warp * warpX
+            var sampleV = v + warp * warpY
+            sampleU += warp * .28f * sin(sampleV * 6.7f - t * 1.5f)
+            sampleV += warp * .28f * cos(sampleU * 7.1f + t * 1.5f)
             var totalWeight = baseWeight
             var red = average.red * baseWeight
             var green = average.green * baseWeight
             var blue = average.blue * baseWeight
             for (colorIndex in colors.indices) {
-                val dx = (u - centersX[colorIndex]) * widthScale / radiusNormalized
-                val dy = (v - centersY[colorIndex]) * heightScale / radiusNormalized
+                val dx = (sampleU - centersX[colorIndex]) * widthScale / radiusNormalized
+                val dy = (sampleV - centersY[colorIndex]) * heightScale / radiusNormalized
                 val distanceSquared = dx * dx + dy * dy
                 val falloff = 1f / (1f + distanceSquared * 4.5f)
                 val weight = falloff * falloff
@@ -700,9 +712,9 @@ private fun fillFlowingMeshPixels(
                 green += color.green * weight
                 blue += color.blue * weight
             }
-            var r = ((red / totalWeight) * pulseGain * downbeatShade).coerceIn(0f, 1f)
-            var g = ((green / totalWeight) * pulseGain * downbeatShade).coerceIn(0f, 1f)
-            var b = ((blue / totalWeight) * pulseGain * downbeatShade).coerceIn(0f, 1f)
+            var r = red / totalWeight
+            var g = green / totalWeight
+            var b = blue / totalWeight
             if (saturation != 1f) {
                 val luminance = r * .2126f + g * .7152f + b * .0722f
                 r = luminance + (r - luminance) * saturation
