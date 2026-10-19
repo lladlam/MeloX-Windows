@@ -84,8 +84,6 @@ if mode == 'routes':
                     'TabLayout': 'tabs', 'SkylineLyrics': 'skyline', 'SystemPlayback': 'system_playback',
                     'FloatingLyrics': 'floating', 'ListenTogether': 'listen_together', 'RemoteConfig': 'remote_config',
                 }.get(route, route.lower())]]
-                if route == 'General':
-                    checks += ['enabled:setting-general_clipboard_links', 'disabled:setting-general_haptic_feedback', 'enabled:setting-system_font']
                 if route == 'Appearance':
                     reveal('setting-immersive_playback')
                     checks += ['enabled:setting-immersive_playback']
@@ -94,6 +92,16 @@ if mode == 'routes':
                 if route == 'FloatingLyrics':
                     checks += ['disabled:setting-floating_lyrics_enabled']
                 add('inspect-' + route.lower(), 'wait@100', checks)
+                if route == 'General':
+                    # Split controls and localized wrapping can place these
+                    # rows below a short pane. Inspect each visible row after
+                    # real wheel input, rather than asserting offscreen nodes.
+                    for key, capability in [('general_clipboard_links', 'enabled'),
+                                            ('general_haptic_feedback', 'disabled'),
+                                            ('system_font', 'enabled')]:
+                        tag = 'setting-' + key
+                        reveal(tag)
+                        add('inspect-general-' + key, 'wait@100', [capability + ':' + tag])
             add('back-' + route.lower(), 'escape', ['tag:settings-root'])
     # Search via physical keyboard, including the localized no-match state.
     add('root-top', f'scroll@{int(width) // 2},{int(height) // 2},-10000')
