@@ -301,7 +301,8 @@ private fun DesktopSettingsLayout(
             Box(Modifier.fillMaxWidth().height(.65.dp).background(colors.outlineVariant.copy(alpha = .7f)))
             Column(
                 Modifier.fillMaxWidth().heightIn(min = 420.dp, max = 620.dp)
-                    .verticalScroll(rememberScrollState()).padding(horizontal = 28.dp, vertical = 22.dp),
+                    .verticalScroll(rememberScrollState()).padding(horizontal = 28.dp, vertical = 22.dp)
+                    .then(if (selected == SettingsRoute.General) Modifier.testTag("settings-general") else Modifier),
             ) {
                 Text(selected.title, fontSize = 24.sp, lineHeight = 30.sp, fontWeight = FontWeight.Bold)
                 val relatedRoutes = desktopSettingsGroup(selected)
