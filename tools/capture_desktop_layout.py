@@ -54,8 +54,13 @@ else:
     add('persisted-mode', 'wait@100', ['runtime:desktopLayoutEnabled:' + ('false' if mode == 'reload-current' else 'true'),
         'tag:interface-current' if mode == 'reload-current' else 'tag:desktop-sidebar'])
 if not mode.startswith('home-') and mode != 'lyrics-light':
-    add('reveal-general', 'reveal@settings-open-general')
-    add('general', 'tap@settings-open-general', ['tag:settings-general'])
+    if mode in ('reload', 'restore'):
+        # These modes start directly in the desktop settings window, whose
+        # General entry is a fixed tab rather than a scrollable legacy list row.
+        add('general', 'wait@100', ['tag:settings-general'])
+    else:
+        add('reveal-general', 'reveal@settings-open-general')
+        add('general', 'tap@settings-open-general', ['tag:settings-general'])
     add('reveal-switch', 'reveal@setting-general_desktop_layout')
 if mode == 'controls':
     add('playback-before-switch', 'wait@100', ['playing:true', 'playback-checkpoint:switch'])
