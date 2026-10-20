@@ -1,0 +1,15 @@
+consent:tap@remote-reject
+reveal-general:reveal@settings-open-general
+general:tap@settings-open-general
+reveal-switch:reveal@setting-general_desktop_layout
+enable-desktop:tap@setting-general_desktop_layout
+home:tap@desktop-nav:Home
+show-playlists:scroll@1000,600,5
+open-real-playlist:tap-first@desktop-home-playlist:
+open-search:tap@desktop-collection-search-toggle
+focus-search:tap@desktop-collection-search
+type-search:type@MeloX-no-matching-title-2026
+close-search:tap@desktop-collection-search-toggle
+more:tap@desktop-collection-actions
+dismiss-menu:1200,780
+back:tap@desktop-collection-back

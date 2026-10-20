@@ -1,0 +1,7 @@
+consent:tap@remote-reject
+loaded-album:wait@1500
+expand-description:tap@desktop-collection-description-toggle
+collapse-description:tap@desktop-collection-description-toggle
+more:tap@desktop-collection-actions
+dismiss-menu:1200,780
+back:tap@desktop-collection-back

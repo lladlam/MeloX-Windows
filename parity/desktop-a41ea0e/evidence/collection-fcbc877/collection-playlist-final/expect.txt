@@ -1,0 +1,10 @@
+consent=cloud-enabled:false
+general=tag:settings-general
+enable-desktop=tag:desktop-sidebar,runtime:desktopLayoutEnabled:true
+home=tag:desktop-home
+open-real-playlist=tag:desktop-playlist-detail,tag:desktop-collection-header
+open-search=tag:desktop-collection-search
+close-search=absent:desktop-collection-search
+more=tag:desktop-collection-download
+dismiss-menu=absent:desktop-collection-download
+back=absent:desktop-playlist-detail,tag:desktop-sidebar

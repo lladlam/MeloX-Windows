@@ -1,0 +1,278 @@
+{
+  "status": "PASSED",
+  "page": "album",
+  "scenes": 10,
+  "assertions": 10,
+  "home": "/tmp/opencode/collection-album-final-home",
+  "source_commit": "a41ea0e1e1fa69fb543d827b853fe3aff5420951",
+  "geometries": [
+    {
+      "scene": "00-settings.png",
+      "artwork": [
+        257,
+        76,
+        535,
+        354
+      ],
+      "details": [
+        569,
+        85,
+        1189,
+        348
+      ],
+      "rows": [
+        [
+          257,
+          423,
+          1238,
+          469
+        ],
+        [
+          257,
+          470,
+          1238,
+          516
+        ],
+        [
+          257,
+          517,
+          1238,
+          563
+        ],
+        [
+          257,
+          564,
+          1238,
+          610
+        ],
+        [
+          257,
+          611,
+          1238,
+          657
+        ],
+        [
+          257,
+          658,
+          1238,
+          704
+        ],
+        [
+          257,
+          705,
+          1238,
+          751
+        ],
+        [
+          257,
+          752,
+          1238,
+          798
+        ]
+      ]
+    },
+    {
+      "scene": "01-consent.png",
+      "artwork": [
+        257,
+        76,
+        535,
+        354
+      ],
+      "details": [
+        569,
+        85,
+        1189,
+        348
+      ],
+      "rows": [
+        [
+          257,
+          423,
+          1238,
+          469
+        ],
+        [
+          257,
+          470,
+          1238,
+          516
+        ],
+        [
+          257,
+          517,
+          1238,
+          563
+        ],
+        [
+          257,
+          564,
+          1238,
+          610
+        ],
+        [
+          257,
+          611,
+          1238,
+          657
+        ],
+        [
+          257,
+          658,
+          1238,
+          704
+        ],
+        [
+          257,
+          705,
+          1238,
+          751
+        ],
+        [
+          257,
+          752,
+          1238,
+          798
+        ]
+      ]
+    },
+    {
+      "scene": "02-loaded-album.png",
+      "artwork": [
+        257,
+        76,
+        535,
+        354
+      ],
+      "details": [
+        569,
+        85,
+        1189,
+        348
+      ],
+      "rows": [
+        [
+          257,
+          423,
+          1238,
+          469
+        ],
+        [
+          257,
+          470,
+          1238,
+          516
+        ],
+        [
+          257,
+          517,
+          1238,
+          563
+        ],
+        [
+          257,
+          564,
+          1238,
+          610
+        ],
+        [
+          257,
+          611,
+          1238,
+          657
+        ],
+        [
+          257,
+          658,
+          1238,
+          704
+        ],
+        [
+          257,
+          705,
+          1238,
+          751
+        ],
+        [
+          257,
+          752,
+          1238,
+          798
+        ]
+      ]
+    },
+    {
+      "scene": "04-reveal-collapse.png",
+      "artwork": [
+        257,
+        355,
+        535,
+        633
+      ],
+      "details": [
+        569,
+        42,
+        1189,
+        627
+      ],
+      "rows": [
+        [
+          257,
+          702,
+          1238,
+          748
+        ],
+        [
+          257,
+          749,
+          1238,
+          795
+        ]
+      ]
+    }
+  ],
+  "images": [
+    {
+      "file": "00-settings.png",
+      "sha256": "ae8ef373cc8f2abe9c1761e5cf7512cfa9ed62d5aa9afd09b5b9605d90cc57f0"
+    },
+    {
+      "file": "01-consent.png",
+      "sha256": "596e6113479ef01ecdd8ee4498a7c139e23cd1b12bab672003b291f36c37c7e0"
+    },
+    {
+      "file": "02-loaded-album.png",
+      "sha256": "596e6113479ef01ecdd8ee4498a7c139e23cd1b12bab672003b291f36c37c7e0"
+    },
+    {
+      "file": "03-expand-description.png",
+      "sha256": "ba39d8050b8977c47a22e05cfaccd623b80c73508553eb4c6879c48aea9d2e03"
+    },
+    {
+      "file": "04-reveal-collapse.png",
+      "sha256": "3a5476bdf58964d20a18480cc301322b6e72e45c4fe4603388404014860dd379"
+    },
+    {
+      "file": "05-collapse-description.png",
+      "sha256": "b201f918a9a671ff194ca7ee44407caf9bab2c770350d4f3e29de215e969aa03"
+    },
+    {
+      "file": "06-return-header.png",
+      "sha256": "b201f918a9a671ff194ca7ee44407caf9bab2c770350d4f3e29de215e969aa03"
+    },
+    {
+      "file": "07-more.png",
+      "sha256": "7c250564a55a747d47703d2f20ab261fb4536dff004a184f0d19cfda2ad99ec4"
+    },
+    {
+      "file": "08-dismiss-menu.png",
+      "sha256": "9a330a8bf609bee90637c4ad4060537f470513399e474576d6fb6f72ea216b7d"
+    },
+    {
+      "file": "09-back.png",
+      "sha256": "4119a872653030a72876112f84bec9ee2864e5130a43687f30cb1b41bc4af60b"
+    }
+  ],
+  "capture_sha256": "3e73797b9b84c34446b4038083a39f89f56f4a32a46545988351060c1d1294c4",
+  "scope": "Live production implementation/input/source metrics; same-content native macOS pixels pending"
+}

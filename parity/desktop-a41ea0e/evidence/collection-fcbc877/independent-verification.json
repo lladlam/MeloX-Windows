@@ -1,0 +1,71 @@
+{
+  "implementation": "fcbc8771bffbf1a6cd00a3612895f8a1c99db563",
+  "tests": {
+    "suites": 56,
+    "tests": 274,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "captures": [
+    {
+      "name": "collection-album-final",
+      "scenes": 10,
+      "assertions": 10,
+      "pcm": []
+    },
+    {
+      "name": "collection-playlist-final",
+      "scenes": 16,
+      "assertions": 13,
+      "pcm": []
+    },
+    {
+      "name": "desktop-layout-cold-final",
+      "scenes": 23,
+      "assertions": 40,
+      "pcm": [
+        {
+          "file": "/mnt/ntfs_files_sda4/项目/MeloX-Windows/desktop/build/parity/desktop-layout-cold-final/pcm-output-0.s16le",
+          "bytes": 1359736,
+          "sha256": "6c4cdd3c6225798b1a14b0b0f6f28379537f0f98c62986e18abd53ce9b65af99",
+          "rms": 2001.5551875842225,
+          "spectral_power": {
+            "110": 44660762490.65625,
+            "220": 134678544341504.0,
+            "330": 27356312933.82422,
+            "440": 798704210.4945984
+          }
+        },
+        {
+          "file": "/mnt/ntfs_files_sda4/项目/MeloX-Windows/desktop/build/parity/desktop-layout-cold-final/pcm-output-1.s16le",
+          "bytes": 1151600,
+          "sha256": "b4662b35235c892381100af023c4a932d7900306e49ba7609358ce0ab9beef25",
+          "rms": 2001.5551875842225,
+          "spectral_power": {
+            "110": 44660762490.65625,
+            "220": 134678544341504.0,
+            "330": 27356312933.82422,
+            "440": 798704210.4945984
+          }
+        },
+        {
+          "file": "/mnt/ntfs_files_sda4/项目/MeloX-Windows/desktop/build/parity/desktop-layout-cold-final/pcm-output-2.s16le",
+          "bytes": 3711140,
+          "sha256": "07fc45d4759e2f26d8b950a02f943619fb799c63954f23773a9f14cb1e7cdb42",
+          "rms": 2000.3734697687548,
+          "spectral_power": {
+            "110": 1794805522.3518677,
+            "220": 33182470186.890625,
+            "330": 134357364655602.0,
+            "440": 30931988927.328125
+          }
+        }
+      ]
+    }
+  ],
+  "scenes": 49,
+  "assertions": 63,
+  "status": "PARTIAL",
+  "scope": "Linux production ImageComposeScene/source geometry/physical input/real software PCM; native macOS same-content pixels pending"
+}

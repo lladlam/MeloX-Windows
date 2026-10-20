@@ -61,6 +61,6 @@ Collection正文独立使用同一官方源字体的6个静态SF Pro face（普�
 
 切换连续性断言记录真实曲目 ID、位置及已打开 PCM 输出数量，再验证多次切换无曲目改变、无回退、无输出重建且仍播放。PCM 输出明确标注 `VALIDATION_SOFTWARE_PCM_OUTPUT`，不是硬件听感验收。浅色歌词、深浅首页和播放器另有截图。
 
-本批本地结果：274 tests／56 suites；桌面七组 75 scenes／139 assertions；旧布局三组 70 scenes／95 assertions；全部通过。原始参数、输入、capture、semantics、源指标检查及构建日志在 `evidence/local/`；详见 `COMPLETION_LOG.md`。Windows CI 增加七组桌面回放并上传原始文件，Windows 结果仍须单独完整下载核验。
+首批历史本地结果保留在 `evidence/local/`；最新已完整下载核验的Windows发行为88f9c23、run39448380868，七组桌面65 scenes／120 assertions。当前fcbc877新增collection／严格冷启动的本地结果为274 tests／56 suites、49 scenes／63 assertions，原始失败与成功证据在 `evidence/collection-fcbc877/`。Windows run39516534284进行中，新结果及发行仍须独立完整下载核验；详见 `COMPLETION_LOG.md`。
 
 Android 正式固定版同内容静态／动态帧、Windows 用户 549→1431MB 长时增长、真实账号／硬件／DPI 实机问题继续按原矩阵跟踪。

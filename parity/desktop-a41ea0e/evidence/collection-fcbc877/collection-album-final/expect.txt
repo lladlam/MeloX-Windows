@@ -1,0 +1,7 @@
+consent=cloud-enabled:false
+loaded-album=tag:desktop-album-detail,tag:desktop-collection-header,tag:desktop-sidebar
+expand-description=state:desktop-collection-description:expanded
+collapse-description=state:desktop-collection-description:collapsed
+more=tag:desktop-collection-download
+dismiss-menu=absent:desktop-collection-download
+back=absent:desktop-album-detail,tag:desktop-sidebar

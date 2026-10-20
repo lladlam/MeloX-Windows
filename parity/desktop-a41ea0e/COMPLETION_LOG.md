@@ -1,5 +1,17 @@
 # Desktop 迁移记录
 
+## 7. Collection 源结构／SF Pro 正文与冷启动焦点修复（fcbc877）
+
+- 实现 `fcbc8771bffbf1a6cd00a3612895f8a1c99db563` 已正常推送main。固定源码对照见 `COLLECTION_PARITY.md`：移除额外滚动toolbar／列标题，内容横42／纵34、header／divider／list间34、封面278／continuous radius11、详情最大620／底距6；默认曲目无封面、minHeight46、数字24／album180／duration42／menu28、行距1；专辑隐藏album列，解析真实曲号及disc分组；接入真实描述展开／选择、收藏星号、下载菜单和曲目双击。
+- Collection正文从Android兰亭切为官方SF Pro普通字符集的6个静态face：text wght400／500／600／700 opsz17、subtitle wght600 opsz22、display wght700 opsz28。保留OpenType shaping及tnum，明确阻断Material的24sp行高继承。固定官方源可逐字节复现；6个face的已冻结轴／SHA／ASCII／HarfBuzz实际等宽数字核验通过。CJK系统fallback、CoreText／Skia栅格与系统字距继续保持未验收。
+- 真源 `en`／`zh-Hans` 扩至86 key，包含collection动作、metadata、质量标题；纯Git blob复核通过。Properties对leading／trailing space使用Unicode转义以完整保留原文分隔符，不手写替换翻译。源及实际uber JAR内28项资源SHA全通过；135符号／68枚举／134码点与原Android18项设置图标核验通过。
+- 全局album／artist路由改用同一movable composition在Desktop主栏呈现，保留侧栏、inspector和底部播放器层级；关闭布局后仍进入原全窗口slot。侧栏导航清除旧collection路由。
+- 首轮真实album冷启动保留了 `FocusRequester is not initialized` 原始异常：DesktopSettingsLayout提前return分支未挂接启动effect使用的requester，导致AWT线程异常和后续点击／加载失败。为该分支挂接真实focusable容器后，严格 `playing:false` 的暂停／完整播放器暂停恢复通过。最终新增冷启动回放 **23 scenes／40 assertions**，覆盖已保存Desktop偏好启动、歌词inspector、真实歌词点击seek、队列选曲、音量、展开／收起播放器和导航；任何后台线程异常会让回放失败。该结果限定于生产ImageComposeScene，不冒充Windows原生窗口物理输入实机验收。
+- 最终真实公共网易album／playlist回放 **26 scenes／23 assertions**：album ID `34720827` 包含超长真实描述展开、滚轮找到收起、收起后返回header、更多菜单／关闭／返回；playlist从Home真实推荐卡打开，键盘筛选到空结果、关闭后恢复真实行。独立核对PNG、输入文件、assertions及278封面／42边距／34间隔／620上限／46行高。与冷启动合计 **49 scenes／63 assertions**。
+- 显式JDK17顺序编译、全量 **274 tests／56 suites／0 failures/errors/skipped**、`auditSettingsIcons`、uber JAR打包通过。独立读取3份实际PCM：字节精确对应written_frames×4、非静音，前两份主峰220Hz、第三份330Hz；均为软件PCM端点，不代替硬件听感。
+- 原始首轮失败、最终capture／semantics／PNG／输入参数／日志、56份测试XML和独立核验在 `evidence/collection-fcbc877/`。Windows [39516534284](https://github.com/lladlam/MeloX-Windows/actions/runs/39516534284) 已启动，新增严格cold-controls及真实collection两组；此处尚未记录Windows结果或新发行下载验收。
+- 总状态继续 **PARTIAL**。源参数对齐、官方字形、Windows实现自回放均不能替代固定macOS同内容／同尺寸／同density的overlay／difference／heatmap；原生控件、阴影、弹簧曲线、加载／失败占位、全部菜单／拖放与剩余页面继续按矩阵推进。
+
 ## 6. Windows 独立下载核验（88f9c23）
 
 - Windows [39448380868](https://github.com/lladlam/MeloX-Windows/actions/runs/39448380868) 成功，来源 `88f9c23bbb2c88499e313423aee00c3de5facda1`。完整下载 `Verification-Windows` 与 `MeloX-Desktop-Windows.zip` 后独立重计：**274 tests / 56 suites / 0 failures/errors/skipped**、桌面七组 **65 scenes / 120 assertions**、全矩阵 **32 组**，ZIP **333622322 bytes**，SHA-256 `a01219c7f8fb3fe1af2b502aa66c81089e2666a40e1fac996cc6fc2f3efd13a1`，357 entries CRC 全通过，build-info 精确匹配。

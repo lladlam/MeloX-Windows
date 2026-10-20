@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="NeteaseOfficialCookieReaderTest[desktop]" tests="9" skipped="0" failures="0" errors="0" timestamp="2026-10-20T23:33:54.612Z" hostname="lladlam-arch" time="0.57">
+  <properties/>
+  <testcase name="readsCommittedWalCookiesWhileWriterConnectionRemainsOpen[desktop]" classname="melox.account.NeteaseOfficialCookieReaderTest" time="0.532"/>
+  <testcase name="rejectsUnknownEncryptionAndTamperedGcmTagAndCleansTemporaryCopies[desktop]" classname="melox.account.NeteaseOfficialCookieReaderTest" time="0.008"/>
+  <testcase name="dpapiAndMalformedPreferencesFailuresAreSanitizedAndCleaned[desktop]" classname="melox.account.NeteaseOfficialCookieReaderTest" time="0.003"/>
+  <testcase name="rejectsUnknownSchemaAndUnselectedProfile[desktop]" classname="melox.account.NeteaseOfficialCookieReaderTest" time="0.002"/>
+  <testcase name="rejectsCookieDelimiterInjectionAndDuplicateRootSessions[desktop]" classname="melox.account.NeteaseOfficialCookieReaderTest" time="0.004"/>
+  <testcase name="rejectsExpiredOrMissingMainCookie[desktop]" classname="melox.account.NeteaseOfficialCookieReaderTest" time="0.002"/>
+  <testcase name="rejectedImportedCookieDoesNotReplaceExistingSession[desktop]" classname="melox.account.NeteaseOfficialCookieReaderTest" time="0.005"/>
+  <testcase name="importsOnlySessionCookiesAndUsesExistingSessionValidationWithoutModifyingSource[desktop]" classname="melox.account.NeteaseOfficialCookieReaderTest" time="0.009"/>
+  <testcase name="discoversOnlyCompleteProfilesAndDoesNotChooseBetweenMultipleProfiles[desktop]" classname="melox.account.NeteaseOfficialCookieReaderTest" time="0.003"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[SLF4J(W): No SLF4J providers were found.
+SLF4J(W): Defaulting to no-operation (NOP) logger implementation
+SLF4J(W): See https://www.slf4j.org/codes.html#noProviders for further details.
+]]></system-err>
+</testsuite>

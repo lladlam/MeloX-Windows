@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="LyricsLoadTest[desktop]" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-10-20T23:34:04.418Z" hostname="lladlam-arch" time="0.221">
+  <properties/>
+  <testcase name="qqAmllUsesNativeIdAndMissStillReachesNetease[desktop]" classname="melox.lyrics.LyricsLoadTest" time="0.006"/>
+  <testcase name="lineBindingYieldsToWordTimedQqAndWordBindingSkipsAmll[desktop]" classname="melox.lyrics.LyricsLoadTest" time="0.195"/>
+  <testcase name="neteaseProviderLyricsAreRequestedOnce[desktop]" classname="melox.lyrics.LyricsLoadTest" time="0.005"/>
+  <testcase name="qqFallsThroughToMatchedNetease[desktop]" classname="melox.lyrics.LyricsLoadTest" time="0.005"/>
+  <testcase name="switchesHideTranslationSyllablesScrollAndTap[desktop]" classname="melox.lyrics.LyricsLoadTest" time="0.002"/>
+  <testcase name="lineTimedAmllYieldsToWordTimedQqAndWordTimedAmllWins[desktop]" classname="melox.lyrics.LyricsLoadTest" time="0.007"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
