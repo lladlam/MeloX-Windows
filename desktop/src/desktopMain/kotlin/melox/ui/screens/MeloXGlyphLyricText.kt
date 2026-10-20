@@ -59,6 +59,7 @@ internal fun MeloXGlyphLyricText(
     followOwnTiming: Boolean = false, renderingQuality: MeloXLyricsRenderingQuality,
     softBlurDp: Float = 0f, modifier: Modifier = Modifier,
 ) {
+    val foreground = LocalMeloXLyricSurface.current.foreground
     val density = LocalDensity.current
     val isRtl = LocalLayoutDirection.current == LayoutDirection.Rtl
     val flipped = line.agent?.alignment == LyricAgentAlignment.Flipped
@@ -69,7 +70,7 @@ internal fun MeloXGlyphLyricText(
     val measurer = rememberTextMeasurer(cacheSize = 0)
     BoxWithConstraints(modifier) {
         val width = with(density) { maxWidth.roundToPx().coerceAtLeast(1) }
-        val style = TextStyle(color = Color.White, fontFamily = MeloXLanTingProFontFamily,
+        val style = TextStyle(color = foreground, fontFamily = MeloXLanTingProFontFamily,
             fontSize = (34f * fontScale).sp, lineHeight = (40.8f * fontScale).sp,
             fontWeight = weight, textAlign = if (flipped) TextAlign.End else TextAlign.Start)
         val layout = remember(line.text, width, style, density, isRtl) {
@@ -85,7 +86,7 @@ internal fun MeloXGlyphLyricText(
                 surface.canvas.clear(0)
                 CanvasDrawScope().draw(density, if (isRtl) LayoutDirection.Rtl else LayoutDirection.Ltr,
                     surface.canvas.asComposeCanvas(), Size(layout.size.width.toFloat(), layout.size.height.toFloat())) {
-                    drawText(layout, color = Color.White)
+                    drawText(layout, color = foreground)
                 }
                 surface.makeImageSnapshot()
             }
@@ -154,7 +155,7 @@ internal fun MeloXGlyphLyricText(
                 paint.imageFilter = null
             }
             if (!animates) {
-                if (blur == null) drawText(layout, color = Color.White)
+                if (blur == null) drawText(layout, color = foreground)
                 else glyphs.forEach { drawGlyph(it, 1f) }
                 return@Canvas
             }
@@ -163,18 +164,18 @@ internal fun MeloXGlyphLyricText(
                 MeloXLyricPresentation.timingEffectsStrength(line, time, timingEffectsStrength)
             val inactive = unplayedAlpha.coerceIn(0f, 1f)
             if (strength <= .0001f) {
-                drawText(layout, color = Color.White.copy(alpha = inactive))
+                drawText(layout, color = foreground.copy(alpha = foreground.alpha * inactive))
                 return@Canvas
             }
             if ((renderingQuality != MeloXLyricsRenderingQuality.High || reduceMotion) &&
                 (!MeloXSettingsRuntime.lyricWordByWordEnabled || reduceMotion)) {
-                drawText(layout, color = Color.White.copy(alpha = inactive))
+                drawText(layout, color = foreground.copy(alpha = foreground.alpha * inactive))
                 val first = line.syllables.minOfOrNull { it.startTimeMs } ?: line.timeMs
                 val last = line.syllables.maxOfOrNull { it.endTimeMs } ?: (line.timeMs + (line.durationMs ?: 2_000L))
                 val reveal = ((time - first).toFloat() / (last - first).coerceAtLeast(1L)).coerceIn(0f, 1f)
                 if (reveal > 0f) {
-                    if (isRtl) clipRect(left = size.width * (1f - reveal)) { drawText(layout, color = Color.White) }
-                    else clipRect(right = size.width * reveal) { drawText(layout, color = Color.White) }
+                    if (isRtl) clipRect(left = size.width * (1f - reveal)) { drawText(layout, color = foreground) }
+                    else clipRect(right = size.width * reveal) { drawText(layout, color = foreground) }
                 }
                 return@Canvas
             }
@@ -245,13 +246,14 @@ internal fun MeloXTimedAccompaniment(vocal: LyricAccompaniment, time: () -> Long
 @Composable
 internal fun MeloXRubyLyricText(line: LyricLine, time: () -> Long, timed: Boolean,
     fontScale: Float, quality: MeloXLyricsRenderingQuality, blur: Float, modifier: Modifier = Modifier) {
+    val foreground = LocalMeloXLyricSurface.current.foreground
     if (MeloXSettingsRuntime.lyricWordByWordEnabled) {
         Column(modifier) {
             MeloXGlyphLyricText(line, time, timed, fontScale, false, 1f, renderingQuality = quality, softBlurDp = blur,
                 modifier = Modifier.fillMaxWidth())
             if (!line.romanization.isNullOrBlank()) {
                 val size = max(34f * fontScale * MeloXSettingsRuntime.lyricRomanizationFontScale, 13f)
-                Text(line.romanization.orEmpty(), color = Color.White.copy(alpha = MeloXSettingsRuntime.lyricRomanizationOpacity),
+                Text(line.romanization.orEmpty(), color = foreground.copy(alpha = MeloXSettingsRuntime.lyricRomanizationOpacity),
                     fontFamily = MeloXLanTingProFontFamily, fontSize = size.sp, lineHeight = (size * 1.2f).sp,
                     fontWeight = MeloXSettingsRuntime.lyricFontWeight.composeWeight,
                     textAlign = if (line.agent?.alignment == LyricAgentAlignment.Flipped) TextAlign.End else TextAlign.Start,
@@ -274,21 +276,21 @@ internal fun MeloXRubyLyricText(line: LyricLine, time: () -> Long, timed: Boolea
             val start = unit.originalSyllables.minOfOrNull { it.startTimeMs } ?: 0L
             val end = unit.originalSyllables.maxOfOrNull { it.endTimeMs }?.coerceAtLeast(start + 1) ?: 1L
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Text(unit.originalText, color = Color.White, fontFamily = MeloXLanTingProFontFamily,
+                Text(unit.originalText, color = foreground, fontFamily = MeloXLanTingProFontFamily,
                     modifier = Modifier.graphicsLayer {
                         alpha = if (!timed || unit.originalSyllables.isEmpty()) 1f else .3f +
                             ((time() - start).toFloat() / (end - start)).coerceIn(0f, 1f) * .7f
                     }, fontSize = primarySize.sp, lineHeight = (40.8f * fontScale).sp,
                     fontWeight = MeloXSettingsRuntime.lyricFontWeight.composeWeight, maxLines = 1,
-                    style = TextStyle(shadow = if (blur > .05f) Shadow(Color.White.copy(alpha = .48f), Offset.Zero, blur) else null))
+                    style = TextStyle(shadow = if (blur > .05f) Shadow(foreground.copy(alpha = .48f), Offset.Zero, blur) else null))
                 val romanization = unit.romanizationText
                 if (!romanization.isNullOrBlank()) {
                     val originalCount = unit.originalText.codePointCount(0, unit.originalText.length).coerceAtLeast(1)
                     val rubyCount = romanization.codePointCount(0, romanization.length).coerceAtLeast(1)
-                    Text(romanization, color = Color.White.copy(alpha = MeloXSettingsRuntime.lyricRomanizationOpacity),
+                    Text(romanization, color = foreground.copy(alpha = MeloXSettingsRuntime.lyricRomanizationOpacity),
                         fontFamily = MeloXLanTingProFontFamily, fontSize = (rubySize * (originalCount * 1.85f / rubyCount).coerceIn(.68f, 1f)).sp,
                         lineHeight = (rubySize * 1.2f).sp, fontWeight = MeloXSettingsRuntime.lyricFontWeight.composeWeight, maxLines = 1,
-                        style = TextStyle(shadow = if (blur > .05f) Shadow(Color.White.copy(alpha = .42f), Offset.Zero, blur) else null))
+                        style = TextStyle(shadow = if (blur > .05f) Shadow(foreground.copy(alpha = .42f), Offset.Zero, blur) else null))
                 }
             }
         }
@@ -298,6 +300,7 @@ internal fun MeloXRubyLyricText(line: LyricLine, time: () -> Long, timed: Boolea
 @Composable
 internal fun MeloXLyricInterludeCountdown(interlude: MeloXLyricPresentation.Interlude, time: () -> Long,
     reduceMotion: Boolean, modifier: Modifier = Modifier) {
+    val foreground = LocalMeloXLyricSurface.current.foreground
     Canvas(modifier.fillMaxWidth(.28f).height(48.dp).testTag("lyric-interlude")) {
         val now = time()
         if (now < interlude.startTimeMs) return@Canvas
@@ -310,7 +313,7 @@ internal fun MeloXLyricInterludeCountdown(interlude: MeloXLyricPresentation.Inte
         repeat(3) { index ->
             val progress = ((elapsed - duration.toFloat() * index / 3f) / (duration / 3f)).coerceIn(.25f, 1f)
             val breathe = if (reduceMotion) 1f else 1f + sin(elapsed.toDouble() / 1500.0 * 2.0 * Math.PI).toFloat() * .05f
-            drawCircle(Color.White.copy(alpha = progress * (remaining / 375f).coerceIn(0f, 1f)),
+            drawCircle(foreground.copy(alpha = progress * (remaining / 375f).coerceIn(0f, 1f)),
                 radius * breathe * if (index == 2) 1f + progress * .18f else 1f, Offset(radius + index * gap, size.height / 2f))
         }
     }

@@ -280,6 +280,11 @@ private fun SettingsDetail(
 @Composable
 private fun GeneralSettings() {
     SettingsGlassGroup {
+        SettingsExternalToggleRow(melox.ui.desktop.desktopPlatformString("layout_title"),
+            MeloXSettingsRuntime.desktopLayoutEnabled, "setting-general_desktop_layout",
+            subtitle = melox.ui.desktop.desktopPlatformString("layout_hint")) {
+            MeloXSettingsPreferences.setBoolean("general_desktop_layout", it)
+        }
         SettingsChoice("settings_general_theme", "theme_mode", MeloXSettingsRuntime.themeMode,
             listOf(MeloXThemeMode.System to pinnedString("settings_general_theme_system"), MeloXThemeMode.Light to pinnedString("settings_general_theme_light"),
                 MeloXThemeMode.Dark to pinnedString("settings_general_theme_dark"))) { MeloXSettingsPreferences.setString("theme_mode", it.name) }

@@ -1,0 +1,85 @@
+#!/usr/bin/env python3
+"""Export the selected native Desktop labels from the exact Git tree, never its checkout."""
+import argparse
+import hashlib
+import json
+from pathlib import Path
+import re
+import subprocess
+
+REVISION = 'a41ea0e1e1fa69fb543d827b853fe3aff5420951'
+KEYS = '''ui.navigation.search ui.navigation.home ui.navigation.explore ui.navigation.podcasts
+ui.navigation.library ui.navigation.library.history ui.navigation.library.liked_songs
+ui.navigation.library.liked_playlists ui.library.artists.title ui.navigation.library.liked_albums
+ui.navigation.library.podcasts ui.navigation.downloads ui.navigation.cloud
+ui.desktop.sidebar.not_signed_in ui.desktop.sidebar.fallback_avatar_initial
+ui.desktop.commands.show_lyrics ui.desktop.commands.show_queue ui.common.lyrics ui.player.queue
+ui.player.previous ui.player.next ui.player.shuffle_on ui.player.shuffle_off
+ui.common.close ui.desktop.player.not_playing ui.home.section.quick_actions'''.split()
+KEYS += [f'ui.home.action.{action}{suffix}' for action in
+         ['daily_songs', 'heart_mode', 'private_roaming', 'hot_songs', 'private_radar', 'similar_songs']
+         for suffix in ['', '.subtitle', '.eyebrow']]
+KEYS += ['ui.home.section.recommended_playlists', 'ui.home.section.tailored', 'ui.common.play', 'ui.player.pause',
+         'ui.player.volume', 'ui.player.repeat', 'ui.player.progress']
+KEYS += ['ui.common.more', 'ui.common.clear', 'ui.common.history', 'ui.player.queue_empty',
+         'ui.desktop.player.autoplay', 'ui.desktop.player.continue_playing', 'ui.settings.automix.title',
+         'ui.desktop.player.remove_from_queue']
+SOURCES = [
+    'MeloXDesktop/App/DesktopRootView.swift',
+    'MeloXDesktop/App/DesktopNavigation.swift',
+    'MeloXDesktop/App/DesktopMainWindowConfiguration.swift',
+    'MeloXDesktop/Features/Sidebar/DesktopSidebar.swift',
+    'MeloXDesktop/Features/Sidebar/DesktopSidebarVisibilityLock.swift',
+    'MeloXDesktop/Features/Player/DesktopBottomPlayer.swift',
+    'MeloXDesktop/Features/Player/BottomBar/DesktopBottomPlayerMetrics.swift',
+    'MeloXDesktop/Features/Player/DesktopPlaybackControls.swift',
+    'MeloXDesktop/Features/Player/BottomBar/DesktopBottomMetadataSlot.swift',
+    'MeloXDesktop/Features/Player/DesktopPlayerSidePanel.swift',
+    'MeloXDesktop/Features/Player/DesktopNowPlayingLayout.swift',
+    'MeloXDesktop/Features/Player/DesktopNowPlayingPlayerColumn.swift',
+    'MeloXDesktop/Core/Lyrics/AppleMusicLyricsTypographyProfile.swift',
+    'MeloXDesktop/Core/Lyrics/AppleMusicLyricsMotionProfile.swift',
+    'MeloXDesktop/Features/Player/DesktopLyricsLayoutMetrics.swift',
+    'MeloXDesktop/Features/Player/Queue/DesktopQueueView.swift',
+    'MeloXDesktop/Features/Player/Queue/DesktopQueueMetrics.swift',
+    'MeloXDesktop/Features/Player/Queue/DesktopQueueRow.swift',
+    'MeloXDesktop/Features/Home/DesktopHomeView.swift',
+    'MeloXDesktop/Features/Home/DesktopHomeQuickActionsView.swift',
+]
+
+parser = argparse.ArgumentParser(description=__doc__)
+parser.add_argument('repository', type=Path)
+parser.add_argument('--verify', action='store_true')
+args = parser.parse_args()
+root = Path(__file__).resolve().parents[1]
+
+def blob(path):
+    return subprocess.check_output(['git', '-C', str(args.repository), 'show', REVISION + ':' + path])
+
+def save(path, data):
+    target = root / path
+    if args.verify:
+        assert target.read_bytes() == data, str(path)
+    else:
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_bytes(data)
+
+hashes = {}
+for lang in ['en', 'zh-Hans']:
+    path = f'MeloXLocalization/{lang}.lproj/Localizable.strings'
+    raw = blob(path)
+    hashes[path] = hashlib.sha256(raw).hexdigest()
+    values = {k: json.loads('"' + v + '"') for k, v in re.findall(r'"([^"\\]+)"\s*=\s*"((?:[^"\\]|\\.)*)"\s*;', raw.decode('utf-8'))}
+    assert set(KEYS) <= values.keys(), set(KEYS) - values.keys()
+    text = '# Exact Desktop reference ' + REVISION + '\n'
+    text += ''.join(k + '=' + values[k].replace('\\', '\\\\').replace('\n', '\\n') + '\n' for k in sorted(KEYS))
+    resource = f'desktop/src/main/resources/parity/desktop-reference-{lang}.properties'
+    save(resource, text.encode('utf-8'))
+resources = {f'parity/desktop-reference-{lang}.properties': hashlib.sha256((root / f'desktop/src/main/resources/parity/desktop-reference-{lang}.properties').read_bytes()).hexdigest() for lang in ['en', 'zh-Hans']}
+for path in SOURCES:
+    hashes[path] = hashlib.sha256(blob(path)).hexdigest()
+audit = {'repository': 'https://github.com/lladlam/melox', 'commit': REVISION,
+    'verified_against_pure_export': True, 'source_sha256': hashes, 'resource_sha256': resources,
+    'keys': sorted(KEYS), 'scope': 'Native macOS Desktop shell reference; separate from pinned Android v0.6.5'}
+save('parity/desktop-a41ea0e/source-audit.json', (json.dumps(audit, ensure_ascii=False, indent=2) + '\n').encode('utf-8'))
+print('PASS exact Desktop source and', len(KEYS), 'labels in two source locales')

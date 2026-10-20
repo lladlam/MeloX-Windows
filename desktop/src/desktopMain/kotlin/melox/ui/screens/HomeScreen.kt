@@ -121,6 +121,7 @@ private fun NeteaseHome(
     var error by remember { mutableStateOf<String?>(null) }
     var activeAction by remember { mutableStateOf<String?>(null) }
     var dailySongs by remember { mutableStateOf<List<melox.model.SearchSong>>(emptyList()) }
+    var desktopActionKey by remember { mutableStateOf("daily_songs") }
 
     val cacheKey = "${session.cookie.hashCode()}_${melox.settings.MeloXSettingsRuntime.musicArea}_${melox.settings.MeloXSettingsRuntime.podcastsEnabled}"
 
@@ -152,7 +153,8 @@ private fun NeteaseHome(
     }
 
     if (dailySongs.isNotEmpty()) {
-        DailySongsPage(dailySongs, onBack = { dailySongs = emptyList() })
+        DailySongsPage(dailySongs, onBack = { dailySongs = emptyList() }, title =
+            if (melox.settings.MeloXSettingsRuntime.desktopLayoutEnabled) melox.ui.desktop.desktopString("ui.home.action.$desktopActionKey") else "每日推荐")
         return
     }
 
@@ -180,6 +182,50 @@ private fun NeteaseHome(
         melox.settings.MeloXSettingsRuntime.homeQuickActionsEnabled
     })
 
+    if (melox.settings.MeloXSettingsRuntime.desktopLayoutEnabled) {
+        melox.ui.desktop.MeloXDesktopHome(content, activeAction, refreshing, error, onAction = { title ->
+            val action = neteaseActions().first { it.title == title }
+            activeAction = title
+            scope.launch {
+                try {
+                    error = null
+                    when (title) {
+                        "热歌榜" -> {
+                            val chart = content?.chartPlaylists?.firstOrNull { it.name.contains("热歌榜") || it.id == 3_778_678L }
+                                ?: withContext(Dispatchers.IO) { client.playlistDetail(3_778_678L).summary }
+                            onOpenPlaylist(chart)
+                        }
+                        "私人雷达" -> {
+                            val radar = content?.radarPlaylists?.firstOrNull() ?: withContext(Dispatchers.IO) {
+                                if (session.profile == null && session.isLoggedIn) session.refreshProfile()
+                                val userId = session.profile?.userId ?: error("请先登录网易云音乐")
+                                client.snapshot(userId).playlists.firstOrNull { it.name.contains("雷达") }
+                                    ?: error("当前账号没有可用的私人雷达")
+                            }
+                            onOpenPlaylist(radar)
+                        }
+                        else -> {
+                            val songs = withContext(Dispatchers.IO) { action.run(client, session) }
+                            if (title == "心动模式") songs.firstOrNull()?.let {
+                                melox.playback.PlaybackCommands.playQueue(songs, it.id, heartMode = true)
+                            } ?: run { error = "没有可播放的推荐歌曲" }
+                            else {
+                                desktopActionKey = when (title) {
+                                    "私人漫游" -> "private_roaming"
+                                    "相似歌曲" -> "similar_songs"
+                                    else -> "daily_songs"
+                                }
+                                dailySongs = songs
+                            }
+                        }
+                    }
+                } catch (cancelled: kotlinx.coroutines.CancellationException) { throw cancelled }
+                catch (failure: Exception) { error = failure.message ?: "$title 加载失败" }
+                finally { activeAction = null }
+            }
+        }, onPlaylist = onOpenPlaylist)
+        return
+    }
     if (content == null && refreshing) {
         Box(Modifier.fillMaxSize().background(MeloXColors.pageBackground()), contentAlignment = Alignment.Center) { CircularProgressIndicator(color = HomeAccent) }
         return
@@ -272,9 +318,9 @@ private fun neteaseActions(): List<NeteaseAction> = buildList {
 private fun homeGreeting(): String = "下午好"
 
 @Composable
-private fun DailySongsPage(songs: List<melox.model.SearchSong>, onBack: () -> Unit) {
+private fun DailySongsPage(songs: List<melox.model.SearchSong>, onBack: () -> Unit, title: String = "每日推荐") {
     LazyColumn(Modifier.fillMaxSize(), contentPadding = PaddingValues(top = 18.dp, bottom = 146.dp)) {
-        item { MeloXIosTopBar(title = "每日推荐", onBack = onBack) }
+        item { MeloXIosTopBar(title = title, onBack = onBack) }
         item {
             Text(
                 "播放全部",

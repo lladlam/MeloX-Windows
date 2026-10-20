@@ -73,6 +73,14 @@ def main():
         split = manifest(split_path)
         assert split['pinned_android'] == '53244b9d6b21d7e3a609e8cb11876efef70f218b' and split['verified_against_pure_export']
         expected.update(split['resource_sha256'])
+    desktop_path = 'parity/desktop-a41ea0e/source-audit.json'
+    has_desktop = bool(subprocess.check_output(['git', 'ls-tree', '--name-only', args.source_revision, '--', desktop_path], cwd=repo).strip()) if args.source_revision else (repo / desktop_path).is_file()
+    desktop_revision = None
+    if has_desktop:
+        desktop = manifest(desktop_path)
+        desktop_revision = desktop['commit']
+        assert desktop_revision == 'a41ea0e1e1fa69fb543d827b853fe3aff5420951' and desktop['verified_against_pure_export']
+        expected.update(desktop['resource_sha256'])
     records = []
     archive = zipfile.ZipFile(io.BytesIO(packaged_bytes(args.artifact))) if args.artifact else None
     try:
@@ -84,11 +92,12 @@ def main():
                             'expected_sha256': digest, 'crlf_count': data.count(b'\r\n'), 'verified': actual == digest})
         result = {'check': 'pinned legal/default-string exact resource bytes',
                    'pinned_android': baseline['pinned_android'],
-                  'additional_android_baselines': additional_baselines,
-                  'source_revision': args.source_revision,
-                  'artifact': str(args.artifact) if args.artifact else 'source resources',
-                  'status': 'PASSED' if all(record['verified'] for record in records) else 'FAILED',
-                  'resources': records}
+                   'additional_android_baselines': additional_baselines,
+                   'desktop_reference': desktop_revision,
+                    'source_revision': args.source_revision,
+                    'artifact': str(args.artifact) if args.artifact else 'source resources',
+                    'status': 'PASSED' if all(record['verified'] for record in records) else 'FAILED',
+                    'resources': records}
         args.output.parent.mkdir(parents=True, exist_ok=True)
         args.output.write_text(json.dumps(result, indent=2, ensure_ascii=False) + '\n', encoding='utf-8')
         assert result['status'] == 'PASSED', 'Pinned resource bytes changed: ' + ', '.join(record['resource'] for record in records if not record['verified'])

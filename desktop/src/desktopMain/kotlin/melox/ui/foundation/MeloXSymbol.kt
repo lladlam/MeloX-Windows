@@ -148,8 +148,9 @@ fun MeloXSymbolIcon(
     size: Int = 22,
     iconSize: Int = size,
     weight: FontWeight = FontWeight.Normal,
+    nativeGlyph: Boolean = false,
 ) {
-    if (symbol == MeloXSymbol.Settings || symbol == MeloXSymbol.Home) {
+    if (!nativeGlyph && (symbol == MeloXSymbol.Settings || symbol == MeloXSymbol.Home)) {
         Icon(
             painter = painterResource(if (symbol == MeloXSymbol.Home) "icons/melox_home_tab.svg" else "icons/ic_melox_brand_gear.svg"),
             contentDescription = null,

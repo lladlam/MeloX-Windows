@@ -12,3 +12,4 @@ desktop/src/main/resources/parity/pinned-v065-lyric-language.properties text eol
 desktop/src/main/resources/parity/pinned-v065-split-layout.properties text eol=lf
 desktop/src/main/resources/icons/pinned-v065-launcher-foreground.png -text
 shared/src/desktopMain/resources/AudioFingerprint/* -text -whitespace
+desktop/src/main/resources/parity/desktop-reference-*.properties text eol=lf

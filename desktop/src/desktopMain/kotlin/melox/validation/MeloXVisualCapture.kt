@@ -151,6 +151,8 @@ fun main(args: Array<String>) = runBlocking {
                 frames += 1
             } while (frames < 3 || System.nanoTime() < end)
         }
+        data class PlaybackCheckpoint(val track: melox.music.model.MusicResourceId, val position: Long, val outputCount: Int)
+        val playbackCheckpoints = mutableMapOf<String, PlaybackCheckpoint>()
         fun assertionMatches(assertion: String): Boolean {
             val (kind, expected) = assertion.split(':', limit = 2)
             val semantics = scene.captureSemantics()
@@ -223,6 +225,19 @@ fun main(args: Array<String>) = runBlocking {
                 "queue-min" -> melox.playback.PlaybackCommands.queue.value.songs.size >= expected.toInt()
                 "tag-prefix" -> semantics.any { it.config.getOrNull(SemanticsProperties.TestTag)?.startsWith(expected) == true && !it.boundsInWindow.isEmpty }
                 "position-min" -> melox.player.AudioPlayer.positionMs.value >= expected.toLong()
+                "volume" -> kotlin.math.abs(melox.player.AudioPlayer.volumeLevel.value - expected.toFloat()) < .025f
+                "playback-checkpoint" -> melox.player.AudioPlayer.currentTrack.value?.id?.let { id ->
+                    if (pcmOutput == null || !melox.player.AudioPlayer.state.value.isPlaying) false else {
+                        playbackCheckpoints[expected] = PlaybackCheckpoint(id, melox.player.AudioPlayer.positionMs.value, pcmOutput.evidence().size)
+                        true
+                    }
+                } ?: false
+                "playback-continuity" -> playbackCheckpoints[expected]?.let { checkpoint ->
+                    melox.player.AudioPlayer.currentTrack.value?.id == checkpoint.track &&
+                        melox.player.AudioPlayer.state.value.isPlaying &&
+                        melox.player.AudioPlayer.positionMs.value >= checkpoint.position &&
+                        pcmOutput?.evidence()?.size == checkpoint.outputCount
+                } == true
                 "no-playback-error" -> (melox.player.AudioPlayer.state.value.error == null) == expected.toBooleanStrict()
                 "repeat" -> melox.playback.PlaybackCommands.playerController()?.repeatMode?.value == expected.toInt()
                 "seek-line" -> semantics.tagged("lyric-line-$expected")?.config?.getOrNull(melox.ui.screens.MeloXLyricTimeMsKey)?.let {

@@ -1,0 +1,60 @@
+# MeloX Desktop 一比一迁移矩阵
+
+## 固定真源与验收口径
+
+- 仓库：<https://github.com/lladlam/melox>。
+- 电脑端固定提交：`a41ea0e1e1fa69fb543d827b853fe3aff5420951`。
+- 重新克隆的位置：`/mnt/ntfs_files_sda4/项目/MeloX-Desktop-Reference`。
+- 这是独立的 **macOS Desktop → Windows** 迁移目标。Android 正式 `v0.6.5 / 53244b9 / versionCode 24` 的资源、矩阵和验收记录继续独立维护。
+- 用户要求覆盖整套 UI；总状态为 **PARTIAL**。接入真实生产页面、源尺寸计算通过或 Windows 自身回放成功，均不等于该页面的一比一视觉／动态验收完成。
+- `build/desktop-reference-a41ea0e/` 中官网下载的截图只用于布局考察；不是从该固定提交、相同账号／内容／尺寸取得的像素基准。
+
+## 首批实现
+
+设置 → 通用 → **电脑端布局 / Desktop layout**。偏好键 `general_desktop_layout` 默认 `false`，即时更新运行态并持久化；冷启动关键偏好读取包含该键。
+
+切换时保留同一个主页面 composition 和可移动详情 composition；播放器／队列仍使用现有 `AudioPlayer`、`PlaybackCommands` 和生产 FFmpeg。桌面布局阻止 Android 左右等分和旧底栏重复出现。Windows 设置入口为平台接线文案，不冒充真源菜单文案。
+
+源指标已接入：侧栏初始宽 199、外距 8；底栏 700×54、内距 9、transport 148、cluster 9、底距 10；右侧面板 258；面板出入 280ms，减少动态关闭时长；首页横向留白 52、hero 最小 200／间隔 20／4:3 竖卡、媒体最小 145／间隔 24；播放器尺寸按源 `DesktopNowPlayingLayout` 计算；歌词 viewport 字号断点 24／28／38／50／72。这些数值不涵盖原生材质、字体栅格和整页像素差。
+
+Windows 首次以已保存桌面模式启动采用 1280×800；启用时设置原生内容最小 980×540 并提升过小窗口，关闭时释放该最小尺寸约束。原生 Windows 高 DPI／frame inset 的实机适配仍需验收。
+
+## 全部界面追踪
+
+| 真源界面 | Windows 状态 | 仍需完成的一比一工作 |
+|---|---|---|
+| `App/DesktopRootView.swift`、`Features/Sidebar` | PARTIAL：独立桌面框架、真实导航、账号／设置可达 | 原生 titlebar、安全区、材质、侧栏滚动／loading footer、账号弹层；当前账号入口接已有设置账号区 |
+| `Features/Home` | PARTIAL：首页标题／卡片首批、真实首页内容与六个动作接线 | 完整分页 shelf、最近听歌／为你定制／新专辑／播客各区块；卡片元数据／封面层、详情与加载／错误样式 |
+| `Features/Search` | PENDING：沿用现有生产搜索 | 桌面搜索输入、scope、结果布局、建议、空态、菜单和全部详情跳转 |
+| `Features/Explore` | PENDING：沿用现有生产发现 | discovery、榜单、分类与筛选、radio 及详情布局 |
+| `Features/Library` | PENDING：侧栏已请求真实 Songs／Playlists／Podcasts／Downloads／Cloud／History 子页 | 桌面歌曲表格、歌单／专辑／歌手网格、筛选／排序／刷新／空态及全部菜单；当前页面仍为原有布局 |
+| Albums／Artists 收藏入口 | BLOCKED：可见但禁用，附后端不可用说明 | 实际收藏能力消费者与真源桌面页面；禁止空点击或填充假集合 |
+| `Features/Detail`、`Features/Playlist` | PENDING：已有真实详情可用 | collection header、track list、artist／album／song／podcast 详情、编辑／删除／分享／下载弹层 |
+| `Features/Player/DesktopBottomPlayer.swift`、`BottomBar` | PARTIAL：源尺寸、真实播放／暂停／切歌／进度／音量、歌词／队列入口 | 元数据 hover 展开、时间／进度过渡、玻璃材质、issue／retry、禁用态与原生音量细节 |
+| `Features/Player/Queue` | PARTIAL：history／up next、按稳定 entry ID 选曲、清除／移除、真实 AutoMix／autoplay | 模式图标／tooltip、drag-and-drop、fade、hover、精确字体／间距和所有菜单细节 |
+| `Features/Player/Inspector`、`DesktopPlayerSidePanel.swift` | PARTIAL：258 宽面板／280ms进退、真实歌词／队列 | 材质、选项切换 crossfade、原生窗口宽度增长策略和尺寸／动画对照 |
+| `Features/Player/DesktopNowPlaying*` | PARTIAL：源几何、真实播放器、歌词／队列并列、暂停封面缩放 | 顶栏 accessory／独立迷你窗口、收藏直控、信息／quality／output 菜单、全套展开收起动效 |
+| `Features/Player/*Lyrics*` | PARTIAL：复用真实加载／字级渲染，接入 desktop 前景色、字号断点、左右 20、段距及 focus 输入 | 完整 macOS motion profiles、逐行焦点的精确高度求解、mask、词级 lift／spring、其他歌词样式和全部扩展窗口 |
+| `Features/Settings` | PENDING：新切换按钮、其余保留现有真实设置 | macOS 设置窗口侧栏与所有分组／子页、控件、弹窗、布局和文案迁移 |
+| `Features/Account` | PENDING：已有真实账号／Cookie/API 登录链 | 桌面 account／login sheet、二维码／Cookie 导入及登录状态布局 |
+| `Features/Messages` | PENDING：已有真实私信链 | 联系人、会话、消息／回复、错误与加载、布局与菜单 |
+| `Features/ListenTogether` | PENDING：已有生产 Together 能力 | 桌面加入／邀请／会话／退出各弹窗；双账号实机回放 |
+| `Features/SongRecognition` | PENDING／能力门控 | 桌面识曲弹层、真实麦克风／后端、权限／失败态及物理输入验证 |
+| `Features/Onboarding`、`Features/About` | PENDING | 桌面引导／关于／隐私／协议／更新 UI、文案与窗口行为 |
+| 快捷键、右键菜单、拖放、独立窗口、系统托盘／媒体控制 | PARTIAL：沿用已有 Windows 生产能力 | 对照真源逐个动作接线与物理输入验证；原生 macOS 项明确映射到 Windows 实际能力 |
+
+## 图标与文案
+
+`tools/export_desktop_reference.py` 直接从固定 Git blob 导出选定原文；`source-audit.json` 记录源文件及资源 SHA-256。当前导出 `en`／`zh-Hans` 两种真源资源，简体中文按系统 locale 选择，其他 locale 回退默认英文；Windows 开关／设置入口文案定义在 `MeloXDesktopStrings.kt` 的独立平台函数中。
+
+桌面 Home 图标使用 SF 字体 house glyph，避开 Android 特有 SVG。现有 Android SF 子集只有 56 个码点，不能据此声称完整桌面图标复刻；`square.grid.2x2`、`icloud`、专辑／歌手／播客等桌面专用符号及真实填充变体仍需补充可追溯源资源。当前相近符号映射属于明确的迁移差异，须逐项替换，不能通过改名将其算作正确图标。
+
+## 验证与证据
+
+`tools/capture_desktop_layout.py` 从生产入口发送真实指针、滚轮和滑块拖动；semantics 只用于定位／断言。controls → reload → restore → reload-current 各自独立 JVM，验证偏好磁盘重载。生成 WAV 和 LRC 只存在隔离验证目录，经过生产 Local scanner／歌词存储／FFmpeg 解码；不会注入远端 provider 或用户音乐库。
+
+切换连续性断言记录真实曲目 ID、位置及已打开 PCM 输出数量，再验证多次切换无曲目改变、无回退、无输出重建且仍播放。PCM 输出明确标注 `VALIDATION_SOFTWARE_PCM_OUTPUT`，不是硬件听感验收。浅色歌词、深浅首页和播放器另有截图。
+
+本批原始参数、输入、capture、semantics、源指标检查及构建日志将记录到本目录证据；Windows CI 增加七组桌面回放并上传原始文件。最终通过数量以完成后记录为准，不将中途测试计作最终结果。
+
+Android 正式固定版同内容静态／动态帧、Windows 用户 549→1431MB 长时增长、真实账号／硬件／DPI 实机问题继续按原矩阵跟踪。

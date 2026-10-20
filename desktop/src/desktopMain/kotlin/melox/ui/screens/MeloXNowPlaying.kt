@@ -203,7 +203,11 @@ fun MeloXNowPlayingScreen(
 
         CompositionLocalProvider(melox.ui.glass.LocalMeloXLayerBackdrop provides playerBackdrop) {
             val classic = MeloXSettingsRuntime.playerShell == MeloXPlayerShell.Classic
-            if (!classic) {
+            if (MeloXSettingsRuntime.desktopLayoutEnabled) {
+                melox.ui.desktop.MeloXDesktopNowPlaying(track,
+                    onDismiss = { onDismiss?.invoke() ?: navState?.goBack() },
+                    onActions = { showQuality = false; showActions = true })
+            } else if (!classic) {
                 MeloXIOSPlayerScene(
                     track = track,
                     sourceColor = sourceColor,
@@ -249,7 +253,7 @@ fun MeloXNowPlayingScreen(
                 )
             }
 
-            if (!classic) {
+            if (!classic || MeloXSettingsRuntime.desktopLayoutEnabled) {
                 MeloXSongActionsOverlay(
                     song = actionSong,
                     queue = actionQueue,

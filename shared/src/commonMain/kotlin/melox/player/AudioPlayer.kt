@@ -44,6 +44,8 @@ object AudioPlayer {
     private var currentLine: SourceDataLine? = null
     private var currentProcess: Process? = null
     @Volatile private var volumeLinear: Float = 1f
+    private val _volumeLevel = MutableStateFlow(1f)
+    val volumeLevel: StateFlow<Float> = _volumeLevel.asStateFlow()
     private val playbackLock = Any()
     private val paused = AtomicBoolean(false)
     private val pauseVersion = AtomicLong()
@@ -448,6 +450,7 @@ object AudioPlayer {
 
     fun setVolume(volume: Float) {
         volumeLinear = volume.coerceIn(0f, 1f)
+        _volumeLevel.value = volumeLinear
         dualSession.get()?.volume = volumeLinear
     }
 

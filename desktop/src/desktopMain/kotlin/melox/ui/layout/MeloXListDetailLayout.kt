@@ -61,7 +61,8 @@ internal fun MeloXAdaptiveDetail(visible: Boolean, onDismiss: (() -> Unit)? = nu
 @Composable
 internal fun MeloXListDetailLayout(hasMedia: Boolean, modifier: Modifier = Modifier, content: @Composable () -> Unit) {
     val state = remember { MeloXDetailPaneState() }
-    val split = meloXUsesListDetail(LocalWindowInfo.current.containerSize, MeloXSettingsRuntime.splitScreenEnabled)
+    val split = meloXUsesListDetail(LocalWindowInfo.current.containerSize,
+        MeloXSettingsRuntime.splitScreenEnabled && !MeloXSettingsRuntime.desktopLayoutEnabled)
     val navigation = MeloXSettingsRuntime.splitNavigationPosition
     val mini = MeloXSettingsRuntime.splitMiniPlayerPosition
     val divider = MaterialTheme.colorScheme.outlineVariant

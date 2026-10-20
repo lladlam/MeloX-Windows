@@ -125,6 +125,7 @@ fun MeloXApp(onExit: () -> Unit = { kotlin.system.exitProcess(0) }) {
     val backDispatchers = remember { AppTab.entries.associateWith { MeloXBackDispatcher() } }
     val playerBackDispatcher = remember { MeloXBackDispatcher() }
     var settingsRouteRequest by remember { mutableStateOf<String?>(null) }
+    var desktopLibraryPage by remember { mutableStateOf<String?>(null) }
     var onboardingLoginPending by remember { mutableStateOf(false) }
     LaunchedEffect(onboarding.stage, onboardingLoginPending) {
         if (onboarding.stage == melox.legal.MeloXOnboardingStage.Complete && onboardingLoginPending) {
@@ -206,7 +207,7 @@ fun MeloXApp(onExit: () -> Unit = { kotlin.system.exitProcess(0) }) {
     val currentTrack by AudioPlayer.currentTrack.collectAsState()
     val hasMedia = currentTrack != null
     val listDetailMode = melox.layout.meloXUsesListDetail(androidx.compose.ui.platform.LocalWindowInfo.current.containerSize,
-        MeloXSettingsRuntime.splitScreenEnabled)
+        MeloXSettingsRuntime.splitScreenEnabled && !MeloXSettingsRuntime.desktopLayoutEnabled)
     val chromeCoupled = melox.settings.meloXChromeScrollCoupled(listDetailMode, MeloXSettingsRuntime.splitNavigationPosition,
         MeloXSettingsRuntime.splitMiniPlayerPosition)
     val currentChromeCoupled by androidx.compose.runtime.rememberUpdatedState(chromeCoupled)
@@ -326,7 +327,11 @@ fun MeloXApp(onExit: () -> Unit = { kotlin.system.exitProcess(0) }) {
     }
     val resolvedTheme = melox.settings.resolveMeloXTheme(MeloXSettingsRuntime.themeMode, systemDark)
     MaterialTheme(
-        colorScheme = if (resolvedTheme == melox.settings.MeloXResolvedTheme.Light) meloXLightScheme() else meloXDarkScheme(),
+        colorScheme = (if (resolvedTheme == melox.settings.MeloXResolvedTheme.Light) meloXLightScheme() else meloXDarkScheme()).let { scheme ->
+            if (!MeloXSettingsRuntime.desktopLayoutEnabled) scheme
+            else if (resolvedTheme == melox.settings.MeloXResolvedTheme.Light) scheme.copy(background = Color(0xFFF6F6F6), surface = Color(0xFFEEEEF0))
+            else scheme.copy(background = Color(0xFF1E1E1E), surface = Color(0xFF17171A))
+        },
         typography = melox.ui.theme.MeloXMaterialTypography,
         shapes = melox.ui.theme.MeloXMaterialShapes,
     ) {
@@ -409,7 +414,15 @@ fun MeloXApp(onExit: () -> Unit = { kotlin.system.exitProcess(0) }) {
                 val pageBackdrop = melox.ui.glass.rememberMeloXLayerBackdrop()
                 CompositionLocalProvider(melox.ui.glass.LocalMeloXLayerBackdrop provides pageBackdrop) {
                 CompositionLocalProvider(melox.ui.glass.LocalMeloXLayerBackdrop provides null) {
-                melox.ui.layout.MeloXListDetailLayout(hasMedia, Modifier.meloXRecordBackdrop(pageBackdrop).nestedScroll(tabBarMinimizeConnection)) {
+                melox.ui.desktop.MeloXInterfaceLayout(
+                    hasMedia = hasMedia, selectedTab = selectedTab, source = selectedSource,
+                    libraryPage = desktopLibraryPage,
+                    onSelect = { tab, page -> desktopLibraryPage = page; selectedTab = tab },
+                    onAccount = { selectedTab = AppTab.Settings },
+                    onExpandPlayer = openPlayer, playerOpen = playerOpen,
+                    backdrop = pageBackdrop,
+                    modifier = Modifier.meloXRecordBackdrop(pageBackdrop).nestedScroll(tabBarMinimizeConnection),
+                ) {
                 AnimatedContent(
                     targetState = selectedTab,
                     transitionSpec = {
@@ -429,6 +442,7 @@ fun MeloXApp(onExit: () -> Unit = { kotlin.system.exitProcess(0) }) {
                         TabContent(
                             tab = tab,
                             source = selectedSource,
+                            libraryPageRequest = desktopLibraryPage,
                             settingsRouteRequest = if (tab == AppTab.Settings) settingsRouteRequest else null,
                             onSettingsRouteConsumed = { settingsRouteRequest = null },
                             onOpenTool = { tool ->
@@ -453,7 +467,7 @@ fun MeloXApp(onExit: () -> Unit = { kotlin.system.exitProcess(0) }) {
 
                 // ── Bottom chrome overlay (Android: aligned BottomCenter,
                 // not inside a Column) ──
-                Box(modifier = Modifier.align(Alignment.BottomCenter).zIndex(10f)) {
+                if (!MeloXSettingsRuntime.desktopLayoutEnabled) Box(modifier = Modifier.align(Alignment.BottomCenter).zIndex(10f)) {
                 MeloXBottomChrome(
                     selectedTab = selectedTab,
                     hasMedia = hasMedia,
@@ -609,6 +623,7 @@ private fun TabContent(
     onOpenTool: (String) -> Unit,
     onSourceSelected: (MusicSource) -> Unit,
     settingsRouteRequest: String? = null,
+    libraryPageRequest: String? = null,
     onSettingsRouteConsumed: () -> Unit = {},
 ) {
     val navState = melox.ui.navigation.rememberMeloXNavState()
@@ -650,7 +665,7 @@ private fun TabContent(
                 onOpenPlaylist = openPlaylist,
                 onOpenProviderPlaylist = openProviderPlaylist,
             )
-            AppTab.Library -> LibraryScreen(navState = navState)
+            AppTab.Library -> LibraryScreen(navState = navState, requestedPage = libraryPageRequest)
             AppTab.Podcasts -> PodcastsScreen(navState = navState)
             AppTab.Downloads -> DownloadsScreen(navState = navState)
             AppTab.Cloud -> CloudScreen(navState = navState)

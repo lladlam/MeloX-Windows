@@ -91,6 +91,30 @@ jobs:
             python tools/capture_split_layout.py $mode "$homeDir" "desktop/build/parity/split-layout-$mode"
             if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           }
+      - name: Replay Desktop layout switch, real player and separate JVM preference reloads
+        shell: pwsh
+        run: |
+          $homeDir = "$pwd/desktop/build/parity/desktop-layout-home"
+          New-Item -ItemType Directory -Force "$homeDir/.melox" | Out-Null
+          [System.IO.File]::WriteAllText("$homeDir/.melox/prefs_melox_app_settings.properties", "onboarding_completed=true`n", [System.Text.UTF8Encoding]::new($false))
+          foreach ($mode in @("controls", "reload", "restore", "reload-current")) {
+            python tools/capture_desktop_layout.py $mode "$homeDir" "desktop/build/parity/desktop-layout-$mode"
+            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          }
+          foreach ($mode in @("home-dark", "home-light")) {
+            $homeDir = "$pwd/desktop/build/parity/desktop-layout-$mode-home"
+            New-Item -ItemType Directory -Force "$homeDir/.melox" | Out-Null
+            [System.IO.File]::WriteAllText("$homeDir/.melox/prefs_melox_app_settings.properties", "onboarding_completed=true`ngeneral_desktop_layout=true`n", [System.Text.UTF8Encoding]::new($false))
+            python tools/capture_desktop_layout.py $mode "$homeDir" "desktop/build/parity/desktop-layout-$mode"
+            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          }
+          $homeDir = "$pwd/desktop/build/parity/desktop-layout-lyrics-light-home"
+          New-Item -ItemType Directory -Force "$homeDir/.melox" | Out-Null
+          [System.IO.File]::WriteAllText("$homeDir/.melox/prefs_melox_app_settings.properties", "onboarding_completed=true`ngeneral_desktop_layout=true`n", [System.Text.UTF8Encoding]::new($false))
+          python tools/capture_desktop_layout.py lyrics-light "$homeDir" desktop/build/parity/desktop-layout-lyrics-light
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python tools/verify_desktop_layout_capture.py desktop/build/parity --output desktop/build/verification/desktop-layout.json
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - name: Replay pinned settings routes in four locales and verify real preference consumers
         shell: pwsh
         run: |
@@ -240,6 +264,11 @@ jobs:
             desktop/build/parity/split-layout-*/*.txt
             desktop/build/parity/split-layout-*/gradle.log
             desktop/build/parity/split-layout-*/*.png
+            desktop/build/parity/desktop-layout-*/*.json
+            desktop/build/parity/desktop-layout-*/*.txt
+            desktop/build/parity/desktop-layout-*/gradle.log
+            desktop/build/parity/desktop-layout-*/*.png
+            desktop/build/parity/desktop-layout-*/*.s16le
             desktop/build/verification/settings-icons.json
             desktop/build/parity/settings-*/*.json
             desktop/build/parity/settings-*/gradle.log

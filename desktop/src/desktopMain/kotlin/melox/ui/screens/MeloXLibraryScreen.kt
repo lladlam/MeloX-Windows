@@ -111,6 +111,7 @@ internal val MeloXBottomContentClearanceDp = 156.dp
 @Composable
 fun LibraryScreen(
     navState: MeloXNavState? = null,
+    requestedPage: String? = null,
 ) {
     val scope = rememberCoroutineScope()
     val session = melox.account.rememberNeteaseSessionStore()
@@ -128,6 +129,9 @@ fun LibraryScreen(
 
     val initialPage = MeloXLibraryPage.valueOf(MeloXContentLayout.initialLibraryPage(source))
     var selectedPage by rememberSaveable(source) { mutableStateOf(initialPage) }
+    LaunchedEffect(source, requestedPage) {
+        MeloXLibraryPage.entries.firstOrNull { it.name == requestedPage && it.isEnabled(source) }?.let { selectedPage = it }
+    }
     var selectedPlaylist by remember(source, session.cookie, accountRevision) { mutableStateOf<NeteasePlaylistSummary?>(null) }
     var snapshot by remember(source, session.cookie, accountRevision) { mutableStateOf<NeteaseLibrarySnapshot?>(null) }
     var providerAccount by remember(source, accountRevision) { mutableStateOf<MusicAccountSummary?>(null) }

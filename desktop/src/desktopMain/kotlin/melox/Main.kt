@@ -43,6 +43,7 @@ fun main() {
     }
 
     try {
+        melox.settings.MeloXSettingsPreferences.initializeCritical()
         application {
             androidx.compose.runtime.LaunchedEffect(Unit) {
                 while (true) {
@@ -53,8 +54,8 @@ fun main() {
                 }
             }
             val windowState = rememberWindowState(
-                width = 427.dp,
-                height = 924.dp,
+                width = if (melox.settings.MeloXSettingsRuntime.desktopLayoutEnabled) 1280.dp else 427.dp,
+                height = if (melox.settings.MeloXSettingsRuntime.desktopLayoutEnabled) 800.dp else 924.dp,
                 position = WindowPosition.PlatformDefault,
             )
             androidx.compose.runtime.LaunchedEffect(windowState.isMinimized) {
@@ -68,6 +69,19 @@ fun main() {
                     exitApplication()
                 },
             ) {
+                val desktopLayout = melox.settings.MeloXSettingsRuntime.desktopLayoutEnabled
+                androidx.compose.runtime.DisposableEffect(window, desktopLayout) {
+                    val previousMinimum = window.minimumSize
+                    if (desktopLayout) {
+                        val frame = window.insets
+                        window.minimumSize = java.awt.Dimension(980 + frame.left + frame.right, 540 + frame.top + frame.bottom)
+                    }
+                    onDispose { window.minimumSize = previousMinimum }
+                }
+                androidx.compose.runtime.LaunchedEffect(desktopLayout) {
+                    if (desktopLayout) windowState.size = androidx.compose.ui.unit.DpSize(
+                        maxOf(windowState.size.width, 980.dp), maxOf(windowState.size.height, 540.dp))
+                }
                 val immersiveOwner = androidx.compose.runtime.remember(windowState, window) { melox.ui.player.MeloXImmersiveWindowOwner(windowState, window) }
                 androidx.compose.runtime.DisposableEffect(immersiveOwner) { onDispose { immersiveOwner.close() } }
                 val displayAwake = androidx.compose.runtime.remember { melox.platform.MeloXDisplayAwakeController(initialForeground = false) }
