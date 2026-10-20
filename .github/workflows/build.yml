@@ -119,7 +119,7 @@ jobs:
           }
           $homeDir = "$pwd/desktop/build/parity/desktop-layout-lyrics-light-home"
           New-Item -ItemType Directory -Force "$homeDir/.melox" | Out-Null
-          [System.IO.File]::WriteAllText("$homeDir/.melox/prefs_melox_app_settings.properties", "onboarding_completed=true`ngeneral_desktop_layout=true`n", [System.Text.UTF8Encoding]::new($false))
+          [System.IO.File]::WriteAllText("$homeDir/.melox/prefs_melox_app_settings.properties", "onboarding_completed=true`ngeneral_desktop_layout=false`n", [System.Text.UTF8Encoding]::new($false))
           python tools/capture_desktop_layout.py lyrics-light "$homeDir" desktop/build/parity/desktop-layout-lyrics-light
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           python tools/verify_desktop_layout_capture.py desktop/build/parity --output desktop/build/verification/desktop-layout.json

@@ -39,6 +39,10 @@ def add(name, action, assertions=()):
 
 if mode == 'lyrics-light':
     add('consent', 'tap@remote-reject', ['cloud-enabled:false'])
+    add('reveal-general', 'reveal@settings-open-general')
+    add('general', 'tap@settings-open-general', ['tag:settings-general'])
+    add('reveal-switch', 'reveal@setting-general_desktop_layout')
+    add('enable-desktop', 'tap@setting-general_desktop_layout', ['tag:desktop-sidebar', 'runtime:desktopLayoutEnabled:true'])
     add('show-real-local-lyrics', 'tap@desktop-show-lyrics', ['tag:desktop-inspector:Lyrics', 'tag:player-lyrics', 'tag-prefix:lyric-line-'])
     add('seek-by-real-pointer', 'tap@lyric-line-1', ['position-min:4000', 'no-playback-error:true'])
     add('close-lyrics', 'tap@desktop-show-lyrics', ['absent:desktop-inspector:Lyrics'])
