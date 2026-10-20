@@ -27,6 +27,12 @@ internal fun desktopPlatformString(key: String): String {
         "layout_hint" -> if (chinese) "使用 MeloX 电脑端侧栏和底部播放器；关闭可切回当前布局" else "Use the MeloX desktop sidebar and bottom player; turn off to restore the current layout"
         "settings" -> if (chinese) "设置" else "Settings"
         "unavailable" -> if (chinese) "此音乐源或当前 Windows 后端尚不支持" else "Not available for this source or Windows backend"
+        "account_title" -> if (chinese) "账户" else "Account"
+        "account_private_messages" -> if (chinese) "私信" else "Private Messages"
+        "account_settings" -> if (chinese) "账户设置" else "Account Settings"
+        "account_logout" -> if (chinese) "退出登录" else "Log Out"
+        "account_login" -> if (chinese) "登录" else "Log In"
+        "account_done" -> if (chinese) "完成" else "Done"
         else -> error("Unknown Windows integration label: $key")
     }
 }

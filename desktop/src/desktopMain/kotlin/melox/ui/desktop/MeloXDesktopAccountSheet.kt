@@ -42,25 +42,25 @@ internal fun MeloXDesktopAccountSheet(
                 .clip(RoundedCornerShape(28.dp)).background(colors.surface.copy(alpha = .97f))
                 .border(1.dp, colors.outlineVariant.copy(alpha = .5f), RoundedCornerShape(28.dp))
                 .clickable {}.padding(24.dp).testTag("desktop-account-sheet")) {
-                Text(desktopString("ui.windows.account.title"), fontSize = 28.sp, fontWeight = FontWeight.Bold)
+                Text(desktopPlatformString("account_title"), fontSize = 28.sp, fontWeight = FontWeight.Bold)
                 Spacer(Modifier.height(24.dp))
                 Column(Modifier.fillMaxWidth().clip(RoundedCornerShape(16.dp)).background(colors.onSurface.copy(alpha = .055f))
                     .padding(horizontal = 14.dp)) {
-                    AccountActionRow("ui.windows.account.private_messages", MeloXSymbol.Message, onMessages)
+                    AccountActionRow("platform_account_private_messages", MeloXSymbol.Message, onMessages)
                     AccountActionRow("ui.navigation.cloud", MeloXSymbol.Cloud, onClick = { onSelect(AppTab.Cloud, null) })
                     AccountActionRow("ui.navigation.downloads", MeloXSymbol.Download, onClick = { onSelect(AppTab.Downloads, null) })
                 }
                 Spacer(Modifier.height(14.dp))
                 Column(Modifier.fillMaxWidth().clip(RoundedCornerShape(16.dp)).background(colors.onSurface.copy(alpha = .055f))
                     .padding(horizontal = 14.dp)) {
-                    AccountActionRow("ui.windows.account.settings", MeloXSymbol.Settings, onAccountSettings, showDivider = false)
+                    AccountActionRow("platform_account_settings", MeloXSymbol.Settings, onAccountSettings, showDivider = false)
                 }
                 Spacer(Modifier.height(14.dp))
                 Row(Modifier.fillMaxWidth().height(52.dp).clip(RoundedCornerShape(16.dp))
                     .background(colors.onSurface.copy(alpha = .055f)).clickable {
                         if (session.isLoggedIn) session.clear() else onLogin()
                     }.padding(horizontal = 14.dp), verticalAlignment = Alignment.CenterVertically) {
-                    Text(desktopString(if (session.isLoggedIn) "ui.windows.account.logout" else "ui.windows.account.login"),
+                    Text(desktopPlatformString(if (session.isLoggedIn) "account_logout" else "account_login"),
                         Modifier.weight(1f), color = Color(0xFFFF454F), fontSize = 15.sp, fontWeight = FontWeight.Medium)
                     if (session.isLoggedIn) {
                         val profile = session.profile
@@ -75,7 +75,7 @@ internal fun MeloXDesktopAccountSheet(
                 Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
                     Box(Modifier.width(110.dp).height(42.dp).clip(CircleShape).background(Color(0xFFFF3B45))
                         .clickable(onClick = onDismiss), contentAlignment = Alignment.Center) {
-                        Text(desktopString("ui.windows.account.done"), color = Color.White, fontSize = 15.sp, fontWeight = FontWeight.SemiBold)
+                        Text(desktopPlatformString("account_done"), color = Color.White, fontSize = 15.sp, fontWeight = FontWeight.SemiBold)
                     }
                 }
             }
@@ -88,7 +88,8 @@ private fun AccountActionRow(key: String, icon: MeloXSymbol, onClick: () -> Unit
     val color = MaterialTheme.colorScheme.onSurface
     Column {
         Row(Modifier.fillMaxWidth().height(54.dp).clickable(onClick = onClick), verticalAlignment = Alignment.CenterVertically) {
-            Text(desktopString(key), Modifier.weight(1f), color = color, fontSize = 15.sp, fontWeight = FontWeight.Medium)
+            Text(if (key.startsWith("platform_")) desktopPlatformString(key.removePrefix("platform_")) else desktopString(key),
+                Modifier.weight(1f), color = color, fontSize = 15.sp, fontWeight = FontWeight.Medium)
             MeloXSymbolIcon(icon, size = 14, color = color.copy(alpha = .48f), nativeGlyph = true)
         }
         if (showDivider) Box(Modifier.fillMaxWidth().height(.5.dp).background(color.copy(alpha = .14f)))
