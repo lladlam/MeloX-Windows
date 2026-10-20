@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="DesktopAudioSessionTest[desktop]" tests="14" skipped="0" failures="0" errors="0" timestamp="2026-10-20T03:01:59.197Z" hostname="lladlam-arch" time="3.52">
+  <properties/>
+  <testcase name="realFfmpegNonzeroExitAfterPcmIsContentFailureRatherThanNaturalEnd[desktop]" classname="melox.player.DesktopAudioSessionTest" time="0.216"/>
+  <testcase name="unexpectedDeviceCloseDuringWriteStillFailsWithLineStateDiagnostics[desktop]" classname="melox.player.DesktopAudioSessionTest" time="0.216"/>
+  <testcase name="unavailableDeviceReportsOutputFailureWithoutProducingAnEndEvent[desktop]" classname="melox.player.DesktopAudioSessionTest" time="0.165"/>
+  <testcase name="seekingToTheDecoderOriginalZeroPositionActuallyRestartsIt[desktop]" classname="melox.player.DesktopAudioSessionTest" time="0.21"/>
+  <testcase name="seekingToKnownTrackEndAcceptsAZeroPcmSuccessfulDecoderExit[desktop]" classname="melox.player.DesktopAudioSessionTest" time="0.197"/>
+  <testcase name="realOutputConsumesEqualizerPreampAndSeekingRebuildsDspWithCurrentSettings[desktop]" classname="melox.player.DesktopAudioSessionTest" time="0.412"/>
+  <testcase name="stopReleasesPausedPendingWriteWithoutFailureOrEndCallback[desktop]" classname="melox.player.DesktopAudioSessionTest" time="0.28"/>
+  <testcase name="pausedWriteReturningZeroRetainsPcmAndResumesOnTheSameDevice[desktop]" classname="melox.player.DesktopAudioSessionTest" time="0.285"/>
+  <testcase name="seekReleasesPausedPendingWriteAndOnlyReplacementPcmCanFinish[desktop]" classname="melox.player.DesktopAudioSessionTest" time="0.262"/>
+  <testcase name="replacingTheSameUriKeepsEndCallbacksOwnedByTheNewRequest[desktop]" classname="melox.player.DesktopAudioSessionTest" time="0.211"/>
+  <testcase name="genuinelyZeroProgressRunningDeviceStillReportsAnOutputFailure[desktop]" classname="melox.player.DesktopAudioSessionTest" time="0.228"/>
+  <testcase name="aDeviceStartFailureIsOutputFailureRatherThanCorruptContent[desktop]" classname="melox.player.DesktopAudioSessionTest" time="0.266"/>
+  <testcase name="decoderEofWaitsForBufferedFramesAndPauseResumePreserveTheTail[desktop]" classname="melox.player.DesktopAudioSessionTest" time="0.322"/>
+  <testcase name="quickPauseResumeBeforeInterruptedWriteReturnsKeepsZeroAndShortWriteRemainders[desktop]" classname="melox.player.DesktopAudioSessionTest" time="0.249"/>
+  <system-out><![CDATA[[DEBUG AudioPlayer] FFmpeg binary=/tmp/melox-decoder-ffmpeg-ee930e8def21a993 os=Linux sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+[DEBUG AudioPlayer] FFmpeg binary=/tmp/melox-decoder-ffmpeg-ee930e8def21a993 os=Linux sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+[DEBUG AudioPlayer] FFmpeg binary=/tmp/melox-decoder-ffmpeg-ee930e8def21a993 os=Linux sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+[DEBUG AudioPlayer] FFmpeg binary=/tmp/melox-decoder-ffmpeg-ee930e8def21a993 os=Linux sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+[DEBUG AudioPlayer] FFmpeg binary=/tmp/melox-decoder-ffmpeg-ee930e8def21a993 os=Linux sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+[DEBUG AudioPlayer] FFmpeg binary=/tmp/melox-decoder-ffmpeg-ee930e8def21a993 os=Linux sourceHost=local
+[DEBUG AudioPlayer] decode local source at 500ms
+[DEBUG AudioPlayer] FFmpeg binary=/tmp/melox-decoder-ffmpeg-ee930e8def21a993 os=Linux sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+[DEBUG AudioPlayer] FFmpeg binary=/tmp/melox-decoder-ffmpeg-ee930e8def21a993 os=Linux sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+[DEBUG AudioPlayer] FFmpeg binary=/tmp/melox-decoder-ffmpeg-ee930e8def21a993 os=Linux sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+[DEBUG AudioPlayer] FFmpeg binary=/tmp/melox-decoder-ffmpeg-ee930e8def21a993 os=Linux sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+[DEBUG AudioPlayer] PCM write interrupted by pause: offset=4096 remaining=31184 paused=true pauseVersion=49->50
+[DEBUG AudioPlayer] FFmpeg binary=/tmp/melox-decoder-ffmpeg-ee930e8def21a993 os=Linux sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+[DEBUG AudioPlayer] FFmpeg binary=/tmp/melox-decoder-ffmpeg-ee930e8def21a993 os=Linux sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+[DEBUG AudioPlayer] FFmpeg binary=/tmp/melox-decoder-ffmpeg-ee930e8def21a993 os=Linux sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+[DEBUG AudioPlayer] FFmpeg binary=/tmp/melox-decoder-ffmpeg-ee930e8def21a993 os=Linux sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+[DEBUG AudioPlayer] FFmpeg binary=/tmp/melox-decoder-ffmpeg-ee930e8def21a993 os=Linux sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+[DEBUG AudioPlayer] FFmpeg binary=/tmp/melox-decoder-ffmpeg-ee930e8def21a993 os=Linux sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+[DEBUG AudioPlayer] FFmpeg binary=/tmp/melox-decoder-ffmpeg-ee930e8def21a993 os=Linux sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+[DEBUG AudioPlayer] FFmpeg binary=/tmp/melox-decoder-ffmpeg-ee930e8def21a993 os=Linux sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+[DEBUG AudioPlayer] PCM write interrupted by pause: offset=4096 remaining=31184 paused=false pauseVersion=52->53
+[DEBUG AudioPlayer] FFmpeg binary=/tmp/melox-decoder-ffmpeg-ee930e8def21a993 os=Linux sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+]]></system-out>
+  <system-err><![CDATA[[ERROR AudioPlayer] 播放失败 (Content): AudioPlaybackFailure: [in#0/wav @ 0x55ee8183aa00] corrupt input packet in stream 0
+[in#0/wav @ 0x55ee8183aa00] Task finished with error: Invalid data found when processing input
+[in#0/wav @ 0x55ee8183aa00] Terminating thread with error: Invalid data found when processing input <- IOException: [in#0/wav @ 0x55ee8183aa00] corrupt input packet in stream 0
+[in#0/wav @ 0x55ee8183aa00] Task finished with error: Invalid data found when processing input
+[in#0/wav @ 0x55ee8183aa00] Terminating thread with error: Invalid data found when processing input
+[ERROR AudioPlayer] 播放失败 (Output): AudioPlaybackFailure: Audio output stopped accepting aligned PCM frames (accepted=0 requested=31184 offset=4096 open=false running=false paused=false pauseVersion=48->48 framePosition=0 buffer=176400 available=172304) <- IOException: Audio output stopped accepting aligned PCM frames (accepted=0 requested=31184 offset=4096 open=false running=false paused=false pauseVersion=48->48 framePosition=0 buffer=176400 available=172304)
+[ERROR AudioPlayer] 播放失败 (Output): AudioPlaybackFailure: test device unavailable <- LineUnavailableException: test device unavailable
+[ERROR AudioPlayer] 播放失败 (Output): AudioPlaybackFailure: Audio output stopped accepting aligned PCM frames (accepted=0 requested=31184 offset=4096 open=true running=true paused=false pauseVersion=51->51 framePosition=0 buffer=176400 available=172304) <- IOException: Audio output stopped accepting aligned PCM frames (accepted=0 requested=31184 offset=4096 open=true running=true paused=false pauseVersion=51->51 framePosition=0 buffer=176400 available=172304)
+[ERROR AudioPlayer] 播放失败 (Output): AudioPlaybackFailure: device start failed <- IllegalStateException: device start failed
+]]></system-err>
+</testsuite>

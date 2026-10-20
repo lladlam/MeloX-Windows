@@ -1,0 +1,58 @@
+[
+  {
+    "file": "desktop/build/parity/desktop-final-controls/pcm-output-0.s16le",
+    "bytes": 5026480,
+    "sha256": "0d3bcb7e9af8d37e8da1817e9827b5bc8d3ef339f98deebde5dc61098ba117d8",
+    "retained_locally": true,
+    "committed": false
+  },
+  {
+    "file": "desktop/build/parity/desktop-final-controls/pcm-output-1.s16le",
+    "bytes": 4903920,
+    "sha256": "40cf2d07e616f0ea31a7590411c60c53965a1716b1102dc39843095ae24b1e57",
+    "retained_locally": true,
+    "committed": false
+  },
+  {
+    "file": "desktop/build/parity/desktop-final-lyrics-light/pcm-output-0.s16le",
+    "bytes": 1075136,
+    "sha256": "a71fb230e67b117877846c88eb7c69d0224b6941515a48adbe121410dd3f2684",
+    "retained_locally": true,
+    "committed": false
+  },
+  {
+    "file": "desktop/build/parity/desktop-final-lyrics-light/pcm-output-1.s16le",
+    "bytes": 1055940,
+    "sha256": "4489a07498d7d853b18fcfb6dd1ccb251500fd115945f90c7354f392013ae5d3",
+    "retained_locally": true,
+    "committed": false
+  },
+  {
+    "file": "desktop/build/parity/desktop-final-reload/pcm-output-0.s16le",
+    "bytes": 1793604,
+    "sha256": "2b6442221e4a4a578e945d618c67f1584205e655d2ecb34c7e770ce19c9ae9f9",
+    "retained_locally": true,
+    "committed": false
+  },
+  {
+    "file": "desktop/build/parity/desktop-final-reload/pcm-output-1.s16le",
+    "bytes": 4719860,
+    "sha256": "4d7a663f67a6f41431abeb078e7343cd10b6700bec9773ebb5b537cf4d18e952",
+    "retained_locally": true,
+    "committed": false
+  },
+  {
+    "file": "desktop/build/parity/desktop-final-reload-current/pcm-output-0.s16le",
+    "bytes": 1325448,
+    "sha256": "852d37f258d63b48322c653779d567a6bd6e8c8fb408665573db17be22bd6ece",
+    "retained_locally": true,
+    "committed": false
+  },
+  {
+    "file": "desktop/build/parity/desktop-final-restore/pcm-output-0.s16le",
+    "bytes": 1331732,
+    "sha256": "c6b59df6eb12ad61e9b91146ef9ec757b078774ddf15ae806147ff17bb06c55e",
+    "retained_locally": true,
+    "committed": false
+  }
+]

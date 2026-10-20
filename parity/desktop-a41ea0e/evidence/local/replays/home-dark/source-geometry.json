@@ -1,0 +1,35 @@
+[
+  {
+    "scene": "00-home.png",
+    "tag": "desktop-sidebar",
+    "bounds": [
+      8,
+      8,
+      207,
+      792
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "01-consent.png",
+    "tag": "desktop-sidebar",
+    "bounds": [
+      8,
+      8,
+      207,
+      792
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "02-desktop-home.png",
+    "tag": "desktop-sidebar",
+    "bounds": [
+      8,
+      8,
+      207,
+      792
+    ],
+    "source_metrics_match": true
+  }
+]

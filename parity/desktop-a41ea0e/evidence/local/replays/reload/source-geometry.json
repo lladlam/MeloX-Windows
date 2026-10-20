@@ -1,0 +1,464 @@
+[
+  {
+    "scene": "00-settings.png",
+    "tag": "desktop-sidebar",
+    "bounds": [
+      8,
+      8,
+      207,
+      792
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "00-settings.png",
+    "tag": "desktop-bottom-player",
+    "bounds": [
+      398,
+      736,
+      1098,
+      790
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "01-persisted-mode.png",
+    "tag": "desktop-sidebar",
+    "bounds": [
+      8,
+      8,
+      207,
+      792
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "01-persisted-mode.png",
+    "tag": "desktop-bottom-player",
+    "bounds": [
+      398,
+      736,
+      1098,
+      790
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "02-reveal-general.png",
+    "tag": "desktop-sidebar",
+    "bounds": [
+      8,
+      8,
+      207,
+      792
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "02-reveal-general.png",
+    "tag": "desktop-bottom-player",
+    "bounds": [
+      398,
+      736,
+      1098,
+      790
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "03-general.png",
+    "tag": "desktop-sidebar",
+    "bounds": [
+      8,
+      8,
+      207,
+      792
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "03-general.png",
+    "tag": "desktop-bottom-player",
+    "bounds": [
+      398,
+      736,
+      1098,
+      790
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "04-reveal-switch.png",
+    "tag": "desktop-sidebar",
+    "bounds": [
+      8,
+      8,
+      207,
+      792
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "04-reveal-switch.png",
+    "tag": "desktop-bottom-player",
+    "bounds": [
+      398,
+      736,
+      1098,
+      790
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "05-pause.png",
+    "tag": "desktop-sidebar",
+    "bounds": [
+      8,
+      8,
+      207,
+      792
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "05-pause.png",
+    "tag": "desktop-bottom-player",
+    "bounds": [
+      398,
+      736,
+      1098,
+      790
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "06-resume.png",
+    "tag": "desktop-sidebar",
+    "bounds": [
+      8,
+      8,
+      207,
+      792
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "06-resume.png",
+    "tag": "desktop-bottom-player",
+    "bounds": [
+      398,
+      736,
+      1098,
+      790
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "07-queue.png",
+    "tag": "desktop-sidebar",
+    "bounds": [
+      8,
+      8,
+      207,
+      792
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "07-queue.png",
+    "tag": "desktop-bottom-player",
+    "bounds": [
+      269,
+      736,
+      969,
+      790
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "07-queue.png",
+    "tag": "desktop-inspector:Queue",
+    "bounds": [
+      1022,
+      0,
+      1280,
+      800
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "08-select-real-track.png",
+    "tag": "desktop-sidebar",
+    "bounds": [
+      8,
+      8,
+      207,
+      792
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "08-select-real-track.png",
+    "tag": "desktop-bottom-player",
+    "bounds": [
+      269,
+      736,
+      969,
+      790
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "08-select-real-track.png",
+    "tag": "desktop-inspector:Queue",
+    "bounds": [
+      1022,
+      0,
+      1280,
+      800
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "09-close-queue.png",
+    "tag": "desktop-sidebar",
+    "bounds": [
+      8,
+      8,
+      207,
+      792
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "09-close-queue.png",
+    "tag": "desktop-bottom-player",
+    "bounds": [
+      398,
+      736,
+      1098,
+      790
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "10-volume.png",
+    "tag": "desktop-sidebar",
+    "bounds": [
+      8,
+      8,
+      207,
+      792
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "10-volume.png",
+    "tag": "desktop-bottom-player",
+    "bounds": [
+      398,
+      736,
+      1098,
+      790
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "11-set-volume.png",
+    "tag": "desktop-sidebar",
+    "bounds": [
+      8,
+      8,
+      207,
+      792
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "11-set-volume.png",
+    "tag": "desktop-bottom-player",
+    "bounds": [
+      398,
+      736,
+      1098,
+      790
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "12-collapse-volume.png",
+    "tag": "desktop-sidebar",
+    "bounds": [
+      8,
+      8,
+      207,
+      792
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "12-collapse-volume.png",
+    "tag": "desktop-bottom-player",
+    "bounds": [
+      398,
+      736,
+      1098,
+      790
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "13-expand-player.png",
+    "tag": "desktop-sidebar",
+    "bounds": [
+      8,
+      8,
+      207,
+      792
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "14-full-queue.png",
+    "tag": "desktop-sidebar",
+    "bounds": [
+      8,
+      8,
+      207,
+      792
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "15-full-pause.png",
+    "tag": "desktop-sidebar",
+    "bounds": [
+      8,
+      8,
+      207,
+      792
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "16-full-resume.png",
+    "tag": "desktop-sidebar",
+    "bounds": [
+      8,
+      8,
+      207,
+      792
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "17-collapse-player.png",
+    "tag": "desktop-sidebar",
+    "bounds": [
+      8,
+      8,
+      207,
+      792
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "17-collapse-player.png",
+    "tag": "desktop-bottom-player",
+    "bounds": [
+      398,
+      736,
+      1098,
+      790
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "18-search.png",
+    "tag": "desktop-sidebar",
+    "bounds": [
+      8,
+      8,
+      207,
+      792
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "18-search.png",
+    "tag": "desktop-bottom-player",
+    "bounds": [
+      398,
+      736,
+      1098,
+      790
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "19-songs.png",
+    "tag": "desktop-sidebar",
+    "bounds": [
+      8,
+      8,
+      207,
+      792
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "19-songs.png",
+    "tag": "desktop-bottom-player",
+    "bounds": [
+      398,
+      736,
+      1098,
+      790
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "20-settings.png",
+    "tag": "desktop-sidebar",
+    "bounds": [
+      8,
+      8,
+      207,
+      792
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "20-settings.png",
+    "tag": "desktop-bottom-player",
+    "bounds": [
+      398,
+      736,
+      1098,
+      790
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "21-reopen-general.png",
+    "tag": "desktop-sidebar",
+    "bounds": [
+      8,
+      8,
+      207,
+      792
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "21-reopen-general.png",
+    "tag": "desktop-bottom-player",
+    "bounds": [
+      398,
+      736,
+      1098,
+      790
+    ],
+    "source_metrics_match": true
+  }
+]

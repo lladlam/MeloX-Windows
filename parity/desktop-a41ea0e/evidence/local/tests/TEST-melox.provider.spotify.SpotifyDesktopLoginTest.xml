@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="SpotifyDesktopLoginTest[desktop]" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-10-20T03:02:10.222Z" hostname="lladlam-arch" time="0.167">
+  <properties/>
+  <testcase name="pkceUsesRfc7636Challenge[desktop]" classname="melox.provider.spotify.SpotifyDesktopLoginTest" time="0.002"/>
+  <testcase name="loopbackRejectsWrongStateThenExchangesCodeWithVerifier[desktop]" classname="melox.provider.spotify.SpotifyDesktopLoginTest" time="0.165"/>
+  <testcase name="duplicateCallbackParametersCannotOverrideState[desktop]" classname="melox.provider.spotify.SpotifyDesktopLoginTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

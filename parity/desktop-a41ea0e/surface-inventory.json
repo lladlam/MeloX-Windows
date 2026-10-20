@@ -1,0 +1,895 @@
+{
+  "repository": "https://github.com/lladlam/melox",
+  "commit": "a41ea0e1e1fa69fb543d827b853fe3aff5420951",
+  "method": "git archive exact commit; every Swift file under MeloXDesktop/App and MeloXDesktop/Features",
+  "meaning": "surface and helper inventory; PARTIAL means some source logic connected, never complete pixel parity",
+  "total": 124,
+  "groups": {
+    "App": 10,
+    "About": 4,
+    "Account": 2,
+    "Detail": 6,
+    "Explore": 2,
+    "Home": 4,
+    "Library": 1,
+    "ListenTogether": 1,
+    "Messages": 1,
+    "Onboarding": 1,
+    "Player": 72,
+    "Playlist": 1,
+    "Search": 1,
+    "Settings": 9,
+    "Sidebar": 3,
+    "SongRecognition": 6
+  },
+  "files": [
+    {
+      "path": "MeloXDesktop/App/DesktopAppDelegate.swift",
+      "bytes": 3988,
+      "sha256": "5f364866c7032d4d1998d2504c19ebf2b3d336ea092885f5bd04cc2cf05f8059",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/App/DesktopAppModel.swift",
+      "bytes": 6029,
+      "sha256": "ef6f6e183b05254a1225f7de690a64f4b3ef51226386e8db1575fc9fba5096f8",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/App/DesktopCommands.swift",
+      "bytes": 3694,
+      "sha256": "ee0c264331ccd3ed2dc2769788f62a8a134a3dc539a644a2d92250297dbea9c5",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/App/DesktopHomeStore.swift",
+      "bytes": 6912,
+      "sha256": "6d19cb919044b9be8769786af9ab6112ced3c4358a7dcc994703d03704136ad0",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/App/DesktopLaunchExperience.swift",
+      "bytes": 4715,
+      "sha256": "e27da72d778252fed7f398865b951a131358ee49e76b5f05215c0936c076d3f8",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/App/DesktopMainWindowConfiguration.swift",
+      "bytes": 8350,
+      "sha256": "99305f83177113ac1b1452191e608916f7926bc573ad0029949bca06b065163d",
+      "migration": "PARTIAL",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/App/DesktopNavigation.swift",
+      "bytes": 4971,
+      "sha256": "6ebc4fddfc1d27cd010cb4380b4af4c9e615b1801e9bfa8f7fd759b80d53d25b",
+      "migration": "PARTIAL",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/App/DesktopPlaybackKeyboardShortcuts.swift",
+      "bytes": 447,
+      "sha256": "331c576befab4191e261b085d7ba2291c7958cabef114ffb0a8d2d96516cc3d0",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/App/DesktopRootView.swift",
+      "bytes": 11036,
+      "sha256": "ebe751383c6d7b8225d842c443fdd9d09949de5a277bcbd5e49269d955fc3402",
+      "migration": "PARTIAL",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/App/MeloXDesktopApp.swift",
+      "bytes": 3635,
+      "sha256": "0b602f4c474b71f195507adef5669447d46a09244bf9663a4babd0f19e9a088f",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/About/DesktopAboutReleaseNotesView.swift",
+      "bytes": 5644,
+      "sha256": "274e31af8f38daa12d11a3602db93e665ede2f47da5c3e0e2c4a0db90b52939f",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/About/DesktopAboutView.swift",
+      "bytes": 5218,
+      "sha256": "f8eb39557edf15618a331ce202b6c5200e8957e8695965725e825531e9d532c3",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/About/DesktopProjectLicensesView.swift",
+      "bytes": 11452,
+      "sha256": "1e1d7ae18d491def1f3e986bfcba353890bbe4c0760387d36b7f2aa3fd3408ff",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/About/DesktopShareholderShowcaseView.swift",
+      "bytes": 906,
+      "sha256": "874dc257dda5e0f84ae4c45bed5b210ee221529dc84651bd0af176a22a129515",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Account/DesktopAccountView.swift",
+      "bytes": 5257,
+      "sha256": "a9a6314ad7b936af18fa2fa74ad6fdd288fda704323982672d028c024c493de9",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Account/DesktopLoginView.swift",
+      "bytes": 5029,
+      "sha256": "9059f0895a5f9bb33cd177c5c37531fb67f13283dae4fbc69f5aa14f6d07d836",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Detail/DesktopAlbumDetailView.swift",
+      "bytes": 4822,
+      "sha256": "6fa7d416c31bc5289cde5474524e463da60805232bbc29666f301b4824c1993b",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Detail/DesktopArtistDetailView.swift",
+      "bytes": 7795,
+      "sha256": "5bd773c26b2e4a77ecba7ad9a76db6358646fc092776ebcc30eefef49e5327d5",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Detail/DesktopPlaylistDetailView.swift",
+      "bytes": 9816,
+      "sha256": "5dd4292f0c720ef43c99cb1b7450a6297d050e7e0385327b387d7371da372596",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Detail/DesktopPodcastDetailView.swift",
+      "bytes": 8353,
+      "sha256": "735568b3f78fd855180e56ec8dd887ebe01304495a0585b6862b505de40b0565",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Detail/DesktopRouteView.swift",
+      "bytes": 13250,
+      "sha256": "5d3d02e47d30d6900fa3776030db8e134a35fd7640341186556e8f18fdc1a4a1",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Detail/DesktopSongDetailView.swift",
+      "bytes": 7664,
+      "sha256": "22093f67562f80b3d8aa91540e73a1f12848266697e0ccb840c8c985c71d025a",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Explore/DesktopDiscoveryView.swift",
+      "bytes": 8478,
+      "sha256": "1798213e3c857c6f0ae4c507e37f80de9a57ded1126c31c7c7299e8b47c0e822",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Explore/DesktopPodcastCategoryView.swift",
+      "bytes": 4795,
+      "sha256": "1800615132f07ff1b153fedffca80c780a863c4427ec7a8a3462d48c6591689a",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Home/DesktopHomePagingShelf.swift",
+      "bytes": 7102,
+      "sha256": "c23475e5d9265a1a3209184b6a2f205545c1bdc51a3ca7890d6de638f9daaaad",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Home/DesktopHomeQuickActionsView.swift",
+      "bytes": 13210,
+      "sha256": "53925ecd75a2ef8486abbae0e7dd7f3a342062633823987088632f235639bf30",
+      "migration": "PARTIAL",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Home/DesktopHomeView.swift",
+      "bytes": 11817,
+      "sha256": "e69ce25c12120a3c63a76d17522b7180fa9a0d9aa92820a0be785e4ede433dda",
+      "migration": "PARTIAL",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Home/DesktopPersonalizedPlaylistView.swift",
+      "bytes": 10840,
+      "sha256": "e69ec0bc1dd6a3afed0f2d5fa0ec6762c040cf57173e19aa0669891505948569",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Library/DesktopLibraryView.swift",
+      "bytes": 15761,
+      "sha256": "eb9fbbef3c98a4155f06d25eb0ab0f18450f8768c576bffdec0a7f5acbc02cbc",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/ListenTogether/DesktopListenTogetherView.swift",
+      "bytes": 9463,
+      "sha256": "8d81212470bd0b5747ed0dcf561ed2aa14c75367415281361525bf286c488e1c",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Messages/DesktopMessagesView.swift",
+      "bytes": 17872,
+      "sha256": "dc074633c458b347a4d7e61a393dff4b015bbab96b7e75323d3a396a3ea68fa1",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Onboarding/DesktopOnboardingDialog.swift",
+      "bytes": 8165,
+      "sha256": "bc58654dc8f75cf47b4f08e20cd16bda2fca81497a2700299937fd57666f1866",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Player/Background/AppleMusicBackdrop/DesktopAppleMusicBackdropArtwork.swift",
+      "bytes": 12963,
+      "sha256": "b261adfeea8644dc8559c4cb2570e55357c2bfb3b2080d94db368ebe26c0beb2",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Player/Background/AppleMusicBackdrop/DesktopAppleMusicBackdropClock.swift",
+      "bytes": 885,
+      "sha256": "1d39af40b0f4f5957434ddc81ed8bef6672dc58a78ff25f3a450917bf5df1087",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Player/Background/AppleMusicBackdrop/DesktopAppleMusicBackdropRasterizer.swift",
+      "bytes": 5359,
+      "sha256": "a794a50976d657d823e876d94d71114066f5ed3992f98a69f67a673360bd1661",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Player/Background/AppleMusicBackdrop/DesktopAppleMusicBackdropShader.swift",
+      "bytes": 1828,
+      "sha256": "6d0fe9bdd02581e3a1a04f55b9b45a3a8d0cf905aea6fc130cefe2ccc690ac98",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Player/Background/AppleMusicBackdrop/DesktopAppleMusicBackdropSurface.swift",
+      "bytes": 2684,
+      "sha256": "8841596c3e53976f4df03dfe40810a07f09dcce59fc68c0b4b5b76fb8b4c834d",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Player/Background/AppleMusicBackdrop/DesktopAppleMusicBackdropView.swift",
+      "bytes": 7831,
+      "sha256": "e3eeabcb87ea10d8d5c8d28ad9f1e49db9e3d698cdb7b63b8a571d4194e7f291",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Player/Background/AppleMusicBackdrop/DesktopAppleMusicPinchMesh.swift",
+      "bytes": 6838,
+      "sha256": "8cc1fdf92eb56aa8817d4e5d7772ccfdf973b3e38c8611c47cbea8e81c085add",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Player/Background/AppleMusicBackdrop/DesktopAppleMusicWarpField.swift",
+      "bytes": 6227,
+      "sha256": "6c92ec6c27fb2a85ef3a9c9f68ba91685d2b396e7eedfcff4d87f06f26a71291",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Player/Background/DesktopFlowingLightMotionField.swift",
+      "bytes": 1542,
+      "sha256": "d444d0f93cbbef293753c0b2e3545b21daaee137959e58cd481dfdac055583ed",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Player/Background/DesktopNowPlayingBackground.swift",
+      "bytes": 7147,
+      "sha256": "3b7dac9eb145e789190f1a0c7b1037fba26172a672daaf309c82719dffa21fe3",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Player/Background/DesktopNowPlayingFlowingLightBackground.swift",
+      "bytes": 7946,
+      "sha256": "ab0baec2e9cd534972be8161d1c5e09c3124b1c39aa3f188ef2fbf767aa08373",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Player/Background/DesktopNowPlayingFlowingLightFields.swift",
+      "bytes": 3844,
+      "sha256": "eaf8675c8475e834a7e9611a226c27885a89d5bb3b214c413d79d435374b643a",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Player/Background/DesktopNowPlayingRhythmicVignette.swift",
+      "bytes": 1920,
+      "sha256": "64aa0a785fb1c3f76832240fa5084bcb101491801dbf20ad5f7a5b060fa86dda",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Player/BottomBar/DesktopBottomMetadataSlot.swift",
+      "bytes": 9396,
+      "sha256": "b314e3c2603f0f058bfde9f6d7fe604d938b7d0df67a50afb052c432492c4e1d",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Player/BottomBar/DesktopBottomPlayerMetrics.swift",
+      "bytes": 429,
+      "sha256": "be6bceaa78bf4321f1f01a41eee552bd012aaacd79ce0a5f0181b0c0b77f7f57",
+      "migration": "PARTIAL",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Player/BottomBar/DesktopBottomProgressMetrics.swift",
+      "bytes": 1461,
+      "sha256": "17ac99d39a0e18dd656b4c38e6f90e4ce96915391678024b60d30adc4914db81",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Player/BottomBar/DesktopBottomSeekBar.swift",
+      "bytes": 2763,
+      "sha256": "ca7f8fc9822fdf36628ffb23fe5245add3de999045f3fddca4e548694b43f7dc",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Player/Chrome/DesktopNowPlayingGlass.swift",
+      "bytes": 963,
+      "sha256": "11a43150930d0f1e1408f081103d7d7af9f419c88fac5ccbc7d9b3ce2009f411",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Player/Chrome/DesktopNowPlayingVolumeControl.swift",
+      "bytes": 2332,
+      "sha256": "654524e7158c9adb3ac8b98ba083671367b36c63237adefac24c9c4f74746bf2",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Player/Chrome/DesktopNowPlayingWindowControls.swift",
+      "bytes": 1203,
+      "sha256": "26380dea8d4e2e1788695720297d2fbadcb0eb9b15cdf4c823479c743b66f6b2",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Player/DesktopBeatNetDebugView.swift",
+      "bytes": 6577,
+      "sha256": "77d0b9308a897909e2f80348b4bcec7711de839fae3c61b839b3ccc9b658cde4",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Player/DesktopBottomPlayer.swift",
+      "bytes": 5930,
+      "sha256": "809258225d8cfe1434f8c7ff1dea7bd564cb82a9a6c5ea22532a87c396e7775a",
+      "migration": "PARTIAL",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Player/DesktopFloatingLyricsBackground.swift",
+      "bytes": 2069,
+      "sha256": "e6476337c4c9f88300bfa6a7bdffc4b7b54b64b1a32e06763b604eb045fabca7",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Player/DesktopFloatingLyricsWindow.swift",
+      "bytes": 8285,
+      "sha256": "030614a9aea8b41a5020659b5a941dbc9fcf2cca43425aa4db7678f160d4bee7",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Player/DesktopFloatingLyricsWindowConfiguration.swift",
+      "bytes": 2233,
+      "sha256": "9a142de36cbfd4a8461e8435c7f00283551d978248aac8e06a9b871cf51656dd",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Player/DesktopLyricLineView.swift",
+      "bytes": 21897,
+      "sha256": "64f28c0ab9c2d694d45a8b40a26151144afe02179ac6892c76e7960b083356c9",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Player/DesktopLyricsAnimations.swift",
+      "bytes": 3032,
+      "sha256": "f0e02941020cb7474abdae7e978acd6ffdf1f126ddde971877f08d84ba8ef80d",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Player/DesktopLyricsLayoutMetrics.swift",
+      "bytes": 2150,
+      "sha256": "44716f21b9cbcdef3f8fb6f3530ac5a78d56c13b3f174c736663b63b2edd7937",
+      "migration": "PARTIAL",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Player/DesktopLyricsScrollView.swift",
+      "bytes": 101878,
+      "sha256": "ed7d05d26c4c8befba25f8dd059209fd5445af1dc2ffb1e6151d0f67b9ed9ab3",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Player/DesktopMiniPlayerWindow.swift",
+      "bytes": 26559,
+      "sha256": "c5ced39fbb838b236998c779c77192e101579f77f2018b2200d0fc0355201654",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Player/DesktopMiniPlayerWindowConfiguration.swift",
+      "bytes": 1703,
+      "sha256": "1bff2445730f3b7ec1593126af90490847bdf762d30a234613c96583527da310",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Player/DesktopNowPlayingArtwork.swift",
+      "bytes": 2171,
+      "sha256": "ff104d7bf827b91368d251dfba1a69abbdbdf19d7af8e18d61e345facf4ef69d",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Player/DesktopNowPlayingLayout.swift",
+      "bytes": 3496,
+      "sha256": "f48d7778c0f2f120f61f18817ff83780fb49aaa027ac667f83756bda0efc1d61",
+      "migration": "PARTIAL",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Player/DesktopNowPlayingLeadingAccessoryInstaller.swift",
+      "bytes": 4258,
+      "sha256": "c6712f532afffa482dfaae3e8ed22c03385e1f3856f96f9049eb21a35d557d03",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Player/DesktopNowPlayingPage.swift",
+      "bytes": 2668,
+      "sha256": "99776c39ff47ad6d6e79f22d8d7e1452c4bf5944bf84673547ab3e8c3236ffb3",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Player/DesktopNowPlayingPlayerColumn.swift",
+      "bytes": 5993,
+      "sha256": "cf29d7db11ae9c80ed457077e5cde9f00cd177614c73aa1e5be176fcc0c9a959",
+      "migration": "PARTIAL",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Player/DesktopNowPlayingProgress.swift",
+      "bytes": 6020,
+      "sha256": "561d7c74b8790b2c3fa91f1112fe7b2fee6461e3758b80f674f4e12869c80058",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Player/DesktopNowPlayingReverseMotion.swift",
+      "bytes": 27180,
+      "sha256": "9444164639e572ff72eeeac5ef508be94f30bb3ddd9441107f0fe8c61434065a",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Player/DesktopNowPlayingTrailingAccessoryInstaller.swift",
+      "bytes": 6377,
+      "sha256": "ef52d810745749fe4692a405a1382cb906916adef92b239810be3c15cd272846",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Player/DesktopNowPlayingWindow.swift",
+      "bytes": 18312,
+      "sha256": "70055ced3373b1e2a58dd811ffff7e3708feab4b940282875277dd80a7e1656d",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Player/DesktopPlaybackControls.swift",
+      "bytes": 10555,
+      "sha256": "978a44eb7c5996eec77e65072669f56b66c8eb115ce76362ff1caf0f6872811f",
+      "migration": "PARTIAL",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Player/DesktopPlaybackPositionedLyricsView.swift",
+      "bytes": 1880,
+      "sha256": "263986f32aa604433fd410e65f307cd9eec47630f9325b13dfd94c9c29893fba",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Player/DesktopPlaybackQualityMenu.swift",
+      "bytes": 1464,
+      "sha256": "10fcb96df7bfa86cb680638ddbd4030a782cae1056e0054a1ce07c18316a69ff",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Player/DesktopPlayerMotion.swift",
+      "bytes": 1211,
+      "sha256": "e371fe6be693406f65a80f5eeb39ce78bdf09308eb84011e0fff906d4603fc95",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Player/DesktopPlayerSidePanel.swift",
+      "bytes": 3690,
+      "sha256": "de93580e7d9f1b1999901e4c44587f85ca357482761a86318759e31db05790d4",
+      "migration": "PARTIAL",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Player/DesktopSleepTimerView.swift",
+      "bytes": 1852,
+      "sha256": "3113bacf5c21fc7477cbc250c740a2f8de01282500d198b3811880d2db870844",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Player/DesktopSynchronizedLyricText.swift",
+      "bytes": 3271,
+      "sha256": "70b8b41aab1181d1b49dc2519597313c31d1fc53d6490e91dfaf0f4ee919b985",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Player/Inspector/DesktopPlayerInspector.swift",
+      "bytes": 567,
+      "sha256": "228df3291f34ef6e651610e214db1d6774939a0c432fb481663d49366181b244",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Player/Lyrics/AppleMusicLyricInterludeView.swift",
+      "bytes": 10545,
+      "sha256": "00a3d3cc0bd1d08a4fd9a1c0f6adb60ad527188ceef10659702c3088c998d3ec",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Player/Lyrics/DesktopLyricsGeometryCache.swift",
+      "bytes": 6764,
+      "sha256": "a349b043024189a9c111e44b6f9553b50309c885cb5d699913b3eeacdbd9a2f1",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Player/Lyrics/DesktopLyricsPlaybackFocusResolver.swift",
+      "bytes": 484,
+      "sha256": "04c8d1828660bddbdca27d644acce801e6aa8b541f7796d7bf7535a3b0669176",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Player/Lyrics/Shared/DesktopTargetDrivenLyricBlur.swift",
+      "bytes": 2978,
+      "sha256": "d2c5698b3431f727496d030fc96dfa82bfddbb8c713ea3b864eb346d78c7971e",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Player/Lyrics/Shared/LyricAnnotationLayout.swift",
+      "bytes": 2428,
+      "sha256": "c6f3e7743320f91d69b4468deee0b355ee26e9e568e44e1ce5d6c8d947896e60",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Player/Lyrics/Shared/LyricAnnotationMetrics.swift",
+      "bytes": 97,
+      "sha256": "ee079ffa850d1e2dfa8117263ba6741b281f3a34ec63ac54ab0ad3f4e216a19f",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Player/Lyrics/Shared/LyricAttributedText.swift",
+      "bytes": 2613,
+      "sha256": "6108746912e77b00a6212818c783e2acb08b7504b85d8576d89b5a63d29ace94",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Player/Lyrics/Shared/LyricFocusColorTransition.swift",
+      "bytes": 6844,
+      "sha256": "1b3c7b533d182a1ee9cccf3e3c5b1992cc3354990ae8b7956db43db47e72bd8b",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Player/Lyrics/Shared/LyricGlowTextRenderer.swift",
+      "bytes": 27819,
+      "sha256": "604b6d49387d6824bec1ace2af7dea154998460a3f93af73dbe11cc1f87d4561",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Player/Lyrics/Shared/LyricHighlightRevealProgress.swift",
+      "bytes": 3327,
+      "sha256": "c5dd30ea6deb848441d8eb581b4c941a1b8ece3cc7a71c4f740dea6c75468650",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Player/Lyrics/Shared/LyricLineFitting.swift",
+      "bytes": 1877,
+      "sha256": "a613074b2afab61349859b766bad997af0ba341c3e64ba422df2159b3544d798",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Player/Lyrics/Shared/LyricLongToneEmphasis.swift",
+      "bytes": 8768,
+      "sha256": "42066126f93b2a155cbbefea771a81eabe597e67f14ca48f99dceca188bd5f14",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Player/Lyrics/Shared/LyricMovementTransition.swift",
+      "bytes": 10944,
+      "sha256": "5d0c9e59eebba8726da47bdcc7e87937601fde248cb9e5613dd8ca76cfb68943",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Player/Lyrics/Shared/LyricRomanizationTextRenderer.swift",
+      "bytes": 5374,
+      "sha256": "721c7663217514fd695d8e6f869446e6985aabc339d2e37efd354f54171d81ab",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Player/Lyrics/Shared/LyricRowPresentationTimeline.swift",
+      "bytes": 2146,
+      "sha256": "55fbb1fab4f596f088d3509aa0cca37e582e120ea65fc9b1b0578f6cba2c3f61",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Player/Lyrics/Shared/LyricRubyLayout.swift",
+      "bytes": 8071,
+      "sha256": "5fe04c17e2821fe9e0660f57aefe150c7e20bf3ebd6b1b76eb3c1707c88a0bae",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Player/Lyrics/Shared/LyricRubyText.swift",
+      "bytes": 4572,
+      "sha256": "8df848e4de548e34b449715e1d96125c09b42f5144c38e66c2432b0e7cd73de9",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Player/Lyrics/Shared/LyricRubyTextBuilder.swift",
+      "bytes": 5748,
+      "sha256": "c56f4f6095aa797db8ed9cb0c7fda1cee3999b66dad63510ae7202dd47b79f94",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Player/Lyrics/Shared/SynchronizedLyricText.swift",
+      "bytes": 29807,
+      "sha256": "2380ec5839053aa445df040145004ffbab9b2d25d242d249ee2cdaadb199bc83",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Player/Lyrics/Shared/SynchronizedLyricTextLayout.swift",
+      "bytes": 5325,
+      "sha256": "6e6981607f57c4998eae4d8ed29d2b2814d9067e2fb631fafe52b90af135b8ca",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Player/Lyrics/Shared/TimedLyricTextBuilder.swift",
+      "bytes": 15422,
+      "sha256": "00c7c84977116a2815cf20548f37da27e98357d8722f49d61fe5a2b55636fb7a",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Player/Queue/DesktopQueueMetrics.swift",
+      "bytes": 3256,
+      "sha256": "a5eeede1bd8e7d3ea28c59dd9860a49ea6fe12efa24c49a3901a56ced289eddf",
+      "migration": "PARTIAL",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Player/Queue/DesktopQueueRow.swift",
+      "bytes": 3126,
+      "sha256": "1c5067843d3e9b98d00ef8880af256d231a9a5a966cd788137255a53110542f5",
+      "migration": "PARTIAL",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Player/Queue/DesktopQueueView.swift",
+      "bytes": 8167,
+      "sha256": "548763a25a62909308a0d56db223c31abf49aa5e520419468f9a0182de77de40",
+      "migration": "PARTIAL",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Playlist/PlaylistCreationSheet.swift",
+      "bytes": 2113,
+      "sha256": "534fab56e94ab1e575de0c89652151b550ed64de9ccfd954318c68cf6d8a0d3f",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Search/DesktopSearchView.swift",
+      "bytes": 14590,
+      "sha256": "566f44ddea5d07318d2e6a374851a146c537345947ced1f4ee7c515ef31211b3",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Settings/DesktopContentFeatureSettingsView.swift",
+      "bytes": 2175,
+      "sha256": "e78e9c9f868bbd523c378625168e8a61050989262315f51834dbae9f90599f1f",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Settings/DesktopPlayerSettingsResetter.swift",
+      "bytes": 746,
+      "sha256": "4184b101c9a0ddaaf3aa92ccb07a1d207f1fc811934a49539d37a7c94f9ff55a",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Settings/DesktopSettingsView.swift",
+      "bytes": 26781,
+      "sha256": "5d52618ea4225bbaccd85a5de71cf5a2c2955983318f387d0c99e6835fea09b6",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Settings/Lyrics/DesktopLyricsAnimationSettingsView.swift",
+      "bytes": 8555,
+      "sha256": "fdd6af9a8451ea92ae18284f0f0085446afa1c6028ba8b69d41b855fecc906d4",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Settings/Lyrics/DesktopLyricsAppearanceSettingsView.swift",
+      "bytes": 9634,
+      "sha256": "a21f96baeed33808c40110721593bb04dc3f80b08a19a592098a55e0d79ef56c",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Settings/Lyrics/DesktopLyricsContentSettingsView.swift",
+      "bytes": 13162,
+      "sha256": "ec96c57f2d53e0a8cc80a5cb84ee5a73b6188a0c54aa85b5abf7f7d03ef14bf2",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Settings/Lyrics/DesktopLyricsExtensionsSettingsView.swift",
+      "bytes": 8790,
+      "sha256": "c9ebfddfd982c10c18fe0e67072d7a38de1ba7d60c402fd8a6dd23ef259f54ac",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Settings/Lyrics/DesktopLyricsInteractionSettingsView.swift",
+      "bytes": 2552,
+      "sha256": "47d18d20492cc607d12fcf042fe0d611d2dc5089db07c2e9e2cefbb802354a44",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Settings/Lyrics/DesktopLyricsSettingsView.swift",
+      "bytes": 1874,
+      "sha256": "196767d6b23eae3426b53c7e03392fcec8fe14ecc6c12d1620bdf3fe1af36ddf",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Sidebar/DesktopLoadingStatus.swift",
+      "bytes": 523,
+      "sha256": "3f9805d7987153efee763ddd7c42cfc3f157c58df6701e6437bb067863f092a6",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Sidebar/DesktopSidebar.swift",
+      "bytes": 5678,
+      "sha256": "9fbbe106fd6c29fe359222e6d006c3ea54a2d1144e6870cf67d9ca48638afa3e",
+      "migration": "PARTIAL",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/Sidebar/DesktopSidebarVisibilityLock.swift",
+      "bytes": 10855,
+      "sha256": "2966f6c22acc0a8b81e231d010e35981990ada67db745d6a1d205d75e8b9c44d",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/SongRecognition/DesktopSongRecognitionView.swift",
+      "bytes": 10544,
+      "sha256": "cd35aaf9134e0d974ed8e1550625542b7133a13fb29d538c25d57d8c8915635a",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/SongRecognition/NeteaseAudioFingerprintGenerator.swift",
+      "bytes": 7324,
+      "sha256": "d7d57cc62e80966853d29904105f04938849cd1924868c76b0b6d683ed1efdf8",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/SongRecognition/SongRecognitionAudioRecorder.swift",
+      "bytes": 9546,
+      "sha256": "e2638ebd56760a397141fd9cb52183c99c0ea1c6438ef9605f70ffe3cb1b40ad",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/SongRecognition/SongRecognitionResult.swift",
+      "bytes": 263,
+      "sha256": "6d8879e8536eeb47d07b5c597824579a65b97da166971a34f5415d1f9baef40c",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/SongRecognition/SongRecognitionSampleBuffer.swift",
+      "bytes": 3654,
+      "sha256": "fe02737c1970098077d6e3f662bffc58a2352db6485527634d6877bb47414b24",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    },
+    {
+      "path": "MeloXDesktop/Features/SongRecognition/SongRecognitionStore.swift",
+      "bytes": 8805,
+      "sha256": "463d18ccf7d718d5b1a09b4917daa4e92b84dff55873ff91304c3fb25dcaf7ef",
+      "migration": "PENDING",
+      "native_same_content_acceptance": "PENDING"
+    }
+  ]
+}

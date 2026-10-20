@@ -21,6 +21,8 @@ MeloX Windows 基于 [lladlam/MeloX-Android](https://github.com/lladlam/MeloX-An
 
 当前活跃迁移目标为正式 **Android 0.6.5（`v0.6.5` / `53244b9` / versionCode 24）**，整体仍为部分完成。进度与未完成项见 [0.6.5 迁移矩阵](parity/53244b9/MATRIX.md)；此前 0.6.2 的测试与发行证据保留原始版本归属。
 
+电脑端 UI 另以 [lladlam/melox](https://github.com/lladlam/melox) 的 **Desktop `a41ea0e`** 为固定真源，目标是整套界面与交互一比一迁移，目前为 **PARTIAL**。**设置 → 通用 → 电脑端布局** 可即时切换并保存选择，默认保留当前布局。首批已接入桌面侧栏、底部播放器、歌词／队列侧栏、首页卡片和并列播放器；完整页面、图标、材质及动效差异见 [Desktop 迁移矩阵](parity/desktop-a41ea0e/MATRIX.md) 和 [迁移记录](parity/desktop-a41ea0e/COMPLETION_LOG.md)。
+
 项目目标是将 MeloX 的完整功能带到 Windows 桌面：
 
 - 使用 **Kotlin + Compose Multiplatform Desktop** 重建界面与交互；

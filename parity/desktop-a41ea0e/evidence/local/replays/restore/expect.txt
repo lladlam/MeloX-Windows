@@ -1,0 +1,3 @@
+persisted-mode=runtime:desktopLayoutEnabled:true,tag:desktop-sidebar
+general=tag:settings-general
+restore-current=tag:interface-current,tag:settings-general,tag:bottom-root-tabs,runtime:desktopLayoutEnabled:false,pref-bool:general_desktop_layout:false

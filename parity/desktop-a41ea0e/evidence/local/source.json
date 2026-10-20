@@ -1,0 +1,7 @@
+{
+  "implementation_commit": "1ccc123830e7662e0a2e6989de237a2ed3c64dcb",
+  "desktop_reference": "a41ea0e1e1fa69fb543d827b853fe3aff5420951",
+  "java": "/usr/lib/jvm/java-17-openjdk",
+  "gradle": "9.5.1",
+  "scope": "local production implementation replay and source formulas; same-content native source pixels and hardware acceptance pending"
+}

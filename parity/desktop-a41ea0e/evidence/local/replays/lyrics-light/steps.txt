@@ -1,0 +1,5 @@
+consent:tap@remote-reject
+show-real-local-lyrics:tap@desktop-show-lyrics
+seek-by-real-pointer:tap@lyric-line-1
+close-lyrics:tap@desktop-show-lyrics
+expand-light-player:tap@mini-player-expand

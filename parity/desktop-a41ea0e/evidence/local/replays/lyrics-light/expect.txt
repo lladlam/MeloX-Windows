@@ -1,0 +1,5 @@
+consent=cloud-enabled:false,absent:remote-reject
+show-real-local-lyrics=tag:desktop-inspector:Lyrics,tag:player-lyrics,tag-prefix:lyric-line-
+seek-by-real-pointer=position-min:4000,no-playback-error:true
+close-lyrics=absent:desktop-inspector:Lyrics
+expand-light-player=tag:desktop-player-column,tag:player-lyrics

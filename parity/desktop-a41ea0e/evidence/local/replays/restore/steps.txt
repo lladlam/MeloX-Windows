@@ -1,0 +1,5 @@
+persisted-mode:wait@100
+reveal-general:reveal@settings-open-general
+general:tap@settings-open-general
+reveal-switch:reveal@setting-general_desktop_layout
+restore-current:tap@setting-general_desktop_layout

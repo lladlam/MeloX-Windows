@@ -47,6 +47,8 @@ Windows 首次以已保存桌面模式启动采用 1280×800；启用时设置�
 
 `tools/export_desktop_reference.py` 直接从固定 Git blob 导出选定原文；`source-audit.json` 记录源文件及资源 SHA-256。当前导出 `en`／`zh-Hans` 两种真源资源，简体中文按系统 locale 选择，其他 locale 回退默认英文；Windows 开关／设置入口文案定义在 `MeloXDesktopStrings.kt` 的独立平台函数中。
 
+`surface-inventory.json` 从固定 Git archive 枚举 App／Features 下全部 124 个 Swift 文件、16 个分组；未进入本批的文件继续标记 PENDING，首批接线文件为 PARTIAL，没有以目录级别的“已复用”关闭验收。
+
 桌面 Home 图标使用 SF 字体 house glyph，避开 Android 特有 SVG。现有 Android SF 子集只有 56 个码点，不能据此声称完整桌面图标复刻；`square.grid.2x2`、`icloud`、专辑／歌手／播客等桌面专用符号及真实填充变体仍需补充可追溯源资源。当前相近符号映射属于明确的迁移差异，须逐项替换，不能通过改名将其算作正确图标。
 
 ## 验证与证据
@@ -55,6 +57,6 @@ Windows 首次以已保存桌面模式启动采用 1280×800；启用时设置�
 
 切换连续性断言记录真实曲目 ID、位置及已打开 PCM 输出数量，再验证多次切换无曲目改变、无回退、无输出重建且仍播放。PCM 输出明确标注 `VALIDATION_SOFTWARE_PCM_OUTPUT`，不是硬件听感验收。浅色歌词、深浅首页和播放器另有截图。
 
-本批原始参数、输入、capture、semantics、源指标检查及构建日志将记录到本目录证据；Windows CI 增加七组桌面回放并上传原始文件。最终通过数量以完成后记录为准，不将中途测试计作最终结果。
+本批本地结果：274 tests／56 suites；桌面七组 75 scenes／139 assertions；旧布局三组 70 scenes／95 assertions；全部通过。原始参数、输入、capture、semantics、源指标检查及构建日志在 `evidence/local/`；详见 `COMPLETION_LOG.md`。Windows CI 增加七组桌面回放并上传原始文件，Windows 结果仍须单独完整下载核验。
 
 Android 正式固定版同内容静态／动态帧、Windows 用户 549→1431MB 长时增长、真实账号／硬件／DPI 实机问题继续按原矩阵跟踪。

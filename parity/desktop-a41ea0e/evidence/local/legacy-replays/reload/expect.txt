@@ -1,0 +1,4 @@
+open-general=tag:settings-general
+persisted=runtime:splitScreenEnabled:true,runtime:splitNavigationPosition:Left,runtime:splitMiniPlayerPosition:Right,pref-string:general_split_navigation_position:Left,pref-string:general_split_mini_player_position:Right,tag:layout-list-detail,in-half:settings-general:right,chrome-placement:positioned-navigation:Left,chrome-placement:positioned-mini-player:Right
+pause=play-ready:false,no-playback-error:true
+resume=play-ready:true,no-playback-error:true

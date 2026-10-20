@@ -1,0 +1,2 @@
+consent=cloud-enabled:false,absent:remote-reject
+desktop-home=tag:desktop-home,tag:desktop-sidebar,runtime:desktopLayoutEnabled:true,tag:desktop-home-action:daily_songs,tag:desktop-home-action:heart_mode,tag:desktop-home-action:private_roaming

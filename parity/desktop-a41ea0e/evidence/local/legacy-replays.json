@@ -1,0 +1,28 @@
+{
+  "replays": [
+    {
+      "mode": "controls",
+      "scenes": 58,
+      "assertions": 69,
+      "status": "PASSED"
+    },
+    {
+      "mode": "reload",
+      "scenes": 6,
+      "assertions": 14,
+      "status": "PASSED"
+    },
+    {
+      "mode": "portrait",
+      "scenes": 6,
+      "assertions": 12,
+      "status": "PASSED"
+    }
+  ],
+  "totals": {
+    "replays": 3,
+    "scenes": 70,
+    "assertions": 95
+  },
+  "status": "PASSED"
+}

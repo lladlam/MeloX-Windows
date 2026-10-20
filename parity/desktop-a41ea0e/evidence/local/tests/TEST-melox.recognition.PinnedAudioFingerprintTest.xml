@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="PinnedAudioFingerprintTest[desktop]" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-10-20T03:02:10.390Z" hostname="lladlam-arch" time="0.819">
+  <properties/>
+  <testcase name="responsePreservesNativeCollectionIdsStartTimeAndRejectsServiceError[desktop]" classname="melox.recognition.PinnedAudioFingerprintTest" time="0.002"/>
+  <testcase name="realFileDecodeAndWasmReachTheMatchProtocolWithSignalData[desktop]" classname="melox.recognition.PinnedAudioFingerprintTest" time="0.647"/>
+  <testcase name="pinnedWasmProducesStableSignalDependentFingerprintsAndClosesEachIsolate[desktop]" classname="melox.recognition.PinnedAudioFingerprintTest" time="0.163"/>
+  <testcase name="closedClientCannotRecordOrDecode[desktop]" classname="melox.recognition.PinnedAudioFingerprintTest" time="0.007"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

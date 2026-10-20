@@ -1,0 +1,123 @@
+[
+  {
+    "scene": "00-settings.png",
+    "tag": "desktop-sidebar",
+    "bounds": [
+      8,
+      8,
+      207,
+      792
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "00-settings.png",
+    "tag": "desktop-bottom-player",
+    "bounds": [
+      398,
+      736,
+      1098,
+      790
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "01-consent.png",
+    "tag": "desktop-sidebar",
+    "bounds": [
+      8,
+      8,
+      207,
+      792
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "01-consent.png",
+    "tag": "desktop-bottom-player",
+    "bounds": [
+      398,
+      736,
+      1098,
+      790
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "02-show-real-local-lyrics.png",
+    "tag": "desktop-sidebar",
+    "bounds": [
+      8,
+      8,
+      207,
+      792
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "02-show-real-local-lyrics.png",
+    "tag": "desktop-bottom-player",
+    "bounds": [
+      269,
+      736,
+      969,
+      790
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "03-seek-by-real-pointer.png",
+    "tag": "desktop-sidebar",
+    "bounds": [
+      8,
+      8,
+      207,
+      792
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "03-seek-by-real-pointer.png",
+    "tag": "desktop-bottom-player",
+    "bounds": [
+      269,
+      736,
+      969,
+      790
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "04-close-lyrics.png",
+    "tag": "desktop-sidebar",
+    "bounds": [
+      8,
+      8,
+      207,
+      792
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "04-close-lyrics.png",
+    "tag": "desktop-bottom-player",
+    "bounds": [
+      398,
+      736,
+      1098,
+      790
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "05-expand-light-player.png",
+    "tag": "desktop-sidebar",
+    "bounds": [
+      8,
+      8,
+      207,
+      792
+    ],
+    "source_metrics_match": true
+  }
+]

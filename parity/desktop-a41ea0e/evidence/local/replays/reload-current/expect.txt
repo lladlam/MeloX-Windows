@@ -1,0 +1,3 @@
+persisted-mode=runtime:desktopLayoutEnabled:false,tag:interface-current
+general=tag:settings-general
+current-persisted=tag:interface-current,tag:bottom-root-tabs,unchecked:setting-general_desktop_layout
