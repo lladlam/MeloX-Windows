@@ -76,6 +76,10 @@ for lang in ['en', 'zh-Hans']:
     resource = f'desktop/src/main/resources/parity/desktop-reference-{lang}.properties'
     save(resource, text.encode('utf-8'))
 resources = {f'parity/desktop-reference-{lang}.properties': hashlib.sha256((root / f'desktop/src/main/resources/parity/desktop-reference-{lang}.properties').read_bytes()).hexdigest() for lang in ['en', 'zh-Hans']}
+# The exact SF Symbols subset is an implementation resource, not a source label
+# export. Pinning it here makes the packaged-resource audit cover the icons too.
+resources['fonts/sf_pro_subset.ttf'] = hashlib.sha256(
+    (root / 'desktop/src/main/resources/fonts/sf_pro_subset.ttf').read_bytes()).hexdigest()
 for path in SOURCES:
     hashes[path] = hashlib.sha256(blob(path)).hexdigest()
 audit = {'repository': 'https://github.com/lladlam/melox', 'commit': REVISION,

@@ -28,7 +28,8 @@
   },
   "resource_sha256": {
     "parity/desktop-reference-en.properties": "23ac5e1b7ba36f1b15372909478354805756ff6da19528084d0d323b5c53e577",
-    "parity/desktop-reference-zh-Hans.properties": "c08fdd196d6c9a697f2102cf20322540f74ef7cff658a236daccb003093e101d"
+    "parity/desktop-reference-zh-Hans.properties": "c08fdd196d6c9a697f2102cf20322540f74ef7cff658a236daccb003093e101d",
+    "fonts/sf_pro_subset.ttf": "3f592d902f739de31deef2d1235d89d105508a5ea750e3d60eedcc7481d13af6"
   },
   "keys": [
     "ui.common.clear",

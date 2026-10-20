@@ -147,7 +147,7 @@ private fun DesktopSidebar(selectedTab: AppTab, source: MusicSource, libraryPage
             if (MeloXSettingsRuntime.homeTabEnabled)
                 DesktopNavigationRow("Home", "ui.navigation.home", MeloXSymbol.Home, selected(AppTab.Home)) { onSelect(AppTab.Home, null) }
             if (MeloXSettingsRuntime.exploreTabEnabled)
-                DesktopNavigationRow("Explore", "ui.navigation.explore", MeloXSymbol.Grid, selected(AppTab.Explore)) { onSelect(AppTab.Explore, null) }
+                DesktopNavigationRow("Explore", "ui.navigation.explore", MeloXSymbol.SquareGrid, selected(AppTab.Explore)) { onSelect(AppTab.Explore, null) }
             if (MeloXSettingsRuntime.podcastsEnabled && source == MusicSource.Netease)
                 DesktopNavigationRow("Radio", "ui.navigation.podcasts", MeloXSymbol.Podcast, selected(AppTab.Podcasts)) { onSelect(AppTab.Podcasts, null) }
             Text(desktopString("ui.navigation.library"), Modifier.padding(top = 22.dp, start = 4.dp, bottom = 6.dp),
@@ -156,11 +156,11 @@ private fun DesktopSidebar(selectedTab: AppTab, source: MusicSource, libraryPage
             for ((page, label, symbol) in listOf(
                 Triple("Songs", "ui.navigation.library.liked_songs", MeloXSymbol.Heart),
                 Triple("Playlists", "ui.navigation.library.liked_playlists", MeloXSymbol.Library),
-                Triple("Albums", "ui.navigation.library.liked_albums", MeloXSymbol.MusicNote),
-                Triple("Artists", "ui.library.artists.title", MeloXSymbol.Mic),
+                Triple("Albums", "ui.navigation.library.liked_albums", MeloXSymbol.SquareStack),
+                Triple("Artists", "ui.library.artists.title", MeloXSymbol.MusicMic),
                 Triple("Podcasts", "ui.navigation.library.podcasts", MeloXSymbol.Mic),
                 Triple("Downloads", "ui.navigation.downloads", MeloXSymbol.Download),
-                Triple("Cloud", "ui.navigation.cloud", MeloXSymbol.Cloud),
+                Triple("Cloud", "ui.navigation.cloud", MeloXSymbol.ICloud),
                 Triple("History", "ui.navigation.library.history", MeloXSymbol.Clock),
             )) {
                 val enabled = page in pages

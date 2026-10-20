@@ -1,5 +1,16 @@
 # Desktop 迁移记录
 
+## 5. 可追溯 SF Symbols 子集与桌面图标对齐
+
+- 固定 Desktop 真源的 135 个 SF Symbol 名称已汇总到 `parity/desktop-a41ea0e/desktop-symbols.json`，包含 App／Features 中静态与计算属性引用的图标。Apple SF Symbols 27 的 `mic`、`music.mic`、`doc.text.magnifyingglass` 等名称按官方 alias 解析；`music.mic` 使用 SF Symbols 6 的 PUA 位置 `U+10046B`，位于 `music.note` 与 `music.note.list` 之间。
+- `sf_pro_subset.ttf` 由 Apple 官方 `SF-Pro.dmg` 内的变量字体重建，源 DMG SHA-256 `968ab3b8…012918`、源字体 SHA-256 `7270e159…f10e10`、子集 SHA-256 `3f592d90…d13af6`。`tools/build_desktop_symbol_font.py` 固定源哈希、134 个唯一码点、可见轮廓和逐字节可复现输出，单次重建得到 162332 bytes。
+- 侧栏 `Explore` 改为 `square.grid.2x2`，`Albums` 改为 `square.stack`，`Artists` 改为 `music.mic`，`Cloud` 改为 `icloud`；账户弹层的私信入口改为 `bubble.left.and.bubble.right`。首页心动模式改用 `heart.fill`。旧 Android 设置 token 的 `circle.grid.2x2.fill` 与 `mic` 映射保留，避免破坏固定 Android 对照。
+- 原枚举中重复或错误的 `heart.fill`、`cloud`、`person.fill`、`globe`、`star` 等码点已按真名字形修正；`MeloXSymbol` 现有 67 项全部在子集中有真实 ink。搜索媒体行、账户歌单行、资料库歌单行及播放列表更多菜单的文本箭头／三连点也改为同一 SF 字形；登录和 Provider 服务页返回箭头改为 `chevron.left`。
+- `tools/verify_desktop_symbols.py` 在无 Apple 源字体下载的 CI 环境核对子集字节、135 个符号、67 个枚举、134 个唯一码点和非空轮廓；`source-audit.json` 与打包资源核验扩至 **22 项**。固定 Android 设置图标 18 项仍通过。
+- 显式 JDK 17、Gradle 9.5.1 重新执行全量 `:shared:desktopTest --rerun-tasks`：**274 tests / 56 suites / 0 failures/errors/skipped**；桌面编译、`auditSettingsIcons` 和 `packageUberJarForCurrentOS` 通过。新子集在实际 uber jar 中的 162332 bytes 与 SHA-256 和源清单完全一致。
+- 本地证据 `evidence/local/desktop-symbols.json` 记录 135／67／134 的独立核验；`desktop-icon-home-light.png` 为生产 `ImageComposeScene` 1280×800 浅色首页，真实未登录网易推荐内容，侧栏与首页卡片字形已实际渲染，`desktop-symbols-render.json` 记录截图与子集 SHA-256。
+- 本批只关闭“图标资源不正确／不可追溯”差异；材质、精确字距和 macOS 同内容像素／动态验收仍未完成，总体 **PARTIAL**。
+
 ## 4. 账户弹层与沉浸队列参考迁移
 
 - 以用户上传的 home、account、playlist、queue、immersive-player、lyrics-pane 截图为本轮参考；桌面侧栏账户入口改为居中账户弹层，提供私信、云盘、下载、账户设置、登录／登出和完成入口。

@@ -24,6 +24,8 @@ import melox.library.NeteaseLibraryClient
 import melox.library.NeteasePlaylistSummary
 import melox.network.*
 import melox.playback.PlaybackCommands
+import melox.ui.foundation.MeloXSymbol
+import melox.ui.foundation.MeloXSymbolIcon
 import melox.ui.glass.*
 import melox.ui.legal.pinnedString
 import melox.ui.navigation.MeloXBackHandler
@@ -112,7 +114,7 @@ internal fun AccountProfileScreen(userId: Long, onBack: () -> Unit) {
                             Text(playlist.name, fontWeight = FontWeight.SemiBold, maxLines = 1, overflow = TextOverflow.Ellipsis)
                             Text(pinnedString("player_track_count", playlist.trackCount), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                         }
-                        Text("›", fontSize = 24.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        MeloXSymbolIcon(MeloXSymbol.ChevronRight, size = 16, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     }
                 }
             } }

@@ -49,7 +49,9 @@ Windows 首次以已保存桌面模式启动采用 1280×800；启用时设置�
 
 `surface-inventory.json` 从固定 Git archive 枚举 App／Features 下全部 124 个 Swift 文件、16 个分组；未进入本批的文件继续标记 PENDING，首批接线文件为 PARTIAL，没有以目录级别的“已复用”关闭验收。
 
-桌面 Home 图标使用 SF 字体 house glyph，避开 Android 特有 SVG。现有 Android SF 子集只有 56 个码点，不能据此声称完整桌面图标复刻；`square.grid.2x2`、`icloud`、专辑／歌手／播客等桌面专用符号及真实填充变体仍需补充可追溯源资源。当前相近符号映射属于明确的迁移差异，须逐项替换，不能通过改名将其算作正确图标。
+桌面 SF Symbol 子集已从 Apple 官方 SF Symbols 27 `SF-Pro.dmg` 重建，固定真源引用的 135 个名称、134 个唯一码点及全部 67 项 `MeloXSymbol` 均有非空轮廓可追溯。`square.grid.2x2`、`icloud`、`square.stack`、`music.mic`、`bubble.left.and.bubble.right` 与真实 `heart.fill` 已替换此前的相近符号；源 DMG／字体／子集哈希、构建与独立校验工具记录在 `desktop-symbols.json`、`tools/build_desktop_symbol_font.py` 和 `tools/verify_desktop_symbols.py`。
+
+这关闭的是图标资源名称和字形差异，不等于图标在 macOS／Windows 上的像素位置、光学尺寸、层级与过渡完全一致；这些仍随各页布局和动态验收逐项核对。固定 Android 基线继续使用 `circle.grid.2x2.fill` 等原有 token 映射，不能由本桌面子集反向覆盖。
 
 ## 验证与证据
 

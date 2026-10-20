@@ -46,8 +46,8 @@ internal fun MeloXDesktopAccountSheet(
                 Spacer(Modifier.height(24.dp))
                 Column(Modifier.fillMaxWidth().clip(RoundedCornerShape(16.dp)).background(colors.onSurface.copy(alpha = .055f))
                     .padding(horizontal = 14.dp)) {
-                    AccountActionRow("platform_account_private_messages", MeloXSymbol.Message, onMessages)
-                    AccountActionRow("ui.navigation.cloud", MeloXSymbol.Cloud, onClick = { onSelect(AppTab.Cloud, null) })
+                    AccountActionRow("platform_account_private_messages", MeloXSymbol.Messages, onMessages)
+                    AccountActionRow("ui.navigation.cloud", MeloXSymbol.ICloud, onClick = { onSelect(AppTab.Cloud, null) })
                     AccountActionRow("ui.navigation.downloads", MeloXSymbol.Download, onClick = { onSelect(AppTab.Downloads, null) })
                 }
                 Spacer(Modifier.height(14.dp))

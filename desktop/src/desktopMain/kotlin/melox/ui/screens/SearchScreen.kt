@@ -788,7 +788,7 @@ private fun SearchMediaResults(values: List<MeloXSearchMediaItem>, onOpen: (Melo
                     Text(item.title, maxLines = 1, overflow = TextOverflow.Ellipsis, color = MeloXColors.pageOnSurface(), fontWeight = FontWeight.Medium)
                     Text(item.subtitle.ifBlank { if (item.trackCount > 0) pinnedString("search_song_count_short", item.trackCount) else item.kind.title }, maxLines = 1, overflow = TextOverflow.Ellipsis, color = MeloXColors.pageOnSurfaceVariant(), fontSize = 13.sp)
                 }
-                Text("›", color = MaterialTheme.colorScheme.onSurface.copy(alpha = .3f), fontSize = 18.sp)
+                MeloXSymbolIcon(MeloXSymbol.ChevronRight, size = 15, color = MaterialTheme.colorScheme.onSurface.copy(alpha = .3f))
             }
         }
     }

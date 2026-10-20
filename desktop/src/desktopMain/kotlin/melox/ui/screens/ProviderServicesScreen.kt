@@ -33,6 +33,8 @@ import melox.music.provider.MusicProviderSelectionStore
 import melox.music.provider.ProviderAccountManager
 import melox.ui.navigation.MeloXNavState
 import melox.ui.navigation.Route
+import melox.ui.foundation.MeloXSymbol
+import melox.ui.foundation.MeloXSymbolIcon
 import melox.ui.theme.MeloXColors
 import melox.ui.theme.MeloXLanTingProFontFamily
 import java.awt.Cursor
@@ -138,10 +140,10 @@ private fun ServiceTopBar(onBack: () -> Unit) {
                 .hoverable(remember { MutableInteractionSource() })
                 .pointerHoverIcon(PointerIcon(Cursor(Cursor.HAND_CURSOR))),
         ) {
-            Text(
-                text = "‹",
+            MeloXSymbolIcon(
+                MeloXSymbol.ChevronLeft,
+                size = 22,
                 color = MeloXColors.TextPrimary,
-                fontSize = 22.sp,
             )
         }
     }

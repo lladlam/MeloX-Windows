@@ -43,7 +43,7 @@ internal val LocalDesktopInspectorWidth = staticCompositionLocalOf { 0 }
 private data class DesktopQuickAction(val original: String, val key: String, val symbol: MeloXSymbol, val colors: List<Color>)
 private val quickActions = listOf(
     DesktopQuickAction("每日推荐", "daily_songs", MeloXSymbol.Calendar, listOf(Color(0xFF5856D6), Color(0xFF007AFF), Color(0xFF00C7BE))),
-    DesktopQuickAction("心动模式", "heart_mode", MeloXSymbol.Heart, listOf(Color(0xFFFF9500), Color(0xFFFF3B30))),
+    DesktopQuickAction("心动模式", "heart_mode", MeloXSymbol.HeartFill, listOf(Color(0xFFFF9500), Color(0xFFFF3B30))),
     DesktopQuickAction("私人漫游", "private_roaming", MeloXSymbol.Walk, listOf(Color.Black, Color(0xFF5856D6), Color.Gray)),
     DesktopQuickAction("热歌榜", "hot_songs", MeloXSymbol.Flame, listOf(Color(0xFFFF3B30), Color(0xFFFF9500))),
     DesktopQuickAction("私人雷达", "private_radar", MeloXSymbol.Podcast, listOf(Color(0xFFAF52DE), Color(0xFF007AFF))),

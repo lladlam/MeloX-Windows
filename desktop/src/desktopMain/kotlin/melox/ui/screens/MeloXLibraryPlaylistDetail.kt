@@ -64,6 +64,8 @@ import melox.network.NeteaseSearchClient
 import melox.playback.PlaybackCommands
 import melox.ui.glass.meloXLiquidButton
 import melox.ui.glass.rememberMeloXLiquidInteraction
+import melox.ui.foundation.MeloXSymbol
+import melox.ui.foundation.MeloXSymbolIcon
 import melox.ui.theme.MeloXColors
 import java.io.IOException
 
@@ -436,12 +438,10 @@ private fun MeloXLibraryPlaylistToolbar(
                     size = 44.dp,
                     onClick = onMore,
                 ) {
-                    Text(
-                        "•••",
+                    MeloXSymbolIcon(
+                        MeloXSymbol.Ellipsis,
+                        size = 17,
                         color = MeloXRed,
-                        fontSize = 15.sp,
-                        fontWeight = FontWeight.Bold,
-                        letterSpacing = 1.sp,
                     )
                 }
             }

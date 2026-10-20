@@ -1,0 +1,959 @@
+{
+  "reference_commit": "a41ea0e1e1fa69fb543d827b853fe3aff5420951",
+  "apple_product": "SF Pro (SF Symbols 27 release)",
+  "download_url": "https://devimages-cdn.apple.com/design/resources/download/SF-Pro.dmg",
+  "download_sha256": "968ab3b8b1f92c2d8af61eb0680f5c2224c4e78d59b986bf004502a7fc012918",
+  "source_font": "SF-Pro.ttf",
+  "source_font_sha256": "7270e1593be7b88597d8ab302e4d156a33084c85b8161e042ff6510cdaf10e10",
+  "subset_resource": "desktop/src/main/resources/fonts/sf_pro_subset.ttf",
+  "symbol_count": 135,
+  "symbols": [
+    {
+      "source_name": "apple.logo",
+      "resolved_name": "apple.logo",
+      "codepoint": "U+1008FA",
+      "code": 1050874,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "arrow.clockwise",
+      "resolved_name": "arrow.clockwise",
+      "codepoint": "U+100148",
+      "code": 1048904,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "arrow.counterclockwise",
+      "resolved_name": "arrow.counterclockwise",
+      "codepoint": "U+100149",
+      "code": 1048905,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "arrow.down.circle",
+      "resolved_name": "arrow.down.circle",
+      "codepoint": "U+100078",
+      "code": 1048696,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "arrow.right.circle",
+      "resolved_name": "arrow.right.circle",
+      "codepoint": "U+10007C",
+      "code": 1048700,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "arrow.triangle.2.circlepath",
+      "resolved_name": "arrow.trianglehead.2.clockwise.rotate.90",
+      "codepoint": "U+1002AF",
+      "code": 1049263,
+      "resolution": "SF Symbols 27 alias"
+    },
+    {
+      "source_name": "arrow.trianglehead.2.clockwise.rotate.90",
+      "resolved_name": "arrow.trianglehead.2.clockwise.rotate.90",
+      "codepoint": "U+1002AF",
+      "code": 1049263,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "arrow.up",
+      "resolved_name": "arrow.up",
+      "codepoint": "U+100128",
+      "code": 1048872,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "arrow.up.circle.fill",
+      "resolved_name": "arrow.up.circle.fill",
+      "codepoint": "U+100077",
+      "code": 1048695,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "arrow.up.left.and.arrow.down.right",
+      "resolved_name": "arrow.up.left.and.arrow.down.right",
+      "codepoint": "U+10014A",
+      "code": 1048906,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "arrow.up.right",
+      "resolved_name": "arrow.up.right",
+      "codepoint": "U+10012F",
+      "code": 1048879,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "backward.fill",
+      "resolved_name": "backward.fill",
+      "codepoint": "U+10028A",
+      "code": 1049226,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "bolt.fill",
+      "resolved_name": "bolt.fill",
+      "codepoint": "U+1002E6",
+      "code": 1049318,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "book.pages",
+      "resolved_name": "book.pages",
+      "codepoint": "U+10173E",
+      "code": 1054526,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "bubble.left",
+      "resolved_name": "bubble.left",
+      "codepoint": "U+10032A",
+      "code": 1049386,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "bubble.left.and.bubble.right",
+      "resolved_name": "bubble.left.and.bubble.right",
+      "codepoint": "U+1004A4",
+      "code": 1049764,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "calendar",
+      "resolved_name": "calendar",
+      "codepoint": "U+100249",
+      "code": 1049161,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "cat",
+      "resolved_name": "cat",
+      "codepoint": "U+10207E",
+      "code": 1056894,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "checkmark",
+      "resolved_name": "checkmark",
+      "codepoint": "U+100185",
+      "code": 1048965,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "checkmark.circle",
+      "resolved_name": "checkmark.circle",
+      "codepoint": "U+100062",
+      "code": 1048674,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "checkmark.circle.fill",
+      "resolved_name": "checkmark.circle.fill",
+      "codepoint": "U+100063",
+      "code": 1048675,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "chevron.left",
+      "resolved_name": "chevron.left",
+      "codepoint": "U+100189",
+      "code": 1048969,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "chevron.right",
+      "resolved_name": "chevron.right",
+      "codepoint": "U+10018A",
+      "code": 1048970,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "chevron.up.chevron.down",
+      "resolved_name": "chevron.up.chevron.down",
+      "codepoint": "U+10018F",
+      "code": 1048975,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "circle",
+      "resolved_name": "circle",
+      "codepoint": "U+100000",
+      "code": 1048576,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "circle.circle.fill",
+      "resolved_name": "circle.circle.fill",
+      "codepoint": "U+100A02",
+      "code": 1051138,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "circle.grid.2x2.fill",
+      "resolved_name": "circle.grid.2x2.fill",
+      "codepoint": "U+1007BF",
+      "code": 1050559,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "circle.grid.cross",
+      "resolved_name": "circle.grid.cross",
+      "codepoint": "U+1009F8",
+      "code": 1051128,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "circle.lefthalf.filled",
+      "resolved_name": "circle.lefthalf.filled",
+      "codepoint": "U+100002",
+      "code": 1048578,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "clock",
+      "resolved_name": "clock",
+      "codepoint": "U+10042B",
+      "code": 1049643,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "cloud",
+      "resolved_name": "cloud",
+      "codepoint": "U+1001C2",
+      "code": 1049026,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "cloud.fill",
+      "resolved_name": "cloud.fill",
+      "codepoint": "U+1001C3",
+      "code": 1049027,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "display",
+      "resolved_name": "display",
+      "codepoint": "U+1008B9",
+      "code": 1050809,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "doc.text.magnifyingglass",
+      "resolved_name": "text.page.badge.magnifyingglass",
+      "codepoint": "U+100579",
+      "code": 1049977,
+      "resolution": "SF Symbols 27 alias"
+    },
+    {
+      "source_name": "dot.radiowaves.left.and.right",
+      "resolved_name": "dot.radiowaves.left.and.right",
+      "codepoint": "U+100319",
+      "code": 1049369,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "ellipsis",
+      "resolved_name": "ellipsis",
+      "codepoint": "U+100360",
+      "code": 1049440,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "exclamationmark.magnifyingglass",
+      "resolved_name": "exclamationmark.magnifyingglass",
+      "codepoint": "U+102202",
+      "code": 1057282,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "exclamationmark.triangle",
+      "resolved_name": "exclamationmark.triangle",
+      "codepoint": "U+1001FE",
+      "code": 1049086,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "exclamationmark.triangle.fill",
+      "resolved_name": "exclamationmark.triangle.fill",
+      "codepoint": "U+1001FF",
+      "code": 1049087,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "figure.walk.motion",
+      "resolved_name": "figure.walk.motion",
+      "codepoint": "U+101411",
+      "code": 1053713,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "film",
+      "resolved_name": "film",
+      "codepoint": "U+1003B6",
+      "code": 1049526,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "flame.fill",
+      "resolved_name": "flame.fill",
+      "codepoint": "U+10066D",
+      "code": 1050221,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "folder",
+      "resolved_name": "folder",
+      "codepoint": "U+100215",
+      "code": 1049109,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "forward.fill",
+      "resolved_name": "forward.fill",
+      "codepoint": "U+10028C",
+      "code": 1049228,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "gear",
+      "resolved_name": "gear",
+      "codepoint": "U+10035F",
+      "code": 1049439,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "gearshape",
+      "resolved_name": "gearshape",
+      "codepoint": "U+1008CB",
+      "code": 1050827,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "gearshape.2",
+      "resolved_name": "gearshape.2",
+      "codepoint": "U+10094E",
+      "code": 1050958,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "globe",
+      "resolved_name": "globe",
+      "codepoint": "U+1001AA",
+      "code": 1049002,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "hand.thumbsup",
+      "resolved_name": "hand.thumbsup",
+      "codepoint": "U+10027F",
+      "code": 1049215,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "heart",
+      "resolved_name": "heart",
+      "codepoint": "U+1002B4",
+      "code": 1049268,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "heart.fill",
+      "resolved_name": "heart.fill",
+      "codepoint": "U+1002B5",
+      "code": 1049269,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "house",
+      "resolved_name": "house",
+      "codepoint": "U+10039E",
+      "code": 1049502,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "icloud",
+      "resolved_name": "icloud",
+      "codepoint": "U+10030B",
+      "code": 1049355,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "icloud.and.arrow.down",
+      "resolved_name": "icloud.and.arrow.down",
+      "codepoint": "U+100315",
+      "code": 1049365,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "infinity",
+      "resolved_name": "infinity",
+      "codepoint": "U+100BE0",
+      "code": 1051616,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "info.circle",
+      "resolved_name": "info.circle",
+      "codepoint": "U+100174",
+      "code": 1048948,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "internaldrive",
+      "resolved_name": "internaldrive",
+      "codepoint": "U+10097E",
+      "code": 1051006,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "iphone",
+      "resolved_name": "iphone",
+      "codepoint": "U+1007DC",
+      "code": 1050588,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "key",
+      "resolved_name": "key",
+      "codepoint": "U+1007D5",
+      "code": 1050581,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "ladybug",
+      "resolved_name": "ladybug",
+      "codepoint": "U+100BD4",
+      "code": 1051604,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "level",
+      "resolved_name": "level",
+      "codepoint": "U+1007C2",
+      "code": 1050562,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "line.diagonal",
+      "resolved_name": "line.diagonal",
+      "codepoint": "U+100AF0",
+      "code": 1051376,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "list.bullet",
+      "resolved_name": "list.bullet",
+      "codepoint": "U+1002F2",
+      "code": 1049330,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "macbook.and.iphone",
+      "resolved_name": "macbook.and.iphone",
+      "codepoint": "U+100B29",
+      "code": 1051433,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "macwindow",
+      "resolved_name": "macwindow",
+      "codepoint": "U+1003DC",
+      "code": 1049564,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "magnifyingglass",
+      "resolved_name": "magnifyingglass",
+      "codepoint": "U+1002AB",
+      "code": 1049259,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "message",
+      "resolved_name": "message",
+      "codepoint": "U+100324",
+      "code": 1049380,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "mic",
+      "resolved_name": "microphone",
+      "codepoint": "U+1002B0",
+      "code": 1049264,
+      "resolution": "SF Symbols 27 alias"
+    },
+    {
+      "source_name": "mic.fill",
+      "resolved_name": "microphone.fill",
+      "codepoint": "U+1002B1",
+      "code": 1049265,
+      "resolution": "SF Symbols 27 alias"
+    },
+    {
+      "source_name": "minus.circle",
+      "resolved_name": "minus.circle",
+      "codepoint": "U+10004E",
+      "code": 1048654,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "moon",
+      "resolved_name": "moon",
+      "codepoint": "U+1001B9",
+      "code": 1049017,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "moon.stars.fill",
+      "resolved_name": "moon.stars.fill",
+      "codepoint": "U+1001C1",
+      "code": 1049025,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "moon.zzz.fill",
+      "resolved_name": "moon.zzz.fill",
+      "codepoint": "U+1001BE",
+      "code": 1049022,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "music.mic",
+      "resolved_name": "microphone.dynamic.on.stand",
+      "codepoint": "U+10046B",
+      "code": 1049707,
+      "resolution": "legacy SF Symbols 6 glyph position, adjacent to music.note and music.note.list"
+    },
+    {
+      "source_name": "music.note",
+      "resolved_name": "music.note",
+      "codepoint": "U+10046A",
+      "code": 1049706,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "music.note.list",
+      "resolved_name": "music.note.list",
+      "codepoint": "U+10046C",
+      "code": 1049708,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "network",
+      "resolved_name": "network",
+      "codepoint": "U+100906",
+      "code": 1050886,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "paperplane",
+      "resolved_name": "paperplane",
+      "codepoint": "U+10021F",
+      "code": 1049119,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "pause.fill",
+      "resolved_name": "pause.fill",
+      "codepoint": "U+100286",
+      "code": 1049222,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "pc",
+      "resolved_name": "pc",
+      "codepoint": "U+10097A",
+      "code": 1051002,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "person.2.badge.plus",
+      "resolved_name": "person.2.badge.plus",
+      "codepoint": "U+102A9D",
+      "code": 1059485,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "person.2.wave.2",
+      "resolved_name": "person.2.wave.2",
+      "codepoint": "U+100F8C",
+      "code": 1052556,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "person.crop.circle",
+      "resolved_name": "person.crop.circle",
+      "codepoint": "U+10026D",
+      "code": 1049197,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "person.crop.circle.badge.exclamationmark",
+      "resolved_name": "person.crop.circle.badge.exclamationmark",
+      "codepoint": "U+100277",
+      "code": 1049207,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "person.crop.circle.badge.plus",
+      "resolved_name": "person.crop.circle.badge.plus",
+      "codepoint": "U+10026F",
+      "code": 1049199,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "person.fill",
+      "resolved_name": "person.fill",
+      "codepoint": "U+10026A",
+      "code": 1049194,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "photo",
+      "resolved_name": "photo",
+      "codepoint": "U+1003C5",
+      "code": 1049541,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "photo.fill",
+      "resolved_name": "photo.fill",
+      "codepoint": "U+1003C6",
+      "code": 1049542,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "pip",
+      "resolved_name": "pip",
+      "codepoint": "U+100833",
+      "code": 1050675,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "pip.exit",
+      "resolved_name": "pip.exit",
+      "codepoint": "U+100467",
+      "code": 1049703,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "play",
+      "resolved_name": "play",
+      "codepoint": "U+100283",
+      "code": 1049219,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "play.circle",
+      "resolved_name": "play.circle",
+      "codepoint": "U+100295",
+      "code": 1049237,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "play.fill",
+      "resolved_name": "play.fill",
+      "codepoint": "U+100284",
+      "code": 1049220,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "plus",
+      "resolved_name": "plus",
+      "codepoint": "U+10017C",
+      "code": 1048956,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "point.3.filled.connected.trianglepath.dotted",
+      "resolved_name": "point.3.filled.connected.trianglepath.dotted",
+      "codepoint": "U+101165",
+      "code": 1053029,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "questionmark",
+      "resolved_name": "questionmark",
+      "codepoint": "U+10014D",
+      "code": 1048909,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "questionmark.circle",
+      "resolved_name": "questionmark.circle",
+      "codepoint": "U+10005C",
+      "code": 1048668,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "quote.bubble",
+      "resolved_name": "quote.bubble",
+      "codepoint": "U+10032E",
+      "code": 1049390,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "rays",
+      "resolved_name": "rays",
+      "codepoint": "U+1001EF",
+      "code": 1049071,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "rectangle.landscape.rotate",
+      "resolved_name": "rectangle.landscape.rotate",
+      "codepoint": "U+101EEF",
+      "code": 1056495,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "rectangle.split.3x1.fill",
+      "resolved_name": "rectangle.split.3x1.fill",
+      "codepoint": "U+100578",
+      "code": 1049976,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "repeat",
+      "resolved_name": "repeat",
+      "codepoint": "U+10029E",
+      "code": 1049246,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "repeat.1",
+      "resolved_name": "repeat.1",
+      "codepoint": "U+10029F",
+      "code": 1049247,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "safari",
+      "resolved_name": "safari",
+      "codepoint": "U+1003AC",
+      "code": 1049516,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "scope",
+      "resolved_name": "scope",
+      "codepoint": "U+100429",
+      "code": 1049641,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "scribble.variable",
+      "resolved_name": "scribble.variable",
+      "codepoint": "U+100911",
+      "code": 1050897,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "shuffle",
+      "resolved_name": "shuffle",
+      "codepoint": "U+10029D",
+      "code": 1049245,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "sparkles",
+      "resolved_name": "sparkles",
+      "codepoint": "U+1001BF",
+      "code": 1049023,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "speaker.slash.fill",
+      "resolved_name": "speaker.slash.fill",
+      "codepoint": "U+1002A3",
+      "code": 1049251,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "speaker.wave.1.fill",
+      "resolved_name": "speaker.wave.1.fill",
+      "codepoint": "U+1002A5",
+      "code": 1049253,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "speaker.wave.2.fill",
+      "resolved_name": "speaker.wave.2.fill",
+      "codepoint": "U+1002A7",
+      "code": 1049255,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "speaker.wave.3.fill",
+      "resolved_name": "speaker.wave.3.fill",
+      "codepoint": "U+1002A9",
+      "code": 1049257,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "square.and.arrow.up",
+      "resolved_name": "square.and.arrow.up",
+      "codepoint": "U+100202",
+      "code": 1049090,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "square.and.pencil",
+      "resolved_name": "square.and.pencil",
+      "codepoint": "U+10020E",
+      "code": 1049102,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "square.grid.2x2",
+      "resolved_name": "square.grid.2x2",
+      "codepoint": "U+1001F7",
+      "code": 1049079,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "square.on.square",
+      "resolved_name": "square.on.square",
+      "codepoint": "U+100405",
+      "code": 1049605,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "square.stack",
+      "resolved_name": "square.stack",
+      "codepoint": "U+10040B",
+      "code": 1049611,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "star",
+      "resolved_name": "star",
+      "codepoint": "U+1002C2",
+      "code": 1049282,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "star.fill",
+      "resolved_name": "star.fill",
+      "codepoint": "U+1002C3",
+      "code": 1049283,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "sun.max",
+      "resolved_name": "sun.max",
+      "codepoint": "U+1001AD",
+      "code": 1049005,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "switch.2",
+      "resolved_name": "switch.2",
+      "codepoint": "U+10070A",
+      "code": 1050378,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "text.badge.plus",
+      "resolved_name": "text.badge.plus",
+      "codepoint": "U+1002F8",
+      "code": 1049336,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "text.bubble",
+      "resolved_name": "text.bubble",
+      "codepoint": "U+100332",
+      "code": 1049394,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "text.line.first.and.arrowtriangle.forward",
+      "resolved_name": "text.line.first.and.arrowtriangle.forward",
+      "codepoint": "U+10163F",
+      "code": 1054271,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "text.quote",
+      "resolved_name": "text.quote",
+      "codepoint": "U+1002FF",
+      "code": 1049343,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "textformat.size.larger",
+      "resolved_name": "textformat.size.larger",
+      "codepoint": "U+100D7F",
+      "code": 1052031,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "trash",
+      "resolved_name": "trash",
+      "codepoint": "U+100211",
+      "code": 1049105,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "tv",
+      "resolved_name": "tv",
+      "codepoint": "U+1003B2",
+      "code": 1049522,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "viewfinder",
+      "resolved_name": "viewfinder",
+      "codepoint": "U+1003B9",
+      "code": 1049529,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "waveform",
+      "resolved_name": "waveform",
+      "codepoint": "U+10066B",
+      "code": 1050219,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "waveform.circle.fill",
+      "resolved_name": "waveform.circle.fill",
+      "codepoint": "U+100789",
+      "code": 1050505,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "waveform.path.ecg",
+      "resolved_name": "waveform.path.ecg",
+      "codepoint": "U+10071F",
+      "code": 1050399,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "wifi",
+      "resolved_name": "wifi",
+      "codepoint": "U+100647",
+      "code": 1050183,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "wifi.exclamationmark",
+      "resolved_name": "wifi.exclamationmark",
+      "codepoint": "U+100665",
+      "code": 1050213,
+      "resolution": "canonical"
+    },
+    {
+      "source_name": "xmark",
+      "resolved_name": "xmark",
+      "codepoint": "U+100184",
+      "code": 1048964,
+      "resolution": "canonical"
+    }
+  ],
+  "subset_sha256": "3f592d902f739de31deef2d1235d89d105508a5ea750e3d60eedcc7481d13af6",
+  "subset_bytes": 162332
+}

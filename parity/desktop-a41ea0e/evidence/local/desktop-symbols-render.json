@@ -1,0 +1,22 @@
+{
+  "status": "PASSED",
+  "scope": "fixed Desktop SF Symbols subset, Windows enum coverage, and production desktop-home render; not native macOS pixel acceptance",
+  "font_source_dmg_sha256": "968ab3b8b1f92c2d8af61eb0680f5c2224c4e78d59b986bf004502a7fc012918",
+  "font_source_ttf_sha256": "7270e1593be7b88597d8ab302e4d156a33084c85b8161e042ff6510cdaf10e10",
+  "subset_sha256": "3f592d902f739de31deef2d1235d89d105508a5ea750e3d60eedcc7481d13af6",
+  "subset_bytes": 162332,
+  "symbols": 135,
+  "enum_symbols": 67,
+  "unique_codepoints": 134,
+  "render": "tools/capture_desktop_layout.py home-light, production ImageComposeScene 1280x800 light, real Netease home feed, logged out",
+  "files": {
+    "desktop-symbols.json": {
+      "bytes": 1687,
+      "sha256": "2eef07a56a14df30f78a377590a9a36415bfc68b16774bf0e88e93d0eb687655"
+    },
+    "desktop-icon-home-light.png": {
+      "bytes": 530936,
+      "sha256": "0f6070de977ac46ddd9d9e8b6a1a9c452261e23ca03358d9e93d7819cfc8a398"
+    }
+  }
+}

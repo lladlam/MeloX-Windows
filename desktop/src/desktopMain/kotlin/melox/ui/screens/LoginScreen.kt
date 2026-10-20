@@ -51,6 +51,8 @@ import melox.provider.qqmusic.QQMusicQrLoginMethod
 import melox.provider.qqmusic.QQMusicQrLoginState
 import melox.provider.qqmusic.QQMusicSessionStore
 import melox.ui.navigation.MeloXNavState
+import melox.ui.foundation.MeloXSymbol
+import melox.ui.foundation.MeloXSymbolIcon
 import melox.ui.theme.MeloXColors
 import melox.ui.theme.MeloXLanTingProFontFamily
 import melox.settings.MeloXSettingsRuntime
@@ -157,10 +159,10 @@ private fun LoginTopBar(onBack: () -> Unit) {
                 .hoverable(remember { MutableInteractionSource() })
                 .pointerHoverIcon(PointerIcon(Cursor(Cursor.HAND_CURSOR))),
         ) {
-            Text(
-                text = "‹",
+            MeloXSymbolIcon(
+                MeloXSymbol.ChevronLeft,
+                size = 22,
                 color = MeloXColors.pageOnSurface(),
-                fontSize = 22.sp,
             )
         }
     }

@@ -919,10 +919,10 @@ private fun MeloXLibraryPlaylistsPage(
                         color = MeloXColors.pageOnBackground().copy(alpha = 0.48f),
                     )
                 }
-                MeloXActionIcon(
-                    "›",
-                    Modifier.size(18.dp),
-                    MeloXColors.pageOnBackground().copy(alpha = 0.40f),
+                MeloXSymbolIcon(
+                    melox.ui.foundation.MeloXSymbol.ChevronRight,
+                    size = 15,
+                    color = MeloXColors.pageOnBackground().copy(alpha = 0.40f),
                 )
             }
             MeloXInsetDivider(leading = 84.dp)
