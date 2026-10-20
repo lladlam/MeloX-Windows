@@ -24,6 +24,9 @@ import melox.model.SearchSong
 import melox.network.MeloXAlbumDetail
 import melox.network.NeteaseCollectionDetailsClient
 import melox.playback.PlaybackCommands
+import melox.ui.desktop.desktopString
+import melox.ui.desktop.desktopFormat
+import kotlinx.coroutines.launch
 import melox.settings.MeloXSettingsRuntime
 import melox.ui.theme.MeloXColors
 import melox.ui.theme.MeloXLanTingProFontFamily
@@ -51,13 +54,20 @@ fun AlbumDetailScreen(
     var error by remember(albumId) { mutableStateOf(if (parsedId == null) "无效的专辑" else null) }
     val queue by PlaybackCommands.queue.collectAsState()
     val playingId = queue.songs.getOrNull(queue.index)?.id ?: PlaybackCommands.currentSongId()
+    val playbackState by melox.player.AudioPlayer.state.collectAsState()
+    val scope = rememberCoroutineScope()
+    var refreshRevision by remember(albumId) { mutableStateOf(0) }
+    var subscribed by remember(albumId) { mutableStateOf(false) }
+    var changingSubscription by remember(albumId) { mutableStateOf(false) }
+    var operation by remember(albumId) { mutableStateOf<String?>(null) }
+    var actionSong by remember(albumId) { mutableStateOf<SearchSong?>(null) }
 
-    LaunchedEffect(parsedId) {
+    LaunchedEffect(parsedId, refreshRevision) {
         if (parsedId == null) return@LaunchedEffect
         loading = true
         error = null
         runCatching { client.albumDetail(parsedId) }
-            .onSuccess { detail = it }
+            .onSuccess { detail = it; subscribed = it.subscribed == true }
             .onFailure { error = it.message ?: "专辑加载失败" }
         loading = false
     }
@@ -70,22 +80,52 @@ fun AlbumDetailScreen(
 
     if (MeloXSettingsRuntime.desktopLayoutEnabled) {
         melox.ui.desktop.MeloXDesktopCollectionDetail(
-            kind = "专辑",
+            kind = album?.type ?: desktopString("ui.common.album"),
             title = title,
-            subtitle = artistName,
-            metadata = "${songs.size} 首歌曲 · ${totalMinutes}分钟",
+            subtitle = album?.artistText?.takeIf(String::isNotBlank),
+            metadata = buildList {
+                album?.publishTime?.let { add(java.time.Instant.ofEpochMilli(it).atZone(java.time.ZoneId.systemDefault()).year.toString()) }
+                album?.size?.let { add(desktopFormat("ui.common.song_count", it)) }
+                add(melox.ui.desktop.desktopQualityTitle(melox.audio.MusicQualityPreferences.read()))
+            }.joinToString(desktopString("ui.common.metadata_separator")),
             description = detail?.description,
             artworkUrl = album?.artworkUrl,
             songs = songs,
             loading = loading,
             error = error,
             playingId = playingId,
+            isPlaying = playbackState.isPlaying,
+            showsAlbumColumn = false,
+            groupsByDisc = true,
+            onRetry = { refreshRevision++ },
             onBack = onBack,
             onPlayAll = { songs.firstOrNull()?.let { PlaybackCommands.playQueue(songs, it.id) } },
             onShuffle = { songs.shuffled().let { shuffled -> shuffled.firstOrNull()?.let { PlaybackCommands.playQueue(shuffled, it.id) } } },
             onSong = { PlaybackCommands.playQueue(songs, it.id) },
+            isFavorite = subscribed,
+            favoriteEnabled = !changingSubscription && parsedId != null,
+            onFavorite = {
+                parsedId?.let { id ->
+                    val previous = subscribed
+                    subscribed = !previous
+                    changingSubscription = true
+                    scope.launch {
+                        try { client.setAlbumSubscribed(id, !previous); operation = null }
+                        catch (cancelled: kotlinx.coroutines.CancellationException) { throw cancelled }
+                        catch (failure: Exception) { subscribed = previous; operation = failure.message ?: desktopString("ui.error.favorite_failed") }
+                        finally { changingSubscription = false }
+                    }
+                }
+            },
+            onDownload = {
+                val store = melox.download.MeloXDownloadStore.instance()
+                songs.forEach { store.start(it, melox.audio.MusicQualityPreferences.read()) }
+            },
+            onMore = { actionSong = it },
+            status = operation,
             tag = "desktop-album-detail",
         )
+        actionSong?.let { song -> MeloXSongActionsOverlay(song, songs, true, { actionSong = null }) }
         return
     }
 

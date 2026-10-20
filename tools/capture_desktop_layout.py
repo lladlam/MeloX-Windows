@@ -11,7 +11,7 @@ import sys
 import wave
 
 mode, home, output = sys.argv[1:4]
-assert mode in ('controls', 'reload', 'restore', 'reload-current', 'home-dark', 'home-light', 'lyrics-light')
+assert mode in ('controls', 'cold-controls', 'reload', 'restore', 'reload-current', 'home-dark', 'home-light', 'lyrics-light')
 repo = Path(__file__).resolve().parents[1]
 home, output = Path(home).resolve(), Path(output).resolve()
 output.mkdir(parents=True, exist_ok=True)
@@ -75,6 +75,12 @@ elif mode == 'reload':
     add('reveal-switch', 'reveal@setting-general_desktop_layout')
     # A separate JVM restores the real queue and resumes PCM after startup.
     add('playback-ready', 'wait@1500', ['playing:true'])
+elif mode == 'cold-controls':
+    add('consent', 'tap@remote-reject', ['cloud-enabled:false', 'absent:remote-reject'])
+    add('cold-desktop-ready', 'wait@1500', ['runtime:desktopLayoutEnabled:true', 'tag:desktop-sidebar', 'tag:settings-root', 'playing:true'])
+    add('cold-lyrics', 'tap@desktop-show-lyrics', ['tag:desktop-inspector:Lyrics', 'tag:player-lyrics', 'tag-prefix:lyric-line-'])
+    add('cold-seek-lyrics', 'tap@lyric-line-1', ['position-min:4000', 'no-playback-error:true'])
+    add('cold-close-lyrics', 'tap@desktop-show-lyrics', ['absent:desktop-inspector:Lyrics'])
 elif mode == 'restore':
     # Fresh current-layout process: record consent, enable the Desktop shell,
     # then restore the current layout. Cold persisted On is covered by `reload`.
@@ -93,8 +99,8 @@ elif mode == 'reload-current':
     add('reveal-general', 'reveal@settings-open-general')
     add('general', 'tap@settings-open-general', ['tag:settings-general'])
     add('check-persisted-switch', 'wait@100', ['unchecked:setting-general_desktop_layout'])
-if mode == 'controls':
-    add('pause', 'tap@mini-player-play-pause', ['no-playback-error:true'])
+if mode in ('controls', 'cold-controls'):
+    add('pause', 'tap@mini-player-play-pause', ['playing:false', 'no-playback-error:true'] if mode == 'cold-controls' else ['no-playback-error:true'])
     add('resume', 'tap@mini-player-play-pause', ['playing:true', 'no-playback-error:true'])
     add('queue', 'tap@desktop-show-queue', ['tag:desktop-inspector:Queue', 'tag:desktop-queue-track:1'])
     add('select-real-track', 'tap@desktop-queue-track:1', ['no-playback-error:true'])
@@ -104,7 +110,7 @@ if mode == 'controls':
     add('collapse-volume', 'tap@desktop-volume', ['absent:desktop-volume-slider'])
     add('expand-player', 'tap@mini-player-expand', ['tag:desktop-player-column', 'tag:desktop-player-panel', 'absent:desktop-bottom-player'])
     add('full-queue', 'tap@desktop-full-queue', ['tag:desktop-queue-autoplay', 'tag:desktop-queue-automix'])
-    add('full-pause', 'tap@mini-player-play-pause', ['no-playback-error:true'])
+    add('full-pause', 'tap@mini-player-play-pause', ['playing:false', 'no-playback-error:true'] if mode == 'cold-controls' else ['no-playback-error:true'])
     add('full-resume', 'tap@mini-player-play-pause', ['playing:true', 'no-playback-error:true'])
     add('collapse-player', 'tap@player-collapse', ['tag:desktop-bottom-player', 'tag:settings-general'])
     add('search', 'tap@desktop-nav:Search', ['tag:desktop-sidebar', 'absent:settings-general'])
@@ -130,6 +136,7 @@ with (output / 'gradle.log').open('w', encoding='utf-8') as log:
 if result.returncode:
     print('\n'.join((output / 'gradle.log').read_text(encoding='utf-8', errors='replace').splitlines()[-65:]))
     raise SystemExit(result.returncode)
+assert 'Exception in thread' not in (output / 'gradle.log').read_text(encoding='utf-8', errors='replace'), 'Background UI exception invalidates replay'
 data = json.loads((output / 'capture.json').read_text(encoding='utf-8'))
 assert len(data['scenes']) == len(data['steps']) + 1
 assert all(a['passed'] for s in data['scenes'] for a in s.get('assertions', []))

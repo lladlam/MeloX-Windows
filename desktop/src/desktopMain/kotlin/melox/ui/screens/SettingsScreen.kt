@@ -141,6 +141,9 @@ fun SettingsScreen(
     if (route != null) detailRoute = route
     MeloXBackHandler(enabled = route != null) { route = null }
     if (MeloXSettingsRuntime.desktopLayoutEnabled) {
+        // The focus effect above also runs for persisted Desktop startup. Keep
+        // its requester attached before that effect, just as in the legacy branch.
+        Box(Modifier.fillMaxSize().focusRequester(detailFocus).focusable()) {
         DesktopSettingsLayout(
             selected = route ?: SettingsRoute.General,
             onSelected = { route = it },
@@ -151,6 +154,7 @@ fun SettingsScreen(
             onOpenLogin = onOpenLogin,
             onOpenServices = onOpenServices,
         )
+        }
         return
     }
     Box(Modifier.fillMaxSize().focusRequester(detailFocus).focusable()) {

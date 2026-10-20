@@ -15,6 +15,8 @@ data class MeloXAlbumSummary(
     val artworkUrl: String?,
     val artistText: String,
     val type: String?,
+    val publishTime: Long? = null,
+    val size: Int? = null,
 )
 
 data class MeloXAlbumDetail(
@@ -185,6 +187,8 @@ class NeteaseCollectionDetailsClient(
                 value.optJSONObject("artist")?.optString("name").orEmpty().ifBlank { "未知歌手" }
             },
             type = value.optString("type").takeIf(String::isNotBlank),
+            publishTime = value.optLong("publishTime").takeIf { it > 0 },
+            size = value.optInt("size", -1).takeIf { it >= 0 },
         )
     }
 
@@ -211,6 +215,8 @@ class NeteaseCollectionDetailsClient(
                     ?: album?.optString("blurPicUrl")?.takeIf(String::isNotBlank),
             ),
             durationMs = value.optLong("dt", value.optLong("duration", 0L)).coerceAtLeast(0L),
+            trackNumber = value.optInt("no").takeIf { it > 0 },
+            disc = value.optString("cd").takeIf(String::isNotBlank),
         )
     }
 

@@ -1,0 +1,55 @@
+{
+  "source_font_sha256": "7270e1593be7b88597d8ab302e4d156a33084c85b8161e042ff6510cdaf10e10",
+  "width": 100,
+  "faces": [
+    {
+      "resource": "desktop/src/main/resources/fonts/sf_pro_text_400.ttf",
+      "optical_size": 17,
+      "weight": 400,
+      "bytes": 482216,
+      "sha256": "9aac5d9e6e50eb0d4c3cc904b4d68c3a83588d7601cb88629b63aace520492aa",
+      "characters": 1764
+    },
+    {
+      "resource": "desktop/src/main/resources/fonts/sf_pro_text_500.ttf",
+      "optical_size": 17,
+      "weight": 500,
+      "bytes": 482492,
+      "sha256": "23fd544dcf23a0ced3d37a6b2fa6f554bce351183069bc77301dd4a395cde834",
+      "characters": 1764
+    },
+    {
+      "resource": "desktop/src/main/resources/fonts/sf_pro_text_600.ttf",
+      "optical_size": 17,
+      "weight": 600,
+      "bytes": 483044,
+      "sha256": "a05bb51922e50659371d8db6b8881f4cf1f1a444875b2762b5f03ccb268e50ce",
+      "characters": 1764
+    },
+    {
+      "resource": "desktop/src/main/resources/fonts/sf_pro_text_700.ttf",
+      "optical_size": 17,
+      "weight": 700,
+      "bytes": 483972,
+      "sha256": "2b77411d019bf6bdc752af1cee8df733400ab0d43dc3c58e8bf88eb768944b60",
+      "characters": 1764
+    },
+    {
+      "resource": "desktop/src/main/resources/fonts/sf_pro_subtitle_600.ttf",
+      "optical_size": 22,
+      "weight": 600,
+      "bytes": 483016,
+      "sha256": "9801651af24ccb45d389bfe072e12bf3ed521471e9af021b7476bf68de255c68",
+      "characters": 1764
+    },
+    {
+      "resource": "desktop/src/main/resources/fonts/sf_pro_display_700.ttf",
+      "optical_size": 28,
+      "weight": 700,
+      "bytes": 483396,
+      "sha256": "6783abccb0efd61de14c3141d740f22ef7cbbf7b044424e77c26192f408b1652",
+      "characters": 1764
+    }
+  ],
+  "scope": "SF Pro non-PUA text; CJK platform fallback is not macOS PingFang parity"
+}

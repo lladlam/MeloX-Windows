@@ -29,7 +29,7 @@ Windows 首次以已保存桌面模式启动采用 1280×800；启用时设置�
 | `Features/Explore` | PARTIAL：桌面 32pt 标题、宽幅 hero、自适应 145pt 媒体网格、20pt 间隔；真实分类、榜单和 Provider 数据 | macOS 固定提交的 discovery／radio 同内容帧、分类工具栏、全部加载／错误／详情状态 |
 | `Features/Library` | PARTIAL：侧栏直达真实子页；歌曲／歌单已采用 34pt 留白、54pt 紧凑行、40pt 封面和 520pt 分页栏 | 专辑／歌手能力、完整网格、筛选／排序／刷新／空态、拖放及全部菜单 |
 | Albums／Artists 收藏入口 | BLOCKED：可见但禁用，附后端不可用说明 | 实际收藏能力消费者与真源桌面页面；禁止空点击或填充假集合 |
-| `Features/Detail`、`Features/Playlist` | PARTIAL：新增 278pt collection header、32pt 标题、桌面操作区与曲目表；歌单／专辑接真实播放、随机、收藏、下载、搜索和菜单 | artist／song／podcast 专属布局、编辑／删除／分享弹层及同内容帧验收 |
+| `Features/Detail`、`Features/Playlist` | PARTIAL：collection内容42/34留白、278封面／34间隔、描述展开、46pt无封面行／固定列宽、专辑真实曲号／disc分组、SF Pro正文；全局album路由保留Desktop侧栏；真实播放／收藏／下载／筛选接线，详见 `COLLECTION_PARITY.md` | 原生toolbar／控件／阴影／字体栅格同内容帧；曲目菜单仍复用既有sheet；artist／song／podcast专属布局、编辑／删除／分享、分页及动态验收 |
 | `Features/Player/DesktopBottomPlayer.swift`、`BottomBar` | PARTIAL：源尺寸、真实播放／暂停／切歌／进度／音量、歌词／队列入口 | 元数据 hover 展开、时间／进度过渡、玻璃材质、issue／retry、禁用态与原生音量细节 |
 | `Features/Player/Queue` | PARTIAL：history／up next、按稳定 entry ID 选曲、清除／移除、真实 AutoMix／autoplay；沉浸队列按参考图显示模式文字与选中状态 | drag-and-drop、fade、hover、精确字体／间距和所有菜单细节 |
 | `Features/Player/Inspector`、`DesktopPlayerSidePanel.swift` | PARTIAL：258 宽面板／280ms进退、真实歌词／队列 | 材质、选项切换 crossfade、原生窗口宽度增长策略和尺寸／动画对照 |
@@ -49,7 +49,9 @@ Windows 首次以已保存桌面模式启动采用 1280×800；启用时设置�
 
 `surface-inventory.json` 从固定 Git archive 枚举 App／Features 下全部 124 个 Swift 文件、16 个分组；未进入本批的文件继续标记 PENDING，首批接线文件为 PARTIAL，没有以目录级别的“已复用”关闭验收。
 
-桌面 SF Symbol 子集已从 Apple 官方 SF Symbols 27 `SF-Pro.dmg` 重建，固定真源引用的 135 个名称、134 个唯一码点及全部 67 项 `MeloXSymbol` 均有非空轮廓可追溯。`square.grid.2x2`、`icloud`、`square.stack`、`music.mic`、`bubble.left.and.bubble.right` 与真实 `heart.fill` 已替换此前的相近符号；源 DMG／字体／子集哈希、构建与独立校验工具记录在 `desktop-symbols.json`、`tools/build_desktop_symbol_font.py` 和 `tools/verify_desktop_symbols.py`。
+桌面 SF Symbol 子集已从 Apple 官方 SF Symbols 27 `SF-Pro.dmg` 重建，固定真源引用的 135 个名称、134 个唯一码点及全部 68 项 `MeloXSymbol`（含collection的`star.fill`）均有非空轮廓可追溯。`square.grid.2x2`、`icloud`、`square.stack`、`music.mic`、`bubble.left.and.bubble.right` 与真实 `heart.fill` 已替换此前的相近符号；源 DMG／字体／子集哈希、构建与独立校验工具记录在 `desktop-symbols.json`、`tools/build_desktop_symbol_font.py` 和 `tools/verify_desktop_symbols.py`。
+
+Collection正文独立使用同一官方源字体的6个静态SF Pro face（普通Unicode字符、非图标）：wght400／500／600／700，opsz17／22／28；真源文案扩至86 key，两种locale均保持纯导出。6个face的构建、字节、ASCII／tnum和无变量轴核验记录在 `desktop-text-fonts.json` 与 `tools/build_desktop_text_fonts.py`，发行固定资源核验扩至28项。CJK平台fallback与CoreText／Skia像素差仍待原生同内容对照。
 
 这关闭的是图标资源名称和字形差异，不等于图标在 macOS／Windows 上的像素位置、光学尺寸、层级与过渡完全一致；这些仍随各页布局和动态验收逐项核对。固定 Android 基线继续使用 `circle.grid.2x2.fill` 等原有 token 映射，不能由本桌面子集反向覆盖。
 

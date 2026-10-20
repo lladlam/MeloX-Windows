@@ -37,6 +37,8 @@ jobs:
           python tools/generate_lanting_static.py --verify
       - name: Verify pinned Desktop SF Symbols subset
         run: python tools/verify_desktop_symbols.py --output desktop/build/verification/desktop-symbols.json
+      - name: Verify frozen Desktop SF Pro text faces
+        run: python tools/build_desktop_text_fonts.py --verify
       - name: Build uber jar
         run: gradle :shared:desktopTest :desktop:packageUberJarForCurrentOS
       - name: Verify native equalizer PCM
@@ -122,7 +124,19 @@ jobs:
           [System.IO.File]::WriteAllText("$homeDir/.melox/prefs_melox_app_settings.properties", "onboarding_completed=true`ngeneral_desktop_layout=false`n", [System.Text.UTF8Encoding]::new($false))
           python tools/capture_desktop_layout.py lyrics-light "$homeDir" desktop/build/parity/desktop-layout-lyrics-light
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-          python tools/verify_desktop_layout_capture.py desktop/build/parity --output desktop/build/verification/desktop-layout.json
+          $coldHome = "$pwd/desktop/build/parity/desktop-layout-cold-controls-home"
+          New-Item -ItemType Directory -Force "$coldHome/.melox" | Out-Null
+          [System.IO.File]::WriteAllText("$coldHome/.melox/prefs_melox_app_settings.properties", "onboarding_completed=true`ngeneral_desktop_layout=true`n", [System.Text.UTF8Encoding]::new($false))
+          python tools/capture_desktop_layout.py cold-controls "$coldHome" desktop/build/parity/desktop-layout-cold-controls
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python tools/verify_desktop_layout_capture.py desktop/build/parity --require-cold-controls --output desktop/build/verification/desktop-layout.json
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Replay real Desktop album and playlist collection geometry and pointers
+        shell: pwsh
+        run: |
+          python tools/capture_desktop_collection.py album "$pwd/desktop/build/parity/collection-album-light-home" desktop/build/parity/collection-album-light --expand-description
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python tools/capture_desktop_collection.py playlist "$pwd/desktop/build/parity/collection-playlist-dark-home" desktop/build/parity/collection-playlist-dark --theme Dark
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - name: Replay pinned settings routes in four locales and verify real preference consumers
         shell: pwsh

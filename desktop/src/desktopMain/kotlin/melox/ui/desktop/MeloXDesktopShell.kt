@@ -86,6 +86,7 @@ internal fun MeloXInterfaceLayout(
     playerOpen: Boolean,
     backdrop: MeloXLayerBackdrop,
     modifier: Modifier = Modifier,
+    collectionOverlay: @Composable () -> Unit = {},
     content: @Composable () -> Unit,
 ) {
     val desktop = MeloXSettingsRuntime.desktopLayoutEnabled
@@ -101,6 +102,7 @@ internal fun MeloXInterfaceLayout(
                     MeloXListDetailLayout(hasMedia, modifier) { content() }
                 }
                 if (desktop) {
+                    collectionOverlay()
                     androidx.compose.animation.AnimatedVisibility(inspector != null && !playerOpen, Modifier.align(Alignment.CenterEnd).width(DesktopMetrics.Inspector.dp).fillMaxHeight(),
                         enter = slideInHorizontally(tween(duration)) { it } + fadeIn(tween(duration)),
                         exit = slideOutHorizontally(tween(duration)) { it } + fadeOut(tween(duration))) {

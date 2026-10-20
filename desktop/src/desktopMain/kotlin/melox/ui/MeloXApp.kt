@@ -135,6 +135,33 @@ fun MeloXApp(onExit: () -> Unit = { kotlin.system.exitProcess(0) }) {
     }
     val collectionTarget by melox.ui.navigation.MeloXCollectionLaunchBus.target.collectAsState()
     val collectionBackDispatcher = remember { MeloXBackDispatcher() }
+    val currentCollectionTarget by androidx.compose.runtime.rememberUpdatedState(collectionTarget)
+    // Keep the same real detail composition when the layout preference moves it
+    // between the full-window Android overlay and the Desktop navigation column.
+    val collectionLayer = remember {
+        androidx.compose.runtime.movableContentOf {
+            AnimatedContent(
+                targetState = currentCollectionTarget,
+                transitionSpec = {
+                    (slideInHorizontally(tween(280, easing = FastOutSlowInEasing)) { it } + fadeIn(tween(280))) togetherWith
+                        (slideOutHorizontally(tween(220, easing = FastOutSlowInEasing)) { it / 4 } + fadeOut(tween(220)))
+                },
+                modifier = Modifier.fillMaxSize().zIndex(if (MeloXSettingsRuntime.desktopLayoutEnabled) 0f else 30f),
+                label = "collection-overlay",
+            ) { target ->
+                CompositionLocalProvider(LocalMeloXBackDispatcher provides collectionBackDispatcher,
+                    melox.ui.glass.LocalMeloXLayerBackdrop provides null) {
+                    when (target) {
+                        is melox.ui.navigation.MeloXCollectionTarget.Artist -> melox.ui.screens.ArtistDetailScreen(target.id,
+                            onBack = melox.ui.navigation.MeloXCollectionLaunchBus::dismiss)
+                        is melox.ui.navigation.MeloXCollectionTarget.Album -> AlbumDetailScreen(target.id.toString(), target.name,
+                            onBack = melox.ui.navigation.MeloXCollectionLaunchBus::dismiss)
+                        null -> Unit
+                    }
+                }
+            }
+        }
+    }
     val searchLaunch = melox.ui.navigation.MeloXSearchLaunchBus.request
 
     LaunchedEffect(Unit) {
@@ -417,13 +444,14 @@ fun MeloXApp(onExit: () -> Unit = { kotlin.system.exitProcess(0) }) {
                 melox.ui.desktop.MeloXInterfaceLayout(
                     hasMedia = hasMedia, selectedTab = selectedTab, source = selectedSource,
                     libraryPage = desktopLibraryPage,
-                    onSelect = { tab, page -> desktopLibraryPage = page; selectedTab = tab },
+                    onSelect = { tab, page -> melox.ui.navigation.MeloXCollectionLaunchBus.dismiss(); desktopLibraryPage = page; selectedTab = tab },
                     onAccount = { selectedTab = AppTab.Settings },
                     onOpenMessages = { messagesVisible = true },
                     onLogin = { selectedTab = AppTab.Settings; settingsRouteRequest = "NeteaseLogin" },
                     onExpandPlayer = openPlayer, playerOpen = playerOpen,
                     backdrop = pageBackdrop,
                     modifier = Modifier.meloXRecordBackdrop(pageBackdrop).nestedScroll(tabBarMinimizeConnection),
+                    collectionOverlay = { collectionLayer() },
                 ) {
                 AnimatedContent(
                     targetState = selectedTab,
@@ -559,26 +587,7 @@ fun MeloXApp(onExit: () -> Unit = { kotlin.system.exitProcess(0) }) {
                         }
                     }
                 }
-                AnimatedContent(
-                    targetState = collectionTarget,
-                    transitionSpec = {
-                        (slideInHorizontally(tween(280, easing = FastOutSlowInEasing)) { it } + fadeIn(tween(280))) togetherWith
-                            (slideOutHorizontally(tween(220, easing = FastOutSlowInEasing)) { it / 4 } + fadeOut(tween(220)))
-                    },
-                    modifier = Modifier.fillMaxSize().zIndex(30f),
-                    label = "collection-overlay",
-                ) { target ->
-                    CompositionLocalProvider(LocalMeloXBackDispatcher provides collectionBackDispatcher,
-                        melox.ui.glass.LocalMeloXLayerBackdrop provides null) {
-                        when (target) {
-                            is melox.ui.navigation.MeloXCollectionTarget.Artist -> melox.ui.screens.ArtistDetailScreen(target.id,
-                                onBack = melox.ui.navigation.MeloXCollectionLaunchBus::dismiss)
-                            is melox.ui.navigation.MeloXCollectionTarget.Album -> AlbumDetailScreen(target.id.toString(), target.name,
-                                onBack = melox.ui.navigation.MeloXCollectionLaunchBus::dismiss)
-                            null -> Unit
-                        }
-                    }
-                }
+                if (!MeloXSettingsRuntime.desktopLayoutEnabled) collectionLayer()
                 }
             }
         }

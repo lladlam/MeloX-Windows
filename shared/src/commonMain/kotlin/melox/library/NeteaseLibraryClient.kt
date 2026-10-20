@@ -379,6 +379,7 @@ class NeteaseLibraryClient(
                 ?.takeIf { it > 0L },
             playCount = value.optLong("playCount", 0L).coerceAtLeast(0L),
             description = description,
+            subscribed = if (value.has("subscribed")) value.optBoolean("subscribed") else null,
         )
     }
 
@@ -414,6 +415,8 @@ class NeteaseLibraryClient(
             artistId = artistsArray.optJSONObject(0)?.optLong("id")?.takeIf { it > 0L },
             artworkUrl = artwork,
             durationMs = duration,
+            trackNumber = value.optInt("no").takeIf { it > 0 },
+            disc = value.optString("cd").takeIf(String::isNotBlank),
         )
     }
 

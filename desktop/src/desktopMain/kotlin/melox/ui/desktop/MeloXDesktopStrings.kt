@@ -19,6 +19,20 @@ internal fun desktopString(key: String): String {
     return checkNotNull((if (simplified) DesktopStrings.chinese else DesktopStrings.english).getProperty(key)) { key }
 }
 
+/** Adapt Foundation format specifiers at the call site; exported values stay byte-pure. */
+internal fun desktopFormat(key: String, vararg arguments: Any): String =
+    String.format(Locale.getDefault(), desktopString(key).replace("%ld", "%d").replace("%@", "%s"), *arguments)
+
+internal fun desktopQualityTitle(quality: melox.audio.MusicQuality): String = desktopString("ui.settings.audio_quality." + when (quality) {
+    melox.audio.MusicQuality.Standard -> "standard"
+    melox.audio.MusicQuality.High -> "high"
+    melox.audio.MusicQuality.Lossless -> "lossless"
+    melox.audio.MusicQuality.HiResolution -> "hi_res"
+    melox.audio.MusicQuality.HighDefinitionSurround -> "hd_surround"
+    melox.audio.MusicQuality.ImmersiveSurround -> "immersive_surround"
+    melox.audio.MusicQuality.UltraClearMaster -> "master"
+})
+
 /** Windows-only integration labels: no corresponding toggle exists in the macOS source. */
 internal fun desktopPlatformString(key: String): String {
     val chinese = Locale.getDefault().language == "zh"

@@ -24,6 +24,15 @@ KEYS += ['ui.home.section.recommended_playlists', 'ui.home.section.tailored', 'u
 KEYS += ['ui.common.more', 'ui.common.clear', 'ui.common.history', 'ui.player.queue_empty',
          'ui.desktop.player.autoplay', 'ui.desktop.player.continue_playing', 'ui.settings.automix.title',
          'ui.desktop.player.remove_from_queue']
+KEYS += ['ui.common.collapse', 'ui.common.playlist', 'ui.common.album', 'ui.common.back',
+         'ui.common.song_count', 'ui.common.metadata_separator', 'ui.common.play_count',
+         'ui.player.shuffle', 'ui.desktop.collection.favorite', 'ui.desktop.collection.unfavorite',
+         'ui.desktop.collection.download_all', 'ui.desktop.collection.disc', 'ui.common.share',
+         'ui.common.retry', 'ui.error.music_content_load_failed', 'ui.error.unknown',
+         'ui.playlists.loading', 'ui.album.loading', 'ui.common.play_named']
+KEYS += ['ui.error.favorite_failed']
+KEYS += [f'ui.settings.audio_quality.{quality}' for quality in
+         ['standard', 'high', 'lossless', 'hi_res', 'hd_surround', 'immersive_surround', 'master']]
 SOURCES = [
     'MeloXDesktop/App/DesktopRootView.swift',
     'MeloXDesktop/App/DesktopNavigation.swift',
@@ -45,6 +54,10 @@ SOURCES = [
     'MeloXDesktop/Features/Player/Queue/DesktopQueueRow.swift',
     'MeloXDesktop/Features/Home/DesktopHomeView.swift',
     'MeloXDesktop/Features/Home/DesktopHomeQuickActionsView.swift',
+    'MeloXDesktop/Features/Detail/DesktopRouteView.swift',
+    'MeloXDesktop/Features/Detail/DesktopPlaylistDetailView.swift',
+    'MeloXDesktop/Features/Detail/DesktopAlbumDetailView.swift',
+    'MeloXDesktop/Shared/DesktopTrackRow.swift',
 ]
 
 parser = argparse.ArgumentParser(description=__doc__)
@@ -72,7 +85,12 @@ for lang in ['en', 'zh-Hans']:
     values = {k: json.loads('"' + v + '"') for k, v in re.findall(r'"([^"\\]+)"\s*=\s*"((?:[^"\\]|\\.)*)"\s*;', raw.decode('utf-8'))}
     assert set(KEYS) <= values.keys(), set(KEYS) - values.keys()
     text = '# Exact Desktop reference ' + REVISION + '\n'
-    text += ''.join(k + '=' + values[k].replace('\\', '\\\\').replace('\n', '\\n') + '\n' for k in sorted(KEYS))
+    # Java Properties consumes unescaped leading whitespace after '='.
+    def property_value(value):
+        encoded = value.replace('\\', '\\\\').replace('\n', '\\n')
+        encoded = re.sub(r'^ +', lambda m: '\\u0020' * len(m[0]), encoded)
+        return re.sub(r' +$', lambda m: '\\u0020' * len(m[0]), encoded)
+    text += ''.join(k + '=' + property_value(values[k]) + '\n' for k in sorted(KEYS))
     resource = f'desktop/src/main/resources/parity/desktop-reference-{lang}.properties'
     save(resource, text.encode('utf-8'))
 resources = {f'parity/desktop-reference-{lang}.properties': hashlib.sha256((root / f'desktop/src/main/resources/parity/desktop-reference-{lang}.properties').read_bytes()).hexdigest() for lang in ['en', 'zh-Hans']}
@@ -80,6 +98,8 @@ resources = {f'parity/desktop-reference-{lang}.properties': hashlib.sha256((root
 # export. Pinning it here makes the packaged-resource audit cover the icons too.
 resources['fonts/sf_pro_subset.ttf'] = hashlib.sha256(
     (root / 'desktop/src/main/resources/fonts/sf_pro_subset.ttf').read_bytes()).hexdigest()
+for path in sorted((root / 'desktop/src/main/resources/fonts').glob('sf_pro_*.ttf')):
+    resources['fonts/' + path.name] = hashlib.sha256(path.read_bytes()).hexdigest()
 for path in SOURCES:
     hashes[path] = hashlib.sha256(blob(path)).hexdigest()
 audit = {'repository': 'https://github.com/lladlam/melox', 'commit': REVISION,

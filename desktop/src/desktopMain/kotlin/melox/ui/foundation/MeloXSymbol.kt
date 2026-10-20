@@ -91,6 +91,7 @@ enum class MeloXSymbol(
     Lyrics("text.bubble", intArrayOf(0x100332)),
     PersonFill("person.fill", intArrayOf(0x10026A)),
     Star("star", intArrayOf(0x1002C2)),
+    StarFill("star.fill", intArrayOf(0x1002C3)),
     SquareGrid("square.grid.2x2", intArrayOf(0x1001F7)),
     SquareStack("square.stack", intArrayOf(0x10040B)),
     MusicMic("music.mic", intArrayOf(0x10046B)),

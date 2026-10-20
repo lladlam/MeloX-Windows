@@ -109,6 +109,9 @@ fun main(args: Array<String>) = runBlocking {
         option("--artist-id", "").takeIf(String::isNotBlank)?.toLong()?.let {
             melox.ui.navigation.MeloXCollectionLaunchBus.open(melox.ui.navigation.MeloXCollectionTarget.Artist(it))
         }
+        option("--album-id", "").takeIf(String::isNotBlank)?.toLong()?.let {
+            melox.ui.navigation.MeloXCollectionLaunchBus.open(melox.ui.navigation.MeloXCollectionTarget.Album(it))
+        }
         val playId = option("--play-id", "").takeIf(String::isNotBlank)?.toLong()
         option("--local-wavs", "").takeIf(String::isNotBlank)?.let { paths ->
             val tracks = paths.split(',').map { path ->

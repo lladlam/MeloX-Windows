@@ -11,8 +11,11 @@ parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument('directory', type=Path)
 parser.add_argument('--prefix', default='desktop-layout-')
 parser.add_argument('--output', type=Path, required=True)
+parser.add_argument('--require-cold-controls', action='store_true')
 args = parser.parse_args()
 modes = ['controls', 'reload', 'restore', 'reload-current', 'home-dark', 'home-light', 'lyrics-light']
+if args.require_cold_controls or (args.directory / (args.prefix + 'cold-controls') / 'capture.json').is_file():
+    modes.append('cold-controls')
 reports = []
 
 def digest(path):

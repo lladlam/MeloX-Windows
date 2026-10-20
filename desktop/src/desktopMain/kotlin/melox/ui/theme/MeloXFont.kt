@@ -102,8 +102,10 @@ private val sfTypefaces by lazy {
     }.use { it.readBytes() }
     org.jetbrains.skia.Data.makeFromBytes(bytes).use { data ->
         val base = requireNotNull(org.jetbrains.skia.FontMgr.default.makeFromData(data))
-        mapOf(FontWeight.Normal to base, FontWeight.Medium to
-            base.makeClone(org.jetbrains.skia.FontVariation("wght", FontWeight.Medium.weight.toFloat())))
+        listOf(FontWeight.Normal, FontWeight.Medium, FontWeight.SemiBold, FontWeight.Bold).associateWith { weight ->
+            if (weight == FontWeight.Normal) base
+            else base.makeClone(org.jetbrains.skia.FontVariation("wght", weight.weight.toFloat()))
+        }
     }
 }
 
@@ -146,6 +148,12 @@ private val MaterialSymbols = run {
 
 val MeloXLanTingProFontFamily = MiLanPro
 val MeloXSFProFontFamily = SFProSymbols
+private fun desktopTextFamily(kind: String, weights: List<Int>): FontFamily = FontFamily(weights.map { weight ->
+    checkNotNull(loadStaticFont("fonts/sf_pro_${kind}_$weight.ttf", FontWeight(weight)))
+})
+internal val MeloXDesktopTextFontFamily by lazy { desktopTextFamily("text", listOf(400, 500, 600, 700)) }
+internal val MeloXDesktopSubtitleFontFamily by lazy { desktopTextFamily("subtitle", listOf(600)) }
+internal val MeloXDesktopDisplayFontFamily by lazy { desktopTextFamily("display", listOf(700)) }
 val MeloXMaterialSymbolsFamily = MaterialSymbols
 
 val LocalMeloXFontFamily = compositionLocalOf { MeloXLanTingProFontFamily }

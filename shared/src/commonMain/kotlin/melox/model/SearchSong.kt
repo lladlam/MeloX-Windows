@@ -20,6 +20,8 @@ data class SearchSong(
     val providerTrack: MusicTrack? = null,
     val albumId: Long? = null,
     val artistId: Long? = null,
+    val trackNumber: Int? = null,
+    val disc: String? = null,
 ) {
     /** Only provider-native NetEase IDs may reach its write/comment endpoints. */
     val neteaseSongId: Long?
