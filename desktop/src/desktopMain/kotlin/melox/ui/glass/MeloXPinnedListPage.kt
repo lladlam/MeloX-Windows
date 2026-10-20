@@ -54,6 +54,7 @@ fun MeloXPinnedListPage(
     actions: (@Composable RowScope.() -> Unit)? = null,
     content: LazyListScope.() -> Unit,
 ) {
+    val desktop = melox.settings.MeloXSettingsRuntime.desktopLayoutEnabled
     val collapseDistancePx = with(LocalDensity.current) { 56.dp.toPx() }
     val collapseProgress by remember(listState, collapseDistancePx) {
         derivedStateOf {
@@ -63,7 +64,9 @@ fun MeloXPinnedListPage(
     }
     val background = MaterialTheme.colorScheme.background
     val pageBackdrop = rememberMeloXLayerBackdrop()
-    val toolbarHeight = 62.dp
+    val toolbarHeight = if (desktop) 52.dp else 62.dp
+    val resolvedHorizontalPadding = if (desktop) 34.dp else horizontalPadding
+    val resolvedBottomPadding = if (desktop) 104.dp else bottomPadding
 
     Box(modifier.fillMaxSize().background(background)) {
       CompositionLocalProvider(LocalMeloXLayerBackdrop provides pageBackdrop) {
@@ -74,10 +77,10 @@ fun MeloXPinnedListPage(
             state = listState,
             modifier = Modifier.fillMaxSize(),
             contentPadding = PaddingValues(
-                start = horizontalPadding,
+                start = resolvedHorizontalPadding,
                 top = toolbarHeight + 12.dp,
-                end = horizontalPadding,
-                bottom = bottomPadding,
+                end = resolvedHorizontalPadding,
+                bottom = resolvedBottomPadding,
             ),
             verticalArrangement = verticalArrangement,
         ) {
@@ -96,7 +99,7 @@ fun MeloXPinnedListPage(
                         .blur(6.dp * collapseProgress)
                         .offset(y = (-8).dp)
                         .padding(vertical = 8.dp),
-                    style = MeloXTypography.largeTitle,
+                    style = if (desktop) MaterialTheme.typography.headlineLarge else MeloXTypography.largeTitle,
                     fontWeight = FontWeight.Bold,
                 )
             }
@@ -107,7 +110,7 @@ fun MeloXPinnedListPage(
         Box(
             Modifier
                 .fillMaxWidth()
-                .height(toolbarHeight + 38.dp)
+                .height(toolbarHeight + if (desktop) 24.dp else 38.dp)
                  .align(Alignment.TopCenter)
                  .meloXTopFadeBackdrop(background)
                 .meloXBackdropBlur(
@@ -119,10 +122,11 @@ fun MeloXPinnedListPage(
         )
         CompositionLocalProvider(LocalMeloXBackdrop provides true) {
             Row(
-                Modifier.fillMaxWidth().height(62.dp).padding(horizontal = 20.dp),
+                Modifier.fillMaxWidth().height(toolbarHeight).padding(horizontal = if (desktop) 34.dp else 20.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                MeloXGlassIconButton(MeloXSymbol.ChevronLeft, onNavigateBack, contentDescription = "返回")
+                MeloXGlassIconButton(MeloXSymbol.ChevronLeft, onNavigateBack,
+                    modifier = if (desktop) Modifier.size(34.dp) else Modifier, contentDescription = "返回")
                 Column(Modifier.weight(1f), horizontalAlignment = Alignment.CenterHorizontally) {
                     Text(
                         title,

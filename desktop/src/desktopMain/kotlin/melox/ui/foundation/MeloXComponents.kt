@@ -31,27 +31,29 @@ fun MeloXIosTopBar(
     contentPadding: PaddingValues = PaddingValues(horizontal = 20.dp),
     actions: @Composable RowScope.() -> Unit = {},
 ) {
-    Column(modifier = modifier.fillMaxWidth().padding(contentPadding)) {
+    val desktop = melox.settings.MeloXSettingsRuntime.desktopLayoutEnabled
+    val resolvedPadding = if (desktop) PaddingValues(horizontal = 34.dp) else contentPadding
+    Column(modifier = modifier.fillMaxWidth().padding(resolvedPadding)) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(if (onBack != null) 56.dp else 44.dp),
+                .height(if (desktop) 52.dp else if (onBack != null) 56.dp else 44.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             if (onBack != null) {
                 MeloXSymbolIcon(
                     symbol = MeloXSymbol.ChevronLeft,
                     modifier = Modifier
-                        .size(44.dp)
+                        .size(if (desktop) 34.dp else 44.dp)
                         .clickable(onClick = onBack),
-                    color = MeloXColors.Primary,
-                    size = 24,
+                    color = if (desktop) MaterialTheme.colorScheme.onBackground.copy(alpha = .72f) else MeloXColors.Primary,
+                    size = if (desktop) 18 else 24,
                 )
                 Spacer(modifier = Modifier.width(8.dp))
             }
             if (onBack != null) Text(
                 text = title,
-                style = MeloXTypography.largeTitle,
+                style = if (desktop) MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold) else MeloXTypography.largeTitle,
                 color = MaterialTheme.colorScheme.onBackground,
                 modifier = Modifier.weight(1f),
                 maxLines = 1,
@@ -62,7 +64,7 @@ fun MeloXIosTopBar(
             }
         }
         if (onBack == null) Text(
-            title, style = MeloXTypography.largeTitle,
+            title, style = if (desktop) MaterialTheme.typography.headlineLarge.copy(fontWeight = FontWeight.Bold) else MeloXTypography.largeTitle,
             color = MaterialTheme.colorScheme.onBackground,
             maxLines = 1, overflow = TextOverflow.Ellipsis,
         )
@@ -75,7 +77,8 @@ fun MeloXIosGroupedList(
     surfaceColor: Color = MaterialTheme.colorScheme.surface,
     content: @Composable ColumnScope.() -> Unit,
 ) {
-    Column(modifier.fillMaxWidth().clip(RoundedCornerShape(28.dp)).background(surfaceColor), content = content)
+    val desktop = melox.settings.MeloXSettingsRuntime.desktopLayoutEnabled
+    Column(modifier.fillMaxWidth().clip(RoundedCornerShape(if (desktop) 10.dp else 28.dp)).background(surfaceColor), content = content)
 }
 
 @Composable
@@ -93,6 +96,7 @@ fun MeloXIosListRow(
     chevronTint: Color = melox.ui.glass.MeloXSystemColors.Red.copy(alpha = 0.88f),
     showTopSeparator: Boolean = false,
 ) {
+    val desktop = melox.settings.MeloXSettingsRuntime.desktopLayoutEnabled
     val interactionSource = remember { MutableInteractionSource() }
     val isHovered by interactionSource.collectIsHoveredAsState()
     val separator = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.10f)
@@ -100,7 +104,7 @@ fun MeloXIosListRow(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .height(if (subtitle != null) 68.dp else 56.dp)
+            .height(if (desktop) { if (subtitle != null) 58.dp else 48.dp } else if (subtitle != null) 68.dp else 56.dp)
             .drawBehind {
                 if (showTopSeparator) drawLine(
                     color = separator,
@@ -117,7 +121,7 @@ fun MeloXIosListRow(
             .background(
                 if (isHovered) Color.White.copy(alpha = 0.05f) else Color.Transparent
             )
-            .padding(horizontal = 16.dp),
+            .padding(horizontal = if (desktop) 13.dp else 16.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         if (leading != null) {
@@ -130,13 +134,13 @@ fun MeloXIosListRow(
         Column(modifier = Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(2.dp)) {
             Text(
                 text = title,
-                style = MeloXTypography.body,
+                style = if (desktop) MaterialTheme.typography.bodyMedium else MeloXTypography.body,
                 color = MaterialTheme.colorScheme.onBackground,
             )
             if (subtitle != null) {
                 Text(
                     text = subtitle,
-                    style = MeloXTypography.subheadline,
+                    style = if (desktop) MaterialTheme.typography.bodySmall else MeloXTypography.subheadline,
                     color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.52f),
                     maxLines = 2,
                 )

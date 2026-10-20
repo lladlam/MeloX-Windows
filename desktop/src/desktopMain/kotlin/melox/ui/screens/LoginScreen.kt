@@ -53,6 +53,7 @@ import melox.provider.qqmusic.QQMusicSessionStore
 import melox.ui.navigation.MeloXNavState
 import melox.ui.theme.MeloXColors
 import melox.ui.theme.MeloXLanTingProFontFamily
+import melox.settings.MeloXSettingsRuntime
 import java.awt.Cursor
 import org.jetbrains.skia.Image
 
@@ -1375,19 +1376,23 @@ private fun LoginButton(
 @Composable
 fun LoginScreen(navState: MeloXNavState, initialProviderId: String? = null) {
     val state = remember { LoginScreenState().apply { dialogTarget = allProviders.firstOrNull { it.id == initialProviderId } } }
+    val desktop = MeloXSettingsRuntime.desktopLayoutEnabled
 
+    Box(
+        modifier = Modifier.fillMaxSize().testTag("account-screen").background(MeloXColors.pageBackground()),
+        contentAlignment = if (desktop) Alignment.TopCenter else Alignment.Center,
+    ) {
     Column(
-        modifier = Modifier
-             .fillMaxSize()
-             .testTag("account-screen")
-             .background(MeloXColors.pageBackground()),
+        modifier = (if (desktop) Modifier.padding(top = 26.dp, bottom = 96.dp).widthIn(max = 700.dp).fillMaxWidth(.92f)
+            .clip(RoundedCornerShape(14.dp)).background(MaterialTheme.colorScheme.surface)
+        else Modifier.fillMaxSize()),
     ) {
         LoginTopBar(onBack = { navState.goBack() })
 
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
-            contentPadding = PaddingValues(horizontal = 20.dp, vertical = 12.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+            contentPadding = PaddingValues(horizontal = if (desktop) 24.dp else 20.dp, vertical = if (desktop) 18.dp else 12.dp),
+            verticalArrangement = Arrangement.spacedBy(if (desktop) 10.dp else 8.dp),
         ) {
             items(allProviders) { provider ->
                 ProviderCard(
@@ -1410,6 +1415,7 @@ fun LoginScreen(navState: MeloXNavState, initialProviderId: String? = null) {
                 Spacer(modifier = Modifier.height(16.dp))
             }
         }
+    }
     }
 
     // Login dialog

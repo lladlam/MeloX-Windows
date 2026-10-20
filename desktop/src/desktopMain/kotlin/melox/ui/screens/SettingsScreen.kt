@@ -1,18 +1,24 @@
 package melox.ui.screens
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.focusable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
@@ -68,6 +74,8 @@ import melox.ui.legal.pinnedString
 import melox.account.rememberNeteaseSessionStore
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
 
 private enum class SettingsRoute(val resourceKey: String, val symbol: String) {
@@ -132,6 +140,19 @@ fun SettingsScreen(
     var detailRoute by remember { mutableStateOf<SettingsRoute?>(null) }
     if (route != null) detailRoute = route
     MeloXBackHandler(enabled = route != null) { route = null }
+    if (MeloXSettingsRuntime.desktopLayoutEnabled) {
+        DesktopSettingsLayout(
+            selected = route ?: SettingsRoute.General,
+            onSelected = { route = it },
+            currentSource = currentSource,
+            onSourceSelected = onSourceSelected,
+            onOpenMessages = onOpenMessages,
+            session = session,
+            onOpenLogin = onOpenLogin,
+            onOpenServices = onOpenServices,
+        )
+        return
+    }
     Box(Modifier.fillMaxSize().focusRequester(detailFocus).focusable()) {
     val normalized = search.trim().lowercase()
     val visibleSections = SettingsSections.mapNotNull { (title, items) ->
@@ -204,6 +225,138 @@ fun SettingsScreen(
         detailRoute?.let { SettingsDetail(it, currentSource, onSourceSelected, onOpenMessages, onBack = { route = null }) }
     }
     }
+    }
+}
+
+private val DesktopSettingsRoutes = listOf(
+    SettingsRoute.General,
+    SettingsRoute.Features,
+    SettingsRoute.Playback,
+    SettingsRoute.Storage,
+    SettingsRoute.Developer,
+)
+
+private fun desktopSettingsGroup(route: SettingsRoute): List<SettingsRoute> = when (route) {
+    SettingsRoute.General, SettingsRoute.Appearance, SettingsRoute.Content ->
+        listOf(SettingsRoute.General, SettingsRoute.Appearance, SettingsRoute.Content)
+    SettingsRoute.Features, SettingsRoute.TabLayout, SettingsRoute.Recognition, SettingsRoute.Messages, SettingsRoute.ListenTogether ->
+        listOf(SettingsRoute.Features, SettingsRoute.TabLayout, SettingsRoute.Recognition, SettingsRoute.Messages, SettingsRoute.ListenTogether)
+    SettingsRoute.Playback, SettingsRoute.Lyrics, SettingsRoute.SystemPlayback, SettingsRoute.SkylineLyrics, SettingsRoute.FloatingLyrics ->
+        listOf(SettingsRoute.Playback, SettingsRoute.Lyrics, SettingsRoute.SystemPlayback, SettingsRoute.SkylineLyrics, SettingsRoute.FloatingLyrics)
+    SettingsRoute.Storage -> listOf(SettingsRoute.Storage)
+    else -> listOf(SettingsRoute.RemoteConfig, SettingsRoute.About, SettingsRoute.Legal, SettingsRoute.Privacy, SettingsRoute.Developer, SettingsRoute.Experimental)
+}
+
+/** Windows counterpart of the fixed 650pt macOS settings window. */
+@Composable
+private fun DesktopSettingsLayout(
+    selected: SettingsRoute,
+    onSelected: (SettingsRoute) -> Unit,
+    currentSource: MusicSource,
+    onSourceSelected: (MusicSource) -> Unit,
+    onOpenMessages: () -> Unit,
+    session: NeteaseSessionStore,
+    onOpenLogin: () -> Unit,
+    onOpenServices: () -> Unit,
+) {
+    val colors = MaterialTheme.colorScheme
+    Box(
+        Modifier.fillMaxSize().background(MeloXColors.pageBackground()).testTag("desktop-settings-window"),
+        contentAlignment = Alignment.TopCenter,
+    ) {
+        Column(
+            Modifier.padding(top = 24.dp, bottom = 94.dp)
+                .widthIn(max = 760.dp).fillMaxWidth(.92f)
+                .shadow(18.dp, RoundedCornerShape(14.dp))
+                .clip(RoundedCornerShape(14.dp))
+                .background(colors.surface)
+                .border(.65.dp, colors.outlineVariant.copy(alpha = .55f), RoundedCornerShape(14.dp)),
+        ) {
+            Row(
+                Modifier.fillMaxWidth().height(72.dp).padding(horizontal = 18.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = androidx.compose.foundation.layout.Arrangement.SpaceEvenly,
+            ) {
+                DesktopSettingsRoutes.forEach { destination ->
+                    val active = when (destination) {
+                        SettingsRoute.General -> selected in setOf(SettingsRoute.General, SettingsRoute.Appearance, SettingsRoute.Content)
+                        SettingsRoute.Features -> selected in setOf(SettingsRoute.Features, SettingsRoute.TabLayout, SettingsRoute.Recognition, SettingsRoute.Messages, SettingsRoute.ListenTogether)
+                        SettingsRoute.Playback -> selected in setOf(SettingsRoute.Playback, SettingsRoute.Lyrics, SettingsRoute.SystemPlayback, SettingsRoute.SkylineLyrics, SettingsRoute.FloatingLyrics)
+                        SettingsRoute.Storage -> selected == SettingsRoute.Storage
+                        SettingsRoute.Developer -> selected in setOf(SettingsRoute.Developer, SettingsRoute.Experimental, SettingsRoute.RemoteConfig, SettingsRoute.About, SettingsRoute.Legal, SettingsRoute.Privacy)
+                        else -> selected == destination
+                    }
+                    Column(
+                        Modifier.width(96.dp).clip(RoundedCornerShape(9.dp))
+                            .background(if (active) colors.onSurface.copy(alpha = .09f) else androidx.compose.ui.graphics.Color.Transparent)
+                            .clickable { onSelected(destination) }.padding(vertical = 8.dp)
+                            .testTag("desktop-settings-tab:${destination.name}"),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                    ) {
+                        Text(destination.symbol, fontSize = 20.sp, color = if (active) androidx.compose.ui.graphics.Color.Red else colors.onSurface.copy(alpha = .72f))
+                        Text(destination.title, fontSize = 11.sp, fontWeight = if (active) FontWeight.SemiBold else FontWeight.Normal, maxLines = 1)
+                    }
+                }
+            }
+            Box(Modifier.fillMaxWidth().height(.65.dp).background(colors.outlineVariant.copy(alpha = .7f)))
+            Column(
+                Modifier.fillMaxWidth().heightIn(min = 420.dp, max = 620.dp)
+                    .verticalScroll(rememberScrollState()).padding(horizontal = 28.dp, vertical = 22.dp),
+            ) {
+                Text(selected.title, fontSize = 24.sp, lineHeight = 30.sp, fontWeight = FontWeight.Bold)
+                val relatedRoutes = desktopSettingsGroup(selected)
+                if (relatedRoutes.size > 1) {
+                    Row(
+                        Modifier.fillMaxWidth().padding(top = 14.dp).horizontalScroll(rememberScrollState()),
+                        horizontalArrangement = androidx.compose.foundation.layout.Arrangement.spacedBy(7.dp),
+                    ) {
+                        relatedRoutes.forEach { route ->
+                            val active = route == selected
+                            Text(
+                                route.title,
+                                modifier = Modifier.clip(RoundedCornerShape(7.dp))
+                                    .background(if (active) androidx.compose.ui.graphics.Color.Red else colors.onSurface.copy(alpha = .07f))
+                                    .clickable { onSelected(route) }
+                                    .padding(horizontal = 12.dp, vertical = 7.dp)
+                                    .testTag("desktop-settings-subtab:${route.name}"),
+                                color = if (active) androidx.compose.ui.graphics.Color.White else colors.onSurface.copy(alpha = .76f),
+                                fontSize = 12.sp,
+                                fontWeight = if (active) FontWeight.SemiBold else FontWeight.Normal,
+                                maxLines = 1,
+                            )
+                        }
+                    }
+                }
+                Spacer(Modifier.height(18.dp))
+                when (selected) {
+                    SettingsRoute.General -> {
+                        SettingsAccountCard(session, onOpenLogin, onOpenServices)
+                        Spacer(Modifier.height(20.dp))
+                        GeneralSettings()
+                    }
+                    SettingsRoute.Appearance -> AppearanceSettings()
+                    SettingsRoute.Content -> ContentSettings()
+                    SettingsRoute.Features -> FeatureSettings()
+                    SettingsRoute.TabLayout -> TabLayoutSettings(currentSource)
+                    SettingsRoute.Playback -> PinnedPlaybackSettings()
+                    SettingsRoute.Lyrics -> LyricsSettings()
+                    SettingsRoute.SystemPlayback -> SystemPlaybackSettings()
+                    SettingsRoute.SkylineLyrics -> SkylineLyricsSettings()
+                    SettingsRoute.FloatingLyrics -> FloatingLyricsSettings()
+                    SettingsRoute.Storage -> PinnedStorageSettings()
+                    SettingsRoute.Recognition -> RecognitionSettings()
+                    SettingsRoute.Messages -> MessagesSettings(onOpenMessages)
+                    SettingsRoute.ListenTogether -> ListenTogetherSettings()
+                    SettingsRoute.RemoteConfig -> RemoteConfigSettings()
+                    SettingsRoute.About -> PinnedAboutSettings()
+                    SettingsRoute.Legal -> LegalSettings()
+                    SettingsRoute.Privacy -> PrivacySettings()
+                    SettingsRoute.Developer -> DeveloperSettings()
+                    SettingsRoute.Experimental -> ExperimentalSettings(currentSource)
+                }
+                Spacer(Modifier.height(18.dp))
+            }
+        }
     }
 }
 

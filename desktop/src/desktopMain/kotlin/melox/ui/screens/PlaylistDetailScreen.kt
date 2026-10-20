@@ -115,6 +115,58 @@ fun PlaylistDetailScreen(
     val filtered = songs.filter { filter.isBlank() || it.name.contains(filter, true) || it.artists.contains(filter, true) || it.album.contains(filter, true) }
     val totalDurationMs = songs.sumOf { it.durationMs }
 
+    if (MeloXSettingsRuntime.desktopLayoutEnabled) {
+        melox.ui.desktop.MeloXDesktopCollectionDetail(
+            kind = "歌单",
+            title = shown.name,
+            subtitle = shown.creatorName.ifBlank { null },
+            metadata = "${if (detail != null) songs.size else shown.trackCount} 首歌曲 · ${formatTotalDuration(totalDurationMs)}",
+            description = shown.description,
+            artworkUrl = shown.coverUrl,
+            songs = filtered,
+            loading = loading,
+            error = error,
+            playingId = playingId,
+            onBack = onBack,
+            onPlayAll = { songs.firstOrNull()?.let { PlaybackCommands.playQueue(songs, it.id) } },
+            onShuffle = { songs.shuffled().let { shuffled -> shuffled.firstOrNull()?.let { PlaybackCommands.playQueue(shuffled, it.id) } } },
+            favoriteLabel = if (playlist.providerPlaylist != null) null else if (subscribed == true) "★ 已收藏" else "☆ 收藏",
+            onFavorite = if (playlist.providerPlaylist != null || busy) null else {{
+                busy = true
+                scope.launch {
+                    try {
+                        melox.network.NeteaseMusicOperationsClient(cookieProvider = { NeteaseSessionStore.readCookie() })
+                            .setPlaylistSubscribed(shown.id, subscribed != true)
+                        subscribed = subscribed != true
+                        operation = if (subscribed == true) "已收藏" else "已取消收藏"
+                    } catch (cancelled: kotlinx.coroutines.CancellationException) { throw cancelled }
+                    catch (failure: Exception) { operation = failure.message ?: "收藏失败" }
+                    finally { busy = false }
+                }
+            }},
+            onDownload = if (playlist.providerPlaylist != null) null else {{
+                val store = melox.download.MeloXDownloadStore.instance()
+                val ref = melox.download.MeloXDownloadPlaylistRef(shown.id, shown.name, shown.coverUrl)
+                songs.forEach { store.start(it, melox.audio.MusicQualityPreferences.read(), ref) }
+                operation = "已加入下载队列"
+            }},
+            filter = filter,
+            onFilterChange = { filter = it },
+            onSong = { PlaybackCommands.playQueue(songs, it.id) },
+            onMore = { actionSong = it },
+            status = operation,
+            tag = "desktop-playlist-detail",
+        )
+        actionSong?.let { song ->
+            MeloXSongActionsOverlay(song, songs, true, { actionSong = null },
+                sourcePlaylist = if (playlist.providerPlaylist == null) melox.download.MeloXDownloadPlaylistRef(shown.id, shown.name, shown.coverUrl) else null,
+                sourceOwnedPlaylistId = shown.id.takeIf { playlist.providerPlaylist == null && accountUserId != null && shown.creatorUserId == accountUserId },
+                sourceProviderPlaylist = playlist.providerPlaylist,
+                onSourcePlaylistChanged = { refreshRevision++ })
+        }
+        return
+    }
+
     Column(modifier = Modifier.fillMaxSize().testTag("playlist-detail").background(MeloXColors.pageBackground())) {
         Row(
             modifier = Modifier.fillMaxWidth().height(48.dp).padding(horizontal = 16.dp),

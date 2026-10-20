@@ -24,6 +24,7 @@ import melox.model.SearchSong
 import melox.network.MeloXAlbumDetail
 import melox.network.NeteaseCollectionDetailsClient
 import melox.playback.PlaybackCommands
+import melox.settings.MeloXSettingsRuntime
 import melox.ui.theme.MeloXColors
 import melox.ui.theme.MeloXLanTingProFontFamily
 
@@ -66,6 +67,27 @@ fun AlbumDetailScreen(
     val title = album?.name?.ifBlank { albumName } ?: albumName
     val artistName = album?.artistText?.ifBlank { null } ?: "未知歌手"
     val totalMinutes = (songs.sumOf { it.durationMs } / 1000 / 60).toInt()
+
+    if (MeloXSettingsRuntime.desktopLayoutEnabled) {
+        melox.ui.desktop.MeloXDesktopCollectionDetail(
+            kind = "专辑",
+            title = title,
+            subtitle = artistName,
+            metadata = "${songs.size} 首歌曲 · ${totalMinutes}分钟",
+            description = detail?.description,
+            artworkUrl = album?.artworkUrl,
+            songs = songs,
+            loading = loading,
+            error = error,
+            playingId = playingId,
+            onBack = onBack,
+            onPlayAll = { songs.firstOrNull()?.let { PlaybackCommands.playQueue(songs, it.id) } },
+            onShuffle = { songs.shuffled().let { shuffled -> shuffled.firstOrNull()?.let { PlaybackCommands.playQueue(shuffled, it.id) } } },
+            onSong = { PlaybackCommands.playQueue(songs, it.id) },
+            tag = "desktop-album-detail",
+        )
+        return
+    }
 
     Column(modifier = Modifier.fillMaxSize().background(MeloXColors.pageBackground()).testTag("album-detail")) {
         Row(

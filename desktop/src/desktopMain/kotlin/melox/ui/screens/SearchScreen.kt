@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -85,6 +86,7 @@ import melox.network.MeloXSearchMediaItem
 import melox.network.NeteaseUniversalSearchClient
 import melox.playback.PlaybackCommands
 import melox.playback.ProviderPlaybackCommands
+import melox.settings.MeloXSettingsRuntime
 import melox.ui.foundation.MeloXIosTopBar
 import melox.ui.foundation.MeloXSearchBackMorphIcon
 import melox.ui.foundation.MeloXSymbol
@@ -385,11 +387,21 @@ fun SearchScreen(
                 onBack = { categoryTitle = null },
                 onPlaylist = { selectedDetail = it.asSearchItem() },
             )
-            else -> Column(Modifier.fillMaxSize().padding(top = 26.dp).testTag("search-state").semantics {
+            else -> Column(Modifier.fillMaxSize().padding(top = if (MeloXSettingsRuntime.desktopLayoutEnabled) 0.dp else 26.dp).testTag("search-state").semantics {
                 stateDescription = if (unifiedEnabled) "Unified>${unifiedSources.sortedBy { it.storageValue }.joinToString(">") { it.storageValue }}" else "Provider>${source.storageValue}"
             }) {
-                MeloXIosTopBar(title = pinnedString("tab_search"))
-                Spacer(Modifier.height(16.dp))
+                if (MeloXSettingsRuntime.desktopLayoutEnabled) {
+                    Text(
+                        pinnedString("tab_search"),
+                        modifier = Modifier.padding(start = 34.dp, end = 34.dp, top = 28.dp, bottom = 16.dp),
+                        fontSize = 32.sp,
+                        lineHeight = 38.sp,
+                        fontWeight = FontWeight.Bold,
+                    )
+                } else {
+                    MeloXIosTopBar(title = pinnedString("tab_search"))
+                    Spacer(Modifier.height(16.dp))
+                }
                 SearchField(
                     value = query,
                     onValueChange = { query = it; skipSearchDebounce = false },
@@ -518,10 +530,14 @@ private fun SearchField(
     onBack: () -> Unit,
 ) {
     var focused by remember { mutableStateOf(false) }
+    val desktop = MeloXSettingsRuntime.desktopLayoutEnabled
     MeloXGlassTextField(
         value = value,
         onValueChange = onValueChange,
-        modifier = Modifier.padding(horizontal = 20.dp).testTag("search-query"),
+        modifier = Modifier
+            .padding(horizontal = if (desktop) 34.dp else 20.dp)
+            .then(if (desktop) Modifier.widthIn(max = 520.dp) else Modifier)
+            .testTag("search-query"),
         leadingContent = {
             MeloXSearchBackMorphIcon(
                 focused = focused,
@@ -555,7 +571,7 @@ private fun SearchField(
         },
         textStyle = androidx.compose.ui.text.TextStyle(
             color = MaterialTheme.colorScheme.onSurface,
-            fontSize = 17.sp,
+            fontSize = if (desktop) 14.sp else 17.sp,
             lineHeight = 22.sp,
         ),
         keyboardOptions = androidx.compose.foundation.text.KeyboardOptions(imeAction = androidx.compose.ui.text.input.ImeAction.Search),
@@ -570,14 +586,15 @@ private fun SearchScopes(
     availableKinds: List<MeloXSearchKind>,
     onKind: (MeloXSearchKind) -> Unit,
 ) {
+    val desktop = MeloXSettingsRuntime.desktopLayoutEnabled
     LazyRow(
-        contentPadding = PaddingValues(horizontal = 20.dp, vertical = 12.dp),
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        contentPadding = PaddingValues(horizontal = if (desktop) 34.dp else 20.dp, vertical = 12.dp),
+        horizontalArrangement = Arrangement.spacedBy(if (desktop) 6.dp else 8.dp),
     ) {
         items(availableKinds) { item ->
             MeloXGlassButton(
                 onClick = { onKind(item) },
-                modifier = Modifier.height(44.dp).testTag("search-kind-${item.name.lowercase()}").semantics { selected = item == kind },
+                modifier = Modifier.height(if (desktop) 32.dp else 44.dp).testTag("search-kind-${item.name.lowercase()}").semantics { selected = item == kind },
                 style = MeloXGlassButtonStyle.Bordered,
                 shape = MeloXShapes.capsule,
                 tint = if (item == kind) MeloXSystemColors.Blue.copy(alpha = .28f) else Color.Transparent,
@@ -600,24 +617,26 @@ private fun SearchDiscovery(
     onPlaylist: (NeteasePlaylistSummary) -> Unit,
     onCategory: (String) -> Unit,
 ) {
-    val categoryColumns = melox.ui.layout.rememberMeloXWindowInfo().gridColumns.coerceIn(2, 4)
-    LazyColumn(Modifier.fillMaxSize(), contentPadding = PaddingValues(bottom = 140.dp)) {
+    val desktop = MeloXSettingsRuntime.desktopLayoutEnabled
+    val categoryColumns = if (desktop) 4 else melox.ui.layout.rememberMeloXWindowInfo().gridColumns.coerceIn(2, 4)
+    val horizontal = if (desktop) 34.dp else 20.dp
+    LazyColumn(Modifier.fillMaxSize(), contentPadding = PaddingValues(bottom = if (desktop) 104.dp else 140.dp)) {
         if (recommendations.isNotEmpty()) {
-            item { Text(pinnedString("search_trending"), modifier = Modifier.padding(start = 20.dp, top = 14.dp, bottom = 12.dp), fontSize = 24.sp, fontWeight = FontWeight.Bold, color = MeloXColors.pageOnSurface()) }
+            item { Text(pinnedString("search_trending"), modifier = Modifier.padding(start = horizontal, top = 14.dp, bottom = 12.dp), fontSize = if (desktop) 20.sp else 24.sp, fontWeight = FontWeight.Bold, color = MeloXColors.pageOnSurface()) }
             item {
-                LazyRow(contentPadding = PaddingValues(horizontal = 20.dp), horizontalArrangement = Arrangement.spacedBy(14.dp)) {
+                LazyRow(contentPadding = PaddingValues(horizontal = horizontal), horizontalArrangement = Arrangement.spacedBy(if (desktop) 20.dp else 14.dp)) {
                     items(recommendations, key = { it.id }) { playlist ->
-                        Column(Modifier.width(160.dp).clickable { onPlaylist(playlist) }) {
-                            MeloXArtworkImage(playlist.coverUrl, MeloXColors.SurfaceVariant, Modifier.size(160.dp).clip(RoundedCornerShape(14.dp)))
-                            Text(playlist.name, modifier = Modifier.padding(top = 7.dp), maxLines = 2, overflow = TextOverflow.Ellipsis, fontWeight = FontWeight.SemiBold, color = MeloXColors.pageOnSurface())
+                        Column(Modifier.width(if (desktop) 172.dp else 160.dp).clickable { onPlaylist(playlist) }) {
+                            MeloXArtworkImage(playlist.coverUrl, MeloXColors.SurfaceVariant, Modifier.size(if (desktop) 172.dp else 160.dp).clip(RoundedCornerShape(if (desktop) 9.dp else 14.dp)))
+                            Text(playlist.name, modifier = Modifier.padding(top = 7.dp), maxLines = 2, overflow = TextOverflow.Ellipsis, fontSize = if (desktop) 13.sp else 14.sp, fontWeight = FontWeight.SemiBold, color = MeloXColors.pageOnSurface())
                         }
                     }
                 }
             }
         }
-        item { Text(pinnedString("search_browse"), modifier = Modifier.padding(start = 20.dp, top = 26.dp, bottom = 12.dp), fontSize = 24.sp, fontWeight = FontWeight.Bold, color = MeloXColors.pageOnSurface()) }
+        item { Text(pinnedString("search_browse"), modifier = Modifier.padding(start = horizontal, top = 26.dp, bottom = 12.dp), fontSize = if (desktop) 20.sp else 24.sp, fontWeight = FontWeight.Bold, color = MeloXColors.pageOnSurface()) }
         items(SearchCategories.filter { it != "播客" || melox.settings.MeloXSettingsRuntime.podcastsEnabled }.chunked(categoryColumns)) { pair ->
-            Row(Modifier.fillMaxWidth().padding(horizontal = 20.dp, vertical = 6.dp), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+            Row(Modifier.fillMaxWidth().padding(horizontal = horizontal, vertical = 6.dp), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                 pair.forEach { category -> SearchCategoryCard(category, Modifier.weight(1f)) { onCategory(category) } }
                 repeat(categoryColumns - pair.size) { Spacer(Modifier.weight(1f)) }
             }
@@ -637,8 +656,8 @@ private fun SearchCategoryCard(title: String, modifier: Modifier, onClick: () ->
     Box(
         modifier
             .testTag("search-category-${SearchCategories.indexOf(title)}")
-            .height(96.dp)
-            .clip(MeloXShapes.compact)
+            .height(if (MeloXSettingsRuntime.desktopLayoutEnabled) 78.dp else 96.dp)
+            .clip(if (MeloXSettingsRuntime.desktopLayoutEnabled) RoundedCornerShape(10.dp) else MeloXShapes.compact)
             .background(tint)
             .clickable(onClick = onClick)
             .padding(14.dp),
@@ -694,7 +713,8 @@ private fun SearchSongResults(
     onMore: ((SearchSong) -> Unit)? = null,
     onLike: ((SearchSong) -> Unit)? = null,
 ) {
-    LazyColumn(Modifier.fillMaxSize(), contentPadding = PaddingValues(start = 20.dp, end = 20.dp, bottom = MeloXBottomContentClearanceDp)) {
+    val desktop = MeloXSettingsRuntime.desktopLayoutEnabled
+    LazyColumn(Modifier.fillMaxSize(), contentPadding = PaddingValues(start = if (desktop) 34.dp else 20.dp, end = if (desktop) 34.dp else 20.dp, bottom = if (desktop) 104.dp else MeloXBottomContentClearanceDp)) {
         if (values.isEmpty()) item { Text(pinnedString("search_no_songs"), Modifier.padding(vertical = 20.dp).testTag("search-empty"), color = MaterialTheme.colorScheme.onSurface.copy(alpha = .46f)) }
         items(values, key = { it.id }) { song ->
             SearchSwipeSongRow(song, onPlay = { onPlay(song) }, onMore = onMore?.let { { it(song) } }, modifier = Modifier.testTag("search-song-${song.id}"),
@@ -714,10 +734,11 @@ private fun SearchSwipeSongRow(song: SearchSong, onPlay: () -> Unit, onMore: (()
         endActions = listOfNotNull(endAction),
         startFullSwipeActionIndex = if (melox.settings.MeloXSettingsRuntime.swipeFullAction == melox.settings.MeloXSwipeFullAction.AddToQueue) 1 else 0,
         onClick = onPlay, onLongClick = onMore, modifier = modifier) {
-        Row(Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 9.dp), verticalAlignment = Alignment.CenterVertically) {
-            MeloXArtworkImage(song.artworkUrl, MeloXColors.SurfaceVariant, Modifier.size(52.dp).clip(RoundedCornerShape(8.dp)))
+        val desktop = MeloXSettingsRuntime.desktopLayoutEnabled
+        Row(Modifier.fillMaxWidth().height(if (desktop) 54.dp else 70.dp).padding(horizontal = if (desktop) 8.dp else 12.dp, vertical = if (desktop) 5.dp else 9.dp), verticalAlignment = Alignment.CenterVertically) {
+            MeloXArtworkImage(song.artworkUrl, MeloXColors.SurfaceVariant, Modifier.size(if (desktop) 40.dp else 52.dp).clip(RoundedCornerShape(if (desktop) 6.dp else 8.dp)))
             Column(Modifier.padding(start = 12.dp).weight(1f)) {
-                Text(song.name, maxLines = 1, overflow = TextOverflow.Ellipsis, color = MeloXColors.pageOnSurface(), fontSize = 17.sp, fontWeight = FontWeight.Medium)
+                Text(song.name, maxLines = 1, overflow = TextOverflow.Ellipsis, color = MeloXColors.pageOnSurface(), fontSize = if (desktop) 14.sp else 17.sp, fontWeight = FontWeight.Medium)
                 Text(listOfNotNull(song.artists, song.album.takeIf(String::isNotBlank), sourceLabel).joinToString(" · "),
                     maxLines = 1, overflow = TextOverflow.Ellipsis, color = MaterialTheme.colorScheme.onSurface.copy(alpha = .5f), fontSize = 13.sp)
             }

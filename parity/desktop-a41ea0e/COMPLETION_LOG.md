@@ -1,5 +1,22 @@
 # Desktop 迁移记录
 
+## 3. Collection 详情、账户与消息桌面化
+
+- 新增共用 Desktop collection 详情组件：对齐真源 278×278 封面、34pt 间距、32pt 标题、22pt 作者、13pt 元数据、桌面操作按钮、搜索和曲目表列。
+- 歌单与专辑在 Desktop layout 下改走该组件，并继续使用真实播放、随机播放、收藏、下载、筛选和歌曲菜单；关闭开关仍使用原移动端结构。
+- 多 Provider 账户页改为居中的 700pt 桌面窗口表面，保留所有现有真实登录能力与弹窗。
+- 私信改为 286pt 联系人侧栏和会话详情双栏布局，联系人选中态、消息气泡、发送与错误处理继续接真实接口。
+- 使用工作区 OpenJDK 21 和固定 Gradle 9.5.1 再次编译 `:desktop:compileKotlinDesktop`，结果成功。
+
+## 2. 桌面搜索、发现、资料库与设置页面化
+
+- Desktop layout 开启时，搜索页采用 32pt 桌面标题、最大 520pt 搜索框、32pt scope、34pt 内容留白、桌面推荐卡片和 54pt 曲目行；原布局分支保持原尺寸。
+- 发现页采用固定提交对应的 32pt 标题、宽幅 hero、自适应最小 145pt 媒体网格、20pt 横向／24pt 纵向间距及 9pt 封面圆角；继续使用真实分类和 Provider 数据。
+- 资料库的歌曲与歌单页加入桌面 34pt 留白、54pt 行高、40pt 封面、紧凑字号与 520pt 分页栏；原 Android 风格在关闭 Desktop layout 后仍走原有分支。
+- 设置改为居中的桌面窗口表面，提供 General、Features、Playback、Files、Advanced 五个顶部入口和组内子页；账号、布局开关及现有真实设置能力全部保留。
+- 共用顶栏、分组列表和固定详情页在 Desktop layout 下统一为 34pt 页面留白、32pt 标题、52pt toolbar、10pt 分组圆角与 48／58pt 紧凑行，因此账号、登录、详情、云盘、下载等复用页面也不再显示移动端密度；关闭开关仍使用原组件指标。
+- 使用工作区 OpenJDK 21 和仓库固定 Gradle 9.5.1 编译 `:desktop:compileKotlinDesktop`，结果成功。未以本次编译冒充固定 macOS 同内容截图或 Windows 实机像素验收。
+
 ## 1. 保留当前 UI，加入桌面切换及首批源布局（1ccc123）
 
 - 实现提交：`1ccc123830e7662e0a2e6989de237a2ed3c64dcb`，已正常推送 `main`。

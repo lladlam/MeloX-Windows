@@ -230,11 +230,26 @@ private fun ExploreLayout(
     error: String?,
     onCollection: (ExploreCollection) -> Unit,
 ) {
-    Column(Modifier.fillMaxSize().padding(top = 18.dp)) {
-        MeloXIosTopBar(title = "探索")
+    val desktop = MeloXSettingsRuntime.desktopLayoutEnabled
+    Column(
+        Modifier.fillMaxSize()
+            .background(MeloXColors.pageBackground())
+            .padding(top = if (desktop) 0.dp else 18.dp),
+    ) {
+        if (desktop) {
+            Text(
+                text = melox.ui.desktop.desktopString("ui.navigation.explore"),
+                modifier = Modifier.padding(start = 34.dp, end = 34.dp, top = 28.dp, bottom = 12.dp),
+                fontSize = 32.sp,
+                lineHeight = 38.sp,
+                fontWeight = FontWeight.Bold,
+            )
+        } else {
+            MeloXIosTopBar(title = "探索")
+        }
         LazyRow(
-            contentPadding = PaddingValues(horizontal = 20.dp, vertical = 14.dp),
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            contentPadding = PaddingValues(horizontal = if (desktop) 34.dp else 20.dp, vertical = 14.dp),
+            horizontalArrangement = Arrangement.spacedBy(if (desktop) 10.dp else 8.dp),
         ) {
             items(categories.size) { index ->
                 val item = categories[index]
@@ -265,7 +280,7 @@ private fun ExploreLayout(
                     )
                 }
             } else {
-                CollectionGrid(collections, onCollection)
+                CollectionGrid(collections, desktop, onCollection)
             }
         }
     }
@@ -274,13 +289,18 @@ private fun ExploreLayout(
 @Composable
 private fun CollectionGrid(
     values: List<ExploreCollection>,
+    desktop: Boolean,
     onSelect: (ExploreCollection) -> Unit,
 ) {
     LazyVerticalGrid(
-        columns = GridCells.Fixed(2),
-        contentPadding = PaddingValues(start = 20.dp, end = 20.dp, bottom = 146.dp),
-        horizontalArrangement = Arrangement.spacedBy(14.dp),
-        verticalArrangement = Arrangement.spacedBy(18.dp),
+        columns = if (desktop) GridCells.Adaptive(minSize = 145.dp) else GridCells.Fixed(2),
+        contentPadding = PaddingValues(
+            start = if (desktop) 34.dp else 20.dp,
+            end = if (desktop) 34.dp else 20.dp,
+            bottom = if (desktop) 104.dp else 146.dp,
+        ),
+        horizontalArrangement = Arrangement.spacedBy(if (desktop) 20.dp else 14.dp),
+        verticalArrangement = Arrangement.spacedBy(if (desktop) 24.dp else 18.dp),
     ) {
         values.firstOrNull()?.let { hero ->
             item(key = "hero-${hero.key}", span = { GridItemSpan(maxLineSpan) }) {
@@ -295,11 +315,12 @@ private fun CollectionGrid(
 
 @Composable
 private fun HeroCollectionCard(value: ExploreCollection, onClick: () -> Unit) {
+    val desktop = MeloXSettingsRuntime.desktopLayoutEnabled
     Box(
         Modifier
             .fillMaxWidth()
-            .aspectRatio(1.75f)
-            .clip(RoundedCornerShape(28.dp))
+            .aspectRatio(if (desktop) 3.1f else 1.75f)
+            .clip(RoundedCornerShape(if (desktop) 16.dp else 28.dp))
             .clickable(onClick = onClick),
     ) {
         MeloXArtworkImage(
@@ -312,13 +333,13 @@ private fun HeroCollectionCard(value: ExploreCollection, onClick: () -> Unit) {
                 .fillMaxSize()
                 .background(Brush.verticalGradient(listOf(Color.Transparent, Color.Black.copy(alpha = .82f)))),
         )
-        Column(Modifier.align(Alignment.BottomStart).padding(20.dp)) {
+        Column(Modifier.align(Alignment.BottomStart).padding(if (desktop) 24.dp else 20.dp)) {
             Text("本周主推", color = Color.White.copy(alpha = .72f), fontSize = 12.sp, fontWeight = FontWeight.Bold)
             Text(
                 value.title,
                 color = Color.White,
-                fontSize = 26.sp,
-                lineHeight = 30.sp,
+                fontSize = if (desktop) 28.sp else 26.sp,
+                lineHeight = if (desktop) 32.sp else 30.sp,
                 fontWeight = FontWeight.Bold,
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis,
@@ -342,12 +363,13 @@ private fun CollectionCard(
     modifier: Modifier,
     onClick: () -> Unit,
 ) {
+    val desktop = MeloXSettingsRuntime.desktopLayoutEnabled
     Column(modifier.clickable(onClick = onClick)) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(174.dp)
-                .clip(RoundedCornerShape(14.dp)),
+                .aspectRatio(1f)
+                .clip(RoundedCornerShape(if (desktop) 9.dp else 14.dp)),
         ) {
             MeloXArtworkImage(
                 url = value.artworkUrl,
@@ -360,8 +382,8 @@ private fun CollectionCard(
             modifier = Modifier.padding(top = 7.dp),
             maxLines = 2,
             overflow = TextOverflow.Ellipsis,
-            fontSize = 15.sp,
-            lineHeight = 19.sp,
+            fontSize = if (desktop) 13.sp else 15.sp,
+            lineHeight = if (desktop) 17.sp else 19.sp,
             fontWeight = FontWeight.SemiBold,
         )
         if (MeloXSettingsRuntime.showPlaylistPlayCount && value.playCount > 0L) {
