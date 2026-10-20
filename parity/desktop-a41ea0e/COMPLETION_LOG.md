@@ -8,7 +8,7 @@
 - 原枚举中重复或错误的 `heart.fill`、`cloud`、`person.fill`、`globe`、`star` 等码点已按真名字形修正；`MeloXSymbol` 现有 67 项全部在子集中有真实 ink。搜索媒体行、账户歌单行、资料库歌单行及播放列表更多菜单的文本箭头／三连点也改为同一 SF 字形；登录和 Provider 服务页返回箭头改为 `chevron.left`。
 - `tools/verify_desktop_symbols.py` 在无 Apple 源字体下载的 CI 环境核对子集字节、135 个符号、67 个枚举、134 个唯一码点和非空轮廓；`source-audit.json` 与打包资源核验扩至 **22 项**。固定 Android 设置图标 18 项仍通过。
 - 显式 JDK 17、Gradle 9.5.1 重新执行全量 `:shared:desktopTest --rerun-tasks`：**274 tests / 56 suites / 0 failures/errors/skipped**；桌面编译、`auditSettingsIcons` 和 `packageUberJarForCurrentOS` 通过。新子集在实际 uber jar 中的 162332 bytes 与 SHA-256 和源清单完全一致。
-- 修复桌面化设置页替换旧列表后丢失的回放语义：窗口根节点保留 `settings-root`，顶部 General 入口将 `settings-open-general` 放在真实可点击节点上；`capture_desktop_layout.py` 的 reload／restore 从固定桌面入口直接验证 General，不再用滚轮寻找不可滚动的顶部标签。本地 `controls` 回放恢复通过：**29 scenes / 68 assertions**。
+- 修复桌面化设置页替换旧列表后丢失的回放语义：窗口根节点保留 `settings-root`，顶部 General 入口将 `settings-open-general` 放在真实可点击节点上；`capture_desktop_layout.py` 的 reload 从固定桌面入口直接验证 General，restore 在独立新偏好目录中切换 Desktop 开关后恢复当前布局，reload-current 再打开 General 核对持久化关闭状态。本地 `controls` **29／68**、`restore` **8／14**、`reload-current` **5／6** 通过；reload 的冷启动播放控制器身份问题另见验证边界，不冒充已通过。
 - 本地证据 `evidence/local/desktop-symbols.json` 记录 135／67／134 的独立核验；`desktop-icon-home-light.png` 为生产 `ImageComposeScene` 1280×800 浅色首页，真实未登录网易推荐内容，侧栏与首页卡片字形已实际渲染，`desktop-symbols-render.json` 记录截图与子集 SHA-256。
 - 本批只关闭“图标资源不正确／不可追溯”差异；材质、精确字距和 macOS 同内容像素／动态验收仍未完成，总体 **PARTIAL**。
 

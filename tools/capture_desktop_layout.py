@@ -50,19 +50,9 @@ elif mode.startswith('home-'):
 elif mode == 'controls':
     add('consent', 'tap@remote-reject', ['cloud-enabled:false'])
     add('current-default', 'wait@100', ['runtime:desktopLayoutEnabled:false', 'tag:interface-current', 'tag:bottom-root-tabs'])
-else:
-    add('persisted-mode', 'wait@100', ['runtime:desktopLayoutEnabled:' + ('false' if mode == 'reload-current' else 'true'),
-        'tag:interface-current' if mode == 'reload-current' else 'tag:desktop-sidebar'])
-if not mode.startswith('home-') and mode != 'lyrics-light':
-    if mode in ('reload', 'restore'):
-        # These modes start directly in the desktop settings window, whose
-        # General entry is a fixed tab rather than a scrollable legacy list row.
-        add('general', 'wait@100', ['tag:settings-general'])
-    else:
-        add('reveal-general', 'reveal@settings-open-general')
-        add('general', 'tap@settings-open-general', ['tag:settings-general'])
+    add('reveal-general', 'reveal@settings-open-general')
+    add('general', 'tap@settings-open-general', ['tag:settings-general'])
     add('reveal-switch', 'reveal@setting-general_desktop_layout')
-if mode == 'controls':
     add('playback-before-switch', 'wait@100', ['playing:true', 'playback-checkpoint:switch'])
     for index in range(3):
         add('desktop-' + str(index), 'tap@setting-general_desktop_layout', ['tag:desktop-sidebar', 'tag:desktop-bottom-player',
@@ -70,6 +60,31 @@ if mode == 'controls':
         if index < 2:
             add('current-' + str(index), 'tap@setting-general_desktop_layout', ['tag:settings-general', 'tag:bottom-root-tabs',
                 'tag:layout-list-detail', 'runtime:desktopLayoutEnabled:false', 'pref-bool:general_desktop_layout:false', 'playback-continuity:switch'])
+elif mode == 'reload':
+    add('persisted-mode', 'wait@100', ['runtime:desktopLayoutEnabled:true', 'tag:desktop-sidebar'])
+    # Start directly in the desktop settings window; General is a fixed tab.
+    add('general', 'wait@100', ['tag:settings-general'])
+    add('reveal-switch', 'reveal@setting-general_desktop_layout')
+    # A separate JVM restores the real queue and resumes PCM after startup.
+    add('playback-ready', 'wait@1500', ['playing:true'])
+elif mode == 'restore':
+    # Fresh current-layout process: record consent, enable the Desktop shell,
+    # then restore the current layout. Cold persisted On is covered by `reload`.
+    add('consent', 'tap@remote-reject', ['cloud-enabled:false'])
+    add('current-default', 'wait@100', ['runtime:desktopLayoutEnabled:false', 'tag:interface-current', 'tag:bottom-root-tabs'])
+    add('reveal-general', 'reveal@settings-open-general')
+    add('general', 'tap@settings-open-general', ['tag:settings-general'])
+    add('reveal-switch', 'reveal@setting-general_desktop_layout')
+    add('enable-desktop', 'tap@setting-general_desktop_layout', ['tag:desktop-sidebar', 'tag:settings-general',
+        'runtime:desktopLayoutEnabled:true', 'pref-bool:general_desktop_layout:true'])
+    add('restore-current', 'tap@setting-general_desktop_layout', ['tag:interface-current', 'tag:settings-general',
+        'tag:bottom-root-tabs', 'runtime:desktopLayoutEnabled:false', 'pref-bool:general_desktop_layout:false'])
+elif mode == 'reload-current':
+    add('current-persisted', 'wait@100', ['runtime:desktopLayoutEnabled:false', 'tag:interface-current',
+        'tag:bottom-root-tabs', 'pref-bool:general_desktop_layout:false'])
+    add('reveal-general', 'reveal@settings-open-general')
+    add('general', 'tap@settings-open-general', ['tag:settings-general'])
+    add('check-persisted-switch', 'wait@100', ['unchecked:setting-general_desktop_layout'])
 if mode in ('controls', 'reload'):
     add('pause', 'tap@mini-player-play-pause', ['play-ready:false', 'no-playback-error:true'])
     add('resume', 'tap@mini-player-play-pause', ['play-ready:true', 'no-playback-error:true'])
@@ -88,11 +103,6 @@ if mode in ('controls', 'reload'):
     add('songs', 'tap@desktop-nav:Songs', ['tag:library-pages'])
     add('settings', 'tap@desktop-settings', ['tag:settings-root'])
     add('reopen-general', 'tap@settings-open-general', ['tag:settings-general', 'checked:setting-general_desktop_layout'])
-elif mode == 'restore':
-    add('restore-current', 'tap@setting-general_desktop_layout', ['tag:interface-current', 'tag:settings-general',
-        'tag:bottom-root-tabs', 'runtime:desktopLayoutEnabled:false', 'pref-bool:general_desktop_layout:false'])
-elif mode == 'reload-current':
-    add('current-persisted', 'wait@100', ['tag:interface-current', 'tag:bottom-root-tabs', 'unchecked:setting-general_desktop_layout'])
 (output / 'steps.txt').write_text('\n'.join(steps) + '\n', encoding='utf-8')
 (output / 'expect.txt').write_text('\n'.join(n + '=' + ','.join(v) for n, v in checks.items()) + '\n', encoding='utf-8')
 args = ['--locale', 'en-US', '--source', 'Netease' if mode.startswith('home-') else 'Local',

@@ -99,8 +99,15 @@ jobs:
           $homeDir = "$pwd/desktop/build/parity/desktop-layout-home"
           New-Item -ItemType Directory -Force "$homeDir/.melox" | Out-Null
           [System.IO.File]::WriteAllText("$homeDir/.melox/prefs_melox_app_settings.properties", "onboarding_completed=true`n", [System.Text.UTF8Encoding]::new($false))
-          foreach ($mode in @("controls", "reload", "restore", "reload-current")) {
+          foreach ($mode in @("controls", "reload")) {
             python tools/capture_desktop_layout.py $mode "$homeDir" "desktop/build/parity/desktop-layout-$mode"
+            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          }
+          $restoreHome = "$pwd/desktop/build/parity/desktop-layout-restore-home"
+          New-Item -ItemType Directory -Force "$restoreHome/.melox" | Out-Null
+          [System.IO.File]::WriteAllText("$restoreHome/.melox/prefs_melox_app_settings.properties", "onboarding_completed=true`ngeneral_desktop_layout=false`n", [System.Text.UTF8Encoding]::new($false))
+          foreach ($mode in @("restore", "reload-current")) {
+            python tools/capture_desktop_layout.py $mode "$restoreHome" "desktop/build/parity/desktop-layout-$mode"
             if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           }
           foreach ($mode in @("home-dark", "home-light")) {
