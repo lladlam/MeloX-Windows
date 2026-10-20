@@ -1,0 +1,226 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.5.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :desktop:kmpPartiallyResolvedDependenciesChecker
+> Task :desktop:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :desktop:extractPinnedGlassGeometry UP-TO-DATE
+> Task :desktop:convertXmlValueResourcesForCommonMain NO-SOURCE
+> Task :desktop:copyNonXmlValueResourcesForCommonMain NO-SOURCE
+> Task :desktop:prepareComposeResourcesTaskForCommonMain NO-SOURCE
+> Task :desktop:generateResourceAccessorsForCommonMain SKIPPED
+> Task :desktop:convertXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :desktop:copyNonXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :desktop:prepareComposeResourcesTaskForDesktopMain NO-SOURCE
+> Task :desktop:generateResourceAccessorsForDesktopMain SKIPPED
+> Task :desktop:generateActualResourceCollectorsForDesktopMain SKIPPED
+> Task :desktop:generateComposeResClass SKIPPED
+> Task :desktop:generateExpectResourceCollectorsForCommonMain SKIPPED
+> Task :innertube:kmpPartiallyResolvedDependenciesChecker
+> Task :innertube:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :innertube:extractAndroidInnerTube UP-TO-DATE
+> Task :innertube:compileKotlinDesktop UP-TO-DATE
+> Task :innertube:compileDesktopMainJava NO-SOURCE
+> Task :innertube:desktopProcessResources NO-SOURCE
+> Task :innertube:processDesktopMainResources SKIPPED
+> Task :innertube:desktopMainClasses UP-TO-DATE
+> Task :innertube:desktopJar UP-TO-DATE
+> Task :shared:kmpPartiallyResolvedDependenciesChecker
+> Task :shared:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :shared:convertXmlValueResourcesForCommonMain NO-SOURCE
+> Task :shared:copyNonXmlValueResourcesForCommonMain NO-SOURCE
+> Task :shared:prepareComposeResourcesTaskForCommonMain NO-SOURCE
+> Task :shared:generateResourceAccessorsForCommonMain SKIPPED
+> Task :shared:convertXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :shared:copyNonXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :shared:prepareComposeResourcesTaskForDesktopMain NO-SOURCE
+> Task :shared:generateResourceAccessorsForDesktopMain SKIPPED
+> Task :shared:generateActualResourceCollectorsForDesktopMain SKIPPED
+> Task :shared:generateComposeResClass SKIPPED
+> Task :shared:generateExpectResourceCollectorsForCommonMain SKIPPED
+> Task :shared:compileKotlinDesktop UP-TO-DATE
+> Task :shared:compileDesktopMainJava NO-SOURCE
+> Task :shared:assembleDesktopMainResources UP-TO-DATE
+> Task :shared:desktopProcessResources UP-TO-DATE
+> Task :shared:processDesktopMainResources SKIPPED
+> Task :shared:desktopMainClasses UP-TO-DATE
+> Task :shared:desktopJar UP-TO-DATE
+> Task :desktop:compileKotlinDesktop UP-TO-DATE
+> Task :desktop:compileDesktopMainJava NO-SOURCE
+> Task :desktop:assembleDesktopMainResources UP-TO-DATE
+> Task :desktop:desktopProcessResources UP-TO-DATE
+> Task :desktop:processDesktopMainResources SKIPPED
+> Task :desktop:desktopMainClasses UP-TO-DATE
+
+> Task :desktop:captureUi
+Production Local scanner indexed 2 real files
+SLF4J(W): No SLF4J providers were found.
+SLF4J(W): Defaulting to no-operation (NOP) logger implementation
+SLF4J(W): See https://www.slf4j.org/codes.html#noProviders for further details.
+[DEBUG MeloXThirdParty] resolve detail source=local id=84e01e3b title=generated-desktop-0 artists=Generated PCM fixture durationMs=420000 metadata=Local
+[INFO MeloXThirdParty] Resolve start source=local quality=Standard thirdParty=false
+[INFO MeloXThirdParty] Resolve fallback source=local stage=provider chksz=disabled
+[INFO MeloXFont] Android MiLan Pro static instances loaded: CSS=[100, 200, 300, 400, 500, 600, 700, 800, 900] files=mi_lan_pro_w{100..800}.ttf (CSS 900 shares frozen axis-700 instance)
+[DEBUG AudioPlayer] Bundled FFmpeg verified: sha256=af7913b7ddc324bf02b8af72fe8612b1471455ef8d9e04e45466510742abcff9 bytes=164352000
+[DEBUG AudioPlayer] FFmpeg binary=C:\Users\runneradmin\AppData\Local\Temp\melox-decoder-ffmpeg-af7913b7ddc324bf.exe os=Windows Server 2025 sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+Captured 00-settings: 1280x800 density=1.0
+Physical click consent: remote-reject at Offset(340.5, 478.0)
+Captured 01-consent: 1280x800 density=1.0
+Verified consent: cloud-enabled:false
+Captured 02-current-default: 1280x800 density=1.0
+Verified current-default: runtime:desktopLayoutEnabled:false
+Verified current-default: tag:interface-current
+Verified current-default: tag:bottom-root-tabs
+Captured 03-reveal-general: 1280x800 density=1.0
+Physical click general: settings-open-general at Offset(320.0, 435.0)
+Captured 04-general: 1280x800 density=1.0
+Verified general: tag:settings-general
+Captured 05-reveal-switch: 1280x800 density=1.0
+Captured 06-playback-before-switch: 1280x800 density=1.0
+Verified playback-before-switch: playing:true
+Verified playback-before-switch: playback-checkpoint:switch
+Physical click desktop-0: setting-general_desktop_layout at Offset(1212.0, 179.0)
+Captured 07-desktop-0: 1280x800 density=1.0
+Verified desktop-0: tag:desktop-sidebar
+Verified desktop-0: tag:desktop-bottom-player
+Verified desktop-0: tag:settings-general
+Verified desktop-0: runtime:desktopLayoutEnabled:true
+Verified desktop-0: absent:bottom-root-tabs
+Verified desktop-0: pref-bool:general_desktop_layout:true
+Verified desktop-0: playback-continuity:switch
+Physical click current-0: setting-general_desktop_layout at Offset(1024.0, 402.0)
+Captured 08-current-0: 1280x800 density=1.0
+Verified current-0: tag:settings-general
+Verified current-0: tag:bottom-root-tabs
+Verified current-0: tag:layout-list-detail
+Verified current-0: runtime:desktopLayoutEnabled:false
+Verified current-0: pref-bool:general_desktop_layout:false
+Verified current-0: playback-continuity:switch
+Physical click desktop-1: setting-general_desktop_layout at Offset(1212.0, 179.0)
+Captured 09-desktop-1: 1280x800 density=1.0
+Verified desktop-1: tag:desktop-sidebar
+Verified desktop-1: tag:desktop-bottom-player
+Verified desktop-1: tag:settings-general
+Verified desktop-1: runtime:desktopLayoutEnabled:true
+Verified desktop-1: absent:bottom-root-tabs
+Verified desktop-1: pref-bool:general_desktop_layout:true
+Verified desktop-1: playback-continuity:switch
+Physical click current-1: setting-general_desktop_layout at Offset(1024.0, 402.0)
+Captured 10-current-1: 1280x800 density=1.0
+Verified current-1: tag:settings-general
+Verified current-1: tag:bottom-root-tabs
+Verified current-1: tag:layout-list-detail
+Verified current-1: runtime:desktopLayoutEnabled:false
+Verified current-1: pref-bool:general_desktop_layout:false
+Verified current-1: playback-continuity:switch
+Physical click desktop-2: setting-general_desktop_layout at Offset(1212.0, 179.0)
+Captured 11-desktop-2: 1280x800 density=1.0
+Verified desktop-2: tag:desktop-sidebar
+Verified desktop-2: tag:desktop-bottom-player
+Verified desktop-2: tag:settings-general
+Verified desktop-2: runtime:desktopLayoutEnabled:true
+Verified desktop-2: absent:bottom-root-tabs
+Verified desktop-2: pref-bool:general_desktop_layout:true
+Verified desktop-2: playback-continuity:switch
+Physical click pause: mini-player-play-pause at Offset(481.0, 763.0)
+Captured 12-pause: 1280x800 density=1.0
+Verified pause: no-playback-error:true
+Physical click resume: mini-player-play-pause at Offset(481.0, 763.0)
+Captured 13-resume: 1280x800 density=1.0
+Verified resume: playing:true
+Verified resume: no-playback-error:true
+Physical click queue: desktop-show-queue at Offset(1035.0, 763.0)
+Captured 14-queue: 1280x800 density=1.0
+Verified queue: tag:desktop-inspector:Queue
+Verified queue: tag:desktop-queue-track:1
+Physical click select-real-track: desktop-queue-track:1 at Offset(1136.0, 205.0)
+[DEBUG MeloXThirdParty] resolve detail source=local id=bd7af1f6 title=generated-desktop-1 artists=Generated PCM fixture durationMs=420000 metadata=Local
+[INFO MeloXThirdParty] Resolve start source=local quality=Standard thirdParty=false
+[INFO MeloXThirdParty] Resolve fallback source=local stage=provider chksz=disabled
+[DEBUG AudioPlayer] FFmpeg binary=C:\Users\runneradmin\AppData\Local\Temp\melox-decoder-ffmpeg-af7913b7ddc324bf.exe os=Windows Server 2025 sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+Captured 15-select-real-track: 1280x800 density=1.0
+Verified select-real-track: no-playback-error:true
+Physical click close-queue: desktop-show-queue at Offset(906.0, 763.0)
+Captured 16-close-queue: 1280x800 density=1.0
+Verified close-queue: absent:desktop-inspector:Queue
+Physical click volume: desktop-volume at Offset(1071.0, 763.0)
+Captured 17-volume: 1280x800 density=1.0
+Verified volume: tag:desktop-volume-slider
+Captured 18-set-volume: 1280x800 density=1.0
+Verified set-volume: volume:0.4
+Physical click collapse-volume: desktop-volume at Offset(1071.0, 763.0)
+Captured 19-collapse-volume: 1280x800 density=1.0
+Verified collapse-volume: absent:desktop-volume-slider
+Physical click expand-player: mini-player-expand at Offset(768.0, 759.0)
+Captured 20-expand-player: 1280x800 density=1.0
+Verified expand-player: tag:desktop-player-column
+Verified expand-player: tag:desktop-player-panel
+Verified expand-player: absent:desktop-bottom-player
+Physical click full-queue: desktop-full-queue at Offset(1244.0, 764.0)
+Captured 21-full-queue: 1280x800 density=1.0
+Verified full-queue: tag:desktop-queue-autoplay
+Verified full-queue: tag:desktop-queue-automix
+Physical click full-pause: mini-player-play-pause at Offset(320.0, 727.0)
+Captured 22-full-pause: 1280x800 density=1.0
+Verified full-pause: no-playback-error:true
+Physical click full-resume: mini-player-play-pause at Offset(320.0, 727.0)
+Captured 23-full-resume: 1280x800 density=1.0
+Verified full-resume: playing:true
+Verified full-resume: no-playback-error:true
+Physical click collapse-player: player-collapse at Offset(36.0, 24.0)
+Captured 24-collapse-player: 1280x800 density=1.0
+Verified collapse-player: tag:desktop-bottom-player
+Verified collapse-player: tag:settings-general
+Physical click search: desktop-nav:Search at Offset(107.5, 62.0)
+Captured 25-search: 1280x800 density=1.0
+Verified search: tag:desktop-sidebar
+Verified search: absent:settings-general
+Physical click songs: desktop-nav:Songs at Offset(107.5, 208.0)
+Captured 26-songs: 1280x800 density=1.0
+Verified songs: tag:library-pages
+Physical click settings: desktop-settings at Offset(107.5, 774.0)
+Exception in thread "AWT-EventQueue-0" java.lang.IllegalStateException: 
+   FocusRequester is not initialized. Here are some possible fixes:
+
+   1. Remember the FocusRequester: val focusRequester = remember { FocusRequester() }
+   2. Did you forget to add a Modifier.focusRequester() ?
+   3. Are you attempting to request focus during composition? Focus requests should be made in
+   response to some event. Eg Modifier.clickable { focusRequester.requestFocus() }
+
+	at androidx.compose.ui.focus.FocusRequester.findFocusTargetNode$ui(FocusRequester.kt:275)
+	at androidx.compose.ui.focus.FocusRequester.requestFocus-3ESFkO8(FocusRequester.kt:82)
+	at androidx.compose.ui.focus.FocusRequester.requestFocus-3ESFkO8$default(FocusRequester.kt:82)
+	at melox.ui.screens.SettingsScreenKt$SettingsScreen$6$1.invokeSuspend(SettingsScreen.kt:128)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+	at androidx.compose.ui.platform.FlushCoroutineDispatcher$dispatch$2.invokeSuspend$lambda$1(FlushCoroutineDispatcher.skiko.kt:62)
+	at androidx.compose.ui.platform.FlushCoroutineDispatcher.performRun(FlushCoroutineDispatcher.skiko.kt:105)
+	at androidx.compose.ui.platform.FlushCoroutineDispatcher.access$performRun(FlushCoroutineDispatcher.skiko.kt:35)
+	at androidx.compose.ui.platform.FlushCoroutineDispatcher$dispatch$2.invokeSuspend(FlushCoroutineDispatcher.skiko.kt:57)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+	at java.desktop/java.awt.event.InvocationEvent.dispatch(InvocationEvent.java:318)
+	at java.desktop/java.awt.EventQueue.dispatchEventImpl(EventQueue.java:773)
+	at java.desktop/java.awt.EventQueue$4.run(EventQueue.java:720)
+	at java.desktop/java.awt.EventQueue$4.run(EventQueue.java:714)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
+	at java.base/java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:86)
+	at java.desktop/java.awt.EventQueue.dispatchEvent(EventQueue.java:742)
+	at java.desktop/java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:203)
+	at java.desktop/java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:124)
+	at java.desktop/java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:113)
+	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:109)
+	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:101)
+	at java.desktop/java.awt.EventDispatchThread.run(EventDispatchThread.java:90)
+	Suppressed: kotlinx.coroutines.internal.DiagnosticCoroutineContextException: [androidx.compose.runtime.BroadcastFrameClock@62fd762, StandaloneCoroutine{Cancelling}@35a852c2, FlushCoroutineDispatcher@dedef43]
+Captured 27-settings: 1280x800 density=1.0
+Verified settings: tag:settings-root
+Physical click reopen-general: settings-open-general at Offset(495.0, 71.0)
+Captured 28-reopen-general: 1280x800 density=1.0
+Verified reopen-general: tag:settings-general
+Verified reopen-general: checked:setting-general_desktop_layout
+gradle/actions: Writing build results to D:\a\_temp\.gradle-actions\build-results\__run_18-1792511081147.json
+
+BUILD SUCCESSFUL in 1m 1s
+15 actionable tasks: 4 executed, 11 up-to-date
+Consider enabling configuration cache to speed up this build: https://docs.gradle.org/9.5.1/userguide/configuration_cache_enabling.html

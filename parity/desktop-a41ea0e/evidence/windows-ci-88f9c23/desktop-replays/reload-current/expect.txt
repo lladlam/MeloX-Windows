@@ -1,0 +1,3 @@
+current-persisted=runtime:desktopLayoutEnabled:false,tag:interface-current,tag:bottom-root-tabs,pref-bool:general_desktop_layout:false
+general=tag:settings-general
+check-persisted-switch=unchecked:setting-general_desktop_layout

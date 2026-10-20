@@ -1,0 +1,204 @@
+{
+  "run_id": "39448380868",
+  "source": "fully downloaded Windows Verification artifact",
+  "replays": [
+    {
+      "path": "bilibili-alignment-controls",
+      "scenes": 10,
+      "assertions": 15,
+      "passed": true
+    },
+    {
+      "path": "bilibili-alignment-reload",
+      "scenes": 6,
+      "assertions": 6,
+      "passed": true
+    },
+    {
+      "path": "desktop-layout-controls",
+      "scenes": 29,
+      "assertions": 66,
+      "passed": true
+    },
+    {
+      "path": "desktop-layout-home-dark",
+      "scenes": 3,
+      "assertions": 8,
+      "passed": true
+    },
+    {
+      "path": "desktop-layout-home-light",
+      "scenes": 3,
+      "assertions": 8,
+      "passed": true
+    },
+    {
+      "path": "desktop-layout-lyrics-light",
+      "scenes": 10,
+      "assertions": 12,
+      "passed": true
+    },
+    {
+      "path": "desktop-layout-reload",
+      "scenes": 7,
+      "assertions": 6,
+      "passed": true
+    },
+    {
+      "path": "desktop-layout-reload-current",
+      "scenes": 5,
+      "assertions": 6,
+      "passed": true
+    },
+    {
+      "path": "desktop-layout-restore",
+      "scenes": 8,
+      "assertions": 14,
+      "passed": true
+    },
+    {
+      "path": "glass-dock-Dark",
+      "scenes": 7,
+      "assertions": 9,
+      "passed": true
+    },
+    {
+      "path": "glass-dock-Light",
+      "scenes": 7,
+      "assertions": 9,
+      "passed": true
+    },
+    {
+      "path": "lyric-language-controls",
+      "scenes": 22,
+      "assertions": 22,
+      "passed": true
+    },
+    {
+      "path": "lyric-language-reload",
+      "scenes": 11,
+      "assertions": 13,
+      "passed": true
+    },
+    {
+      "path": "lyrics-controls",
+      "scenes": 151,
+      "assertions": 260,
+      "passed": true
+    },
+    {
+      "path": "lyrics-reload",
+      "scenes": 2,
+      "assertions": 241,
+      "passed": true
+    },
+    {
+      "path": "settings-controls",
+      "scenes": 74,
+      "assertions": 55,
+      "passed": true
+    },
+    {
+      "path": "settings-en-US",
+      "scenes": 88,
+      "assertions": 65,
+      "passed": true
+    },
+    {
+      "path": "settings-ja-JP",
+      "scenes": 88,
+      "assertions": 65,
+      "passed": true
+    },
+    {
+      "path": "settings-reload",
+      "scenes": 8,
+      "assertions": 18,
+      "passed": true
+    },
+    {
+      "path": "settings-zh-CN",
+      "scenes": 88,
+      "assertions": 65,
+      "passed": true
+    },
+    {
+      "path": "settings-zh-TW",
+      "scenes": 88,
+      "assertions": 65,
+      "passed": true
+    },
+    {
+      "path": "skyline/controls",
+      "scenes": 58,
+      "assertions": 87,
+      "passed": true
+    },
+    {
+      "path": "skyline/reload",
+      "scenes": 3,
+      "assertions": 73,
+      "passed": true
+    },
+    {
+      "path": "skyline/reload-reset",
+      "scenes": 3,
+      "assertions": 73,
+      "passed": true
+    },
+    {
+      "path": "skyline/reset",
+      "scenes": 6,
+      "assertions": 109,
+      "passed": true
+    },
+    {
+      "path": "smartqueue-limit-controls",
+      "scenes": 26,
+      "assertions": 13,
+      "passed": true
+    },
+    {
+      "path": "smartqueue-limit-reload",
+      "scenes": 5,
+      "assertions": 4,
+      "passed": true
+    },
+    {
+      "path": "song-actions-controls",
+      "scenes": 38,
+      "assertions": 34,
+      "passed": true
+    },
+    {
+      "path": "song-actions-reload",
+      "scenes": 30,
+      "assertions": 29,
+      "passed": true
+    },
+    {
+      "path": "split-layout-controls",
+      "scenes": 58,
+      "assertions": 69,
+      "passed": true
+    },
+    {
+      "path": "split-layout-portrait",
+      "scenes": 6,
+      "assertions": 12,
+      "passed": true
+    },
+    {
+      "path": "split-layout-reload",
+      "scenes": 6,
+      "assertions": 14,
+      "passed": true
+    }
+  ],
+  "totals": {
+    "replays": 32,
+    "scenes": 954,
+    "assertions": 1545
+  },
+  "status": "PASSED"
+}

@@ -1,0 +1,24 @@
+[
+  {
+    "scene": "06-enable-desktop.png",
+    "tag": "desktop-sidebar",
+    "bounds": [
+      8,
+      8,
+      207,
+      792
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "06-enable-desktop.png",
+    "tag": "desktop-bottom-player",
+    "bounds": [
+      398,
+      736,
+      1098,
+      790
+    ],
+    "source_metrics_match": true
+  }
+]

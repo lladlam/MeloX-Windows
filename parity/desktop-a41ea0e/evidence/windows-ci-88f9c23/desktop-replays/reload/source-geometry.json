@@ -1,0 +1,156 @@
+[
+  {
+    "scene": "00-settings.png",
+    "tag": "desktop-sidebar",
+    "bounds": [
+      8,
+      8,
+      207,
+      792
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "00-settings.png",
+    "tag": "desktop-bottom-player",
+    "bounds": [
+      398,
+      736,
+      1098,
+      790
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "01-persisted-mode.png",
+    "tag": "desktop-sidebar",
+    "bounds": [
+      8,
+      8,
+      207,
+      792
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "01-persisted-mode.png",
+    "tag": "desktop-bottom-player",
+    "bounds": [
+      398,
+      736,
+      1098,
+      790
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "02-warm-navigation.png",
+    "tag": "desktop-sidebar",
+    "bounds": [
+      8,
+      8,
+      207,
+      792
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "02-warm-navigation.png",
+    "tag": "desktop-bottom-player",
+    "bounds": [
+      398,
+      736,
+      1098,
+      790
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "03-return-settings.png",
+    "tag": "desktop-sidebar",
+    "bounds": [
+      8,
+      8,
+      207,
+      792
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "03-return-settings.png",
+    "tag": "desktop-bottom-player",
+    "bounds": [
+      398,
+      736,
+      1098,
+      790
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "04-general.png",
+    "tag": "desktop-sidebar",
+    "bounds": [
+      8,
+      8,
+      207,
+      792
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "04-general.png",
+    "tag": "desktop-bottom-player",
+    "bounds": [
+      398,
+      736,
+      1098,
+      790
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "05-reveal-switch.png",
+    "tag": "desktop-sidebar",
+    "bounds": [
+      8,
+      8,
+      207,
+      792
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "05-reveal-switch.png",
+    "tag": "desktop-bottom-player",
+    "bounds": [
+      398,
+      736,
+      1098,
+      790
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "06-playback-ready.png",
+    "tag": "desktop-sidebar",
+    "bounds": [
+      8,
+      8,
+      207,
+      792
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "06-playback-ready.png",
+    "tag": "desktop-bottom-player",
+    "bounds": [
+      398,
+      736,
+      1098,
+      790
+    ],
+    "source_metrics_match": true
+  }
+]

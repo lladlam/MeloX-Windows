@@ -1,0 +1,6 @@
+persisted-mode:wait@100
+warm-navigation:tap@desktop-nav:Search
+return-settings:tap@desktop-settings
+general:wait@100
+reveal-switch:reveal@setting-general_desktop_layout
+playback-ready:wait@1500

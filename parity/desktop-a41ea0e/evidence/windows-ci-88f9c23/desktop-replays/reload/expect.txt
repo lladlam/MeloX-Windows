@@ -1,0 +1,5 @@
+persisted-mode=runtime:desktopLayoutEnabled:true,tag:desktop-sidebar
+warm-navigation=tag:desktop-sidebar
+return-settings=tag:settings-root
+general=tag:settings-general
+playback-ready=playing:true

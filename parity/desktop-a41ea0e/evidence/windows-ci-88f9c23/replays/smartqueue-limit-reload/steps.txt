@@ -1,0 +1,4 @@
+reveal-playback:reveal@settings-open-playback
+open-playback:tap@settings-open-playback
+reveal-persisted:reveal@automix_smart_queue_analysis_limit
+persisted:wait@100

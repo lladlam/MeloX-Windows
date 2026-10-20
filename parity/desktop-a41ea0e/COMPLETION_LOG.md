@@ -1,5 +1,11 @@
 # Desktop 迁移记录
 
+## 6. Windows 独立下载核验（88f9c23）
+
+- Windows [39448380868](https://github.com/lladlam/MeloX-Windows/actions/runs/39448380868) 成功，来源 `88f9c23bbb2c88499e313423aee00c3de5facda1`。完整下载 `Verification-Windows` 与 `MeloX-Desktop-Windows.zip` 后独立重计：**274 tests / 56 suites / 0 failures/errors/skipped**、桌面七组 **65 scenes / 120 assertions**、全矩阵 **32 组**，ZIP **333622322 bytes**，SHA-256 `a01219c7f8fb3fe1af2b502aa66c81089e2666a40e1fac996cc6fc2f3efd13a1`，357 entries CRC 全通过，build-info 精确匹配。
+- 发行内 22 项固定资源全部 SHA 匹配，其中 `fonts/sf_pro_subset.ttf` 为 **162332 bytes / `3f592d90…d13af6`**；`desktop-symbols.json` 在下载产物中独立核对 **135 symbols / 67 enum / 134 unique code points**。原始证据在 `evidence/windows-ci-88f9c23/`。
+- 仍不把 Windows CI 自比对当作固定 macOS 同内容像素／动态验收；整套 UI 仍为 **PARTIAL**，后续继续逐页、图标光学、材质、hover、拖放与所有弹窗迁移。
+
 ## 5. 可追溯 SF Symbols 子集与桌面图标对齐
 
 - 固定 Desktop 真源的 135 个 SF Symbol 名称已汇总到 `parity/desktop-a41ea0e/desktop-symbols.json`，包含 App／Features 中静态与计算属性引用的图标。Apple SF Symbols 27 的 `mic`、`music.mic`、`doc.text.magnifyingglass` 等名称按官方 alias 解析；`music.mic` 使用 SF Symbols 6 的 PUA 位置 `U+10046B`，位于 `music.note` 与 `music.note.list` 之间。

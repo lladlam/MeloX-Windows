@@ -1,0 +1,5 @@
+consent=cloud-enabled:false
+current-default=runtime:desktopLayoutEnabled:false,tag:interface-current,tag:bottom-root-tabs
+general=tag:settings-general
+enable-desktop=tag:desktop-sidebar,tag:settings-general,runtime:desktopLayoutEnabled:true,pref-bool:general_desktop_layout:true
+restore-current=tag:interface-current,tag:settings-general,tag:bottom-root-tabs,runtime:desktopLayoutEnabled:false,pref-bool:general_desktop_layout:false

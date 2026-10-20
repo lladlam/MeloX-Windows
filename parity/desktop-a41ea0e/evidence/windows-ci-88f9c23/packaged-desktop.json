@@ -1,0 +1,72 @@
+{
+  "status": "PASSED",
+  "entries": [
+    {
+      "entry": "melox/ui/desktop/MeloXDesktopShellKt.class",
+      "bytes": 204614,
+      "sha256": "f0100c57543ec644666f66b38746be91f69541a37bdb578d982cab2872cd12e2"
+    },
+    {
+      "entry": "melox/ui/desktop/MeloXDesktopHomeKt.class",
+      "bytes": 50985,
+      "sha256": "b6c256349bf4745a9f55bd82dae199d822c5f8817956f9c14bd03d80f5de35b1"
+    },
+    {
+      "entry": "melox/ui/desktop/MeloXDesktopLyricsKt.class",
+      "bytes": 9293,
+      "sha256": "022e52c0d905b8b1fca1801796cefdeb9f2c13208d57e0cc64ea1dfb6e6201ae"
+    },
+    {
+      "entry": "melox/ui/desktop/MeloXDesktopNowPlayingKt.class",
+      "bytes": 57571,
+      "sha256": "aa9e6c07642c62bea2b1e3add786edd9e69303d28006f8da6e6f952284816513"
+    },
+    {
+      "entry": "melox/ui/desktop/MeloXDesktopStringsKt.class",
+      "bytes": 4050,
+      "sha256": "d003b1b8215d87de9e13dbe9dfdc751c21df51d2802e88f5e2c11c3ad6c92708"
+    },
+    {
+      "entry": "melox/ui/screens/MeloXLyricSurface.class",
+      "bytes": 5770,
+      "sha256": "ddb52c01fb84e18f0c34012383e2230ae1a5ada9a6e0a54393813205ac525562"
+    },
+    {
+      "entry": "melox/layout/MeloXDesktopGeometryKt.class",
+      "bytes": 1140,
+      "sha256": "63ae1918fa2a735cbeab3e29e8bba8d6ea3494e5229bfc5291d1d10edb362885"
+    },
+    {
+      "entry": "melox/layout/MeloXDesktopPlayerGeometry.class",
+      "bytes": 4697,
+      "sha256": "125b1541b7e5a652052c7bbaef86c1cb84a3c21b6bbe77ac165c9c8ff4a7a7a1"
+    },
+    {
+      "entry": "parity/desktop-reference-en.properties",
+      "bytes": 2545,
+      "sha256": "23ac5e1b7ba36f1b15372909478354805756ff6da19528084d0d323b5c53e577"
+    },
+    {
+      "entry": "parity/desktop-reference-zh-Hans.properties",
+      "bytes": 2478,
+      "sha256": "c08fdd196d6c9a697f2102cf20322540f74ef7cff658a236daccb003093e101d"
+    },
+    {
+      "entry": "parity/migration-baseline.properties",
+      "bytes": 316,
+      "sha256": "3e384c4eac5c20e490f4edc0afc20371d54a72c15fd5bd5add43bd1616331137"
+    },
+    {
+      "entry": "fonts/sf_pro_subset.ttf",
+      "bytes": 162332,
+      "sha256": "3f592d902f739de31deef2d1235d89d105508a5ea750e3d60eedcc7481d13af6"
+    }
+  ],
+  "meaning": "presence and immutable resource bytes in the independently downloaded exact Windows distribution; native source pixel parity pending",
+  "symbol_subset": {
+    "symbols": 135,
+    "enum_symbols": 67,
+    "unique_codepoints": 134,
+    "note": "bytes and SHA verified inside independently downloaded Windows distribution"
+  }
+}

@@ -1,0 +1,1137 @@
+{
+  "renderer": "production ImageComposeScene",
+  "start_tab": "Settings",
+  "density": 1,
+  "frames": [],
+  "physical_audible_acceptance": "BLOCKED",
+  "locale": "en-US",
+  "steps": ["open:tap@settings-open-lyrics"],
+  "home": "D:\\a\\MeloX-Windows\\MeloX-Windows\\desktop\\build\\parity\\lyrics-controls-home",
+  "enabled_start_tab": false,
+  "play_id": null,
+  "play_query": "",
+  "pcm_outputs": [],
+  "width": 1100,
+  "scenes": [
+    {
+      "memory": {
+        "direct_buffer_bytes": 8192,
+        "heap_used_bytes": 14838008,
+        "resident_bytes": 169738240,
+        "private_commit_bytes": 149254144,
+        "uptime_ms": 2788,
+        "heap_max_bytes": 1037959168,
+        "threads": 17,
+        "heap_committed_bytes": 21397504,
+        "non_heap_used_bytes": 44505216
+      },
+      "legal_consent_version": "",
+      "skia": {
+        "font_cache_bytes": 53090,
+        "live_objects": null,
+        "resource_cache_bytes": 746544
+      },
+      "cloud_enabled": false,
+      "title": null,
+      "error": null,
+      "onboarding_completed": true,
+      "automix_status": "idle",
+      "file": "00-settings.png",
+      "equalizer": {
+        "bands_db": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "preamp_db": 0,
+        "preset": "Flat",
+        "enabled": false
+      },
+      "text_pv_style": "KineticSplit",
+      "artwork_cache": {
+        "entries": 0,
+        "budget_bytes": 67108864,
+        "budgeted_bytes": 0
+      },
+      "is_playing": false,
+      "play_when_ready": false,
+      "selected_quality": "standard",
+      "is_loading": false,
+      "personalization_consent": false,
+      "assertions": [
+        {
+          "expected": "pref-string:lyrics_rendering_quality:Low",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricRenderingQuality:Low",
+          "passed": true
+        },
+        {
+          "expected": "pref-bool:lyrics_auto_select:false",
+          "passed": true
+        },
+        {
+          "expected": "runtime:automaticLyricSelectionEnabled:false",
+          "passed": true
+        },
+        {
+          "expected": "pref-bool:lyrics_word_by_word:false",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricWordByWordEnabled:false",
+          "passed": true
+        },
+        {
+          "expected": "pref-bool:lyrics_pseudo_timing:true",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricPseudoTimingEnabled:true",
+          "passed": true
+        },
+        {
+          "expected": "pref-bool:lyrics_tap_seek:false",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricTapSeekEnabled:false",
+          "passed": true
+        },
+        {
+          "expected": "pref-bool:lyrics_long_press_share:false",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricLongPressShareEnabled:false",
+          "passed": true
+        },
+        {
+          "expected": "pref-bool:lyrics_interlude_countdown:false",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricInterludeCountdownEnabled:false",
+          "passed": true
+        },
+        {
+          "expected": "pref-bool:lyrics_auto_follow:false",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricAutoFollowEnabled:false",
+          "passed": true
+        },
+        {
+          "expected": "pref-int:lyrics_follow_delay_ms:5000",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricFollowDelayMs:5000",
+          "passed": true
+        },
+        {
+          "expected": "pref-bool:lyrics_reduce_motion:true",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricReduceMotion:true",
+          "passed": true
+        },
+        {
+          "expected": "pref-bool:lyrics_translation:false",
+          "passed": true
+        },
+        {
+          "expected": "runtime:showLyricTranslation:false",
+          "passed": true
+        },
+        {
+          "expected": "pref-float:lyrics_translation_font_scale:0.8",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricTranslationFontScale:0.8",
+          "passed": true
+        },
+        {
+          "expected": "pref-float:lyrics_translation_opacity:0.4",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricTranslationOpacity:0.4",
+          "passed": true
+        },
+        {
+          "expected": "pref-string:lyrics_translation_display_mode:FocusedLine",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricTranslationDisplayMode:FocusedLine",
+          "passed": true
+        },
+        {
+          "expected": "pref-bool:lyrics_romanization:true",
+          "passed": true
+        },
+        {
+          "expected": "runtime:showLyricRomanization:true",
+          "passed": true
+        },
+        {
+          "expected": "pref-string:lyrics_romanization_display_mode:AllLines",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricRomanizationDisplayMode:AllLines",
+          "passed": true
+        },
+        {
+          "expected": "pref-float:lyrics_romanization_font_scale:0.5",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricRomanizationFontScale:0.5",
+          "passed": true
+        },
+        {
+          "expected": "pref-float:lyrics_romanization_opacity:0.5",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricRomanizationOpacity:0.5",
+          "passed": true
+        },
+        {
+          "expected": "pref-int:lyrics_advance_ms:500",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricAdvanceMs:500",
+          "passed": true
+        },
+        {
+          "expected": "pref-bool:lyrics_advance_word_by_word:true",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricAdvanceAppliesToWordByWord:true",
+          "passed": true
+        },
+        {
+          "expected": "pref-int:lyrics_refresh_rate:120",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricRefreshRate:120",
+          "passed": true
+        },
+        {
+          "expected": "pref-float:lyrics_font_scale:1.12",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricFontScale:1.12",
+          "passed": true
+        },
+        {
+          "expected": "pref-string:lyrics_font_weight:Regular",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricFontWeight:Regular",
+          "passed": true
+        },
+        {
+          "expected": "pref-string:lyrics_lift_mode:Word",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricLiftMode:Word",
+          "passed": true
+        },
+        {
+          "expected": "pref-string:lyrics_long_tone_detection:Word",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricLongToneDetectionMode:Word",
+          "passed": true
+        },
+        {
+          "expected": "pref-bool:lyrics_glow_enabled:false",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricGlowEnabled:false",
+          "passed": true
+        },
+        {
+          "expected": "pref-bool:lyrics_glow_long_tones_only:false",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricGlowLongTonesOnly:false",
+          "passed": true
+        },
+        {
+          "expected": "pref-float:lyrics_glow_strength:1.4",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricGlowStrength:1.4",
+          "passed": true
+        },
+        {
+          "expected": "pref-float:lyrics_long_tone_strength:0",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricLongToneStrength:0",
+          "passed": true
+        },
+        {
+          "expected": "pref-int:lyrics_long_tone_threshold_ms:300",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricLongToneThresholdMs:300",
+          "passed": true
+        },
+        {
+          "expected": "pref-float:lyrics_spacing_scale:1.4",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricSpacingScale:1.4",
+          "passed": true
+        },
+        {
+          "expected": "pref-float:lyrics_blur_strength:0",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricBlurStrength:0",
+          "passed": true
+        },
+        {
+          "expected": "pref-float:lyrics_focus_scale:1.08",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricFocusScale:1.08",
+          "passed": true
+        },
+        {
+          "expected": "pref-float:lyrics_inactive_opacity:0.6",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricInactiveOpacity:0.6",
+          "passed": true
+        },
+        {
+          "expected": "pref-int:lyrics_interface_auto_hide_ms:15000",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricInterfaceAutoHideDelayMs:15000",
+          "passed": true
+        },
+        {
+          "expected": "pref-int:lyrics_scroll_hide_threshold_dp:40",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricScrollHideThresholdDp:40",
+          "passed": true
+        },
+        {
+          "expected": "pref-bool:lyrics_cascade_bounce_enabled:false",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricCascadeBounceEnabled:false",
+          "passed": true
+        },
+        {
+          "expected": "pref-bool:lyrics_scale_bounce_enabled:false",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricScaleBounceEnabled:false",
+          "passed": true
+        },
+        {
+          "expected": "pref-int:lyrics_scale_bounce_duration_ms:150",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricScaleBounceDurationMs:150",
+          "passed": true
+        },
+        {
+          "expected": "pref-int:lyrics_focus_color_lead_ms:-300",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricFocusColorLeadMs:-300",
+          "passed": true
+        },
+        {
+          "expected": "pref-float:lyrics_cascade_bounce:0.8",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricCascadeBounce:0.8",
+          "passed": true
+        },
+        {
+          "expected": "pref-float:lyrics_cascade_bounce_gradient:0",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricCascadeBounceGradient:0",
+          "passed": true
+        },
+        {
+          "expected": "pref-float:lyrics_scale_bounce:0.5",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricScaleBounce:0.5",
+          "passed": true
+        },
+        {
+          "expected": "pref-float:lyrics_highlight_gradient_width:3",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricHighlightGradientWidth:3",
+          "passed": true
+        },
+        {
+          "expected": "pref-float:lyrics_highlight_gradient_reduction:0",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricHighlightGradientReduction:0",
+          "passed": true
+        },
+        {
+          "expected": "pref-float:lyrics_focus_position:0.8",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricFocusPosition:0.8",
+          "passed": true
+        },
+        {
+          "expected": "pref-float:lyrics_distance_blur_scale:1.5",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricDistanceBlurScale:1.5",
+          "passed": true
+        },
+        {
+          "expected": "pref-float:lyrics_hidden_blur_scale:1.5",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricHiddenInterfaceBlurScale:1.5",
+          "passed": true
+        },
+        {
+          "expected": "pref-float:lyrics_dim_amount:0",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricDimAmount:0",
+          "passed": true
+        },
+        {
+          "expected": "pref-float:lyrics_cascade_delay_ms:100",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricCascadeDelayMs:100",
+          "passed": true
+        },
+        {
+          "expected": "pref-float:lyrics_cascade_delay_increase_ms:100",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricCascadeDelayIncreaseMs:100",
+          "passed": true
+        },
+        {
+          "expected": "pref-float:lyrics_cascade_following_delay_ms:200",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricCascadeFollowingDelayMs:200",
+          "passed": true
+        },
+        {
+          "expected": "pref-float:lyrics_cascade_catch_up_ratio:0.5",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricCascadeCatchUpRatio:0.5",
+          "passed": true
+        },
+        {
+          "expected": "pref-float:lyrics_cascade_chase_gradient:1",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricCascadeChaseSpeedGradient:1",
+          "passed": true
+        },
+        {
+          "expected": "pref-float:lyrics_cascade_duration_ms:1200",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricCascadeDurationMs:1200",
+          "passed": true
+        },
+        {
+          "expected": "pref-float:lyrics_snap_threshold_ms:500",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricSnapThresholdMs:500",
+          "passed": true
+        },
+        {
+          "expected": "pref-string:lyrics_style:TextPV",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricsStyle:TextPV",
+          "passed": true
+        },
+        {
+          "expected": "pref-string:lyrics_text_pv_style:KineticSplit",
+          "passed": true
+        },
+        {
+          "expected": "runtime:textPVStyle:KineticSplit",
+          "passed": true
+        },
+        {
+          "expected": "pref-float:lyrics_text_pv_motion_intensity:1.5",
+          "passed": true
+        },
+        {
+          "expected": "runtime:textPVMotionIntensity:1.5",
+          "passed": true
+        },
+        {
+          "expected": "pref-float:lyrics_text_pv_animation_speed:3",
+          "passed": true
+        },
+        {
+          "expected": "runtime:textPVAnimationSpeed:3",
+          "passed": true
+        }
+      ],
+      "track": null,
+      "cloud_choice_made": true,
+      "queue_count": 0,
+      "lyric_style": "TextPV",
+      "text_pv_intensity": 1.5,
+      "error_kind": null,
+      "queue_tracks": [],
+      "lyric_document": null,
+      "automix_progress": 0,
+      "automix_active": false,
+      "duration_ms": 0,
+      "position_ms": 0,
+      "is_paused": false,
+      "captured_elapsed_ms": 1559.1557,
+      "page": null,
+      "queue_entry_ids": [],
+      "lyric_word_lines": null,
+      "queue_index": -1,
+      "text_pv_speed": 3,
+      "controls_visible": false,
+      "autoplay_enabled": false
+    },
+    {
+      "memory": {
+        "direct_buffer_bytes": 8192,
+        "heap_used_bytes": 19113752,
+        "resident_bytes": 228843520,
+        "private_commit_bytes": 214614016,
+        "uptime_ms": 4613,
+        "heap_max_bytes": 1037959168,
+        "threads": 18,
+        "heap_committed_bytes": 35663872,
+        "non_heap_used_bytes": 53708768
+      },
+      "legal_consent_version": "",
+      "skia": {
+        "font_cache_bytes": 68325,
+        "live_objects": null,
+        "resource_cache_bytes": 746544
+      },
+      "cloud_enabled": false,
+      "title": null,
+      "error": null,
+      "onboarding_completed": true,
+      "automix_status": "idle",
+      "file": "01-open.png",
+      "equalizer": {
+        "bands_db": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "preamp_db": 0,
+        "preset": "Flat",
+        "enabled": false
+      },
+      "text_pv_style": "KineticSplit",
+      "artwork_cache": {
+        "entries": 0,
+        "budget_bytes": 67108864,
+        "budgeted_bytes": 0
+      },
+      "is_playing": false,
+      "play_when_ready": false,
+      "selected_quality": "standard",
+      "is_loading": false,
+      "personalization_consent": false,
+      "assertions": [
+        {
+          "expected": "tag:advanced-lyrics-settings",
+          "passed": true
+        },
+        {
+          "expected": "pref-string:lyrics_rendering_quality:Low",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricRenderingQuality:Low",
+          "passed": true
+        },
+        {
+          "expected": "pref-bool:lyrics_auto_select:false",
+          "passed": true
+        },
+        {
+          "expected": "runtime:automaticLyricSelectionEnabled:false",
+          "passed": true
+        },
+        {
+          "expected": "pref-bool:lyrics_word_by_word:false",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricWordByWordEnabled:false",
+          "passed": true
+        },
+        {
+          "expected": "pref-bool:lyrics_pseudo_timing:true",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricPseudoTimingEnabled:true",
+          "passed": true
+        },
+        {
+          "expected": "pref-bool:lyrics_tap_seek:false",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricTapSeekEnabled:false",
+          "passed": true
+        },
+        {
+          "expected": "pref-bool:lyrics_long_press_share:false",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricLongPressShareEnabled:false",
+          "passed": true
+        },
+        {
+          "expected": "pref-bool:lyrics_interlude_countdown:false",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricInterludeCountdownEnabled:false",
+          "passed": true
+        },
+        {
+          "expected": "pref-bool:lyrics_auto_follow:false",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricAutoFollowEnabled:false",
+          "passed": true
+        },
+        {
+          "expected": "pref-int:lyrics_follow_delay_ms:5000",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricFollowDelayMs:5000",
+          "passed": true
+        },
+        {
+          "expected": "pref-bool:lyrics_reduce_motion:true",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricReduceMotion:true",
+          "passed": true
+        },
+        {
+          "expected": "pref-bool:lyrics_translation:false",
+          "passed": true
+        },
+        {
+          "expected": "runtime:showLyricTranslation:false",
+          "passed": true
+        },
+        {
+          "expected": "pref-float:lyrics_translation_font_scale:0.8",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricTranslationFontScale:0.8",
+          "passed": true
+        },
+        {
+          "expected": "pref-float:lyrics_translation_opacity:0.4",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricTranslationOpacity:0.4",
+          "passed": true
+        },
+        {
+          "expected": "pref-string:lyrics_translation_display_mode:FocusedLine",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricTranslationDisplayMode:FocusedLine",
+          "passed": true
+        },
+        {
+          "expected": "pref-bool:lyrics_romanization:true",
+          "passed": true
+        },
+        {
+          "expected": "runtime:showLyricRomanization:true",
+          "passed": true
+        },
+        {
+          "expected": "pref-string:lyrics_romanization_display_mode:AllLines",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricRomanizationDisplayMode:AllLines",
+          "passed": true
+        },
+        {
+          "expected": "pref-float:lyrics_romanization_font_scale:0.5",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricRomanizationFontScale:0.5",
+          "passed": true
+        },
+        {
+          "expected": "pref-float:lyrics_romanization_opacity:0.5",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricRomanizationOpacity:0.5",
+          "passed": true
+        },
+        {
+          "expected": "pref-int:lyrics_advance_ms:500",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricAdvanceMs:500",
+          "passed": true
+        },
+        {
+          "expected": "pref-bool:lyrics_advance_word_by_word:true",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricAdvanceAppliesToWordByWord:true",
+          "passed": true
+        },
+        {
+          "expected": "pref-int:lyrics_refresh_rate:120",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricRefreshRate:120",
+          "passed": true
+        },
+        {
+          "expected": "pref-float:lyrics_font_scale:1.12",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricFontScale:1.12",
+          "passed": true
+        },
+        {
+          "expected": "pref-string:lyrics_font_weight:Regular",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricFontWeight:Regular",
+          "passed": true
+        },
+        {
+          "expected": "pref-string:lyrics_lift_mode:Word",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricLiftMode:Word",
+          "passed": true
+        },
+        {
+          "expected": "pref-string:lyrics_long_tone_detection:Word",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricLongToneDetectionMode:Word",
+          "passed": true
+        },
+        {
+          "expected": "pref-bool:lyrics_glow_enabled:false",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricGlowEnabled:false",
+          "passed": true
+        },
+        {
+          "expected": "pref-bool:lyrics_glow_long_tones_only:false",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricGlowLongTonesOnly:false",
+          "passed": true
+        },
+        {
+          "expected": "pref-float:lyrics_glow_strength:1.4",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricGlowStrength:1.4",
+          "passed": true
+        },
+        {
+          "expected": "pref-float:lyrics_long_tone_strength:0",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricLongToneStrength:0",
+          "passed": true
+        },
+        {
+          "expected": "pref-int:lyrics_long_tone_threshold_ms:300",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricLongToneThresholdMs:300",
+          "passed": true
+        },
+        {
+          "expected": "pref-float:lyrics_spacing_scale:1.4",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricSpacingScale:1.4",
+          "passed": true
+        },
+        {
+          "expected": "pref-float:lyrics_blur_strength:0",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricBlurStrength:0",
+          "passed": true
+        },
+        {
+          "expected": "pref-float:lyrics_focus_scale:1.08",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricFocusScale:1.08",
+          "passed": true
+        },
+        {
+          "expected": "pref-float:lyrics_inactive_opacity:0.6",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricInactiveOpacity:0.6",
+          "passed": true
+        },
+        {
+          "expected": "pref-int:lyrics_interface_auto_hide_ms:15000",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricInterfaceAutoHideDelayMs:15000",
+          "passed": true
+        },
+        {
+          "expected": "pref-int:lyrics_scroll_hide_threshold_dp:40",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricScrollHideThresholdDp:40",
+          "passed": true
+        },
+        {
+          "expected": "pref-bool:lyrics_cascade_bounce_enabled:false",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricCascadeBounceEnabled:false",
+          "passed": true
+        },
+        {
+          "expected": "pref-bool:lyrics_scale_bounce_enabled:false",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricScaleBounceEnabled:false",
+          "passed": true
+        },
+        {
+          "expected": "pref-int:lyrics_scale_bounce_duration_ms:150",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricScaleBounceDurationMs:150",
+          "passed": true
+        },
+        {
+          "expected": "pref-int:lyrics_focus_color_lead_ms:-300",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricFocusColorLeadMs:-300",
+          "passed": true
+        },
+        {
+          "expected": "pref-float:lyrics_cascade_bounce:0.8",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricCascadeBounce:0.8",
+          "passed": true
+        },
+        {
+          "expected": "pref-float:lyrics_cascade_bounce_gradient:0",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricCascadeBounceGradient:0",
+          "passed": true
+        },
+        {
+          "expected": "pref-float:lyrics_scale_bounce:0.5",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricScaleBounce:0.5",
+          "passed": true
+        },
+        {
+          "expected": "pref-float:lyrics_highlight_gradient_width:3",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricHighlightGradientWidth:3",
+          "passed": true
+        },
+        {
+          "expected": "pref-float:lyrics_highlight_gradient_reduction:0",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricHighlightGradientReduction:0",
+          "passed": true
+        },
+        {
+          "expected": "pref-float:lyrics_focus_position:0.8",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricFocusPosition:0.8",
+          "passed": true
+        },
+        {
+          "expected": "pref-float:lyrics_distance_blur_scale:1.5",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricDistanceBlurScale:1.5",
+          "passed": true
+        },
+        {
+          "expected": "pref-float:lyrics_hidden_blur_scale:1.5",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricHiddenInterfaceBlurScale:1.5",
+          "passed": true
+        },
+        {
+          "expected": "pref-float:lyrics_dim_amount:0",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricDimAmount:0",
+          "passed": true
+        },
+        {
+          "expected": "pref-float:lyrics_cascade_delay_ms:100",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricCascadeDelayMs:100",
+          "passed": true
+        },
+        {
+          "expected": "pref-float:lyrics_cascade_delay_increase_ms:100",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricCascadeDelayIncreaseMs:100",
+          "passed": true
+        },
+        {
+          "expected": "pref-float:lyrics_cascade_following_delay_ms:200",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricCascadeFollowingDelayMs:200",
+          "passed": true
+        },
+        {
+          "expected": "pref-float:lyrics_cascade_catch_up_ratio:0.5",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricCascadeCatchUpRatio:0.5",
+          "passed": true
+        },
+        {
+          "expected": "pref-float:lyrics_cascade_chase_gradient:1",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricCascadeChaseSpeedGradient:1",
+          "passed": true
+        },
+        {
+          "expected": "pref-float:lyrics_cascade_duration_ms:1200",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricCascadeDurationMs:1200",
+          "passed": true
+        },
+        {
+          "expected": "pref-float:lyrics_snap_threshold_ms:500",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricSnapThresholdMs:500",
+          "passed": true
+        },
+        {
+          "expected": "pref-string:lyrics_style:TextPV",
+          "passed": true
+        },
+        {
+          "expected": "runtime:lyricsStyle:TextPV",
+          "passed": true
+        },
+        {
+          "expected": "pref-string:lyrics_text_pv_style:KineticSplit",
+          "passed": true
+        },
+        {
+          "expected": "runtime:textPVStyle:KineticSplit",
+          "passed": true
+        },
+        {
+          "expected": "pref-float:lyrics_text_pv_motion_intensity:1.5",
+          "passed": true
+        },
+        {
+          "expected": "runtime:textPVMotionIntensity:1.5",
+          "passed": true
+        },
+        {
+          "expected": "pref-float:lyrics_text_pv_animation_speed:3",
+          "passed": true
+        },
+        {
+          "expected": "runtime:textPVAnimationSpeed:3",
+          "passed": true
+        }
+      ],
+      "track": null,
+      "cloud_choice_made": true,
+      "queue_count": 0,
+      "lyric_style": "TextPV",
+      "text_pv_intensity": 1.5,
+      "error_kind": null,
+      "queue_tracks": [],
+      "lyric_document": null,
+      "automix_progress": 0,
+      "automix_active": false,
+      "duration_ms": 0,
+      "position_ms": 0,
+      "is_paused": false,
+      "captured_elapsed_ms": 3242.9608,
+      "page": null,
+      "queue_entry_ids": [],
+      "lyric_word_lines": null,
+      "queue_index": -1,
+      "text_pv_speed": 3,
+      "controls_visible": false,
+      "autoplay_enabled": false,
+      "action_elapsed_ms": 1600.1707
+    }
+  ],
+  "theme": "Dark",
+  "audio_endpoint": "Java Sound physical output",
+  "height": 780
+}

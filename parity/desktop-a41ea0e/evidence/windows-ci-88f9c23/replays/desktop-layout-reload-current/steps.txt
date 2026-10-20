@@ -1,0 +1,4 @@
+current-persisted:wait@100
+reveal-general:reveal@settings-open-general
+general:tap@settings-open-general
+check-persisted-switch:wait@100

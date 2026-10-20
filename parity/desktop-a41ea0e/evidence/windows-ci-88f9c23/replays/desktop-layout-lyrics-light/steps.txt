@@ -1,0 +1,9 @@
+consent:tap@remote-reject
+reveal-general:reveal@settings-open-general
+general:tap@settings-open-general
+reveal-switch:reveal@setting-general_desktop_layout
+enable-desktop:tap@setting-general_desktop_layout
+show-real-local-lyrics:tap@desktop-show-lyrics
+seek-by-real-pointer:tap@lyric-line-1
+close-lyrics:tap@desktop-show-lyrics
+expand-light-player:tap@mini-player-expand
