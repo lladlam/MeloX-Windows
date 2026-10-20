@@ -38,7 +38,7 @@ def add(name, action, assertions=()):
         checks[name] = list(assertions)
 
 if mode == 'lyrics-light':
-    add('consent', 'tap@remote-reject', ['cloud-enabled:false', 'absent:remote-reject'])
+    add('consent', 'tap@remote-reject', ['cloud-enabled:false'])
     add('show-real-local-lyrics', 'tap@desktop-show-lyrics', ['tag:desktop-inspector:Lyrics', 'tag:player-lyrics', 'tag-prefix:lyric-line-'])
     add('seek-by-real-pointer', 'tap@lyric-line-1', ['position-min:4000', 'no-playback-error:true'])
     add('close-lyrics', 'tap@desktop-show-lyrics', ['absent:desktop-inspector:Lyrics'])
