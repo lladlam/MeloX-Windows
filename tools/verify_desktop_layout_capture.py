@@ -77,7 +77,9 @@ for mode in modes:
         assert sum(p['written_frames'] for p in pcm) > 44100
     reports.append({'mode': mode, 'home': data['home'], 'scenes': len(scenes), 'assertions': len(assertions),
                     'capture_sha256': digest(path), 'geometries': geometries, 'pcm': pcm, 'status': 'PASSED'})
-assert len({r['home'] for r in reports[:4]}) == 1, 'Reloads must use the same isolated persisted preferences'
+assert reports[0]['home'] == reports[1]['home'], 'controls and reload must share one persisted home'
+assert reports[2]['home'] == reports[3]['home'], 'restore and reload-current must share one persisted home'
+assert reports[0]['home'] != reports[2]['home'], 'Desktop-On and restored-Off replays must use independent homes'
 result = {'desktop_reference': 'a41ea0e1e1fa69fb543d827b853fe3aff5420951', 'status': 'PASSED',
           'scope': 'Windows implementation replay/source geometry/real PCM; native source same-content pixel and hardware acceptance pending',
           'totals': {'replays': len(reports), 'scenes': sum(r['scenes'] for r in reports), 'assertions': sum(r['assertions'] for r in reports)},
