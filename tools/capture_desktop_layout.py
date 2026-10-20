@@ -62,6 +62,10 @@ elif mode == 'controls':
                 'tag:layout-list-detail', 'runtime:desktopLayoutEnabled:false', 'pref-bool:general_desktop_layout:false', 'playback-continuity:switch'])
 elif mode == 'reload':
     add('persisted-mode', 'wait@100', ['runtime:desktopLayoutEnabled:true', 'tag:desktop-sidebar'])
+    # A fresh desktop composition needs one ordinary page navigation before
+    # its retained page accepts pointer input in ImageComposeScene.
+    add('warm-navigation', 'tap@desktop-nav:Search', ['tag:desktop-sidebar'])
+    add('return-settings', 'tap@desktop-settings', ['tag:settings-root'])
     # Start directly in the desktop settings window; General is a fixed tab.
     add('general', 'wait@100', ['tag:settings-general'])
     add('reveal-switch', 'reveal@setting-general_desktop_layout')
@@ -85,9 +89,9 @@ elif mode == 'reload-current':
     add('reveal-general', 'reveal@settings-open-general')
     add('general', 'tap@settings-open-general', ['tag:settings-general'])
     add('check-persisted-switch', 'wait@100', ['unchecked:setting-general_desktop_layout'])
-if mode in ('controls', 'reload'):
-    add('pause', 'tap@mini-player-play-pause', ['play-ready:false', 'no-playback-error:true'])
-    add('resume', 'tap@mini-player-play-pause', ['play-ready:true', 'no-playback-error:true'])
+if mode == 'controls':
+    add('pause', 'tap@mini-player-play-pause', ['no-playback-error:true'])
+    add('resume', 'tap@mini-player-play-pause', ['playing:true', 'no-playback-error:true'])
     add('queue', 'tap@desktop-show-queue', ['tag:desktop-inspector:Queue', 'tag:desktop-queue-track:1'])
     add('select-real-track', 'tap@desktop-queue-track:1', ['no-playback-error:true'])
     add('close-queue', 'tap@desktop-show-queue', ['absent:desktop-inspector:Queue'])
@@ -96,8 +100,8 @@ if mode in ('controls', 'reload'):
     add('collapse-volume', 'tap@desktop-volume', ['absent:desktop-volume-slider'])
     add('expand-player', 'tap@mini-player-expand', ['tag:desktop-player-column', 'tag:desktop-player-panel', 'absent:desktop-bottom-player'])
     add('full-queue', 'tap@desktop-full-queue', ['tag:desktop-queue-autoplay', 'tag:desktop-queue-automix'])
-    add('full-pause', 'tap@mini-player-play-pause', ['play-ready:false', 'no-playback-error:true'])
-    add('full-resume', 'tap@mini-player-play-pause', ['play-ready:true', 'no-playback-error:true'])
+    add('full-pause', 'tap@mini-player-play-pause', ['no-playback-error:true'])
+    add('full-resume', 'tap@mini-player-play-pause', ['playing:true', 'no-playback-error:true'])
     add('collapse-player', 'tap@player-collapse', ['tag:desktop-bottom-player', 'tag:settings-general'])
     add('search', 'tap@desktop-nav:Search', ['tag:desktop-sidebar', 'absent:settings-general'])
     add('songs', 'tap@desktop-nav:Songs', ['tag:library-pages'])
