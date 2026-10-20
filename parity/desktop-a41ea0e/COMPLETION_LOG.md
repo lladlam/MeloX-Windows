@@ -1,5 +1,12 @@
 # Desktop 迁移记录
 
+## 4. 账户弹层与沉浸队列参考迁移
+
+- 以用户上传的 home、account、playlist、queue、immersive-player、lyrics-pane 截图为本轮参考；桌面侧栏账户入口改为居中账户弹层，提供私信、云盘、下载、账户设置、登录／登出和完成入口。
+- 上述操作分别连接现有消息页、云盘页、下载页、设置页与网易云会话；退出登录清除会话，未登录状态可进入已有登录流程。
+- 沉浸式队列模式选择补充 AutoPlay／AutoMix 文案，保留运行时模式状态和点击行为；队列标题及行内边距按源 15pt 指标调整。
+- OpenJDK 21 与固定 Gradle 9.5.1 下 `:desktop:compileKotlinDesktop` 编译成功。此次未运行测试。
+
 ## 3. Collection 详情、账户与消息桌面化
 
 - 新增共用 Desktop collection 详情组件：对齐真源 278×278 封面、34pt 间距、32pt 标题、22pt 作者、13pt 元数据、桌面操作按钮、搜索和曲目表列。

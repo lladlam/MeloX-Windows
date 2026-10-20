@@ -80,6 +80,8 @@ internal fun MeloXInterfaceLayout(
     libraryPage: String?,
     onSelect: (AppTab, String?) -> Unit,
     onAccount: () -> Unit,
+    onOpenMessages: () -> Unit,
+    onLogin: () -> Unit,
     onExpandPlayer: () -> Unit,
     playerOpen: Boolean,
     backdrop: MeloXLayerBackdrop,
@@ -88,10 +90,11 @@ internal fun MeloXInterfaceLayout(
 ) {
     val desktop = MeloXSettingsRuntime.desktopLayoutEnabled
     var inspector by remember { mutableStateOf<DesktopInspector?>(null) }
+    var accountSheet by remember { mutableStateOf(false) }
     LaunchedEffect(desktop, hasMedia) { if (!desktop || !hasMedia) inspector = null }
     val duration = if (MeloXSettingsRuntime.reduceMotion) 0 else 280
     Row(Modifier.fillMaxSize().testTag(if (desktop) "interface-desktop" else "interface-current")) {
-        if (desktop) DesktopSidebar(selectedTab, source, libraryPage, onSelect, onAccount)
+        if (desktop) DesktopSidebar(selectedTab, source, libraryPage, onSelect) { accountSheet = true }
         key("retained-page") {
             Box(Modifier.weight(1f).fillMaxHeight().clipToBounds()) {
                 CompositionLocalProvider(LocalDesktopInspectorWidth provides if (desktop && inspector != null && !playerOpen) DesktopMetrics.Inspector else 0) {
@@ -117,6 +120,15 @@ internal fun MeloXInterfaceLayout(
                 }
             }
         }
+    }
+    if (desktop && accountSheet) {
+        MeloXDesktopAccountSheet(
+            onDismiss = { accountSheet = false },
+            onAccountSettings = { accountSheet = false; onAccount() },
+            onMessages = { accountSheet = false; onOpenMessages() },
+            onLogin = { accountSheet = false; onLogin() },
+            onSelect = { tab, page -> accountSheet = false; onSelect(tab, page) },
+        )
     }
 }
 
@@ -324,13 +336,18 @@ internal fun DesktopQueueInspector(active: Boolean, prominent: Boolean = false) 
             val automix = melox.playback.MeloXPlaybackModeRuntime.autoMixEnabled
             for ((id, title, checked) in listOf(Triple("autoplay", "ui.desktop.player.autoplay", autoplay),
                 Triple("automix", "ui.settings.automix.title", automix))) {
-                Box(Modifier.weight(1f).height(38.dp).clip(CircleShape).testTag("desktop-queue-$id")
+                Row(Modifier.weight(1f).height(if (prominent) 40.dp else 38.dp).clip(CircleShape).testTag("desktop-queue-$id")
                     .background(if (checked) Color.Red else color.copy(alpha = .10f))
                     .semantics { selected = checked; contentDescription = desktopString(title) }
                     .clickable(enabled = active, role = Role.Button) {
                         if (id == "autoplay") player?.setAutoplayEnabled(!autoplay) else player?.setAutoMixEnabled(!automix)
-                    }, contentAlignment = Alignment.Center) {
+                    }, verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.Center) {
                     MeloXSymbolIcon(MeloXSymbol.Infinity, size = 16, color = if (checked) Color.White else color.copy(alpha = .88f))
+                    if (prominent) {
+                        Spacer(Modifier.width(8.dp))
+                        Text(desktopString(title), color = if (checked) Color.White else color.copy(alpha = .88f),
+                            fontSize = 15.sp, fontWeight = FontWeight.SemiBold, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                    }
                 }
             }
         }
@@ -338,7 +355,7 @@ internal fun DesktopQueueInspector(active: Boolean, prominent: Boolean = false) 
             contentPadding = PaddingValues(bottom = if (prominent) 64.dp else 0.dp)) {
         fun header(title: String, tag: String, enabled: Boolean, onClear: () -> Unit) {
             item(key = tag) {
-                Row(Modifier.fillMaxWidth().height(44.dp).padding(horizontal = 16.dp), verticalAlignment = Alignment.CenterVertically) {
+                Row(Modifier.fillMaxWidth().height(44.dp).padding(horizontal = if (prominent) 15.dp else 16.dp), verticalAlignment = Alignment.CenterVertically) {
                     Text(desktopString(title), Modifier.weight(1f), color = color, fontSize = 15.sp, fontWeight = FontWeight.Bold)
                     Text(desktopString("ui.common.clear"), Modifier.testTag(tag).clickable(enabled = active && enabled, role = Role.Button, onClick = onClear),
                         color = Color.Red.copy(alpha = if (enabled) 1f else .3f), fontSize = 14.sp, fontWeight = FontWeight.Medium)
@@ -352,7 +369,7 @@ internal fun DesktopQueueInspector(active: Boolean, prominent: Boolean = false) 
             val entryId = queue.entryIds.getOrNull(index)
             fun playEntry() { PlaybackCommands.queue.value.entryIds.indexOf(entryId).takeIf { it >= 0 }?.let { player?.seekToIndex(it); player?.play() } }
             var menu by remember(entryId) { mutableStateOf(false) }
-            Row(Modifier.fillMaxWidth().height(48.dp).padding(start = 16.dp, end = 10.dp),
+            Row(Modifier.fillMaxWidth().height(48.dp).padding(start = if (prominent) 15.dp else 16.dp, end = if (prominent) 9.dp else 10.dp),
                 verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 Row(Modifier.weight(1f).fillMaxHeight().testTag("desktop-queue-track:$index").clickable(enabled = active, onClick = ::playEntry),
                     verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(11.dp)) {

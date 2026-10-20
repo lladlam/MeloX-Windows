@@ -419,6 +419,8 @@ fun MeloXApp(onExit: () -> Unit = { kotlin.system.exitProcess(0) }) {
                     libraryPage = desktopLibraryPage,
                     onSelect = { tab, page -> desktopLibraryPage = page; selectedTab = tab },
                     onAccount = { selectedTab = AppTab.Settings },
+                    onOpenMessages = { messagesVisible = true },
+                    onLogin = { selectedTab = AppTab.Settings; settingsRouteRequest = "NeteaseLogin" },
                     onExpandPlayer = openPlayer, playerOpen = playerOpen,
                     backdrop = pageBackdrop,
                     modifier = Modifier.meloXRecordBackdrop(pageBackdrop).nestedScroll(tabBarMinimizeConnection),
