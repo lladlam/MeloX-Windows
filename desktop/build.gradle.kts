@@ -58,6 +58,8 @@ kotlin {
                 implementation(libs.kotlinx.coroutines.swing)
                 implementation(libs.okhttp)
                 implementation(libs.org.json)
+                // Same JNA already shipped by shared; native input verification uses its Win32 ABI.
+                implementation("net.java.dev.jna:jna-platform:5.17.0")
                 implementation(compose.ui)
                 implementation(compose.runtime)
                 implementation(compose.material3)
@@ -203,6 +205,16 @@ tasks.register<JavaExec>("auditImmersiveWindow") {
     classpath = files(compilation.output.allOutputs, compilation.runtimeDependencyFiles)
     mainClass.set("melox.validation.MeloXImmersiveWindowAuditKt")
     args(layout.buildDirectory.file("verification/immersive-window.json").get().asFile.absolutePath)
+}
+
+tasks.register<JavaExec>("auditNativeTouchScroll") {
+    group = "verification"
+    description = "Inject Windows touch contacts through AWT into the production scrolling adapter."
+    dependsOn("desktopMainClasses")
+    val compilation = kotlin.targets.getByName("desktop").compilations.getByName("main")
+    classpath = files(compilation.output.allOutputs, compilation.runtimeDependencyFiles)
+    mainClass.set("melox.validation.MeloXNativeTouchScrollAuditKt")
+    args(layout.buildDirectory.file("verification/native-touch-scroll.json").get().asFile.absolutePath)
 }
 
 tasks.register<JavaExec>("auditWindowChrome") {

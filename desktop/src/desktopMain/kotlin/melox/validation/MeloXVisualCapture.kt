@@ -376,10 +376,12 @@ fun main(args: Array<String>) = runBlocking {
                         settle(16)
                     }
                 } else if (coordinates.startsWith("tap@") || coordinates.startsWith("tap-first@") || coordinates.startsWith("hold-tag@") ||
-                    coordinates.startsWith("touch-tap@") || coordinates.startsWith("touch-tap-first@")) {
+                    coordinates.startsWith("touch-tap@") || coordinates.startsWith("touch-tap-first@") ||
+                    coordinates.startsWith("right-click@") || coordinates.startsWith("right-click-first@")) {
                     val requested = coordinates.substringAfter('@')
                     val touch = coordinates.startsWith("touch-")
-                    val prefix = coordinates.startsWith("tap-first@") || coordinates.startsWith("touch-tap-first@")
+                    val secondary = coordinates.startsWith("right-click")
+                    val prefix = coordinates.startsWith("tap-first@") || coordinates.startsWith("touch-tap-first@") || coordinates.startsWith("right-click-first@")
                     fun matchingTag() = if (!prefix) requested else scene.captureSemantics().firstOrNull {
                         it.config.getOrNull(SemanticsProperties.TestTag)?.startsWith(requested) == true && !it.boundsInWindow.isEmpty &&
                             it.config.contains(SemanticsActions.OnClick)
@@ -424,27 +426,28 @@ fun main(args: Array<String>) = runBlocking {
                     // Keep down/up on separate frames for pointer coroutines.
                     val pointerType = if (touch) PointerType.Touch else PointerType.Mouse
                     inputEvidence.put(JSONObject().put("step", name).put("type", if (touch) "Touch" else "Mouse")
-                        .put("action", "tap").put("x", point.x).put("y", point.y))
+                        .put("action", if (secondary) "right-click" else "tap").put("x", point.x).put("y", point.y))
                     if (!touch) { scene.sendPointerEvent(PointerEventType.Move, point); settle(16) }
-                    scene.sendPointerEvent(PointerEventType.Press, point, type = pointerType, button = if (touch) null else PointerButton.Primary)
+                    scene.sendPointerEvent(PointerEventType.Press, point, type = pointerType, button = if (touch) null else if (secondary) PointerButton.Secondary else PointerButton.Primary)
                     settle(if (hold) 700 else 32)
-                    scene.sendPointerEvent(PointerEventType.Release, point, type = pointerType, button = if (touch) null else PointerButton.Primary)
-                } else if (coordinates.startsWith("touch-drag@") || coordinates.startsWith("touch-edge@")) {
+                    scene.sendPointerEvent(PointerEventType.Release, point, type = pointerType, button = if (touch) null else if (secondary) PointerButton.Secondary else PointerButton.Primary)
+                } else if (coordinates.startsWith("touch-drag@") || coordinates.startsWith("touch-edge@") || coordinates.startsWith("mouse-drag@")) {
                     val (tag, dx, dy) = coordinates.substringAfter('@').split(',')
                     val bounds = checkNotNull(scene.captureSemantics().tagged(tag)) { "Missing touch target $tag" }.boundsInWindow
                     val point = if (coordinates.startsWith("touch-edge@")) Offset(bounds.left + 12 * density, bounds.center.y) else bounds.center
                     val delta = Offset(dx.toFloat() * density, dy.toFloat() * density)
-                    inputEvidence.put(JSONObject().put("step", name).put("type", "Touch").put("action", "drag")
+                    val pointerType = if (coordinates.startsWith("mouse-drag@")) PointerType.Mouse else PointerType.Touch
+                    inputEvidence.put(JSONObject().put("step", name).put("type", pointerType.toString()).put("action", "drag")
                         .put("start", JSONArray(listOf(point.x, point.y))).put("delta", JSONArray(listOf(delta.x, delta.y))))
-                    scene.sendPointerEvent(PointerEventType.Press, point, type = PointerType.Touch)
+                    scene.sendPointerEvent(PointerEventType.Press, point, type = pointerType, button = if (pointerType == PointerType.Mouse) PointerButton.Primary else null)
                     settle(32)
                     for (frame in 1..24) {
-                        scene.sendPointerEvent(PointerEventType.Move, point + delta * (frame / 24f), type = PointerType.Touch)
+                        scene.sendPointerEvent(PointerEventType.Move, point + delta * (frame / 24f), type = pointerType)
                         settle(16)
                     }
                     // Let velocity settle before lift so this checks distance/direction, not a fling.
                     settle(160)
-                    scene.sendPointerEvent(PointerEventType.Release, point + delta, type = PointerType.Touch)
+                    scene.sendPointerEvent(PointerEventType.Release, point + delta, type = pointerType, button = if (pointerType == PointerType.Mouse) PointerButton.Primary else null)
                 } else if (coordinates.startsWith("hover@")) {
                     val tag = coordinates.substringAfter('@')
                     awaitUi { scene.captureSemantics().tagged(tag) != null }

@@ -14,6 +14,7 @@ import androidx.compose.foundation.interaction.collectIsHoveredAsState
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.selection.SelectionContainer
@@ -26,6 +27,12 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.layout.boundsInWindow
+import androidx.compose.ui.unit.IntOffset
+import androidx.compose.ui.input.pointer.onPointerEvent
+import androidx.compose.ui.input.pointer.PointerEventType
+import androidx.compose.ui.input.pointer.isSecondaryPressed
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
@@ -76,12 +83,15 @@ internal fun MeloXDesktopCollectionDetail(
     onRetry: () -> Unit,
     onSong: (SearchSong) -> Unit,
     onMore: ((SearchSong) -> Unit)? = null,
+    onMenuAnchor: (IntOffset) -> Unit = {},
     status: String? = null,
+    extraContent: (androidx.compose.foundation.lazy.LazyListScope.() -> Unit)? = null,
     tag: String,
 ) {
     val colors = MaterialTheme.colorScheme
     var searchOpen by remember(tag) { mutableStateOf(false) }
     var downloadMenu by remember(tag) { mutableStateOf(false) }
+    val listState = rememberLazyListState()
     // Do not merge Material bodyLarge's 24sp line height into 11–13.5pt SF text.
     CompositionLocalProvider(LocalTextStyle provides TextStyle(fontFamily = MeloXDesktopTextFontFamily, color = colors.onSurface)) {
         Column(Modifier.fillMaxSize().background(colors.background).testTag(tag)) {
@@ -115,7 +125,9 @@ internal fun MeloXDesktopCollectionDetail(
                     DesktopCollectionAction(desktopString("ui.common.retry"), MeloXSymbol.Refresh, "desktop-collection-retry", onClick = onRetry)
                 }
                 else -> LazyColumn(
-                    Modifier.fillMaxSize().testTag("desktop-collection-scroll"),
+                    Modifier.fillMaxSize().desktopPromotedDragScroll(listState).testTag("desktop-collection-scroll")
+                        .semantics { stateDescription = "${listState.firstVisibleItemIndex}-${listState.firstVisibleItemScrollOffset}" },
+                    state = listState,
                     contentPadding = PaddingValues(horizontal = 42.dp, vertical = 34.dp),
                 ) {
                     item("header") {
@@ -142,6 +154,9 @@ internal fun MeloXDesktopCollectionDetail(
                         }
                     }
                     status?.let { message -> item("status") { Text(message, Modifier.padding(top = 12.dp), color = colors.onSurfaceVariant, fontSize = 12.sp) } }
+                    if (extraContent != null) {
+                        extraContent()
+                    } else {
                     item("divider") {
                         HorizontalDivider(Modifier.padding(vertical = 34.dp), color = colors.onSurface.copy(alpha = .10f), thickness = .5.dp)
                     }
@@ -160,10 +175,11 @@ internal fun MeloXDesktopCollectionDetail(
                         val offset = indexOffset
                         itemsIndexed(group, key = { _, song -> song.providerTrack?.id?.toString() ?: song.id.toString() }) { index, song ->
                             DesktopCollectionTrackRow(if (groupsByDisc) song.trackNumber ?: (offset + index + 1) else offset + index + 1,
-                                song, playingId == song.id, isPlaying, showsAlbumColumn, { onSong(song) }, onMore?.let { { it(song) } })
+                                song, playingId == song.id, isPlaying, showsAlbumColumn, { onSong(song) }, onMore?.let { action -> { anchor -> onMenuAnchor(anchor); action(song) } })
                             Spacer(Modifier.height(1.dp))
                         }
                         indexOffset += group.size
+                    }
                     }
                 }
             }
@@ -247,17 +263,27 @@ private fun DesktopCollectionAction(label: String, symbol: MeloXSymbol, tag: Str
 }
 
 @Composable
-@OptIn(androidx.compose.foundation.ExperimentalFoundationApi::class)
-private fun DesktopCollectionTrackRow(index: Int, song: SearchSong, current: Boolean, isPlaying: Boolean,
-    showsAlbumColumn: Boolean, onClick: () -> Unit, onMore: (() -> Unit)?) {
+@OptIn(androidx.compose.foundation.ExperimentalFoundationApi::class, androidx.compose.ui.ExperimentalComposeUiApi::class)
+internal fun DesktopCollectionTrackRow(index: Int, song: SearchSong, current: Boolean, isPlaying: Boolean,
+    showsAlbumColumn: Boolean, onClick: () -> Unit, onMore: ((IntOffset) -> Unit)?) {
     val colors = MaterialTheme.colorScheme
     val interaction = remember { MutableInteractionSource() }
     val hovered by interaction.collectIsHoveredAsState()
+    var rowOrigin by remember { mutableStateOf(androidx.compose.ui.geometry.Offset.Zero) }
+    var menuAnchor by remember { mutableStateOf(IntOffset.Zero) }
     val opacity by animateFloatAsState(if (hovered) .045f else 0f,
         tween(if (MeloXSettingsRuntime.reduceMotion) 0 else 160, easing = CubicBezierEasing(0f, 0f, .58f, 1f)), label = "collection-row-hover")
     Row(Modifier.fillMaxWidth().heightIn(min = 46.dp).testTag("desktop-collection-track:${song.id}")
+        .onGloballyPositioned { rowOrigin = it.boundsInWindow().topLeft }
+        .onPointerEvent(PointerEventType.Press) { event ->
+            if (event.buttons.isSecondaryPressed) {
+                val point = rowOrigin + event.changes.first().position
+                onMore?.invoke(IntOffset(point.x.toInt(), point.y.toInt()))
+                event.changes.forEach { it.consume() }
+            }
+        }
         .clip(RoundedCornerShape(8.dp)).hoverable(interaction).background(colors.onSurface.copy(alpha = opacity))
-        .combinedClickable(onClick = { if (MeloXPointerMode.touch) onClick() }, onDoubleClick = onClick, onLongClick = onMore)
+        .combinedClickable(onClick = { if (MeloXPointerMode.touch) onClick() }, onDoubleClick = onClick, onLongClick = onMore?.let { { it(menuAnchor) } })
         .padding(horizontal = 12.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
         Box(Modifier.width(24.dp).height(28.dp).testTag("desktop-collection-track-play:${song.id}")
             .semantics { contentDescription = desktopFormat("ui.common.play_named", song.name) }
@@ -275,8 +301,9 @@ private fun DesktopCollectionTrackRow(index: Int, song: SearchSong, current: Boo
             maxLines = 1, overflow = TextOverflow.Ellipsis)
         Text(desktopDuration(song.durationMs), Modifier.width(42.dp), fontSize = 12.sp, style = LocalTextStyle.current.copy(fontFeatureSettings = "tnum"),
             textAlign = androidx.compose.ui.text.style.TextAlign.End, color = colors.onSurface.copy(alpha = .5f))
-        Box(Modifier.alpha(if (hovered || current || MeloXPointerMode.touch) 1f else .16f)) {
-            if (onMore != null) DesktopCollectionIconButton(MeloXSymbol.Ellipsis, "desktop-collection-more:${song.id}", desktopString("ui.common.more"), onMore, size = 28)
+        Box(Modifier.alpha(if (hovered || current || MeloXPointerMode.touch) 1f else .16f)
+            .onGloballyPositioned { val bounds = it.boundsInWindow(); menuAnchor = IntOffset(bounds.right.toInt(), bounds.bottom.toInt()) }) {
+            if (onMore != null) DesktopCollectionIconButton(MeloXSymbol.Ellipsis, "desktop-collection-more:${song.id}", desktopString("ui.common.more"), { onMore(menuAnchor) }, size = 28)
             else Spacer(Modifier.size(28.dp))
         }
     }

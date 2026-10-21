@@ -119,6 +119,7 @@ fun PlaylistDetailScreen(
     val totalDurationMs = songs.sumOf { it.durationMs }
 
     if (MeloXSettingsRuntime.desktopLayoutEnabled) {
+        var menuAnchor by remember { mutableStateOf<androidx.compose.ui.unit.IntOffset?>(null) }
         melox.ui.desktop.MeloXDesktopCollectionDetail(
             kind = desktopString("ui.common.playlist"),
             title = shown.name,
@@ -164,6 +165,7 @@ fun PlaylistDetailScreen(
             onFilterChange = { filter = it },
             onSong = { PlaybackCommands.playQueue(songs, it.id) },
             onMore = { actionSong = it },
+            onMenuAnchor = { menuAnchor = it },
             status = operation,
             tag = "desktop-playlist-detail",
         )
@@ -172,7 +174,7 @@ fun PlaylistDetailScreen(
                 sourcePlaylist = if (playlist.providerPlaylist == null) melox.download.MeloXDownloadPlaylistRef(shown.id, shown.name, shown.coverUrl) else null,
                 sourceOwnedPlaylistId = shown.id.takeIf { playlist.providerPlaylist == null && accountUserId != null && shown.creatorUserId == accountUserId },
                 sourceProviderPlaylist = playlist.providerPlaylist,
-                onSourcePlaylistChanged = { refreshRevision++ })
+                onSourcePlaylistChanged = { refreshRevision++ }, desktopAnchor = menuAnchor)
         }
         return
     }

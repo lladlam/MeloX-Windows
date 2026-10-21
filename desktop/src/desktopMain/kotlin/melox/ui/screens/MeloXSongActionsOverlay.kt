@@ -51,6 +51,7 @@ import melox.playback.MeloXSleepTimer
 import melox.playback.PlaybackCommands
 import melox.ui.foundation.*
 import melox.ui.navigation.MeloXBackHandler
+import melox.ui.navigation.songShareUrl
 import melox.ui.legal.pinnedString
 import melox.ui.theme.MeloXColors
 
@@ -72,8 +73,14 @@ fun MeloXSongActionsOverlay(
     sourceProviderPlaylist: MusicPlaylistSummary? = null,
     onSourcePlaylistChanged: (() -> Unit)? = null,
     fromPlayer: Boolean = false,
+    desktopAnchor: androidx.compose.ui.unit.IntOffset? = null,
 ) {
     if (!visible) return
+    if (melox.settings.MeloXSettingsRuntime.desktopLayoutEnabled) {
+        melox.ui.desktop.MeloXDesktopSongMenu(song, onDismiss, desktopAnchor, sourcePlaylist,
+            sourceOwnedPlaylistId, sourceProviderPlaylist, onSourcePlaylistChanged)
+        return
+    }
     // A different native identity owns different jobs/state, even when legacy ids collide.
     key(song) {
         SongActionsContent(song, queue, onDismiss, sourcePlaylist, sourceOwnedPlaylistId,
@@ -614,18 +621,5 @@ private fun BilibiliOffset(song: SearchSong) {
             onValueChange = { displayed = it.toInt(); melox.provider.bilibili.BilibiliLyricOffsetStore.write(provider.id.value, displayed) },
             valueRange = -5_000f..5_000f, stepSize = 100f, visibilityThreshold = 1f,
             contentDescription = pinnedString("player_lyric_offset"), modifier = Modifier.testTag("bilibili-lyric-offset"))
-    }
-}
-
-private fun songShareUrl(song: SearchSong): String? {
-    song.neteaseSongId?.let { return "https://music.163.com/song?id=$it" }
-    val track = song.providerTrack ?: return null
-    val id = java.net.URLEncoder.encode(track.id.value, "UTF-8")
-    return when (track.id.source) {
-        MusicSource.QQMusic -> "https://y.qq.com/n/ryqq/songDetail/$id"
-        MusicSource.Spotify -> "https://open.spotify.com/track/$id"
-        MusicSource.YouTubeMusic -> "https://music.youtube.com/watch?v=$id"
-        MusicSource.Bilibili -> (track.providerMetadata as? ProviderTrackMetadata.Bilibili)?.let { "https://www.bilibili.com/video/${it.bvid}" }
-        else -> null
     }
 }

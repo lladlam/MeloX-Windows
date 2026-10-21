@@ -23,7 +23,7 @@ assertions = [a for s in data['scenes'] for a in s.get('assertions', [])]
 assert assertions and all(a['passed'] for a in assertions)
 scale = data['density']
 assert scale > 0
-geometries, images = [], []
+geometries, images, desktop_menus, artist_frames = [], [], [], []
 measured_rows = 0
 search_empty = search_restored = False
 for scene in data['scenes']:
@@ -33,6 +33,28 @@ for scene in data['scenes']:
     assert struct.unpack('>II', raw[16:24]) == (data['width'], data['height'])
     images.append(dict(file=scene['file'], sha256=hashlib.sha256(raw).hexdigest()))
     nodes = json.loads(image.with_suffix('.semantics.json').read_text(encoding='utf-8'))
+    tagged = {n['tag']: n for n in nodes if n.get('tag')}
+    if scene['file'].endswith('-close-submenu.png'):
+        assert 'desktop-song-add-menu' not in tagged, 'Escape must close the child menu'
+        assert 'desktop-song-menu' in tagged, 'First Escape must preserve the parent menu'
+    menu = tagged.get('desktop-song-menu')
+    if menu:
+        assert 'song-actions' not in tagged, 'Desktop must not render the Android bottom sheet'
+        bounds = menu['bounds']
+        assert abs((bounds[2] - bounds[0]) / scale - 266) <= 1
+        assert (bounds[3] - bounds[1]) / scale < 400
+        assert {'desktop-song-next', 'desktop-song-queue', 'desktop-song-add-to',
+                'desktop-song-favorite', 'desktop-song-information'} <= tagged.keys()
+        desktop_menus.append(dict(scene=scene['file'], bounds=bounds))
+    hero = tagged.get('desktop-artist-hero')
+    if hero and scene['file'].endswith('-artist-route.png'):
+        assert 'artist-detail' not in tagged, 'Desktop must not render the Android artist page'
+        bounds = hero['bounds']
+        assert abs((bounds[3] - bounds[1]) / scale - 380) <= 1
+        avatar = tagged['desktop-artist-avatar']['bounds']
+        assert abs((avatar[2] - avatar[0]) / scale - 190) <= 1
+        assert abs((avatar[3] - avatar[1]) / scale - 190) <= 1
+        artist_frames.append(dict(scene=scene['file'], hero=bounds, avatar=avatar))
     rows = [n for n in nodes if (n.get('tag') or '').startswith('desktop-collection-track:')]
     if '-type-search.' in scene['file']:
         assert not rows, 'Actual typed filter did not remove nonmatching rows'
@@ -64,6 +86,13 @@ for scene in data['scenes']:
     geometries.append(dict(scene=scene['file'], artwork=artwork['bounds'], details=details['bounds'] if details else None,
                            rows=[n['bounds'] for n in full_rows]))
 assert geometries and measured_rows
+for stage in ['native-touch-scroll', 'promoted-touch-scroll']:
+    dragged = next((s for s in data['scenes'] if s['file'].endswith('-' + stage + '.png')), None)
+    if dragged:
+        nodes = json.loads((directory / dragged['file']).with_suffix('.semantics.json').read_text(encoding='utf-8'))
+        state = next(n['state'] for n in nodes if n.get('tag') == 'desktop-collection-scroll')
+        index, offset = map(int, state.split('-'))
+        assert index > 0 or offset >= 100, (stage, state, 'Drag did not actually scroll')
 if args.page == 'playlist':
     assert search_empty and search_restored
 log = (directory / 'gradle.log').read_text(encoding='utf-8', errors='replace')
@@ -78,6 +107,7 @@ if args.reference:
                      actual_artwork=bounds, delta_px=[a - b for a, b in zip(bounds, [498, 172, 1054, 728])],
                      scope='Original artwork landmark only; different public playlist, typography and native toolbar remain outside full-image acceptance')
 report = dict(status='PASSED', page=args.page, scenes=len(data['scenes']), assertions=len(assertions), home=data['home'], reference=reference,
+              desktop_menus=desktop_menus, artist_frames=artist_frames,
               source_commit='a41ea0e1e1fa69fb543d827b853fe3aff5420951', geometries=geometries, images=images,
               capture_sha256=hashlib.sha256((directory / 'capture.json').read_bytes()).hexdigest(),
               scope='Live production implementation/input/source metrics; same-content native macOS pixels pending')

@@ -79,6 +79,7 @@ fun AlbumDetailScreen(
     val totalMinutes = (songs.sumOf { it.durationMs } / 1000 / 60).toInt()
 
     if (MeloXSettingsRuntime.desktopLayoutEnabled) {
+        var menuAnchor by remember { mutableStateOf<androidx.compose.ui.unit.IntOffset?>(null) }
         melox.ui.desktop.MeloXDesktopCollectionDetail(
             kind = album?.type ?: desktopString("ui.common.album"),
             title = title,
@@ -122,10 +123,11 @@ fun AlbumDetailScreen(
                 songs.forEach { store.start(it, melox.audio.MusicQualityPreferences.read()) }
             },
             onMore = { actionSong = it },
+            onMenuAnchor = { menuAnchor = it },
             status = operation,
             tag = "desktop-album-detail",
         )
-        actionSong?.let { song -> MeloXSongActionsOverlay(song, songs, true, { actionSong = null }) }
+        actionSong?.let { song -> MeloXSongActionsOverlay(song, songs, true, { actionSong = null }, desktopAnchor = menuAnchor) }
         return
     }
 

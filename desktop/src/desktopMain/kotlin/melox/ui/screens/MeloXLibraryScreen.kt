@@ -279,7 +279,8 @@ fun LibraryScreen(
         return
     }
 
-    val splitPlaylistDetail = melox.ui.layout.LocalMeloXListDetail.current && !melox.ui.layout.LocalMeloXInDetailPane.current
+    val splitPlaylistDetail = !MeloXSettingsRuntime.desktopLayoutEnabled &&
+        melox.ui.layout.LocalMeloXListDetail.current && !melox.ui.layout.LocalMeloXInDetailPane.current
     var retainedPlaylist by remember(source) { mutableStateOf(selectedPlaylist) }
     androidx.compose.runtime.SideEffect { if (selectedPlaylist != null) retainedPlaylist = selectedPlaylist }
     melox.ui.navigation.MeloXBackHandler(selectedPlaylist != null) { selectedPlaylist = null }
@@ -315,6 +316,11 @@ fun LibraryScreen(
         ) { targetPlaylist ->
             val playlistTransitionVisibilityScope = this
             if (targetPlaylist != null) {
+                if (MeloXSettingsRuntime.desktopLayoutEnabled) {
+                    // Library must use the same Mac collection surface as Home/Search.
+                    // The shared-element mobile detail below belongs to the mobile layout only.
+                    PlaylistDetailScreen(targetPlaylist, onBack = { selectedPlaylist = null })
+                } else {
                 MeloXLibraryPlaylistDetailScreen(
                     initialPlaylist = targetPlaylist,
                     client = client,
@@ -330,6 +336,7 @@ fun LibraryScreen(
                         }
                     },
                 )
+                }
             } else {
                 val desktop = MeloXSettingsRuntime.desktopLayoutEnabled
                 Column(

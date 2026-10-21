@@ -55,6 +55,10 @@ import melox.ui.navigation.MeloXBackHandler
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ArtistDetailScreen(id: Long, onBack: () -> Unit) {
+    if (melox.settings.MeloXSettingsRuntime.desktopLayoutEnabled) {
+        melox.ui.desktop.MeloXDesktopArtistDetail(id, onBack)
+        return
+    }
     val client = remember { NeteaseCollectionDetailsClient(cookieProvider = { NeteaseSessionStore.readCookie() }) }
     val scope = rememberCoroutineScope()
     var detail by remember(id) { mutableStateOf<MeloXArtistDetail?>(null) }

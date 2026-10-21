@@ -37,6 +37,15 @@ KEYS += ['ui.desktop.settings.account', 'ui.messages.private.title', 'ui.desktop
          'ui.settings.account.logout', 'ui.settings.account.logout.confirmation', 'ui.common.cancel',
          'ui.common.done', 'ui.common.login', 'ui.account.login_netease', 'ui.desktop.account.login_message']
 KEYS += ['ui.common.title_detail_separator', 'ui.desktop.player.playback_progress', 'ui.desktop.player.toggle_mute']
+KEYS += ['ui.player.play_next', 'ui.player.add_to_queue', 'ui.playlists.add_to',
+         'ui.playlists.create.title', 'ui.playlists.create.name', 'ui.playlists.create.private', 'ui.playlists.create.action',
+         'ui.playlists.none_available', 'ui.playlists.remove_song', 'ui.playlists.remove_song.message',
+         'ui.playlists.add_failed', 'ui.library.error.title', 'ui.song.unlike', 'ui.song.like',
+         'ui.common.download', 'ui.song.view_information', 'ui.artist.go_to_generic', 'ui.common.ok']
+KEYS += ['ui.song.detail.title', 'ui.comments.title', 'ui.desktop.song.content', 'ui.common.songs',
+         'ui.desktop.lyrics.unavailable', 'ui.comments.empty', 'ui.song.loading']
+KEYS += ['ui.desktop.artist.latest_releases', 'ui.artist.popular_songs', 'ui.artist.loading',
+         'ui.common.artist', 'ui.desktop.artist.follow_failed', 'ui.desktop.artist.following', 'ui.desktop.artist.follow']
 KEYS += [f'ui.settings.audio_quality.{quality}' for quality in
          ['standard', 'high', 'lossless', 'hi_res', 'hd_surround', 'immersive_surround', 'master']]
 SOURCES = [
@@ -73,6 +82,9 @@ SOURCES = [
     'MeloXDesktop/Features/Detail/DesktopPlaylistDetailView.swift',
     'MeloXDesktop/Features/Detail/DesktopAlbumDetailView.swift',
     'MeloXDesktop/Shared/DesktopTrackRow.swift',
+    'MeloXDesktop/Features/Playlist/PlaylistCreationSheet.swift',
+    'MeloXDesktop/Features/Detail/DesktopSongDetailView.swift',
+    'MeloXDesktop/Features/Detail/DesktopArtistDetailView.swift',
 ]
 
 parser = argparse.ArgumentParser(description=__doc__)

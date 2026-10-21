@@ -53,6 +53,8 @@ jobs:
         run: gradle :desktop:auditImmersiveWindow
       - name: Verify app-owned window caption using native pointer input
         run: gradle :desktop:auditWindowChrome
+      - name: Verify Windows-injected touch and promoted mouse drag scrolling
+        run: gradle :desktop:auditNativeTouchScroll
       - name: Audit real glass optics, native ownership and stable filter reuse
         run: gradle :desktop:auditGlassOptics
       - name: Replay the real glass dock and moving selection in both themes
@@ -138,7 +140,9 @@ jobs:
         run: |
           python tools/capture_desktop_collection.py album "$pwd/desktop/build/parity/collection-album-light-home" desktop/build/parity/collection-album-light --expand-description
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-          python tools/capture_desktop_collection.py playlist "$pwd/desktop/build/parity/collection-playlist-dark-home" desktop/build/parity/collection-playlist-dark --theme Dark
+          python tools/capture_desktop_collection.py playlist "$pwd/desktop/build/parity/collection-playlist-dark-home" desktop/build/parity/collection-playlist-dark --theme Dark --drag-scroll --song-menu --artist-route
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python tools/capture_desktop_collection.py playlist "$pwd/desktop/build/parity/collection-playlist-light-home" desktop/build/parity/collection-playlist-light --theme Light --locale zh-CN --drag-scroll --song-menu --artist-route
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - name: Replay Desktop Home themes, paging, real routes and Touch input
         shell: pwsh

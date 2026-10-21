@@ -2,6 +2,12 @@
 
 ## 固定真源与验收口径
 
+**用户纠正后的硬约束：电脑模式的唯一UI基准为MeloX Mac Desktop；手机版已迁移UI仅供参考，不能作为桌面页面、弹层、菜单或动效的实现模板。可以共用真实业务／服务／持久化逻辑，不能以“功能共用”将手机UI混进桌面。此前六图回放通过不代表这个隔离约束已经全部满足。**
+
+音乐库歌单入口此前遗漏了桌面分支，进入`MeloXLibraryPlaylistDetailScreen`（Android移植页）；已改为与Home／Search相同的桌面collection分支，并禁止桌面进入手机版split detail路由。歌曲操作现已在入口分流到独立桌面菜单，歌曲／歌手详情也新增独立Mac页面，见`DESKTOP_ONLY_SURFACES.md`。设置子页仍复用手机控件，属于待替换UI，不能按功能可达标为完成。
+
+触屏需区分Compose的Touch事件与Windows AWT提升为Mouse的拖动事件；collection已为后一条链路补充按阈值开始的纵向拖动／惯性滚动，原生Touch及滚轮继续由LazyColumn处理。`--drag-scroll`独立断言两种输入均实际滚动超过100px并回到顶部，未用tag存在代替滚动结果。Windows物理触屏验证仍未完成。
+
 - 仓库：<https://github.com/lladlam/melox>。
 - 电脑端固定提交：`a41ea0e1e1fa69fb543d827b853fe3aff5420951`。
 - 重新克隆的位置：`/mnt/ntfs_files_sda4/项目/MeloX-Desktop-Reference`。

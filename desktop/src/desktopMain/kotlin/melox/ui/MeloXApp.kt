@@ -160,6 +160,8 @@ fun MeloXApp(onExit: () -> Unit = { kotlin.system.exitProcess(0) }) {
                             onBack = melox.ui.navigation.MeloXCollectionLaunchBus::dismiss)
                         is melox.ui.navigation.MeloXCollectionTarget.Album -> AlbumDetailScreen(target.id.toString(), target.name,
                             onBack = melox.ui.navigation.MeloXCollectionLaunchBus::dismiss)
+                        is melox.ui.navigation.MeloXCollectionTarget.Song -> melox.ui.desktop.MeloXDesktopSongDetail(target.id,
+                            onBack = melox.ui.navigation.MeloXCollectionLaunchBus::dismiss)
                     } }
                 }
             }
@@ -451,7 +453,7 @@ fun MeloXApp(onExit: () -> Unit = { kotlin.system.exitProcess(0) }) {
                 melox.ui.desktop.MeloXInterfaceLayout(
                     hasMedia = hasMedia, selectedTab = selectedTab, source = selectedSource,
                     libraryPage = desktopLibraryPage,
-                    onSelect = { tab, page -> melox.ui.navigation.MeloXCollectionLaunchBus.dismiss(); desktopLibraryPage = page; selectedTab = tab },
+                    onSelect = { tab, page -> melox.ui.navigation.MeloXCollectionLaunchBus.clear(); desktopLibraryPage = page; selectedTab = tab },
                     onAccount = { selectedTab = AppTab.Settings },
                     onOpenMessages = { messagesVisible = true },
                     onLogin = { selectedTab = AppTab.Settings; settingsRouteRequest = "NeteaseLogin" },
