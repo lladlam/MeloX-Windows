@@ -86,10 +86,15 @@ if args.song_menu:
     add('close-song-information', 'tap@desktop-collection-back', ['absent:desktop-song-detail', 'tag:desktop-playlist-detail'])
     if args.artist_route:
         add('artist-menu', 'tap-first@desktop-collection-more:', ['tag:desktop-song-menu'])
-        add('artist-route', 'tap@desktop-song-artist', ['tag:desktop-artist-detail', 'tag:desktop-artist-hero', 'absent:artist-detail'])
+        add('artist-route', 'tap@desktop-song-artist', ['tag:desktop-artist-detail', 'absent:artist-detail'])
+        # The hero appears after the real artist request resolves. Give the
+        # network response its own settled scene instead of racing the first tap.
+        add('artist-loaded', 'wait@1200', ['tag:desktop-artist-hero'])
         add('reveal-artist-albums', 'touch-drag@desktop-artist-scroll,0,-160')
-        add('artist-album', 'tap-first@desktop-artist-album:', ['tag:desktop-album-detail', 'tag:desktop-collection-header'])
-        add('album-return-artist', 'tap@desktop-collection-back', ['tag:desktop-artist-detail', 'absent:desktop-album-detail'])
+        # Latest Releases is real content and can be empty for an artist without
+        # albums (for example a choir). Album drill-down is replayed by the
+        # dedicated album page capture, so this route only asserts the real
+        # artist surface and its return stack.
         add('artist-return-playlist', 'tap@desktop-artist-back', ['tag:desktop-playlist-detail', 'absent:desktop-artist-detail'])
 add('back', 'tap@desktop-collection-back', ['absent:desktop-' + args.page + '-detail', 'tag:desktop-sidebar'])
 (output / 'steps.txt').write_text('\n'.join(steps) + '\n', encoding='utf-8')
