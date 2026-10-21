@@ -41,7 +41,9 @@ internal fun MeloXDesktopOnboarding(onFinish: (login: Boolean) -> Unit) {
     var duration by remember { mutableIntStateOf(MeloXSettingsPreferences.string("recognition_duration", "6").toIntOrNull() ?: 6) }
     Dialog(onDismissRequest = {}, properties = DialogProperties(usePlatformDefaultWidth = false, dismissOnBackPress = false, dismissOnClickOutside = false)) {
         CompositionLocalProvider(LocalTextStyle provides androidx.compose.ui.text.TextStyle(fontFamily = MeloXDesktopTextFontFamily, color = MaterialTheme.colorScheme.onSurface, fontSize = 13.sp)) {
-            Surface(Modifier.size(760.dp, 650.dp).testTag("desktop-onboarding"), shape = RoundedCornerShape(10.dp)) {
+            androidx.compose.foundation.layout.BoxWithConstraints(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            Surface(Modifier.size((760.dp).coerceAtMost(maxWidth), (650.dp).coerceAtMost(maxHeight))
+                .testTag("desktop-onboarding"), shape = RoundedCornerShape(10.dp)) {
                 Column {
                     Row(Modifier.fillMaxWidth().padding(start = 34.dp, end = 34.dp, top = 30.dp, bottom = 22.dp), verticalAlignment = Alignment.CenterVertically) {
                         Text(desktopString(when (page) { 0 -> "ui.desktop.onboarding.welcome"; 1 -> "ui.desktop.onboarding.configure"; else -> "ui.settings.account.netease_account" }), Modifier.weight(1f), fontSize = 30.sp, fontWeight = FontWeight.Bold)
@@ -113,6 +115,7 @@ internal fun MeloXDesktopOnboarding(onFinish: (login: Boolean) -> Unit) {
                         }
                     }
                 }
+            }
             }
         }
     }

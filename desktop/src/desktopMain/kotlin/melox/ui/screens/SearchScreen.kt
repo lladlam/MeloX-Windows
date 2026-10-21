@@ -181,6 +181,7 @@ fun SearchScreen(
     var loading by remember(source) { mutableStateOf(false) }
     var error by remember(source) { mutableStateOf<String?>(null) }
     var selectedActionSong by remember(source) { mutableStateOf<SearchSong?>(null) }
+    var actionAnchor by remember(source) { mutableStateOf<androidx.compose.ui.unit.IntOffset?>(null) }
     // DesktopSearchView scope: catalog vs the signed-in user's library.
     var libraryScope by remember { mutableStateOf(false) }
     var searchSuggestions by remember { mutableStateOf<List<String>>(emptyList()) }
@@ -455,7 +456,7 @@ fun SearchScreen(
                     tracks = providerSongs, selectedTrackId = track.id,
                     onFailure = { failure -> error = failure.message ?: "播放失败" }) },
                 onOpenMedia = { selectedDetail = it },
-                onSongMenu = { song, _ -> selectedActionSong = song },
+                onSongMenu = { song, anchor -> selectedActionSong = song; actionAnchor = anchor },
                 onRetry = { searchTrigger += 1 },
             )
             else -> Column(Modifier.fillMaxSize().padding(top = 26.dp).testTag("search-state").semantics {
@@ -587,7 +588,8 @@ fun SearchScreen(
                 song = song,
                 queue = songs,
                 visible = true,
-                onDismiss = { selectedActionSong = null },
+                onDismiss = { selectedActionSong = null; actionAnchor = null },
+                desktopAnchor = actionAnchor,
             )
         }
     }

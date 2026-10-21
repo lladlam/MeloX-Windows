@@ -51,6 +51,17 @@ internal fun desktopPlatformString(key: String): String {
         "account_logout" -> if (chinese) "退出登录" else "Log Out"
         "account_login" -> if (chinese) "登录" else "Log In"
         "account_done" -> if (chinese) "完成" else "Done"
+        "login_phone" -> if (chinese) "手机号" else "Phone"
+        "login_client_cookie" -> if (chinese) "本机客户端" else "Client Cookie"
+        "login_send_code" -> if (chinese) "获取验证码" else "Send Code"
+        "login_client_message" -> if (chinese) "读取当前 Windows 用户的网易云音乐客户端 Cookie，验证后用于 MeloX 登录。"
+            else "Read the NetEase Cloud Music client cookie for this Windows user, verify it, and use it to sign in to MeloX."
+        "login_client_windows_only" -> if (chinese) "本机客户端登录仅支持 Windows。" else "Client-cookie sign-in is only available on Windows."
+        "login_find_client" -> if (chinese) "查找客户端登录态" else "Find Client Sign-In"
+        "login_import_client" -> if (chinese) "读取客户端登录态" else "Import Client Sign-In"
+        "login_client_not_found" -> if (chinese) "未找到网易云音乐客户端登录数据，请先在客户端登录"
+            else "No NetEase Cloud Music client sign-in was found. Sign in with the client first."
+        "login_choose_profile" -> if (chinese) "发现多个客户端数据目录，请选择后再读取" else "Multiple client profiles were found. Choose one, then import it."
         else -> error("Unknown Windows integration label: $key")
     }
 }

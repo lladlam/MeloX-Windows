@@ -49,8 +49,9 @@ internal fun MeloXDesktopToolHost(onLogin: () -> Unit) {
     val tool = MeloXDesktopToolWindows.active ?: return
     Dialog(onDismissRequest = MeloXDesktopToolWindows::dismiss, properties = DialogProperties(usePlatformDefaultWidth = false)) {
         CompositionLocalProvider(LocalTextStyle provides androidx.compose.ui.text.TextStyle(fontFamily = MeloXDesktopTextFontFamily, fontSize = 13.sp, color = MaterialTheme.colorScheme.onSurface)) {
-            Surface(Modifier.size(when (tool) { DesktopTool.Recognition -> 700.dp; DesktopTool.ListenTogether -> 620.dp; DesktopTool.About -> 600.dp; DesktopTool.Licenses -> 680.dp },
-                when (tool) { DesktopTool.Recognition -> 660.dp; DesktopTool.ListenTogether -> 620.dp; DesktopTool.About -> 320.dp; DesktopTool.Licenses -> 680.dp })
+            androidx.compose.foundation.layout.BoxWithConstraints(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            Surface(Modifier.size((when (tool) { DesktopTool.Recognition -> 700.dp; DesktopTool.ListenTogether -> 620.dp; DesktopTool.About -> 600.dp; DesktopTool.Licenses -> 680.dp }).coerceAtMost(maxWidth),
+                (when (tool) { DesktopTool.Recognition -> 660.dp; DesktopTool.ListenTogether -> 620.dp; DesktopTool.About -> 320.dp; DesktopTool.Licenses -> 680.dp }).coerceAtMost(maxHeight))
                 .testTag("desktop-tool:${tool.name}"), shape = RoundedCornerShape(10.dp)) {
                 if (tool == DesktopTool.About) Box {
                     MeloXDesktopAbout()
@@ -63,6 +64,7 @@ internal fun MeloXDesktopToolHost(onLogin: () -> Unit) {
                     HorizontalDivider(thickness = .5.dp)
                     when (tool) { DesktopTool.Recognition -> DesktopRecognitionContent(); DesktopTool.ListenTogether -> DesktopTogetherContent(onLogin); DesktopTool.Licenses -> MeloXDesktopProjectLicenses(); else -> Unit }
                 }
+            }
             }
         }
     }

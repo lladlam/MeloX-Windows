@@ -42,7 +42,18 @@ for index in range(6):
 add('close-licenses', 'tap@desktop-dialog:ui.common.done', 'absent:desktop-project-licenses')
 add('restore-question', 'tap@settings-reset', 'tag:desktop-dialog:ui.common.cancel')
 add('cancel-restore', 'tap@desktop-dialog:ui.common.cancel', 'runtime:desktopLayoutEnabled:true')
+add('settings-features', 'tap@desktop-settings-tab:Features', 'tag:desktop-settings-panel')
+add('settings-messages-tab', 'tap@desktop-settings-subtab:Messages', 'tag:settings-page:Messages')
+add('settings-messages-open', 'tap@settings-open-messages', 'tag:desktop-messages-login')
+add('settings-messages-close', 'escape', 'absent:desktop-messages-login', 'tag:desktop-settings-panel')
+add('settings-general', 'tap@desktop-settings-tab:General', 'tag:settings-general')
 add('dismiss-settings', 'tap@desktop-dialog:ui.common.ok', 'tag:desktop-home')
+add('account-sheet', 'tap@desktop-account', 'tag:desktop-account-sheet', 'tag:desktop-account-login')
+add('login-sheet', 'tap@desktop-account-login', 'tag:desktop-login', 'tag:desktop-login-phone')
+add('login-client', 'tap@desktop-login-method:ClientCookie', 'tag:desktop-login-import')
+add('login-phone', 'tap@desktop-login-method:Phone', 'tag:desktop-login-send')
+add('login-cancel', 'tap@desktop-login-cancel', 'absent:desktop-login')
+add('login-closed', 'wait@300', 'absent:desktop-login', 'absent:desktop-account-sheet')
 steps_file = output / 'steps.txt'
 expect_file = output / 'expect.txt'
 steps_file.write_text('\n'.join(steps) + '\n', encoding='utf-8')

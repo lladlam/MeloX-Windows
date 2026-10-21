@@ -103,12 +103,25 @@ fun main(args: Array<String>) {
                 fun position() = list.firstVisibleItemIndex * 46 + list.firstVisibleItemScrollOffset
                 fun record(stage: String) { samples.put(JSONObject().put("stage", stage).put("index", list.firstVisibleItemIndex).put("offset", list.firstVisibleItemScrollOffset)) }
                 suspend fun inject(x: Int, y: Int, flags: Int) {
-                    contact.info.pixel.x = x; contact.info.pixel.y = y; contact.info.flags = flags
-                    contact.contact.left = x - 2; contact.contact.right = x + 2
-                    contact.contact.top = y - 2; contact.contact.bottom = y + 2
+                    contact.info.pixel.x = x; contact.info.pixel.y = y
+                    contact.info.rawPixel.x = x; contact.info.rawPixel.y = y
+                    contact.info.flags = flags
+                    // Win32 validates both the promoted contact and the raw
+                    // contact rectangle; an empty rcContactRaw is rejected.
+                    for (rect in listOf(contact.contact, contact.rawContact)) {
+                        rect.left = (x - 2).coerceAtLeast(0); rect.right = x + 2
+                        rect.top = (y - 2).coerceAtLeast(0); rect.bottom = y + 2
+                    }
                     contact.write()
-                    check(api.InjectTouchInput(1, contact.pointer)) { "InjectTouchInput failed: ${Native.getLastError()} flags=$flags" }
-                    delay(20)
+                    var error = 0
+                    for (attempt in 0..1) {
+                        if (api.InjectTouchInput(1, contact.pointer)) { delay(20); return }
+                        error = Native.getLastError()
+                        // ERROR_NOT_READY: frames closer than 0.1ms; retry once.
+                        if (error != 21 || attempt == 1) break
+                        delay(2)
+                    }
+                    error("InjectTouchInput failed: $error flags=$flags contact=$x,$y")
                 }
                 try {
                     // Initialize and inject on the same native UI thread.
@@ -130,7 +143,7 @@ fun main(args: Array<String>) {
                     inject(x, y, 0x10006)
                     for (frame in 1..24) inject(x, y - distance * frame / 24, 0x20006)
                     for (frame in 1..8) inject(x, y - distance, 0x20006)
-                    inject(x, y - distance, 0x40000)
+                    inject(x, y - distance, 0x40002)
                     await { position() >= 100 }
                     record("windows-injected-touch-scroll")
                     list.scrollToItem(0)

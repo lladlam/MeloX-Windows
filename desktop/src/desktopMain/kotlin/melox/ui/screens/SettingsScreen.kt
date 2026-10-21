@@ -654,6 +654,7 @@ private fun FeatureSettings() {
 @Composable
 private fun MessagesSettings(onOpenMessages: () -> Unit) {
     MeloXIosListRow(
+        modifier = Modifier.testTag("settings-open-messages"),
         title = "私信",
         subtitle = "查看联系人、会话详情并发送文字私信",
         leadingIcon = MeloXSymbol.Message,

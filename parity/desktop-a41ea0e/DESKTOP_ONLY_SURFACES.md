@@ -47,6 +47,9 @@ Compose Touch原生滚动保留；为AWT可能提升为Mouse的触屏补充按�
 - 搜索桌面模式改为独立工具栏：332×36胶囊输入、catalog／library双scope、5类紧凑segmented picker；结果显示42pt封面track row和145–210pt自适应媒体网格，专辑／歌手／歌单／播客均走真实搜索与桌面详情。未登录library scope显示登录提示；候选词读取真实`/api/search/suggest/keyword`，320ms防抖。Windows聚合搜索在桌面模式不冒充Mac catalog结果。
 - 探索桌面模式按`DesktopDiscoveryView`分为New Music 12首、Charts网格、Popular Artists圆形网格；三个数据源独立失败，单一路由失败不会清空其他真实区块。
 - 私信桌面模式按`DesktopMessagesView`为270–410pt会话栏、64pt会话头、真实历史／发送、头像／时间／未读数、资源卡和新建私信联系人面板；未登录显示独立登录门。双账号与真实网易私信会话仍待实测。
+- 登录桌面模式为880×680独立面板：顶部Cancel／居中标题／direct-connection说明／进度，真实手机验证码和本机客户端Cookie两种方式。Mac使用WKWebView；Windows没有随包浏览器内核，因此这里是同等“直接连接”语义的Windows实现，不冒充WKWebView。
+- 远程公告在桌面模式使用独立紧凑alert；其他手机页面仍保留原glass对话框。桌面模式的通用玻璃对话框统一改走紧凑Surface并可在小窗口内滚动，因此Windows首次启动法律同意页、连接服务页和云控选择页也使用桌面尺寸，而非手机全屏。
+- 首次启动顺序先显示Windows法律同意，再显示Mac三步引导的Connect页；法律同意文本和链接仍是Android/Widows合规内容，不属于Mac源页面。
 
 ### 设置及后续页面（正在验证）
 
@@ -58,8 +61,8 @@ Compose Touch原生滚动保留；为AWT可能提升为Mouse的触屏补充按�
 
 第一轮深浅20设置子页回放成功；控件回放发现滑杆3/4输入的原生thumb几何对应6.5dB，失败证据保留在`native-settings-v1-desktop-controls`。随后改用端点输入独立验证12dB持久化，结果须以最终回放记录为准。第一轮设置通过早于后续页面修改，不能视作最终冻结版全量验收。
 
-仍须继续迁移独立登录窗口（Mac为880×680内嵌WebView；Windows现仍需改为独立桌面登录面板）、多provider音乐库／服务页、远程公告弹层、mini窗口及原生材质／动画；以上替换不声称整套Mac UI或同内容整幅像素验收完成。
+仍须继续迁移多provider音乐库／服务页、mini窗口、消息回复／分页菜单及原生材质／动画；以上替换不声称整套Mac UI或同内容整幅像素验收完成。
 
-当前明确的未完成项：Windows没有内嵌浏览器内核，网易登录只能复用真实手机验证码／本机客户端Cookie导入，不能冒充Mac WKWebView；私人收藏、云盘、私信发送和双账号Together需要真实登录账户复测；播放器原生glass、spring和逐页同内容像素仍为PARTIAL。
+当前明确的未完成项：Windows登录面板已独立，但没有Mac的WKWebView内核，只复用真实手机验证码／本机客户端Cookie导入；私人收藏、云盘、私信发送和双账号Together需要真实登录账户复测；播放器原生glass、spring和逐页同内容像素仍为PARTIAL。
 
 本批仍有可见残差：Mac原生菜单材质／系统控件动效、歌曲别名／播客描述模型、评论点赞图标与本地化数字、系统分享窗口尚未逐项等价；Windows分享目前复制真实链接。歌手图片异步下载可能在首次截图中仍为占位，不能将这些画面用于已完成的同内容像素验收。非网易provider的歌曲信息暂使用真实搜索回退，不能计作该provider的详情页已迁移。

@@ -1377,6 +1377,10 @@ private fun LoginButton(
 
 @Composable
 fun LoginScreen(navState: MeloXNavState, initialProviderId: String? = null) {
+    if (MeloXSettingsRuntime.desktopLayoutEnabled && (initialProviderId == null || initialProviderId == "netease")) {
+        melox.ui.desktop.MeloXDesktopLogin(onCancel = { navState.goBack() }, onLoggedIn = { navState.goBack() })
+        return
+    }
     val state = remember { LoginScreenState().apply { dialogTarget = allProviders.firstOrNull { it.id == initialProviderId } } }
     val desktop = MeloXSettingsRuntime.desktopLayoutEnabled
 

@@ -105,6 +105,7 @@ EXPORTED_SURFACES = [
     'MeloXDesktop/Features/Library/DesktopLibraryView.swift',
     'MeloXDesktop/Features/Search/DesktopSearchView.swift',
     'MeloXDesktop/Features/Messages/DesktopMessagesView.swift',
+    'MeloXDesktop/Features/Account/DesktopLoginView.swift',
 ]
 SOURCES += EXPORTED_SURFACES
 KEYS += ['ui.error.listen_together.missing_room_id', 'ui.recognition.failed']

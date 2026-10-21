@@ -25,7 +25,10 @@ internal fun RemoteCompatibilityNotice() {
     }
     pending?.let { notice ->
         LaunchedEffect(notice.id, notice.frequency) { MeloXRemoteNoticeStore.markShown(notice) }
-        MeloXGlassDialog(true, onDismiss = { pending = null }, modifier = Modifier.testTag("remote-notice")) {
+        if (melox.settings.MeloXSettingsRuntime.desktopLayoutEnabled) {
+            melox.ui.desktop.DesktopTextDialog(notice.title, notice.message, { pending = null },
+                confirmKey = melox.ui.desktop.desktopString("ui.common.ok"), onConfirm = { pending = null })
+        } else MeloXGlassDialog(true, onDismiss = { pending = null }, modifier = Modifier.testTag("remote-notice")) {
             Text(notice.title, fontSize = 19.sp, fontWeight = FontWeight.SemiBold)
             Text(notice.message, Modifier.padding(top = 10.dp, bottom = 16.dp), fontSize = 14.sp, lineHeight = 21.sp)
             MeloXGlassButton(onClick = { pending = null }, modifier = Modifier.fillMaxWidth().testTag("remote-notice-acknowledge")) { Text("知道了") }

@@ -58,11 +58,12 @@
     "MeloXDesktop/Core/Settings/Recognition/SongRecognitionPreferences.swift": "1ee88f7aec6b1a6ec38ade35395db5657658939ff9dddc42936294724a50f308",
     "MeloXDesktop/Features/Library/DesktopLibraryView.swift": "eb9fbbef3c98a4155f06d25eb0ab0f18450f8768c576bffdec0a7f5acbc02cbc",
     "MeloXDesktop/Features/Search/DesktopSearchView.swift": "566f44ddea5d07318d2e6a374851a146c537345947ced1f4ee7c515ef31211b3",
-    "MeloXDesktop/Features/Messages/DesktopMessagesView.swift": "dc074633c458b347a4d7e61a393dff4b015bbab96b7e75323d3a396a3ea68fa1"
+    "MeloXDesktop/Features/Messages/DesktopMessagesView.swift": "dc074633c458b347a4d7e61a393dff4b015bbab96b7e75323d3a396a3ea68fa1",
+    "MeloXDesktop/Features/Account/DesktopLoginView.swift": "9059f0895a5f9bb33cd177c5c37531fb67f13283dae4fbc69f5aa14f6d07d836"
   },
   "resource_sha256": {
-    "parity/desktop-reference-en.properties": "ad03ed946ce2ecc88fee03485c5e2d8034393dd6f3ced94061d16794235116e2",
-    "parity/desktop-reference-zh-Hans.properties": "113b10e5a864089258773221504d474e25d92ac3435730ee52eb390c85557a18",
+    "parity/desktop-reference-en.properties": "343c605a34bca27caab75df5fceb9d9e94dc341052c6ba022c0e1875307bc134",
+    "parity/desktop-reference-zh-Hans.properties": "50ec384f2326c42e291df45ccee235e2512419f0fc2a6fda3c0f56e26f8a1e44",
     "parity/desktop-logo.png": "18ae2ae21ba19e76267199a8b31cb84b78e56677bccba5b57508ef744f49491d",
     "parity/legal/NeteaseAudioFingerprint-NOTICE.txt": "49f519decb43364a19327b299001ceb8d27bafc74ec8c1ebd701745264f07cda",
     "parity/legal/NeteaseAPI-LICENSE.txt": "e463bb821c363e6182f16ec1bf24405af3315b4adc72fc1402232fa98b9a0b12",
@@ -164,6 +165,7 @@
     "ui.desktop.listen_together.friends_room",
     "ui.desktop.listen_together.welcome.message",
     "ui.desktop.listen_together.your_room",
+    "ui.desktop.login.direct_connection",
     "ui.desktop.lyrics.unavailable",
     "ui.desktop.messages.conversation_failed",
     "ui.desktop.messages.conversations",

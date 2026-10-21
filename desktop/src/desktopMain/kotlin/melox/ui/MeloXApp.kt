@@ -612,9 +612,10 @@ fun MeloXApp(onExit: () -> Unit = { kotlin.system.exitProcess(0) }) {
             }
         }
         }
-        if (MeloXSettingsRuntime.desktopLayoutEnabled && onboarding.stage in setOf(melox.legal.MeloXOnboardingStage.Legal, melox.legal.MeloXOnboardingStage.Connect)) {
+        // The legal consent gate is Windows-specific and is shown first. The
+        // Mac three-page onboarding then replaces only the Connect stage.
+        if (MeloXSettingsRuntime.desktopLayoutEnabled && onboarding.stage == melox.legal.MeloXOnboardingStage.Connect) {
             melox.ui.desktop.MeloXDesktopOnboarding { login ->
-                if (onboarding.stage == melox.legal.MeloXOnboardingStage.Legal) onboarding.agreeLegal()
                 onboarding.finishConnection()
                 if (login) { selectedTab = AppTab.Settings; onboardingLoginPending = true }
             }

@@ -354,10 +354,17 @@ internal fun DesktopDialogButton(key: String, enabled: Boolean = true, tag: Stri
 @Composable
 internal fun DesktopMessageDialog(titleKey: String, message: String, onDismiss: () -> Unit,
     confirmKey: String = "ui.common.ok", enabled: Boolean = true, onConfirm: (() -> Unit)? = null) {
+    DesktopTextDialog(desktopString(titleKey), message, onDismiss, confirmKey, enabled, onConfirm)
+}
+
+/** Same independent Desktop alert for a server-provided literal title. */
+@Composable
+internal fun DesktopTextDialog(title: String, message: String, onDismiss: () -> Unit,
+    confirmKey: String = "ui.common.ok", enabled: Boolean = true, onConfirm: (() -> Unit)? = null) {
     Dialog(onDismissRequest = onDismiss, properties = DialogProperties(usePlatformDefaultWidth = false)) {
         Surface(Modifier.width(360.dp).testTag("desktop-message-dialog"), shape = RoundedCornerShape(10.dp)) {
             Column(Modifier.padding(20.dp), verticalArrangement = Arrangement.spacedBy(14.dp)) {
-                Text(desktopString(titleKey), fontFamily = MeloXDesktopTextFontFamily, fontSize = 14.sp, fontWeight = FontWeight.Bold)
+                Text(title, fontFamily = MeloXDesktopTextFontFamily, fontSize = 14.sp, fontWeight = FontWeight.Bold)
                 Text(message, fontFamily = MeloXDesktopTextFontFamily, fontSize = 13.sp)
                 Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.End)) {
                     if (onConfirm != null) DesktopDialogButton("ui.common.cancel", enabled, onClick = onDismiss)

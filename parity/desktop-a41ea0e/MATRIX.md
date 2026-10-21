@@ -42,7 +42,7 @@ Windows 首次以已保存桌面模式启动采用 1280×800；启用时设置�
 | `Features/Player/DesktopNowPlaying*` | PARTIAL：修正播放1/.74封面缩放、真实收藏与独立JVM重载、8→18进度、白色音量、三态切换器，真实播放器／歌词／队列，见用户原图记录 | 顶栏 accessory／独立迷你窗口、信息／quality／output 菜单、全套展开收起原生动效 |
 | `Features/Player/*Lyrics*` | PARTIAL：复用真实加载／字级渲染，接入 desktop 前景色、字号断点、左右 20、段距及 focus 输入 | 完整 macOS motion profiles、逐行焦点的精确高度求解、mask、词级 lift／spring、其他歌词样式和全部扩展窗口 |
 | `Features/Settings` | PARTIAL：650pt外框、按tab高度、58pt footer；独立Form／checkbox／picker／slider／输入框／按钮／对话框，保留20页生产业务；手机分支独立 | 最终控件持久化／手机回归、独立窗口生命周期、逐页真源排列／文案与同内容像素验收 |
-| `Features/Account` | PARTIAL：500×600 sheet／42行／chevron11／80×30完成、原图深色采样与浅色配色；私信／云盘／下载／设置／登录登出接真实页面及会话 | 880×680 网易 Web 登录专窗、窗口生命周期及真实登录态逐状态验收 |
+| `Features/Account` | PARTIAL：500×600账户sheet与原图几何；独立880×680登录面板（真实验证码／客户端Cookie）、私信／云盘／下载／设置及登出 | Mac WKWebView内核不可用，保留Windows真实登录替代；真实账户逐状态验收 |
 | `Features/Messages` | PARTIAL：270–410pt会话栏、64pt会话头、头像／时间／未读、气泡方向／资源卡、真实发送与新建私信面板 | 真实双账号会话、回复／菜单、分页和逐状态像素验收 |
 | `Features/ListenTogether` | PARTIAL：620×620独立桌面窗口、真实登录门控／创建／加入／成员／邀请／退出与错误确认 | 双账号实机同步、连接状态本地化／材质及逐状态视觉验收 |
 | `Features/SongRecognition` | PARTIAL：700×660独立桌面窗口、真实录音／匹配服务、时长选择／停止／重试／结果 | 麦克风权限／硬件与指纹后端、动画／失败态及物理输入验证 |
