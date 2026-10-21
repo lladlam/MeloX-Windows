@@ -464,7 +464,10 @@ fun main(args: Array<String>) = runBlocking {
                     for (attempt in 0 until 400) {
                         val node = scene.captureSemantics().lastOrNull { it.config.getOrNull(SemanticsProperties.TestTag) == tag }
                         // Window bounds are authoritative for scroll visibility;
-                        // positionInWindow can be relative to a nested scroll parent.
+                        // an offscreen child in verticalScroll clips to empty.
+                        // positionInWindow still carries its unclipped position,
+                        // which is needed to choose the scroll direction.
+                        val rawCenterY = node?.let { it.positionInWindow.y + it.size.height / 2f }
                         val centerY = node?.takeUnless { it.boundsInWindow.isEmpty }?.boundsInWindow?.center?.y
                         if (centerY != null && centerY in topGuard..bottomGuard) {
                             // A wheel animation may pass through the target and
@@ -477,7 +480,7 @@ fun main(args: Array<String>) = runBlocking {
                                 break
                             }
                         }
-                        val direction = if (centerY != null && centerY < topGuard) -1f else 1f
+                        val direction = if (rawCenterY != null && rawCenterY < topGuard) -1f else 1f
                         // Traverse long production settings pages by mouse wheel,
                         // with enough distance to return from their last slider.
                         // Aim inside the owning pane. Window center is the divider
