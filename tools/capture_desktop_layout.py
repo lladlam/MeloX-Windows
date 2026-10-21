@@ -156,7 +156,7 @@ if mode in ('controls', 'cold-controls'):
     add('full-resume', 'tap@mini-player-play-pause', ['playing:true', 'no-playback-error:true'])
     add('collapse-player', 'tap@player-collapse', ['tag:desktop-bottom-player', 'tag:settings-general'])
     add('search', 'tap@desktop-nav:Search', ['tag:desktop-sidebar', 'absent:settings-general'])
-    add('songs', 'tap@desktop-nav:Songs', ['tag:library-pages'])
+    add('songs', 'tap@desktop-nav:Songs', ['tag:desktop-provider-library:Local', 'absent:library-pages'])
     add('settings', 'tap@desktop-settings', ['tag:settings-root'])
     add('reopen-general', 'tap@settings-open-general', ['tag:settings-general', 'checked:setting-general_desktop_layout'])
 (output / 'steps.txt').write_text('\n'.join(steps) + '\n', encoding='utf-8')
