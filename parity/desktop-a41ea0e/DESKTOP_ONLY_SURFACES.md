@@ -36,6 +36,8 @@
 
 Compose Touch原生滚动保留；为AWT可能提升为Mouse的触屏补充按触控阈值开始的纵向拖动与真实惯性。只在尚未被子控件消费的手势上接管；横向手势、文字选择、按钮、滚轮不借用手机手势实现。原生Touch和Mouse拖动回放分别验证位移超过100px和反向回到`0-0`。Windows物理触屏仍待实测。
 
+Windows CI 的`SM_MAXIMUMTOUCHES`为0（无触控数字化仪），系统`InjectTouchInput`在任何帧前即返回87，AWT Robot同样没有OS输入桌面。审计现记录`UNSUPPORTED`并保留两项真实错误，不再把“环境无触屏”写成PASSED；生产拖动逻辑仍由Compose场景级Touch/Mouse回放验证。有数字化仪的Windows机器上才会得到PASSED/FAILED。
+
 新增`auditNativeTouchScroll`：Windows上使用系统`InitializeTouchInjection`／`InjectTouchInput`注入真实系统触点，经AWT／Compose进入生产`desktopPromotedDragScroll`；再用AWT Robot验证原生Mouse拖动。独立JSON记录滚动前后index／offset与Compose实际收到的pointer类型。Linux只验证96／144字节x64 ABI并报告`UNSUPPORTED`，不得算Windows输入通过；Windows系统注入通过也不等于物理触屏验收。
 
 ## 验证边界
