@@ -108,6 +108,13 @@ private fun searchCategoryLabel(id: String): String = SearchCategories.indexOf(i
 
 private enum class SearchBackAction { ClearOverlay, ClearQuery, SwitchToHome }
 
+private sealed interface SearchDetailDestination {
+    data class Playlist(val value: MusicPlaylistSummary) : SearchDetailDestination
+    data class Album(val value: MusicAlbumSummary) : SearchDetailDestination
+    data class Artist(val value: MusicArtistSummary) : SearchDetailDestination
+    data class Media(val value: MeloXSearchMediaItem) : SearchDetailDestination
+}
+
 @Composable
 fun SearchScreen(
     source: MusicSource = MusicSource.Netease,
@@ -351,34 +358,6 @@ fun SearchScreen(
             },
     ) {
         when {
-            selectedProviderPlaylist != null -> PlaylistDetailScreen(
-                playlist = MeloXLegacyUiBridge.playlist(selectedProviderPlaylist!!),
-                onBack = { selectedProviderPlaylist = null },
-            )
-            selectedProviderAlbum != null -> ProviderCollectionDetail(
-                title = selectedProviderAlbum!!.title,
-                subtitle = "",
-                artwork = selectedProviderAlbum!!.artworkUrl,
-                load = { (currentProvider as? AlbumCapability)?.albumDetail(selectedProviderAlbum!!)?.tracks.orEmpty() },
-                onBack = { selectedProviderAlbum = null },
-            )
-            selectedProviderArtist != null -> ProviderCollectionDetail(
-                title = selectedProviderArtist!!.name,
-                subtitle = "",
-                artwork = selectedProviderArtist!!.artworkUrl,
-                load = { (currentProvider as? ArtistCapability)?.artistDetail(selectedProviderArtist!!)?.tracks.orEmpty() },
-                onBack = { selectedProviderArtist = null },
-            )
-             selectedDetail?.kind == MeloXSearchKind.Artists -> ArtistDetailScreen(selectedDetail!!.id, onBack = { selectedDetail = null })
-             selectedDetail?.kind == MeloXSearchKind.Albums -> AlbumDetailScreen(selectedDetail!!.id.toString(), selectedDetail!!.title, onBack = { selectedDetail = null })
-              selectedDetail?.kind == MeloXSearchKind.Users -> AccountProfileScreen(selectedDetail!!.id, onBack = { selectedDetail = null })
-              selectedDetail?.kind == MeloXSearchKind.Podcasts -> PodcastDetail(universal,
-                  melox.network.MeloXPodcast(selectedDetail!!.id, selectedDetail!!.title, selectedDetail!!.artworkUrl),
-                  onBack = { selectedDetail = null })
-              selectedDetail != null -> PlaylistDetailScreen(NeteasePlaylistSummary(
-                  id = selectedDetail!!.id, name = selectedDetail!!.title, coverUrl = selectedDetail!!.artworkUrl,
-                  creatorName = selectedDetail!!.subtitle, trackCount = selectedDetail!!.trackCount),
-                  onBack = { selectedDetail = null })
             categoryTitle != null -> SearchCategoryPage(
                 title = categoryTitle!!,
                 playlists = categoryPlaylists,
@@ -489,6 +468,34 @@ fun SearchScreen(
                             onOpen = { selectedProviderArtist = providerArtists[it] },
                         )
                         else -> SearchMediaResults(media) { selectedDetail = it }
+                    }
+                }
+            }
+        }
+        val destination = selectedProviderPlaylist?.let { SearchDetailDestination.Playlist(it) }
+            ?: selectedProviderAlbum?.let { SearchDetailDestination.Album(it) }
+            ?: selectedProviderArtist?.let { SearchDetailDestination.Artist(it) }
+            ?: selectedDetail?.let { SearchDetailDestination.Media(it) }
+        // Keep the result/category composition and scroll offset while details
+        // animate above it. Snapshot destinations also survive their exit frame.
+        melox.ui.navigation.MeloXDetailOverlay(destination, onBack = {
+            selectedDetail = null; selectedProviderPlaylist = null; selectedProviderAlbum = null; selectedProviderArtist = null
+        }) { target ->
+            when (target) {
+                is SearchDetailDestination.Playlist -> PlaylistDetailScreen(MeloXLegacyUiBridge.playlist(target.value), onBack = { selectedProviderPlaylist = null })
+                is SearchDetailDestination.Album -> ProviderCollectionDetail(target.value.title, "", target.value.artworkUrl,
+                    load = { (currentProvider as? AlbumCapability)?.albumDetail(target.value)?.tracks.orEmpty() }, onBack = { selectedProviderAlbum = null })
+                is SearchDetailDestination.Artist -> ProviderCollectionDetail(target.value.name, "", target.value.artworkUrl,
+                    load = { (currentProvider as? ArtistCapability)?.artistDetail(target.value)?.tracks.orEmpty() }, onBack = { selectedProviderArtist = null })
+                is SearchDetailDestination.Media -> {
+                    val item = target.value
+                    when (item.kind) {
+                        MeloXSearchKind.Artists -> ArtistDetailScreen(item.id, onBack = { selectedDetail = null })
+                        MeloXSearchKind.Albums -> AlbumDetailScreen(item.id.toString(), item.title, onBack = { selectedDetail = null })
+                        MeloXSearchKind.Users -> AccountProfileScreen(item.id, onBack = { selectedDetail = null })
+                        MeloXSearchKind.Podcasts -> PodcastDetail(universal, melox.network.MeloXPodcast(item.id, item.title, item.artworkUrl), onBack = { selectedDetail = null })
+                        else -> PlaylistDetailScreen(NeteasePlaylistSummary(item.id, item.title, item.artworkUrl,
+                            creatorName = item.subtitle, trackCount = item.trackCount), onBack = { selectedDetail = null })
                     }
                 }
             }

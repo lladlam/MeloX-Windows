@@ -34,16 +34,19 @@ for mode in modes:
     assertions = [a for scene in scenes for a in scene['assertions']]
     assert assertions and all(a['passed'] for a in assertions), str(path)
     dimensions = {'desktop-sidebar': (199, None), 'desktop-bottom-player': (700, 54),
-                  'desktop-inspector:Queue': (258, None), 'desktop-inspector:Lyrics': (258, None)}
+                  'desktop-inspector:Queue': (258, None), 'desktop-inspector:Lyrics': (360, None)}
     geometries = []
     for scene in scenes:
         image = directory / scene['file']
         assert image.is_file()
         nodes = json.loads(image.with_suffix('.semantics.json').read_text(encoding='utf-8'))
+        inspector_width = 360 if any(n.get('tag') == 'desktop-inspector:Lyrics' for n in nodes) else 258 if any(n.get('tag') == 'desktop-inspector:Queue' for n in nodes) else 0
         for node in nodes:
             if node['tag'] not in dimensions:
                 continue
             width, height = dimensions[node['tag']]
+            if node['tag'] == 'desktop-bottom-player':
+                width = min(700, data['width'] / data['density'] - 207 - 48 - inspector_width)
             x0, y0, x1, y1 = node['bounds']
             assert abs((x1 - x0) / data['density'] - width) <= 1, (mode, scene['file'], node['tag'])
             if height is not None:

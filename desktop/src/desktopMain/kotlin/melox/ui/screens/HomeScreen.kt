@@ -122,6 +122,10 @@ private fun NeteaseHome(
     var activeAction by remember { mutableStateOf<String?>(null) }
     var dailySongs by remember { mutableStateOf<List<melox.model.SearchSong>>(emptyList()) }
     var desktopActionKey by remember { mutableStateOf("daily_songs") }
+    var recentSongs by remember { mutableStateOf<List<melox.model.SearchSong>>(emptyList()) }
+    var homePodcast by remember { mutableStateOf<melox.network.MeloXPodcast?>(null) }
+    val collectionClient = remember { melox.network.NeteaseCollectionDetailsClient(cookieProvider = { melox.account.NeteaseSessionStore.readCookie() }) }
+    val podcastClient = remember { melox.network.NeteaseUniversalSearchClient(cookieProvider = { melox.account.NeteaseSessionStore.readCookie() }) }
 
     val cacheKey = "${session.cookie.hashCode()}_${melox.settings.MeloXSettingsRuntime.musicArea}_${melox.settings.MeloXSettingsRuntime.podcastsEnabled}"
 
@@ -149,10 +153,15 @@ private fun NeteaseHome(
     LaunchedEffect(cacheKey) {
         content = cache.loadHomeContent(cacheKey)
         if (session.isLoggedIn && session.profile == null) session.refreshProfile()
+        session.profile?.userId?.let { userId -> recentSongs = cache.loadSnapshot(userId)?.recentSongs.orEmpty() }
+        if (session.isLoggedIn && melox.settings.MeloXSettingsRuntime.listeningHistoryEnabled) {
+            runCatching { withContext(Dispatchers.IO) { client.recentSongsBlocking(8) } }
+                .onSuccess { recentSongs = it }.onFailure { if (it is kotlinx.coroutines.CancellationException) throw it }
+        }
         if (melox.library.NeteaseLibraryCache.beginHomeColdStartRefresh(cacheKey)) refresh(false)
     }
 
-    if (dailySongs.isNotEmpty()) {
+    if (dailySongs.isNotEmpty() && !melox.settings.MeloXSettingsRuntime.desktopLayoutEnabled) {
         DailySongsPage(dailySongs, onBack = { dailySongs = emptyList() }, title =
             if (melox.settings.MeloXSettingsRuntime.desktopLayoutEnabled) melox.ui.desktop.desktopString("ui.home.action.$desktopActionKey") else "每日推荐")
         return
@@ -183,7 +192,7 @@ private fun NeteaseHome(
     })
 
     if (melox.settings.MeloXSettingsRuntime.desktopLayoutEnabled) {
-        melox.ui.desktop.MeloXDesktopHome(content, activeAction, refreshing, error, onAction = { title ->
+        melox.ui.desktop.MeloXDesktopHome(content, recentSongs, activeAction, refreshing, error, onAction = { title ->
             val action = neteaseActions().first { it.title == title }
             activeAction = title
             scope.launch {
@@ -223,7 +232,32 @@ private fun NeteaseHome(
                 catch (failure: Exception) { error = failure.message ?: "$title 加载失败" }
                 finally { activeAction = null }
             }
-        }, onPlaylist = onOpenPlaylist)
+        }, onPlaylist = onOpenPlaylist, onPlayPlaylist = { playlist ->
+            scope.launch {
+                try {
+                    val songs = client.playlistDetail(playlist.id).songs
+                    songs.firstOrNull()?.let { melox.playback.PlaybackCommands.playQueue(songs, it.id) }
+                } catch (cancelled: kotlinx.coroutines.CancellationException) { throw cancelled }
+                catch (failure: Exception) { error = failure.message }
+            }
+        }, onAlbum = { id, name -> melox.ui.navigation.MeloXCollectionLaunchBus.open(melox.ui.navigation.MeloXCollectionTarget.Album(id, name)) },
+            onPlayAlbum = { id -> scope.launch {
+                try {
+                    val songs = collectionClient.albumDetail(id).songs
+                    songs.firstOrNull()?.let { melox.playback.PlaybackCommands.playQueue(songs, it.id) }
+                } catch (cancelled: kotlinx.coroutines.CancellationException) { throw cancelled }
+                catch (failure: Exception) { error = failure.message }
+            } }, onPodcast = { id -> scope.launch {
+                try { homePodcast = podcastClient.podcastDetail(id) ?: error("网易云没有返回播客信息") }
+                catch (cancelled: kotlinx.coroutines.CancellationException) { throw cancelled }
+                catch (failure: Exception) { error = failure.message }
+            } }, onTool = onOpenTool)
+        melox.ui.navigation.MeloXDetailOverlay(dailySongs.takeIf { it.isNotEmpty() }, { dailySongs = emptyList() }) { songs ->
+            DailySongsPage(songs, onBack = { dailySongs = emptyList() }, title = melox.ui.desktop.desktopString("ui.home.action.$desktopActionKey"))
+        }
+        melox.ui.navigation.MeloXDetailOverlay(homePodcast, { homePodcast = null }) { podcast ->
+            PodcastDetail(podcastClient, podcast, onBack = { homePodcast = null })
+        }
         return
     }
     if (content == null && refreshing) {

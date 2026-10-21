@@ -9,6 +9,7 @@ import struct
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument('directory', type=Path)
 parser.add_argument('--page', choices=['album', 'playlist'], required=True)
+parser.add_argument('--reference', type=Path)
 args = parser.parse_args()
 directory = args.directory
 data = json.loads((directory / 'capture.json').read_text(encoding='utf-8'))
@@ -67,7 +68,16 @@ if args.page == 'playlist':
     assert search_empty and search_restored
 log = (directory / 'gradle.log').read_text(encoding='utf-8', errors='replace')
 assert 'Exception in thread' not in log, 'A background exception invalidates the replay'
-report = dict(status='PASSED', page=args.page, scenes=len(data['scenes']), assertions=len(assertions), home=data['home'],
+reference = None
+if args.reference:
+    raw = args.reference.read_bytes()
+    assert args.page == 'playlist' and hashlib.sha256(raw).hexdigest() == 'aac558cd59d005aeb24dbf1b2805183f2f9ab15f42d816685adb9137c123301f'
+    assert struct.unpack('>II', raw[16:24]) == (data['width'], data['height']) == (1960, 1356)
+    bounds = geometries[0]['artwork']
+    reference = dict(sha256=hashlib.sha256(raw).hexdigest(), artwork=[498, 172, 1054, 728],
+                     actual_artwork=bounds, delta_px=[a - b for a, b in zip(bounds, [498, 172, 1054, 728])],
+                     scope='Original artwork landmark only; different public playlist, typography and native toolbar remain outside full-image acceptance')
+report = dict(status='PASSED', page=args.page, scenes=len(data['scenes']), assertions=len(assertions), home=data['home'], reference=reference,
               source_commit='a41ea0e1e1fa69fb543d827b853fe3aff5420951', geometries=geometries, images=images,
               capture_sha256=hashlib.sha256((directory / 'capture.json').read_bytes()).hexdigest(),
               scope='Live production implementation/input/source metrics; same-content native macOS pixels pending')

@@ -9,8 +9,7 @@ import org.json.JSONArray
 import org.json.JSONObject
 
 /** Persistent metadata cache with one network refresh per cold-start process. */
-class NeteaseLibraryCache {
-    private val directory = File(meloXDataDir(), "netease_library_cache")
+class NeteaseLibraryCache(private val directory: File = File(meloXDataDir(), "netease_library_cache")) {
 
     suspend fun loadSnapshot(userId: Long): NeteaseLibrarySnapshot? = readJson(
         file = File(directory, "library_$userId.json"),
@@ -43,6 +42,7 @@ class NeteaseLibraryCache {
             roamingSongs = decodeSongs(value.optJSONArray("roamingSongs") ?: JSONArray()),
             similarSongs = decodeSongs(value.optJSONArray("similarSongs") ?: JSONArray()),
             podcasts = decodeHomePodcasts(value.optJSONArray("podcasts") ?: JSONArray()),
+            newAlbums = decodeAlbums(value.optJSONArray("newAlbums") ?: JSONArray()),
         )
     }
     suspend fun saveHomeContent(cacheKey: String, content: NeteaseHomeContent) {
@@ -52,7 +52,8 @@ class NeteaseLibraryCache {
             .put("chartPlaylists", encodePlaylists(content.chartPlaylists))
             .put("radarPlaylists", encodePlaylists(content.radarPlaylists)).put("personalPlaylists", encodePlaylists(content.personalPlaylists))
             .put("regionalSongs", encodeSongs(content.regionalSongs)).put("roamingSongs", encodeSongs(content.roamingSongs))
-            .put("similarSongs", encodeSongs(content.similarSongs)).put("podcasts", encodeHomePodcasts(content.podcasts)) }
+            .put("similarSongs", encodeSongs(content.similarSongs)).put("podcasts", encodeHomePodcasts(content.podcasts))
+            .put("newAlbums", encodeAlbums(content.newAlbums)) }
     }
 
     suspend fun loadExplore(category: String): List<NeteasePlaylistSummary>? = readJson(
@@ -168,6 +169,7 @@ private fun encodePlaylist(value: NeteasePlaylistSummary) = JSONObject()
     .put("creatorUserId", value.creatorUserId)
     .put("playCount", value.playCount)
     .put("description", value.description)
+    .put("copywriter", value.copywriter)
 
 private fun decodePlaylist(value: JSONObject) = NeteasePlaylistSummary(
     id = value.getLong("id"),
@@ -178,7 +180,25 @@ private fun decodePlaylist(value: JSONObject) = NeteasePlaylistSummary(
     creatorUserId = value.optLong("creatorUserId", -1L).takeIf { it > 0L },
     playCount = value.optLong("playCount"),
     description = value.optNullableString("description"),
+    copywriter = value.optNullableString("copywriter"),
 )
+
+private fun encodeAlbums(values: List<melox.network.MeloXAlbumSummary>) = JSONArray().apply {
+    values.forEach { album -> put(JSONObject().put("id", album.id).put("name", album.name)
+        .put("artworkUrl", album.artworkUrl).put("artistText", album.artistText).put("type", album.type)
+        .put("publishTime", album.publishTime).put("size", album.size)) }
+}
+
+private fun decodeAlbums(values: JSONArray) = buildList {
+    for (index in 0 until values.length()) {
+        val album = values.optJSONObject(index) ?: continue
+        val id = album.optLong("id", 0L)
+        if (id > 0) add(melox.network.MeloXAlbumSummary(id, album.optString("name"), album.optNullableString("artworkUrl"),
+            album.optString("artistText"), album.optNullableString("type"),
+            if (album.has("publishTime") && !album.isNull("publishTime")) album.optLong("publishTime") else null,
+            if (album.has("size") && !album.isNull("size")) album.optInt("size") else null))
+    }
+}
 
 private fun encodeSongs(values: List<SearchSong>) = JSONArray().apply {
     values.forEach { song ->

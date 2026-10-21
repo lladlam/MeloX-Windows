@@ -49,6 +49,13 @@ class NeteaseCollectionDetailsClient(
     private val eapi = NeteaseAuthenticatedEapi(cookieProvider, httpClient)
     private val weapi = NeteaseAuthenticatedWeapi(cookieProvider, httpClient)
 
+    suspend fun newAlbums(limit: Int = 16, area: String = "ALL"): List<MeloXAlbumSummary> = withContext(Dispatchers.IO) {
+        val response = eapi.post("/api/album/new", JSONObject().put("limit", limit).put("offset", 0).put("total", true).put("area", area),
+            authenticated = NeteaseSessionStore.containsMusicU(cookieProvider()))
+        val values = response.optJSONArray("albums") ?: JSONArray()
+        (0 until values.length()).mapNotNull { parseAlbum(values.optJSONObject(it)) }
+    }
+
     suspend fun albumDetail(id: Long): MeloXAlbumDetail = withContext(Dispatchers.IO) {
         val logged = NeteaseSessionStore.containsMusicU(cookieProvider())
         val response = eapi.post("/api/v1/album/$id", authenticated = logged)

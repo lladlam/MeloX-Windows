@@ -51,6 +51,8 @@ jobs:
         run: gradle :desktop:auditDisplayAwake
       - name: Audit native immersive fullscreen and placement restoration
         run: gradle :desktop:auditImmersiveWindow
+      - name: Verify app-owned window caption using native pointer input
+        run: gradle :desktop:auditWindowChrome
       - name: Audit real glass optics, native ownership and stable filter reuse
         run: gradle :desktop:auditGlassOptics
       - name: Replay the real glass dock and moving selection in both themes
@@ -138,6 +140,42 @@ jobs:
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           python tools/capture_desktop_collection.py playlist "$pwd/desktop/build/parity/collection-playlist-dark-home" desktop/build/parity/collection-playlist-dark --theme Dark
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Replay Desktop Home themes, paging, real routes and Touch input
+        shell: pwsh
+        run: |
+          python -m pip install --quiet Pillow
+          python tools/capture_desktop_home.py "$pwd/desktop/build/parity/home-final-dark-home" desktop/build/parity/home-final-dark --touch --account
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python tools/verify_desktop_home_capture.py desktop/build/parity/home-final-dark
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python tools/verify_desktop_account_capture.py desktop/build/parity/home-final-dark
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python tools/capture_desktop_home.py "$pwd/desktop/build/parity/home-final-light-home" desktop/build/parity/home-final-light --theme Light --reduce-motion --account --width 2188 --height 1356
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python tools/verify_desktop_home_capture.py desktop/build/parity/home-final-light
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python tools/verify_desktop_account_capture.py desktop/build/parity/home-final-light
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Replay reference Desktop player, queue, volume and independent favorite reload
+        shell: pwsh
+        run: |
+          $homeDir = "$pwd/desktop/build/parity/reference-player-home"
+          python tools/capture_desktop_layout.py reference-player "$homeDir" desktop/build/parity/reference-player
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python tools/verify_desktop_player_capture.py desktop/build/parity/reference-player
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python tools/capture_desktop_layout.py reference-player-reload "$homeDir" desktop/build/parity/reference-player-reload
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python tools/verify_desktop_player_capture.py desktop/build/parity/reference-player-reload
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python tools/capture_desktop_layout.py reference-lyrics "$pwd/desktop/build/parity/reference-lyrics-home" desktop/build/parity/reference-lyrics
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python tools/verify_desktop_lyrics_pane_capture.py desktop/build/parity/reference-lyrics
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python tools/capture_desktop_layout.py reference-lyrics-light "$pwd/desktop/build/parity/reference-lyrics-light-home" desktop/build/parity/reference-lyrics-light
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python tools/verify_desktop_lyrics_pane_capture.py desktop/build/parity/reference-lyrics-light
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - name: Replay pinned settings routes in four locales and verify real preference consumers
         shell: pwsh
         run: |
@@ -165,6 +203,13 @@ jobs:
           python tools/capture_settings_pages.py reload "$homeDir" desktop/build/parity/settings-reload
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           python tools/verify_settings_pages_capture.py desktop/build/parity desktop/build/verification/settings-pages.json
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Replay every Desktop settings page and shared account actions
+        shell: pwsh
+        run: |
+          python tools/capture_settings_pages.py desktop-routes "$pwd/desktop/build/parity/settings-desktop-dark-home" desktop/build/parity/settings-desktop-dark en-US Dark 1280 900
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python tools/capture_settings_pages.py desktop-routes "$pwd/desktop/build/parity/settings-desktop-light-home" desktop/build/parity/settings-desktop-light zh-CN Light 1280 900
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - name: Measure cold-start memory of the production app
         shell: pwsh
@@ -271,6 +316,7 @@ jobs:
           name: Verification-${{ runner.os }}
           path: |
             desktop/build/verification/*.json
+            desktop/build/verification/window-caption-*.png
             desktop/build/verification/glass-scene/*.json
             desktop/build/verification/glass-scene/*.png
             desktop/build/verification/glass-popup/*.json
@@ -292,6 +338,20 @@ jobs:
             desktop/build/parity/desktop-layout-*/gradle.log
             desktop/build/parity/desktop-layout-*/*.png
             desktop/build/parity/desktop-layout-*/*.s16le
+            desktop/build/parity/home-final-*/*.json
+            desktop/build/parity/home-final-*/*.txt
+            desktop/build/parity/home-final-*/gradle.log
+            desktop/build/parity/home-final-*/*.png
+            desktop/build/parity/reference-player*/*.json
+            desktop/build/parity/reference-player*/*.txt
+            desktop/build/parity/reference-player*/gradle.log
+            desktop/build/parity/reference-player*/*.png
+            desktop/build/parity/reference-player*/*.s16le
+            desktop/build/parity/reference-lyrics*/*.json
+            desktop/build/parity/reference-lyrics*/*.txt
+            desktop/build/parity/reference-lyrics*/gradle.log
+            desktop/build/parity/reference-lyrics*/*.png
+            desktop/build/parity/reference-lyrics*/*.s16le
             desktop/build/verification/settings-icons.json
             desktop/build/parity/settings-*/*.json
             desktop/build/parity/settings-*/gradle.log

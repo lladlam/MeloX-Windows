@@ -19,7 +19,7 @@ internal fun DesktopLyrics(track: MusicTrack, foreground: Color, active: Boolean
     compact: Boolean = false, focusOffset: Float? = null) {
     BoxWithConstraints(Modifier.fillMaxSize()) {
         val fontSize = meloXDesktopLyricsFontSize(maxWidth.value, compact) * MeloXSettingsRuntime.lyricFontScale
-        val focus = if (compact) 69.734375f / (maxHeight.value - fontSize * 1.2f).coerceAtLeast(1f)
+        val focus = if (compact) .25f
             else focusOffset?.let { it / maxHeight.value.coerceAtLeast(1f) } ?: .5f
         CompositionLocalProvider(LocalMeloXLyricSurface provides MeloXLyricSurface(foreground = foreground,
             fontScale = fontSize / 34f, focusPosition = focus.coerceIn(0f, 1f), horizontalInset = 20,

@@ -210,13 +210,7 @@ fun SettingsScreen(
                 color = MaterialTheme.colorScheme.onBackground.copy(alpha = .48f))
         }
         if (normalized.isBlank()) {
-            SettingsDangerButton(pinnedString("settings_reset_player"), Modifier.testTag("settings-reset")) {
-                MeloXSettingsPreferences.reset()
-                melox.playback.MeloXPlaybackModePreferences.reset()
-                PlaybackCommands.changeQuality(MusicQuality.Standard)
-            }
-            Spacer(Modifier.height(18.dp))
-            if (session.isLoggedIn) SettingsDangerButton(pinnedString("settings_sign_out"), Modifier.testTag("settings-sign-out")) { session.clear() }
+            SettingsAccountActions(session)
         }
     }
     melox.ui.layout.MeloXAdaptiveDetail(route != null, onDismiss = { route = null }) { shown ->
@@ -253,6 +247,7 @@ private fun desktopSettingsGroup(route: SettingsRoute): List<SettingsRoute> = wh
 
 /** Windows counterpart of the fixed 650pt macOS settings window. */
 @Composable
+@OptIn(androidx.compose.foundation.layout.ExperimentalLayoutApi::class)
 private fun DesktopSettingsLayout(
     selected: SettingsRoute,
     onSelected: (SettingsRoute) -> Unit,
@@ -264,6 +259,11 @@ private fun DesktopSettingsLayout(
     onOpenServices: () -> Unit,
 ) {
     val colors = MaterialTheme.colorScheme
+    var search by remember { mutableStateOf("") }
+    val normalized = search.trim().lowercase()
+    val matchingRoutes = SettingsSections.flatMap { it.second }.filter {
+        "${it.title} ${it.subtitle} ${it.keywords}".lowercase().contains(normalized)
+    }
     Box(Modifier.fillMaxSize().testTag("settings-root")) {
         Box(
             Modifier.fillMaxSize().background(MeloXColors.pageBackground()).testTag("desktop-settings-window"),
@@ -311,12 +311,41 @@ private fun DesktopSettingsLayout(
                         .verticalScroll(rememberScrollState()).padding(horizontal = 28.dp, vertical = 22.dp)
                         .then(if (selected == SettingsRoute.General) Modifier.testTag("settings-general") else Modifier),
                 ) {
+                    MeloXGlassTextField(
+                        value = search,
+                        onValueChange = { search = it },
+                        modifier = Modifier.fillMaxWidth().testTag("settings-search"),
+                        leadingContent = { MeloXSymbolIcon(MeloXSymbol.Search, size = 20, iconSize = 24, color = colors.onSurface.copy(alpha = .55f)) },
+                        placeholder = { Text(pinnedString("settings_search_placeholder"), color = colors.onSurface.copy(alpha = .42f), fontSize = 16.sp) },
+                        textStyle = androidx.compose.ui.text.TextStyle(color = colors.onSurface, fontSize = 16.sp, lineHeight = 21.sp),
+                    )
+                    Spacer(Modifier.height(18.dp))
+                    if (normalized.isNotBlank()) {
+                        if (pinnedString("settings_account_keywords").lowercase().contains(normalized)) {
+                            SettingsAccountCard(session, onOpenLogin, onOpenServices)
+                            Spacer(Modifier.height(18.dp))
+                        }
+                        matchingRoutes.forEach { destination ->
+                            MeloXIosListRow(
+                                title = destination.title,
+                                modifier = Modifier.testTag("settings-open-${destination.name.lowercase()}"),
+                                onClick = {
+                                    if (destination == SettingsRoute.Messages) onOpenMessages()
+                                    else { onSelected(destination); search = "" }
+                                },
+                            )
+                        }
+                        if (matchingRoutes.isEmpty()) Text(pinnedString("settings_search_empty"),
+                            Modifier.padding(vertical = 36.dp).testTag("settings-search-empty"),
+                            color = colors.onBackground.copy(alpha = .48f))
+                    } else {
                     Text(selected.title, fontSize = 24.sp, lineHeight = 30.sp, fontWeight = FontWeight.Bold)
                     val relatedRoutes = desktopSettingsGroup(selected)
                     if (relatedRoutes.size > 1) {
-                        Row(
-                            Modifier.fillMaxWidth().padding(top = 14.dp).horizontalScroll(rememberScrollState()),
+                        androidx.compose.foundation.layout.FlowRow(
+                            Modifier.fillMaxWidth().padding(top = 14.dp),
                             horizontalArrangement = androidx.compose.foundation.layout.Arrangement.spacedBy(7.dp),
+                            verticalArrangement = androidx.compose.foundation.layout.Arrangement.spacedBy(7.dp),
                         ) {
                             relatedRoutes.forEach { route ->
                                 val active = route == selected
@@ -336,37 +365,35 @@ private fun DesktopSettingsLayout(
                         }
                     }
                     Spacer(Modifier.height(18.dp))
-                    when (selected) {
-                        SettingsRoute.General -> {
+                    if (selected == SettingsRoute.General) {
                             SettingsAccountCard(session, onOpenLogin, onOpenServices)
                             Spacer(Modifier.height(20.dp))
-                            GeneralSettings()
-                        }
-                        SettingsRoute.Appearance -> AppearanceSettings()
-                        SettingsRoute.Content -> ContentSettings()
-                        SettingsRoute.Features -> FeatureSettings()
-                        SettingsRoute.TabLayout -> TabLayoutSettings(currentSource)
-                        SettingsRoute.Playback -> PinnedPlaybackSettings()
-                        SettingsRoute.Lyrics -> LyricsSettings()
-                        SettingsRoute.SystemPlayback -> SystemPlaybackSettings()
-                        SettingsRoute.SkylineLyrics -> SkylineLyricsSettings()
-                        SettingsRoute.FloatingLyrics -> FloatingLyricsSettings()
-                        SettingsRoute.Storage -> PinnedStorageSettings()
-                        SettingsRoute.Recognition -> RecognitionSettings()
-                        SettingsRoute.Messages -> MessagesSettings(onOpenMessages)
-                        SettingsRoute.ListenTogether -> ListenTogetherSettings()
-                        SettingsRoute.RemoteConfig -> RemoteConfigSettings()
-                        SettingsRoute.About -> PinnedAboutSettings()
-                        SettingsRoute.Legal -> LegalSettings()
-                        SettingsRoute.Privacy -> PrivacySettings()
-                        SettingsRoute.Developer -> DeveloperSettings()
-                        SettingsRoute.Experimental -> ExperimentalSettings(currentSource)
+                    }
+                    Column(Modifier.fillMaxWidth().testTag("settings-page:${selected.name}")) {
+                        SettingsRouteContent(selected, currentSource, onOpenMessages)
+                    }
+                    if (selected == SettingsRoute.General) {
+                        Spacer(Modifier.height(18.dp))
+                        SettingsAccountActions(session)
                     }
                     Spacer(Modifier.height(18.dp))
+                    }
                 }
             }
         }
     }
+}
+
+/** Both layouts use the same production actions and settings pages. */
+@Composable
+private fun SettingsAccountActions(session: NeteaseSessionStore) {
+    SettingsDangerButton(pinnedString("settings_reset_player"), Modifier.testTag("settings-reset")) {
+        MeloXSettingsPreferences.reset()
+        melox.playback.MeloXPlaybackModePreferences.reset()
+        PlaybackCommands.changeQuality(MusicQuality.Standard)
+    }
+    Spacer(Modifier.height(18.dp))
+    if (session.isLoggedIn) SettingsDangerButton(pinnedString("settings_sign_out"), Modifier.testTag("settings-sign-out")) { session.clear() }
 }
 
 @Composable
@@ -412,30 +439,35 @@ private fun SettingsDetail(
         modifier = Modifier.testTag("settings-${route.name.lowercase()}")) {
         item(key = "settings-detail:${route.name}") {
           Column {
-            when (route) {
-                SettingsRoute.General -> GeneralSettings()
-                SettingsRoute.Appearance -> AppearanceSettings()
-                SettingsRoute.Content -> ContentSettings()
-                SettingsRoute.TabLayout -> TabLayoutSettings(currentSource)
-                SettingsRoute.Playback -> PinnedPlaybackSettings()
-                SettingsRoute.Lyrics -> LyricsSettings()
-                SettingsRoute.SkylineLyrics -> SkylineLyricsSettings()
-                SettingsRoute.SystemPlayback -> SystemPlaybackSettings()
-                SettingsRoute.FloatingLyrics -> FloatingLyricsSettings()
-                SettingsRoute.Recognition -> RecognitionSettings()
-                SettingsRoute.ListenTogether -> ListenTogetherSettings()
-                SettingsRoute.Storage -> PinnedStorageSettings()
-                SettingsRoute.Features -> FeatureSettings()
-                SettingsRoute.Messages -> MessagesSettings(onOpenMessages)
-                SettingsRoute.RemoteConfig -> RemoteConfigSettings()
-                SettingsRoute.Legal -> LegalSettings()
-                SettingsRoute.Privacy -> PrivacySettings()
-                SettingsRoute.About -> PinnedAboutSettings()
-                SettingsRoute.Developer -> DeveloperSettings()
-                SettingsRoute.Experimental -> ExperimentalSettings(currentSource)
-            }
+            SettingsRouteContent(route, currentSource, onOpenMessages)
           }
         }
+    }
+}
+
+@Composable
+private fun SettingsRouteContent(route: SettingsRoute, currentSource: MusicSource, onOpenMessages: () -> Unit) {
+    when (route) {
+        SettingsRoute.General -> GeneralSettings()
+        SettingsRoute.Appearance -> AppearanceSettings()
+        SettingsRoute.Content -> ContentSettings()
+        SettingsRoute.TabLayout -> TabLayoutSettings(currentSource)
+        SettingsRoute.Playback -> PinnedPlaybackSettings()
+        SettingsRoute.Lyrics -> LyricsSettings()
+        SettingsRoute.SkylineLyrics -> SkylineLyricsSettings()
+        SettingsRoute.SystemPlayback -> SystemPlaybackSettings()
+        SettingsRoute.FloatingLyrics -> FloatingLyricsSettings()
+        SettingsRoute.Recognition -> RecognitionSettings()
+        SettingsRoute.ListenTogether -> ListenTogetherSettings()
+        SettingsRoute.Storage -> PinnedStorageSettings()
+        SettingsRoute.Features -> FeatureSettings()
+        SettingsRoute.Messages -> MessagesSettings(onOpenMessages)
+        SettingsRoute.RemoteConfig -> RemoteConfigSettings()
+        SettingsRoute.Legal -> LegalSettings()
+        SettingsRoute.Privacy -> PrivacySettings()
+        SettingsRoute.About -> PinnedAboutSettings()
+        SettingsRoute.Developer -> DeveloperSettings()
+        SettingsRoute.Experimental -> ExperimentalSettings(currentSource)
     }
 }
 

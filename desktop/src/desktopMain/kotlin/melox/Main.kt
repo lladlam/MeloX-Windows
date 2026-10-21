@@ -61,13 +61,15 @@ fun main() {
             androidx.compose.runtime.LaunchedEffect(windowState.isMinimized) {
                 melox.remoteconfig.MeloXRemoteConfigRuntime.setForeground(!windowState.isMinimized)
             }
+            val closeWindow: () -> Unit = {
+                melox.playback.PlaybackCommands.playerController()?.release()
+                exitApplication()
+            }
             Window(
                 title = "MeloX",
                 state = windowState,
-                onCloseRequest = {
-                    melox.playback.PlaybackCommands.playerController()?.release()
-                    exitApplication()
-                },
+                undecorated = true,
+                onCloseRequest = closeWindow,
             ) {
                 val desktopLayout = melox.settings.MeloXSettingsRuntime.desktopLayoutEnabled
                 androidx.compose.runtime.DisposableEffect(window, desktopLayout) {
@@ -102,12 +104,16 @@ fun main() {
                     }
                 }
                 val focused = androidx.compose.ui.platform.LocalWindowInfo.current.isWindowFocused
+                val chrome = androidx.compose.runtime.remember(window, windowState) {
+                    melox.ui.desktop.MeloXWindowChrome(this, windowState, closeWindow)
+                }
                 androidx.compose.runtime.CompositionLocalProvider(
+                    melox.ui.desktop.LocalMeloXWindowChrome provides chrome,
                     melox.ui.player.LocalMeloXDisplayAwakeOwner provides displayAwake,
                     melox.ui.player.LocalMeloXWindowForeground provides (focused && !windowState.isMinimized),
                     melox.ui.player.LocalMeloXImmersiveWindowOwner provides immersiveOwner,
                 ) {
-                    MeloXApp(onExit = ::exitApplication)
+                    MeloXApp(onExit = closeWindow)
                 }
             }
         }

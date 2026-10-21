@@ -80,6 +80,8 @@ import melox.ui.navigation.MeloXBottomChrome
 import melox.ui.navigation.Route
 import melox.ui.navigation.MeloXBackDispatcher
 import melox.ui.navigation.LocalMeloXBackDispatcher
+import melox.ui.navigation.meloXTrackPointerMode
+import melox.ui.navigation.meloXEdgeSwipeBack
 import melox.ui.navigation.MeloXBackHandler
 import melox.ui.screens.AlbumDetailScreen
 import melox.ui.screens.CloudScreen
@@ -151,13 +153,14 @@ fun MeloXApp(onExit: () -> Unit = { kotlin.system.exitProcess(0) }) {
             ) { target ->
                 CompositionLocalProvider(LocalMeloXBackDispatcher provides collectionBackDispatcher,
                     melox.ui.glass.LocalMeloXLayerBackdrop provides null) {
-                    when (target) {
+                    if (target != null) Box(Modifier.fillMaxSize().meloXEdgeSwipeBack {
+                        if (!collectionBackDispatcher.dispatch()) melox.ui.navigation.MeloXCollectionLaunchBus.dismiss()
+                    }) { when (target) {
                         is melox.ui.navigation.MeloXCollectionTarget.Artist -> melox.ui.screens.ArtistDetailScreen(target.id,
                             onBack = melox.ui.navigation.MeloXCollectionLaunchBus::dismiss)
                         is melox.ui.navigation.MeloXCollectionTarget.Album -> AlbumDetailScreen(target.id.toString(), target.name,
                             onBack = melox.ui.navigation.MeloXCollectionLaunchBus::dismiss)
-                        null -> Unit
-                    }
+                    } }
                 }
             }
         }
@@ -356,8 +359,10 @@ fun MeloXApp(onExit: () -> Unit = { kotlin.system.exitProcess(0) }) {
     MaterialTheme(
         colorScheme = (if (resolvedTheme == melox.settings.MeloXResolvedTheme.Light) meloXLightScheme() else meloXDarkScheme()).let { scheme ->
             if (!MeloXSettingsRuntime.desktopLayoutEnabled) scheme
-            else if (resolvedTheme == melox.settings.MeloXResolvedTheme.Light) scheme.copy(background = Color(0xFFF6F6F6), surface = Color(0xFFEEEEF0))
-            else scheme.copy(background = Color(0xFF1E1E1E), surface = Color(0xFF17171A))
+            else if (resolvedTheme == melox.settings.MeloXResolvedTheme.Light) scheme.copy(background = Color(0xFFF6F6F6), surface = Color.White,
+                onSurface = Color(0xFF202020), onBackground = Color(0xFF202020))
+            else scheme.copy(background = Color(0xFF1E1E1E), surface = Color(0xFF17171A),
+                onSurface = Color(0xFFF0F0F0), onBackground = Color(0xFFDDDDDD))
         },
         typography = melox.ui.theme.MeloXMaterialTypography,
         shapes = melox.ui.theme.MeloXMaterialShapes,
@@ -411,11 +416,13 @@ fun MeloXApp(onExit: () -> Unit = { kotlin.system.exitProcess(0) }) {
                 },
             )
         }
+        melox.ui.desktop.MeloXWindowFrame {
         SharedTransitionLayout(modifier = Modifier.fillMaxSize()) {
             val sharedScope = this
             Box(
                 modifier = Modifier
                     .fillMaxSize()
+                    .meloXTrackPointerMode()
                     .background(MaterialTheme.colorScheme.background)
                     .onPreviewKeyEvent { event ->
                         if (event.type != KeyEventType.KeyUp || event.key != Key.Escape) return@onPreviewKeyEvent false
@@ -478,7 +485,9 @@ fun MeloXApp(onExit: () -> Unit = { kotlin.system.exitProcess(0) }) {
                             onOpenTool = { tool ->
                                 when (tool) {
                                      "Messages" -> messagesVisible = true
-                                     "Home" -> selectedTab = AppTab.Home
+                                      "Home" -> selectedTab = AppTab.Home
+                                     "Playlists" -> { desktopLibraryPage = "Playlists"; selectedTab = AppTab.Library }
+                                     "Explore" -> selectedTab = AppTab.Explore
                                     "Podcasts" -> selectedTab = AppTab.Podcasts
                                     "Downloads" -> selectedTab = AppTab.Downloads
                                     "Cloud" -> selectedTab = AppTab.Cloud
@@ -591,6 +600,7 @@ fun MeloXApp(onExit: () -> Unit = { kotlin.system.exitProcess(0) }) {
                 }
             }
         }
+        }
         when (onboarding.stage) {
             melox.legal.MeloXOnboardingStage.Legal -> melox.ui.legal.MeloXFirstLaunchLegalConsent(
                 onAgree = onboarding::agreeLegal, onDecline = onExit,
@@ -698,13 +708,13 @@ private fun TabContent(
             Route.ProviderServices -> ProviderServicesScreen(navState)
             else -> Unit
         }
-        selectedPlaylist?.let { playlist ->
+        melox.ui.navigation.MeloXDetailOverlay(selectedPlaylist, onBack = { selectedPlaylist = null }) { playlist ->
             PlaylistDetailScreen(
                 playlist = playlist,
                 onBack = { selectedPlaylist = null },
             )
         }
-        selectedAlbum?.let { (id, name) ->
+        melox.ui.navigation.MeloXDetailOverlay(selectedAlbum, onBack = { selectedAlbum = null }) { (id, name) ->
             AlbumDetailScreen(
                 albumId = id,
                 albumName = name,

@@ -15,8 +15,8 @@ args = parser.parse_args()
 
 # Discover the four locale route captures from their recorded JVM locale.
 route_names = sorted(entry.name for entry in args.parity.glob('settings-*')
-                     if entry.is_dir() and (entry / 'capture.json').is_file()
-                     and entry.name not in ('settings-controls', 'settings-reload'))
+                      if entry.is_dir() and (entry / 'capture.json').is_file()
+                      and entry.name in {f'settings-{locale}' for locale in ['en-US', 'zh-CN', 'zh-TW', 'ja-JP']})
 assert len(route_names) == 4, route_names
 locales = [json.loads((args.parity / name / 'capture.json').read_text(encoding='utf-8'))['locale']
            for name in route_names]

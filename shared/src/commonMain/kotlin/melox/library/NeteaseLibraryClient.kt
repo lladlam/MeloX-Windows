@@ -129,6 +129,10 @@ class NeteaseLibraryClient(
             roamingSongs = serverOrFallback(serverBlocks?.roamingSongs, fallbackRoaming),
             similarSongs = serverOrFallback(serverBlocks?.likedSongRecommendations, fallbackSimilar),
             podcasts = if (podcastsEnabled) serverOrFallback(serverBlocks?.podcasts, fallbackPodcasts) else emptyList(),
+            newAlbums = runCatching {
+                melox.network.NeteaseCollectionDetailsClient(cookieProvider, httpClient).newAlbums(
+                    limit = 16, area = when (area) { "华语", "中国" -> "ZH"; "日本", "日语" -> "JP"; "韩国", "韩语" -> "KR"; "欧美" -> "EA"; else -> "ALL" })
+            }.onFailure { if (it is kotlinx.coroutines.CancellationException) throw it }.getOrDefault(emptyList()),
         )
     }
 
@@ -380,6 +384,7 @@ class NeteaseLibraryClient(
             playCount = value.optLong("playCount", 0L).coerceAtLeast(0L),
             description = description,
             subscribed = if (value.has("subscribed")) value.optBoolean("subscribed") else null,
+            copywriter = value.optString("copywriter").takeIf { it.isNotBlank() && it != "null" },
         )
     }
 

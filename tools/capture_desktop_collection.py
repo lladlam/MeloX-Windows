@@ -20,6 +20,9 @@ parser.add_argument('--theme', choices=['Light', 'Dark'], default='Light')
 parser.add_argument('--locale', default='en-US')
 parser.add_argument('--album-id', default='34720827')
 parser.add_argument('--expand-description', action='store_true')
+parser.add_argument('--width', type=int, default=1280)
+parser.add_argument('--height', type=int, default=800)
+parser.add_argument('--density', type=float, default=1)
 args = parser.parse_args()
 repo = Path(__file__).resolve().parents[1]
 home, output = args.home.resolve(), args.output.resolve()
@@ -43,7 +46,7 @@ if args.page == 'playlist':
     add('reveal-switch', 'reveal@setting-general_desktop_layout')
     add('enable-desktop', 'tap@setting-general_desktop_layout', ['tag:desktop-sidebar', 'runtime:desktopLayoutEnabled:true'])
     add('home', 'tap@desktop-nav:Home', ['tag:desktop-home'])
-    add('show-playlists', 'scroll@1000,600,5')
+    add('show-playlists', 'reveal@desktop-home-shelf:hero')
     add('open-real-playlist', 'tap-first@desktop-home-playlist:', ['tag:desktop-playlist-detail', 'tag:desktop-collection-header'])
 else:
     add('loaded-album', 'wait@1500', ['tag:desktop-album-detail', 'tag:desktop-collection-header', 'tag:desktop-sidebar'])
@@ -63,7 +66,7 @@ add('back', 'tap@desktop-collection-back', ['absent:desktop-' + args.page + '-de
 (output / 'steps.txt').write_text('\n'.join(steps) + '\n', encoding='utf-8')
 (output / 'expect.txt').write_text('\n'.join(name + '=' + ','.join(values) for name, values in checks.items() if values) + '\n', encoding='utf-8')
 parameters = ['--locale', args.locale, '--source', 'Netease', '--start-tab', 'Settings', '--theme', args.theme,
-              '--width', '1280', '--height', '800', '--output', str(output), '--wait-ms', '650',
+              '--width', str(args.width), '--height', str(args.height), '--density', str(args.density), '--output', str(output), '--wait-ms', '650',
               '--startup-wait-ms', '1800', '--steps-file', str(output / 'steps.txt'), '--expect-file', str(output / 'expect.txt')]
 if args.page == 'album':
     parameters += ['--album-id', args.album_id]

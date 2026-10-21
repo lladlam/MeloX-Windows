@@ -206,7 +206,7 @@ fun MeloXNowPlayingScreen(
             if (MeloXSettingsRuntime.desktopLayoutEnabled) {
                 melox.ui.desktop.MeloXDesktopNowPlaying(track,
                     onDismiss = { onDismiss?.invoke() ?: navState?.goBack() },
-                    onActions = { showQuality = false; showActions = true })
+                    onActions = { showQuality = false; showActions = true }, actionsVisible = showActions)
             } else if (!classic) {
                 MeloXIOSPlayerScene(
                     track = track,

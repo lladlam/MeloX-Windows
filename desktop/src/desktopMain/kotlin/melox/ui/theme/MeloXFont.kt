@@ -102,7 +102,7 @@ private val sfTypefaces by lazy {
     }.use { it.readBytes() }
     org.jetbrains.skia.Data.makeFromBytes(bytes).use { data ->
         val base = requireNotNull(org.jetbrains.skia.FontMgr.default.makeFromData(data))
-        listOf(FontWeight.Normal, FontWeight.Medium, FontWeight.SemiBold, FontWeight.Bold).associateWith { weight ->
+        listOf(FontWeight.Normal, FontWeight.Medium, FontWeight.SemiBold, FontWeight.Bold, FontWeight.Black).associateWith { weight ->
             if (weight == FontWeight.Normal) base
             else base.makeClone(org.jetbrains.skia.FontVariation("wght", weight.weight.toFloat()))
         }

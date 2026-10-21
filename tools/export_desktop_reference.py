@@ -31,6 +31,12 @@ KEYS += ['ui.common.collapse', 'ui.common.playlist', 'ui.common.album', 'ui.comm
          'ui.common.retry', 'ui.error.music_content_load_failed', 'ui.error.unknown',
          'ui.playlists.loading', 'ui.album.loading', 'ui.common.play_named']
 KEYS += ['ui.error.favorite_failed']
+KEYS += ['ui.common.view_all', 'ui.albums.new.title', 'ui.home.section.podcast_recommendations',
+         'ui.desktop.pagination.previous', 'ui.desktop.pagination.next', 'ui.error.home.load_failed']
+KEYS += ['ui.desktop.settings.account', 'ui.messages.private.title', 'ui.desktop.account.settings',
+         'ui.settings.account.logout', 'ui.settings.account.logout.confirmation', 'ui.common.cancel',
+         'ui.common.done', 'ui.common.login', 'ui.account.login_netease', 'ui.desktop.account.login_message']
+KEYS += ['ui.common.title_detail_separator', 'ui.desktop.player.playback_progress', 'ui.desktop.player.toggle_mute']
 KEYS += [f'ui.settings.audio_quality.{quality}' for quality in
          ['standard', 'high', 'lossless', 'hi_res', 'hd_surround', 'immersive_surround', 'master']]
 SOURCES = [
@@ -46,6 +52,12 @@ SOURCES = [
     'MeloXDesktop/Features/Player/DesktopPlayerSidePanel.swift',
     'MeloXDesktop/Features/Player/DesktopNowPlayingLayout.swift',
     'MeloXDesktop/Features/Player/DesktopNowPlayingPlayerColumn.swift',
+    'MeloXDesktop/Features/Player/DesktopNowPlayingArtwork.swift',
+    'MeloXDesktop/Features/Player/DesktopNowPlayingProgress.swift',
+    'MeloXDesktop/Features/Player/DesktopNowPlayingPage.swift',
+    'MeloXDesktop/Features/Player/DesktopNowPlayingWindow.swift',
+    'MeloXDesktop/Features/Player/Chrome/DesktopNowPlayingGlass.swift',
+    'MeloXDesktop/Features/Player/Chrome/DesktopNowPlayingVolumeControl.swift',
     'MeloXDesktop/Core/Lyrics/AppleMusicLyricsTypographyProfile.swift',
     'MeloXDesktop/Core/Lyrics/AppleMusicLyricsMotionProfile.swift',
     'MeloXDesktop/Features/Player/DesktopLyricsLayoutMetrics.swift',
@@ -54,6 +66,9 @@ SOURCES = [
     'MeloXDesktop/Features/Player/Queue/DesktopQueueRow.swift',
     'MeloXDesktop/Features/Home/DesktopHomeView.swift',
     'MeloXDesktop/Features/Home/DesktopHomeQuickActionsView.swift',
+    'MeloXDesktop/Features/Home/DesktopHomePagingShelf.swift',
+    'MeloXDesktop/Shared/DesktopMediaCard.swift',
+    'MeloXDesktop/Features/Account/DesktopAccountView.swift',
     'MeloXDesktop/Features/Detail/DesktopRouteView.swift',
     'MeloXDesktop/Features/Detail/DesktopPlaylistDetailView.swift',
     'MeloXDesktop/Features/Detail/DesktopAlbumDetailView.swift',

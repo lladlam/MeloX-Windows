@@ -20,4 +20,5 @@ data class NeteaseHomeContent(
     val roamingSongs: List<SearchSong> = emptyList(),
     val similarSongs: List<SearchSong> = emptyList(),
     val podcasts: List<NeteaseHomePodcast> = emptyList(),
+    val newAlbums: List<melox.network.MeloXAlbumSummary> = emptyList(),
 )

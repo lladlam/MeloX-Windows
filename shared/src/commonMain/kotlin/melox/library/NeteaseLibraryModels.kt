@@ -19,6 +19,7 @@ data class NeteasePlaylistSummary(
      */
     val providerPlaylist: MusicPlaylistSummary? = null,
     val subscribed: Boolean? = null,
+    val copywriter: String? = null,
 )
 
 data class NeteasePlaylistDetail(

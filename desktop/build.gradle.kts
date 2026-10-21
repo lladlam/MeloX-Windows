@@ -205,6 +205,16 @@ tasks.register<JavaExec>("auditImmersiveWindow") {
     args(layout.buildDirectory.file("verification/immersive-window.json").get().asFile.absolutePath)
 }
 
+tasks.register<JavaExec>("auditWindowChrome") {
+    group = "verification"
+    description = "Replay the production app-owned window caption with native Robot pointer input."
+    dependsOn("desktopMainClasses")
+    val compilation = kotlin.targets.getByName("desktop").compilations.getByName("main")
+    classpath = files(compilation.output.allOutputs, compilation.runtimeDependencyFiles)
+    mainClass.set("melox.validation.MeloXWindowChromeAuditKt")
+    args(layout.buildDirectory.file("verification/window-chrome.json").get().asFile.absolutePath)
+}
+
 tasks.register<JavaExec>("auditGlassOptics") {
     group = "verification"
     description = "Verify real Skia glass optics pixels, stable filter reuse and native ownership."

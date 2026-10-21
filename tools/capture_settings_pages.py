@@ -13,10 +13,15 @@ import sys
 
 repo = Path(__file__).resolve().parents[1]
 mode, home, output = sys.argv[1:4]
-assert mode in ('routes', 'controls', 'reload')
+assert mode in ('routes', 'controls', 'reload', 'desktop-routes')
 locale, theme, width, height = (sys.argv[4:] or ['en-US', 'Dark', '1100', '780'])
 home, output = Path(home).resolve(), Path(output).resolve()
 output.mkdir(parents=True, exist_ok=True)
+if mode == 'desktop-routes':
+    prefs = home / '.melox/prefs_melox_app_settings.properties'
+    assert not prefs.exists(), 'Use a fresh isolated home'
+    prefs.parent.mkdir(parents=True, exist_ok=True)
+    prefs.write_text('onboarding_completed=true\ngeneral_desktop_layout=true\n', encoding='utf-8')
 suffix = {'zh-CN': '-zh-rCN', 'zh-TW': '-zh-rTW', 'ja-JP': '-ja'}.get(locale, '')
 resources = repo / 'desktop/src/main/resources/parity'
 
@@ -69,7 +74,29 @@ def toggle(key, value, runtime=None):
 if mode != 'reload':
     add('remote-reject', 'tap@remote-reject', ['cloud-choice:true', 'cloud-enabled:false'])
 
-if mode == 'routes':
+if mode == 'desktop-routes':
+    groups = {
+        'General': ['General', 'Appearance', 'Content'],
+        'Features': ['Features', 'TabLayout', 'Recognition', 'Messages', 'ListenTogether'],
+        'Playback': ['Playback', 'Lyrics', 'SystemPlayback', 'SkylineLyrics', 'FloatingLyrics'],
+        'Storage': ['Storage'],
+        'Developer': ['RemoteConfig', 'About', 'Legal', 'Privacy', 'Developer', 'Experimental'],
+    }
+    for group, routes in groups.items():
+        add('group-' + group, 'tap@desktop-settings-tab:' + group)
+        for route in routes:
+            if len(routes) > 1:
+                reveal('desktop-settings-subtab:' + route)
+                add('open-' + route, 'tap@desktop-settings-subtab:' + route)
+            reveal('settings-page:' + route)
+            add('inspect-' + route, 'wait@100', ['tag:settings-page:' + route])
+    add('general-actions', 'tap@desktop-settings-tab:General')
+    reveal('settings-reset')
+    add('inspect-reset', 'wait@100', ['enabled:settings-reset', 'absent:settings-sign-out'])
+    reveal('settings-search')
+    add('focus-search', 'tap@settings-search')
+    add('no-match', 'type@no-matching-setting-984723', ['tag:settings-search-empty'])
+elif mode == 'routes':
     audit = json.loads((repo / 'parity/3f877ea/evidence/settings-pages-source-audit.json').read_text(encoding='utf-8'))
     aliases = {'PlayerAppearance': 'Appearance', 'ContentFeatures': 'Features'}
     for section in audit['sections']:

@@ -5,9 +5,12 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.animation.togetherWith
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.VerticalScrollbar
+import androidx.compose.foundation.rememberScrollbarAdapter
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.border
@@ -28,7 +31,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.draw.drawWithContent
+import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.luminance
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.BlendMode
+import androidx.compose.ui.graphics.CompositingStrategy
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.graphics.BlurEffect
+import androidx.compose.ui.graphics.TileMode
+import androidx.compose.ui.graphics.layer.drawLayer
+import androidx.compose.ui.graphics.drawscope.translate
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.layout.positionInRoot
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Size
@@ -66,6 +82,8 @@ internal enum class DesktopInspector { Lyrics, Queue }
 internal object DesktopMetrics {
     const val Sidebar = 199
     const val Inspector = 258
+    // The uploaded lyrics-pane uses a wider reading column than the queue.
+    const val LyricsInspector = 360
     const val PlayerWidth = 700
     const val PlayerHeight = 54
     const val PlayerBottom = 10
@@ -91,6 +109,8 @@ internal fun MeloXInterfaceLayout(
 ) {
     val desktop = MeloXSettingsRuntime.desktopLayoutEnabled
     var inspector by remember { mutableStateOf<DesktopInspector?>(null) }
+    var inspectorWidth by remember { mutableIntStateOf(DesktopMetrics.Inspector) }
+    if (inspector != null) inspectorWidth = if (inspector == DesktopInspector.Lyrics) DesktopMetrics.LyricsInspector else DesktopMetrics.Inspector
     var accountSheet by remember { mutableStateOf(false) }
     LaunchedEffect(desktop, hasMedia) { if (!desktop || !hasMedia) inspector = null }
     val duration = if (MeloXSettingsRuntime.reduceMotion) 0 else 280
@@ -98,21 +118,23 @@ internal fun MeloXInterfaceLayout(
         if (desktop) DesktopSidebar(selectedTab, source, libraryPage, onSelect) { accountSheet = true }
         key("retained-page") {
             Box(Modifier.weight(1f).fillMaxHeight().clipToBounds()) {
-                CompositionLocalProvider(LocalDesktopInspectorWidth provides if (desktop && inspector != null && !playerOpen) DesktopMetrics.Inspector else 0) {
+                CompositionLocalProvider(LocalDesktopInspectorWidth provides if (desktop && inspector != null && !playerOpen) inspectorWidth else 0) {
                     MeloXListDetailLayout(hasMedia, modifier) { content() }
                 }
                 if (desktop) {
                     collectionOverlay()
-                    androidx.compose.animation.AnimatedVisibility(inspector != null && !playerOpen, Modifier.align(Alignment.CenterEnd).width(DesktopMetrics.Inspector.dp).fillMaxHeight(),
+                    androidx.compose.animation.AnimatedVisibility(inspector != null && !playerOpen, Modifier.align(Alignment.CenterEnd).width(inspectorWidth.dp).fillMaxHeight(),
                         enter = slideInHorizontally(tween(duration)) { it } + fadeIn(tween(duration)),
                         exit = slideOutHorizontally(tween(duration)) { it } + fadeOut(tween(duration))) {
                         var retained by remember { mutableStateOf(inspector ?: DesktopInspector.Lyrics) }
                         if (inspector != null) retained = inspector!!
-                        DesktopInspectorPanel(retained, inspector != null)
+                        CompositionLocalProvider(LocalMeloXLayerBackdrop provides backdrop) {
+                            DesktopInspectorPanel(retained, inspector != null)
+                        }
                     }
                     if (hasMedia && !playerOpen) {
                         Box(Modifier.align(Alignment.BottomCenter).fillMaxWidth()
-                            .padding(start = 24.dp, end = 24.dp + if (inspector != null) DesktopMetrics.Inspector.dp else 0.dp,
+                            .padding(start = 24.dp, end = 24.dp + if (inspector != null) inspectorWidth.dp else 0.dp,
                                 bottom = DesktopMetrics.PlayerBottom.dp), contentAlignment = Alignment.Center) {
                             CompositionLocalProvider(LocalMeloXLayerBackdrop provides backdrop) {
                                 DesktopBottomPlayer(inspector, { inspector = if (inspector == it) null else it }, onExpandPlayer)
@@ -139,7 +161,7 @@ private fun DesktopSidebar(selectedTab: AppTab, source: MusicSource, libraryPage
     onSelect: (AppTab, String?) -> Unit, onAccount: () -> Unit) {
     val session = rememberNeteaseSessionStore()
     val colors = MaterialTheme.colorScheme
-    Column(Modifier.padding(8.dp).width(DesktopMetrics.Sidebar.dp).fillMaxHeight()
+    Column(Modifier.padding(start = 8.dp, top = 8.dp, bottom = 8.dp).width(DesktopMetrics.Sidebar.dp).fillMaxHeight()
         .clip(RoundedCornerShape(18.dp)).background(colors.surface.copy(alpha = .72f))
         .border(.65.dp, colors.outlineVariant.copy(alpha = .5f), RoundedCornerShape(18.dp))
         .testTag("desktop-sidebar")) {
@@ -197,7 +219,7 @@ private fun DesktopNavigationRow(id: String, key: String, symbol: MeloXSymbol, i
     val hovered by interaction.collectIsHoveredAsState()
     val color = if (isSelected) Color.White else MaterialTheme.colorScheme.onSurface.copy(alpha = if (enabled) 1f else .34f)
     Row(Modifier.fillMaxWidth().height(32.dp).clip(RoundedCornerShape(8.dp))
-        .background(if (isSelected) Color(0xFFFF303C) else if (hovered && enabled) MaterialTheme.colorScheme.onSurface.copy(alpha = .06f) else Color.Transparent)
+        .background(if (isSelected) Color(0xFFDC0011) else if (hovered && enabled) MaterialTheme.colorScheme.onSurface.copy(alpha = .06f) else Color.Transparent)
         .testTag("desktop-nav:$id").semantics {
             selected = isSelected
             contentDescription = desktopString(key) + if (enabled) "" else ": " + desktopPlatformString("unavailable")
@@ -249,7 +271,7 @@ private fun DesktopBottomPlayer(inspector: DesktopInspector?, onInspector: (Desk
 }
 
 @Composable
-internal fun DesktopTransport(modifier: Modifier, tint: Color, prominent: Boolean = false) {
+internal fun DesktopTransport(modifier: Modifier, tint: Color, prominent: Boolean = false, scale: Float = 1f) {
     val player = PlaybackCommands.playerController()
     val state by AudioPlayer.state.collectAsState()
     val queue by PlaybackCommands.queue.collectAsState()
@@ -257,26 +279,32 @@ internal fun DesktopTransport(modifier: Modifier, tint: Color, prominent: Boolea
     val repeat by player?.repeatMode?.collectAsState() ?: remember { mutableIntStateOf(0) }
     Row(modifier, horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
         DesktopIconButton(MeloXSymbol.Shuffle, "desktop-shuffle", desktopString(if (shuffle) "ui.player.shuffle_off" else "ui.player.shuffle_on"),
-            if (shuffle) Color.Red else tint.copy(alpha = .58f), width = if (prominent) 40 else 28, iconSize = if (prominent) 20 else 11) { player?.setShuffleEnabled(!shuffle) }
+            if (shuffle) Color.Red else tint.copy(alpha = .58f), width = 28, iconSize = if (prominent) 16 else 11,
+            scale = scale, weight = FontWeight.SemiBold) { player?.setShuffleEnabled(!shuffle) }
         DesktopIconButton(MeloXSymbol.PreviousTrack, "desktop-previous", desktopString("ui.player.previous"), tint,
-            width = if (prominent) 44 else 28, iconSize = if (prominent) 26 else 13) { player?.previous() }
+            width = if (prominent) 36 else 28, iconSize = if (prominent) 24 else 13,
+            scale = scale, weight = FontWeight.SemiBold) { player?.previous() }
         DesktopIconButton(if (state.isPlaying) MeloXSymbol.Pause else MeloXSymbol.Play, "mini-player-play-pause", desktopString(if (state.isPlaying) "ui.player.pause" else "ui.common.play"), tint,
-            width = if (prominent) 52 else 36, iconSize = if (prominent) 32 else 19) { player?.togglePlay() }
+            width = if (prominent) 48 else 36, iconSize = if (prominent) 30 else 19,
+            scale = scale, weight = FontWeight.SemiBold) { player?.togglePlay() }
         DesktopIconButton(MeloXSymbol.NextTrack, "mini-player-next", desktopString("ui.player.next"), tint,
             enabled = queue.index < queue.songs.lastIndex || repeat == PlaybackCommands.REPEAT_ALL,
-            width = if (prominent) 44 else 28, iconSize = if (prominent) 26 else 13) { player?.next() }
+            width = if (prominent) 36 else 28, iconSize = if (prominent) 24 else 13,
+            scale = scale, weight = FontWeight.SemiBold) { player?.next() }
         DesktopIconButton(if (repeat == PlaybackCommands.REPEAT_ONE) MeloXSymbol.RepeatOne else MeloXSymbol.Repeat,
             "desktop-repeat", desktopString("ui.player.repeat"), if (repeat != 0) Color.Red else tint.copy(alpha = .58f),
-            width = if (prominent) 40 else 28, iconSize = if (prominent) 20 else 11) { player?.cycleRepeatMode() }
+            width = 28, iconSize = if (prominent) 16 else 11,
+            scale = scale, weight = FontWeight.SemiBold) { player?.cycleRepeatMode() }
     }
 }
 
 @Composable
 internal fun DesktopIconButton(symbol: MeloXSymbol, tag: String, label: String, tint: Color,
-    enabled: Boolean = true, width: Int = 36, iconSize: Int = 15, onClick: () -> Unit) {
-    Box(Modifier.size(width.dp, 36.dp).clip(CircleShape).testTag(tag).semantics { contentDescription = label }
+    enabled: Boolean = true, width: Int = 36, iconSize: Int = 15, scale: Float = 1f,
+    weight: FontWeight = FontWeight.Normal, onClick: () -> Unit) {
+    Box(Modifier.size((width * scale).dp, (36 * scale).dp).clip(CircleShape).testTag(tag).semantics { contentDescription = label }
         .clickable(enabled = enabled, role = Role.Button, onClick = onClick), contentAlignment = Alignment.Center) {
-        MeloXSymbolIcon(symbol, size = iconSize, color = tint.copy(alpha = tint.alpha * if (enabled) 1f else .3f))
+        MeloXSymbolIcon(symbol, size = (iconSize * scale).toInt(), weight = weight, color = tint.copy(alpha = tint.alpha * if (enabled) 1f else .3f))
     }
 }
 
@@ -315,10 +343,23 @@ internal fun DesktopSeekBar(modifier: Modifier, tint: Color) {
 private fun DesktopInspectorPanel(kind: DesktopInspector, active: Boolean) {
     val track by AudioPlayer.currentTrack.collectAsState()
     val color = MaterialTheme.colorScheme.onSurface
-    Column(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.surface)
-        .testTag("desktop-inspector:${kind.name}")) {
-        if (kind == DesktopInspector.Lyrics) track?.let { DesktopLyrics(it, color, active = active, compact = true) }
-        else DesktopQueueInspector(active)
+    val dark = MaterialTheme.colorScheme.background.luminance() < .5f
+    val backdrop = LocalMeloXLayerBackdrop.current
+    var origin by remember { mutableStateOf(Offset.Zero) }
+    Box(Modifier.fillMaxSize().clipToBounds().testTag("desktop-inspector:${kind.name}")) {
+        if (backdrop != null) Box(Modifier.matchParentSize().onGloballyPositioned { origin = it.positionInRoot() }
+            .graphicsLayer { renderEffect = BlurEffect(24.dp.toPx(), 24.dp.toPx(), TileMode.Clamp) }
+            .drawBehind {
+                translate(backdrop.origin.x - origin.x, backdrop.origin.y - origin.y) { drawLayer(backdrop.layer) }
+            })
+        Box(Modifier.matchParentSize().background(MaterialTheme.colorScheme.surface.copy(alpha = if (dark) .52f else .72f)))
+        Box(Modifier.fillMaxHeight().width(.5.dp).background(color.copy(alpha = .16f)))
+        androidx.compose.animation.AnimatedContent(kind,
+            transitionSpec = { fadeIn(tween(if (MeloXSettingsRuntime.reduceMotion) 0 else 280)) togetherWith fadeOut(tween(if (MeloXSettingsRuntime.reduceMotion) 0 else 280)) },
+            label = "desktop-inspector-crossfade") { destination ->
+            if (destination == DesktopInspector.Lyrics) track?.let { DesktopLyrics(it, color, active = active, compact = true) }
+            else DesktopQueueInspector(active)
+        }
     }
 }
 
@@ -331,35 +372,47 @@ internal fun DesktopQueueInspector(active: Boolean, prominent: Boolean = false) 
     LaunchedEffect(queue.entryIds.getOrNull(queue.index)) {
         list.scrollToItem(if (queue.index >= 0) queue.index + 2 else 0)
     }
-    Column(Modifier.fillMaxSize()) {
-        Row(Modifier.fillMaxWidth().padding(start = 9.dp, end = 9.dp, top = if (prominent) 38.dp else 7.dp),
+    CompositionLocalProvider(androidx.compose.material3.LocalTextStyle provides androidx.compose.ui.text.TextStyle(
+        fontFamily = melox.ui.theme.MeloXDesktopTextFontFamily, color = color)) {
+    Column(Modifier.fillMaxSize().padding(start = if (prominent) 32.dp else 0.dp).testTag("desktop-queue")) {
+        Row(Modifier.fillMaxWidth().padding(start = 9.dp, end = if (prominent) 20.dp else 9.dp, top = if (prominent) 0.dp else 7.dp),
             horizontalArrangement = Arrangement.spacedBy(if (prominent) 11.dp else 9.dp)) {
             val autoplay = melox.playback.MeloXPlaybackModeRuntime.autoplayEnabled
             val automix = melox.playback.MeloXPlaybackModeRuntime.autoMixEnabled
             for ((id, title, checked) in listOf(Triple("autoplay", "ui.desktop.player.autoplay", autoplay),
                 Triple("automix", "ui.settings.automix.title", automix))) {
-                Row(Modifier.weight(1f).height(if (prominent) 40.dp else 38.dp).clip(CircleShape).testTag("desktop-queue-$id")
-                    .background(if (checked) Color.Red else color.copy(alpha = .10f))
+                val foreground = if (prominent && checked) Color.Black.copy(alpha = .78f) else if (checked) Color.White else color.copy(alpha = .88f)
+                Row(Modifier.weight(1f).height(if (prominent) 36.dp else 38.dp).clip(CircleShape).testTag("desktop-queue-$id")
+                    .background(if (checked) { if (prominent) Color.White.copy(alpha = .88f) else Color.Red } else color.copy(alpha = .10f))
+                    .border(.5.dp, color.copy(alpha = .07f), CircleShape)
                     .semantics { selected = checked; contentDescription = desktopString(title) }
                     .clickable(enabled = active, role = Role.Button) {
                         if (id == "autoplay") player?.setAutoplayEnabled(!autoplay) else player?.setAutoMixEnabled(!automix)
                     }, verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.Center) {
-                    MeloXSymbolIcon(MeloXSymbol.Infinity, size = 16, color = if (checked) Color.White else color.copy(alpha = .88f))
+                    MeloXSymbolIcon(MeloXSymbol.Infinity, size = 16, weight = if (id == "automix") FontWeight.Black else FontWeight.SemiBold, color = foreground)
                     if (prominent) {
                         Spacer(Modifier.width(8.dp))
-                        Text(desktopString(title), color = if (checked) Color.White else color.copy(alpha = .88f),
+                        Text(desktopString(title), color = foreground,
                             fontSize = 15.sp, fontWeight = FontWeight.SemiBold, maxLines = 1, overflow = TextOverflow.Ellipsis)
                     }
                 }
             }
         }
-        androidx.compose.foundation.lazy.LazyColumn(Modifier.weight(1f).fillMaxWidth(), state = list, userScrollEnabled = active,
+        Box(Modifier.weight(1f).fillMaxWidth()) {
+        androidx.compose.foundation.lazy.LazyColumn(Modifier.fillMaxSize().graphicsLayer { compositingStrategy = CompositingStrategy.Offscreen }
+            .drawWithContent {
+                drawContent()
+                val fade = 72.dp.toPx().coerceAtMost(size.height)
+                drawRect(Brush.verticalGradient(listOf(Color.Black, Color.Transparent), startY = size.height - fade, endY = size.height),
+                    topLeft = Offset(0f, size.height - fade), size = Size(size.width, fade), blendMode = BlendMode.DstIn)
+            }, state = list, userScrollEnabled = active,
             contentPadding = PaddingValues(bottom = if (prominent) 64.dp else 0.dp)) {
         fun header(title: String, tag: String, enabled: Boolean, onClear: () -> Unit) {
             item(key = tag) {
-                Row(Modifier.fillMaxWidth().height(44.dp).padding(horizontal = if (prominent) 15.dp else 16.dp), verticalAlignment = Alignment.CenterVertically) {
-                    Text(desktopString(title), Modifier.weight(1f), color = color, fontSize = 15.sp, fontWeight = FontWeight.Bold)
-                    Text(desktopString("ui.common.clear"), Modifier.testTag(tag).clickable(enabled = active && enabled, role = Role.Button, onClick = onClear),
+                Row(Modifier.fillMaxWidth().height(if (prominent) 58.dp else 44.dp).padding(start = if (prominent) 22.dp else 16.dp, end = if (prominent) 33.dp else 16.dp),
+                    verticalAlignment = if (prominent) Alignment.Top else Alignment.CenterVertically) {
+                    Text(desktopString(title), Modifier.weight(1f).padding(top = if (prominent) 12.dp else 0.dp), color = color, fontSize = 15.sp, fontWeight = FontWeight.Bold)
+                    Text(desktopString("ui.common.clear"), Modifier.align(Alignment.CenterVertically).testTag(tag).clickable(enabled = active && enabled, role = Role.Button, onClick = onClear),
                         color = Color.Red.copy(alpha = if (enabled) 1f else .3f), fontSize = 14.sp, fontWeight = FontWeight.Medium)
                 }
             }
@@ -371,15 +424,15 @@ internal fun DesktopQueueInspector(active: Boolean, prominent: Boolean = false) 
             val entryId = queue.entryIds.getOrNull(index)
             fun playEntry() { PlaybackCommands.queue.value.entryIds.indexOf(entryId).takeIf { it >= 0 }?.let { player?.seekToIndex(it); player?.play() } }
             var menu by remember(entryId) { mutableStateOf(false) }
-            Row(Modifier.fillMaxWidth().height(48.dp).padding(start = if (prominent) 15.dp else 16.dp, end = if (prominent) 9.dp else 10.dp),
+            Row(Modifier.fillMaxWidth().height(48.dp).padding(start = if (prominent) 14.dp else 16.dp, end = if (prominent) 21.dp else 10.dp),
                 verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 Row(Modifier.weight(1f).fillMaxHeight().testTag("desktop-queue-track:$index").clickable(enabled = active, onClick = ::playEntry),
                     verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(11.dp)) {
                 MeloXArtworkImage(song.artworkUrl, color.copy(alpha = .2f), Modifier.size(34.dp).clip(RoundedCornerShape(5.dp)))
-                Column(Modifier.weight(1f)) {
+                Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(2.dp)) {
                     Text(song.name, fontSize = 14.sp, fontWeight = FontWeight.Medium, maxLines = 1, overflow = TextOverflow.Ellipsis,
                         color = if (index == queue.index) Color.Red else color)
-                    Text(listOf(song.artists, song.album).filter(String::isNotBlank).joinToString(" — "), fontSize = 12.sp,
+                    Text(listOf(song.artists, song.album).filter(String::isNotBlank).joinToString(desktopString("ui.common.title_detail_separator")), fontSize = 12.sp,
                         maxLines = 1, overflow = TextOverflow.Ellipsis, color = color.copy(alpha = .55f))
                 }
                 }
@@ -394,7 +447,7 @@ internal fun DesktopQueueInspector(active: Boolean, prominent: Boolean = false) 
                     }
                 }
             }
-            if (row < indices.lastIndex) Box(Modifier.fillMaxWidth().padding(start = 16.dp).height(.5.dp).background(color.copy(alpha = .13f)))
+            if (row < indices.lastIndex) Box(Modifier.fillMaxWidth().padding(start = if (prominent) 60.dp else 16.dp).height(.5.dp).background(color.copy(alpha = .13f)))
         }
         }
         if (queue.index >= 0) {
@@ -412,5 +465,9 @@ internal fun DesktopQueueInspector(active: Boolean, prominent: Boolean = false) 
             Text(desktopString("ui.player.queue_empty"), color = color.copy(alpha = .55f), fontSize = 15.sp)
         } } else rows(upcoming)
         }
+        if (list.canScrollBackward || list.canScrollForward) VerticalScrollbar(rememberScrollbarAdapter(list),
+            Modifier.align(Alignment.CenterEnd).fillMaxHeight().padding(end = 3.dp).width(6.dp).testTag("desktop-queue-scrollbar"))
+        }
+    }
     }
 }

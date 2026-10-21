@@ -11,11 +11,16 @@ import sys
 import wave
 
 mode, home, output = sys.argv[1:4]
-assert mode in ('controls', 'cold-controls', 'reload', 'restore', 'reload-current', 'home-dark', 'home-light', 'lyrics-light')
+assert mode in ('controls', 'cold-controls', 'reference-player', 'reference-player-reload', 'reference-lyrics', 'reference-lyrics-light', 'reload', 'restore', 'reload-current', 'home-dark', 'home-light', 'lyrics-light')
 repo = Path(__file__).resolve().parents[1]
 home, output = Path(home).resolve(), Path(output).resolve()
 output.mkdir(parents=True, exist_ok=True)
 home.mkdir(parents=True, exist_ok=True)
+if mode in ('reference-player', 'reference-lyrics', 'reference-lyrics-light'):
+    settings = home / '.melox/prefs_melox_app_settings.properties'
+    assert not settings.exists(), 'Reference player replay requires a fresh home'
+    settings.parent.mkdir(parents=True, exist_ok=True)
+    settings.write_text('onboarding_completed=true\ngeneral_desktop_layout=true\n', encoding='utf-8')
 fixtures = []
 for index, hz in enumerate([220, 330]):
     path = home / f'generated-desktop-{index}.wav'
@@ -37,7 +42,44 @@ def add(name, action, assertions=()):
     if assertions:
         checks[name] = list(assertions)
 
-if mode == 'lyrics-light':
+if mode.startswith('reference-lyrics'):
+    add('consent', 'tap@remote-reject', ['cloud-enabled:false', 'absent:remote-reject'])
+    add('ready', 'wait@1500', ['playing:true', 'tag:desktop-home', 'tag:desktop-bottom-player'])
+    add('pause-for-lyric-input', 'tap@mini-player-play-pause', ['playing:false'])
+    add('lyrics-pane', 'tap@desktop-show-lyrics', ['tag:desktop-inspector:Lyrics', 'tag:player-lyrics', 'tag-prefix:lyric-line-'])
+    add('reveal-lyric', 'reveal@lyric-line-1')
+    add('seek-lyrics', 'tap@lyric-line-1', ['position-min:4000', 'no-playback-error:true'])
+    add('resume-lyrics', 'tap@mini-player-play-pause', ['playing:true'])
+    add('queue-inspector', 'tap@desktop-show-queue', ['tag:desktop-inspector:Queue', 'absent:desktop-inspector:Lyrics'])
+    add('lyrics-again', 'tap@desktop-show-lyrics', ['tag:desktop-inspector:Lyrics', 'absent:desktop-inspector:Queue'])
+    add('close-pane', 'tap@desktop-show-lyrics', ['absent:desktop-inspector:Lyrics', 'tag:desktop-home'])
+elif mode.startswith('reference-player'):
+    if mode == 'reference-player':
+        add('consent', 'tap@remote-reject', ['cloud-enabled:false', 'absent:remote-reject'])
+    add('ready', 'wait@1500', ['playing:true', 'runtime:desktopLayoutEnabled:true'])
+    add('expanded', 'tap@mini-player-expand', ['tag:desktop-player-column', 'tag:desktop-player-favorite', 'selected:desktop-full-lyrics'])
+    if mode == 'reference-player':
+        add('favorite-ready', 'wait@500', ['state:desktop-player-favorite:unliked', 'local-favorite:false'])
+        add('favorite', 'tap@desktop-player-favorite', ['state:desktop-player-favorite:liked', 'local-favorite:true'])
+        add('paused', 'tap@mini-player-play-pause', ['playing:false'])
+        add('resumed', 'tap@mini-player-play-pause', ['playing:true'])
+        add('seek', 'slider@desktop-seek,0.25', ['position-min:100000', 'no-playback-error:true'])
+        add('drag-seek', 'hold-drag@desktop-seek,200,0', ['position-min:300000', 'no-playback-error:true'])
+        add('mute', 'tap@desktop-full-mute', ['volume:0'])
+        add('unmute', 'tap@desktop-full-mute', ['volume:1'])
+        add('volume', 'slider@desktop-full-volume,0.4', ['volume:0.4'])
+        add('queue', 'tap@desktop-full-queue', ['selected:desktop-full-queue', 'tag:desktop-queue-track:1', 'absent:player-lyrics'])
+        add('autoplay', 'tap@desktop-queue-autoplay', ['selected:desktop-queue-autoplay'])
+        add('autoplay-off', 'tap@desktop-queue-autoplay', ['unselected:desktop-queue-autoplay'])
+        add('automix', 'tap@desktop-queue-automix', ['selected:desktop-queue-automix'])
+        add('automix-off', 'tap@desktop-queue-automix', ['unselected:desktop-queue-automix'])
+        add('artwork-only', 'tap@desktop-full-queue', ['unselected:desktop-full-queue', 'unselected:desktop-full-lyrics', 'absent:desktop-queue', 'absent:player-lyrics'])
+        add('lyrics', 'tap@desktop-full-lyrics', ['selected:desktop-full-lyrics', 'tag:player-lyrics'])
+    else:
+        add('persisted-favorite', 'wait@500', ['state:desktop-player-favorite:liked', 'local-favorite:true'])
+        add('restore-favorite', 'tap@desktop-player-favorite', ['state:desktop-player-favorite:unliked', 'local-favorite:false'])
+    add('collapsed', 'tap@player-collapse', ['tag:desktop-bottom-player', 'absent:desktop-player-column'])
+elif mode == 'lyrics-light':
     add('consent', 'tap@remote-reject', ['cloud-enabled:false'])
     add('reveal-general', 'reveal@settings-open-general')
     add('general', 'tap@settings-open-general', ['tag:settings-general'])
@@ -119,9 +161,11 @@ if mode in ('controls', 'cold-controls'):
     add('reopen-general', 'tap@settings-open-general', ['tag:settings-general', 'checked:setting-general_desktop_layout'])
 (output / 'steps.txt').write_text('\n'.join(steps) + '\n', encoding='utf-8')
 (output / 'expect.txt').write_text('\n'.join(n + '=' + ','.join(v) for n, v in checks.items()) + '\n', encoding='utf-8')
-args = ['--locale', 'en-US', '--source', 'Netease' if mode.startswith('home-') else 'Local',
-    '--start-tab', 'Home' if mode.startswith('home-') else 'Settings', '--theme', 'Light' if mode in ('home-light', 'lyrics-light') else 'Dark',
-    '--width', '1280', '--height', '800', '--capture-pcm',
+args = ['--locale', 'en-US', '--source', 'Netease' if mode.startswith(('home-', 'reference-lyrics')) else 'Local',
+    '--start-tab', 'Home' if mode.startswith(('home-', 'reference-lyrics')) else 'Settings', '--theme', 'Light' if mode in ('home-light', 'lyrics-light', 'reference-lyrics-light') else 'Dark',
+    '--width', '2414' if mode.startswith('reference-lyrics') else '1960' if mode.startswith('reference-player') else '1280',
+    '--height', '1356' if mode.startswith('reference-lyrics') else '1184' if mode.startswith('reference-player') else '800',
+    '--density', '2' if mode.startswith('reference-') else '1', '--capture-pcm',
     '--output', str(output), '--wait-ms', '650', '--startup-wait-ms', '1200',
     '--steps-file', str(output / 'steps.txt'), '--expect-file', str(output / 'expect.txt')]
 if not mode.startswith('home-'):
@@ -146,8 +190,11 @@ if not mode.startswith('home-'):
 geometry = []
 for scene in data['scenes']:
     nodes = json.loads((output / scene['file'].replace('.png', '.semantics.json')).read_text(encoding='utf-8'))
-    for tag, expected_width, expected_height in [('desktop-sidebar', 199, None), ('desktop-bottom-player', 700, 54),
-        ('desktop-inspector:Queue', 258, None)]:
+    inspector_width = next(((n['bounds'][2] - n['bounds'][0]) / data['density'] for n in nodes
+                            if n.get('tag') in ('desktop-inspector:Lyrics', 'desktop-inspector:Queue')), 0)
+    player_width = min(700, data['width'] / data['density'] - 207 - 48 - inspector_width)
+    for tag, expected_width, expected_height in [('desktop-sidebar', 199, None), ('desktop-bottom-player', player_width, 54),
+        ('desktop-inspector:Queue', 258, None), ('desktop-inspector:Lyrics', 360, None)]:
         node = next((n for n in nodes if n.get('tag') == tag), None)
         if node:
             left, top, right, bottom = node['bounds']

@@ -7,7 +7,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.hoverable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsHoveredAsState
@@ -25,7 +25,6 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
@@ -46,6 +45,7 @@ import melox.ui.theme.MeloXDesktopDisplayFontFamily
 import melox.ui.theme.MeloXDesktopSubtitleFontFamily
 import melox.ui.theme.MeloXDesktopTextFontFamily
 import com.kyant.capsule.ContinuousRoundedRectangle
+import melox.ui.navigation.MeloXPointerMode
 
 /** DesktopRouteView / DesktopTrackRow at a41ea0e. Native toolbar is a fixed Windows adapter. */
 @Composable
@@ -86,8 +86,10 @@ internal fun MeloXDesktopCollectionDetail(
     CompositionLocalProvider(LocalTextStyle provides TextStyle(fontFamily = MeloXDesktopTextFontFamily, color = colors.onSurface)) {
         Column(Modifier.fillMaxSize().background(colors.background).testTag(tag)) {
             // SwiftUI navigationTitle/back live outside ScrollView, not inside its header.
-            Row(Modifier.fillMaxWidth().height(42.dp).padding(horizontal = 12.dp), verticalAlignment = Alignment.CenterVertically) {
-                DesktopCollectionIconButton(MeloXSymbol.ChevronLeft, "desktop-collection-back", desktopString("ui.common.back"), onBack)
+            Row(Modifier.fillMaxWidth().height(52.dp).padding(horizontal = 8.dp), verticalAlignment = Alignment.CenterVertically) {
+                Box(Modifier.clip(CircleShape).background(colors.onSurface.copy(alpha = .025f)).border(.75.dp, colors.onSurface.copy(alpha = .12f), CircleShape)) {
+                    DesktopCollectionIconButton(MeloXSymbol.ChevronLeft, "desktop-collection-back", desktopString("ui.common.back"), onBack, size = 36)
+                }
                 Text(title, Modifier.weight(1f).padding(start = 8.dp), fontSize = 13.sp, fontWeight = FontWeight.SemiBold,
                     maxLines = 1, overflow = TextOverflow.Ellipsis)
                 if (onFilterChange != null) {
@@ -199,7 +201,7 @@ private fun DesktopCollectionDetails(
             fontWeight = FontWeight.Bold, maxLines = 2, overflow = TextOverflow.Ellipsis)
         subtitle?.takeIf(String::isNotBlank)?.let {
             Text(it, fontFamily = MeloXDesktopSubtitleFontFamily, fontSize = 22.sp,
-                fontWeight = FontWeight.SemiBold, color = Color.Red, maxLines = 2, overflow = TextOverflow.Ellipsis)
+                fontWeight = FontWeight.SemiBold, color = Color(0xFFFF3B45), maxLines = 2, overflow = TextOverflow.Ellipsis)
         }
         metadata?.takeIf(String::isNotBlank)?.let { Text(it, fontSize = 13.sp, fontWeight = FontWeight.Medium, color = secondary) }
         description?.takeIf(String::isNotBlank)?.let {
@@ -233,17 +235,19 @@ private fun DesktopCollectionAction(label: String, symbol: MeloXSymbol, tag: Str
     val interaction = remember { MutableInteractionSource() }
     val hovered by interaction.collectIsHoveredAsState()
     val shape = RoundedCornerShape(5.dp)
-    Row(Modifier.height(22.dp).clip(shape).testTag(tag).semantics { contentDescription = label }
-        .background(if (prominent) Color.Red.copy(alpha = if (enabled) 1f else .35f) else colors.onSurface.copy(alpha = if (hovered && enabled) .10f else .05f))
-        .border(.5.dp, colors.onSurface.copy(alpha = .12f), shape).hoverable(interaction)
+    val accent = Color(0xFFFF3B45)
+    Row(Modifier.height(24.dp).clip(shape).testTag(tag).semantics { contentDescription = label }
+        .background(if (prominent) accent.copy(alpha = if (enabled) 1f else .35f) else accent.copy(alpha = if (hovered && enabled) .14f else .065f))
+        .hoverable(interaction)
         .clickable(enabled = enabled, role = Role.Button, onClick = onClick).padding(horizontal = if (iconOnly) 7.dp else 9.dp)
         .alpha(if (enabled) 1f else .4f), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(5.dp)) {
-        MeloXSymbolIcon(symbol, size = 12, color = if (prominent) Color.White else colors.onSurface)
-        if (!iconOnly) Text(label, fontSize = 13.sp, color = if (prominent) Color.White else colors.onSurface)
+        MeloXSymbolIcon(symbol, size = 12, color = if (prominent) Color.White else accent)
+        if (!iconOnly) Text(label, fontSize = 13.sp, color = if (prominent) Color.White else accent)
     }
 }
 
 @Composable
+@OptIn(androidx.compose.foundation.ExperimentalFoundationApi::class)
 private fun DesktopCollectionTrackRow(index: Int, song: SearchSong, current: Boolean, isPlaying: Boolean,
     showsAlbumColumn: Boolean, onClick: () -> Unit, onMore: (() -> Unit)?) {
     val colors = MaterialTheme.colorScheme
@@ -253,12 +257,12 @@ private fun DesktopCollectionTrackRow(index: Int, song: SearchSong, current: Boo
         tween(if (MeloXSettingsRuntime.reduceMotion) 0 else 160, easing = CubicBezierEasing(0f, 0f, .58f, 1f)), label = "collection-row-hover")
     Row(Modifier.fillMaxWidth().heightIn(min = 46.dp).testTag("desktop-collection-track:${song.id}")
         .clip(RoundedCornerShape(8.dp)).hoverable(interaction).background(colors.onSurface.copy(alpha = opacity))
-        .pointerInput(song.id, onClick, onMore) { detectTapGestures(onDoubleTap = { onClick() }, onLongPress = onMore?.let { { _ -> it() } }) }
+        .combinedClickable(onClick = { if (MeloXPointerMode.touch) onClick() }, onDoubleClick = onClick, onLongClick = onMore)
         .padding(horizontal = 12.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
         Box(Modifier.width(24.dp).height(28.dp).testTag("desktop-collection-track-play:${song.id}")
             .semantics { contentDescription = desktopFormat("ui.common.play_named", song.name) }
             .clickable(role = Role.Button, onClick = onClick), contentAlignment = Alignment.Center) {
-            if (hovered || current) MeloXSymbolIcon(if (current && isPlaying) MeloXSymbol.Waveform else MeloXSymbol.Play,
+            if (hovered || current || MeloXPointerMode.touch) MeloXSymbolIcon(if (current && isPlaying) MeloXSymbol.Waveform else MeloXSymbol.Play,
                 size = 12, weight = FontWeight.SemiBold, color = if (current) Color.Red else colors.onSurface)
             else Text(index.toString(), fontSize = 12.sp, fontWeight = FontWeight.SemiBold, color = colors.onSurface.copy(alpha = .5f))
         }
@@ -271,7 +275,7 @@ private fun DesktopCollectionTrackRow(index: Int, song: SearchSong, current: Boo
             maxLines = 1, overflow = TextOverflow.Ellipsis)
         Text(desktopDuration(song.durationMs), Modifier.width(42.dp), fontSize = 12.sp, style = LocalTextStyle.current.copy(fontFeatureSettings = "tnum"),
             textAlign = androidx.compose.ui.text.style.TextAlign.End, color = colors.onSurface.copy(alpha = .5f))
-        Box(Modifier.alpha(if (hovered || current) 1f else .16f)) {
+        Box(Modifier.alpha(if (hovered || current || MeloXPointerMode.touch) 1f else .16f)) {
             if (onMore != null) DesktopCollectionIconButton(MeloXSymbol.Ellipsis, "desktop-collection-more:${song.id}", desktopString("ui.common.more"), onMore, size = 28)
             else Spacer(Modifier.size(28.dp))
         }
