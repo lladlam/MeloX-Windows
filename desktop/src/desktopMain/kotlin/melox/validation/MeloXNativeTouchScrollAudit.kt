@@ -18,6 +18,7 @@ import androidx.compose.ui.window.rememberWindowState
 import com.sun.jna.Native
 import com.sun.jna.Pointer
 import com.sun.jna.Structure
+import com.sun.jna.platform.win32.User32
 import com.sun.jna.platform.win32.WinDef.POINT
 import com.sun.jna.platform.win32.WinDef.RECT
 import com.sun.jna.win32.StdCallLibrary
@@ -121,8 +122,12 @@ fun main(args: Array<String>) {
                     }
                     error("InjectTouchInput failed: $error flags=$flags contact=$x,$y")
                 }
+                var touchFailure: Throwable? = null
+                var mouseFailure: Throwable? = null
+                var maxTouches = 0
                 try {
                     // Initialize and inject on the same native UI thread.
+                    maxTouches = User32.INSTANCE.GetSystemMetrics(95) // SM_MAXIMUMTOUCHES
                     check(api.InitializeTouchInjection(10, 3)) { "InitializeTouchInjection failed: ${Native.getLastError()}" }
                     await { window.isShowing && window.width > 0 }
                     window.toFront(); window.requestFocus()
@@ -148,6 +153,13 @@ fun main(args: Array<String>) {
                     inject(x, y - distance, 0x40000)
                     await { position() >= 100 }
                     record("windows-injected-touch-scroll")
+                } catch (error: Throwable) {
+                    touchFailure = error
+                    record("touch-failed")
+                }
+                try {
+                    // The mouse path is independent evidence and still runs when
+                    // the hosted session has no touch digitizer.
                     list.scrollToItem(0)
                     val robot = Robot()
                     val rx = window.x + window.width / 2
@@ -158,16 +170,38 @@ fun main(args: Array<String>) {
                     robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK)
                     await { position() >= 100 }
                     record("native-mouse-promoted-drag-scroll")
-                } catch (error: Throwable) { failure = error; record("failed") }
-                finally {
-                    output.writeText(JSONObject().put("status", if (failure == null) "PASSED" else "FAILED")
+                } catch (error: Throwable) {
+                    mouseFailure = error
+                    record("mouse-failed")
+                } finally {
+                    // A hosted runner without any touch digitizer rejects system
+                    // injection with ERROR_INVALID_PARAMETER. Report UNSUPPORTED,
+                    // never PASSED, and keep the real error plus mouse evidence.
+                    val unsupported = touchFailure != null && maxTouches <= 0
+                    val status = when {
+                        mouseFailure != null -> "FAILED"
+                        unsupported -> "UNSUPPORTED"
+                        touchFailure != null -> "FAILED"
+                        else -> "PASSED"
+                    }
+                    output.writeText(JSONObject().put("status", status)
                         .put("input", "Windows InjectTouchInput and AWT Robot; not physical hardware acceptance")
-                        .put("error", failure?.toString()).put("samples", samples).put("received_contacts", events)
+                        .put("error", (mouseFailure ?: touchFailure)?.toString())
+                        .put("touch_error", touchFailure?.toString())
+                        .put("mouse_error", mouseFailure?.toString())
+                        .put("max_touches", maxTouches)
+                        .put("touch_contact_observed", events.length() > 0)
+                        .put("samples", samples).put("received_contacts", events)
                         .put("pointer_info_bytes", contact.info.size()).put("touch_info_bytes", contact.size()).toString(2) + "\n")
                     exitApplication()
                 }
             }
         }
     }
-    failure?.let { throw it }
+    // The report carries the detailed failure; fail CI only when the AWT mouse
+    // path (which needs no digitizer) also fails.
+    val report = runCatching { output.readText() }.getOrNull().orEmpty()
+    if (!report.contains("\"status\": \"UNSUPPORTED\"") && report.contains("\"status\": \"FAILED\"")) {
+        error("Native touch scroll audit failed; see $output")
+    }
 }
