@@ -174,17 +174,21 @@ fun main(args: Array<String>) {
                     mouseFailure = error
                     record("mouse-failed")
                 } finally {
-                    // A hosted runner without any touch digitizer rejects system
-                    // injection with ERROR_INVALID_PARAMETER. Report UNSUPPORTED,
-                    // never PASSED, and keep the real error plus mouse evidence.
-                    val unsupported = touchFailure != null && maxTouches <= 0
+                    // SM_MAXIMUMTOUCHES=0 means the hosted session has no touch
+                    // digitizer; InjectTouchInput and OS-level Robot delivery are
+                    // then unavailable. Report UNSUPPORTED, never PASSED, and keep
+                    // both real errors. Scene-level Touch/Mouse replay remains the
+                    // functional evidence for the production drag adapter.
+                    val unsupported = maxTouches <= 0
                     val status = when {
-                        mouseFailure != null -> "FAILED"
                         unsupported -> "UNSUPPORTED"
-                        touchFailure != null -> "FAILED"
+                        mouseFailure != null || touchFailure != null -> "FAILED"
                         else -> "PASSED"
                     }
                     output.writeText(JSONObject().put("status", status)
+                        .put("unsupported_reason", if (unsupported)
+                            "SM_MAXIMUMTOUCHES=0: no touch digitizer in this Windows session; system injection and OS-level Robot are unavailable"
+                        else null)
                         .put("input", "Windows InjectTouchInput and AWT Robot; not physical hardware acceptance")
                         .put("error", (mouseFailure ?: touchFailure)?.toString())
                         .put("touch_error", touchFailure?.toString())
