@@ -58,7 +58,9 @@ internal fun PinnedAboutSettings() {
         }
         throw failure ?: java.io.IOException("No GitHub route")
     }
-    SettingsGlassGroup {
+    if (melox.settings.MeloXSettingsRuntime.desktopLayoutEnabled) {
+        melox.ui.desktop.DesktopSettingsButton("MeloX", Modifier.testTag("about-build")) { melox.ui.desktop.MeloXDesktopToolWindows.show(melox.ui.desktop.DesktopTool.About) }
+    } else SettingsGlassGroup {
         Column(Modifier.padding(18.dp).testTag("about-build")) {
             Text("MeloX Windows", fontSize = 22.sp, fontWeight = FontWeight.Bold)
             Text(pinnedString("settings_about_version", version), Modifier.padding(top = 7.dp), color = MaterialTheme.colorScheme.onSurface.copy(alpha = .62f))

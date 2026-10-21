@@ -171,6 +171,13 @@ class NeteaseMusicOperationsClient(
         Unit
     }
 
+    suspend fun deletePlaylist(playlistId: Long) = withContext(Dispatchers.IO) {
+        ensureLoggedIn()
+        require(playlistId > 0)
+        eapi("/api/playlist/remove", JSONObject().put("ids", JSONArray().put(playlistId).toString()), true)
+        Unit
+    }
+
     suspend fun setPlaylistSubscribed(playlistId: Long, subscribed: Boolean) = withContext(Dispatchers.IO) {
         ensureLoggedIn()
         val data = JSONObject()

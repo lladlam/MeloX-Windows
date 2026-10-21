@@ -298,7 +298,7 @@ private fun DesktopSongMenuItem(key: String?, symbol: MeloXSymbol?, tag: String,
 }
 
 @Composable
-private fun DesktopPlaylistCreation(privateSupported: Boolean, busy: Boolean, error: String?, onDismiss: () -> Unit, onCreate: (String, Boolean) -> Unit) {
+internal fun DesktopPlaylistCreation(privateSupported: Boolean, busy: Boolean, error: String?, onDismiss: () -> Unit, onCreate: (String, Boolean) -> Unit) {
     var name by remember { mutableStateOf("") }
     var private by remember { mutableStateOf(false) }
     Dialog(onDismissRequest = onDismiss, properties = DialogProperties(usePlatformDefaultWidth = false)) {

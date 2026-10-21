@@ -54,6 +54,10 @@ private enum class MeloXLocalBrowseMode(val title: String) {
 
 @Composable
 internal fun MeloXLibraryDownloadsPage() {
+    if (melox.settings.MeloXSettingsRuntime.desktopLayoutEnabled) {
+        melox.ui.desktop.MeloXDesktopDownloads()
+        return
+    }
     val downloads = remember { MeloXDownloadStore.instance() }
     val providerDownloads = remember { MeloXProviderDownloadStore.get() }
     var page by rememberSaveable { mutableStateOf(MeloXDownloadsPage.Root) }

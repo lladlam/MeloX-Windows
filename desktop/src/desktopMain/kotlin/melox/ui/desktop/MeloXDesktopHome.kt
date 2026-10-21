@@ -68,7 +68,6 @@ internal fun MeloXDesktopHome(content: NeteaseHomeContent?, recentSongs: List<Se
     val listState = rememberLazyListState()
     val scope = rememberCoroutineScope()
     val wheelScale = with(androidx.compose.ui.platform.LocalDensity.current) { 64.dp.toPx() }
-    var selectedSong by remember { mutableStateOf<SearchSong?>(null) }
     CompositionLocalProvider(LocalTextStyle provides TextStyle(fontFamily = MeloXDesktopTextFontFamily,
         color = MaterialTheme.colorScheme.onBackground), LocalDesktopHomeVerticalWheel provides { delta ->
         scope.launch { listState.scrollBy(delta * wheelScale) }; Unit
@@ -110,7 +109,8 @@ internal fun MeloXDesktopHome(content: NeteaseHomeContent?, recentSongs: List<Se
                 HomeSection(desktopString("ui.navigation.library.history")) {
                     DesktopHomePagingShelf(history, { it.id }, mediaWidth, 24.dp, reserved, "history") { song ->
                         DesktopHomeMediaCard(song.name, song.artists, song.artworkUrl, mediaWidth, "desktop-home-track:${song.id}",
-                            onOpen = { selectedSong = song },
+                            onOpen = { melox.ui.navigation.MeloXCollectionLaunchBus.open(
+                                melox.ui.navigation.MeloXCollectionTarget.Song(song.id)) },
                             onPlay = { melox.playback.PlaybackCommands.playQueue(history, song.id) })
                     }
                 }
@@ -150,7 +150,6 @@ internal fun MeloXDesktopHome(content: NeteaseHomeContent?, recentSongs: List<Se
             }
         }
     }
-    selectedSong?.let { song -> melox.ui.screens.MeloXSongActionsOverlay(song, recentSongs.ifEmpty { content?.newSongs.orEmpty() }, true, { selectedSong = null }) }
     }
 }
 

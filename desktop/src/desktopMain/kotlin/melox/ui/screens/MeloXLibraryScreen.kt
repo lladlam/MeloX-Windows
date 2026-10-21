@@ -115,6 +115,10 @@ fun LibraryScreen(
     navState: MeloXNavState? = null,
     requestedPage: String? = null,
 ) {
+    if (MeloXSettingsRuntime.desktopLayoutEnabled && MusicProviderSelectionStore.selectedSource() == MusicSource.Netease) {
+        melox.ui.desktop.MeloXDesktopLibrary(requestedPage) { navState?.navigateTo(melox.ui.navigation.Route.Login) }
+        return
+    }
     val scope = rememberCoroutineScope()
     val session = melox.account.rememberNeteaseSessionStore()
     val source = MusicProviderSelectionStore.selectedSource()

@@ -162,6 +162,9 @@ fun MeloXApp(onExit: () -> Unit = { kotlin.system.exitProcess(0) }) {
                             onBack = melox.ui.navigation.MeloXCollectionLaunchBus::dismiss)
                         is melox.ui.navigation.MeloXCollectionTarget.Song -> melox.ui.desktop.MeloXDesktopSongDetail(target.id,
                             onBack = melox.ui.navigation.MeloXCollectionLaunchBus::dismiss)
+                        is melox.ui.navigation.MeloXCollectionTarget.Playlist -> melox.ui.screens.PlaylistDetailScreen(
+                            melox.library.NeteasePlaylistSummary(target.id, target.name, null, 0, ""),
+                            onBack = melox.ui.navigation.MeloXCollectionLaunchBus::dismiss)
                     } }
                 }
             }
@@ -370,6 +373,9 @@ fun MeloXApp(onExit: () -> Unit = { kotlin.system.exitProcess(0) }) {
         shapes = melox.ui.theme.MeloXMaterialShapes,
     ) {
         CompositionLocalProvider(androidx.compose.material3.LocalContentColor provides MaterialTheme.colorScheme.onBackground) {
+        if (MeloXSettingsRuntime.desktopLayoutEnabled) melox.ui.desktop.MeloXDesktopToolHost {
+            settingsRouteRequest = "NeteaseLogin"; selectedTab = AppTab.Settings
+        }
         if (onboarding.stage == melox.legal.MeloXOnboardingStage.Complete) melox.ui.screens.RemoteCompatibilityNotice()
         clipboardInvitation?.let { invitation ->
             androidx.compose.runtime.key(invitation) {
@@ -488,6 +494,7 @@ fun MeloXApp(onExit: () -> Unit = { kotlin.system.exitProcess(0) }) {
                                 when (tool) {
                                      "Messages" -> messagesVisible = true
                                       "Home" -> selectedTab = AppTab.Home
+                                     "Login" -> { settingsRouteRequest = "NeteaseLogin"; selectedTab = AppTab.Settings }
                                      "Playlists" -> { desktopLibraryPage = "Playlists"; selectedTab = AppTab.Library }
                                      "Explore" -> selectedTab = AppTab.Explore
                                     "Podcasts" -> selectedTab = AppTab.Podcasts
@@ -545,7 +552,9 @@ fun MeloXApp(onExit: () -> Unit = { kotlin.system.exitProcess(0) }) {
                     enter = slideInHorizontally(tween(300, easing = FastOutSlowInEasing)) { it },
                     exit = slideOutHorizontally(tween(300, easing = FastOutSlowInEasing)) { it },
                 ) {
-                    MessagesScreen(onBack = { messagesVisible = false })
+                    MessagesScreen(onBack = { messagesVisible = false }, onLogin = {
+                        messagesVisible = false; selectedTab = AppTab.Settings; settingsRouteRequest = "NeteaseLogin"
+                    })
                 }
 
                 // ── Full player overlay (zIndex 20, Android lines 647–702) ──
@@ -603,7 +612,13 @@ fun MeloXApp(onExit: () -> Unit = { kotlin.system.exitProcess(0) }) {
             }
         }
         }
-        when (onboarding.stage) {
+        if (MeloXSettingsRuntime.desktopLayoutEnabled && onboarding.stage in setOf(melox.legal.MeloXOnboardingStage.Legal, melox.legal.MeloXOnboardingStage.Connect)) {
+            melox.ui.desktop.MeloXDesktopOnboarding { login ->
+                if (onboarding.stage == melox.legal.MeloXOnboardingStage.Legal) onboarding.agreeLegal()
+                onboarding.finishConnection()
+                if (login) { selectedTab = AppTab.Settings; onboardingLoginPending = true }
+            }
+        } else when (onboarding.stage) {
             melox.legal.MeloXOnboardingStage.Legal -> melox.ui.legal.MeloXFirstLaunchLegalConsent(
                 onAgree = onboarding::agreeLegal, onDecline = onExit,
                 onOpenProject = { runCatching { java.awt.Desktop.getDesktop().browse(java.net.URI("https://github.com/lladlam/MeloX-Android")) } },
@@ -700,13 +715,14 @@ private fun TabContent(
                 onOpenMessages = { navState.navigateTo(Route.Messages) },
                 onOpenServices = { navState.navigateTo(Route.ProviderServices) },
                 onOpenLogin = { loginInitialProvider = null; navState.navigateTo(Route.Login) },
+                onDesktopDismiss = { onOpenTool("Home") },
             )
             AppTab.Search -> SearchScreen(source = source,
                 onSearchExit = { onOpenTool("Home") }, onOpenPodcasts = { onOpenTool("Podcasts") })
         }
         when (navState.currentRoute) {
             Route.Login -> LoginScreen(navState, initialProviderId = loginInitialProvider)
-            Route.Messages -> MessagesScreen()
+            Route.Messages -> MessagesScreen(onLogin = { onOpenTool("Login") })
             Route.ProviderServices -> ProviderServicesScreen(navState)
             else -> Unit
         }

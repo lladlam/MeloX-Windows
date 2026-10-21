@@ -41,7 +41,7 @@ import melox.ui.theme.MeloXColors
 import melox.settings.MeloXSettingsRuntime
 
 @Composable
-fun MessagesScreen(onBack: (() -> Unit)? = null) {
+fun MessagesScreen(onBack: (() -> Unit)? = null, onLogin: (() -> Unit)? = null) {
     val loggedIn = remember { NeteaseSessionStore.containsMusicU(NeteaseSessionStore.readCookie()) }
     var contacts by remember { mutableStateOf<List<MeloXMessageContact>>(emptyList()) }
     var selected by remember { mutableStateOf<MeloXMessageContact?>(null) }
@@ -58,38 +58,7 @@ fun MessagesScreen(onBack: (() -> Unit)? = null) {
     }
     val open = selected
     if (MeloXSettingsRuntime.desktopLayoutEnabled) {
-        Row(Modifier.fillMaxSize().background(MeloXColors.pageBackground()).testTag("desktop-messages")) {
-            Column(Modifier.width(286.dp).fillMaxSize().background(androidx.compose.material3.MaterialTheme.colorScheme.surface.copy(alpha = .68f))) {
-                MeloXIosTopBar(title = "私信", onBack = onBack)
-                when {
-                    !loggedIn -> Box(Modifier.fillMaxSize().padding(24.dp), contentAlignment = Alignment.Center) {
-                        Text("登录网易云音乐后查看联系人", color = MeloXColors.pageOnSurfaceVariant())
-                    }
-                    loading -> Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) { CircularProgressIndicator(color = MeloXColors.Primary) }
-                    error != null -> Box(Modifier.fillMaxSize().padding(24.dp), contentAlignment = Alignment.Center) { Text(error.orEmpty(), color = MeloXColors.Error) }
-                    contacts.isEmpty() -> Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) { Text("没有联系人", color = MeloXColors.pageOnSurfaceVariant()) }
-                    else -> LazyColumn(contentPadding = PaddingValues(bottom = 20.dp)) {
-                        items(contacts, key = { it.id }) { contact ->
-                            Box(Modifier.padding(horizontal = 8.dp, vertical = 2.dp)) {
-                                MeloXIosListRow(
-                                    title = contact.name,
-                                    subtitle = contact.latestMessage ?: contact.signature,
-                                    leadingIcon = MeloXSymbol.Person,
-                                    showChevron = false,
-                                    modifier = Modifier.background(if (open?.id == contact.id) androidx.compose.material3.MaterialTheme.colorScheme.onSurface.copy(alpha = .08f) else androidx.compose.ui.graphics.Color.Transparent),
-                                    onClick = { selected = contact },
-                                )
-                            }
-                        }
-                    }
-                }
-            }
-            Box(Modifier.width(1.dp).fillMaxSize().background(androidx.compose.material3.MaterialTheme.colorScheme.outlineVariant.copy(alpha = .55f)))
-            if (open != null) Box(Modifier.weight(1f).fillMaxSize()) { MessageThread(contact = open, onBack = { selected = null }, desktop = true) }
-            else Box(Modifier.weight(1f).fillMaxSize(), contentAlignment = Alignment.Center) {
-                Text("选择一个会话", color = MeloXColors.pageOnSurfaceVariant(), fontSize = 15.sp)
-            }
-        }
+        melox.ui.desktop.MeloXDesktopMessages(onLogin ?: { onBack?.invoke() ?: Unit })
         return
     }
     if (open != null) {

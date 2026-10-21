@@ -1,5 +1,9 @@
 package melox.ui.screens
 
+import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.material3.HorizontalDivider
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.animation.AnimatedVisibility
@@ -121,6 +125,7 @@ fun SettingsScreen(
     onOpenMessages: () -> Unit = {},
     onOpenServices: () -> Unit = {},
     onOpenLogin: () -> Unit = {},
+    onDesktopDismiss: () -> Unit = {},
 ) {
     var route by remember { mutableStateOf<SettingsRoute?>(null) }
     val detailFocus = remember { androidx.compose.ui.focus.FocusRequester() }
@@ -143,6 +148,7 @@ fun SettingsScreen(
     if (MeloXSettingsRuntime.desktopLayoutEnabled) {
         // The focus effect above also runs for persisted Desktop startup. Keep
         // its requester attached before that effect, just as in the legacy branch.
+        CompositionLocalProvider(melox.ui.desktop.LocalDesktopSettingsPresentation provides true) {
         Box(Modifier.fillMaxSize().focusRequester(detailFocus).focusable()) {
         DesktopSettingsLayout(
             selected = route ?: SettingsRoute.General,
@@ -153,7 +159,9 @@ fun SettingsScreen(
             session = session,
             onOpenLogin = onOpenLogin,
             onOpenServices = onOpenServices,
+            onDismiss = onDesktopDismiss,
         )
+        }
         }
         return
     }
@@ -257,25 +265,33 @@ private fun DesktopSettingsLayout(
     session: NeteaseSessionStore,
     onOpenLogin: () -> Unit,
     onOpenServices: () -> Unit,
+    onDismiss: () -> Unit,
 ) {
     val colors = MaterialTheme.colorScheme
     var search by remember { mutableStateOf("") }
+    var resetConfirmation by remember { mutableStateOf(false) }
     val normalized = search.trim().lowercase()
     val matchingRoutes = SettingsSections.flatMap { it.second }.filter {
         "${it.title} ${it.subtitle} ${it.keywords}".lowercase().contains(normalized)
     }
     Box(Modifier.fillMaxSize().testTag("settings-root")) {
-        Box(
+        BoxWithConstraints(
             Modifier.fillMaxSize().background(MeloXColors.pageBackground()).testTag("desktop-settings-window"),
             contentAlignment = Alignment.TopCenter,
         ) {
+            val preferredHeight = when (selected) {
+                SettingsRoute.General, SettingsRoute.Appearance, SettingsRoute.Content -> 570.dp
+                SettingsRoute.Features, SettingsRoute.TabLayout, SettingsRoute.Recognition, SettingsRoute.Messages, SettingsRoute.ListenTogether -> 480.dp
+                SettingsRoute.Playback, SettingsRoute.Lyrics, SettingsRoute.Storage, SettingsRoute.SystemPlayback, SettingsRoute.SkylineLyrics, SettingsRoute.FloatingLyrics -> 620.dp
+                else -> 600.dp
+            }
             Column(
                 Modifier.padding(top = 24.dp, bottom = 94.dp)
-                    .widthIn(max = 760.dp).fillMaxWidth(.92f)
+                    .width(650.dp).height(preferredHeight.coerceAtMost((maxHeight - 118.dp).coerceAtLeast(240.dp)))
                     .shadow(18.dp, RoundedCornerShape(14.dp))
                     .clip(RoundedCornerShape(14.dp))
                     .background(colors.surface)
-                    .border(.65.dp, colors.outlineVariant.copy(alpha = .55f), RoundedCornerShape(14.dp)),
+                    .border(.65.dp, colors.outlineVariant.copy(alpha = .55f), RoundedCornerShape(14.dp)).testTag("desktop-settings-panel"),
             ) {
                 Row(
                     Modifier.fillMaxWidth().height(72.dp).padding(horizontal = 18.dp),
@@ -298,8 +314,12 @@ private fun DesktopSettingsLayout(
                                 .testTag("desktop-settings-tab:${destination.name}"),
                             horizontalAlignment = Alignment.CenterHorizontally,
                         ) {
-                            Text(destination.symbol, fontSize = 20.sp, color = if (active) androidx.compose.ui.graphics.Color.Red else colors.onSurface.copy(alpha = .72f))
-                            Text(destination.title,
+                            MeloXSymbolIcon(when (destination) { SettingsRoute.General -> MeloXSymbol.Settings; SettingsRoute.Features -> MeloXSymbol.Switch; SettingsRoute.Playback -> MeloXSymbol.Play; SettingsRoute.Storage -> MeloXSymbol.Drive; else -> MeloXSymbol.Settings }, size = 20, color = if (active) androidx.compose.ui.graphics.Color.Red else colors.onSurface.copy(alpha = .72f))
+                            Text(melox.ui.desktop.desktopString(when (destination) {
+                                SettingsRoute.General -> "ui.desktop.settings.tab.general"; SettingsRoute.Features -> "ui.desktop.settings.tab.features"
+                                SettingsRoute.Playback -> "ui.settings.playback.section.playback"; SettingsRoute.Storage -> "ui.desktop.settings.tab.files"
+                                else -> "ui.desktop.settings.tab.advanced"
+                            }),
                                 modifier = if (destination == SettingsRoute.General) Modifier.testTag("settings-open-general").clickable { onSelected(destination) } else Modifier,
                                 fontSize = 11.sp, fontWeight = if (active) FontWeight.SemiBold else FontWeight.Normal, maxLines = 1)
                         }
@@ -307,18 +327,15 @@ private fun DesktopSettingsLayout(
                 }
                 Box(Modifier.fillMaxWidth().height(.65.dp).background(colors.outlineVariant.copy(alpha = .7f)))
                 Column(
-                    Modifier.fillMaxWidth().heightIn(min = 420.dp, max = 620.dp)
-                        .verticalScroll(rememberScrollState()).padding(horizontal = 28.dp, vertical = 22.dp)
+                    Modifier.fillMaxWidth().weight(1f)
+                        .verticalScroll(rememberScrollState()).padding(16.dp)
                         .then(if (selected == SettingsRoute.General) Modifier.testTag("settings-general") else Modifier),
                 ) {
-                    MeloXGlassTextField(
-                        value = search,
-                        onValueChange = { search = it },
-                        modifier = Modifier.fillMaxWidth().testTag("settings-search"),
-                        leadingContent = { MeloXSymbolIcon(MeloXSymbol.Search, size = 20, iconSize = 24, color = colors.onSurface.copy(alpha = .55f)) },
-                        placeholder = { Text(pinnedString("settings_search_placeholder"), color = colors.onSurface.copy(alpha = .42f), fontSize = 16.sp) },
-                        textStyle = androidx.compose.ui.text.TextStyle(color = colors.onSurface, fontSize = 16.sp, lineHeight = 21.sp),
-                    )
+                    androidx.compose.foundation.text.BasicTextField(search, { search = it }, singleLine = true,
+                        textStyle = androidx.compose.ui.text.TextStyle(fontFamily = melox.ui.theme.MeloXDesktopTextFontFamily, color = colors.onSurface, fontSize = 13.sp),
+                        modifier = Modifier.fillMaxWidth().height(24.dp).clip(RoundedCornerShape(5.dp)).background(colors.onSurface.copy(alpha = .045f))
+                            .border(.5.dp, colors.onSurface.copy(alpha = .15f), RoundedCornerShape(5.dp)).padding(horizontal = 7.dp, vertical = 4.dp).testTag("settings-search"),
+                        decorationBox = { inner -> Box { if (search.isEmpty()) Text(pinnedString("settings_search_placeholder"), fontSize = 13.sp, color = colors.onSurface.copy(alpha = .4f)); inner() } })
                     Spacer(Modifier.height(18.dp))
                     if (normalized.isNotBlank()) {
                         if (pinnedString("settings_account_keywords").lowercase().contains(normalized)) {
@@ -339,7 +356,7 @@ private fun DesktopSettingsLayout(
                             Modifier.padding(vertical = 36.dp).testTag("settings-search-empty"),
                             color = colors.onBackground.copy(alpha = .48f))
                     } else {
-                    Text(selected.title, fontSize = 24.sp, lineHeight = 30.sp, fontWeight = FontWeight.Bold)
+                    Text(selected.title, fontSize = 13.sp, fontWeight = FontWeight.SemiBold)
                     val relatedRoutes = desktopSettingsGroup(selected)
                     if (relatedRoutes.size > 1) {
                         androidx.compose.foundation.layout.FlowRow(
@@ -352,11 +369,11 @@ private fun DesktopSettingsLayout(
                                 Text(
                                     route.title,
                                     modifier = Modifier.clip(RoundedCornerShape(7.dp))
-                                        .background(if (active) androidx.compose.ui.graphics.Color.Red else colors.onSurface.copy(alpha = .07f))
+                                         .background(if (active) colors.onSurface.copy(alpha = .14f) else colors.onSurface.copy(alpha = .04f))
                                         .clickable { onSelected(route) }
-                                        .padding(horizontal = 12.dp, vertical = 7.dp)
+                                         .padding(horizontal = 9.dp, vertical = 4.dp)
                                         .testTag("desktop-settings-subtab:${route.name}"),
-                                    color = if (active) androidx.compose.ui.graphics.Color.White else colors.onSurface.copy(alpha = .76f),
+                                     color = colors.onSurface.copy(alpha = if (active) 1f else .76f),
                                     fontSize = 12.sp,
                                     fontWeight = if (active) FontWeight.SemiBold else FontWeight.Normal,
                                     maxLines = 1,
@@ -374,14 +391,26 @@ private fun DesktopSettingsLayout(
                     }
                     if (selected == SettingsRoute.General) {
                         Spacer(Modifier.height(18.dp))
-                        SettingsAccountActions(session)
+                         if (session.isLoggedIn) melox.ui.desktop.DesktopDialogButton("ui.settings.account.logout", tag = "settings-sign-out") { session.clear() }
                     }
                     Spacer(Modifier.height(18.dp))
                     }
                 }
+                HorizontalDivider(thickness = .5.dp)
+                Row(Modifier.fillMaxWidth().height(58.dp).testTag("desktop-settings-footer").padding(horizontal = 20.dp), verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                    Box(Modifier.size(24.dp).testTag("desktop-settings-about").clickable { melox.ui.desktop.MeloXDesktopToolWindows.show(melox.ui.desktop.DesktopTool.About) }, contentAlignment = Alignment.Center) { MeloXSymbolIcon(MeloXSymbol.Question, size = 20) }
+                    melox.ui.desktop.DesktopDialogButton("ui.desktop.settings.restore_defaults_ellipsis", tag = "settings-reset") { resetConfirmation = true }
+                    Spacer(Modifier.weight(1f))
+                    melox.ui.desktop.DesktopDialogButton("ui.common.cancel", onClick = onDismiss)
+                    melox.ui.desktop.DesktopDialogButton("ui.common.ok", prominent = true, onClick = onDismiss)
+                }
             }
         }
     }
+    if (resetConfirmation) melox.ui.desktop.DesktopMessageDialog("ui.desktop.settings.restore_defaults.confirmation",
+        melox.ui.desktop.desktopString("ui.desktop.settings.restore_defaults.message"), { resetConfirmation = false },
+        confirmKey = "ui.desktop.settings.restore_defaults", onConfirm = { MeloXSettingsPreferences.resetRecommendedPlayerSettings(); resetConfirmation = false })
 }
 
 /** Both layouts use the same production actions and settings pages. */
@@ -588,6 +617,10 @@ private fun ContentSettings() {
 
 @Composable
 internal fun PreferenceToggle(title: String, checked: Boolean, key: String, subtitle: String? = null, showTopSeparator: Boolean = false) {
+    if (MeloXSettingsRuntime.desktopLayoutEnabled) {
+        melox.ui.desktop.DesktopSettingsCheckbox(title, checked, key, subtitle = subtitle) { MeloXSettingsPreferences.setBoolean(key, it) }
+        return
+    }
     MeloXIosListRow(
         title = title,
         subtitle = subtitle,

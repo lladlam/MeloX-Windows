@@ -83,7 +83,6 @@ fun main(args: Array<String>) {
     }
     check(!GraphicsEnvironment.isHeadless()) { "Windows native input audit needs a usable desktop" }
     val api = Native.load("user32", TouchInjectionApi::class.java)
-    check(api.InitializeTouchInjection(1, 3)) { "InitializeTouchInjection failed: ${Native.getLastError()}" }
     val samples = JSONArray()
     val events = JSONArray()
     var failure: Throwable? = null
@@ -112,6 +111,8 @@ fun main(args: Array<String>) {
                     delay(20)
                 }
                 try {
+                    // Initialize and inject on the same native UI thread.
+                    check(api.InitializeTouchInjection(1, 3)) { "InitializeTouchInjection failed: ${Native.getLastError()}" }
                     await { window.isShowing && window.width > 0 }
                     window.toFront(); window.requestFocus()
                     await { window.isFocused }
@@ -120,6 +121,11 @@ fun main(args: Array<String>) {
                     val x = ((window.x + window.width / 2) * transform.scaleX).toInt()
                     val y = ((window.y + window.height * .72) * transform.scaleY).toInt()
                     val distance = (220 * transform.scaleY).toInt()
+                    samples.put(JSONObject().put("stage", "injection-context")
+                        .put("thread", Thread.currentThread().name)
+                        .put("window", listOf(window.x, window.y, window.width, window.height))
+                        .put("device_bounds", window.graphicsConfiguration.bounds.toString())
+                        .put("scale", listOf(transform.scaleX, transform.scaleY)).put("contact", listOf(x, y)))
                     record("initial")
                     inject(x, y, 0x10006)
                     for (frame in 1..24) inject(x, y - distance * frame / 24, 0x20006)

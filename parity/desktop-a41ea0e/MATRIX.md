@@ -31,22 +31,22 @@ Windows 首次以已保存桌面模式启动采用 1280×800；启用时设置�
 |---|---|---|
 | `App/DesktopRootView.swift`、`Features/Sidebar` | PARTIAL：独立桌面框架、真实导航、账户sheet／设置可达；主窗口移除原生标题栏，接入软件内最小化／最大化／还原／关闭、拖动／resize，见窗口记录 | Windows原生DPI／触屏／窗口行为验收、安全区、材质、侧栏滚动／loading footer及原生阴影 |
 | `Features/Home` | PARTIAL：完整顺序区块、真实新专辑API／缓存、最近播放回退、正方形推荐hero、媒体卡元数据及播放入口；分页shelf／纵滚转交、保留父页的真实歌单／专辑跳转；深浅配色和真实主题切换，见 `HOME_PARITY.md` | 固定同内容全图／动态验收、CJK字体栅格、原生toolbar／材质／阴影／snappy、歌曲独立详情和全部加载／错误视觉 |
-| `Features/Search` | PARTIAL：桌面标题、520 宽输入、紧凑 scope、桌面推荐卡片／分类网格／曲目密度；复用真实跨 Provider 搜索与详情跳转 | 搜索建议弹层、macOS toolbar scope、专辑／歌手／歌单完整网格和逐菜单像素／动态验收 |
-| `Features/Explore` | PARTIAL：桌面 32pt 标题、宽幅 hero、自适应 145pt 媒体网格、20pt 间隔；真实分类、榜单和 Provider 数据 | macOS 固定提交的 discovery／radio 同内容帧、分类工具栏、全部加载／错误／详情状态 |
-| `Features/Library` | PARTIAL：侧栏直达真实子页；歌曲／歌单已采用 34pt 留白、54pt 紧凑行、40pt 封面和 520pt 分页栏 | 专辑／歌手能力、完整网格、筛选／排序／刷新／空态、拖放及全部菜单 |
-| Albums／Artists 收藏入口 | BLOCKED：可见但禁用，附后端不可用说明 | 实际收藏能力消费者与真源桌面页面；禁止空点击或填充假集合 |
+| `Features/Search` | PARTIAL：独立332×36胶囊、catalog／library scope、5类segmented picker、42pt封面track row、自适应媒体网格、真实候选词及桌面详情 | 逐菜单像素／动态验收、聚合搜索桌面入口取舍 |
+| `Features/Explore` | PARTIAL：独立New Music／Charts／Popular Artists三段、圆形歌手卡、145–205pt网格，真实Netease榜单与歌手接口 | 同内容帧、原生toolbar与逐区块加载／错误动画验收 |
+| `Features/Library` | PARTIAL：网易侧栏直达独立桌面歌曲／历史、歌单／专辑／歌手／播客网格、下载和云盘；真实API、桌面track row与collection详情；深浅未登录导航回放通过 | 其他provider音乐库、登录态全量数据／分页、筛选／排序、拖放及全部菜单 |
+| Albums／Artists 收藏入口 | PARTIAL：网易已启用，真实sublist接口和桌面网格／详情；其他provider仍能力门控 | 真实收藏账户验收；其他provider独立消费者与真源桌面页面 |
 | `Features/Detail`、`Features/Playlist` | PARTIAL：collection内容42/34留白、278封面／34间隔、描述展开、46pt无封面行／固定列宽、专辑真实曲号／disc分组、SF Pro正文；全局album路由保留Desktop侧栏；真实播放／收藏／下载／筛选接线，详见 `COLLECTION_PARITY.md` | 原生toolbar／控件／阴影／字体栅格同内容帧；曲目菜单仍复用既有sheet；artist／song／podcast专属布局、编辑／删除／分享、分页及动态验收 |
 | `Features/Player/DesktopBottomPlayer.swift`、`BottomBar` | PARTIAL：源尺寸、真实播放／暂停／切歌／进度／音量、歌词／队列入口 | 元数据 hover 展开、时间／进度过渡、玻璃材质、issue／retry、禁用态与原生音量细节 |
 | `Features/Player/Queue` | PARTIAL：history／up next、按稳定 entry ID 选曲、清除／移除、真实 AutoMix／autoplay；沉浸队列按参考图显示浅色模式选中与标题，实际scrollbar和72pt底部fade | drag-and-drop、真实来源上下文、hover、精确字体／间距和所有菜单细节 |
 | `Features/Player/Inspector`、`DesktopPlayerSidePanel.swift` | PARTIAL：队列258／新图歌词360宽、280ms进退与crossfade、真实page采样blur和主题透明层、真实歌词／队列 | 原生glass光学、窗口宽度增长策略和同内容尺寸／动画对照 |
 | `Features/Player/DesktopNowPlaying*` | PARTIAL：修正播放1/.74封面缩放、真实收藏与独立JVM重载、8→18进度、白色音量、三态切换器，真实播放器／歌词／队列，见用户原图记录 | 顶栏 accessory／独立迷你窗口、信息／quality／output 菜单、全套展开收起原生动效 |
 | `Features/Player/*Lyrics*` | PARTIAL：复用真实加载／字级渲染，接入 desktop 前景色、字号断点、左右 20、段距及 focus 输入 | 完整 macOS motion profiles、逐行焦点的精确高度求解、mask、词级 lift／spring、其他歌词样式和全部扩展窗口 |
-| `Features/Settings` | PARTIAL：保留桌面窗口／五类顶部导航／换行子标签；与第一套布局共用全部20个真实子页，补齐搜索／重置／退出入口，见设置功能对齐记录 | 独立窗口生命周期、底部按钮区、弹窗及逐页文案／同内容像素验收 |
+| `Features/Settings` | PARTIAL：650pt外框、按tab高度、58pt footer；独立Form／checkbox／picker／slider／输入框／按钮／对话框，保留20页生产业务；手机分支独立 | 最终控件持久化／手机回归、独立窗口生命周期、逐页真源排列／文案与同内容像素验收 |
 | `Features/Account` | PARTIAL：500×600 sheet／42行／chevron11／80×30完成、原图深色采样与浅色配色；私信／云盘／下载／设置／登录登出接真实页面及会话 | 880×680 网易 Web 登录专窗、窗口生命周期及真实登录态逐状态验收 |
-| `Features/Messages` | PARTIAL：286pt 联系人侧栏＋会话双栏，真实加载／发送／错误链保留 | 真源联系人头像与时间、消息方向／资源卡、回复／菜单、分页和逐状态验收 |
-| `Features/ListenTogether` | PENDING：已有生产 Together 能力 | 桌面加入／邀请／会话／退出各弹窗；双账号实机回放 |
-| `Features/SongRecognition` | PENDING／能力门控 | 桌面识曲弹层、真实麦克风／后端、权限／失败态及物理输入验证 |
-| `Features/Onboarding`、`Features/About` | PENDING | 桌面引导／关于／隐私／协议／更新 UI、文案与窗口行为 |
+| `Features/Messages` | PARTIAL：270–410pt会话栏、64pt会话头、头像／时间／未读、气泡方向／资源卡、真实发送与新建私信面板 | 真实双账号会话、回复／菜单、分页和逐状态像素验收 |
+| `Features/ListenTogether` | PARTIAL：620×620独立桌面窗口、真实登录门控／创建／加入／成员／邀请／退出与错误确认 | 双账号实机同步、连接状态本地化／材质及逐状态视觉验收 |
+| `Features/SongRecognition` | PARTIAL：700×660独立桌面窗口、真实录音／匹配服务、时长选择／停止／重试／结果 | 麦克风权限／硬件与指纹后端、动画／失败态及物理输入验证 |
+| `Features/Onboarding`、`Features/About` | PARTIAL：760×650三步引导、600×320关于、许可证列表及6个文档、Windows真实更新检查；资源按固定blob导出 | 引导beat-effects、隐私／协议／云控独立桌面窗口、完整原生窗口与更新逐状态验收 |
 | 快捷键、右键菜单、拖放、独立窗口、系统托盘／媒体控制 | PARTIAL：沿用已有 Windows 生产能力 | 对照真源逐个动作接线与物理输入验证；原生 macOS 项明确映射到 Windows 实际能力 |
 
 ## 图标与文案

@@ -187,9 +187,9 @@ private fun DesktopSidebar(selectedTab: AppTab, source: MusicSource, libraryPage
                 Triple("Cloud", "ui.navigation.cloud", MeloXSymbol.ICloud),
                 Triple("History", "ui.navigation.library.history", MeloXSymbol.Clock),
             )) {
-                val enabled = page in pages
-                // The desktop source exposes Albums/Artists. Until their real
-                // Windows provider consumers exist, retain explicit disabled rows.
+                val enabled = page in pages || (source == MusicSource.Netease && page in setOf("Albums", "Artists"))
+                // NetEase collections have native Desktop consumers; other sources
+                // remain capability-gated until their collection routes are connected.
                 if (enabled || page in setOf("Albums", "Artists"))
                     DesktopNavigationRow(page, label, symbol, selected(AppTab.Library, page), enabled) { onSelect(AppTab.Library, page) }
             }

@@ -22,6 +22,10 @@ import melox.ui.legal.pinnedString
 
 @Composable
 internal fun SettingsGlassGroup(content: @Composable ColumnScope.() -> Unit) {
+    if (melox.settings.MeloXSettingsRuntime.desktopLayoutEnabled) {
+        melox.ui.desktop.DesktopSettingsForm(content)
+        return
+    }
     CompositionLocalProvider(LocalSettingsGroupRowIndex provides mutableIntStateOf(0)) {
         MeloXIosGroupedList(surfaceColor = MaterialTheme.colorScheme.surface, content = content)
     }
@@ -38,6 +42,10 @@ internal fun SettingsToggleRow(title: String, key: String, default: Boolean, ena
 
 @Composable
 internal fun SettingsExternalToggleRow(title: String, value: Boolean, tag: String, enabled: Boolean = true, subtitle: String? = null, onChange: (Boolean) -> Unit) {
+    if (melox.settings.MeloXSettingsRuntime.desktopLayoutEnabled) {
+        melox.ui.desktop.DesktopSettingsCheckbox(title, value, tag, enabled, subtitle, onChange)
+        return
+    }
     MeloXIosListRow(title = title, subtitle = subtitle, showChevron = false,
         showTopSeparator = LocalSettingsGroupRowIndex.current.intValue++ > 0,
         trailingContent = { MeloXGlassToggle(value, onCheckedChange = onChange, enabled = enabled, modifier = Modifier.testTag(tag)) })
@@ -45,6 +53,10 @@ internal fun SettingsExternalToggleRow(title: String, value: Boolean, tag: Strin
 
 @Composable
 internal fun <T> SettingsChoice(title: String, key: String, value: T, items: List<Pair<T, String>>, enabled: Boolean = true, onChange: (T) -> Unit) {
+    if (melox.settings.MeloXSettingsRuntime.desktopLayoutEnabled) {
+        melox.ui.desktop.DesktopSettingsPicker(pinnedString(title), value, items, key, enabled, onChange)
+        return
+    }
     Box(Modifier.testTag(key)) {
         MeloXSettingsDropdown(pinnedString(title), value, items, onChange, grouped = true, enabled = enabled)
     }
@@ -52,6 +64,10 @@ internal fun <T> SettingsChoice(title: String, key: String, value: T, items: Lis
 
 @Composable
 internal fun SettingsChoiceRow(title: String, selected: Boolean, tag: String, enabled: Boolean = true, onClick: () -> Unit) {
+    if (melox.settings.MeloXSettingsRuntime.desktopLayoutEnabled) {
+        melox.ui.desktop.DesktopSettingsChoice(title, selected, tag, enabled, onClick)
+        return
+    }
     Row(Modifier.fillMaxWidth().testTag(tag).semantics { this.selected = selected }
         .clickable(enabled = enabled, onClick = onClick).padding(horizontal = 16.dp, vertical = 12.dp), verticalAlignment = Alignment.CenterVertically) {
         Text(title, Modifier.weight(1f), fontSize = 16.sp)

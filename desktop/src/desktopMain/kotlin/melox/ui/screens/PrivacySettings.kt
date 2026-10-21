@@ -28,6 +28,10 @@ import melox.ui.legal.pinnedString
 
 @Composable
 internal fun SettingsActionButton(title: String, modifier: Modifier = Modifier, enabled: Boolean = true, onClick: () -> Unit) {
+    if (melox.ui.desktop.LocalDesktopSettingsPresentation.current) {
+        melox.ui.desktop.DesktopSettingsButton(title, modifier, enabled, onClick = onClick)
+        return
+    }
     Box(modifier.fillMaxWidth().height(50.dp).meloXLiquidButton(
         shape = RoundedCornerShape(25.dp), enabled = enabled, surfaceColor = MaterialTheme.colorScheme.onBackground.copy(alpha = .06f),
     ).clickable(enabled = enabled, onClick = onClick), contentAlignment = Alignment.Center) { Text(title, fontWeight = FontWeight.SemiBold) }
@@ -35,6 +39,10 @@ internal fun SettingsActionButton(title: String, modifier: Modifier = Modifier, 
 
 @Composable
 internal fun SettingsDangerButton(title: String, modifier: Modifier = Modifier, enabled: Boolean = true, onClick: () -> Unit) {
+    if (melox.ui.desktop.LocalDesktopSettingsPresentation.current) {
+        melox.ui.desktop.DesktopSettingsButton(title, modifier, enabled, destructive = true, onClick)
+        return
+    }
     Box(modifier.fillMaxWidth().height(54.dp).meloXLiquidButton(
         shape = RoundedCornerShape(27.dp), enabled = enabled, tint = MaterialTheme.colorScheme.error.copy(alpha = .25f),
         surfaceColor = MaterialTheme.colorScheme.error.copy(alpha = .20f),

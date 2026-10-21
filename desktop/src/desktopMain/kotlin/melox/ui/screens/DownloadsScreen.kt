@@ -7,5 +7,9 @@ import melox.ui.navigation.MeloXNavState
 fun DownloadsScreen(
     navState: MeloXNavState? = null,
 ) {
+    if (melox.settings.MeloXSettingsRuntime.desktopLayoutEnabled) {
+        melox.ui.desktop.MeloXDesktopDownloads()
+        return
+    }
     MeloXLibraryDownloadsPage()
 }

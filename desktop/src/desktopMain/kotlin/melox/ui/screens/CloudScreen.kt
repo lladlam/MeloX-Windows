@@ -57,6 +57,10 @@ fun CloudScreen(
     modifier: Modifier = Modifier,
     embedded: Boolean = false,
 ) {
+    if (melox.settings.MeloXSettingsRuntime.desktopLayoutEnabled) {
+        melox.ui.desktop.MeloXDesktopCloud { navState.navigateTo(melox.ui.navigation.Route.Login) }
+        return
+    }
     val client = remember { NeteaseUniversalSearchClient(cookieProvider = { NeteaseSessionStore.readCookie() }) }
     val scope = rememberCoroutineScope()
     var values by remember { mutableStateOf<List<MeloXCloudSong>>(emptyList()) }
@@ -195,7 +199,7 @@ fun CloudScreen(
 }
 
 /** Desktop file chooser on the EDT; disposing/cancelling the screen closes the dialog. */
-private suspend fun chooseCloudAudioFile(): java.io.File? = suspendCancellableCoroutine { continuation ->
+internal suspend fun chooseCloudAudioFile(): java.io.File? = suspendCancellableCoroutine { continuation ->
     val chooser = java.util.concurrent.atomic.AtomicReference<JFileChooser?>()
     continuation.invokeOnCancellation { SwingUtilities.invokeLater { chooser.get()?.cancelSelection() } }
     SwingUtilities.invokeLater {

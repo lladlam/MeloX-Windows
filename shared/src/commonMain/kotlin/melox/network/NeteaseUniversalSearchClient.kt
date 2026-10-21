@@ -272,6 +272,21 @@ class NeteaseUniversalSearchClient(
     }
 
 
+    /** DesktopSearchView's text-input suggestions from `/api/search/suggest/keyword`. */
+    suspend fun searchSuggestions(keyword: String, limit: Int = 8): List<String> = withContext(Dispatchers.IO) {
+        val query = keyword.trim()
+        if (query.isEmpty()) return@withContext emptyList()
+        val response = eapi("/api/search/suggest/keyword", JSONObject().put("s", query))
+        val result = response.optJSONObject("result") ?: return@withContext emptyList()
+        val matches = result.optJSONArray("allMatch") ?: JSONArray()
+        buildList {
+            for (index in 0 until matches.length()) {
+                matches.optJSONObject(index)?.optString("keyword")?.trim()?.takeIf(String::isNotBlank)?.let(::add)
+                if (size >= limit) break
+            }
+        }
+    }
+
     suspend fun podcastCategories(): List<MeloXPodcastCategory> = withContext(Dispatchers.IO) {
         val values = eapi("/api/djradio/category/get", JSONObject()).optJSONArray("categories") ?: JSONArray()
         buildList {
@@ -286,6 +301,10 @@ class NeteaseUniversalSearchClient(
 
     suspend fun featuredPodcasts(): List<MeloXPodcast> = withContext(Dispatchers.IO) {
         parsePodcasts(eapi("/api/djradio/recommend/v1", JSONObject()).optJSONArray("djRadios"))
+    }
+
+    suspend fun subscribedPodcasts(): List<MeloXPodcast> = withContext(Dispatchers.IO) {
+        parsePodcasts(eapi("/api/djradio/get/subed", JSONObject().put("limit", 2000).put("offset", 0).put("total", true)).optJSONArray("djRadios"))
     }
 
     suspend fun personalizedPodcasts(limit: Int = 12): List<MeloXPodcast> = withContext(Dispatchers.IO) {
@@ -314,12 +333,18 @@ class NeteaseUniversalSearchClient(
         MeloXPodcastPage(values, offset + values.size < total, total)
     }
 
-    suspend fun podcastPrograms(radioId: Long, offset: Int = 0, limit: Int = 30): MeloXPodcastPage<MeloXPodcastProgram> = withContext(Dispatchers.IO) {
-        val response = eapi("/api/dj/program/byradio", JSONObject().put("radioId", radioId).put("limit", limit.coerceIn(1, 50)).put("offset", offset.coerceAtLeast(0)).put("asc", false))
+    suspend fun podcastPrograms(radioId: Long, offset: Int = 0, limit: Int = 30, ascending: Boolean = false): MeloXPodcastPage<MeloXPodcastProgram> = withContext(Dispatchers.IO) {
+        val response = eapi("/api/dj/program/byradio", JSONObject().put("radioId", radioId).put("limit", limit.coerceIn(1, 50)).put("offset", offset.coerceAtLeast(0)).put("asc", ascending))
         val source = response.optJSONArray("programs") ?: JSONArray()
         val values = buildList { for (index in 0 until source.length()) parsePodcastProgram(source.optJSONObject(index))?.let(::add) }
         val total = response.optInt("count", offset + values.size)
         MeloXPodcastPage(values, offset + values.size < total, total)
+    }
+
+    suspend fun recommendedPodcastPrograms(limit: Int = 12): List<MeloXPodcastProgram> = withContext(Dispatchers.IO) {
+        val response = eapi("/api/program/recommend/v1", JSONObject().put("limit", limit.coerceIn(1, 50)).put("offset", 0))
+        val source = response.optJSONArray("programs") ?: JSONArray()
+        buildList { for (index in 0 until source.length()) parsePodcastProgram(source.optJSONObject(index))?.let(::add) }
     }
 
     suspend fun setPodcastSubscribed(id: Long, subscribed: Boolean) = withContext(Dispatchers.IO) {

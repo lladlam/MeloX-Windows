@@ -1,6 +1,7 @@
 package melox.network
 
 import melox.account.NeteaseSessionStore
+import melox.library.NeteasePlaylistSummary
 import melox.model.SearchSong
 import java.io.IOException
 import kotlinx.coroutines.Dispatchers
@@ -41,6 +42,8 @@ data class MeloXArtistDetail(
     val albums: List<MeloXAlbumSummary>,
 )
 
+data class MeloXLibraryArtistSummary(val id: Long, val name: String, val artworkUrl: String?, val aliases: List<String>)
+
 class NeteaseCollectionDetailsClient(
     cookieProvider: () -> String,
     httpClient: OkHttpClient = MeloXHttpClient.shared,
@@ -48,6 +51,73 @@ class NeteaseCollectionDetailsClient(
     private val cookieProvider = cookieProvider
     private val eapi = NeteaseAuthenticatedEapi(cookieProvider, httpClient)
     private val weapi = NeteaseAuthenticatedWeapi(cookieProvider, httpClient)
+
+    suspend fun subscribedAlbums(): List<MeloXAlbumSummary> = withContext(Dispatchers.IO) {
+        val source = subscribedCollection("/api/album/sublist").optJSONArray("data") ?: JSONArray()
+        buildList { for (index in 0 until source.length()) parseAlbum(source.optJSONObject(index))?.let(::add) }
+    }
+
+    suspend fun subscribedArtists(): List<MeloXLibraryArtistSummary> = withContext(Dispatchers.IO) {
+        val source = subscribedCollection("/api/artist/sublist").optJSONArray("data") ?: JSONArray()
+        buildList { for (index in 0 until source.length()) {
+            val artist = source.optJSONObject(index) ?: continue
+            val id = artist.optLong("id").takeIf { it > 0 } ?: continue
+            val aliases = artist.optJSONArray("alias") ?: JSONArray()
+            add(MeloXLibraryArtistSummary(id, artist.optString("name"), secure(artist.optString("picUrl").ifBlank { artist.optString("img1v1Url") }),
+                buildList { for (i in 0 until aliases.length()) aliases.optString(i).takeIf(String::isNotBlank)?.let(::add) }))
+        } }
+    }
+
+    private fun subscribedCollection(path: String): JSONObject {
+        check(NeteaseSessionStore.containsMusicU(cookieProvider())) { "请先登录网易云音乐" }
+        val data = JSONObject().put("limit", 2000).put("offset", 0).put("total", true)
+        return try { weapi.post(path, data) }
+        catch (failure: IOException) {
+            if (!failure.message.orEmpty().contains("空响应")) throw failure
+            eapi.post(path, data, authenticated = true)
+        }
+    }
+
+    /** DesktopDiscoveryView's toplists section: NeteaseAPI.toplists(). */
+    suspend fun toplists(): List<NeteasePlaylistSummary> = withContext(Dispatchers.IO) {
+        val response = eapi.post("/api/toplist", JSONObject(), authenticated = NeteaseSessionStore.containsMusicU(cookieProvider()))
+        val list = response.optJSONArray("list") ?: JSONArray()
+        buildList {
+            for (index in 0 until list.length()) {
+                val value = list.optJSONObject(index) ?: continue
+                val id = value.optLong("id", -1L)
+                if (id <= 0L) continue
+                add(NeteasePlaylistSummary(
+                    id = id,
+                    name = value.optString("name").ifBlank { "排行榜" },
+                    coverUrl = secure(value.optString("coverImgUrl").takeIf(String::isNotBlank)
+                        ?: value.optString("picUrl").takeIf(String::isNotBlank)),
+                    trackCount = value.optInt("trackCount", 0),
+                    creatorName = value.optJSONObject("creator")?.optString("nickname").orEmpty(),
+                    playCount = value.optLong("playCount", 0L),
+                    description = value.optString("description").takeIf(String::isNotBlank),
+                    copywriter = value.optString("updateFrequency").takeIf(String::isNotBlank),
+                ))
+            }
+        }
+    }
+
+    /** DesktopDiscoveryView's circular popular-artist grid: NeteaseAPI.topArtists(). */
+    suspend fun topArtists(limit: Int = 18): List<MeloXLibraryArtistSummary> = withContext(Dispatchers.IO) {
+        val response = eapi.post("/api/toplist/artist", JSONObject().put("limit", limit.coerceIn(1, 100)),
+            authenticated = NeteaseSessionStore.containsMusicU(cookieProvider()))
+        val artists = response.optJSONObject("list")?.optJSONArray("artists") ?: JSONArray()
+        buildList {
+            for (index in 0 until artists.length()) {
+                val artist = artists.optJSONObject(index) ?: continue
+                val id = artist.optLong("id").takeIf { it > 0 } ?: continue
+                val aliases = artist.optJSONArray("alias") ?: artist.optJSONArray("transNames") ?: JSONArray()
+                add(MeloXLibraryArtistSummary(id, artist.optString("name"),
+                    secure(artist.optString("picUrl").ifBlank { artist.optString("img1v1Url") }),
+                    buildList { for (i in 0 until aliases.length()) aliases.optString(i).takeIf(String::isNotBlank)?.let(::add) }))
+            }
+        }
+    }
 
     suspend fun newAlbums(limit: Int = 16, area: String = "ALL"): List<MeloXAlbumSummary> = withContext(Dispatchers.IO) {
         val response = eapi.post("/api/album/new", JSONObject().put("limit", limit).put("offset", 0).put("total", true).put("area", area),

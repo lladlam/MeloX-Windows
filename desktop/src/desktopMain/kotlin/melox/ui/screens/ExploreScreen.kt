@@ -97,6 +97,10 @@ fun ExploreScreen(
     onOpenPodcasts: () -> Unit = {},
     onOpenProviderPlaylist: (MusicPlaylistSummary) -> Unit = {},
 ) {
+    if (MeloXSettingsRuntime.desktopLayoutEnabled) {
+        melox.ui.desktop.MeloXDesktopExplore(source, onOpenPlaylist, onOpenProviderPlaylist)
+        return
+    }
     if (source == MusicSource.Netease) {
         NeteaseExploreDataScreen(
             onOpenPlaylist = onOpenPlaylist,

@@ -126,7 +126,7 @@ private fun HomePageButton(next: Boolean, tag: String, modifier: Modifier, onCli
 
 @Composable
 internal fun DesktopHomeMediaCard(title: String, subtitle: String, artwork: String?, width: Dp, tag: String, playCount: Long = 0,
-    onOpen: () -> Unit, onPlay: (() -> Unit)? = null) {
+    onOpen: () -> Unit, onPlay: (() -> Unit)? = null, isCircular: Boolean = false) {
     val interaction = remember { MutableInteractionSource() }
     val hovered by interaction.collectIsHoveredAsState()
     val duration = if (MeloXSettingsRuntime.reduceMotion) 0 else 240
@@ -134,7 +134,7 @@ internal fun DesktopHomeMediaCard(title: String, subtitle: String, artwork: Stri
     Column(Modifier.width(width).hoverable(interaction), verticalArrangement = Arrangement.spacedBy(8.dp)) {
         Box(Modifier.size(width)) {
             MeloXArtworkImage(artwork, MaterialTheme.colorScheme.surfaceVariant, Modifier.fillMaxSize()
-                .graphicsLayer { scaleX = scale; scaleY = scale }.clip(ContinuousRoundedRectangle(9.dp))
+                .graphicsLayer { scaleX = scale; scaleY = scale }.clip(if (isCircular) CircleShape else ContinuousRoundedRectangle(9.dp))
                 .testTag(tag).clickable(interactionSource = null, indication = null, role = Role.Button, onClick = onOpen))
             if (MeloXSettingsRuntime.showPlaylistPlayCount && playCount > 0) Box(Modifier.align(Alignment.TopEnd).padding(8.dp)
                 .clip(CircleShape).background(Color.Black.copy(alpha = .48f)).padding(horizontal = 7.dp, vertical = 5.dp)) {

@@ -122,6 +122,7 @@ fun SearchScreen(
     onOpenPodcasts: () -> Unit = {},
 ) {
     val scope = rememberCoroutineScope()
+    val session = melox.account.rememberNeteaseSessionStore()
     val sessionRevision by NeteaseSessionStore.revision.collectAsState()
     val sessionCookie = remember(sessionRevision) { NeteaseSessionStore.readCookie() }
     val cookie = remember(sessionCookie) { { sessionCookie } }
@@ -180,6 +181,18 @@ fun SearchScreen(
     var loading by remember(source) { mutableStateOf(false) }
     var error by remember(source) { mutableStateOf<String?>(null) }
     var selectedActionSong by remember(source) { mutableStateOf<SearchSong?>(null) }
+    // DesktopSearchView scope: catalog vs the signed-in user's library.
+    var libraryScope by remember { mutableStateOf(false) }
+    var searchSuggestions by remember { mutableStateOf<List<String>>(emptyList()) }
+    var librarySongsLoaded by remember(sessionRevision) { mutableStateOf(false) }
+    var libraryLiked by remember(sessionRevision) { mutableStateOf<List<SearchSong>>(emptyList()) }
+    var libraryRecent by remember(sessionRevision) { mutableStateOf<List<SearchSong>>(emptyList()) }
+    var libraryPlaylists by remember(sessionRevision) { mutableStateOf<List<NeteasePlaylistSummary>>(emptyList()) }
+    var libraryAlbums by remember(sessionRevision) { mutableStateOf<List<melox.network.MeloXAlbumSummary>>(emptyList()) }
+    var libraryArtists by remember(sessionRevision) { mutableStateOf<List<melox.network.MeloXLibraryArtistSummary>>(emptyList()) }
+    var libraryPodcasts by remember(sessionRevision) { mutableStateOf<List<melox.network.MeloXPodcast>>(emptyList()) }
+    val details = remember(sessionRevision) { melox.network.NeteaseCollectionDetailsClient({ sessionCookie }) }
+    val desktop = MeloXSettingsRuntime.desktopLayoutEnabled
     var songLinkResult by remember(source) { mutableStateOf(false) }
     val launch = melox.ui.navigation.MeloXSearchLaunchBus.request
     LaunchedEffect(launch, source) {
@@ -195,7 +208,9 @@ fun SearchScreen(
     }
 
     LaunchedEffect(source, availableKinds) {
-        if (kind !in availableKinds) kind = MeloXSearchKind.Songs
+        if (kind !in availableKinds || (MeloXSettingsRuntime.desktopLayoutEnabled && kind == MeloXSearchKind.Users)) {
+            kind = MeloXSearchKind.Songs
+        }
     }
     LaunchedEffect(source, sessionRevision) {
         if (source == MusicSource.Netease) {
@@ -217,7 +232,14 @@ fun SearchScreen(
         catch (failure: Exception) { categoryError = failure.message ?: pinnedString("search_category_failed") }
         finally { categoryLoading = false }
     }
-    LaunchedEffect(query, kind, source, searchTrigger, unifiedEnabled, unifiedSources, sessionRevision) {
+    // DesktopSearchView suggestions use a 300ms debounce and only the catalog scope.
+    LaunchedEffect(query, libraryScope, sessionRevision) {
+        if (query.isBlank() || libraryScope || sessionCookie.isBlank()) { searchSuggestions = emptyList(); return@LaunchedEffect }
+        delay(300)
+        searchSuggestions = runCatching { universal.searchSuggestions(query) }.getOrDefault(emptyList())
+    }
+
+    LaunchedEffect(query, kind, source, searchTrigger, unifiedEnabled, unifiedSources, sessionRevision, libraryScope) {
         unifiedFailures = emptyList()
         songLinkResult = false
         val keyword = query.trim()
@@ -233,7 +255,44 @@ fun SearchScreen(
             return@LaunchedEffect
         }
         error = null
-        if (!skipSearchDebounce) delay(1500)
+        if (libraryScope) {
+            songs = emptyList(); providerSongs = emptyList(); media = emptyList(); loading = true
+            try {
+                if (!NeteaseSessionStore.containsMusicU(sessionCookie)) {
+                    error = melox.ui.desktop.desktopString("ui.desktop.library.sign_in_message")
+                } else {
+                    if (!librarySongsLoaded) {
+                        val user = session.profile?.userId ?: throw IllegalStateException(melox.ui.desktop.desktopString("ui.desktop.library.sign_in_message"))
+                        val snapshot = library.snapshot(user)
+                        libraryLiked = snapshot.likedSongs
+                        libraryRecent = snapshot.recentSongs
+                        libraryPlaylists = snapshot.playlists
+                        libraryAlbums = details.subscribedAlbums()
+                        libraryArtists = details.subscribedArtists()
+                        libraryPodcasts = universal.subscribedPodcasts()
+                        librarySongsLoaded = true
+                    }
+                    fun matches(vararg values: String?) = values.filterNotNull().any { it.contains(keyword, ignoreCase = true) }
+                    when (kind) {
+                        MeloXSearchKind.Songs -> songs = (libraryLiked + libraryRecent).distinctBy { it.id }
+                            .filter { matches(it.name, it.artists, it.album) }
+                        MeloXSearchKind.Playlists -> media = libraryPlaylists.filter { matches(it.name, it.creatorName) }
+                            .map { MeloXSearchMediaItem(it.id, MeloXSearchKind.Playlists, it.name, it.creatorName, it.coverUrl, it.trackCount) }
+                        MeloXSearchKind.Albums -> media = libraryAlbums.filter { matches(it.name, it.artistText) }
+                            .map { MeloXSearchMediaItem(it.id, MeloXSearchKind.Albums, it.name, it.artistText, it.artworkUrl, it.size ?: 0) }
+                        MeloXSearchKind.Artists -> media = libraryArtists.filter { matches(it.name, it.aliases.joinToString(" ")) }
+                            .map { MeloXSearchMediaItem(it.id, MeloXSearchKind.Artists, it.name, it.aliases.firstOrNull().orEmpty(), it.artworkUrl) }
+                        MeloXSearchKind.Podcasts -> media = libraryPodcasts.filter { matches(it.name, it.host?.nickname, it.category) }
+                            .map { MeloXSearchMediaItem(it.id, MeloXSearchKind.Podcasts, it.name, it.host?.nickname.orEmpty(), it.artworkUrl, it.programCount) }
+                        else -> Unit
+                    }
+                }
+            } catch (cancelled: kotlinx.coroutines.CancellationException) { throw cancelled }
+            catch (failure: Exception) { error = failure.message ?: melox.ui.desktop.desktopString("ui.desktop.search.failed") }
+            finally { loading = false }
+            return@LaunchedEffect
+        }
+        if (!skipSearchDebounce) delay(if (MeloXSettingsRuntime.desktopLayoutEnabled) 320 else 1500)
         skipSearchDebounce = false
         loading = true
         val linkedId = if (source == MusicSource.Netease) parseSongLink(keyword) else null
@@ -253,7 +312,7 @@ fun SearchScreen(
         when (kind) {
             MeloXSearchKind.Songs -> {
                 media = emptyList()
-                if (unifiedEnabled) {
+                if (unifiedEnabled && !MeloXSettingsRuntime.desktopLayoutEnabled) {
                     songs = emptyList()
                     providerSongs = emptyList()
                     runCatching { unifiedService.searchSongs(keyword, unifiedSources, pageSizePerProvider = 25) }
@@ -358,7 +417,7 @@ fun SearchScreen(
             },
     ) {
         when {
-            categoryTitle != null -> SearchCategoryPage(
+            categoryTitle != null && !desktop -> SearchCategoryPage(
                 title = categoryTitle!!,
                 playlists = categoryPlaylists,
                 loading = categoryLoading,
@@ -366,21 +425,44 @@ fun SearchScreen(
                 onBack = { categoryTitle = null },
                 onPlaylist = { selectedDetail = it.asSearchItem() },
             )
-            else -> Column(Modifier.fillMaxSize().padding(top = if (MeloXSettingsRuntime.desktopLayoutEnabled) 0.dp else 26.dp).testTag("search-state").semantics {
+            MeloXSettingsRuntime.desktopLayoutEnabled -> melox.ui.desktop.MeloXDesktopSearchScaffold(
+                query = query,
+                onQuery = { query = it; skipSearchDebounce = false },
+                onSubmit = {
+                    skipSearchDebounce = true
+                    searchTrigger += 1
+                    rememberSearchQuery(query)
+                    history = searchHistory()
+                },
+                suggestions = searchSuggestions,
+                onSuggestion = { picked ->
+                    query = picked; searchSuggestions = emptyList()
+                    skipSearchDebounce = true; searchTrigger += 1
+                },
+                libraryScope = libraryScope,
+                onScope = { libraryScope = it; skipSearchDebounce = true; searchTrigger += 1 },
+                kinds = availableKinds,
+                kind = kind,
+                onKind = { kind = it },
+                loading = loading,
+                error = error,
+                searched = query.isNotBlank(),
+                songs = songs,
+                providerSongs = providerSongs,
+                media = media,
+                onPlaySong = { song -> PlaybackCommands.playQueue(songs, song.id) },
+                onPlayProvider = { track -> ProviderPlaybackCommands.playQueue(
+                    tracks = providerSongs, selectedTrackId = track.id,
+                    onFailure = { failure -> error = failure.message ?: "播放失败" }) },
+                onOpenMedia = { selectedDetail = it },
+                onSongMenu = { song, _ -> selectedActionSong = song },
+                onRetry = { searchTrigger += 1 },
+            )
+            else -> Column(Modifier.fillMaxSize().padding(top = 26.dp).testTag("search-state").semantics {
                 stateDescription = if (unifiedEnabled) "Unified>${unifiedSources.sortedBy { it.storageValue }.joinToString(">") { it.storageValue }}" else "Provider>${source.storageValue}"
             }) {
-                if (MeloXSettingsRuntime.desktopLayoutEnabled) {
-                    Text(
-                        pinnedString("tab_search"),
-                        modifier = Modifier.padding(start = 34.dp, end = 34.dp, top = 28.dp, bottom = 16.dp),
-                        fontSize = 32.sp,
-                        lineHeight = 38.sp,
-                        fontWeight = FontWeight.Bold,
-                    )
-                } else {
-                    MeloXIosTopBar(title = pinnedString("tab_search"))
-                    Spacer(Modifier.height(16.dp))
-                }
+                MeloXIosTopBar(title = pinnedString("tab_search"))
+                Spacer(Modifier.height(16.dp))
                 SearchField(
                     value = query,
                     onValueChange = { query = it; skipSearchDebounce = false },

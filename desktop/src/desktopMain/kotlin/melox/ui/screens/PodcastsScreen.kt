@@ -55,6 +55,10 @@ fun PodcastsScreen(
     navState: MeloXNavState,
     modifier: Modifier = Modifier,
 ) {
+    if (melox.settings.MeloXSettingsRuntime.desktopLayoutEnabled) {
+        melox.ui.desktop.MeloXDesktopPodcasts()
+        return
+    }
     val revision by NeteaseSessionStore.revision.collectAsState()
     val cookie = remember(revision) { NeteaseSessionStore.readCookie() }
     val client = remember(cookie) { NeteaseUniversalSearchClient(cookieProvider = { cookie }) }
@@ -153,6 +157,10 @@ private fun PodcastRow(title: String, values: List<MeloXPodcast>, onPodcast: (Me
 
 @Composable
 internal fun PodcastDetail(client: NeteaseUniversalSearchClient, initial: MeloXPodcast, onBack: () -> Unit) {
+    if (melox.settings.MeloXSettingsRuntime.desktopLayoutEnabled) {
+        melox.ui.desktop.MeloXDesktopPodcastDetail(client, initial, onBack)
+        return
+    }
     key(client, initial.id) { PodcastDetailContent(client, initial, onBack) }
 }
 

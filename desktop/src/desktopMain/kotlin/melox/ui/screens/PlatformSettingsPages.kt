@@ -66,6 +66,12 @@ internal fun FloatingLyricsSettings() {
 
 @Composable
 internal fun RecognitionSettings() {
+    if (melox.settings.MeloXSettingsRuntime.desktopLayoutEnabled) {
+        melox.ui.desktop.DesktopSettingsButton(melox.ui.desktop.desktopString("ui.recognition.title"), Modifier.testTag("recognition-start")) {
+            melox.ui.desktop.MeloXDesktopToolWindows.show(melox.ui.desktop.DesktopTool.Recognition)
+        }
+        return
+    }
     val client = remember { melox.recognition.SongRecognitionClient() }
     val scope = rememberCoroutineScope()
     var duration by remember { mutableStateOf(MeloXSettingsPreferences.string("recognition_duration", "6").toIntOrNull() ?: 6) }
@@ -130,6 +136,12 @@ internal fun RecognitionSettings() {
 
 @Composable
 internal fun ListenTogetherSettings() {
+    if (melox.settings.MeloXSettingsRuntime.desktopLayoutEnabled) {
+        melox.ui.desktop.DesktopSettingsButton(melox.ui.desktop.desktopString("ui.listen_together.title"), Modifier.testTag("listen-together-open")) {
+            melox.ui.desktop.MeloXDesktopToolWindows.show(melox.ui.desktop.DesktopTool.ListenTogether)
+        }
+        return
+    }
     val state by MeloXListenTogetherCoordinator.state.collectAsState()
     val scope = rememberCoroutineScope()
     val ops = remember { NeteaseMusicOperationsClient(cookieProvider = { NeteaseSessionStore.readCookie() }) }

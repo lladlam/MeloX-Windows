@@ -265,7 +265,7 @@ private fun DesktopCollectionAction(label: String, symbol: MeloXSymbol, tag: Str
 @Composable
 @OptIn(androidx.compose.foundation.ExperimentalFoundationApi::class, androidx.compose.ui.ExperimentalComposeUiApi::class)
 internal fun DesktopCollectionTrackRow(index: Int, song: SearchSong, current: Boolean, isPlaying: Boolean,
-    showsAlbumColumn: Boolean, onClick: () -> Unit, onMore: ((IntOffset) -> Unit)?) {
+    showsAlbumColumn: Boolean, onClick: () -> Unit, onMore: ((IntOffset) -> Unit)?, showsArtwork: Boolean = false) {
     val colors = MaterialTheme.colorScheme
     val interaction = remember { MutableInteractionSource() }
     val hovered by interaction.collectIsHoveredAsState()
@@ -273,7 +273,7 @@ internal fun DesktopCollectionTrackRow(index: Int, song: SearchSong, current: Bo
     var menuAnchor by remember { mutableStateOf(IntOffset.Zero) }
     val opacity by animateFloatAsState(if (hovered) .045f else 0f,
         tween(if (MeloXSettingsRuntime.reduceMotion) 0 else 160, easing = CubicBezierEasing(0f, 0f, .58f, 1f)), label = "collection-row-hover")
-    Row(Modifier.fillMaxWidth().heightIn(min = 46.dp).testTag("desktop-collection-track:${song.id}")
+    Row(Modifier.fillMaxWidth().heightIn(min = if (showsArtwork) 54.dp else 46.dp).testTag("desktop-collection-track:${song.id}")
         .onGloballyPositioned { rowOrigin = it.boundsInWindow().topLeft }
         .onPointerEvent(PointerEventType.Press) { event ->
             if (event.buttons.isSecondaryPressed) {
@@ -292,12 +292,13 @@ internal fun DesktopCollectionTrackRow(index: Int, song: SearchSong, current: Bo
                 size = 12, weight = FontWeight.SemiBold, color = if (current) Color.Red else colors.onSurface)
             else Text(index.toString(), fontSize = 12.sp, fontWeight = FontWeight.SemiBold, color = colors.onSurface.copy(alpha = .5f))
         }
+        if (showsArtwork) MeloXArtworkImage(song.artworkUrl, colors.surfaceVariant, Modifier.size(42.dp).clip(RoundedCornerShape(6.dp)))
         Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(2.dp)) {
             Text(song.name, fontSize = 13.5.sp, fontWeight = if (current) FontWeight.SemiBold else FontWeight.Normal,
                 color = if (current) Color.Red else colors.onSurface, maxLines = 1, overflow = TextOverflow.Ellipsis)
             Text(song.artists, fontSize = 11.5.sp, color = colors.onSurface.copy(alpha = .5f), maxLines = 1, overflow = TextOverflow.Ellipsis)
         }
-        if (showsAlbumColumn) Text(song.album, Modifier.width(180.dp), fontSize = 12.sp, color = colors.onSurface.copy(alpha = .5f),
+        if (showsAlbumColumn && !showsArtwork) Text(song.album, Modifier.width(180.dp), fontSize = 12.sp, color = colors.onSurface.copy(alpha = .5f),
             maxLines = 1, overflow = TextOverflow.Ellipsis)
         Text(desktopDuration(song.durationMs), Modifier.width(42.dp), fontSize = 12.sp, style = LocalTextStyle.current.copy(fontFeatureSettings = "tnum"),
             textAlign = androidx.compose.ui.text.style.TextAlign.End, color = colors.onSurface.copy(alpha = .5f))

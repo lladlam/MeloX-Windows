@@ -22,6 +22,7 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -151,6 +152,15 @@ fun MeloXGlassDialog(
     modifier: Modifier = Modifier,
     content: @Composable ColumnScope.() -> Unit,
 ) {
+    if (melox.ui.desktop.LocalDesktopSettingsPresentation.current) {
+        if (visible) Dialog(onDismissRequest = onDismiss, properties = DialogProperties(usePlatformDefaultWidth = false)) {
+            androidx.compose.material3.Surface(modifier.widthIn(max = 420.dp).fillMaxWidth().heightIn(max = 600.dp),
+                shape = androidx.compose.foundation.shape.RoundedCornerShape(10.dp)) {
+                Column(Modifier.padding(20.dp), verticalArrangement = androidx.compose.foundation.layout.Arrangement.spacedBy(12.dp), content = content)
+            }
+        }
+        return
+    }
     val visibility = remember { MutableTransitionState(visible) }
     LaunchedEffect(visible) {
         visibility.targetState = visible

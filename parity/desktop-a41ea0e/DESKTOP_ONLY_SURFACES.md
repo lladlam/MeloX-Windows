@@ -42,6 +42,24 @@ Compose Touch原生滚动保留；为AWT可能提升为Mouse的触屏补充按�
 
 回放覆盖实际省略号、子菜单／Escape、右键、入队、歌曲三页、歌手、专辑及返回栈，并断言无`歌曲操作`手机sheet／无Android artist页面。独立报告核对菜单尺寸、380hero／190头像、触屏实际位移。测试不伪造网易登录态；创建／写入私人歌单及真实触屏不得以未登录的离屏回放代替。
 
-仍须继续替换桌面设置中沿用的手机表单控件，以及其他尚未完成的桌面列表／页面；以上替换不声称整套Mac UI或同内容整幅像素验收完成。
+### 搜索／探索／私信
+
+- 搜索桌面模式改为独立工具栏：332×36胶囊输入、catalog／library双scope、5类紧凑segmented picker；结果显示42pt封面track row和145–210pt自适应媒体网格，专辑／歌手／歌单／播客均走真实搜索与桌面详情。未登录library scope显示登录提示；候选词读取真实`/api/search/suggest/keyword`，320ms防抖。Windows聚合搜索在桌面模式不冒充Mac catalog结果。
+- 探索桌面模式按`DesktopDiscoveryView`分为New Music 12首、Charts网格、Popular Artists圆形网格；三个数据源独立失败，单一路由失败不会清空其他真实区块。
+- 私信桌面模式按`DesktopMessagesView`为270–410pt会话栏、64pt会话头、真实历史／发送、头像／时间／未读数、资源卡和新建私信联系人面板；未登录显示独立登录门。双账号与真实网易私信会话仍待实测。
+
+### 设置及后续页面（正在验证）
+
+- `MeloXDesktopSettingsControls.kt` 独立实现紧凑Form、14pt checkbox、23pt picker／按钮、滑杆；设置作用域内的旧控件调用委派到该独立实现，作用域外手机分支保留。设置外框改为650pt，tab按570／480／620／620／600pt，footer为58pt；取消／确定返回主页，恢复默认经确认后只重置推荐播放器选项，保留布局偏好。
+- `MeloXDesktopPodcasts.kt` 对应DesktopDiscoveryView、DesktopPodcastCategoryView和DesktopPodcastDetailView，含真实分类分页、推荐节目、收藏、30条节目分页与新旧排序；Search播客详情也分流至此。
+- `MeloXDesktopTools.kt` 独立识曲700×660和一起听620×620窗口；录音／识别、房间创建／加入／结束／邀请链接使用既有真实服务。未登录不能声称房间同步、硬件麦克风已验收。
+- `MeloXDesktopAbout.kt`、`MeloXDesktopOnboarding.kt` 对应About／ProjectLicenses和三步引导。Logo、两份指纹notice／license和BeatNet notice按固定Git blob导出；更新指向Windows仓库。引导的beat-effects项尚未接线，因此不能标为完整等价。
+- `MeloXDesktopLibrary.kt`、`MeloXDesktopLibraryPages.kt` 独立网易收藏歌曲／历史、歌单／专辑／歌手／播客网格、下载和云盘列表。侧栏Albums／Artists接真实收藏接口，支持打开桌面详情；收藏写入／私人云盘仍需真实账户验收。其他provider音乐库仍需继续替换。
+
+第一轮深浅20设置子页回放成功；控件回放发现滑杆3/4输入的原生thumb几何对应6.5dB，失败证据保留在`native-settings-v1-desktop-controls`。随后改用端点输入独立验证12dB持久化，结果须以最终回放记录为准。第一轮设置通过早于后续页面修改，不能视作最终冻结版全量验收。
+
+仍须继续迁移独立登录窗口（Mac为880×680内嵌WebView；Windows现仍需改为独立桌面登录面板）、多provider音乐库／服务页、远程公告弹层、mini窗口及原生材质／动画；以上替换不声称整套Mac UI或同内容整幅像素验收完成。
+
+当前明确的未完成项：Windows没有内嵌浏览器内核，网易登录只能复用真实手机验证码／本机客户端Cookie导入，不能冒充Mac WKWebView；私人收藏、云盘、私信发送和双账号Together需要真实登录账户复测；播放器原生glass、spring和逐页同内容像素仍为PARTIAL。
 
 本批仍有可见残差：Mac原生菜单材质／系统控件动效、歌曲别名／播客描述模型、评论点赞图标与本地化数字、系统分享窗口尚未逐项等价；Windows分享目前复制真实链接。歌手图片异步下载可能在首次截图中仍为占位，不能将这些画面用于已完成的同内容像素验收。非网易provider的歌曲信息暂使用真实搜索回退，不能计作该provider的详情页已迁移。

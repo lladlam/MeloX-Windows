@@ -1,5 +1,8 @@
 package melox.ui.glass
 
+import androidx.compose.foundation.border
+import androidx.compose.ui.unit.sp
+
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.background
@@ -180,6 +183,10 @@ fun MeloXGlassToggle(
     enabled: Boolean = true,
     modifier: Modifier = Modifier,
 ) {
+    if (melox.ui.desktop.LocalDesktopSettingsPresentation.current) {
+        Box(modifier.width(14.dp)) { melox.ui.desktop.DesktopSettingsCheckbox("", checked, "desktop-checkbox", enabled, onChange = onCheckedChange) }
+        return
+    }
     val dark = MaterialTheme.colorScheme.background.luminance() < 0.5f
     val accent = if (dark) Color(0xFF30D158) else Color(0xFF34C759)
     val track = if (dark) Color(0xFF787880).copy(alpha = 0.36f) else Color(0xFF787878).copy(alpha = 0.20f)
@@ -320,6 +327,22 @@ fun MeloXGlassTextField(
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     onFocusChanged: ((Boolean) -> Unit)? = null,
 ) {
+    if (melox.ui.desktop.LocalDesktopSettingsPresentation.current) {
+        Row(modifier.heightIn(min = 24.dp).clip(androidx.compose.foundation.shape.RoundedCornerShape(5.dp))
+            .background(MaterialTheme.colorScheme.onSurface.copy(alpha = .045f))
+            .border(.5.dp, MaterialTheme.colorScheme.onSurface.copy(alpha = .2f), androidx.compose.foundation.shape.RoundedCornerShape(5.dp))
+            .padding(horizontal = 7.dp, vertical = 4.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+            leadingContent?.invoke()
+            BasicTextField(value, onValueChange, enabled = enabled, singleLine = singleLine,
+                textStyle = TextStyle(fontFamily = melox.ui.theme.MeloXDesktopTextFontFamily, fontSize = 13.sp, color = MaterialTheme.colorScheme.onSurface),
+                cursorBrush = androidx.compose.ui.graphics.SolidColor(MaterialTheme.colorScheme.onSurface),
+                keyboardOptions = keyboardOptions, keyboardActions = keyboardActions,
+                modifier = Modifier.weight(1f).onFocusChanged { onFocusChanged?.invoke(it.isFocused) },
+                decorationBox = { inner -> Box { if (value.isBlank()) placeholder?.invoke(); inner() } })
+            trailingContent?.invoke()
+        }
+        return
+    }
     Row(
         modifier = modifier
             .heightIn(min = 50.dp)

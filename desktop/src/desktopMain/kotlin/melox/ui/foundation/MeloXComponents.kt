@@ -77,6 +77,10 @@ fun MeloXIosGroupedList(
     surfaceColor: Color = MaterialTheme.colorScheme.surface,
     content: @Composable ColumnScope.() -> Unit,
 ) {
+    if (melox.ui.desktop.LocalDesktopSettingsPresentation.current) {
+        Column(modifier) { melox.ui.desktop.DesktopSettingsForm(content) }
+        return
+    }
     val desktop = melox.settings.MeloXSettingsRuntime.desktopLayoutEnabled
     Column(modifier.fillMaxWidth().clip(RoundedCornerShape(if (desktop) 10.dp else 28.dp)).background(surfaceColor), content = content)
 }
@@ -96,6 +100,11 @@ fun MeloXIosListRow(
     chevronTint: Color = melox.ui.glass.MeloXSystemColors.Red.copy(alpha = 0.88f),
     showTopSeparator: Boolean = false,
 ) {
+    if (melox.ui.desktop.LocalDesktopSettingsPresentation.current) {
+        melox.ui.desktop.DesktopSettingsRow(modifier, title, subtitle, leadingIcon, leadingIconColor,
+            trailingContent, showChevron, onClick, leading, detail)
+        return
+    }
     val desktop = melox.settings.MeloXSettingsRuntime.desktopLayoutEnabled
     val interactionSource = remember { MutableInteractionSource() }
     val isHovered by interactionSource.collectIsHoveredAsState()

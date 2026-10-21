@@ -13,11 +13,11 @@ import sys
 
 repo = Path(__file__).resolve().parents[1]
 mode, home, output = sys.argv[1:4]
-assert mode in ('routes', 'controls', 'reload', 'desktop-routes')
+assert mode in ('routes', 'controls', 'reload', 'desktop-routes', 'desktop-controls', 'desktop-reload')
 locale, theme, width, height = (sys.argv[4:] or ['en-US', 'Dark', '1100', '780'])
 home, output = Path(home).resolve(), Path(output).resolve()
 output.mkdir(parents=True, exist_ok=True)
-if mode == 'desktop-routes':
+if mode in ('desktop-routes', 'desktop-controls'):
     prefs = home / '.melox/prefs_melox_app_settings.properties'
     assert not prefs.exists(), 'Use a fresh isolated home'
     prefs.parent.mkdir(parents=True, exist_ok=True)
@@ -71,10 +71,23 @@ def toggle(key, value, runtime=None):
     add('toggle-' + str(len(steps)), 'tap@' + tag, checks)
 
 
-if mode != 'reload':
+if mode not in ('reload', 'desktop-reload'):
     add('remote-reject', 'tap@remote-reject', ['cloud-choice:true', 'cloud-enabled:false'])
 
-if mode == 'desktop-routes':
+if mode == 'desktop-controls':
+    choose('theme_mode', strings['settings_general_theme_light'], 'string', 'Light', 'themeMode')
+    toggle('general_remember_tab', 'false', 'rememberLastTab')
+    add('playback', 'tap@desktop-settings-tab:Playback')
+    reveal('equalizer-enabled')
+    add('enable-eq', 'tap@equalizer-enabled', ['eq-enabled:true'])
+    reveal('equalizer-preamp')
+    # The tag includes 16dp of outer padding. Select the track's right end,
+    # rather than the tagged node's exclusive outer edge.
+    add('set-eq-preamp', 'slider@equalizer-preamp,0.97', ['pref-float:equalizer_preamp_db:12.0'])
+    add('general', 'tap@desktop-settings-tab:General')
+elif mode == 'desktop-reload':
+    expected['00-settings'] = ['tag:desktop-settings-window', 'runtime:desktopLayoutEnabled:true', 'runtime:themeMode:Light', 'runtime:rememberLastTab:false', 'eq-enabled:true', 'pref-float:equalizer_preamp_db:12.0']
+elif mode == 'desktop-routes':
     groups = {
         'General': ['General', 'Appearance', 'Content'],
         'Features': ['Features', 'TabLayout', 'Recognition', 'Messages', 'ListenTogether'],
@@ -90,6 +103,12 @@ if mode == 'desktop-routes':
                 add('open-' + route, 'tap@desktop-settings-subtab:' + route)
             reveal('settings-page:' + route)
             add('inspect-' + route, 'wait@100', ['tag:settings-page:' + route])
+            if route == 'Recognition':
+                add('recognition-window', 'tap@recognition-start', ['tag:desktop-tool:Recognition', 'tag:desktop-recognition-start'])
+                add('close-recognition', 'tap@desktop-dialog:ui.common.done', ['absent:desktop-tool:Recognition'])
+            if route == 'ListenTogether':
+                add('together-window', 'tap@listen-together-open', ['tag:desktop-tool:ListenTogether', 'tag:desktop-together-login'])
+                add('close-together', 'tap@desktop-dialog:ui.common.done', ['absent:desktop-tool:ListenTogether'])
     add('general-actions', 'tap@desktop-settings-tab:General')
     reveal('settings-reset')
     add('inspect-reset', 'wait@100', ['enabled:settings-reset', 'absent:settings-sign-out'])
@@ -205,9 +224,11 @@ steps_file = output / 'steps.txt'
 expect_file = output / 'expect.txt'
 steps_file.write_text('\n'.join(steps) + '\n', encoding='utf-8')
 expect_file.write_text('\n'.join(name + '=' + ','.join(checks) for name, checks in expected.items()) + '\n', encoding='utf-8')
-args = ['--locale', locale, '--source', 'Local', '--start-tab', 'Settings', '--theme', theme, '--width', width, '--height', height,
+args = ['--locale', locale, '--source', 'Local', '--start-tab', 'Settings', '--width', width, '--height', height,
     '--output', str(output), '--wait-ms', '180', '--startup-wait-ms', '1200',
     '--steps-file', str(steps_file), '--expect-file', str(expect_file)]
+if mode != 'desktop-reload':
+    args += ['--theme', theme]
 argfile = output / 'arguments.txt'
 argfile.write_text('\n'.join(args) + '\n', encoding='utf-8')
 (output / 'control-inputs.json').write_text(json.dumps(changed, indent=2) + '\n', encoding='utf-8')

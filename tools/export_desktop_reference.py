@@ -46,6 +46,10 @@ KEYS += ['ui.song.detail.title', 'ui.comments.title', 'ui.desktop.song.content',
          'ui.desktop.lyrics.unavailable', 'ui.comments.empty', 'ui.song.loading']
 KEYS += ['ui.desktop.artist.latest_releases', 'ui.artist.popular_songs', 'ui.artist.loading',
          'ui.common.artist', 'ui.desktop.artist.follow_failed', 'ui.desktop.artist.following', 'ui.desktop.artist.follow']
+KEYS += ['ui.desktop.settings.tab.general', 'ui.desktop.settings.tab.features', 'ui.settings.playback.section.playback',
+         'ui.desktop.settings.tab.files', 'ui.desktop.settings.tab.advanced', 'ui.desktop.settings.restore_defaults_ellipsis',
+         'ui.desktop.settings.restore_defaults.confirmation', 'ui.desktop.settings.restore_defaults', 'ui.desktop.settings.restore_defaults.message']
+KEYS += ['ui.podcast.sort.newest', 'ui.podcast.sort.oldest']
 KEYS += [f'ui.settings.audio_quality.{quality}' for quality in
          ['standard', 'high', 'lossless', 'hi_res', 'hd_surround', 'immersive_surround', 'master']]
 SOURCES = [
@@ -86,6 +90,35 @@ SOURCES = [
     'MeloXDesktop/Features/Detail/DesktopSongDetailView.swift',
     'MeloXDesktop/Features/Detail/DesktopArtistDetailView.swift',
 ]
+EXPORTED_SURFACES = [
+    'MeloXDesktop/Features/Settings/DesktopSettingsView.swift',
+    'MeloXDesktop/Features/Explore/DesktopDiscoveryView.swift',
+    'MeloXDesktop/Features/Explore/DesktopPodcastCategoryView.swift',
+    'MeloXDesktop/Features/Detail/DesktopPodcastDetailView.swift',
+    'MeloXDesktop/Features/SongRecognition/DesktopSongRecognitionView.swift',
+    'MeloXDesktop/Features/ListenTogether/DesktopListenTogetherView.swift',
+    'MeloXDesktop/Features/About/DesktopAboutView.swift',
+    'MeloXDesktop/Features/About/DesktopProjectLicensesView.swift',
+    'MeloXDesktop/Features/Onboarding/DesktopOnboardingDialog.swift',
+    'MeloXDesktop/Core/Settings/Application/AppAppearance.swift',
+    'MeloXDesktop/Core/Settings/Recognition/SongRecognitionPreferences.swift',
+    'MeloXDesktop/Features/Library/DesktopLibraryView.swift',
+    'MeloXDesktop/Features/Search/DesktopSearchView.swift',
+    'MeloXDesktop/Features/Messages/DesktopMessagesView.swift',
+]
+SOURCES += EXPORTED_SURFACES
+KEYS += ['ui.error.listen_together.missing_room_id', 'ui.recognition.failed']
+KEYS += ['ui.downloads.delete', 'ui.cloud.delete', 'ui.common.refresh']
+KEYS += ['ui.search.prompt', 'ui.common.netease_cloud_music', 'ui.desktop.search.failed',
+         'ui.desktop.search.empty.title', 'ui.desktop.search.empty.message']
+KEYS += [f'ui.search.kind.{kind}' for kind in ['songs', 'albums', 'artists', 'playlists', 'podcasts']]
+KEYS += ['ui.account.login_required', 'ui.desktop.messages.login_message', 'ui.messages.empty',
+         'ui.messages.empty.message', 'ui.desktop.messages.load_failed', 'ui.desktop.messages.conversations',
+         'ui.desktop.messages.select_conversation', 'ui.desktop.messages.select_conversation.message',
+         'ui.desktop.messages.conversation_failed', 'ui.desktop.messages.input_to', 'ui.messages.start_private_message',
+         'ui.messages.send_failed', 'ui.desktop.messages.refresh',
+         'ui.messages.no_messages', 'ui.messages.no_messages.message', 'ui.messages.search_following',
+         'ui.messages.contacts_not_found', 'ui.messages.private_send_failed']
 
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument('repository', type=Path)
@@ -96,6 +129,10 @@ root = Path(__file__).resolve().parents[1]
 def blob(path):
     return subprocess.check_output(['git', '-C', str(args.repository), 'show', REVISION + ':' + path])
 
+for source in EXPORTED_SURFACES:
+    KEYS += re.findall(r'"(ui\.[a-zA-Z0-9_.]+)"', blob(source).decode('utf-8'))
+KEYS = sorted(set(KEYS))
+
 def save(path, data):
     target = root / path
     if args.verify:
@@ -105,6 +142,18 @@ def save(path, data):
         target.write_bytes(data)
 
 hashes = {}
+logo_source = 'MeloXDesktop/Assets.xcassets/MeloXLogo.imageset/MeloXLogo.png'
+logo = blob(logo_source)
+save('desktop/src/main/resources/parity/desktop-logo.png', logo)
+hashes[logo_source] = hashlib.sha256(logo).hexdigest()
+legal_resources = {}
+for relative in ['AudioFingerprint/NeteaseAudioFingerprint-NOTICE.txt', 'AudioFingerprint/NeteaseAPI-LICENSE.txt', 'Models/BeatNet/BeatNet-NOTICE.md']:
+    path = 'MeloXDesktop/Resources/' + relative
+    data = blob(path)
+    target = 'parity/legal/' + Path(relative).name
+    save('desktop/src/main/resources/' + target, data)
+    hashes[path] = hashlib.sha256(data).hexdigest()
+    legal_resources[target] = hashlib.sha256(data).hexdigest()
 for lang in ['en', 'zh-Hans']:
     path = f'MeloXLocalization/{lang}.lproj/Localizable.strings'
     raw = blob(path)
@@ -121,6 +170,8 @@ for lang in ['en', 'zh-Hans']:
     resource = f'desktop/src/main/resources/parity/desktop-reference-{lang}.properties'
     save(resource, text.encode('utf-8'))
 resources = {f'parity/desktop-reference-{lang}.properties': hashlib.sha256((root / f'desktop/src/main/resources/parity/desktop-reference-{lang}.properties').read_bytes()).hexdigest() for lang in ['en', 'zh-Hans']}
+resources['parity/desktop-logo.png'] = hashlib.sha256(logo).hexdigest()
+resources.update(legal_resources)
 # The exact SF Symbols subset is an implementation resource, not a source label
 # export. Pinning it here makes the packaged-resource audit cover the icons too.
 resources['fonts/sf_pro_subset.ttf'] = hashlib.sha256(

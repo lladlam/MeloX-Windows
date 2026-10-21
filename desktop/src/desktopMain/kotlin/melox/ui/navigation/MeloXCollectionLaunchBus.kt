@@ -8,6 +8,7 @@ sealed interface MeloXCollectionTarget {
     data class Artist(val id: Long) : MeloXCollectionTarget
     data class Album(val id: Long, val name: String = "") : MeloXCollectionTarget
     data class Song(val id: Long) : MeloXCollectionTarget
+    data class Playlist(val id: Long, val name: String = "") : MeloXCollectionTarget
 }
 
 object MeloXCollectionLaunchBus {

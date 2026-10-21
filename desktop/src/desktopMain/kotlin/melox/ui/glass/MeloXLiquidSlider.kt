@@ -59,6 +59,11 @@ fun MeloXLiquidSlider(
     onValueChangeFinished: () -> Unit = {},
     enabled: Boolean = true,
 ) {
+    if (melox.ui.desktop.LocalDesktopSettingsPresentation.current) {
+        melox.ui.desktop.DesktopSettingsSlider(value, onValueChange, onTransientValueChange, valueRange,
+            stepSize, modifier, contentDescription, onValueChangeFinished, enabled)
+        return
+    }
     require(valueRange.endInclusive > valueRange.start) { "valueRange must not be empty" }
     require(stepSize >= 0f) { "stepSize must be non-negative" }
     val externalValue = quantizeMeloXSliderValue(value, valueRange, stepSize)

@@ -107,6 +107,10 @@ fun <T> MeloXSettingsDropdown(
     grouped: Boolean = false,
     showTopSeparator: Boolean = false,
 ) {
+    if (melox.ui.desktop.LocalDesktopSettingsPresentation.current) {
+        Box(modifier) { melox.ui.desktop.DesktopSettingsPicker(title, selected, items, "desktop-picker:$title", enabled, onSelected) }
+        return
+    }
     val groupRowIndex = LocalSettingsGroupRowIndex.current
     val effectiveSeparator = if (grouped) groupRowIndex.intValue++.let { it > 0 } else showTopSeparator
     val selectedLabel = items.firstOrNull { it.first == selected }?.second.orEmpty()
