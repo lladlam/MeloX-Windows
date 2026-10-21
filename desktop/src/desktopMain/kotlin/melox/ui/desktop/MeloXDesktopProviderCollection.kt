@@ -1,6 +1,7 @@
 package melox.ui.desktop
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -39,11 +40,10 @@ internal fun MeloXDesktopProviderCollection(title: String, subtitle: String, art
             contentPadding = PaddingValues(horizontal = 34.dp, vertical = 28.dp), verticalArrangement = Arrangement.spacedBy(2.dp)) {
             item("header") {
                 Column(verticalArrangement = Arrangement.spacedBy(18.dp)) {
-                    Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                        Box(Modifier.size(24.dp).clip(RoundedCornerShape(5.dp)).testTag("desktop-provider-collection-back")
-                            .then(Modifier).background(MaterialTheme.colorScheme.onSurface.copy(alpha = .06f)), contentAlignment = Alignment.Center) {
-                            MeloXSymbolIcon(MeloXSymbol.ChevronLeft, size = 12)
-                        }
+                    Row(Modifier.testTag("desktop-provider-collection-back").clip(RoundedCornerShape(5.dp))
+                        .clickable(role = androidx.compose.ui.semantics.Role.Button, onClick = onBack)
+                        .padding(end = 6.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                        MeloXSymbolIcon(MeloXSymbol.ChevronLeft, size = 12)
                         Text(desktopString("ui.navigation.search"), fontSize = 12.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     }
                     Row(verticalAlignment = Alignment.Bottom, horizontalArrangement = Arrangement.spacedBy(24.dp)) {

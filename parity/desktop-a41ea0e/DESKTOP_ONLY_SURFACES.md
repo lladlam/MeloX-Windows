@@ -47,6 +47,9 @@ Compose Touch原生滚动保留；为AWT可能提升为Mouse的触屏补充按�
 - 搜索桌面模式改为独立工具栏：332×36胶囊输入、catalog／library双scope、5类紧凑segmented picker；结果显示42pt封面track row和145–210pt自适应媒体网格，专辑／歌手／歌单／播客均走真实搜索与桌面详情。未登录library scope显示登录提示；候选词读取真实`/api/search/suggest/keyword`，320ms防抖。Windows聚合搜索在桌面模式不冒充Mac catalog结果。
 - 探索桌面模式按`DesktopDiscoveryView`分为New Music 12首、Charts网格、Popular Artists圆形网格；三个数据源独立失败，单一路由失败不会清空其他真实区块。
 - 私信桌面模式按`DesktopMessagesView`为270–410pt会话栏、64pt会话头、真实历史／发送、头像／时间／未读数、资源卡和新建私信联系人面板；未登录显示独立登录门。双账号与真实网易私信会话仍待实测。
+- 非网易Provider音乐库不再回退手机segmented picker：有登录会话时用同一34pt留白桌面网格展示真实歌单，Local显示真实收藏歌曲；无会话显示桌面登录门。歌单进入同一Mac collection详情。
+- Windows音乐服务页为独立紧凑表单，Provider真实登录／退出、加入搜索和聚合搜索开关；选择具体Provider会带上Provider标识打开对应登录。
+- Provider专辑／歌手详情从搜索进入时使用桌面collection头图、220pt封面、34pt标题与桌面track row，不再显示手机top bar。
 - 登录桌面模式为880×680独立面板：顶部Cancel／居中标题／direct-connection说明／进度，真实手机验证码和本机客户端Cookie两种方式。Mac使用WKWebView；Windows没有随包浏览器内核，因此这里是同等“直接连接”语义的Windows实现，不冒充WKWebView。
 - 远程公告在桌面模式使用独立紧凑alert；其他手机页面仍保留原glass对话框。桌面模式的通用玻璃对话框统一改走紧凑Surface并可在小窗口内滚动，因此Windows首次启动法律同意页、连接服务页和云控选择页也使用桌面尺寸，而非手机全屏。
 - 首次启动顺序先显示Windows法律同意，再显示Mac三步引导的Connect页；法律同意文本和链接仍是Android/Widows合规内容，不属于Mac源页面。
