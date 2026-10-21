@@ -1,0 +1,101 @@
+[
+  {
+    "scene": "00-settings.png",
+    "tag": "desktop-sidebar",
+    "bounds": [
+      16,
+      16,
+      414,
+      1168
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "00-settings.png",
+    "tag": "desktop-bottom-player",
+    "bounds": [
+      487,
+      1056,
+      1887,
+      1164
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "01-ready.png",
+    "tag": "desktop-sidebar",
+    "bounds": [
+      16,
+      16,
+      414,
+      1168
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "01-ready.png",
+    "tag": "desktop-bottom-player",
+    "bounds": [
+      487,
+      1056,
+      1887,
+      1164
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "02-expanded.png",
+    "tag": "desktop-sidebar",
+    "bounds": [
+      16,
+      16,
+      414,
+      1168
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "03-persisted-favorite.png",
+    "tag": "desktop-sidebar",
+    "bounds": [
+      16,
+      16,
+      414,
+      1168
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "04-restore-favorite.png",
+    "tag": "desktop-sidebar",
+    "bounds": [
+      16,
+      16,
+      414,
+      1168
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "05-collapsed.png",
+    "tag": "desktop-sidebar",
+    "bounds": [
+      16,
+      16,
+      414,
+      1168
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "05-collapsed.png",
+    "tag": "desktop-bottom-player",
+    "bounds": [
+      487,
+      1056,
+      1887,
+      1164
+    ],
+    "source_metrics_match": true
+  }
+]

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="CloudUploadProtocolTest[desktop]" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-10-21T04:21:49.074Z" hostname="lladlam-arch" time="4.883">
+  <properties/>
+  <testcase name="encryptedProtocolUploadsExactRealBytesPublishesAndRefreshesOnlyAfterSuccess[desktop]" classname="melox.network.CloudUploadProtocolTest" time="3.75"/>
+  <testcase name="cancellingBlockedNosResponsePromptlyReleasesSnapshotWithoutPublishing[desktop]" classname="melox.network.CloudUploadProtocolTest" time="0.259"/>
+  <testcase name="rejectedNosUploadNeverRegistersPublishesOrReportsCompletion[desktop]" classname="melox.network.CloudUploadProtocolTest" time="0.25"/>
+  <testcase name="existingRemoteFileSkipsNosAndRealWeapiFallbackCanRegisterIt[desktop]" classname="melox.network.CloudUploadProtocolTest" time="0.248"/>
+  <testcase name="nativeTagsAndUnicodeFilenameSurviveCloudRegistration[desktop]" classname="melox.network.CloudUploadProtocolTest" time="0.318"/>
+  <testcase name="absentAccountEmptyAndInvalidAudioMakeNoCloudRequests[desktop]" classname="melox.network.CloudUploadProtocolTest" time="0.056"/>
+  <system-out><![CDATA[[DEBUG AudioPlayer] Bundled FFmpeg verified: sha256=ee930e8def21a993f4b8c680757df15054da1c8f2698da0fdf87f1f3b15bd633 bytes=172690600
+Cloud protocol: real native WAV metadata, exact 44144 upload bytes/MD5, encrypted EAPI, NOS token without Cookie, publish then cloud-list refresh
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

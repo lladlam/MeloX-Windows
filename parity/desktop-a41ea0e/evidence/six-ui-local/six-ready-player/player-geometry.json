@@ -1,0 +1,780 @@
+{
+  "status": "PASSED",
+  "scenes": 21,
+  "assertions": 35,
+  "reference": {
+    "file": "immersive-player.png",
+    "sha256": "89cec608c79da182e02bb7c41ac04d131e9baeb0a3a9344257a4bcc98af6b6a2",
+    "playing_artwork_landmark": [
+      207,
+      113,
+      785,
+      692
+    ],
+    "uncertainty_px": 1,
+    "source_revision": "unconfirmed upload; fixed source independently a41ea0e",
+    "density": "2 inferred from image landmarks and fixed source, no embedded density metadata"
+  },
+  "queue_reference": {
+    "sha256": "d457073b0968f91634d2fbf4613bf8cbd7c953ffedc892a4ec2408129f2821a0",
+    "mode_row_landmark": [
+      1063,
+      96,
+      1832,
+      168
+    ],
+    "actual_mode_row": [
+      1062,
+      96,
+      1832,
+      168
+    ],
+    "uncertainty_px": 1,
+    "provenance": "Unknown for generated local queue; do not fabricate the uploaded source album context"
+  },
+  "images": [
+    {
+      "file": "00-settings.png",
+      "sha256": "b25e501df6632f2db0f1562f1f83c599ae45707a73d699152400a9fd217adaa0"
+    },
+    {
+      "file": "01-consent.png",
+      "sha256": "096233f40a4472f1b404e643d50c46118e6ff1c94f8b78380b75679ca8e05463"
+    },
+    {
+      "file": "02-ready.png",
+      "sha256": "c1cbe7f2125510c427b9c9b6ca32b5213177a633688adc63490593f68927ef2b"
+    },
+    {
+      "file": "03-expanded.png",
+      "sha256": "78e3c59270a06e21a3dd84f73c05b371f447dd7a2825e9714c76da864d10a893",
+      "artwork": [
+        200.81079,
+        112.81079,
+        779.1892,
+        691.1892
+      ],
+      "expected_artwork": [
+        200.81081081081084,
+        112.81081081081084,
+        779.1891891891892,
+        691.1891891891892
+      ],
+      "progress": [
+        170,
+        888,
+        810,
+        954
+      ],
+      "seek": [
+        170,
+        888,
+        810,
+        924
+      ],
+      "uploaded_landmark_delta_px": [
+        -6.189,
+        -0.189,
+        -5.811,
+        -0.811
+      ]
+    },
+    {
+      "file": "04-favorite-ready.png",
+      "sha256": "9ad64ccb89fb5294f3d8c12d29a6fac40ddda11df27af132aab3173a9a6b1c8a",
+      "artwork": [
+        200.81079,
+        112.81079,
+        779.1892,
+        691.1892
+      ],
+      "expected_artwork": [
+        200.81081081081084,
+        112.81081081081084,
+        779.1891891891892,
+        691.1891891891892
+      ],
+      "progress": [
+        170,
+        888,
+        810,
+        954
+      ],
+      "seek": [
+        170,
+        888,
+        810,
+        924
+      ],
+      "uploaded_landmark_delta_px": [
+        -6.189,
+        -0.189,
+        -5.811,
+        -0.811
+      ]
+    },
+    {
+      "file": "05-favorite.png",
+      "sha256": "b3be1434ecdb3b6d52bd3f326b007a348882135652cfe0b8d10564d00c9244b2",
+      "artwork": [
+        200.81079,
+        112.81079,
+        779.1892,
+        691.1892
+      ],
+      "expected_artwork": [
+        200.81081081081084,
+        112.81081081081084,
+        779.1891891891892,
+        691.1891891891892
+      ],
+      "progress": [
+        170,
+        888,
+        810,
+        954
+      ],
+      "seek": [
+        170,
+        888,
+        810,
+        924
+      ],
+      "uploaded_landmark_delta_px": [
+        -6.189,
+        -0.189,
+        -5.811,
+        -0.811
+      ]
+    },
+    {
+      "file": "06-paused.png",
+      "sha256": "01decb700918846694880a4b0a975b6483f1bd31b69af007d6667630965dcf7c",
+      "artwork": [
+        276,
+        188,
+        704,
+        616
+      ],
+      "expected_artwork": [
+        276.0,
+        188.0,
+        704.0,
+        616.0
+      ],
+      "progress": [
+        170,
+        888,
+        810,
+        954
+      ],
+      "seek": [
+        170,
+        888,
+        810,
+        924
+      ]
+    },
+    {
+      "file": "07-resumed.png",
+      "sha256": "8fbad3d7ea4ff16019d20131ce51e3e5577504ea191477f45b74d6291e7104da",
+      "artwork": [
+        200.81079,
+        112.81079,
+        779.1892,
+        691.1892
+      ],
+      "expected_artwork": [
+        200.81081081081084,
+        112.81081081081084,
+        779.1891891891892,
+        691.1891891891892
+      ],
+      "progress": [
+        170,
+        888,
+        810,
+        954
+      ],
+      "seek": [
+        170,
+        888,
+        810,
+        924
+      ],
+      "uploaded_landmark_delta_px": [
+        -6.189,
+        -0.189,
+        -5.811,
+        -0.811
+      ]
+    },
+    {
+      "file": "08-seek.png",
+      "sha256": "3523a9faf505774fc2e59d70787425aa22fafebae3e918c15ce68382bb17bf68",
+      "artwork": [
+        200.81079,
+        112.81079,
+        779.1892,
+        691.1892
+      ],
+      "expected_artwork": [
+        200.81081081081084,
+        112.81081081081084,
+        779.1891891891892,
+        691.1891891891892
+      ],
+      "progress": [
+        170,
+        888,
+        810,
+        954
+      ],
+      "seek": [
+        170,
+        888,
+        810,
+        924
+      ],
+      "uploaded_landmark_delta_px": [
+        -6.189,
+        -0.189,
+        -5.811,
+        -0.811
+      ]
+    },
+    {
+      "file": "09-drag-seek.png",
+      "sha256": "1c30f92fc484dc1de5bbefe29ec1ef4b496b65188d1bededc06c87ca77074d97",
+      "artwork": [
+        200.81079,
+        112.81079,
+        779.1892,
+        691.1892
+      ],
+      "expected_artwork": [
+        200.81081081081084,
+        112.81081081081084,
+        779.1891891891892,
+        691.1891891891892
+      ],
+      "progress": [
+        170,
+        888,
+        810,
+        954
+      ],
+      "seek": [
+        170,
+        888,
+        810,
+        924
+      ],
+      "uploaded_landmark_delta_px": [
+        -6.189,
+        -0.189,
+        -5.811,
+        -0.811
+      ]
+    },
+    {
+      "file": "10-mute.png",
+      "sha256": "a81142f67c308e85ead6831a3d6e6ea5abed72b36265a88987031271e5a98ea0",
+      "artwork": [
+        200.81079,
+        112.81079,
+        779.1892,
+        691.1892
+      ],
+      "expected_artwork": [
+        200.81081081081084,
+        112.81081081081084,
+        779.1891891891892,
+        691.1891891891892
+      ],
+      "progress": [
+        170,
+        888,
+        810,
+        954
+      ],
+      "seek": [
+        170,
+        888,
+        810,
+        924
+      ],
+      "uploaded_landmark_delta_px": [
+        -6.189,
+        -0.189,
+        -5.811,
+        -0.811
+      ]
+    },
+    {
+      "file": "11-unmute.png",
+      "sha256": "4e4fc51423f05d8625fe415f50ff6fb1547d561c998ccc551896ffaba20a0463",
+      "artwork": [
+        200.81079,
+        112.81079,
+        779.1892,
+        691.1892
+      ],
+      "expected_artwork": [
+        200.81081081081084,
+        112.81081081081084,
+        779.1891891891892,
+        691.1891891891892
+      ],
+      "progress": [
+        170,
+        888,
+        810,
+        954
+      ],
+      "seek": [
+        170,
+        888,
+        810,
+        924
+      ],
+      "uploaded_landmark_delta_px": [
+        -6.189,
+        -0.189,
+        -5.811,
+        -0.811
+      ]
+    },
+    {
+      "file": "12-volume.png",
+      "sha256": "b4ec2d5490a4f1ba2f233b80ec64cb329c8fc9841f84f3a31892c74ce93239bb",
+      "artwork": [
+        200.81079,
+        112.81079,
+        779.1892,
+        691.1892
+      ],
+      "expected_artwork": [
+        200.81081081081084,
+        112.81081081081084,
+        779.1891891891892,
+        691.1891891891892
+      ],
+      "progress": [
+        170,
+        888,
+        810,
+        954
+      ],
+      "seek": [
+        170,
+        888,
+        810,
+        924
+      ],
+      "uploaded_landmark_delta_px": [
+        -6.189,
+        -0.189,
+        -5.811,
+        -0.811
+      ]
+    },
+    {
+      "file": "13-queue.png",
+      "sha256": "5f57eaeee869d79c2b246479afb0eb80b6b48e506ea1a33716b7c97f18eaf841",
+      "queue_modes": [
+        {
+          "tag": "desktop-queue-autoplay",
+          "bounds": [
+            1062,
+            96,
+            1436,
+            168
+          ],
+          "selected": false,
+          "surface_rgb": [
+            51,
+            57,
+            89
+          ]
+        },
+        {
+          "tag": "desktop-queue-automix",
+          "bounds": [
+            1458,
+            96,
+            1832,
+            168
+          ],
+          "selected": false,
+          "surface_rgb": [
+            52,
+            56,
+            88
+          ]
+        }
+      ],
+      "artwork": [
+        200.81079,
+        112.81079,
+        779.1892,
+        691.1892
+      ],
+      "expected_artwork": [
+        200.81081081081084,
+        112.81081081081084,
+        779.1891891891892,
+        691.1891891891892
+      ],
+      "progress": [
+        170,
+        888,
+        810,
+        954
+      ],
+      "seek": [
+        170,
+        888,
+        810,
+        924
+      ],
+      "uploaded_landmark_delta_px": [
+        -6.189,
+        -0.189,
+        -5.811,
+        -0.811
+      ]
+    },
+    {
+      "file": "14-autoplay.png",
+      "sha256": "39ba54d0e2ea8ce44a4dc17e1d6a92fc30940935401b9f94e005edf5db0c0ee1",
+      "queue_modes": [
+        {
+          "tag": "desktop-queue-autoplay",
+          "bounds": [
+            1062,
+            96,
+            1436,
+            168
+          ],
+          "selected": true,
+          "surface_rgb": [
+            228,
+            228,
+            232
+          ]
+        },
+        {
+          "tag": "desktop-queue-automix",
+          "bounds": [
+            1458,
+            96,
+            1832,
+            168
+          ],
+          "selected": false,
+          "surface_rgb": [
+            62,
+            54,
+            84
+          ]
+        }
+      ],
+      "artwork": [
+        200.81079,
+        112.81079,
+        779.1892,
+        691.1892
+      ],
+      "expected_artwork": [
+        200.81081081081084,
+        112.81081081081084,
+        779.1891891891892,
+        691.1891891891892
+      ],
+      "progress": [
+        170,
+        888,
+        810,
+        954
+      ],
+      "seek": [
+        170,
+        888,
+        810,
+        924
+      ],
+      "uploaded_landmark_delta_px": [
+        -6.189,
+        -0.189,
+        -5.811,
+        -0.811
+      ]
+    },
+    {
+      "file": "15-autoplay-off.png",
+      "sha256": "1085ba84865ece6f4db527d9bce3e8439727073e2e981e7512cadbd6d6eefb68",
+      "queue_modes": [
+        {
+          "tag": "desktop-queue-autoplay",
+          "bounds": [
+            1062,
+            96,
+            1436,
+            168
+          ],
+          "selected": false,
+          "surface_rgb": [
+            68,
+            68,
+            93
+          ]
+        },
+        {
+          "tag": "desktop-queue-automix",
+          "bounds": [
+            1458,
+            96,
+            1832,
+            168
+          ],
+          "selected": false,
+          "surface_rgb": [
+            51,
+            56,
+            84
+          ]
+        }
+      ],
+      "artwork": [
+        200.81079,
+        112.81079,
+        779.1892,
+        691.1892
+      ],
+      "expected_artwork": [
+        200.81081081081084,
+        112.81081081081084,
+        779.1891891891892,
+        691.1891891891892
+      ],
+      "progress": [
+        170,
+        888,
+        810,
+        954
+      ],
+      "seek": [
+        170,
+        888,
+        810,
+        924
+      ],
+      "uploaded_landmark_delta_px": [
+        -6.189,
+        -0.189,
+        -5.811,
+        -0.811
+      ]
+    },
+    {
+      "file": "16-automix.png",
+      "sha256": "6f5d0dd17478648fabeff3f3bbc12e6179ee56419c5a2097956eaef52e0854a4",
+      "queue_modes": [
+        {
+          "tag": "desktop-queue-autoplay",
+          "bounds": [
+            1062,
+            96,
+            1436,
+            168
+          ],
+          "selected": false,
+          "surface_rgb": [
+            61,
+            73,
+            102
+          ]
+        },
+        {
+          "tag": "desktop-queue-automix",
+          "bounds": [
+            1458,
+            96,
+            1832,
+            168
+          ],
+          "selected": true,
+          "surface_rgb": [
+            229,
+            230,
+            234
+          ]
+        }
+      ],
+      "artwork": [
+        200.81079,
+        112.81079,
+        779.1892,
+        691.1892
+      ],
+      "expected_artwork": [
+        200.81081081081084,
+        112.81081081081084,
+        779.1891891891892,
+        691.1891891891892
+      ],
+      "progress": [
+        170,
+        888,
+        810,
+        954
+      ],
+      "seek": [
+        170,
+        888,
+        810,
+        924
+      ],
+      "uploaded_landmark_delta_px": [
+        -6.189,
+        -0.189,
+        -5.811,
+        -0.811
+      ]
+    },
+    {
+      "file": "17-automix-off.png",
+      "sha256": "cade3dd060fef6fcfc8fddae8eb1e28e51b4c745e015494e2f0f382cfd9e65d6",
+      "queue_modes": [
+        {
+          "tag": "desktop-queue-autoplay",
+          "bounds": [
+            1062,
+            96,
+            1436,
+            168
+          ],
+          "selected": false,
+          "surface_rgb": [
+            50,
+            56,
+            84
+          ]
+        },
+        {
+          "tag": "desktop-queue-automix",
+          "bounds": [
+            1458,
+            96,
+            1832,
+            168
+          ],
+          "selected": false,
+          "surface_rgb": [
+            70,
+            68,
+            99
+          ]
+        }
+      ],
+      "artwork": [
+        200.81079,
+        112.81079,
+        779.1892,
+        691.1892
+      ],
+      "expected_artwork": [
+        200.81081081081084,
+        112.81081081081084,
+        779.1891891891892,
+        691.1891891891892
+      ],
+      "progress": [
+        170,
+        888,
+        810,
+        954
+      ],
+      "seek": [
+        170,
+        888,
+        810,
+        924
+      ],
+      "uploaded_landmark_delta_px": [
+        -6.189,
+        -0.189,
+        -5.811,
+        -0.811
+      ]
+    },
+    {
+      "file": "18-artwork-only.png",
+      "sha256": "9f6c64d8754968e8dacf70a5fffcef91cdcec34f7e81ab088c4cf6e4a422055a",
+      "artwork": [
+        690.8108,
+        112.81079,
+        1269.1892,
+        691.1892
+      ],
+      "expected_artwork": [
+        690.8108108108108,
+        112.81081081081084,
+        1269.1891891891892,
+        691.1891891891892
+      ],
+      "progress": [
+        660,
+        888,
+        1300,
+        954
+      ],
+      "seek": [
+        660,
+        888,
+        1300,
+        924
+      ]
+    },
+    {
+      "file": "19-lyrics.png",
+      "sha256": "c5ceaf0d56327dc73b4e2fa5e14b9cbff5bb865b2f2b1f2275a991bde50296c9",
+      "artwork": [
+        200.81079,
+        112.81079,
+        779.1892,
+        691.1892
+      ],
+      "expected_artwork": [
+        200.81081081081084,
+        112.81081081081084,
+        779.1891891891892,
+        691.1891891891892
+      ],
+      "progress": [
+        170,
+        888,
+        810,
+        954
+      ],
+      "seek": [
+        170,
+        888,
+        810,
+        924
+      ],
+      "uploaded_landmark_delta_px": [
+        -6.189,
+        -0.189,
+        -5.811,
+        -0.811
+      ]
+    },
+    {
+      "file": "20-collapsed.png",
+      "sha256": "820ff69565d1dc8cdbf8fad0411fe269c894f8a3459efa0439e16c063762ab1b"
+    }
+  ],
+  "scope": "Production local-media replay, original-sized frames, independent source/cover landmarks; different music/text/background, NOT full-image pixel parity"
+}

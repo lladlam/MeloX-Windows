@@ -1,0 +1,98 @@
+{
+  "status": "PASSED",
+  "scope": "Original viewport/boundary, real timed lyrics seek, PCM and inspector transitions; not full-image pixel parity",
+  "theme": "Light",
+  "panels": [
+    {
+      "file": "04-lyrics-pane.png",
+      "kind": "Lyrics",
+      "bounds": [
+        1694,
+        0,
+        2414,
+        1356
+      ],
+      "surface_sample_rgb": [
+        252,
+        252,
+        252
+      ]
+    },
+    {
+      "file": "05-reveal-lyric.png",
+      "kind": "Lyrics",
+      "bounds": [
+        1694,
+        0,
+        2414,
+        1356
+      ],
+      "surface_sample_rgb": [
+        252,
+        252,
+        252
+      ]
+    },
+    {
+      "file": "06-seek-lyrics.png",
+      "kind": "Lyrics",
+      "bounds": [
+        1694,
+        0,
+        2414,
+        1356
+      ],
+      "surface_sample_rgb": [
+        252,
+        252,
+        252
+      ]
+    },
+    {
+      "file": "07-resume-lyrics.png",
+      "kind": "Lyrics",
+      "bounds": [
+        1694,
+        0,
+        2414,
+        1356
+      ],
+      "surface_sample_rgb": [
+        252,
+        252,
+        252
+      ]
+    },
+    {
+      "file": "08-queue-inspector.png",
+      "kind": "Queue",
+      "bounds": [
+        1898,
+        0,
+        2414,
+        1356
+      ],
+      "surface_sample_rgb": [
+        252,
+        252,
+        252
+      ]
+    },
+    {
+      "file": "09-lyrics-again.png",
+      "kind": "Lyrics",
+      "bounds": [
+        1694,
+        0,
+        2414,
+        1356
+      ],
+      "surface_sample_rgb": [
+        252,
+        252,
+        252
+      ]
+    }
+  ],
+  "reference": null
+}

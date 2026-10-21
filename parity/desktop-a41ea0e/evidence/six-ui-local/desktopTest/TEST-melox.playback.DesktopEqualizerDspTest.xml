@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="DesktopEqualizerDspTest[desktop]" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-10-21T04:22:09.134Z" hostname="lladlam-arch" time="0.653">
+  <properties/>
+  <testcase name="boostAndCutAtEveryBandHaveMeasuredCenterGainAndNoChannelLeakage[desktop]" classname="melox.playback.DesktopEqualizerDspTest" time="0.067"/>
+  <testcase name="liveDisableMorphEndsInByteExactBypassAndPreampVolumeSaturatesWithoutWrap[desktop]" classname="melox.playback.DesktopEqualizerDspTest" time="0.016"/>
+  <testcase name="canonicalValuesOverrideLegacyWithoutDeletingExistingBytesAndCorruptGainsAreBounded[desktop]" classname="melox.playback.DesktopEqualizerDspTest" time="0.19"/>
+  <testcase name="streamingChunksPreserveFilterHistoryAndReleaseClearsIt[desktop]" classname="melox.playback.DesktopEqualizerDspTest" time="0.013"/>
+  <testcase name="explicitResetMasksLegacyEqualizerWithoutErasingItsExistingValues[desktop]" classname="melox.playback.DesktopEqualizerDspTest" time="0.362"/>
+  <testcase name="disabledAndFlatUnityAreByteExactRegardlessOfBlockBoundaries[desktop]" classname="melox.playback.DesktopEqualizerDspTest" time="0.005"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

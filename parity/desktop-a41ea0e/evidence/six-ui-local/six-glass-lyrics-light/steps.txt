@@ -1,0 +1,10 @@
+consent:tap@remote-reject
+ready:wait@1500
+pause-for-lyric-input:tap@mini-player-play-pause
+lyrics-pane:tap@desktop-show-lyrics
+reveal-lyric:reveal@lyric-line-1
+seek-lyrics:tap@lyric-line-1
+resume-lyrics:tap@mini-player-play-pause
+queue-inspector:tap@desktop-show-queue
+lyrics-again:tap@desktop-show-lyrics
+close-pane:tap@desktop-show-lyrics

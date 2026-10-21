@@ -1,0 +1,9 @@
+consent=cloud-enabled:false,absent:remote-reject
+ready=playing:true,tag:desktop-home,tag:desktop-bottom-player
+pause-for-lyric-input=playing:false
+lyrics-pane=tag:desktop-inspector:Lyrics,tag:player-lyrics,tag-prefix:lyric-line-
+seek-lyrics=position-min:4000,no-playback-error:true
+resume-lyrics=playing:true
+queue-inspector=tag:desktop-inspector:Queue,absent:desktop-inspector:Lyrics
+lyrics-again=tag:desktop-inspector:Lyrics,absent:desktop-inspector:Queue
+close-pane=absent:desktop-inspector:Lyrics,tag:desktop-home

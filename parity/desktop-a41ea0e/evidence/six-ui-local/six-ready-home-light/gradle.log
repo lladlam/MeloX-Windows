@@ -1,0 +1,148 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.5.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :desktop:kmpPartiallyResolvedDependenciesChecker
+> Task :desktop:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :desktop:extractPinnedGlassGeometry UP-TO-DATE
+> Task :desktop:convertXmlValueResourcesForCommonMain NO-SOURCE
+> Task :desktop:copyNonXmlValueResourcesForCommonMain NO-SOURCE
+> Task :desktop:prepareComposeResourcesTaskForCommonMain NO-SOURCE
+> Task :desktop:generateResourceAccessorsForCommonMain SKIPPED
+> Task :desktop:convertXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :desktop:copyNonXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :desktop:prepareComposeResourcesTaskForDesktopMain NO-SOURCE
+> Task :desktop:generateResourceAccessorsForDesktopMain SKIPPED
+> Task :desktop:generateActualResourceCollectorsForDesktopMain SKIPPED
+> Task :desktop:generateComposeResClass SKIPPED
+> Task :desktop:generateExpectResourceCollectorsForCommonMain SKIPPED
+> Task :innertube:kmpPartiallyResolvedDependenciesChecker
+> Task :innertube:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :innertube:extractAndroidInnerTube UP-TO-DATE
+> Task :innertube:compileKotlinDesktop UP-TO-DATE
+> Task :innertube:compileDesktopMainJava NO-SOURCE
+> Task :innertube:desktopProcessResources NO-SOURCE
+> Task :innertube:processDesktopMainResources SKIPPED
+> Task :innertube:desktopMainClasses UP-TO-DATE
+> Task :innertube:desktopJar UP-TO-DATE
+> Task :shared:kmpPartiallyResolvedDependenciesChecker
+> Task :shared:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :shared:convertXmlValueResourcesForCommonMain NO-SOURCE
+> Task :shared:copyNonXmlValueResourcesForCommonMain NO-SOURCE
+> Task :shared:prepareComposeResourcesTaskForCommonMain NO-SOURCE
+> Task :shared:generateResourceAccessorsForCommonMain SKIPPED
+> Task :shared:convertXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :shared:copyNonXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :shared:prepareComposeResourcesTaskForDesktopMain NO-SOURCE
+> Task :shared:generateResourceAccessorsForDesktopMain SKIPPED
+> Task :shared:generateActualResourceCollectorsForDesktopMain SKIPPED
+> Task :shared:generateComposeResClass SKIPPED
+> Task :shared:generateExpectResourceCollectorsForCommonMain SKIPPED
+> Task :shared:compileKotlinDesktop UP-TO-DATE
+> Task :shared:compileDesktopMainJava NO-SOURCE
+> Task :shared:assembleDesktopMainResources UP-TO-DATE
+> Task :shared:desktopProcessResources UP-TO-DATE
+> Task :shared:processDesktopMainResources SKIPPED
+> Task :shared:desktopMainClasses UP-TO-DATE
+> Task :shared:desktopJar UP-TO-DATE
+> Task :desktop:compileKotlinDesktop
+> Task :desktop:compileDesktopMainJava NO-SOURCE
+> Task :desktop:assembleDesktopMainResources UP-TO-DATE
+> Task :desktop:desktopProcessResources UP-TO-DATE
+> Task :desktop:processDesktopMainResources SKIPPED
+> Task :desktop:desktopMainClasses
+
+> Task :desktop:captureUi
+[INFO MeloXFont] Android MiLan Pro static instances loaded: CSS=[100, 200, 300, 400, 500, 600, 700, 800, 900] files=mi_lan_pro_w{100..800}.ttf (CSS 900 shares frozen axis-700 instance)
+Captured 00-home: 2188x1356 density=2.0
+Physical click consent: remote-reject at Offset(588.0, 834.0)
+Captured 01-consent: 2188x1356 density=2.0
+Verified consent: cloud-enabled:false
+Captured 02-neutral-pointer: 2188x1356 density=2.0
+Captured 03-home: 2188x1356 density=2.0
+Verified home: tag:desktop-home
+Verified home: tag:desktop-sidebar
+Verified home: tag:desktop-home-action:daily_songs
+Verified home: tag:desktop-home-action:heart_mode
+Verified home: tag:desktop-home-action:private_roaming
+Verified home: runtime:desktopLayoutEnabled:true
+Verified home: runtime:reduceMotion:true
+Physical click account: desktop-account at Offset(215.0, 1218.0)
+Captured 04-account: 2188x1356 density=2.0
+Verified account: tag:desktop-account-sheet
+Verified account: tag:desktop-account-signed-out
+Verified account: tag:desktop-account-login
+Physical click account-done: desktop-account-done at Offset(1482.0, 1216.0)
+Captured 05-account-done: 2188x1356 density=2.0
+Verified account-done: absent:desktop-account-sheet
+Verified account-done: tag:desktop-home
+Physical click account-again: desktop-account at Offset(215.0, 1218.0)
+Captured 06-account-again: 2188x1356 density=2.0
+Verified account-again: tag:desktop-account-sheet
+Captured 07-account-escape: 2188x1356 density=2.0
+Verified account-escape: absent:desktop-account-sheet
+Captured 08-shelf-hover: 2188x1356 density=2.0
+Verified shelf-hover: tag:desktop-home-page:actions:next
+Physical click next-actions: desktop-home-page:actions:next at Offset(2040.0, 736.0)
+Captured 09-next-actions: 2188x1356 density=2.0
+Verified next-actions: tag:desktop-home-action:similar_songs
+Verified next-actions: tag:desktop-home-page:actions:previous
+Physical click previous-actions: desktop-home-page:actions:previous at Offset(562.0, 736.0)
+Captured 10-previous-actions: 2188x1356 density=2.0
+Verified previous-actions: tag:desktop-home-action:daily_songs
+Captured 11-reveal-hero: 2188x1356 density=2.0
+Verified reveal-hero: tag-prefix:desktop-home-playlist:
+Physical click real-playlist: desktop-home-playlist:167900089 at Offset(765.0, 970.0)
+Captured 12-real-playlist: 2188x1356 density=2.0
+Verified real-playlist: tag:desktop-playlist-detail
+Verified real-playlist: tag:desktop-collection-header
+Physical click return-home: desktop-collection-back at Offset(466.0, 52.0)
+Captured 13-return-home: 2188x1356 density=2.0
+Verified return-home: tag:desktop-home
+Verified return-home: absent:desktop-playlist-detail
+Verified return-home: tag-prefix:desktop-home-playlist:
+Captured 14-tailored: 2188x1356 density=2.0
+Verified tailored: tag-prefix:desktop-home-media-playlist:
+Captured 15-album-shelf: 2188x1356 density=2.0
+Verified album-shelf: tag-prefix:desktop-home-album:
+Physical click real-album: desktop-home-album:404945877 at Offset(695.0, 856.0)
+Captured 16-real-album: 2188x1356 density=2.0
+Verified real-album: tag:desktop-album-detail
+Verified real-album: tag:desktop-collection-header
+Physical click return-from-album: desktop-collection-back at Offset(466.0, 52.0)
+Captured 17-return-from-album: 2188x1356 density=2.0
+Verified return-from-album: tag:desktop-home
+Verified return-from-album: absent:desktop-album-detail
+Verified return-from-album: tag-prefix:desktop-home-album:
+Physical click settings: desktop-settings at Offset(215.0, 1304.0)
+Captured 18-settings: 2188x1356 density=2.0
+Verified settings: tag:settings-root
+Physical click general: settings-open-general at Offset(795.5, 142.0)
+Captured 19-general: 2188x1356 density=2.0
+Verified general: tag:settings-general
+Captured 20-theme: 2188x1356 density=2.0
+Physical click theme-choice: theme_mode at Offset(1859.0, 959.5)
+Captured 21-theme-choice: 2188x1356 density=2.0
+Physical click switch-theme: settings-option:深色 at Offset(1674.0, 1161.0)
+Captured 22-switch-theme: 2188x1356 density=2.0
+Verified switch-theme: runtime:themeMode:Dark
+Physical click home-new-theme: desktop-nav:Home at Offset(215.0, 188.0)
+Captured 23-home-new-theme: 2188x1356 density=2.0
+Verified home-new-theme: tag:desktop-home
+Verified home-new-theme: tag:desktop-sidebar
+Physical click account-new-theme: desktop-account at Offset(215.0, 1218.0)
+Captured 24-account-new-theme: 2188x1356 density=2.0
+Verified account-new-theme: tag:desktop-account-sheet
+Verified account-new-theme: tag:desktop-account-signed-out
+Physical click account-new-theme-done: desktop-account-done at Offset(1482.0, 1216.0)
+Captured 25-account-new-theme-done: 2188x1356 density=2.0
+Verified account-new-theme-done: absent:desktop-account-sheet
+Verified account-new-theme-done: tag:desktop-home
+Captured 26-return-top: 2188x1356 density=2.0
+Verified return-top: tag:desktop-home-action:daily_songs
+Captured 27-top-new-theme: 2188x1356 density=2.0
+Verified top-new-theme: tag:desktop-home-action:daily_songs
+Captured 28-neutral-new-theme: 2188x1356 density=2.0
+Verified neutral-new-theme: tag:desktop-home
+
+BUILD SUCCESSFUL in 1m 12s
+15 actionable tasks: 5 executed, 10 up-to-date
+Consider enabling configuration cache to speed up this build: https://docs.gradle.org/9.5.1/userguide/configuration_cache_enabling.html

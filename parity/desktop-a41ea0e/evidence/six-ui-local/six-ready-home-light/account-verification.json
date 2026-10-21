@@ -1,0 +1,67 @@
+{
+  "status": "PASSED",
+  "scope": "Source sheet/button geometry and actual rendered surfaces; not signed-in/full-image pixel acceptance",
+  "measurements": [
+    {
+      "file": "04-account.png",
+      "sheet": [
+        594,
+        78,
+        1594,
+        1278
+      ],
+      "done": [
+        1402,
+        1186,
+        1562,
+        1246
+      ],
+      "surface_rgb": [
+        248,
+        247,
+        247
+      ]
+    },
+    {
+      "file": "06-account-again.png",
+      "sheet": [
+        594,
+        78,
+        1594,
+        1278
+      ],
+      "done": [
+        1402,
+        1186,
+        1562,
+        1246
+      ],
+      "surface_rgb": [
+        248,
+        247,
+        247
+      ]
+    },
+    {
+      "file": "24-account-new-theme.png",
+      "sheet": [
+        594,
+        78,
+        1594,
+        1278
+      ],
+      "done": [
+        1402,
+        1186,
+        1562,
+        1246
+      ],
+      "surface_rgb": [
+        49,
+        46,
+        46
+      ]
+    }
+  ],
+  "reference": null
+}

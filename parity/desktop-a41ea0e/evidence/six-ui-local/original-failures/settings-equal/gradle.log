@@ -1,0 +1,217 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.5.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :desktop:kmpPartiallyResolvedDependenciesChecker
+> Task :desktop:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :desktop:extractPinnedGlassGeometry UP-TO-DATE
+> Task :desktop:convertXmlValueResourcesForCommonMain NO-SOURCE
+> Task :desktop:copyNonXmlValueResourcesForCommonMain NO-SOURCE
+> Task :desktop:prepareComposeResourcesTaskForCommonMain NO-SOURCE
+> Task :desktop:generateResourceAccessorsForCommonMain SKIPPED
+> Task :desktop:convertXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :desktop:copyNonXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :desktop:prepareComposeResourcesTaskForDesktopMain NO-SOURCE
+> Task :desktop:generateResourceAccessorsForDesktopMain SKIPPED
+> Task :desktop:generateActualResourceCollectorsForDesktopMain SKIPPED
+> Task :desktop:generateComposeResClass SKIPPED
+> Task :desktop:generateExpectResourceCollectorsForCommonMain SKIPPED
+> Task :innertube:kmpPartiallyResolvedDependenciesChecker
+> Task :innertube:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :innertube:extractAndroidInnerTube UP-TO-DATE
+> Task :innertube:compileKotlinDesktop UP-TO-DATE
+> Task :innertube:compileDesktopMainJava NO-SOURCE
+> Task :innertube:desktopProcessResources NO-SOURCE
+> Task :innertube:processDesktopMainResources SKIPPED
+> Task :innertube:desktopMainClasses UP-TO-DATE
+> Task :innertube:desktopJar UP-TO-DATE
+> Task :shared:kmpPartiallyResolvedDependenciesChecker
+> Task :shared:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :shared:convertXmlValueResourcesForCommonMain NO-SOURCE
+> Task :shared:copyNonXmlValueResourcesForCommonMain NO-SOURCE
+> Task :shared:prepareComposeResourcesTaskForCommonMain NO-SOURCE
+> Task :shared:generateResourceAccessorsForCommonMain SKIPPED
+> Task :shared:convertXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :shared:copyNonXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :shared:prepareComposeResourcesTaskForDesktopMain NO-SOURCE
+> Task :shared:generateResourceAccessorsForDesktopMain SKIPPED
+> Task :shared:generateActualResourceCollectorsForDesktopMain SKIPPED
+> Task :shared:generateComposeResClass SKIPPED
+> Task :shared:generateExpectResourceCollectorsForCommonMain SKIPPED
+> Task :shared:compileKotlinDesktop UP-TO-DATE
+> Task :shared:compileDesktopMainJava NO-SOURCE
+> Task :shared:assembleDesktopMainResources UP-TO-DATE
+> Task :shared:desktopProcessResources UP-TO-DATE
+> Task :shared:processDesktopMainResources SKIPPED
+> Task :shared:desktopMainClasses UP-TO-DATE
+> Task :shared:desktopJar UP-TO-DATE
+> Task :desktop:compileKotlinDesktop
+> Task :desktop:compileDesktopMainJava NO-SOURCE
+> Task :desktop:assembleDesktopMainResources UP-TO-DATE
+> Task :desktop:desktopProcessResources UP-TO-DATE
+> Task :desktop:processDesktopMainResources SKIPPED
+> Task :desktop:desktopMainClasses
+
+> Task :desktop:captureUi
+[INFO MeloXFont] Android MiLan Pro static instances loaded: CSS=[100, 200, 300, 400, 500, 600, 700, 800, 900] files=mi_lan_pro_w{100..800}.ttf (CSS 900 shares frozen axis-700 instance)
+Captured 00-settings: 1280x900 density=1.0
+Physical click remote-reject: remote-reject at Offset(340.5, 528.0)
+Captured 01-remote-reject: 1280x900 density=1.0
+Verified remote-reject: cloud-choice:true
+Verified remote-reject: cloud-enabled:false
+Physical click group-General: desktop-settings-tab:General at Offset(491.0, 60.0)
+Captured 02-group-General: 1280x900 density=1.0
+Captured 03-reveal-2: 1280x900 density=1.0
+Physical click open-General: desktop-settings-subtab:General at Offset(458.0, 249.0)
+Captured 04-open-General: 1280x900 density=1.0
+Captured 05-reveal-4: 1280x900 density=1.0
+Captured 06-inspect-General: 1280x900 density=1.0
+Verified inspect-General: tag:settings-page:General
+Captured 07-reveal-6: 1280x900 density=1.0
+Physical click open-Appearance: desktop-settings-subtab:Appearance at Offset(548.0, 174.0)
+Captured 08-open-Appearance: 1280x900 density=1.0
+Captured 09-reveal-8: 1280x900 density=1.0
+Captured 10-inspect-Appearance: 1280x900 density=1.0
+Verified inspect-Appearance: tag:settings-page:Appearance
+Captured 11-reveal-10: 1280x900 density=1.0
+Physical click open-Content: desktop-settings-subtab:Content at Offset(640.5, 174.0)
+Captured 12-open-Content: 1280x900 density=1.0
+Captured 13-reveal-12: 1280x900 density=1.0
+Captured 14-inspect-Content: 1280x900 density=1.0
+Verified inspect-Content: tag:settings-page:Content
+Physical click group-Features: desktop-settings-tab:Features at Offset(617.0, 60.0)
+Captured 15-group-Features: 1280x900 density=1.0
+Captured 16-reveal-15: 1280x900 density=1.0
+Physical click open-Features: desktop-settings-subtab:Features at Offset(461.0, 249.0)
+Captured 17-open-Features: 1280x900 density=1.0
+Captured 18-reveal-17: 1280x900 density=1.0
+Captured 19-inspect-Features: 1280x900 density=1.0
+Verified inspect-Features: tag:settings-page:Features
+Captured 20-reveal-19: 1280x900 density=1.0
+Physical click open-TabLayout: desktop-settings-subtab:TabLayout at Offset(571.5, 249.0)
+Captured 21-open-TabLayout: 1280x900 density=1.0
+Captured 22-reveal-21: 1280x900 density=1.0
+Captured 23-inspect-TabLayout: 1280x900 density=1.0
+Verified inspect-TabLayout: tag:settings-page:TabLayout
+Captured 24-reveal-23: 1280x900 density=1.0
+Physical click open-Recognition: desktop-settings-subtab:Recognition at Offset(707.0, 107.5)
+Captured 25-open-Recognition: 1280x900 density=1.0
+Captured 26-reveal-25: 1280x900 density=1.0
+Captured 27-inspect-Recognition: 1280x900 density=1.0
+Verified inspect-Recognition: tag:settings-page:Recognition
+Captured 28-reveal-27: 1280x900 density=1.0
+Physical click open-Messages: desktop-settings-subtab:Messages at Offset(873.0, 249.0)
+Captured 29-open-Messages: 1280x900 density=1.0
+Captured 30-reveal-29: 1280x900 density=1.0
+Captured 31-inspect-Messages: 1280x900 density=1.0
+Verified inspect-Messages: tag:settings-page:Messages
+Captured 32-reveal-31: 1280x900 density=1.0
+Physical click open-ListenTogether: desktop-settings-subtab:ListenTogether at Offset(1022.5, 249.0)
+Captured 33-open-ListenTogether: 1280x900 density=1.0
+Captured 34-reveal-33: 1280x900 density=1.0
+Captured 35-inspect-ListenTogether: 1280x900 density=1.0
+Verified inspect-ListenTogether: tag:settings-page:ListenTogether
+Physical click group-Playback: desktop-settings-tab:Playback at Offset(744.0, 60.0)
+Captured 36-group-Playback: 1280x900 density=1.0
+Captured 37-reveal-36: 1280x900 density=1.0
+Physical click open-Playback: desktop-settings-subtab:Playback at Offset(462.0, 249.0)
+Captured 38-open-Playback: 1280x900 density=1.0
+Captured 39-reveal-38: 1280x900 density=1.0
+Captured 40-inspect-Playback: 1280x900 density=1.0
+Verified inspect-Playback: tag:settings-page:Playback
+Captured 41-reveal-40: 1280x900 density=1.0
+Physical click open-Lyrics: desktop-settings-subtab:Lyrics at Offset(538.0, 249.0)
+Captured 42-open-Lyrics: 1280x900 density=1.0
+Captured 43-reveal-42: 1280x900 density=1.0
+Captured 44-inspect-Lyrics: 1280x900 density=1.0
+Verified inspect-Lyrics: tag:settings-page:Lyrics
+Captured 45-reveal-44: 1280x900 density=1.0
+Physical click open-SystemPlayback: desktop-settings-subtab:SystemPlayback at Offset(624.0, 107.5)
+Captured 46-open-SystemPlayback: 1280x900 density=1.0
+Captured 47-reveal-46: 1280x900 density=1.0
+Captured 48-inspect-SystemPlayback: 1280x900 density=1.0
+Verified inspect-SystemPlayback: tag:settings-page:SystemPlayback
+Captured 49-reveal-48: 1280x900 density=1.0
+Physical click open-SkylineLyrics: desktop-settings-subtab:SkylineLyrics at Offset(766.0, 115.0)
+Captured 50-open-SkylineLyrics: 1280x900 density=1.0
+Captured 51-reveal-50: 1280x900 density=1.0
+Captured 52-inspect-SkylineLyrics: 1280x900 density=1.0
+Verified inspect-SkylineLyrics: tag:settings-page:SkylineLyrics
+Captured 53-reveal-52: 1280x900 density=1.0
+Physical click open-FloatingLyrics: desktop-settings-subtab:FloatingLyrics at Offset(912.0, 115.0)
+Captured 54-open-FloatingLyrics: 1280x900 density=1.0
+Captured 55-reveal-54: 1280x900 density=1.0
+Captured 56-inspect-FloatingLyrics: 1280x900 density=1.0
+Verified inspect-FloatingLyrics: tag:settings-page:FloatingLyrics
+Physical click group-Storage: desktop-settings-tab:Storage at Offset(870.0, 60.0)
+Captured 57-group-Storage: 1280x900 density=1.0
+Captured 58-reveal-57: 1280x900 density=1.0
+Captured 59-inspect-Storage: 1280x900 density=1.0
+Verified inspect-Storage: tag:settings-page:Storage
+Physical click group-Developer: desktop-settings-tab:Developer at Offset(997.0, 60.0)
+Captured 60-group-Developer: 1280x900 density=1.0
+Captured 61-reveal-60: 1280x900 density=1.0
+Physical click open-RemoteConfig: desktop-settings-subtab:RemoteConfig at Offset(517.0, 249.0)
+Captured 62-open-RemoteConfig: 1280x900 density=1.0
+Captured 63-reveal-62: 1280x900 density=1.0
+Captured 64-inspect-RemoteConfig: 1280x900 density=1.0
+Verified inspect-RemoteConfig: tag:settings-page:RemoteConfig
+Captured 65-reveal-64: 1280x900 density=1.0
+Physical click open-About: desktop-settings-subtab:About at Offset(676.5, 249.0)
+Captured 66-open-About: 1280x900 density=1.0
+Captured 67-reveal-66: 1280x900 density=1.0
+Captured 68-inspect-About: 1280x900 density=1.0
+Verified inspect-About: tag:settings-page:About
+Captured 69-reveal-68: 1280x900 density=1.0
+Physical click open-Legal: desktop-settings-subtab:Legal at Offset(828.5, 107.0)
+Captured 70-open-Legal: 1280x900 density=1.0
+Captured 71-reveal-70: 1280x900 density=1.0
+Captured 72-inspect-Legal: 1280x900 density=1.0
+Verified inspect-Legal: tag:settings-page:Legal
+Captured 73-reveal-72: 1280x900 density=1.0
+Physical click open-Privacy: desktop-settings-subtab:Privacy at Offset(1001.5, 214.0)
+Captured 74-open-Privacy: 1280x900 density=1.0
+Captured 75-reveal-74: 1280x900 density=1.0
+Captured 76-inspect-Privacy: 1280x900 density=1.0
+Verified inspect-Privacy: tag:settings-page:Privacy
+Captured failure: 1280x900 density=1.0
+Exception in thread "main" java.lang.IllegalStateException: Could not reveal production node desktop-settings-subtab:Developer using mouse wheel at reveal-76
+	at melox.validation.MeloXVisualCaptureKt$main$1$6.invokeSuspend(MeloXVisualCapture.kt:482)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTaskKt.resume(DispatchedTask.kt:233)
+	at kotlinx.coroutines.DispatchedTaskKt.dispatch(DispatchedTask.kt:152)
+	at kotlinx.coroutines.CancellableContinuationImpl.dispatchResume(CancellableContinuationImpl.kt:470)
+	at kotlinx.coroutines.CancellableContinuationImpl.resumeImpl$kotlinx_coroutines_core(CancellableContinuationImpl.kt:504)
+	at kotlinx.coroutines.CancellableContinuationImpl.resumeImpl$kotlinx_coroutines_core$default(CancellableContinuationImpl.kt:493)
+	at kotlinx.coroutines.CancellableContinuationImpl.resumeUndispatched(CancellableContinuationImpl.kt:596)
+	at kotlinx.coroutines.swing.SwingDispatcher.scheduleResumeAfterDelay$lambda$0(SwingDispatcher.kt:28)
+	at java.desktop/javax.swing.Timer.fireActionPerformed(Timer.java:311)
+	at java.desktop/javax.swing.Timer$DoPostEvent.run(Timer.java:243)
+	at java.desktop/java.awt.event.InvocationEvent.dispatch(InvocationEvent.java:318)
+	at java.desktop/java.awt.EventQueue.dispatchEventImpl(EventQueue.java:773)
+	at java.desktop/java.awt.EventQueue$4.run(EventQueue.java:720)
+	at java.desktop/java.awt.EventQueue$4.run(EventQueue.java:714)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
+	at java.base/java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:86)
+	at java.desktop/java.awt.EventQueue.dispatchEvent(EventQueue.java:742)
+	at java.desktop/java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:203)
+	at java.desktop/java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:124)
+	at java.desktop/java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:113)
+	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:109)
+	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:101)
+	at java.desktop/java.awt.EventDispatchThread.run(EventDispatchThread.java:90)
+
+> Task :desktop:captureUi FAILED
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':desktop:captureUi' (registered in build file 'desktop/build.gradle.kts').
+> Process 'command '/usr/lib/jvm/java-17-openjdk/bin/java'' finished with non-zero exit value 1
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 3m 11s
+15 actionable tasks: 5 executed, 10 up-to-date

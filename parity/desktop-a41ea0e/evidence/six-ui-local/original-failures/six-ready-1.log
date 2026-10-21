@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/mnt/ntfs_files_sda4/项目/MeloX-Windows/tools/verify_desktop_player_capture.py", line 38, in <module>
+    assert abs(y0 - 96) <= 1 and abs(y1 - y0 - 72) <= 1
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

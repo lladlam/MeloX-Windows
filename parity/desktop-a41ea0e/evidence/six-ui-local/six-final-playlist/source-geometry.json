@@ -1,0 +1,398 @@
+{
+  "status": "PASSED",
+  "page": "playlist",
+  "scenes": 16,
+  "assertions": 13,
+  "home": "/mnt/ntfs_files_sda4/项目/MeloX-Windows/desktop/build/parity/six-final-playlist-home",
+  "reference": {
+    "sha256": "aac558cd59d005aeb24dbf1b2805183f2f9ab15f42d816685adb9137c123301f",
+    "artwork": [
+      498,
+      172,
+      1054,
+      728
+    ],
+    "actual_artwork": [
+      498,
+      172,
+      1054,
+      728
+    ],
+    "delta_px": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "scope": "Original artwork landmark only; different public playlist, typography and native toolbar remain outside full-image acceptance"
+  },
+  "source_commit": "a41ea0e1e1fa69fb543d827b853fe3aff5420951",
+  "geometries": [
+    {
+      "scene": "08-open-real-playlist.png",
+      "artwork": [
+        498,
+        172,
+        1054,
+        728
+      ],
+      "details": [
+        1122,
+        213,
+        1876,
+        716
+      ],
+      "rows": [
+        [
+          498,
+          865,
+          1876,
+          957
+        ],
+        [
+          498,
+          959,
+          1876,
+          1051
+        ],
+        [
+          498,
+          1053,
+          1876,
+          1145
+        ],
+        [
+          498,
+          1147,
+          1876,
+          1239
+        ],
+        [
+          498,
+          1241,
+          1876,
+          1333
+        ]
+      ]
+    },
+    {
+      "scene": "09-open-search.png",
+      "artwork": [
+        498,
+        172,
+        1054,
+        728
+      ],
+      "details": [
+        1122,
+        213,
+        1876,
+        716
+      ],
+      "rows": [
+        [
+          498,
+          865,
+          1876,
+          957
+        ],
+        [
+          498,
+          959,
+          1876,
+          1051
+        ],
+        [
+          498,
+          1053,
+          1876,
+          1145
+        ],
+        [
+          498,
+          1147,
+          1876,
+          1239
+        ],
+        [
+          498,
+          1241,
+          1876,
+          1333
+        ]
+      ]
+    },
+    {
+      "scene": "10-focus-search.png",
+      "artwork": [
+        498,
+        172,
+        1054,
+        728
+      ],
+      "details": [
+        1122,
+        213,
+        1876,
+        716
+      ],
+      "rows": [
+        [
+          498,
+          865,
+          1876,
+          957
+        ],
+        [
+          498,
+          959,
+          1876,
+          1051
+        ],
+        [
+          498,
+          1053,
+          1876,
+          1145
+        ],
+        [
+          498,
+          1147,
+          1876,
+          1239
+        ],
+        [
+          498,
+          1241,
+          1876,
+          1333
+        ]
+      ]
+    },
+    {
+      "scene": "11-type-search.png",
+      "artwork": [
+        498,
+        172,
+        1054,
+        728
+      ],
+      "details": [
+        1122,
+        213,
+        1876,
+        716
+      ],
+      "rows": []
+    },
+    {
+      "scene": "12-close-search.png",
+      "artwork": [
+        498,
+        172,
+        1054,
+        728
+      ],
+      "details": [
+        1122,
+        213,
+        1876,
+        716
+      ],
+      "rows": [
+        [
+          498,
+          865,
+          1876,
+          957
+        ],
+        [
+          498,
+          959,
+          1876,
+          1051
+        ],
+        [
+          498,
+          1053,
+          1876,
+          1145
+        ],
+        [
+          498,
+          1147,
+          1876,
+          1239
+        ],
+        [
+          498,
+          1241,
+          1876,
+          1333
+        ]
+      ]
+    },
+    {
+      "scene": "13-more.png",
+      "artwork": [
+        498,
+        172,
+        1054,
+        728
+      ],
+      "details": [
+        1122,
+        213,
+        1876,
+        716
+      ],
+      "rows": [
+        [
+          498,
+          865,
+          1876,
+          957
+        ],
+        [
+          498,
+          959,
+          1876,
+          1051
+        ],
+        [
+          498,
+          1053,
+          1876,
+          1145
+        ],
+        [
+          498,
+          1147,
+          1876,
+          1239
+        ],
+        [
+          498,
+          1241,
+          1876,
+          1333
+        ]
+      ]
+    },
+    {
+      "scene": "14-dismiss-menu.png",
+      "artwork": [
+        498,
+        172,
+        1054,
+        728
+      ],
+      "details": [
+        1122,
+        213,
+        1876,
+        716
+      ],
+      "rows": [
+        [
+          498,
+          865,
+          1876,
+          957
+        ],
+        [
+          498,
+          959,
+          1876,
+          1051
+        ],
+        [
+          498,
+          1053,
+          1876,
+          1145
+        ],
+        [
+          498,
+          1147,
+          1876,
+          1239
+        ],
+        [
+          498,
+          1241,
+          1876,
+          1333
+        ]
+      ]
+    }
+  ],
+  "images": [
+    {
+      "file": "00-settings.png",
+      "sha256": "6e7dbb4923a7e8c42b39b14a9250e167923397d99dda98fe930f201751a02b5a"
+    },
+    {
+      "file": "01-consent.png",
+      "sha256": "0b3106e1806fb63876ed63b866f4b5dccfb7f7677e129c966419a769e22e97a6"
+    },
+    {
+      "file": "02-reveal-general.png",
+      "sha256": "0b3106e1806fb63876ed63b866f4b5dccfb7f7677e129c966419a769e22e97a6"
+    },
+    {
+      "file": "03-general.png",
+      "sha256": "caf2154aba62ffcbe4c1a5fd096b1f0074688989dad6342a667c570898185256"
+    },
+    {
+      "file": "04-reveal-switch.png",
+      "sha256": "caf2154aba62ffcbe4c1a5fd096b1f0074688989dad6342a667c570898185256"
+    },
+    {
+      "file": "05-enable-desktop.png",
+      "sha256": "f7a9cd31204d2f21c145a9260c9e36385415fd44a5a760546265f31a872fcf26"
+    },
+    {
+      "file": "06-home.png",
+      "sha256": "9d255092fa0c74987e8c9e254319d2e9d76d36d125f70042eb2aed2bdab170fe"
+    },
+    {
+      "file": "07-show-playlists.png",
+      "sha256": "ef73dcf558b8ae3ddd6848b20e6d0a6aa1dbf80346ad3750b9d16f7b03e3ab45"
+    },
+    {
+      "file": "08-open-real-playlist.png",
+      "sha256": "380fea32b95c28227536ebd0c67cb0d10e0204326252c4c593a69abd09e93f76"
+    },
+    {
+      "file": "09-open-search.png",
+      "sha256": "559de5b34270f293d1ec7d320c6993be0787b2c94cd147bdb8f094083d6ee813"
+    },
+    {
+      "file": "10-focus-search.png",
+      "sha256": "9e6a435de618a90cf98f91c89af56a9b251ef6578651ef18cf3c0ef7a669f59f"
+    },
+    {
+      "file": "11-type-search.png",
+      "sha256": "4bae78a9a41591b11340fbb272a5c834e0ba4846c340c2bb7e541bb07440f587"
+    },
+    {
+      "file": "12-close-search.png",
+      "sha256": "34015fb003d29fc766e327cdb1ee9ff5a5a0ba5aba4a2e7af5b3468afa0afb6e"
+    },
+    {
+      "file": "13-more.png",
+      "sha256": "82c0a33d3dbea97bea4c06263a8fc01fbf4c7c354a05be25e726c9244cd4416b"
+    },
+    {
+      "file": "14-dismiss-menu.png",
+      "sha256": "33374cfd9959b04b0df30a2244c5aa7a0f14ccf33cd7aefe88500566c18941cc"
+    },
+    {
+      "file": "15-back.png",
+      "sha256": "b8a39a7e508fc9b4b28276a05631b2ce9ecb36fc417ed2bdcbf10f99a49ca8b1"
+    }
+  ],
+  "capture_sha256": "62b7521b7cc1649a85c7c5bfd58c98f2d307ab1f72b9f8f0f0c44d4ff1931dc8",
+  "scope": "Live production implementation/input/source metrics; same-content native macOS pixels pending"
+}

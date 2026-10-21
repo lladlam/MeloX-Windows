@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="RemoteConfigProtocolTest[desktop]" tests="10" skipped="0" failures="0" errors="0" timestamp="2026-10-21T04:22:37.726Z" hostname="lladlam-arch" time="8.762">
+  <properties/>
+  <testcase name="signedLoginBreakersPreventActualPhoneRequestsAndBrowserOpeningWhileLocalStillResolves[desktop]" classname="melox.remoteconfig.RemoteConfigProtocolTest" time="1.052"/>
+  <testcase name="foregroundResumeRefreshesSignedPolicyAndStopPreventsLaterAutomaticRequests[desktop]" classname="melox.remoteconfig.RemoteConfigProtocolTest" time="1.102"/>
+  <testcase name="disabledRuntimeMakesNoRequestAndExplicitConsentPerformsGenuineSignedRefresh[desktop]" classname="melox.remoteconfig.RemoteConfigProtocolTest" time="0.993"/>
+  <testcase name="tamperedSignatureRetainsLastValidCacheAndReturnsActualVerificationError[desktop]" classname="melox.remoteconfig.RemoteConfigProtocolTest" time="0.792"/>
+  <testcase name="corruptCachedEnvelopeDropsConditionalEtagAndRefetchesWithoutLosingRollbackFloor[desktop]" classname="melox.remoteconfig.RemoteConfigProtocolTest" time="0.709"/>
+  <testcase name="clearingCachePreservesRollbackFloorAndRejectsOlderEvenCorrectlySignedEnvelope[desktop]" classname="melox.remoteconfig.RemoteConfigProtocolTest" time="0.848"/>
+  <testcase name="oversizedChunkedBodyIsBoundedAndNeverBecomesCachedConfiguration[desktop]" classname="melox.remoteconfig.RemoteConfigProtocolTest" time="0.727"/>
+  <testcase name="withdrawingDuringBlockedResponseCancelsSocketClearsCacheAndRestoresBuiltinPolicyPromptly[desktop]" classname="melox.remoteconfig.RemoteConfigProtocolTest" time="1.265"/>
+  <testcase name="versionAndConsentGateTheActualPolicyAndNeverDisableUserAddedOrLocalSources[desktop]" classname="melox.remoteconfig.RemoteConfigProtocolTest" time="0.668"/>
+  <testcase name="realSignedHttpPersistsEtagAnd304KeepsVerifiedConfigWithoutAccountHeaders[desktop]" classname="melox.remoteconfig.RemoteConfigProtocolTest" time="0.605"/>
+  <system-out><![CDATA[[DEBUG MeloXThirdParty] resolve detail source=local id=own-file title=Local artists=未知歌手 durationMs=null metadata=Local
+[INFO MeloXThirdParty] Resolve start source=local quality=Standard thirdParty=true
+[INFO MeloXThirdParty] Resolve fallback source=local stage=provider chksz=unavailable
+[WARN MeloXRemoteConfig] Remote config failed through GhFast: Remote config signature verification failed
+[WARN MeloXRemoteConfig] Remote config failed through GhFast: Remote config rollback rejected
+[WARN MeloXRemoteConfig] Remote config failed through GhFast: Remote config response is too large
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

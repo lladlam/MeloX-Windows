@@ -1,0 +1,182 @@
+{
+  "status": "PASSED",
+  "scope": "Physical production replay, source geometry and rendered theme colours; not full-image parity",
+  "scenes": 36,
+  "assertions": 52,
+  "columns": 3,
+  "quick_card_width_dp": 209,
+  "themes": [
+    {
+      "theme": "Dark",
+      "background_rgb": [
+        30,
+        30,
+        30
+      ],
+      "sidebar_rgb": [
+        24,
+        24,
+        26
+      ],
+      "selected_rgb": [
+        221,
+        18,
+        34
+      ]
+    },
+    {
+      "theme": "Light",
+      "background_rgb": [
+        246,
+        246,
+        246
+      ],
+      "sidebar_rgb": [
+        252,
+        252,
+        252
+      ],
+      "selected_rgb": [
+        205,
+        2,
+        18
+      ]
+    }
+  ],
+  "touch_events": 8,
+  "retained_home_scroll": true,
+  "reference": {
+    "sha256": "f2c2fa9fc30425513cb8a5b90569d140c520efb10f7a1413fda45aca70dd3c54",
+    "original_size": [
+      1960,
+      1184
+    ],
+    "original_quick_card": [
+      518,
+      402,
+      936,
+      959
+    ],
+    "actual_quick_card": [
+      518,
+      406,
+      936,
+      963
+    ],
+    "landmark_delta_px": [
+      0,
+      4,
+      0,
+      4
+    ],
+    "dark_gradient_samples": [
+      {
+        "point_in_card": [
+          21,
+          39
+        ],
+        "reference_rgb": [
+          115,
+          126,
+          247
+        ],
+        "actual_rgb": [
+          121,
+          124,
+          245
+        ],
+        "delta_rgb": [
+          6,
+          -2,
+          -2
+        ]
+      },
+      {
+        "point_in_card": [
+          201,
+          39
+        ],
+        "reference_rgb": [
+          99,
+          130,
+          245
+        ],
+        "actual_rgb": [
+          96,
+          130,
+          245
+        ],
+        "delta_rgb": [
+          -3,
+          0,
+          0
+        ]
+      },
+      {
+        "point_in_card": [
+          389,
+          39
+        ],
+        "reference_rgb": [
+          75,
+          138,
+          246
+        ],
+        "actual_rgb": [
+          69,
+          137,
+          245
+        ],
+        "delta_rgb": [
+          -6,
+          -1,
+          -1
+        ]
+      },
+      {
+        "point_in_card": [
+          21,
+          217
+        ],
+        "reference_rgb": [
+          79,
+          135,
+          252
+        ],
+        "actual_rgb": [
+          80,
+          135,
+          253
+        ],
+        "delta_rgb": [
+          1,
+          0,
+          1
+        ]
+      },
+      {
+        "point_in_card": [
+          389,
+          217
+        ],
+        "reference_rgb": [
+          12,
+          158,
+          244
+        ],
+        "actual_rgb": [
+          45,
+          158,
+          244
+        ],
+        "delta_rgb": [
+          33,
+          0,
+          0
+        ]
+      }
+    ],
+    "density": "2 inferred; original has no density/colour/version metadata",
+    "full_image_pixel_parity": "PARTIAL: different public content, source/upload wording, CJK raster, native chrome/material and player state"
+  }
+}

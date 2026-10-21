@@ -1,0 +1,123 @@
+{
+  "status": "PASSED",
+  "scenes": 6,
+  "assertions": 11,
+  "reference": null,
+  "images": [
+    {
+      "file": "00-settings.png",
+      "sha256": "7de6804238c6c03bd53f173ed7d6494da01aebc0dd5aac2e6a6ad1032bee5d67"
+    },
+    {
+      "file": "01-ready.png",
+      "sha256": "8cfff0bd54c44d405e4bdfd116c3f72456498e190e082741f1c7dfc113d090d5"
+    },
+    {
+      "file": "02-expanded.png",
+      "sha256": "b54a30e989fa17a2bc5a55786f795388f191c12d0ff7e0e5792a5e823e86d354",
+      "artwork": [
+        200.81079,
+        112.81079,
+        779.1892,
+        691.1892
+      ],
+      "expected_artwork": [
+        200.81081081081084,
+        112.81081081081084,
+        779.1891891891892,
+        691.1891891891892
+      ],
+      "progress": [
+        170,
+        888,
+        810,
+        954
+      ],
+      "seek": [
+        170,
+        888,
+        810,
+        924
+      ],
+      "uploaded_landmark_delta_px": [
+        -6.189,
+        -0.189,
+        -5.811,
+        -0.811
+      ]
+    },
+    {
+      "file": "03-persisted-favorite.png",
+      "sha256": "f91ca4662f467b3cd281a23cb396ebfd026b88abce9db9d72bd630183482e30b",
+      "artwork": [
+        200.81079,
+        112.81079,
+        779.1892,
+        691.1892
+      ],
+      "expected_artwork": [
+        200.81081081081084,
+        112.81081081081084,
+        779.1891891891892,
+        691.1891891891892
+      ],
+      "progress": [
+        170,
+        888,
+        810,
+        954
+      ],
+      "seek": [
+        170,
+        888,
+        810,
+        924
+      ],
+      "uploaded_landmark_delta_px": [
+        -6.189,
+        -0.189,
+        -5.811,
+        -0.811
+      ]
+    },
+    {
+      "file": "04-restore-favorite.png",
+      "sha256": "550f7c8fe9774b1109c3d417f97c1257e61d5cdf1e3332d8fe7e9ebd91dffb4a",
+      "artwork": [
+        200.81079,
+        112.81079,
+        779.1892,
+        691.1892
+      ],
+      "expected_artwork": [
+        200.81081081081084,
+        112.81081081081084,
+        779.1891891891892,
+        691.1891891891892
+      ],
+      "progress": [
+        170,
+        888,
+        810,
+        954
+      ],
+      "seek": [
+        170,
+        888,
+        810,
+        924
+      ],
+      "uploaded_landmark_delta_px": [
+        -6.189,
+        -0.189,
+        -5.811,
+        -0.811
+      ]
+    },
+    {
+      "file": "05-collapsed.png",
+      "sha256": "11d9a4118736308186c6d042c6142977c922691f5ad3fe2fa23aecca35d3c55c"
+    }
+  ],
+  "scope": "Production local-media replay, original-sized frames, independent source/cover landmarks; different music/text/background, NOT full-image pixel parity"
+}

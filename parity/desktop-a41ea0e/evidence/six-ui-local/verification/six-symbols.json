@@ -1,0 +1,50 @@
+{
+  "status": "PASSED",
+  "reference_commit": "a41ea0e1e1fa69fb543d827b853fe3aff5420951",
+  "apple_product": "SF Pro (SF Symbols 27 release)",
+  "source_font_sha256": "7270e1593be7b88597d8ab302e4d156a33084c85b8161e042ff6510cdaf10e10",
+  "subset": "desktop/src/main/resources/fonts/sf_pro_subset.ttf",
+  "subset_sha256": "3f592d902f739de31deef2d1235d89d105508a5ea750e3d60eedcc7481d13af6",
+  "subset_bytes": 162332,
+  "symbol_count": 135,
+  "enum_symbols": 71,
+  "unique_codepoints": 134,
+  "aliases": [
+    {
+      "source_name": "arrow.triangle.2.circlepath",
+      "resolved_name": "arrow.trianglehead.2.clockwise.rotate.90",
+      "codepoint": "U+1002AF",
+      "glyph": "u1002AF",
+      "resolution": "SF Symbols 27 alias"
+    },
+    {
+      "source_name": "doc.text.magnifyingglass",
+      "resolved_name": "text.page.badge.magnifyingglass",
+      "codepoint": "U+100579",
+      "glyph": "u100579",
+      "resolution": "SF Symbols 27 alias"
+    },
+    {
+      "source_name": "mic",
+      "resolved_name": "microphone",
+      "codepoint": "U+1002B0",
+      "glyph": "u1002B0",
+      "resolution": "SF Symbols 27 alias"
+    },
+    {
+      "source_name": "mic.fill",
+      "resolved_name": "microphone.fill",
+      "codepoint": "U+1002B1",
+      "glyph": "u1002B1",
+      "resolution": "SF Symbols 27 alias"
+    },
+    {
+      "source_name": "music.mic",
+      "resolved_name": "microphone.dynamic.on.stand",
+      "codepoint": "U+10046B",
+      "glyph": "u10046B",
+      "resolution": "legacy SF Symbols 6 glyph position, adjacent to music.note and music.note.list"
+    }
+  ],
+  "scope": "fixed Desktop SF Symbols subset and Windows enum coverage; not native macOS pixel acceptance"
+}

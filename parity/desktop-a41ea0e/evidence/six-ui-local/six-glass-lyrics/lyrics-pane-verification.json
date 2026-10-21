@@ -1,0 +1,108 @@
+{
+  "status": "PASSED",
+  "scope": "Original viewport/boundary, real timed lyrics seek, PCM and inspector transitions; not full-image pixel parity",
+  "theme": "Dark",
+  "panels": [
+    {
+      "file": "04-lyrics-pane.png",
+      "kind": "Lyrics",
+      "bounds": [
+        1694,
+        0,
+        2414,
+        1356
+      ],
+      "surface_sample_rgb": [
+        26,
+        26,
+        27
+      ]
+    },
+    {
+      "file": "05-reveal-lyric.png",
+      "kind": "Lyrics",
+      "bounds": [
+        1694,
+        0,
+        2414,
+        1356
+      ],
+      "surface_sample_rgb": [
+        26,
+        26,
+        27
+      ]
+    },
+    {
+      "file": "06-seek-lyrics.png",
+      "kind": "Lyrics",
+      "bounds": [
+        1694,
+        0,
+        2414,
+        1356
+      ],
+      "surface_sample_rgb": [
+        26,
+        26,
+        27
+      ]
+    },
+    {
+      "file": "07-resume-lyrics.png",
+      "kind": "Lyrics",
+      "bounds": [
+        1694,
+        0,
+        2414,
+        1356
+      ],
+      "surface_sample_rgb": [
+        26,
+        26,
+        27
+      ]
+    },
+    {
+      "file": "08-queue-inspector.png",
+      "kind": "Queue",
+      "bounds": [
+        1898,
+        0,
+        2414,
+        1356
+      ],
+      "surface_sample_rgb": [
+        26,
+        26,
+        27
+      ]
+    },
+    {
+      "file": "09-lyrics-again.png",
+      "kind": "Lyrics",
+      "bounds": [
+        1694,
+        0,
+        2414,
+        1356
+      ],
+      "surface_sample_rgb": [
+        26,
+        26,
+        27
+      ]
+    }
+  ],
+  "reference": {
+    "sha256": "e6c559e285ec4137d0c713c412607a579bc025d4449773fee93aaf3865779f74",
+    "original_panel_bounds": [
+      1694,
+      0,
+      2414,
+      1356
+    ],
+    "boundary_uncertainty_px": 1,
+    "content": "Private lyrics/content are not reused in public evidence"
+  }
+}

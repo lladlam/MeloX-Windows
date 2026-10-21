@@ -1,0 +1,70 @@
+{
+  "status": "PASSED_LOCAL_IMPLEMENTATION",
+  "full_image_pixel_acceptance": "PARTIAL",
+  "windows_native_caption": "UNSUPPORTED locally; required in Windows CI",
+  "scenes": 312,
+  "assertions": 241,
+  "tests": {
+    "tests": 276,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "suites": 57
+  },
+  "replays": [
+    {
+      "name": "six-ready-home-dark",
+      "scenes": 36,
+      "assertions": 52,
+      "capture_sha256": "20c1f5d0a843da33a47daf2a95dd6c4c1a5f5fba3948604b13bc3c98385dce46"
+    },
+    {
+      "name": "six-ready-home-light",
+      "scenes": 29,
+      "assertions": 44,
+      "capture_sha256": "64a7e1aa7cbf6551f879854f7e0e8d546858604f11f63415e4112995b3820b5b"
+    },
+    {
+      "name": "six-ready-player",
+      "scenes": 21,
+      "assertions": 35,
+      "capture_sha256": "f466f1376f3d906998a6137094ad85795c526faee8874aa3e67f4203978a8797"
+    },
+    {
+      "name": "six-ready-player-reload",
+      "scenes": 6,
+      "assertions": 11,
+      "capture_sha256": "7d6bb4fb6f7c44259e502f23c57e58a4a619531a49c042bdb3a8c1473532f4c1"
+    },
+    {
+      "name": "six-glass-lyrics",
+      "scenes": 11,
+      "assertions": 18,
+      "capture_sha256": "1a5c50ea31efcd84896f292c08212018bf374bc2812f619f15b1aba5396cd400"
+    },
+    {
+      "name": "six-glass-lyrics-light",
+      "scenes": 11,
+      "assertions": 18,
+      "capture_sha256": "a5822299be8eae17908de222eeeeebb62baff0dc8d7a25e3f37c3e19574b1004"
+    },
+    {
+      "name": "six-final-playlist",
+      "scenes": 16,
+      "assertions": 13,
+      "capture_sha256": "62b7521b7cc1649a85c7c5bfd58c98f2d307ab1f72b9f8f0f0c44d4ff1931dc8"
+    },
+    {
+      "name": "settings-equal-v2",
+      "scenes": 91,
+      "assertions": 25,
+      "capture_sha256": "febaaaa09cb9991927974e2383376d93db419e8f8889c1bf70ef9a0a4e14052f"
+    },
+    {
+      "name": "settings-equal-light",
+      "scenes": 91,
+      "assertions": 25,
+      "capture_sha256": "7caaed3b4fc37a1996f206091ce13cfd82f53e8852ec40f49084b1dbe8a1c21b"
+    }
+  ]
+}

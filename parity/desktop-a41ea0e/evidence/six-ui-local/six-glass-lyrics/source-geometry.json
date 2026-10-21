@@ -1,0 +1,310 @@
+[
+  {
+    "scene": "00-home.png",
+    "tag": "desktop-sidebar",
+    "bounds": [
+      16,
+      16,
+      414,
+      1340
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "00-home.png",
+    "tag": "desktop-bottom-player",
+    "bounds": [
+      714,
+      1228,
+      2114,
+      1336
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "01-consent.png",
+    "tag": "desktop-sidebar",
+    "bounds": [
+      16,
+      16,
+      414,
+      1340
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "01-consent.png",
+    "tag": "desktop-bottom-player",
+    "bounds": [
+      714,
+      1228,
+      2114,
+      1336
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "02-ready.png",
+    "tag": "desktop-sidebar",
+    "bounds": [
+      16,
+      16,
+      414,
+      1340
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "02-ready.png",
+    "tag": "desktop-bottom-player",
+    "bounds": [
+      714,
+      1228,
+      2114,
+      1336
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "03-pause-for-lyric-input.png",
+    "tag": "desktop-sidebar",
+    "bounds": [
+      16,
+      16,
+      414,
+      1340
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "03-pause-for-lyric-input.png",
+    "tag": "desktop-bottom-player",
+    "bounds": [
+      714,
+      1228,
+      2114,
+      1336
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "04-lyrics-pane.png",
+    "tag": "desktop-sidebar",
+    "bounds": [
+      16,
+      16,
+      414,
+      1340
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "04-lyrics-pane.png",
+    "tag": "desktop-bottom-player",
+    "bounds": [
+      462,
+      1228,
+      1646,
+      1336
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "04-lyrics-pane.png",
+    "tag": "desktop-inspector:Lyrics",
+    "bounds": [
+      1694,
+      0,
+      2414,
+      1356
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "05-reveal-lyric.png",
+    "tag": "desktop-sidebar",
+    "bounds": [
+      16,
+      16,
+      414,
+      1340
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "05-reveal-lyric.png",
+    "tag": "desktop-bottom-player",
+    "bounds": [
+      462,
+      1228,
+      1646,
+      1336
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "05-reveal-lyric.png",
+    "tag": "desktop-inspector:Lyrics",
+    "bounds": [
+      1694,
+      0,
+      2414,
+      1356
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "06-seek-lyrics.png",
+    "tag": "desktop-sidebar",
+    "bounds": [
+      16,
+      16,
+      414,
+      1340
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "06-seek-lyrics.png",
+    "tag": "desktop-bottom-player",
+    "bounds": [
+      462,
+      1228,
+      1646,
+      1336
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "06-seek-lyrics.png",
+    "tag": "desktop-inspector:Lyrics",
+    "bounds": [
+      1694,
+      0,
+      2414,
+      1356
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "07-resume-lyrics.png",
+    "tag": "desktop-sidebar",
+    "bounds": [
+      16,
+      16,
+      414,
+      1340
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "07-resume-lyrics.png",
+    "tag": "desktop-bottom-player",
+    "bounds": [
+      462,
+      1228,
+      1646,
+      1336
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "07-resume-lyrics.png",
+    "tag": "desktop-inspector:Lyrics",
+    "bounds": [
+      1694,
+      0,
+      2414,
+      1356
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "08-queue-inspector.png",
+    "tag": "desktop-sidebar",
+    "bounds": [
+      16,
+      16,
+      414,
+      1340
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "08-queue-inspector.png",
+    "tag": "desktop-bottom-player",
+    "bounds": [
+      462,
+      1228,
+      1850,
+      1336
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "08-queue-inspector.png",
+    "tag": "desktop-inspector:Queue",
+    "bounds": [
+      1898,
+      0,
+      2414,
+      1356
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "09-lyrics-again.png",
+    "tag": "desktop-sidebar",
+    "bounds": [
+      16,
+      16,
+      414,
+      1340
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "09-lyrics-again.png",
+    "tag": "desktop-bottom-player",
+    "bounds": [
+      462,
+      1228,
+      1646,
+      1336
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "09-lyrics-again.png",
+    "tag": "desktop-inspector:Lyrics",
+    "bounds": [
+      1694,
+      0,
+      2414,
+      1356
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "10-close-pane.png",
+    "tag": "desktop-sidebar",
+    "bounds": [
+      16,
+      16,
+      414,
+      1340
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "10-close-pane.png",
+    "tag": "desktop-bottom-player",
+    "bounds": [
+      714,
+      1228,
+      2114,
+      1336
+    ],
+    "source_metrics_match": true
+  }
+]

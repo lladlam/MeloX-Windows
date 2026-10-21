@@ -1,0 +1,17 @@
+consent=cloud-enabled:false
+home=tag:desktop-home,tag:desktop-sidebar,tag:desktop-home-action:daily_songs,tag:desktop-home-action:heart_mode,tag:desktop-home-action:private_roaming,runtime:desktopLayoutEnabled:true
+shelf-hover=tag:desktop-home-page:actions:next
+next-actions=tag:desktop-home-action:similar_songs,tag:desktop-home-page:actions:previous
+previous-actions=tag:desktop-home-action:daily_songs
+reveal-hero=tag-prefix:desktop-home-playlist:
+real-playlist=tag:desktop-playlist-detail,tag:desktop-collection-header
+return-home=tag:desktop-home,absent:desktop-playlist-detail,tag-prefix:desktop-home-playlist:
+tailored=tag-prefix:desktop-home-media-playlist:
+album-shelf=tag-prefix:desktop-home-album:
+real-album=tag:desktop-album-detail,tag:desktop-collection-header
+return-from-album=tag:desktop-home,absent:desktop-album-detail,tag-prefix:desktop-home-album:
+settings=tag:settings-root
+general=tag:settings-general
+switch-theme=runtime:themeMode:Light
+home-new-theme=tag:desktop-home,tag:desktop-sidebar
+return-top=tag:desktop-home-action:daily_songs

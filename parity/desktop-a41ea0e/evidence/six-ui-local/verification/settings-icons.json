@@ -1,0 +1,171 @@
+{
+  "pinned_android": "3f877eaffe30c82eb6d24eb3647702f5bc554dd3",
+  "manifest": "settings-pages-source-audit.json",
+  "icon_font": "fonts/sf_pro_subset.ttf (pinned, ss16)",
+  "settings_route_icons": 18,
+  "samples": [
+    {
+      "symbol": "Mic",
+      "brand_override": false,
+      "ink_width": 16,
+      "ink_height": 23,
+      "sf_name": "mic",
+      "token": "⌁",
+      "pinned_android_sf_name": "mic"
+    },
+    {
+      "symbol": "Bug",
+      "brand_override": false,
+      "ink_width": 25,
+      "ink_height": 27,
+      "sf_name": "ladybug",
+      "token": "⌘",
+      "pinned_android_sf_name": "ladybug"
+    },
+    {
+      "symbol": "Info",
+      "brand_override": false,
+      "ink_width": 22,
+      "ink_height": 22,
+      "sf_name": "info.circle",
+      "token": "ⓘ",
+      "pinned_android_sf_name": "info.circle"
+    },
+    {
+      "symbol": "ListBullet",
+      "brand_override": false,
+      "ink_width": 22,
+      "ink_height": 17,
+      "sf_name": "list.bullet",
+      "token": "▣",
+      "pinned_android_sf_name": "list.bullet"
+    },
+    {
+      "symbol": "Pip",
+      "brand_override": false,
+      "ink_width": 28,
+      "ink_height": 23,
+      "sf_name": "pip",
+      "token": "▤",
+      "pinned_android_sf_name": "pip"
+    },
+    {
+      "symbol": "Grid",
+      "brand_override": false,
+      "ink_width": 22,
+      "ink_height": 21,
+      "sf_name": "circle.grid.2x2.fill",
+      "token": "▥",
+      "pinned_android_sf_name": "circle.grid.2x2.fill"
+    },
+    {
+      "symbol": "Grid",
+      "brand_override": false,
+      "ink_width": 22,
+      "ink_height": 21,
+      "sf_name": "circle.grid.2x2.fill",
+      "token": "▦",
+      "pinned_android_sf_name": "circle.grid.2x2.fill"
+    },
+    {
+      "symbol": "Drive",
+      "brand_override": false,
+      "ink_width": 26,
+      "ink_height": 19,
+      "sf_name": "internaldrive",
+      "token": "▰",
+      "pinned_android_sf_name": "internaldrive"
+    },
+    {
+      "symbol": "Rotate",
+      "brand_override": false,
+      "ink_width": 27,
+      "ink_height": 28,
+      "sf_name": "rectangle.landscape.rotate",
+      "token": "▱",
+      "pinned_android_sf_name": "rectangle.landscape.rotate"
+    },
+    {
+      "symbol": "Message",
+      "brand_override": false,
+      "ink_width": 25,
+      "ink_height": 21,
+      "sf_name": "message",
+      "token": "◎",
+      "pinned_android_sf_name": "message"
+    },
+    {
+      "symbol": "Grid",
+      "brand_override": false,
+      "ink_width": 22,
+      "ink_height": 21,
+      "sf_name": "circle.grid.2x2.fill",
+      "token": "☷",
+      "pinned_android_sf_name": "circle.grid.2x2.fill"
+    },
+    {
+      "symbol": "MusicNote",
+      "brand_override": false,
+      "ink_width": 14,
+      "ink_height": 23,
+      "sf_name": "music.note",
+      "token": "♫",
+      "pinned_android_sf_name": "music.note"
+    },
+    {
+      "symbol": "Settings",
+      "brand_override": true,
+      "ink_width": 0,
+      "ink_height": 0,
+      "sf_name": "gear",
+      "token": "⚙",
+      "pinned_android_sf_name": "gear"
+    },
+    {
+      "symbol": "Send",
+      "brand_override": false,
+      "ink_width": 24,
+      "ink_height": 24,
+      "sf_name": "paperplane",
+      "token": "✉",
+      "pinned_android_sf_name": "paperplane"
+    },
+    {
+      "symbol": "Sparkles",
+      "brand_override": false,
+      "ink_width": 20,
+      "ink_height": 25,
+      "sf_name": "sparkles",
+      "token": "✦",
+      "pinned_android_sf_name": "sparkles"
+    },
+    {
+      "symbol": "Quote",
+      "brand_override": false,
+      "ink_width": 24,
+      "ink_height": 23,
+      "sf_name": "quote.bubble",
+      "token": "❞",
+      "pinned_android_sf_name": "quote.bubble"
+    },
+    {
+      "symbol": "Upload",
+      "brand_override": false,
+      "ink_width": 23,
+      "ink_height": 23,
+      "sf_name": "arrow.up.circle.fill",
+      "token": "↑",
+      "pinned_android_sf_name": "arrow.up.circle.fill"
+    },
+    {
+      "symbol": "Download",
+      "brand_override": false,
+      "ink_width": 22,
+      "ink_height": 22,
+      "sf_name": "arrow.down.circle",
+      "token": "↓",
+      "pinned_android_sf_name": "arrow.down.circle"
+    }
+  ],
+  "status": "PASSED"
+}

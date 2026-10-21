@@ -1,5 +1,20 @@
 # Desktop 迁移记录
 
+## 8. 六张用户图、设置功能对齐和软件内窗口操作
+
+- 实现提交：`ecfd6e2`，证据与完成记录独立提交后正常推送main触发Windows CI。
+- 六张原始PNG的SHA／尺寸和source差异见 `USER_SCREENSHOT_REFERENCE.md`；原图与用户私人内容仅留忽略的build目录，公开证据使用真实公共推荐或明确标注的生成本地媒体。
+- Home按固定源码补齐完整分区、正方形hero、真实新专辑API／缓存、分页／hover、鼠标纵滚转交、返回保留滚动和真实Touch输入；深／浅主题跟随同一设置。原图首卡 `[518,402,936,959]`，最终 `[518,406,936,963]`：横向及尺寸一致，纵向仍低4px，未将其标为完全一致。
+- Account采用500×600／42行／chevron11／80×30完成按钮和原图surface采样，两主题下回放真实未登录态、完成、Escape和再次打开。真实登录后的私信／云盘／下载／设置／退出仍复用原生产会话与页面；没有借用原图账号。
+- Playlist以1960×1356／density2直接回放，真实搜索／恢复／更多／返回通过；原图封面 `[498,172,1054,728]` 与最终几何相同。正文和用户图内容不同，顶部Windows搜索／标题与CJK栅格差异继续明确保留。
+- 沉浸播放器修正播放封面为暂停slot的1/.74，补真实收藏／重载还原、进度scrub、白色音量和三态切换；21／35及独立JVM6／11通过。原图封面相对固定source仍有约6px横向差，不通过硬移封面伪装关闭。
+- Queue按新图修正浅色选中／模式文字、横向inset和header，加入实际scrollbar／72pt fade；模式总边界最终约 `[1062,96,1832,168]`，原图约 `[1063,96,1832,168]`。继续播放的真实来源上下文仍未接入，不以歌曲专辑伪造。
+- Lyrics panel按原图宽720px／左边界1694制作360dp阅读列；生产page-layer单独BlurEffect24dp后裁剪，再叠主题透明表面，避免旧采样器的偏移／模糊越界；歌词／队列280ms crossfade，减少动态为0。深浅两组均11／18通过，包含真实暂停、歌词点击seek、恢复、切队列及关闭。
+- 设置保持桌面五类顶部导航／分类子页，统一为第一套布局的同一20个生产设置组件，补齐同一搜索、重置和退出逻辑；长子标签换行解决真实不可达入口。英文深色／中文浅色各91 scenes／25 assertions通过，详见 `SETTINGS_FUNCTION_PARITY.md`。
+- 主窗口使用undecorated，新增软件内最小化／最大化／还原／关闭、拖动／双击及四边四角resize；关闭共用释放实际播放器后退出的回调。原生Robot审计已加入Windows CI。本机显示器0×0，记录UNSUPPORTED，未把离屏截图冒充窗口操作通过；详见 `WINDOW_CHROME.md`。
+- 最终9组独立重计 **312 scenes／241 assertions**；**276 tests／57 suites／0 failures/errors/skipped**，18枚设置图标、135 SF Symbols／71枚举／134码点、105纯导出文案和源／最终uber JAR内28资源通过。独立读取最终播放器23份实际软件PCM的字节数／SHA／RMS和220／330Hz频谱均通过。
+- 原始失败、成功输入／参数／capture、选定PNG／semantics、测试XML与独立报告在 `evidence/six-ui-local/`；背景色、原图几何残差与验证边界保持可追溯。总体同内容全图像素／原生材质／字体／弹簧曲线及真机触屏验收继续 **PARTIAL**，长时内存增长不由本次短回放关闭。
+
 ## 7. Collection 源结构／SF Pro 正文与冷启动焦点修复（fcbc877）
 
 - 实现 `fcbc8771bffbf1a6cd00a3612895f8a1c99db563` 已正常推送main。固定源码对照见 `COLLECTION_PARITY.md`：移除额外滚动toolbar／列标题，内容横42／纵34、header／divider／list间34、封面278／continuous radius11、详情最大620／底距6；默认曲目无封面、minHeight46、数字24／album180／duration42／menu28、行距1；专辑隐藏album列，解析真实曲号及disc分组；接入真实描述展开／选择、收藏星号、下载菜单和曲目双击。

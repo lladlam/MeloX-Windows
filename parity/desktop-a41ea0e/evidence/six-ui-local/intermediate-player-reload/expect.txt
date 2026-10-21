@@ -1,0 +1,5 @@
+ready=playing:true,runtime:desktopLayoutEnabled:true
+expanded=tag:desktop-player-column,tag:desktop-player-favorite,selected:desktop-full-lyrics
+persisted-favorite=state:desktop-player-favorite:liked,local-favorite:true
+restore-favorite=state:desktop-player-favorite:unliked,local-favorite:false
+collapsed=tag:desktop-bottom-player,absent:desktop-player-column

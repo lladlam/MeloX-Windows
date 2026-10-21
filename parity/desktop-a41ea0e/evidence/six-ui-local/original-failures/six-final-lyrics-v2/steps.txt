@@ -1,0 +1,7 @@
+consent:tap@remote-reject
+ready:wait@1500
+lyrics-pane:tap@desktop-show-lyrics
+seek-lyrics:tap@lyric-line-1
+queue-inspector:tap@desktop-show-queue
+lyrics-again:tap@desktop-show-lyrics
+close-pane:tap@desktop-show-lyrics

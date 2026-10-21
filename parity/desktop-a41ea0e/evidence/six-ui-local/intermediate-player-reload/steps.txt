@@ -1,0 +1,5 @@
+ready:wait@1500
+expanded:tap@mini-player-expand
+persisted-favorite:wait@500
+restore-favorite:tap@desktop-player-favorite
+collapsed:tap@player-collapse

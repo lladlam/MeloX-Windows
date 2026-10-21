@@ -1,0 +1,84 @@
+{
+  "status": "PASSED",
+  "scope": "Source sheet/button geometry and actual rendered surfaces; not signed-in/full-image pixel acceptance",
+  "measurements": [
+    {
+      "file": "04-account.png",
+      "sheet": [
+        480,
+        32,
+        1480,
+        1152
+      ],
+      "done": [
+        1288,
+        1060,
+        1448,
+        1120
+      ],
+      "surface_rgb": [
+        49,
+        46,
+        46
+      ]
+    },
+    {
+      "file": "06-account-again.png",
+      "sheet": [
+        480,
+        32,
+        1480,
+        1152
+      ],
+      "done": [
+        1288,
+        1060,
+        1448,
+        1120
+      ],
+      "surface_rgb": [
+        49,
+        46,
+        46
+      ]
+    },
+    {
+      "file": "31-account-new-theme.png",
+      "sheet": [
+        480,
+        32,
+        1480,
+        1152
+      ],
+      "done": [
+        1288,
+        1060,
+        1448,
+        1120
+      ],
+      "surface_rgb": [
+        248,
+        247,
+        247
+      ]
+    }
+  ],
+  "reference": {
+    "sha256": "e553ec08f86422bed8cdbb7c8febee1ad185ee9fc13737734b4807d9672df6bf",
+    "dimensions": [
+      2188,
+      1356
+    ],
+    "surface_rgb": [
+      49,
+      46,
+      46
+    ],
+    "group_rgb": [
+      57,
+      54,
+      54
+    ],
+    "account_state": "Original signed-in private identity; replay uses genuine signed-out state"
+  }
+}
