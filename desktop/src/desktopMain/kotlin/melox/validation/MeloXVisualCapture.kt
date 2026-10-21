@@ -463,14 +463,16 @@ fun main(args: Array<String>) = runBlocking {
                     val bottomGuard = height - 170f * density
                     for (attempt in 0 until 400) {
                         val node = scene.captureSemantics().lastOrNull { it.config.getOrNull(SemanticsProperties.TestTag) == tag }
-                        val centerY = node?.let { it.positionInWindow.y + it.size.height / 2f }
-                        if (centerY != null && centerY in topGuard..bottomGuard && !node.boundsInWindow.isEmpty) {
+                        // Window bounds are authoritative for scroll visibility;
+                        // positionInWindow can be relative to a nested scroll parent.
+                        val centerY = node?.takeUnless { it.boundsInWindow.isEmpty }?.boundsInWindow?.center?.y
+                        if (centerY != null && centerY in topGuard..bottomGuard) {
                             // A wheel animation may pass through the target and
                             // keep moving. Confirm visibility after settling.
                             settle(240)
                             val settled = scene.captureSemantics().tagged(tag)
-                            val y = settled?.let { it.positionInWindow.y + it.size.height / 2f }
-                            if (y != null && y in topGuard..bottomGuard && !settled.boundsInWindow.isEmpty) {
+                            val y = settled?.takeUnless { it.boundsInWindow.isEmpty }?.boundsInWindow?.center?.y
+                            if (y != null && y in topGuard..bottomGuard) {
                                 revealed = true
                                 break
                             }
@@ -483,6 +485,16 @@ fun main(args: Array<String>) = runBlocking {
                         val centerX = node?.let { it.positionInWindow.x + it.size.width / 2f } ?: width * .5f
                         scene.sendPointerEvent(PointerEventType.Scroll, Offset(centerX.coerceIn(1f, width - 1f), height * .55f), scrollDelta = Offset(0f, direction * 3f))
                         settle(240)
+                    }
+                    // Wheel inertia can carry the target back out after the
+                    // loop's last check. Let it stop, then accept a target that
+                    // is genuinely visible instead of scrolling it away again.
+                    for (attempt in 0 until 12) {
+                        if (revealed) break
+                        settle(200)
+                        val settled = scene.captureSemantics().tagged(tag)
+                        val y = settled?.takeUnless { it.boundsInWindow.isEmpty }?.boundsInWindow?.center?.y
+                        if (y != null && y in topGuard..bottomGuard) revealed = true
                     }
                     check(revealed) { "Could not reveal production node $tag using mouse wheel at $name" }
                 } else if (coordinates.startsWith("wait@")) {
