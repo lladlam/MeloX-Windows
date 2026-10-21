@@ -64,7 +64,7 @@ internal open class AuditTouchInfo : Structure() {
     @JvmField var contact = RECT()
     @JvmField var rawContact = RECT()
     @JvmField var orientation = 90
-    @JvmField var pressure = 320
+    @JvmField var pressure = 32000
 }
 
 /** Windows system-injected contact -> AWT -> Compose -> the production drag adapter.
@@ -106,12 +106,10 @@ fun main(args: Array<String>) {
                     contact.info.pixel.x = x; contact.info.pixel.y = y
                     contact.info.rawPixel.x = x; contact.info.rawPixel.y = y
                     contact.info.flags = flags
-                    // Win32 validates both the promoted contact and the raw
-                    // contact rectangle; an empty rcContactRaw is rejected.
-                    for (rect in listOf(contact.contact, contact.rawContact)) {
-                        rect.left = (x - 2).coerceAtLeast(0); rect.right = x + 2
-                        rect.top = (y - 2).coerceAtLeast(0); rect.bottom = y + 2
-                    }
+                    // The official InjectTouchPointerInput sample sets only
+                    // rcContact and leaves rcContactRaw zeroed.
+                    contact.contact.left = (x - 2).coerceAtLeast(0); contact.contact.right = x + 2
+                    contact.contact.top = (y - 2).coerceAtLeast(0); contact.contact.bottom = y + 2
                     contact.write()
                     var error = 0
                     for (attempt in 0..1) {
@@ -125,7 +123,7 @@ fun main(args: Array<String>) {
                 }
                 try {
                     // Initialize and inject on the same native UI thread.
-                    check(api.InitializeTouchInjection(1, 1)) { "InitializeTouchInjection failed: ${Native.getLastError()}" }
+                    check(api.InitializeTouchInjection(10, 3)) { "InitializeTouchInjection failed: ${Native.getLastError()}" }
                     await { window.isShowing && window.width > 0 }
                     window.toFront(); window.requestFocus()
                     await { window.isFocused }
@@ -140,10 +138,14 @@ fun main(args: Array<String>) {
                         .put("device_bounds", window.graphicsConfiguration.bounds.toString())
                         .put("scale", listOf(transform.scaleX, transform.scaleY)).put("contact", listOf(x, y)))
                     record("initial")
+                    // Enter hover first. The documented state machine starts in
+                    // hover (INRANGE|UPDATE) and transitions to the first contact
+                    // through INRANGE|INCONTACT|DOWN.
+                    inject(x, y, 0x20002)
                     inject(x, y, 0x10006)
                     for (frame in 1..24) inject(x, y - distance * frame / 24, 0x20006)
                     for (frame in 1..8) inject(x, y - distance, 0x20006)
-                    inject(x, y - distance, 0x40002)
+                    inject(x, y - distance, 0x40000)
                     await { position() >= 100 }
                     record("windows-injected-touch-scroll")
                     list.scrollToItem(0)
