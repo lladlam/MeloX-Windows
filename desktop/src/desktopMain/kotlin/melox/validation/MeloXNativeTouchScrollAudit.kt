@@ -39,7 +39,7 @@ internal interface TouchInjectionApi : StdCallLibrary {
 @Structure.FieldOrder("type", "pointerId", "frameId", "flags", "source", "target", "pixel", "himetric", "rawPixel", "rawHimetric", "time", "historyCount", "inputData", "keyStates", "performanceCount", "buttonChange")
 internal open class AuditPointerInfo : Structure() {
     @JvmField var type = 2 // PT_TOUCH
-    @JvmField var pointerId = 1
+    @JvmField var pointerId = 0
     @JvmField var frameId = 0
     @JvmField var flags = 0
     @JvmField var source: Pointer? = null
@@ -125,7 +125,7 @@ fun main(args: Array<String>) {
                 }
                 try {
                     // Initialize and inject on the same native UI thread.
-                    check(api.InitializeTouchInjection(1, 3)) { "InitializeTouchInjection failed: ${Native.getLastError()}" }
+                    check(api.InitializeTouchInjection(1, 1)) { "InitializeTouchInjection failed: ${Native.getLastError()}" }
                     await { window.isShowing && window.width > 0 }
                     window.toFront(); window.requestFocus()
                     await { window.isFocused }

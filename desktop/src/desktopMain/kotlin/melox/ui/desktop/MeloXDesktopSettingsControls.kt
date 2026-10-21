@@ -46,9 +46,9 @@ internal fun DesktopSettingsForm(content: @Composable ColumnScope.() -> Unit) {
 
 @Composable
 internal fun DesktopSettingsCheckbox(title: String, value: Boolean, tag: String, enabled: Boolean = true,
-    subtitle: String? = null, onChange: (Boolean) -> Unit) {
+    subtitle: String? = null, modifier: Modifier = Modifier.fillMaxWidth(), onChange: (Boolean) -> Unit) {
     val color = MaterialTheme.colorScheme.onSurface.copy(alpha = if (enabled) 1f else .4f)
-    Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(3.dp)) {
+    Column(modifier, verticalArrangement = Arrangement.spacedBy(3.dp)) {
         Row(Modifier.fillMaxWidth().heightIn(min = 26.dp).testTag(tag)
             .toggleable(value, enabled, Role.Checkbox, onChange), verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(7.dp)) {

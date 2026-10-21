@@ -62,6 +62,15 @@ internal fun desktopPlatformString(key: String): String {
         "login_client_not_found" -> if (chinese) "未找到网易云音乐客户端登录数据，请先在客户端登录"
             else "No NetEase Cloud Music client sign-in was found. Sign in with the client first."
         "login_choose_profile" -> if (chinese) "发现多个客户端数据目录，请选择后再读取" else "Multiple client profiles were found. Choose one, then import it."
+        "services_title" -> if (chinese) "音乐服务" else "Music Services"
+        "services_providers" -> if (chinese) "音乐服务" else "Providers"
+        "services_search" -> if (chinese) "搜索设置" else "Search Settings"
+        "services_signed_in" -> if (chinese) "已登录" else "Signed In"
+        "services_not_signed_in" -> if (chinese) "未登录" else "Not Signed In"
+        "services_in_search" -> if (chinese) "加入搜索" else "In Search"
+        "services_sign_out" -> if (chinese) "退出" else "Sign Out"
+        "services_unified" -> if (chinese) "聚合搜索" else "Combined Search"
+        "services_scope_hint" -> if (chinese) "勾选要参与聚合搜索的来源" else "Choose which providers participate in combined search."
         else -> error("Unknown Windows integration label: $key")
     }
 }

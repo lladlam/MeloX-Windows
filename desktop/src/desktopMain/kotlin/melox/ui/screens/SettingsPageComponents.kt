@@ -43,7 +43,7 @@ internal fun SettingsToggleRow(title: String, key: String, default: Boolean, ena
 @Composable
 internal fun SettingsExternalToggleRow(title: String, value: Boolean, tag: String, enabled: Boolean = true, subtitle: String? = null, onChange: (Boolean) -> Unit) {
     if (melox.settings.MeloXSettingsRuntime.desktopLayoutEnabled) {
-        melox.ui.desktop.DesktopSettingsCheckbox(title, value, tag, enabled, subtitle, onChange)
+        melox.ui.desktop.DesktopSettingsCheckbox(title, value, tag, enabled, subtitle, onChange = onChange)
         return
     }
     MeloXIosListRow(title = title, subtitle = subtitle, showChevron = false,

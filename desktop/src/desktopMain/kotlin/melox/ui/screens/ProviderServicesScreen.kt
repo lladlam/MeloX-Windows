@@ -341,6 +341,10 @@ private fun SearchScopeItem(
 
 @Composable
 fun ProviderServicesScreen(navState: MeloXNavState) {
+    if (melox.settings.MeloXSettingsRuntime.desktopLayoutEnabled) {
+        melox.ui.desktop.MeloXDesktopProviderServices(navState)
+        return
+    }
     val state = remember { ServiceState() }
     val visibleProviders = allProviders.filter { it.musicSource() in MusicProviderSelectionStore.visibleSources() }
 

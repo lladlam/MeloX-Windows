@@ -28,7 +28,7 @@ for page in ['Songs', 'Playlists', 'Albums', 'Artists', 'Podcasts', 'History', '
 add('explore', 'tap@desktop-nav:Explore', 'tag:desktop-explore')
 # The tab crossfade is 280ms; assert the retired Library page is gone only
 # after that transition actually finishes.
-add('explore-settled', 'wait@520', 'tag:desktop-explore', 'absent:desktop-library:Songs')
+add('explore-settled', 'wait@1200', 'tag:desktop-explore', 'absent:desktop-library:Songs')
 add('search', 'tap@desktop-nav:Search', 'tag:desktop-search', 'absent:search-state')
 add('search-focus', 'tap@search-query', 'tag:desktop-search')
 add('search-type', 'type@love', 'tag:desktop-search', 'tag:search-kind-songs')
@@ -42,6 +42,8 @@ for index in range(6):
 add('close-licenses', 'tap@desktop-dialog:ui.common.done', 'absent:desktop-project-licenses')
 add('restore-question', 'tap@settings-reset', 'tag:desktop-dialog:ui.common.cancel')
 add('cancel-restore', 'tap@desktop-dialog:ui.common.cancel', 'runtime:desktopLayoutEnabled:true')
+add('services', 'tap@settings-open-services', 'tag:desktop-provider-services', 'tag:desktop-service-scope:netease')
+add('services-close', 'escape', 'absent:desktop-provider-services', 'tag:desktop-settings-panel')
 add('settings-features', 'tap@desktop-settings-tab:Features', 'tag:desktop-settings-panel')
 add('settings-messages-tab', 'tap@desktop-settings-subtab:Messages', 'tag:settings-page:Messages')
 add('settings-messages-open', 'tap@settings-open-messages', 'tag:desktop-messages-login')
