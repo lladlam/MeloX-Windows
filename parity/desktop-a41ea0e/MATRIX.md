@@ -12,7 +12,8 @@
 - 电脑端固定提交：`a41ea0e1e1fa69fb543d827b853fe3aff5420951`。
 - 重新克隆的位置：`/mnt/ntfs_files_sda4/项目/MeloX-Desktop-Reference`。
 - 这是独立的 **macOS Desktop → Windows** 迁移目标。Android 正式 `v0.6.5 / 53244b9 / versionCode 24` 的资源、矩阵和验收记录继续独立维护。
-- 用户要求覆盖整套 UI；总状态为 **PARTIAL**。接入真实生产页面、源尺寸计算通过或 Windows 自身回放成功，均不等于该页面的一比一视觉／动态验收完成。
+- 用户要求覆盖整套 UI；总状态为 **PARTIAL**。本轮构建／回放／发行核验见 `ROUND_EVIDENCE.md`（CI `39632536833`，head `a1f6f10`）。
+接入真实生产页面、源尺寸计算通过或 Windows 自身回放成功，均不等于该页面的一比一视觉／动态验收完成。
 - `build/desktop-reference-a41ea0e/` 中官网下载的截图只用于布局考察；不是从该固定提交、相同账号／内容／尺寸取得的像素基准。
 
 ## 首批实现
