@@ -283,6 +283,34 @@ fun LibraryScreen(
         return
     }
 
+    if (MeloXSettingsRuntime.desktopLayoutEnabled && source != MusicSource.Netease) {
+        if (selectedPlaylist != null) {
+            PlaylistDetailScreen(requireNotNull(selectedPlaylist), onBack = { selectedPlaylist = null })
+        } else if (source == MusicSource.Local) {
+            melox.ui.desktop.DesktopLibrarySongs(
+                titleKey = "ui.navigation.library",
+                songs = snapshot?.likedSongs.orEmpty(),
+                loading = loading,
+                error = errorMessage,
+                onRetry = { scope.launch { refreshLibrary() } },
+                onLogin = if (providerAccount == null) ({ navState?.navigateTo(melox.ui.navigation.Route.Login) }) else null,
+                tag = "desktop-provider-library:Local",
+            )
+        } else {
+            melox.ui.desktop.MeloXDesktopProviderLibrary(
+                source = source,
+                playlists = snapshot?.playlists.orEmpty(),
+                loading = loading,
+                error = errorMessage,
+                accountName = providerAccount?.displayName,
+                onLogin = { navState?.navigateTo(melox.ui.navigation.Route.Login) },
+                onRetry = { scope.launch { refreshLibrary() } },
+                onOpen = { selectedPlaylist = it },
+            )
+        }
+        return
+    }
+
     val splitPlaylistDetail = !MeloXSettingsRuntime.desktopLayoutEnabled &&
         melox.ui.layout.LocalMeloXListDetail.current && !melox.ui.layout.LocalMeloXInDetailPane.current
     var retainedPlaylist by remember(source) { mutableStateOf(selectedPlaylist) }

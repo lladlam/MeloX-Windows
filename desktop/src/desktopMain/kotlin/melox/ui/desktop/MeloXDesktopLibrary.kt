@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
+import androidx.compose.material3.LocalTextStyle
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -19,14 +20,66 @@ import melox.account.rememberNeteaseSessionStore
 import melox.library.NeteaseLibraryClient
 import melox.library.NeteasePlaylistSummary
 import melox.model.SearchSong
+import melox.music.model.MusicSource
 import melox.network.*
 import melox.playback.PlaybackCommands
 import melox.ui.navigation.MeloXCollectionLaunchBus
 import melox.ui.navigation.MeloXCollectionTarget
 import melox.ui.screens.PlaylistDetailScreen
+import melox.ui.theme.MeloXDesktopTextFontFamily
 import kotlin.math.floor
 
 private data class DesktopLibraryCard(val id: Long, val title: String, val subtitle: String, val artwork: String?, val open: () -> Unit)
+
+/** Non-NetEase providers keep the Mac grid/list structure with their real playlists. */
+@Composable
+internal fun MeloXDesktopProviderLibrary(source: MusicSource, playlists: List<NeteasePlaylistSummary>,
+    loading: Boolean, error: String?, accountName: String?, onLogin: () -> Unit, onRetry: () -> Unit,
+    onOpen: (NeteasePlaylistSummary) -> Unit) {
+    CompositionLocalProvider(LocalTextStyle provides androidx.compose.ui.text.TextStyle(fontFamily = MeloXDesktopTextFontFamily,
+        fontSize = 13.sp, color = MaterialTheme.colorScheme.onSurface)) {
+        Column(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background).verticalScroll(rememberScrollState())
+            .padding(horizontal = 34.dp, vertical = 28.dp).testTag("desktop-provider-library")) {
+            Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+                Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(2.dp)) {
+                    Text(desktopString("ui.navigation.library"), fontSize = 32.sp, fontWeight = FontWeight.Bold)
+                    Text(source.displayName, fontSize = 12.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                }
+                accountName?.let { Text(it, color = MaterialTheme.colorScheme.onSurfaceVariant) }
+            }
+            Spacer(Modifier.height(22.dp))
+            when {
+                loading && playlists.isEmpty() -> Box(Modifier.fillMaxWidth().height(340.dp), contentAlignment = Alignment.Center) {
+                    CircularProgressIndicator(Modifier.size(20.dp), strokeWidth = 2.dp)
+                }
+                playlists.isEmpty() -> Column(Modifier.fillMaxWidth().heightIn(min = 340.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(14.dp, Alignment.CenterVertically)) {
+                    Text(desktopString(if (error == null) "ui.desktop.library.empty" else "ui.desktop.library.sign_in_title"),
+                        fontSize = 22.sp, fontWeight = FontWeight.Bold)
+                    Text(error ?: desktopString("ui.desktop.library.empty.message"), color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    if (error == null && accountName == null) DesktopDialogButton("ui.common.login", prominent = true, onClick = onLogin)
+                    else if (error != null) DesktopDialogButton("ui.common.retry", onClick = onRetry)
+                }
+                else -> BoxWithConstraints(Modifier.fillMaxWidth()) {
+                    val count = floor((maxWidth.value + 20) / 165).toInt().coerceAtLeast(1)
+                    val width = ((maxWidth.value - (count - 1) * 20) / count).coerceAtMost(205f).dp
+                    Column(verticalArrangement = Arrangement.spacedBy(24.dp)) {
+                        playlists.chunked(count).forEach { row ->
+                            Row(horizontalArrangement = Arrangement.spacedBy(20.dp)) {
+                                row.forEach { playlist ->
+                                    DesktopHomeMediaCard(playlist.name, playlist.creatorName, playlist.coverUrl, width,
+                                        "desktop-provider-library-card:${playlist.id}", playlist.playCount,
+                                        onOpen = { onOpen(playlist) })
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            Spacer(Modifier.height(80.dp))
+        }
+    }
+}
 
 /** DesktopLibraryView uses sidebar destinations, never the phone segmented picker. */
 @Composable
