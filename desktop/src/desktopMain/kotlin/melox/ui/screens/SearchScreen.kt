@@ -948,12 +948,17 @@ private fun ProviderCollectionDetail(
     var tracks by remember(title, artwork) { mutableStateOf<List<MusicTrack>>(emptyList()) }
     var loading by remember(title, artwork) { mutableStateOf(true) }
     var error by remember(title, artwork) { mutableStateOf<String?>(null) }
-    LaunchedEffect(title, artwork) {
+    var reload by remember(title, artwork) { mutableIntStateOf(0) }
+    LaunchedEffect(title, artwork, reload) {
         loading = true
         runCatching { load() }
             .onSuccess { tracks = it }
             .onFailure { if (it is kotlinx.coroutines.CancellationException) throw it; error = it.message ?: pinnedString("search_content_failed") }
         loading = false
+    }
+    if (MeloXSettingsRuntime.desktopLayoutEnabled) {
+        melox.ui.desktop.MeloXDesktopProviderCollection(title, subtitle, artwork, tracks, loading, error, onBack, { reload++ })
+        return
     }
     Column(Modifier.fillMaxSize().padding(top = 26.dp)) {
         MeloXIosTopBar(title = title, onBack = onBack)
