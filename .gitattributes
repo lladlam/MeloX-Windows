@@ -14,3 +14,6 @@ desktop/src/main/resources/icons/pinned-v065-launcher-foreground.png -text
 shared/src/desktopMain/resources/AudioFingerprint/* -text -whitespace
 desktop/src/main/resources/parity/desktop-reference-*.properties text eol=lf
 parity/desktop-a41ea0e/evidence/six-ui-local/**/*.log -whitespace
+desktop/src/main/resources/parity/legal/*.txt text eol=lf
+desktop/src/main/resources/parity/legal/*.md text eol=lf
+desktop/src/main/resources/parity/desktop-logo.png -text
