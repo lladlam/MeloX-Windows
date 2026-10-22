@@ -6,7 +6,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.BasicTextField
+import melox.ui.input.BasicTextField
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -73,6 +73,7 @@ internal fun MeloXDesktopToolHost(onLogin: () -> Unit) {
 /** DesktopSongRecognitionView, backed by the existing recorder and real matching endpoint. */
 @Composable
 private fun DesktopRecognitionContent() {
+    val scroll = androidx.compose.foundation.lazy.rememberLazyListState()
     val client = remember { SongRecognitionClient() }
     val scope = rememberCoroutineScope()
     var duration by remember { mutableIntStateOf(MeloXSettingsPreferences.string("recognition_duration", "6").toIntOrNull() ?: 6) }
@@ -99,7 +100,7 @@ private fun DesktopRecognitionContent() {
         }
     }
     when {
-        results.isNotEmpty() -> LazyColumn(Modifier.fillMaxSize().padding(24.dp), verticalArrangement = Arrangement.spacedBy(2.dp)) {
+        results.isNotEmpty() -> LazyColumn(Modifier.fillMaxSize().padding(24.dp).desktopPromotedDragScroll(scroll), state = scroll, verticalArrangement = Arrangement.spacedBy(2.dp)) {
             item { Text(desktopString("ui.recognition.results"), fontSize = 22.sp, fontWeight = FontWeight.Bold) }
             itemsIndexed(results, key = { _, value -> value.song.id }) { index, value ->
                 DesktopCollectionTrackRow(index + 1, value.song, false, false, false,
@@ -126,6 +127,7 @@ private fun DesktopRecognitionContent() {
 /** DesktopListenTogetherView: no account or room is fabricated for the ready state. */
 @Composable
 private fun DesktopTogetherContent(onLogin: () -> Unit) {
+    val scroll = androidx.compose.foundation.lazy.rememberLazyListState()
     val state by MeloXListenTogetherCoordinator.state.collectAsState()
     val revision by NeteaseSessionStore.revision.collectAsState()
     val loggedIn = remember(revision) { NeteaseSessionStore.containsMusicU(NeteaseSessionStore.readCookie()) }
@@ -150,7 +152,7 @@ private fun DesktopTogetherContent(onLogin: () -> Unit) {
         }
     }
     val room = state.room
-    LazyColumn(Modifier.fillMaxSize(), contentPadding = PaddingValues(horizontal = if (room == null) 48.dp else 26.dp, vertical = 36.dp), verticalArrangement = Arrangement.spacedBy(if (room == null) 24.dp else 22.dp)) {
+    LazyColumn(Modifier.fillMaxSize().desktopPromotedDragScroll(scroll), state = scroll, contentPadding = PaddingValues(horizontal = if (room == null) 48.dp else 26.dp, vertical = 36.dp), verticalArrangement = Arrangement.spacedBy(if (room == null) 24.dp else 22.dp)) {
         if (room == null) {
             item { Box(Modifier.fillMaxWidth().padding(top = 38.dp), contentAlignment = Alignment.Center) { MeloXSymbolIcon(MeloXSymbol.Messages, size = 56, color = Color.Red) } }
             item { Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(8.dp)) {

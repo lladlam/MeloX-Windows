@@ -1,6 +1,7 @@
 package melox
 
 import androidx.compose.ui.unit.dp
+import androidx.compose.runtime.*
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.WindowPosition
 import androidx.compose.ui.window.application
@@ -58,19 +59,43 @@ fun main() {
                 height = if (melox.settings.MeloXSettingsRuntime.desktopLayoutEnabled) 800.dp else 924.dp,
                 position = WindowPosition.PlatformDefault,
             )
-            androidx.compose.runtime.LaunchedEffect(windowState.isMinimized) {
-                melox.remoteconfig.MeloXRemoteConfigRuntime.setForeground(!windowState.isMinimized)
+            var windowVisible by remember { mutableStateOf(true) }
+            var trayInstalled by remember { mutableStateOf(false) }
+            var restoreRequest by remember { mutableIntStateOf(0) }
+            LaunchedEffect(windowVisible, windowState.isMinimized) {
+                melox.remoteconfig.MeloXRemoteConfigRuntime.setForeground(windowVisible && !windowState.isMinimized)
             }
-            val closeWindow: () -> Unit = {
+            val quitApplication: () -> Unit = {
                 melox.playback.PlaybackCommands.playerController()?.release()
                 exitApplication()
             }
+            val showWindow: () -> Unit = { windowVisible = true; windowState.isMinimized = false; restoreRequest++ }
+            val currentShow by rememberUpdatedState(showWindow)
+            val currentQuit by rememberUpdatedState(quitApplication)
+            val closeToTray = melox.settings.MeloXSettingsRuntime.closeToTrayEnabled
+            DisposableEffect(closeToTray) {
+                if (!closeToTray && !windowVisible) currentShow()
+                val tray = if (closeToTray) melox.platform.MeloXSystemTray.install(
+                    melox.ui.desktop.desktopPlatformString("tray_show"), melox.ui.desktop.desktopPlatformString("tray_quit"),
+                    { currentShow() }, { currentQuit() }) else null
+                trayInstalled = tray != null
+                onDispose { tray?.close(); trayInstalled = false }
+            }
+            val closeWindow: () -> Unit = {
+                if (melox.settings.MeloXSettingsRuntime.closeToTrayEnabled && trayInstalled) windowVisible = false
+                else quitApplication()
+            }
+            val currentClose by rememberUpdatedState(closeWindow)
             Window(
                 title = "MeloX",
                 state = windowState,
+                visible = windowVisible,
                 undecorated = true,
                 onCloseRequest = closeWindow,
             ) {
+                LaunchedEffect(windowVisible, restoreRequest) {
+                    if (windowVisible && restoreRequest > 0) { window.toFront(); window.requestFocus() }
+                }
                 val desktopLayout = melox.settings.MeloXSettingsRuntime.desktopLayoutEnabled
                 androidx.compose.runtime.DisposableEffect(window, desktopLayout) {
                     val previousMinimum = window.minimumSize
@@ -88,7 +113,7 @@ fun main() {
                 androidx.compose.runtime.DisposableEffect(immersiveOwner) { onDispose { immersiveOwner.close() } }
                 val displayAwake = androidx.compose.runtime.remember { melox.platform.MeloXDisplayAwakeController(initialForeground = false) }
                 androidx.compose.runtime.DisposableEffect(window, displayAwake) {
-                    fun foreground() = window.isFocused && (window.extendedState and java.awt.Frame.ICONIFIED) == 0
+                    fun foreground() = window.isVisible && window.isFocused && (window.extendedState and java.awt.Frame.ICONIFIED) == 0
                     val listener = object : java.awt.event.WindowAdapter() {
                         override fun windowLostFocus(event: java.awt.event.WindowEvent) { displayAwake.setForeground(false) }
                         override fun windowGainedFocus(event: java.awt.event.WindowEvent) { displayAwake.setForeground(foreground()) }
@@ -105,15 +130,15 @@ fun main() {
                 }
                 val focused = androidx.compose.ui.platform.LocalWindowInfo.current.isWindowFocused
                 val chrome = androidx.compose.runtime.remember(window, windowState) {
-                    melox.ui.desktop.MeloXWindowChrome(this, windowState, closeWindow)
+                    melox.ui.desktop.MeloXWindowChrome(this, windowState) { currentClose() }
                 }
                 androidx.compose.runtime.CompositionLocalProvider(
                     melox.ui.desktop.LocalMeloXWindowChrome provides chrome,
                     melox.ui.player.LocalMeloXDisplayAwakeOwner provides displayAwake,
-                    melox.ui.player.LocalMeloXWindowForeground provides (focused && !windowState.isMinimized),
+                    melox.ui.player.LocalMeloXWindowForeground provides (windowVisible && focused && !windowState.isMinimized),
                     melox.ui.player.LocalMeloXImmersiveWindowOwner provides immersiveOwner,
                 ) {
-                    MeloXApp(onExit = closeWindow)
+                    MeloXApp(onExit = quitApplication)
                 }
             }
         }

@@ -26,7 +26,6 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.kyant.capsule.ContinuousRoundedRectangle
-import melox.account.rememberNeteaseSessionStore
 import melox.settings.MeloXSettingsRuntime
 import melox.ui.foundation.MeloXSymbol
 import melox.ui.foundation.MeloXSymbolIcon
@@ -36,9 +35,9 @@ import melox.ui.theme.MeloXDesktopTextFontFamily
 
 @Composable
 @OptIn(androidx.compose.ui.ExperimentalComposeUiApi::class)
-internal fun MeloXDesktopAccountSheet(onDismiss: () -> Unit, onAccountSettings: () -> Unit,
+internal fun MeloXDesktopAccountSheet(session: melox.account.NeteaseSessionStore, onDismiss: () -> Unit, onAccountSettings: () -> Unit,
+    onManageSources: () -> Unit,
     onMessages: () -> Unit, onLogin: () -> Unit, onSelect: (AppTab, String?) -> Unit) {
-    val session = rememberNeteaseSessionStore()
     val dark = MaterialTheme.colorScheme.background.luminance() < .5f
     val foreground = if (dark) Color(0xFFDDDDDD) else Color(0xFF202020)
     val surface = if (dark) Color(0xFF312E2E) else Color(0xFFF8F7F7)
@@ -100,6 +99,7 @@ internal fun MeloXDesktopAccountSheet(onDismiss: () -> Unit, onAccountSettings: 
                         .clickable(interactionSource = null, indication = null, role = Role.Button, onClick = onLogin)
                         .padding(horizontal = 22.dp, vertical = 8.dp)) { Text(desktopString("ui.common.login"), color = Color.White, fontSize = 13.sp) }
                 }
+                AccountLabeledActionRow(desktopPlatformString("services_title"), "desktop-account-sources", foreground, onManageSources)
                 Row(Modifier.fillMaxWidth().padding(start = 16.dp, end = 16.dp, bottom = 16.dp), horizontalArrangement = Arrangement.End) {
                     Box(Modifier.size(80.dp, 30.dp).clip(CircleShape).background(accent).testTag("desktop-account-done")
                         .clickable(interactionSource = null, indication = null, role = Role.Button, onClick = onDismiss), contentAlignment = Alignment.Center) {
@@ -130,9 +130,14 @@ private fun AccountSeparator(foreground: Color) {
 
 @Composable
 private fun AccountActionRow(key: String, tag: String, color: Color, onClick: () -> Unit) {
+    AccountLabeledActionRow(desktopString(key), tag, color, onClick)
+}
+
+@Composable
+private fun AccountLabeledActionRow(label: String, tag: String, color: Color, onClick: () -> Unit) {
     Row(Modifier.fillMaxWidth().height(42.dp).testTag(tag).clickable(interactionSource = null, indication = null, role = Role.Button,
         onClick = onClick).padding(horizontal = 12.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-        Text(desktopString(key), Modifier.weight(1f), color = color, fontSize = 13.sp)
+        Text(label, Modifier.weight(1f), color = color, fontSize = 13.sp)
         MeloXSymbolIcon(MeloXSymbol.ChevronRight, size = 11, weight = FontWeight.SemiBold, color = color.copy(alpha = .3f))
     }
 }

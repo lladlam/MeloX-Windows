@@ -5,18 +5,20 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.hoverable
+import androidx.compose.foundation.focusable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsHoveredAsState
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.input.key.*
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.Role
@@ -81,10 +83,15 @@ internal fun <T> DesktopSettingsPicker(title: String, value: T, items: List<Pair
                 MeloXSymbolIcon(MeloXSymbol.ChevronUpDown, size = 9)
             }
             if (expanded) Popup(alignment = Alignment.TopEnd, onDismissRequest = { expanded = false }, properties = PopupProperties(focusable = true)) {
-                Surface(Modifier.widthIn(min = 180.dp, max = 300.dp).testTag("desktop-settings-picker-menu"),
+                val focus = remember { FocusRequester() }
+                LaunchedEffect(Unit) { focus.requestFocus() }
+                Surface(Modifier.widthIn(min = 180.dp, max = 300.dp).testTag("desktop-settings-picker-menu")
+                    .onPreviewKeyEvent {
+                        if (it.key == Key.Escape) { if (it.type == KeyEventType.KeyUp) expanded = false; true } else false
+                    }.focusRequester(focus).focusable(),
                     shape = RoundedCornerShape(6.dp), shadowElevation = 8.dp,
                     border = androidx.compose.foundation.BorderStroke(.5.dp, MaterialTheme.colorScheme.onSurface.copy(alpha = .2f))) {
-                    Column(Modifier.heightIn(max = 340.dp).verticalScroll(rememberScrollState()).padding(5.dp)) {
+                    Column(Modifier.heightIn(max = 340.dp).desktopVerticalScroll().padding(5.dp)) {
                         items.forEachIndexed { index, (option, label) ->
                             val interaction = remember { MutableInteractionSource() }
                             val hovered by interaction.collectIsHoveredAsState()

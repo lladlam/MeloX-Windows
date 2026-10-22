@@ -148,7 +148,7 @@ jobs:
         shell: pwsh
         run: |
           python -m pip install --quiet Pillow
-          python tools/capture_desktop_home.py "$pwd/desktop/build/parity/home-final-dark-home" desktop/build/parity/home-final-dark --touch --account
+          python tools/capture_desktop_home.py "$pwd/desktop/build/parity/home-final-dark-home" desktop/build/parity/home-final-dark --touch --account --promoted-drag
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           python tools/verify_desktop_home_capture.py desktop/build/parity/home-final-dark
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
@@ -214,6 +214,28 @@ jobs:
           python tools/capture_settings_pages.py desktop-routes "$pwd/desktop/build/parity/settings-desktop-dark-home" desktop/build/parity/settings-desktop-dark en-US Dark 1280 900
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           python tools/capture_settings_pages.py desktop-routes "$pwd/desktop/build/parity/settings-desktop-light-home" desktop/build/parity/settings-desktop-light zh-CN Light 1280 900
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python tools/capture_settings_pages.py desktop-controls "$pwd/desktop/build/parity/settings-desktop-controls-home" desktop/build/parity/settings-desktop-controls en-US Dark 1280 900
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python tools/capture_settings_pages.py desktop-reload "$pwd/desktop/build/parity/settings-desktop-controls-home" desktop/build/parity/settings-desktop-reload en-US Dark 1280 900
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Replay Desktop promoted drag and native Touch scene paths
+        shell: pwsh
+        run: |
+          python tools/capture_desktop_drag_scroll.py "$pwd/desktop/build/parity/desktop-drag-home" desktop/build/parity/desktop-drag
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python tools/capture_desktop_search_scroll.py "$pwd/desktop/build/parity/desktop-search-scroll-home" desktop/build/parity/desktop-search-scroll
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Replay Desktop surfaces and first launch
+        shell: pwsh
+        run: |
+          foreach ($theme in @("Dark", "Light")) {
+            python tools/capture_desktop_surfaces.py "$pwd/desktop/build/parity/desktop-surfaces-$theme-home" "desktop/build/parity/desktop-surfaces-$theme" $theme
+            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+            python tools/verify_desktop_surfaces_capture.py "desktop/build/parity/desktop-surfaces-$theme"
+            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          }
+          python tools/capture_desktop_onboarding.py "$pwd/desktop/build/parity/desktop-onboarding-home" desktop/build/parity/desktop-onboarding
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - name: Measure cold-start memory of the production app
         shell: pwsh
@@ -298,7 +320,7 @@ jobs:
             --main-jar "$name" `
             --name MeloX-Desktop `
             --dest desktop/build/releases `
-            --java-options "-Xms16m -Xmx1g -XX:+UseSerialGC -Dfile.encoding=UTF-8"
+            --java-options "-Xms16m -Xmx1g -XX:+UseSerialGC -Dfile.encoding=UTF-8 --add-opens=java.desktop/java.awt.event=ALL-UNNAMED"
       - name: Verify app-image decoder
         run: python tools/verify_decoder_bundle.py --artifact desktop/build/releases/MeloX-Desktop --run --output desktop/build/verification/image-decoder.json
       - name: Verify app-image pinned resources
@@ -342,6 +364,11 @@ jobs:
             desktop/build/parity/desktop-layout-*/gradle.log
             desktop/build/parity/desktop-layout-*/*.png
             desktop/build/parity/desktop-layout-*/*.s16le
+            desktop/build/parity/desktop-drag/*
+            desktop/build/parity/desktop-search-scroll/*
+            desktop/build/parity/desktop-surfaces-Dark/*
+            desktop/build/parity/desktop-surfaces-Light/*
+            desktop/build/parity/desktop-onboarding/*
             desktop/build/parity/home-final-*/*.json
             desktop/build/parity/home-final-*/*.txt
             desktop/build/parity/home-final-*/gradle.log

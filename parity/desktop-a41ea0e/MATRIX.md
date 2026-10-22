@@ -4,9 +4,15 @@
 
 **用户纠正后的硬约束：电脑模式的唯一UI基准为MeloX Mac Desktop；手机版已迁移UI仅供参考，不能作为桌面页面、弹层、菜单或动效的实现模板。可以共用真实业务／服务／持久化逻辑，不能以“功能共用”将手机UI混进桌面。此前六图回放通过不代表这个隔离约束已经全部满足。**
 
-音乐库歌单入口此前遗漏了桌面分支，进入`MeloXLibraryPlaylistDetailScreen`（Android移植页）；已改为与Home／Search相同的桌面collection分支，并禁止桌面进入手机版split detail路由。歌曲操作现已在入口分流到独立桌面菜单，歌曲／歌手详情也新增独立Mac页面，见`DESKTOP_ONLY_SURFACES.md`。设置子页仍复用手机控件，属于待替换UI，不能按功能可达标为完成。
+音乐库歌单入口此前遗漏了桌面分支，进入`MeloXLibraryPlaylistDetailScreen`（Android移植页）；已改为与Home／Search相同的桌面collection分支，并禁止桌面进入手机版split detail路由。歌曲操作现已在入口分流到独立桌面菜单，歌曲／歌手详情也新增独立Mac页面，见`DESKTOP_ONLY_SURFACES.md`。设置已使用独立桌面控件委派，逐页排列和同内容像素验收仍为 PARTIAL。
 
 触屏需区分Compose的Touch事件与Windows AWT提升为Mouse的拖动事件；collection已为后一条链路补充按阈值开始的纵向拖动／惯性滚动，原生Touch及滚轮继续由LazyColumn处理。`--drag-scroll`独立断言两种输入均实际滚动超过100px并回到顶部，未用tag存在代替滚动结果。Windows物理触屏验证仍未完成。
+
+用户再次反馈触屏不好用后，新增排查发现 Home、设置正文、部分工具／菜单／音乐库等滚动容器漏接 promoted-mouse 适配；Home 横向卡片与播客分类也需独立横向适配。当前补齐入口、按轴竞争、拖动全程用户输入优先级，并修正搜索媒体网格没有滚动容器的问题。场景回放与硬件触屏结论分开记录，见 `TOUCH_SCROLL_FOLLOWUP.md`。
+
+按用户最新要求，左侧大栏／侧边歌词改为无描边液态玻璃，移除歌词打开时的 Home 卡片重排及底部播放器避让；账户 footer 与 sheet 共享真实会话资料加载，音乐服务管理接入账户页。真源依据与边界见 `SIDEBAR_ACCOUNT_GLASS.md`。
+
+Windows 输入框的触摸键盘路由与原生 InputPane 接线见 `TOUCH_KEYBOARD.md`；关闭窗口隐藏到托盘的设置／生命周期见 `WINDOWS_TRAY.md`。这两项 Windows 集成与 Mac 原生组件的验收分别记录。
 
 - 仓库：<https://github.com/lladlam/melox>。
 - 电脑端固定提交：`a41ea0e1e1fa69fb543d827b853fe3aff5420951`。
@@ -32,7 +38,7 @@ Windows 首次以已保存桌面模式启动采用 1280×800；启用时设置�
 |---|---|---|
 | `App/DesktopRootView.swift`、`Features/Sidebar` | PARTIAL：独立桌面框架、真实导航、账户sheet／设置可达；主窗口移除原生标题栏，接入软件内最小化／最大化／还原／关闭、拖动／resize，见窗口记录 | Windows原生DPI／触屏／窗口行为验收、安全区、材质、侧栏滚动／loading footer及原生阴影 |
 | `Features/Home` | PARTIAL：完整顺序区块、真实新专辑API／缓存、最近播放回退、正方形推荐hero、媒体卡元数据及播放入口；分页shelf／纵滚转交、保留父页的真实歌单／专辑跳转；深浅配色和真实主题切换，见 `HOME_PARITY.md` | 固定同内容全图／动态验收、CJK字体栅格、原生toolbar／材质／阴影／snappy、歌曲独立详情和全部加载／错误视觉 |
-| `Features/Search` | PARTIAL：独立332×36胶囊、catalog／library scope、5类segmented picker、42pt封面track row、自适应媒体网格、真实候选词及桌面详情 | 逐菜单像素／动态验收、聚合搜索桌面入口取舍 |
+| `Features/Search` | PARTIAL：独立332×36胶囊、catalog／library scope、5类segmented picker、42pt封面track row、惰性可滚动媒体网格、悬浮真实候选词及桌面详情 | 逐菜单像素／动态验收、聚合搜索桌面入口取舍 |
 | `Features/Explore` | PARTIAL：独立New Music／Charts／Popular Artists三段、圆形歌手卡、145–205pt网格，真实Netease榜单与歌手接口 | 同内容帧、原生toolbar与逐区块加载／错误动画验收 |
 | `Features/Library` | PARTIAL：网易侧栏直达独立桌面歌曲／历史、歌单／专辑／歌手／播客网格、下载和云盘；真实API、桌面track row与collection详情；深浅未登录导航回放通过 | 其他provider音乐库、登录态全量数据／分页、筛选／排序、拖放及全部菜单 |
 | Albums／Artists 收藏入口 | PARTIAL：网易已启用，真实sublist接口和桌面网格／详情；其他provider仍能力门控 | 真实收藏账户验收；其他provider独立消费者与真源桌面页面 |

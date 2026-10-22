@@ -44,7 +44,6 @@ import melox.ui.screens.MeloXArtworkImage
 import melox.ui.theme.MeloXDesktopDisplayFontFamily
 import melox.ui.theme.MeloXDesktopTextFontFamily
 
-internal val LocalDesktopInspectorWidth = staticCompositionLocalOf { 0 }
 internal val LocalDesktopHomeVerticalWheel = staticCompositionLocalOf<((Float) -> Unit)?> { null }
 
 private data class DesktopQuickAction(val original: String, val key: String, val symbol: MeloXSymbol,
@@ -63,7 +62,7 @@ private val quickActions = listOf(
 internal fun MeloXDesktopHome(content: NeteaseHomeContent?, recentSongs: List<SearchSong>, activeAction: String?, loading: Boolean, error: String?,
     onAction: (String) -> Unit, onPlaylist: (NeteasePlaylistSummary) -> Unit, onPlayPlaylist: (NeteasePlaylistSummary) -> Unit,
     onAlbum: (Long, String) -> Unit, onPlayAlbum: (Long) -> Unit, onPodcast: (Long) -> Unit, onTool: (String) -> Unit) {
-    val reserved = LocalDesktopInspectorWidth.current
+    val reserved = 0
     val currentTrack by AudioPlayer.currentTrack.collectAsState()
     val listState = rememberLazyListState()
     val scope = rememberCoroutineScope()
@@ -76,7 +75,7 @@ internal fun MeloXDesktopHome(content: NeteaseHomeContent?, recentSongs: List<Se
         val heroWidth = meloXDesktopShelfWidth(maxWidth.value - reserved, if (reserved > 0) 145 else 200, 20).dp
         val mediaWidth = meloXDesktopShelfWidth(maxWidth.value - reserved, 145, 24).dp
         // The native reference has a toolbar safe-area above its 22pt scroll padding.
-        LazyColumn(Modifier.fillMaxSize().padding(top = 52.dp).testTag("desktop-home-scroll"), state = listState,
+        LazyColumn(Modifier.fillMaxSize().padding(top = 52.dp).desktopPromotedDragScroll(listState).testTag("desktop-home-scroll"), state = listState,
             contentPadding = PaddingValues(start = 52.dp, end = 52.dp, top = 22.dp, bottom = 88.dp),
             verticalArrangement = Arrangement.spacedBy(32.dp)) {
             item("title") { Text(desktopString("ui.navigation.home"), Modifier.height(55.dp).wrapContentHeight(unbounded = true),

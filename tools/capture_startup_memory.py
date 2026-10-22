@@ -27,7 +27,7 @@ parser.add_argument('--jar', type=Path)
 parser.add_argument('--queue', type=Path, help='App-written prefs_melox_playback_queue.properties')
 parser.add_argument('--runs', type=int, default=3)
 # Must match the shipped jpackage java-options so CI measures the production JVM.
-parser.add_argument('--jvm-args', default='-Xms16m -Xmx1g -XX:+UseSerialGC -Dfile.encoding=UTF-8 -Djava.awt.headless=true')
+parser.add_argument('--jvm-args', default='-Xms16m -Xmx1g -XX:+UseSerialGC -Dfile.encoding=UTF-8 --add-opens=java.desktop/java.awt.event=ALL-UNNAMED -Djava.awt.headless=true')
 args = parser.parse_args()
 
 jar = args.jar or next((repo / 'desktop/build/compose/jars').glob('*.jar'), None)

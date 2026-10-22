@@ -38,6 +38,19 @@ for scene in data['scenes']:
                            surface_sample_rgb=image.convert('RGB').getpixel((2390, 100))))
 assert any(p['kind'] == 'Queue' for p in panels)
 assert sum(p['kind'] == 'Lyrics' for p in panels) >= 3
+
+
+def tagged_at(name):
+    scene = next(s for s in data['scenes'] if s['file'].split('-', 1)[1] == name + '.png')
+    nodes = json.loads((root / scene['file']).with_suffix('.semantics.json').read_text(encoding='utf-8'))
+    return {n['tag']: n for n in nodes if n.get('tag')}
+
+
+before = tagged_at('pause-for-lyric-input')
+for name in ['lyrics-pane', 'queue-inspector', 'lyrics-again', 'close-pane']:
+    nodes = tagged_at(name)
+    for tag in ['desktop-home-scroll', 'desktop-home-action:daily_songs', 'desktop-bottom-player']:
+        assert nodes[tag]['bounds'] == before[tag]['bounds'], (name, tag, 'Opening inspector reflowed the page')
 reference = None
 if args.reference:
     raw = args.reference.read_bytes()
@@ -46,6 +59,6 @@ if args.reference:
     reference = dict(sha256=hashlib.sha256(raw).hexdigest(), original_panel_bounds=[1694, 0, 2414, 1356],
                      boundary_uncertainty_px=1, content='Private lyrics/content are not reused in public evidence')
 report = dict(status='PASSED', scope='Original viewport/boundary, real timed lyrics seek, PCM and inspector transitions; not full-image pixel parity',
-              theme=data['theme'], panels=panels, reference=reference)
+              theme=data['theme'], panels=panels, reference=reference, page_and_bottom_player_reflow=False)
 (root / 'lyrics-pane-verification.json').write_text(json.dumps(report, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
 print(f'PASS lyrics pane: {len(panels)} panel frames; uploaded boundary, production lyrics, seek and queue transitions')

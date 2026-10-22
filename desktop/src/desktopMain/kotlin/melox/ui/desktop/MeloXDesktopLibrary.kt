@@ -2,8 +2,6 @@ package melox.ui.desktop
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.runtime.*
@@ -38,7 +36,7 @@ internal fun MeloXDesktopProviderLibrary(source: MusicSource, playlists: List<Ne
     onOpen: (NeteasePlaylistSummary) -> Unit) {
     CompositionLocalProvider(LocalTextStyle provides androidx.compose.ui.text.TextStyle(fontFamily = MeloXDesktopTextFontFamily,
         fontSize = 13.sp, color = MaterialTheme.colorScheme.onSurface)) {
-        Column(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background).verticalScroll(rememberScrollState())
+        Column(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background).desktopVerticalScroll()
             .padding(horizontal = 34.dp, vertical = 28.dp).testTag("desktop-provider-library")) {
             Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
                 Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(2.dp)) {
@@ -134,7 +132,7 @@ internal fun MeloXDesktopLibrary(page: String?, onLogin: () -> Unit) {
         playlist != null -> PlaylistDetailScreen(requireNotNull(playlist), onBack = { playlist = null })
         podcast != null -> MeloXDesktopPodcastDetail(universal, requireNotNull(podcast)) { podcast = null }
         section in setOf("Songs", "History") -> DesktopLibrarySongs(title, songs, loading, error, { refresh++ }, if (session.isLoggedIn) null else onLogin, tag = "desktop-library:$section")
-        else -> Column(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background).verticalScroll(rememberScrollState()).padding(horizontal = 34.dp, vertical = 28.dp).testTag("desktop-library:$section"), verticalArrangement = Arrangement.spacedBy(22.dp)) {
+        else -> Column(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background).desktopVerticalScroll().padding(horizontal = 34.dp, vertical = 28.dp).testTag("desktop-library:$section"), verticalArrangement = Arrangement.spacedBy(22.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(desktopString(title), Modifier.weight(1f), fontSize = 32.sp, fontWeight = FontWeight.Bold)
                 if (section == "Playlists") DesktopDialogButton("ui.playlists.create.title", session.isLoggedIn, "desktop-library-create") { creating = true }

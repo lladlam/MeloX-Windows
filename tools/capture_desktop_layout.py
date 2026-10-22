@@ -190,9 +190,8 @@ if not mode.startswith('home-'):
 geometry = []
 for scene in data['scenes']:
     nodes = json.loads((output / scene['file'].replace('.png', '.semantics.json')).read_text(encoding='utf-8'))
-    inspector_width = next(((n['bounds'][2] - n['bounds'][0]) / data['density'] for n in nodes
-                            if n.get('tag') in ('desktop-inspector:Lyrics', 'desktop-inspector:Queue')), 0)
-    player_width = min(700, data['width'] / data['density'] - 207 - 48 - inspector_width)
+    # The reference side panel overlays the page; it does not reserve width.
+    player_width = min(700, data['width'] / data['density'] - 207 - 48)
     for tag, expected_width, expected_height in [('desktop-sidebar', 199, None), ('desktop-bottom-player', player_width, 54),
         ('desktop-inspector:Queue', 258, None), ('desktop-inspector:Lyrics', 360, None)]:
         node = next((n for n in nodes if n.get('tag') == tag), None)

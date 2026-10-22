@@ -1,5 +1,7 @@
 package melox.ui.foundation
 
+import melox.ui.input.OutlinedTextField
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.hoverable

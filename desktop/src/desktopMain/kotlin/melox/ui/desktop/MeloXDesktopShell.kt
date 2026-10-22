@@ -19,10 +19,8 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsHoveredAsState
 import androidx.compose.foundation.hoverable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
@@ -32,19 +30,12 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.draw.drawWithContent
-import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.CompositingStrategy
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.graphics.BlurEffect
-import androidx.compose.ui.graphics.TileMode
-import androidx.compose.ui.graphics.layer.drawLayer
-import androidx.compose.ui.graphics.drawscope.translate
-import androidx.compose.ui.layout.onGloballyPositioned
-import androidx.compose.ui.layout.positionInRoot
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Size
@@ -98,6 +89,7 @@ internal fun MeloXInterfaceLayout(
     libraryPage: String?,
     onSelect: (AppTab, String?) -> Unit,
     onAccount: () -> Unit,
+    onManageSources: () -> Unit,
     onOpenMessages: () -> Unit,
     onLogin: () -> Unit,
     onExpandPlayer: () -> Unit,
@@ -112,15 +104,17 @@ internal fun MeloXInterfaceLayout(
     var inspectorWidth by remember { mutableIntStateOf(DesktopMetrics.Inspector) }
     if (inspector != null) inspectorWidth = if (inspector == DesktopInspector.Lyrics) DesktopMetrics.LyricsInspector else DesktopMetrics.Inspector
     var accountSheet by remember { mutableStateOf(false) }
+    val account = rememberNeteaseSessionStore()
+    LaunchedEffect(desktop, account.cookie) { if (desktop && account.isLoggedIn) account.refreshProfile() }
     LaunchedEffect(desktop, hasMedia) { if (!desktop || !hasMedia) inspector = null }
     val duration = if (MeloXSettingsRuntime.reduceMotion) 0 else 280
     Row(Modifier.fillMaxSize().testTag(if (desktop) "interface-desktop" else "interface-current")) {
-        if (desktop) DesktopSidebar(selectedTab, source, libraryPage, onSelect) { accountSheet = true }
+        if (desktop) CompositionLocalProvider(LocalMeloXLayerBackdrop provides backdrop) {
+            DesktopSidebar(selectedTab, source, libraryPage, onSelect, account) { accountSheet = true }
+        }
         key("retained-page") {
             Box(Modifier.weight(1f).fillMaxHeight().clipToBounds()) {
-                CompositionLocalProvider(LocalDesktopInspectorWidth provides if (desktop && inspector != null && !playerOpen) inspectorWidth else 0) {
-                    MeloXListDetailLayout(hasMedia, modifier) { content() }
-                }
+                MeloXListDetailLayout(hasMedia, modifier) { content() }
                 if (desktop) {
                     collectionOverlay()
                     androidx.compose.animation.AnimatedVisibility(inspector != null && !playerOpen, Modifier.align(Alignment.CenterEnd).width(inspectorWidth.dp).fillMaxHeight(),
@@ -134,7 +128,7 @@ internal fun MeloXInterfaceLayout(
                     }
                     if (hasMedia && !playerOpen) {
                         Box(Modifier.align(Alignment.BottomCenter).fillMaxWidth()
-                            .padding(start = 24.dp, end = 24.dp + if (inspector != null) inspectorWidth.dp else 0.dp,
+                            .padding(start = 24.dp, end = 24.dp,
                                 bottom = DesktopMetrics.PlayerBottom.dp), contentAlignment = Alignment.Center) {
                             CompositionLocalProvider(LocalMeloXLayerBackdrop provides backdrop) {
                                 DesktopBottomPlayer(inspector, { inspector = if (inspector == it) null else it }, onExpandPlayer)
@@ -147,8 +141,10 @@ internal fun MeloXInterfaceLayout(
     }
     if (desktop && accountSheet) {
         MeloXDesktopAccountSheet(
+            session = account,
             onDismiss = { accountSheet = false },
             onAccountSettings = { accountSheet = false; onAccount() },
+            onManageSources = { accountSheet = false; onManageSources() },
             onMessages = { accountSheet = false; onOpenMessages() },
             onLogin = { accountSheet = false; onLogin() },
             onSelect = { tab, page -> accountSheet = false; onSelect(tab, page) },
@@ -158,14 +154,12 @@ internal fun MeloXInterfaceLayout(
 
 @Composable
 private fun DesktopSidebar(selectedTab: AppTab, source: MusicSource, libraryPage: String?,
-    onSelect: (AppTab, String?) -> Unit, onAccount: () -> Unit) {
-    val session = rememberNeteaseSessionStore()
+    onSelect: (AppTab, String?) -> Unit, session: melox.account.NeteaseSessionStore, onAccount: () -> Unit) {
     val colors = MaterialTheme.colorScheme
     Column(Modifier.padding(start = 8.dp, top = 8.dp, bottom = 8.dp).width(DesktopMetrics.Sidebar.dp).fillMaxHeight()
-        .clip(RoundedCornerShape(18.dp)).background(colors.surface.copy(alpha = .72f))
-        .border(.65.dp, colors.outlineVariant.copy(alpha = .5f), RoundedCornerShape(18.dp))
+        .desktopLiquidPanel(RoundedCornerShape(18.dp))
         .testTag("desktop-sidebar")) {
-        Column(Modifier.weight(1f).verticalScroll(rememberScrollState()).padding(horizontal = 9.dp, vertical = 38.dp)) {
+        Column(Modifier.weight(1f).desktopVerticalScroll().padding(horizontal = 9.dp, vertical = 38.dp)) {
             fun selected(tab: AppTab, page: String? = null) = tab == selectedTab && (page == null || libraryPage == page)
             DesktopNavigationRow("Search", "ui.navigation.search", MeloXSymbol.Search, selected(AppTab.Search)) { onSelect(AppTab.Search, null) }
             if (MeloXSettingsRuntime.homeTabEnabled)
@@ -202,7 +196,7 @@ private fun DesktopSidebar(selectedTab: AppTab, source: MusicSource, libraryPage
             else Box(Modifier.size(30.dp).clip(CircleShape).background(Color(0xFF7AA1E0)), contentAlignment = Alignment.Center) {
                 Text(desktopString("ui.desktop.sidebar.fallback_avatar_initial"), color = Color.White, fontWeight = FontWeight.Bold, fontSize = 14.sp)
             }
-            Text(profile?.nickname ?: desktopString("ui.desktop.sidebar.not_signed_in"), fontSize = 13.5.sp, fontWeight = FontWeight.SemiBold,
+            Text(profile?.nickname ?: if (session.isLoggedIn) desktopPlatformString("services_signed_in") else desktopString("ui.desktop.sidebar.not_signed_in"), fontSize = 13.5.sp, fontWeight = FontWeight.SemiBold,
                 maxLines = 1, overflow = TextOverflow.Ellipsis, modifier = Modifier.weight(1f))
         }
         Row(Modifier.fillMaxWidth().height(36.dp).testTag("desktop-settings").clickable(role = Role.Button) { onSelect(AppTab.Settings, null) }
@@ -343,17 +337,7 @@ internal fun DesktopSeekBar(modifier: Modifier, tint: Color) {
 private fun DesktopInspectorPanel(kind: DesktopInspector, active: Boolean) {
     val track by AudioPlayer.currentTrack.collectAsState()
     val color = MaterialTheme.colorScheme.onSurface
-    val dark = MaterialTheme.colorScheme.background.luminance() < .5f
-    val backdrop = LocalMeloXLayerBackdrop.current
-    var origin by remember { mutableStateOf(Offset.Zero) }
-    Box(Modifier.fillMaxSize().clipToBounds().testTag("desktop-inspector:${kind.name}")) {
-        if (backdrop != null) Box(Modifier.matchParentSize().onGloballyPositioned { origin = it.positionInRoot() }
-            .graphicsLayer { renderEffect = BlurEffect(24.dp.toPx(), 24.dp.toPx(), TileMode.Clamp) }
-            .drawBehind {
-                translate(backdrop.origin.x - origin.x, backdrop.origin.y - origin.y) { drawLayer(backdrop.layer) }
-            })
-        Box(Modifier.matchParentSize().background(MaterialTheme.colorScheme.surface.copy(alpha = if (dark) .52f else .72f)))
-        Box(Modifier.fillMaxHeight().width(.5.dp).background(color.copy(alpha = .16f)))
+    Box(Modifier.fillMaxSize().desktopLiquidPanel(androidx.compose.ui.graphics.RectangleShape).testTag("desktop-inspector:${kind.name}")) {
         androidx.compose.animation.AnimatedContent(kind,
             transitionSpec = { fadeIn(tween(if (MeloXSettingsRuntime.reduceMotion) 0 else 280)) togetherWith fadeOut(tween(if (MeloXSettingsRuntime.reduceMotion) 0 else 280)) },
             label = "desktop-inspector-crossfade") { destination ->
@@ -399,7 +383,9 @@ internal fun DesktopQueueInspector(active: Boolean, prominent: Boolean = false) 
             }
         }
         Box(Modifier.weight(1f).fillMaxWidth()) {
-        androidx.compose.foundation.lazy.LazyColumn(Modifier.fillMaxSize().graphicsLayer { compositingStrategy = CompositingStrategy.Offscreen }
+        androidx.compose.foundation.lazy.LazyColumn(Modifier.fillMaxSize()
+            .then(if (active) Modifier.desktopPromotedDragScroll(list) else Modifier)
+            .graphicsLayer { compositingStrategy = CompositingStrategy.Offscreen }
             .drawWithContent {
                 drawContent()
                 val fade = 72.dp.toPx().coerceAtMost(size.height)

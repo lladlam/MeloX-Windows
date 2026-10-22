@@ -65,7 +65,9 @@ def theme_samples(name, theme):
     if theme == 'Dark':
         assert max(background) <= 35 and max(sidebar) <= 35, (background, sidebar)
     else:
-        assert min(background) >= 240 and min(sidebar) >= 250, (background, sidebar)
+        # Borderless regular glass inherits the light page below, rather than
+        # the retired nearly-opaque white sidebar slab.
+        assert min(background) >= 240 and min(sidebar) >= 240, (background, sidebar)
     assert red[0] > 160 and red[1] < 50 and red[2] < 60, red
     return dict(theme=theme, background_rgb=background, sidebar_rgb=sidebar, selected_rgb=red)
 

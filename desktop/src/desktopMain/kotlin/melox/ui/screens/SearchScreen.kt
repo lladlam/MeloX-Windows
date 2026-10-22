@@ -234,10 +234,13 @@ fun SearchScreen(
         finally { categoryLoading = false }
     }
     // DesktopSearchView suggestions use a 300ms debounce and only the catalog scope.
-    LaunchedEffect(query, libraryScope, sessionRevision) {
-        if (query.isBlank() || libraryScope || sessionCookie.isBlank()) { searchSuggestions = emptyList(); return@LaunchedEffect }
+    LaunchedEffect(query, libraryScope, sessionRevision, source, MeloXSettingsRuntime.desktopLayoutEnabled) {
+        searchSuggestions = emptyList()
+        if (!MeloXSettingsRuntime.desktopLayoutEnabled || source != MusicSource.Netease || query.isBlank() || libraryScope) return@LaunchedEffect
         delay(300)
-        searchSuggestions = runCatching { universal.searchSuggestions(query) }.getOrDefault(emptyList())
+        try { searchSuggestions = universal.searchSuggestions(query) }
+        catch (cancelled: kotlinx.coroutines.CancellationException) { throw cancelled }
+        catch (_: Exception) { searchSuggestions = emptyList() }
     }
 
     LaunchedEffect(query, kind, source, searchTrigger, unifiedEnabled, unifiedSources, sessionRevision, libraryScope) {

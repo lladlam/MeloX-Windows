@@ -51,6 +51,16 @@ add('settings-messages-close', 'escape', 'absent:desktop-messages-login', 'tag:d
 add('settings-general', 'tap@desktop-settings-tab:General', 'tag:settings-general')
 add('dismiss-settings', 'tap@desktop-dialog:ui.common.ok', 'tag:desktop-home')
 add('account-sheet', 'tap@desktop-account', 'tag:desktop-account-sheet', 'tag:desktop-account-login')
+add('account-sources', 'tap@desktop-account-sources', 'tag:desktop-provider-services', 'tag:desktop-service-current-source')
+add('source-menu', 'tap@desktop-service-current-source', 'tag:settings-option:Local Music')
+add('source-local', 'tap@settings-option:Local Music', 'tag:desktop-provider-services')
+add('source-local-menu', 'tap@desktop-service-current-source', 'selected:settings-option:Local Music')
+add('source-netease', 'tap@settings-option:NetEase Cloud Music', 'tag:desktop-provider-services')
+add('source-netease-menu', 'tap@desktop-service-current-source', 'selected:settings-option:NetEase Cloud Music')
+add('source-menu-close', 'escape', 'absent:desktop-settings-picker-menu')
+add('account-sources-close', 'escape', 'absent:desktop-provider-services')
+add('account-sources-settings-close', 'tap@desktop-dialog:ui.common.ok', 'tag:desktop-home')
+add('account-again', 'tap@desktop-account', 'tag:desktop-account-sheet')
 add('login-sheet', 'tap@desktop-account-login', 'tag:desktop-login', 'tag:desktop-login-phone')
 add('login-client', 'tap@desktop-login-method:ClientCookie', 'tag:desktop-login-import')
 add('login-phone', 'tap@desktop-login-method:Phone', 'tag:desktop-login-send')
@@ -74,4 +84,8 @@ with (output / 'gradle.log').open('w') as log:
     result = subprocess.run(command, cwd=repo, stdout=log, stderr=subprocess.STDOUT)
 if result.returncode:
     print((output / 'gradle.log').read_text(errors='replace')[-14000:])
-raise SystemExit(result.returncode)
+    raise SystemExit(result.returncode)
+source_prefs = dict(line.split('=', 1) for line in
+    (home / '.melox/prefs_melox_music_providers.properties').read_text(encoding='utf-8').splitlines()
+    if line and not line.startswith('#'))
+assert source_prefs.get('selected_source') == 'netease', 'Account source selection was not persisted'

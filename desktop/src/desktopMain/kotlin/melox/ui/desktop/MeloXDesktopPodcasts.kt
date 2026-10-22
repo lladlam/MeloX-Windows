@@ -97,7 +97,9 @@ private fun DesktopPodcastCatalog(client: NeteaseUniversalSearchClient, category
                 if (category == null && categories.isNotEmpty()) item("categories") {
                     Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
                         Text(desktopString("ui.search.browse_categories"), fontSize = 22.sp, fontWeight = FontWeight.Bold)
-                        LazyRow(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                        val categoriesScroll = rememberLazyListState()
+                        LazyRow(Modifier.desktopPromotedDragScroll(categoriesScroll, androidx.compose.foundation.gestures.Orientation.Horizontal),
+                            state = categoriesScroll, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                             items(categories, key = { it.id }) { item ->
                                 Row(Modifier.clip(CircleShape).background(MaterialTheme.colorScheme.onSurface.copy(alpha = .08f))
                                     .testTag("desktop-podcast-category:${item.id}").clickable { onCategory(item) }.padding(horizontal = 14.dp, vertical = 9.dp),

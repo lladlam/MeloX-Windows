@@ -461,6 +461,7 @@ fun MeloXApp(onExit: () -> Unit = { kotlin.system.exitProcess(0) }) {
                     libraryPage = desktopLibraryPage,
                     onSelect = { tab, page -> melox.ui.navigation.MeloXCollectionLaunchBus.clear(); desktopLibraryPage = page; selectedTab = tab },
                     onAccount = { selectedTab = AppTab.Settings },
+                    onManageSources = { selectedTab = AppTab.Settings; settingsRouteRequest = "ProviderServices" },
                     onOpenMessages = { messagesVisible = true },
                     onLogin = { selectedTab = AppTab.Settings; settingsRouteRequest = "NeteaseLogin" },
                     onExpandPlayer = openPlayer, playerOpen = playerOpen,
@@ -679,6 +680,10 @@ private fun TabContent(
             navState.navigateTo(Route.Login)
             onSettingsRouteConsumed()
         }
+        if (settingsRouteRequest == "ProviderServices") {
+            navState.navigateTo(Route.ProviderServices)
+            onSettingsRouteConsumed()
+        }
     }
     val openPlaylist: (NeteasePlaylistSummary) -> Unit = { playlist ->
         selectedAlbum = null
@@ -709,7 +714,7 @@ private fun TabContent(
             AppTab.Downloads -> DownloadsScreen(navState = navState)
             AppTab.Cloud -> CloudScreen(navState = navState)
             AppTab.Settings -> SettingsScreen(
-                routeRequest = settingsRouteRequest?.takeUnless { it == "NeteaseLogin" },
+                routeRequest = settingsRouteRequest?.takeUnless { it == "NeteaseLogin" || it == "ProviderServices" },
                 onRouteRequestConsumed = onSettingsRouteConsumed,
                 currentSource = source,
                 onSourceSelected = onSourceSelected,
@@ -724,7 +729,7 @@ private fun TabContent(
         when (navState.currentRoute) {
             Route.Login -> LoginScreen(navState, initialProviderId = loginInitialProvider)
             Route.Messages -> MessagesScreen(onLogin = { onOpenTool("Login") })
-            Route.ProviderServices -> ProviderServicesScreen(navState)
+            Route.ProviderServices -> ProviderServicesScreen(navState, source, onSourceSelected)
             else -> Unit
         }
         melox.ui.navigation.MeloXDetailOverlay(selectedPlaylist, onBack = { selectedPlaylist = null }) { playlist ->

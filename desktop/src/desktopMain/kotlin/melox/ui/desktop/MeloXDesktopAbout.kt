@@ -2,8 +2,6 @@ package melox.ui.desktop
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -113,10 +111,10 @@ internal fun MeloXDesktopProjectLicenses() {
                 Text(desktopString("ui.legal.document.$key.title"), Modifier.weight(1f).padding(horizontal = 12.dp), fontWeight = FontWeight.SemiBold)
                 DesktopDialogButton("ui.legal.view_source") { open(url) }
             }
-            SelectionContainer(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(24.dp)) { Text(contents.takeIf { it.isNotEmpty() }?.joinToString("\n\n──────────\n\n") ?: desktopString("ui.legal.document.$key.fallback")) }
+            SelectionContainer(Modifier.fillMaxSize().desktopVerticalScroll().padding(24.dp)) { Text(contents.takeIf { it.isNotEmpty() }?.joinToString("\n\n──────────\n\n") ?: desktopString("ui.legal.document.$key.fallback")) }
         }
     } else {
-    Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(24.dp).testTag("desktop-project-licenses"), verticalArrangement = Arrangement.spacedBy(14.dp)) {
+    Column(Modifier.fillMaxSize().desktopVerticalScroll().padding(24.dp).testTag("desktop-project-licenses"), verticalArrangement = Arrangement.spacedBy(14.dp)) {
         Text(desktopString("ui.legal.section.important"), fontSize = 13.sp, fontWeight = FontWeight.SemiBold)
         Text(desktopString("ui.legal.pv_tool.noncommercial.title"), fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.error)
         Text(desktopString("ui.legal.pv_tool.noncommercial.message"), color = MaterialTheme.colorScheme.onSurfaceVariant)

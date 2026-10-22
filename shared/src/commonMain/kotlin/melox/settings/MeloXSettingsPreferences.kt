@@ -57,6 +57,7 @@ object MeloXSettingsPreferences {
             "player_keep_screen_on" -> MeloXSettingsRuntime.keepScreenOn = value
             "lyrics_translation" -> MeloXSettingsRuntime.showLyricTranslation = value
             "general_desktop_layout" -> MeloXSettingsRuntime.desktopLayoutEnabled = value
+            "windows_close_to_tray" -> MeloXSettingsRuntime.closeToTrayEnabled = value
             "general_split_screen" -> MeloXSettingsRuntime.splitScreenEnabled = value
             "lyrics_auto_select" -> MeloXSettingsRuntime.automaticLyricSelectionEnabled = value
             "bilibili_lyric_audio_alignment" -> MeloXSettingsRuntime.bilibiliLyricAudioAlignmentEnabled = value

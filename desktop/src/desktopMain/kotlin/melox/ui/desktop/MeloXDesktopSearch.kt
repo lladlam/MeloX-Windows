@@ -8,7 +8,7 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.BasicTextField
+import melox.ui.input.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.ui.focus.onFocusChanged
@@ -67,7 +67,7 @@ internal fun MeloXDesktopSearchScaffold(
     CompositionLocalProvider(LocalTextStyle provides androidx.compose.ui.text.TextStyle(fontFamily = MeloXDesktopTextFontFamily,
         fontSize = 13.sp, color = MaterialTheme.colorScheme.onSurface)) {
         Column(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background).testTag("desktop-search")) {
-            Row(Modifier.fillMaxWidth().padding(horizontal = 34.dp, vertical = 18.dp), verticalAlignment = Alignment.CenterVertically) {
+            Row(Modifier.fillMaxWidth().testTag("desktop-search-toolbar").padding(horizontal = 34.dp, vertical = 18.dp), verticalAlignment = Alignment.CenterVertically) {
                 Spacer(Modifier.weight(1f))
                 DesktopSearchField(query, onQuery, onSubmit, suggestions, onSuggestion)
                 Spacer(Modifier.weight(1f))
@@ -103,26 +103,31 @@ internal fun MeloXDesktopSearchScaffold(
 private fun DesktopSearchField(value: String, onChange: (String) -> Unit, onSubmit: () -> Unit,
     suggestions: List<String>, onSuggestion: (String) -> Unit) {
     var focused by remember { mutableStateOf(false) }
+    var suggestionsDismissed by remember(value) { mutableStateOf(false) }
+    val density = androidx.compose.ui.platform.LocalDensity.current
     Box {
-        Column {
-            Row(Modifier.width(332.dp).height(36.dp).clip(CircleShape)
-                .background(MaterialTheme.colorScheme.onSurface.copy(alpha = .07f)).padding(horizontal = 13.dp),
-                verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                MeloXSymbolIcon(MeloXSymbol.Search, size = 13, color = MaterialTheme.colorScheme.onSurface.copy(alpha = .55f))
-                BasicTextField(value, onChange, singleLine = true,
-                    modifier = Modifier.weight(1f).testTag("search-query").onFocusChanged { focused = it.isFocused },
-                    keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
-                    keyboardActions = KeyboardActions(onSearch = { onSubmit() }),
-                    textStyle = LocalTextStyle.current,
-                    decorationBox = { inner -> Box { if (value.isEmpty()) Text(desktopString("ui.search.prompt"),
-                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = .42f), fontSize = 13.sp); inner() } })
-            }
-            if (focused && suggestions.isNotEmpty()) {
+        Row(Modifier.width(332.dp).height(36.dp).clip(CircleShape)
+            .background(MaterialTheme.colorScheme.onSurface.copy(alpha = .07f)).padding(horizontal = 13.dp),
+            verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            MeloXSymbolIcon(MeloXSymbol.Search, size = 13, color = MaterialTheme.colorScheme.onSurface.copy(alpha = .55f))
+            BasicTextField(value, onChange, singleLine = true,
+                modifier = Modifier.weight(1f).testTag("search-query").onFocusChanged { focused = it.isFocused },
+                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
+                keyboardActions = KeyboardActions(onSearch = { onSubmit() }),
+                textStyle = LocalTextStyle.current,
+                decorationBox = { inner -> Box { if (value.isEmpty()) Text(desktopString("ui.search.prompt"),
+                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = .42f), fontSize = 13.sp); inner() } })
+        }
+        if (focused && !suggestionsDismissed && suggestions.isNotEmpty()) {
+            androidx.compose.ui.window.Popup(alignment = Alignment.TopStart,
+                offset = IntOffset(0, with(density) { 40.dp.roundToPx() }),
+                onDismissRequest = { suggestionsDismissed = true },
+                properties = androidx.compose.ui.window.PopupProperties(focusable = false)) {
                 Surface(Modifier.width(332.dp).testTag("desktop-search-suggestions"), shape = RoundedCornerShape(8.dp),
                     shadowElevation = 6.dp, border = androidx.compose.foundation.BorderStroke(.5.dp, MaterialTheme.colorScheme.onSurface.copy(alpha = .18f))) {
-                    Column(Modifier.padding(vertical = 4.dp)) {
+                    Column(Modifier.heightIn(max = 260.dp).desktopVerticalScroll().padding(vertical = 4.dp)) {
                         suggestions.forEach { suggestion ->
-                            Row(Modifier.fillMaxWidth().heightIn(min = 26.dp).clickable { onSuggestion(suggestion) }
+                            Row(Modifier.fillMaxWidth().heightIn(min = 26.dp).clickable { suggestionsDismissed = true; onSuggestion(suggestion) }
                                 .padding(horizontal = 10.dp), verticalAlignment = Alignment.CenterVertically,
                                 horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                                 MeloXSymbolIcon(MeloXSymbol.Search, size = 11, color = MaterialTheme.colorScheme.onSurface.copy(alpha = .5f))
@@ -198,8 +203,10 @@ private fun DesktopSearchMediaGrid(items: List<MeloXSearchMediaItem>, kind: Melo
     BoxWithConstraints(Modifier.fillMaxSize().padding(horizontal = 34.dp, vertical = 24.dp)) {
         val count = floor((maxWidth.value + 20) / 150).toInt().coerceAtLeast(1)
         val width = ((maxWidth.value - (count - 1) * 20) / count).coerceAtMost(210f).dp
-        Column(verticalArrangement = Arrangement.spacedBy(24.dp)) {
-            items.chunked(count).forEach { row ->
+        val scroll = rememberLazyListState()
+        LazyColumn(Modifier.fillMaxSize().desktopPromotedDragScroll(scroll).testTag("desktop-search-media-scroll"),
+            state = scroll, verticalArrangement = Arrangement.spacedBy(24.dp)) {
+            itemsIndexed(items.chunked(count), key = { _, row -> "${row.first().kind}:${row.first().id}" }) { _, row ->
                 Row(horizontalArrangement = Arrangement.spacedBy(20.dp)) {
                     row.forEach { item ->
                         DesktopHomeMediaCard(item.title, item.subtitle, item.artworkUrl, width,

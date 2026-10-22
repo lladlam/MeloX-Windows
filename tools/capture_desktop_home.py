@@ -18,6 +18,7 @@ parser.add_argument('--height', type=int, default=1184)
 parser.add_argument('--density', type=float, default=2)
 parser.add_argument('--reduce-motion', action='store_true')
 parser.add_argument('--touch', action='store_true')
+parser.add_argument('--promoted-drag', action='store_true')
 parser.add_argument('--account', action='store_true')
 args = parser.parse_args()
 repo = Path(__file__).resolve().parents[1]
@@ -50,6 +51,11 @@ if args.account:
 add('shelf-hover', 'hover@desktop-home-shelf:actions', ['tag:desktop-home-page:actions:next'])
 add('next-actions', 'tap@desktop-home-page:actions:next', ['tag:desktop-home-action:similar_songs', 'tag:desktop-home-page:actions:previous'])
 add('previous-actions', 'tap@desktop-home-page:actions:previous', ['tag:desktop-home-action:daily_songs'])
+if args.promoted_drag:
+    add('mouse-horizontal', 'mouse-drag@desktop-home-shelf:actions,-240,0', ['tag:desktop-home-page:actions:previous'])
+    add('mouse-page-back', 'tap@desktop-home-page:actions:previous', ['tag:desktop-home-action:daily_songs'])
+    add('mouse-vertical', 'mouse-drag@desktop-home-shelf:actions,0,-130', ['tag:desktop-home'])
+    add('mouse-vertical-back', 'mouse-drag@desktop-home-scroll,0,130', ['tag:desktop-home'])
 if args.touch:
     add('touch-horizontal', 'touch-drag@desktop-home-shelf:actions,-320,0', ['tag:desktop-home-page:actions:previous'])
     add('touch-page-back', 'touch-tap@desktop-home-page:actions:previous', ['tag:desktop-home-action:daily_songs'])
@@ -102,4 +108,14 @@ data = json.loads((output / 'capture.json').read_text(encoding='utf-8'))
 assert len(data['scenes']) == len(steps) + 1
 assert all(a['passed'] for s in data['scenes'] for a in s.get('assertions', []))
 assert 'Exception in thread' not in (output / 'gradle.log').read_text(encoding='utf-8', errors='replace')
+if args.promoted_drag:
+    def node_at(name, tag):
+        entry = next(s for s in data['scenes'] if s['file'].split('-', 1)[1] == name + '.png')
+        nodes = json.loads((output / entry['file']).with_suffix('.semantics.json').read_text(encoding='utf-8'))
+        return next(n for n in nodes if n.get('tag') == tag)
+
+    before = node_at('previous-actions', 'desktop-home-scroll')['vertical_scroll']
+    after = node_at('mouse-vertical', 'desktop-home-scroll')['vertical_scroll']
+    assert after - before > 60, (before, after)
+    assert node_at('mouse-horizontal', 'desktop-home-shelf:actions')['state'] != node_at('previous-actions', 'desktop-home-shelf:actions')['state']
 print(f'PASS Home {args.theme}: {len(data["scenes"])} scenes / {sum(len(s.get("assertions", [])) for s in data["scenes"])} assertions')

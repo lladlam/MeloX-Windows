@@ -49,6 +49,8 @@ internal fun List<SemanticsNode>.toEvidence(): JSONArray = JSONArray().apply {
         put(JSONObject().put("tag", tag ?: JSONObject.NULL).put("text", text ?: JSONObject.NULL)
             .put("description", description ?: JSONObject.NULL)
             .put("state", config.getOrNull(SemanticsProperties.StateDescription) ?: JSONObject.NULL)
+            .put("vertical_scroll", config.getOrNull(SemanticsProperties.VerticalScrollAxisRange)?.value?.invoke() ?: JSONObject.NULL)
+            .put("horizontal_scroll", config.getOrNull(SemanticsProperties.HorizontalScrollAxisRange)?.value?.invoke() ?: JSONObject.NULL)
             .put("toggle_visual_progress", config.getOrNull(MeloXToggleVisualProgressKey) ?: JSONObject.NULL)
             .put("lyric_time_ms", config.getOrNull(MeloXLyricTimeMsKey) ?: JSONObject.NULL)
             .put("lyric_browsing", config.getOrNull(MeloXLyricBrowsingKey) ?: JSONObject.NULL)

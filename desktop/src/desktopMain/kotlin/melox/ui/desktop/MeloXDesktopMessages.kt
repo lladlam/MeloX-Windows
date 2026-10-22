@@ -8,7 +8,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.BasicTextField
+import melox.ui.input.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
@@ -51,6 +51,7 @@ internal fun MeloXDesktopMessages(onLogin: () -> Unit) {
     val loggedIn = remember(revision) { NeteaseSessionStore.containsMusicU(NeteaseSessionStore.readCookie()) }
     val ops = remember(revision) { NeteaseMusicOperationsClient(cookieProvider = { NeteaseSessionStore.readCookie() }) }
     val scope = rememberCoroutineScope()
+    val conversationsScroll = rememberLazyListState()
     var conversations by remember(revision) { mutableStateOf<List<MeloXMessageContact>>(emptyList()) }
     var selected by remember { mutableStateOf<MeloXMessageContact?>(null) }
     var phase by remember(revision) { mutableStateOf(DesktopMessagePhase.Loading) }
@@ -99,7 +100,7 @@ internal fun MeloXDesktopMessages(onLogin: () -> Unit) {
                             desktopString("ui.desktop.messages.load_failed"), error!!, onRetry = { scope.launch { load() } })
                         conversations.isEmpty() -> DesktopMessageUnavailable(
                             desktopString("ui.messages.no_messages"), desktopString("ui.messages.no_messages.message"))
-                        else -> LazyColumn(Modifier.fillMaxSize()) {
+                        else -> LazyColumn(Modifier.fillMaxSize().desktopPromotedDragScroll(conversationsScroll), state = conversationsScroll) {
                             items(conversations, key = { it.id }) { contact ->
                                 DesktopConversationRow(contact, contact.id == selected?.id) {
                                     selected = contact.copy(unreadCount = 0)
@@ -206,7 +207,7 @@ private fun DesktopConversationPane(contact: MeloXMessageContact, userId: Long, 
                 }
                 error != null && messages.isEmpty() -> DesktopMessageUnavailable(
                     desktopString("ui.desktop.messages.conversation_failed"), error!!, onRetry = { scope.launch { load() } })
-                else -> LazyColumn(Modifier.fillMaxSize(), state = listState, contentPadding = PaddingValues(20.dp),
+                else -> LazyColumn(Modifier.fillMaxSize().desktopPromotedDragScroll(listState), state = listState, contentPadding = PaddingValues(20.dp),
                     verticalArrangement = Arrangement.spacedBy(12.dp)) {
                     items(messages, key = { it.id }) { message -> DesktopMessageBubble(message, message.fromUserId == userId) }
                 }
@@ -279,6 +280,7 @@ private fun DesktopMessageResource(resource: MeloXPrivateMessageResource) {
 @Composable
 private fun DesktopNewMessageSheet(contacts: List<MeloXMessageContact>, onDismiss: () -> Unit, onPick: (MeloXMessageContact) -> Unit) {
     var query by remember { mutableStateOf("") }
+    val scroll = rememberLazyListState()
     androidx.compose.ui.window.Dialog(onDismissRequest = onDismiss, properties = androidx.compose.ui.window.DialogProperties(usePlatformDefaultWidth = false)) {
         Surface(Modifier.size(420.dp, 520.dp).testTag("desktop-message-compose"), shape = RoundedCornerShape(10.dp)) {
             Column {
@@ -298,7 +300,7 @@ private fun DesktopNewMessageSheet(contacts: List<MeloXMessageContact>, onDismis
                 }
                 if (filtered.isEmpty()) Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                     Text(desktopString("ui.messages.no_messages"), color = MaterialTheme.colorScheme.onSurfaceVariant)
-                } else LazyColumn(Modifier.fillMaxSize()) {
+                } else LazyColumn(Modifier.fillMaxSize().desktopPromotedDragScroll(scroll), state = scroll) {
                     items(filtered, key = { it.id }) { contact ->
                         DesktopConversationRow(contact, false) { onPick(contact) }
                     }

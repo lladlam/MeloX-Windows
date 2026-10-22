@@ -302,6 +302,7 @@ fun main(args: Array<String>) = runBlocking {
                 })
                 .put("captured_elapsed_ms", (System.nanoTime() - start) / 1_000_000.0)
                 .put("pointer_mode", if (melox.ui.navigation.MeloXPointerMode.touch) "Touch" else "Mouse")
+                .put("touch_keyboard_requests", melox.platform.MeloXWindowsTouchKeyboard.requestCount.get())
                 .put("page", page ?: JSONObject.NULL)
                 .put("controls_visible", semantics.tagged("player-controls") != null)
                 .put("track", track?.id?.let { "${it.source.storageValue}:${it.value}" } ?: JSONObject.NULL)

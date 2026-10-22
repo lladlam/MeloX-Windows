@@ -7,10 +7,8 @@ import androidx.compose.foundation.hoverable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsHoveredAsState
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.foundation.text.BasicTextField
+import melox.ui.input.BasicTextField
 import androidx.compose.foundation.focusable
 import androidx.compose.foundation.selection.toggleable
 import androidx.compose.material3.*
@@ -260,7 +258,7 @@ private fun DesktopMenuSurface(modifier: Modifier, content: @Composable ColumnSc
     Surface(modifier, shape = shape, color = MaterialTheme.colorScheme.surface, shadowElevation = 10.dp,
         border = androidx.compose.foundation.BorderStroke(.5.dp, MaterialTheme.colorScheme.onSurface.copy(alpha = .16f))) {
         CompositionLocalProvider(LocalTextStyle provides androidx.compose.ui.text.TextStyle(fontFamily = MeloXDesktopTextFontFamily)) {
-            Column(Modifier.heightIn(max = 600.dp).verticalScroll(rememberScrollState()).padding(5.dp).onPreviewKeyEvent {
+            Column(Modifier.heightIn(max = 600.dp).desktopVerticalScroll().padding(5.dp).onPreviewKeyEvent {
                 when (it.key) {
                     Key.DirectionDown, Key.DirectionUp -> {
                         if (it.type == KeyEventType.KeyDown) focus.moveFocus(if (it.key == Key.DirectionDown) FocusDirection.Next else FocusDirection.Previous)

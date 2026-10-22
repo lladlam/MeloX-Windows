@@ -75,6 +75,9 @@ if mode not in ('reload', 'desktop-reload'):
     add('remote-reject', 'tap@remote-reject', ['cloud-choice:true', 'cloud-enabled:false'])
 
 if mode == 'desktop-controls':
+    toggle('windows_close_to_tray', 'false', 'closeToTrayEnabled')
+    toggle('windows_close_to_tray', 'true', 'closeToTrayEnabled')
+    toggle('windows_close_to_tray', 'false', 'closeToTrayEnabled')
     choose('theme_mode', strings['settings_general_theme_light'], 'string', 'Light', 'themeMode')
     toggle('general_remember_tab', 'false', 'rememberLastTab')
     add('playback', 'tap@desktop-settings-tab:Playback')
@@ -86,7 +89,7 @@ if mode == 'desktop-controls':
     add('set-eq-preamp', 'slider@equalizer-preamp,0.97', ['pref-float:equalizer_preamp_db:12.0'])
     add('general', 'tap@desktop-settings-tab:General')
 elif mode == 'desktop-reload':
-    expected['00-settings'] = ['tag:desktop-settings-window', 'runtime:desktopLayoutEnabled:true', 'runtime:themeMode:Light', 'runtime:rememberLastTab:false', 'eq-enabled:true', 'pref-float:equalizer_preamp_db:12.0']
+    expected['00-settings'] = ['tag:desktop-settings-window', 'runtime:desktopLayoutEnabled:true', 'runtime:themeMode:Light', 'runtime:rememberLastTab:false', 'runtime:closeToTrayEnabled:false', 'pref-bool:windows_close_to_tray:false', 'eq-enabled:true', 'pref-float:equalizer_preamp_db:12.0']
 elif mode == 'desktop-routes':
     groups = {
         'General': ['General', 'Appearance', 'Content'],

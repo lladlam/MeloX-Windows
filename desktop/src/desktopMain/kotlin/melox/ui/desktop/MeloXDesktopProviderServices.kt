@@ -2,9 +2,7 @@ package melox.ui.desktop
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
@@ -56,7 +54,7 @@ private fun DesktopServiceProvider.source(): MusicSource = when (id) {
 
 /** Windows multi-provider management, styled as a compact Desktop form. */
 @Composable
-internal fun MeloXDesktopProviderServices(navState: MeloXNavState) {
+internal fun MeloXDesktopProviderServices(navState: MeloXNavState, currentSource: MusicSource, onSourceSelected: (MusicSource) -> Unit) {
     val accounts = remember { ProviderAccountManager() }
     var revision by remember { mutableIntStateOf(0) }
     var unified by remember { mutableStateOf(MusicProviderSelectionStore.unifiedEnabled()) }
@@ -67,13 +65,16 @@ internal fun MeloXDesktopProviderServices(navState: MeloXNavState) {
     MeloXBackHandler(true) { navState.goBack() }
     CompositionLocalProvider(LocalTextStyle provides androidx.compose.ui.text.TextStyle(fontFamily = MeloXDesktopTextFontFamily,
         fontSize = 13.sp, color = MaterialTheme.colorScheme.onSurface)) {
-        Column(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background).verticalScroll(rememberScrollState())
+        Column(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background).desktopVerticalScroll()
             .padding(horizontal = 34.dp, vertical = 28.dp).testTag("desktop-provider-services")) {
             Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
                 Text(desktopPlatformString("services_title"), Modifier.weight(1f), fontSize = 32.sp, fontWeight = FontWeight.Bold)
                 DesktopSettingsButton(desktopString("ui.common.done"), Modifier.testTag("desktop-services-done")) { navState.goBack() }
             }
             Spacer(Modifier.height(22.dp))
+            DesktopSettingsPicker(desktopPlatformString("services_current_source"), currentSource,
+                visible.map { it.source() to it.name }, "desktop-service-current-source", onChange = onSourceSelected)
+            Spacer(Modifier.height(18.dp))
             DesktopSettingsForm {
                 Text(desktopPlatformString("services_providers"), fontSize = 13.sp, fontWeight = FontWeight.SemiBold)
                 visible.forEachIndexed { index, provider ->

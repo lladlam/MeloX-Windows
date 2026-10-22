@@ -72,6 +72,7 @@ kotlin {
 compose.desktop {
     application {
         mainClass = "melox.MainKt"
+        jvmArgs += "--add-opens=java.desktop/java.awt.event=ALL-UNNAMED"
         nativeDistributions {
             targetFormats(TargetFormat.Exe, TargetFormat.Msi)
             packageName = "MeloX-Desktop"
@@ -100,7 +101,7 @@ compose.desktop {
 }
 
 // Production JVM flags (jpackage java-options) must be the flags every replay runs under.
-val productionJvmArgs = listOf("-Xms16m", "-Xmx1g", "-XX:+UseSerialGC", "-Dfile.encoding=UTF-8")
+val productionJvmArgs = listOf("-Xms16m", "-Xmx1g", "-XX:+UseSerialGC", "-Dfile.encoding=UTF-8", "--add-opens=java.desktop/java.awt.event=ALL-UNNAMED")
 
 tasks.register<JavaExec>("captureUi") {
     group = "verification"

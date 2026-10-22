@@ -102,7 +102,8 @@ internal fun <T> DesktopHomePagingShelf(values: List<T>, itemKey: (T) -> Any, wi
             }
         }
     }) {
-        LazyRow(state = state, horizontalArrangement = Arrangement.spacedBy(spacing), contentPadding = PaddingValues(end = reserved.dp)) {
+        LazyRow(modifier = Modifier.desktopPromotedDragScroll(state, androidx.compose.foundation.gestures.Orientation.Horizontal),
+            state = state, horizontalArrangement = Arrangement.spacedBy(spacing), contentPadding = PaddingValues(end = reserved.dp)) {
             items(values, key = itemKey) { value -> Box(Modifier.width(width)) { card(value) } }
         }
         val show = hovered || MeloXPointerMode.touch

@@ -33,7 +33,7 @@ internal object MeloXPointerMode {
 internal fun Modifier.meloXTrackPointerMode() = pointerInput(Unit) {
     awaitEachGesture {
         val down = awaitFirstDown(requireUnconsumed = false, pass = PointerEventPass.Initial)
-        MeloXPointerMode.touch = down.type == PointerType.Touch
+        MeloXPointerMode.touch = down.type == PointerType.Touch || melox.ui.input.MeloXTouchInput.promoted(currentEvent.nativeEvent)
     }
 }
 

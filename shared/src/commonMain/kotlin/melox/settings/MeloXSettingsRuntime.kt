@@ -47,6 +47,8 @@ enum class MeloXLyricsFontWeight(val composeWeight: FontWeight) {
 object MeloXSettingsRuntime {
     var desktopLayoutEnabled by mutableStateOf(false)
         internal set
+    var closeToTrayEnabled by mutableStateOf(true)
+        internal set
     var splitScreenEnabled by mutableStateOf(true)
         internal set
     var splitNavigationPosition by mutableStateOf(MeloXSplitChromePosition.BottomLeft)
@@ -369,6 +371,7 @@ object MeloXSettingsRuntime {
     /** Reads only state required to draw the first root frame. The remaining settings load after setContent. */
     fun initializeCritical() {
         desktopLayoutEnabled = prefs().getBoolean("general_desktop_layout", false)
+        closeToTrayEnabled = prefs().getBoolean("windows_close_to_tray", true)
         themeMode = runCatching {
             MeloXThemeMode.valueOf((prefs().getString("theme_mode", MeloXThemeMode.System.name) ?: MeloXThemeMode.System.name))
         }.getOrDefault(MeloXThemeMode.System)
@@ -451,6 +454,7 @@ object MeloXSettingsRuntime {
         transitionUiEnabled = prefs().getBoolean("transition_ui_enabled", false)
         showLyricTranslation = prefs().getBoolean("lyrics_translation", true)
         desktopLayoutEnabled = prefs().getBoolean("general_desktop_layout", false)
+        closeToTrayEnabled = prefs().getBoolean("windows_close_to_tray", true)
         splitScreenEnabled = prefs().getBoolean("general_split_screen", true)
         splitNavigationPosition = MeloXSplitChromePosition.fromPreference(prefs().getString("general_split_navigation_position", "BottomLeft") ?: "BottomLeft")
         splitMiniPlayerPosition = MeloXSplitChromePosition.fromPreference(prefs().getString("general_split_mini_player_position", "BottomLeft") ?: "BottomLeft")

@@ -1,5 +1,7 @@
 package melox.ui.screens
 
+import melox.ui.desktop.desktopVerticalScroll
+
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.material3.HorizontalDivider
@@ -328,10 +330,10 @@ private fun DesktopSettingsLayout(
                 Box(Modifier.fillMaxWidth().height(.65.dp).background(colors.outlineVariant.copy(alpha = .7f)))
                 Column(
                     Modifier.fillMaxWidth().weight(1f)
-                        .verticalScroll(rememberScrollState()).padding(16.dp)
+                        .desktopVerticalScroll().padding(16.dp)
                         .then(if (selected == SettingsRoute.General) Modifier.testTag("settings-general") else Modifier),
                 ) {
-                    androidx.compose.foundation.text.BasicTextField(search, { search = it }, singleLine = true,
+                    melox.ui.input.BasicTextField(search, { search = it }, singleLine = true,
                         textStyle = androidx.compose.ui.text.TextStyle(fontFamily = melox.ui.theme.MeloXDesktopTextFontFamily, color = colors.onSurface, fontSize = 13.sp),
                         modifier = Modifier.fillMaxWidth().height(24.dp).clip(RoundedCornerShape(5.dp)).background(colors.onSurface.copy(alpha = .045f))
                             .border(.5.dp, colors.onSurface.copy(alpha = .15f), RoundedCornerShape(5.dp)).padding(horizontal = 7.dp, vertical = 4.dp).testTag("settings-search"),
@@ -507,6 +509,11 @@ private fun GeneralSettings() {
             MeloXSettingsRuntime.desktopLayoutEnabled, "setting-general_desktop_layout",
             subtitle = melox.ui.desktop.desktopPlatformString("layout_hint")) {
             MeloXSettingsPreferences.setBoolean("general_desktop_layout", it)
+        }
+        SettingsExternalToggleRow(melox.ui.desktop.desktopPlatformString("tray_title"),
+            MeloXSettingsRuntime.closeToTrayEnabled, "setting-windows_close_to_tray",
+            subtitle = melox.ui.desktop.desktopPlatformString("tray_hint")) {
+            MeloXSettingsPreferences.setBoolean("windows_close_to_tray", it)
         }
         SettingsChoice("settings_general_theme", "theme_mode", MeloXSettingsRuntime.themeMode,
             listOf(MeloXThemeMode.System to pinnedString("settings_general_theme_system"), MeloXThemeMode.Light to pinnedString("settings_general_theme_light"),
