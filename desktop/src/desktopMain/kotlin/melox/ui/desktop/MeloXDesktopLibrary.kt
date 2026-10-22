@@ -13,6 +13,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.currentCoroutineContext
+import kotlinx.coroutines.ensureActive
 import melox.account.NeteaseSessionStore
 import melox.account.rememberNeteaseSessionStore
 import melox.library.NeteaseLibraryClient
@@ -90,12 +92,12 @@ internal fun MeloXDesktopLibrary(page: String?, onLogin: () -> Unit) {
     val details = remember(cookie) { NeteaseCollectionDetailsClient({ cookie }) }
     val universal = remember(cookie) { NeteaseUniversalSearchClient(cookieProvider = { cookie }) }
     val operations = remember(cookie) { NeteaseMusicOperationsClient(cookieProvider = { cookie }) }
-    var songs by remember(section, cookie) { mutableStateOf<List<SearchSong>>(emptyList()) }
-    var cards by remember(section, cookie) { mutableStateOf<List<DesktopLibraryCard>>(emptyList()) }
-    var playlist by remember(section) { mutableStateOf<NeteasePlaylistSummary?>(null) }
-    var podcast by remember(section) { mutableStateOf<MeloXPodcast?>(null) }
-    var loading by remember(section, cookie) { mutableStateOf(session.isLoggedIn) }
-    var error by remember(section, cookie) { mutableStateOf<String?>(null) }
+    var songs by remember(section, cookie, revision) { mutableStateOf<List<SearchSong>>(emptyList()) }
+    var cards by remember(section, cookie, revision) { mutableStateOf<List<DesktopLibraryCard>>(emptyList()) }
+    var playlist by remember(section, cookie, revision) { mutableStateOf<NeteasePlaylistSummary?>(null) }
+    var podcast by remember(section, cookie, revision) { mutableStateOf<MeloXPodcast?>(null) }
+    var loading by remember(section, cookie, revision) { mutableStateOf(session.isLoggedIn) }
+    var error by remember(section, cookie, revision) { mutableStateOf<String?>(null) }
     var refresh by remember { mutableIntStateOf(0) }
     var creating by remember { mutableStateOf(false) }
     var busy by remember { mutableStateOf(false) }
@@ -105,8 +107,12 @@ internal fun MeloXDesktopLibrary(page: String?, onLogin: () -> Unit) {
         "Artists" -> "ui.library.artists.title"; "Podcasts" -> "ui.navigation.library.podcasts"
         "History" -> "ui.navigation.library.history"; else -> "ui.navigation.library.liked_songs"
     }
-    LaunchedEffect(section, cookie, session.profile?.userId, refresh) {
-        if (!session.isLoggedIn || section in setOf("Cloud", "Downloads")) return@LaunchedEffect
+    LaunchedEffect(section, cookie, revision, refresh) {
+        session.reloadFromStorage()
+        if (!NeteaseSessionStore.containsMusicU(cookie) || section in setOf("Cloud", "Downloads")) {
+            loading = false
+            return@LaunchedEffect
+        }
         loading = true; error = null
         try {
             when (section) {
@@ -114,11 +120,19 @@ internal fun MeloXDesktopLibrary(page: String?, onLogin: () -> Unit) {
                 "Artists" -> cards = details.subscribedArtists().map { artist -> DesktopLibraryCard(artist.id, artist.name, artist.aliases.joinToString(" / "), artist.artworkUrl) { MeloXCollectionLaunchBus.open(MeloXCollectionTarget.Artist(artist.id)) } }
                 "Podcasts" -> cards = universal.subscribedPodcasts().map { value -> DesktopLibraryCard(value.id, value.name, value.host?.nickname.orEmpty(), value.artworkUrl) { podcast = value } }
                 else -> {
-                    val user = session.profile?.userId
-                    if (user != null) {
-                        val data = client.snapshot(user)
-                        if (section == "Playlists") cards = data.playlists.map { value -> DesktopLibraryCard(value.id, value.name, value.creatorName, value.coverUrl) { playlist = value } }
-                        else songs = if (section == "History") data.recentSongs else data.likedSongs
+                    if (section == "History") {
+                        songs = client.recentSongs()
+                    } else {
+                        session.refreshProfile()
+                        currentCoroutineContext().ensureActive()
+                        if (NeteaseSessionStore.revision.value != revision || NeteaseSessionStore.readCookie() != cookie) {
+                            throw CancellationException("Library account changed")
+                        }
+                        val user = session.profile?.userId
+                            ?: throw java.io.IOException(session.errorMessage ?: desktopString("ui.desktop.library.sign_in_message"))
+                        if (section == "Playlists") {
+                            cards = client.userPlaylists(user).map { value -> DesktopLibraryCard(value.id, value.name, value.creatorName, value.coverUrl) { playlist = value } }
+                        } else songs = client.likedSongs(user)
                     }
                 }
             }

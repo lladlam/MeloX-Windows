@@ -121,3 +121,9 @@
 - 迟到的v58后台通知确认完整深浅歌词回放失败，不覆盖此前已通过的独立材质/侧面像素检查。排查语义证实目标行未创建时，reveal在窗口中央滚动首页；增加显式所属面板/方向与可选原子指针点击，避免截图耗时触发歌词自动跟随后再点击旧行。
 - 串行v61深色、单独v62浅色各 **10 scenes / 18 assertions PASSED**，实际滚轮找行、鼠标点击跳转、恢复播放及队列/歌词切换全部通过。v61浅色被外层总超时中断，不计通过。v58类加载错误本次未复现，未将推测并行构建原因记为已证实。
 - 证据 `evidence/desktop-panel-glass/full-lyrics-replay/`，详见 `DESKTOP_PANEL_GLASS.md`。本次仅修回放工具，不改生产歌词交互。
+
+## 15. 电脑UI收藏歌曲/收藏歌单读取
+
+- 修复独立session未刷新profile导致userId为空、静默空列表；补账号错误显示。拆除电脑收藏入口对整套snapshot的依赖，歌单/歌曲/历史独立获取，避免任一无关接口失败拖累当前页。
+- 相关HTTP接入owner取消，账号revision清空旧列表与详情；保留真实ID和喜欢顺序。
+- shared **59 suites / 289 tests / 0 failures/errors/skipped**，桌面编译通过。协议fixture验证独立请求及实际Call取消；未宣称私人账号收藏数量已实测。说明 `DESKTOP_LIBRARY_LOADING.md`。

@@ -10,6 +10,10 @@ import javax.crypto.Cipher
 import javax.crypto.spec.SecretKeySpec
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import kotlinx.coroutines.currentCoroutineContext
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.ensureActive
+import melox.network.executeOwned
 import okhttp3.FormBody
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -38,6 +42,26 @@ class NeteaseLibraryClient(
 
     suspend fun playlistDetail(playlistId: Long): NeteasePlaylistDetail =
         withContext(Dispatchers.IO) { playlistDetailBlocking(playlistId) }
+
+    /** Independent library sections: a history failure must not hide favorites. */
+    suspend fun userPlaylists(userId: Long): List<NeteasePlaylistSummary> = withContext(Dispatchers.IO) {
+        ensureLoggedIn()
+        userPlaylistsBlocking(userId, owner = currentCoroutineContext()[Job])
+    }
+
+    suspend fun likedSongs(userId: Long): List<SearchSong> = withContext(Dispatchers.IO) {
+        val owner = currentCoroutineContext()[Job]
+        val ids = likedSongIdsBlocking(userId, owner).distinct()
+        val songs = ids.chunked(100).flatMap { page ->
+            owner?.ensureActive()
+            songDetailsBlocking(page, owner)
+        }.associateBy(SearchSong::id)
+        ids.mapNotNull(songs::get)
+    }
+
+    suspend fun recentSongs(limit: Int = 100): List<SearchSong> = withContext(Dispatchers.IO) {
+        recentSongsBlocking(limit, currentCoroutineContext()[Job])
+    }
 
     suspend fun homeContent(
         limit: Int = 12,
@@ -245,7 +269,7 @@ class NeteaseLibraryClient(
 
     private fun areaId(area: String): Int = when (area) { "华语", "中国" -> 7; "日本", "日语" -> 8; "韩国", "韩语" -> 16; "欧美" -> 96; else -> 0 }
 
-    fun userPlaylistsBlocking(userId: Long, limit: Int = 2_000): List<NeteasePlaylistSummary> {
+    fun userPlaylistsBlocking(userId: Long, limit: Int = 2_000, owner: Job? = null): List<NeteasePlaylistSummary> {
         val authenticated = NeteaseSessionStore.containsMusicU(cookieProvider())
         val response = eapi(
             uri = "/api/user/playlist",
@@ -255,16 +279,18 @@ class NeteaseLibraryClient(
                 .put("offset", 0)
                 .put("includeVideo", true),
             authenticated = authenticated,
+            owner = owner,
         )
         return parsePlaylists(response.optJSONArray("playlist") ?: JSONArray())
     }
 
-    fun likedSongIdsBlocking(userId: Long): List<Long> {
+    fun likedSongIdsBlocking(userId: Long, owner: Job? = null): List<Long> {
         ensureLoggedIn()
         val response = eapi(
             uri = "/api/song/like/get",
             data = JSONObject().put("uid", userId),
             authenticated = true,
+            owner = owner,
         )
         val ids = response.optJSONArray("ids") ?: JSONArray()
         return buildList(ids.length()) {
@@ -274,15 +300,15 @@ class NeteaseLibraryClient(
         }
     }
 
-    fun recentSongsBlocking(limit: Int = 100): List<SearchSong> {
+    fun recentSongsBlocking(limit: Int = 100, owner: Job? = null): List<SearchSong> {
         ensureLoggedIn()
         val path = "/api/play-record/song/list"
         val data = JSONObject().put("limit", limit)
         val response = try {
-            authenticatedWeapi.post(path, data)
+            authenticatedWeapi.post(path, data, owner)
         } catch (error: IOException) {
             if (!error.message.orEmpty().contains("空响应")) throw error
-            eapi(path, data, true)
+            eapi(path, data, true, owner)
         }
         val list = response.optJSONObject("data")?.optJSONArray("list") ?: JSONArray()
         return buildList {
@@ -335,18 +361,18 @@ class NeteaseLibraryClient(
         return NeteasePlaylistDetail(summary, songs)
     }
 
-    fun songDetailsBlocking(ids: List<Long>): List<SearchSong> {
+    fun songDetailsBlocking(ids: List<Long>, owner: Job? = null): List<SearchSong> {
         if (ids.isEmpty()) return emptyList()
         val descriptors = JSONArray().apply { ids.take(100).forEach { put(JSONObject().put("id", it)) } }
         val path = "/api/v3/song/detail"
         val data = JSONObject().put("c", descriptors.toString())
         val authenticated = NeteaseSessionStore.containsMusicU(cookieProvider())
         val response = if (authenticated) try {
-            authenticatedWeapi.post(path, data)
+            authenticatedWeapi.post(path, data, owner)
         } catch (error: IOException) {
             if (!error.message.orEmpty().contains("空响应")) throw error
-            eapi(path, data, true)
-        } else eapi(path, data, false)
+            eapi(path, data, true, owner)
+        } else eapi(path, data, false, owner)
         val songs = response.optJSONArray("songs") ?: JSONArray()
         return buildList {
             for (index in 0 until songs.length()) {
@@ -439,6 +465,7 @@ class NeteaseLibraryClient(
         uri: String,
         data: JSONObject,
         authenticated: Boolean = true,
+        owner: Job? = null,
     ): JSONObject {
         val timestampMillis = System.currentTimeMillis()
         val cookieHeader = cookieProvider()
@@ -481,7 +508,7 @@ class NeteaseLibraryClient(
             .post(FormBody.Builder().add("params", params).build())
             .build()
 
-        httpClient.newCall(request).execute().use { response ->
+        return httpClient.executeOwned(request, owner) { response ->
             val body = response.body?.string() ?: throw IOException("空响应")
             if (!response.isSuccessful) {
                 throw IOException("网易云请求失败：HTTP ${response.code}")
@@ -495,7 +522,7 @@ class NeteaseLibraryClient(
                     .ifBlank { "请求失败" }
                 throw IOException("网易云请求失败（$code）：$message")
             }
-            return result
+            result
         }
     }
 
