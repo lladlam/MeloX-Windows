@@ -1,0 +1,7 @@
+consent:tap@remote-reject
+ready:wait@3000
+pause:tap@mini-player-play-pause
+lyrics:tap@desktop-show-lyrics
+before:wait@700
+scroll:scroll@700,400,8
+after:wait@700

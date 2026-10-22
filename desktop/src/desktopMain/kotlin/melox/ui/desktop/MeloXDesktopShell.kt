@@ -62,6 +62,7 @@ import melox.settings.MeloXSettingsRuntime
 import melox.ui.foundation.MeloXSymbol
 import melox.ui.foundation.MeloXSymbolIcon
 import melox.ui.glass.*
+import androidx.compose.ui.zIndex
 import melox.ui.layout.MeloXListDetailLayout
 import melox.ui.navigation.AppTab
 import melox.ui.screens.LyricsPage
@@ -114,9 +115,13 @@ internal fun MeloXInterfaceLayout(
         }
         key("retained-page") {
             Box(Modifier.weight(1f).fillMaxHeight().clipToBounds()) {
-                MeloXListDetailLayout(hasMedia, modifier) { content() }
+                // Record the active page and collection together, excluding every
+                // glass consumer. Panels must reflect the detail, not stale Home.
+                Box(Modifier.fillMaxSize().meloXRecordBackdrop(backdrop)) {
+                    MeloXListDetailLayout(hasMedia, modifier) { content() }
+                    if (desktop) collectionOverlay()
+                }
                 if (desktop) {
-                    collectionOverlay()
                     androidx.compose.animation.AnimatedVisibility(inspector != null && !playerOpen, Modifier.align(Alignment.CenterEnd).width(inspectorWidth.dp).fillMaxHeight()
                         .padding(top = melox.ui.desktop.LocalMeloXCaptionInset.current),
                         enter = slideInHorizontally(tween(duration)) { it } + fadeIn(tween(duration)),
@@ -157,8 +162,8 @@ internal fun MeloXInterfaceLayout(
 private fun DesktopSidebar(selectedTab: AppTab, source: MusicSource, libraryPage: String?,
     onSelect: (AppTab, String?) -> Unit, session: melox.account.NeteaseSessionStore, onAccount: () -> Unit) {
     val colors = MaterialTheme.colorScheme
-    Column(Modifier.padding(start = 8.dp, top = 8.dp + melox.ui.desktop.LocalMeloXCaptionInset.current, bottom = 8.dp).width(DesktopMetrics.Sidebar.dp).fillMaxHeight()
-        .desktopLiquidPanel(RoundedCornerShape(18.dp))
+    Column(Modifier.zIndex(1f).padding(start = 8.dp, top = 8.dp + melox.ui.desktop.LocalMeloXCaptionInset.current, bottom = 8.dp).width(DesktopMetrics.Sidebar.dp).fillMaxHeight()
+        .desktopLiquidPanel(RoundedCornerShape(18.dp), reflectPageAtRightEdge = true)
         .testTag("desktop-sidebar")) {
         Column(Modifier.weight(1f).desktopVerticalScroll().padding(horizontal = 9.dp, vertical = 38.dp)) {
             fun selected(tab: AppTab, page: String? = null) = tab == selectedTab && (page == null || libraryPage == page)

@@ -13,6 +13,12 @@ import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.draw.drawWithCache
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.BlendMode
+import androidx.compose.ui.graphics.Paint
+import androidx.compose.ui.geometry.Rect
+import androidx.compose.ui.graphics.drawscope.clipRect
 import androidx.compose.ui.graphics.Matrix
 import androidx.compose.ui.graphics.layer.GraphicsLayer
 import androidx.compose.ui.graphics.layer.drawLayer
@@ -25,6 +31,7 @@ import androidx.compose.ui.layout.LayoutCoordinates
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.layout.positionInRoot
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.IntSize
 import kotlin.math.ceil
 
@@ -36,6 +43,9 @@ class MeloXLayerBackdrop(val layer: GraphicsLayer) {
 }
 
 val LocalMeloXLayerBackdrop = staticCompositionLocalOf<MeloXLayerBackdrop?> { null }
+
+/** Adjacent page projected into a narrow side face, rather than a readable mirrored page. */
+enum class MeloXBackdropEdge { Left, Right }
 
 /** The legacy visual-context flag is not evidence that an acyclic sampler exists. */
 @Composable
@@ -67,6 +77,7 @@ fun Modifier.meloXSampleBackdrop(
     vibrant: Boolean = false,
     underlay: MeloXLayerBackdrop? = null,
     sampleScale: Offset = Offset(1f, 1f),
+    reflectionEdge: MeloXBackdropEdge? = null,
 ): Modifier = composed {
     val backdrop = backdropOverride ?: LocalMeloXLayerBackdrop.current
     if (backdrop == null) return@composed Modifier
@@ -90,6 +101,15 @@ fun Modifier.meloXSampleBackdrop(
                 sampleLayer.renderEffect = filters.obtain(MeloXGlassFilterKey(size.width, size.height, padding.toFloat(), blurPx,
                     radii, MeloXGlassOptics(height, amount, depth, dispersion, vibrant)))
                 val matrix = Matrix()
+                val panelWidth = size.width
+                val edgeWidth = minOf(28.dp.toPx(), panelWidth / 2f)
+                val compression = edgeWidth / 180.dp.toPx()
+                val edgeStart = if (reflectionEdge == MeloXBackdropEdge.Right) panelWidth - edgeWidth else 0f
+                val edgeEnd = edgeStart + edgeWidth
+                val edgePaint = Paint()
+                val edgeMask = Brush.horizontalGradient(
+                    if (reflectionEdge == MeloXBackdropEdge.Right) listOf(Color.Transparent, Color.White)
+                    else listOf(Color.White, Color.Transparent), startX = edgeStart, endX = edgeEnd)
                 val sampleCenter = Offset(padding + size.width / 2f, padding + size.height / 2f)
                 fun DrawScope.drawSource(source: MeloXLayerBackdrop) {
                     val target = coordinates
@@ -106,12 +126,21 @@ fun Modifier.meloXSampleBackdrop(
                         // Source-local -> control-local mapping includes inverse press,
                         // drag and ancestor transforms, keeping the sampled page aligned.
                         val p = points[0]; val x = (points[1] - p) / 256f; val y = (points[2] - p) / 256f
-                        matrix.values[0] = x.x; matrix.values[1] = x.y
-                        matrix.values[4] = y.x; matrix.values[5] = y.y
-                        matrix.values[12] = p.x + padding; matrix.values[13] = p.y + padding
+                        val edge = if (reflectionEdge == MeloXBackdropEdge.Right) panelWidth else 0f
+                        matrix.values[0] = if (reflectionEdge != null) -compression * x.x else x.x; matrix.values[1] = x.y
+                        matrix.values[4] = if (reflectionEdge != null) -compression * y.x else y.x; matrix.values[5] = y.y
+                        matrix.values[12] = (if (reflectionEdge != null) edge * (1f + compression) - compression * p.x else p.x) + padding
+                        matrix.values[13] = p.y + padding
                         withTransform({ transform(matrix) }) { drawLayer(source.layer) }
                     } else {
-                        translate(source.origin.x - origin.x + padding, source.origin.y - origin.y + padding) { drawLayer(source.layer) }
+                        val dx = source.origin.x - origin.x
+                        if (reflectionEdge != null) {
+                            val edge = if (reflectionEdge == MeloXBackdropEdge.Right) panelWidth else 0f
+                            withTransform({
+                                translate(edge * (1f + compression) - compression * dx + padding, source.origin.y - origin.y + padding)
+                                scale(-compression, 1f, Offset.Zero)
+                            }) { drawLayer(source.layer) }
+                        } else translate(dx + padding, source.origin.y - origin.y + padding) { drawLayer(source.layer) }
                     }
                 }
             onDrawWithContent {
@@ -122,7 +151,14 @@ fun Modifier.meloXSampleBackdrop(
                     }
                      scale(sampleScale.x.glassFinite(), sampleScale.y.glassFinite(), sampleCenter) { drawSource(backdrop) }
                 }
-                translate(-padding.toFloat(), -padding.toFloat()) { drawLayer(sampleLayer) }
+                 if (reflectionEdge == null) {
+                     translate(-padding.toFloat(), -padding.toFloat()) { drawLayer(sampleLayer) }
+                 } else clipRect(left = edgeStart, right = edgeEnd) {
+                     drawContext.canvas.saveLayer(Rect(edgeStart, 0f, edgeEnd, size.height), edgePaint)
+                     translate(-padding.toFloat(), -padding.toFloat()) { drawLayer(sampleLayer) }
+                     drawRect(edgeMask, blendMode = BlendMode.DstIn)
+                     drawContext.canvas.restore()
+                 }
             }
             drawContent()
             }

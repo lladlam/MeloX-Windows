@@ -1,0 +1,2 @@
+before=tag:desktop-inspector:Lyrics,tag:desktop-sidebar,tag:desktop-home
+after=tag:desktop-inspector:Lyrics,tag:desktop-sidebar,tag:desktop-home

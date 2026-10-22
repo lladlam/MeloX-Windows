@@ -242,3 +242,16 @@ tasks.register<JavaExec>("auditGlassOptics") {
     systemProperty("user.home", layout.buildDirectory.dir("verification/glass-home").get().asFile.absolutePath)
     args(layout.buildDirectory.file("verification/glass-optics.json").get().asFile.absolutePath)
 }
+
+tasks.register<JavaExec>("auditDesktopGlass") {
+    group = "verification"
+    description = "Verify Desktop side-panel material and live adjacent-page reflection."
+    dependsOn("desktopMainClasses")
+    val compilation = kotlin.targets.getByName("desktop").compilations.getByName("main")
+    classpath = files(compilation.output.allOutputs, compilation.runtimeDependencyFiles)
+    mainClass.set("melox.validation.MeloXDesktopGlassAuditKt")
+    jvmArgs(productionJvmArgs)
+    systemProperty("java.awt.headless", "true")
+    systemProperty("user.home", layout.buildDirectory.dir("verification/desktop-glass-home").get().asFile.absolutePath)
+    args(layout.buildDirectory.dir("verification/desktop-glass").get().asFile.absolutePath)
+}

@@ -197,6 +197,7 @@ fun Modifier.meloXLiquidBottomBar(
     pressProgress: Float = 0f,
     dark: Boolean = true,
     refractionHeight: Dp = 24.dp,
+    reflectionEdge: MeloXBackdropEdge? = null,
 ): Modifier = composed {
     val frosted = melox.settings.MeloXSettingsRuntime.frostedGlassEnabled
     val p = safeGlassProgress(pressProgress)
@@ -212,7 +213,8 @@ fun Modifier.meloXLiquidBottomBar(
             (.48f - .16f * tone + .30f * p).coerceAtMost(1f), 4.dp + 8.dp * p, .10f + .30f * p))
         .clip(shape)
         .meloXSampleBackdrop(if (frosted) 8.dp else 2.dp, shape = shape,
-            lensHeight = if (frosted) 0.dp else 24.dp, lensAmount = if (frosted) 0.dp else 24.dp, vibrant = !frosted)
+            lensHeight = if (frosted) 0.dp else 24.dp, lensAmount = if (frosted) 0.dp else 24.dp, vibrant = !frosted,
+            reflectionEdge = reflectionEdge)
         .drawBehind { drawRect(surfaceColor) }
 }
 

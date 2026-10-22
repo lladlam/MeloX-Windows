@@ -1,6 +1,5 @@
 package melox.ui
 
-import melox.ui.glass.meloXRecordBackdrop
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
@@ -492,7 +491,7 @@ fun MeloXApp(onExit: () -> Unit = { kotlin.system.exitProcess(0) }) {
                     onExpandPlayer = openPlayer, playerOpen = playerOpen,
                     backdrop = pageBackdrop,
                      modifier = Modifier.padding(top = melox.ui.desktop.LocalMeloXCaptionInset.current)
-                         .meloXRecordBackdrop(pageBackdrop).nestedScroll(tabBarMinimizeConnection),
+                          .nestedScroll(tabBarMinimizeConnection),
                     collectionOverlay = { collectionLayer() },
                 ) {
                 AnimatedContent(

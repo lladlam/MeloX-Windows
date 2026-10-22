@@ -56,7 +56,7 @@ jobs:
       - name: Verify Windows-injected touch and promoted mouse drag scrolling
         run: gradle :desktop:auditNativeTouchScroll
       - name: Audit real glass optics, native ownership and stable filter reuse
-        run: gradle :desktop:auditGlassOptics
+        run: gradle :desktop:auditGlassOptics :desktop:auditDesktopGlass
       - name: Replay the real glass dock and moving selection in both themes
         shell: pwsh
         run: |
@@ -354,6 +354,8 @@ jobs:
             desktop/build/verification/window-caption-*.png
             desktop/build/verification/glass-scene/*.json
             desktop/build/verification/glass-scene/*.png
+            desktop/build/verification/desktop-glass/*.json
+            desktop/build/verification/desktop-glass/*.png
             desktop/build/verification/glass-popup/*.json
             desktop/build/verification/glass-popup/*.png
             desktop/build/verification/flowing-light/*.json

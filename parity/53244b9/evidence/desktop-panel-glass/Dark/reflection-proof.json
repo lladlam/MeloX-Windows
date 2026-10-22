@@ -1,0 +1,22 @@
+{
+  "status": "PASSED",
+  "theme": "Dark",
+  "regions": {
+    "dock_edge": {
+      "changed": 10825,
+      "pixels": 11088,
+      "fraction": 0.9762806637806638
+    },
+    "lyrics_edge": {
+      "changed": 10813,
+      "pixels": 11088,
+      "fraction": 0.9751984126984127
+    },
+    "dock_body": {
+      "changed": 0,
+      "pixels": 70560,
+      "fraction": 0.0
+    }
+  },
+  "scope": "production page wheel scroll; visual reflection, not physical hardware acceptance"
+}

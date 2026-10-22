@@ -1,0 +1,94 @@
+{
+  "cases": [
+    {
+      "inspector_live_pixels": 3600,
+      "density": 1,
+      "tested_edge_pixels": 3600,
+      "frosted": false,
+      "readable_body_unchanged": true,
+      "tested_pixels": 22000,
+      "dark": false,
+      "dock_live_pixels": 3600,
+      "identical_material_pixels": 22000
+    },
+    {
+      "inspector_live_pixels": 3600,
+      "density": 1,
+      "tested_edge_pixels": 3600,
+      "frosted": true,
+      "readable_body_unchanged": true,
+      "tested_pixels": 22000,
+      "dark": false,
+      "dock_live_pixels": 3600,
+      "identical_material_pixels": 22000
+    },
+    {
+      "inspector_live_pixels": 3600,
+      "density": 1,
+      "tested_edge_pixels": 3600,
+      "frosted": false,
+      "readable_body_unchanged": true,
+      "tested_pixels": 22000,
+      "dark": true,
+      "dock_live_pixels": 3600,
+      "identical_material_pixels": 22000
+    },
+    {
+      "inspector_live_pixels": 3600,
+      "density": 1,
+      "tested_edge_pixels": 3600,
+      "frosted": true,
+      "readable_body_unchanged": true,
+      "tested_pixels": 22000,
+      "dark": true,
+      "dock_live_pixels": 3600,
+      "identical_material_pixels": 22000
+    },
+    {
+      "inspector_live_pixels": 14400,
+      "density": 2,
+      "tested_edge_pixels": 14400,
+      "frosted": false,
+      "readable_body_unchanged": true,
+      "tested_pixels": 88000,
+      "dark": false,
+      "dock_live_pixels": 14400,
+      "identical_material_pixels": 88000
+    },
+    {
+      "inspector_live_pixels": 14400,
+      "density": 2,
+      "tested_edge_pixels": 14400,
+      "frosted": true,
+      "readable_body_unchanged": true,
+      "tested_pixels": 88000,
+      "dark": false,
+      "dock_live_pixels": 14400,
+      "identical_material_pixels": 88000
+    },
+    {
+      "inspector_live_pixels": 14400,
+      "density": 2,
+      "tested_edge_pixels": 14400,
+      "frosted": false,
+      "readable_body_unchanged": true,
+      "tested_pixels": 88000,
+      "dark": true,
+      "dock_live_pixels": 14400,
+      "identical_material_pixels": 88000
+    },
+    {
+      "inspector_live_pixels": 14400,
+      "density": 2,
+      "tested_edge_pixels": 14400,
+      "frosted": true,
+      "readable_body_unchanged": true,
+      "tested_pixels": 88000,
+      "dark": true,
+      "dock_live_pixels": 14400,
+      "identical_material_pixels": 88000
+    }
+  ],
+  "scope": "generated optical target, production panel rendering; not Android pixel parity or hardware FPS",
+  "status": "PASSED"
+}
