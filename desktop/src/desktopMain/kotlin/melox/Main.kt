@@ -47,6 +47,7 @@ fun main() {
         melox.settings.MeloXSettingsPreferences.initializeCritical()
         application {
             androidx.compose.runtime.LaunchedEffect(Unit) {
+                kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) { melox.lan.MeloXLanRuntime.start() }
                 while (true) {
                     val images = melox.ui.artwork.MeloXArtworkMemoryCache.stats()
                     melox.platform.logInfo("MeloXMemory", "${melox.diagnostics.MeloXMemoryDiagnostics.describe()} " +
@@ -66,6 +67,7 @@ fun main() {
                 melox.remoteconfig.MeloXRemoteConfigRuntime.setForeground(windowVisible && !windowState.isMinimized)
             }
             val quitApplication: () -> Unit = {
+                melox.lan.MeloXLanRuntime.stop()
                 melox.playback.PlaybackCommands.playerController()?.release()
                 exitApplication()
             }

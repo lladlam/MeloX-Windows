@@ -731,6 +731,7 @@ class MeloXDesktopPlayer internal constructor(
     }
 
     fun play() {
+        if (melox.lan.MeloXLanRuntime.forwardGuestControl("play")) return
         playWhenReady = true
         MeloXPlaybackEvents.publish(this, MeloXPlaybackEvents.Kind.Play)
         if (deferredRestore) {
@@ -753,6 +754,7 @@ class MeloXDesktopPlayer internal constructor(
     }
 
     fun pause() {
+        if (melox.lan.MeloXLanRuntime.forwardGuestControl("pause")) return
         actionRevision += 1
         playWhenReady = false
         awaitingAutoplay = false
@@ -807,6 +809,7 @@ class MeloXDesktopPlayer internal constructor(
     }
 
     fun next() {
+        if (melox.lan.MeloXLanRuntime.forwardGuestControl("next")) return
         if (items.isEmpty()) return
         val nextIndex = when {
             currentMediaItemIndex < items.lastIndex -> currentMediaItemIndex + 1
@@ -821,6 +824,7 @@ class MeloXDesktopPlayer internal constructor(
     }
 
     fun previous() {
+        if (melox.lan.MeloXLanRuntime.forwardGuestControl("previous")) return
         val position = AudioPlayer.getCurrentPositionMs().takeIf { it > 0L } ?: currentPosition
         if (melox.settings.MeloXSettingsRuntime.previousRestartsAfterFiveSeconds && position > 5000L) {
             seekTo(0L)
@@ -839,6 +843,7 @@ class MeloXDesktopPlayer internal constructor(
     }
 
     fun seekTo(ms: Long) {
+        if (melox.lan.MeloXLanRuntime.forwardGuestControl("seek", ms)) return
         actionRevision += 1
         mixJob?.cancel(); mixAttemptFor = null
         awaitingAutoplay = false
@@ -1069,6 +1074,7 @@ class MeloXDesktopPlayer internal constructor(
 
     private fun resolve(entry: QueueEntry): DesktopPlaybackRequest {
         val song = entry.song
+        melox.lan.MeloXLanRuntime.playbackOverride(song)?.let { return it }
         val track = song.providerTrack
         song.neteaseSongId?.let { nativeId ->
             MeloXDownloadStore.instance().localPlaybackString(nativeId)?.let { return DesktopPlaybackRequest(it) }

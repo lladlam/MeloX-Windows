@@ -238,6 +238,7 @@ private fun DesktopBottomPlayer(inspector: DesktopInspector?, onInspector: (Desk
     val player = PlaybackCommands.playerController()
     val volume by AudioPlayer.volumeLevel.collectAsState()
     var volumeExpanded by remember { mutableStateOf(false) }
+    var lanOpen by remember { mutableStateOf(false) }
     Row(Modifier.widthIn(max = DesktopMetrics.PlayerWidth.dp).fillMaxWidth().height(DesktopMetrics.PlayerHeight.dp)
         .testTag("desktop-bottom-player").shadow(14.dp, RoundedCornerShape(27.dp))
         .meloXLiquidBottomBar(RoundedCornerShape(27.dp), bottomLiquidGlassTint(), surfaceColor = bottomGlassSurfaceColor(), dark = bottomBarTone() > .5f)
@@ -267,7 +268,9 @@ private fun DesktopBottomPlayer(inspector: DesktopInspector?, onInspector: (Desk
                 if (inspector == DesktopInspector.Queue) Color.Red else color) { onInspector(DesktopInspector.Queue) }
         }
         DesktopIconButton(MeloXSymbol.Volume, "desktop-volume", desktopString("ui.player.volume"), color) { volumeExpanded = !volumeExpanded }
+        DesktopIconButton(MeloXSymbol.Cloud, "desktop-lan", "局域网播放", color) { lanOpen = true }
     }
+    if (lanOpen) MeloXLanDialog(true) { lanOpen = false }
 }
 
 @Composable

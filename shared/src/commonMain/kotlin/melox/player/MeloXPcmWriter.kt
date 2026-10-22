@@ -39,6 +39,7 @@ internal suspend fun writePcmBlock(
                 "buffer=${runCatching { line.bufferSize }.getOrNull()} available=${runCatching { line.available() }.getOrNull()}"
             throw AudioPlaybackFailure(AudioFailureKind.Output, IOException("Audio output stopped accepting aligned PCM frames ($details)"))
         }
+        melox.lan.LanPcmTap.accepted(bytes, offset, accepted)
         onAccepted(accepted)
         offset += accepted
     }

@@ -127,3 +127,9 @@
 - 修复独立session未刷新profile导致userId为空、静默空列表；补账号错误显示。拆除电脑收藏入口对整套snapshot的依赖，歌单/歌曲/历史独立获取，避免任一无关接口失败拖累当前页。
 - 相关HTTP接入owner取消，账号revision清空旧列表与详情；保留真实ID和喜欢顺序。
 - shared **59 suites / 289 tests / 0 failures/errors/skipped**，桌面编译通过。协议fixture验证独立请求及实际Call取消；未宣称私人账号收藏数量已实测。说明 `DESKTOP_LIBRARY_LOADING.md`。
+
+## 16. MELOX-LAN v1 局域网播放迁移
+
+- 依据 Android `docs/MELOX-LAN.md` 与 `lan/` 源码迁移发现、PIN/信任、控制、接力、PCM 投放、Together 及中继 token。
+- 播放全部接真实 PlaybackCommands/AudioPlayer；投放只取 Java Sound 实际接受的 PCM；中继只代理真实 Range 音频且不泄露 Cookie。底栏与设置入口提供设备名/端口/PIN/信任列表/最近连接。
+- shared **292 tests / 0 failures/errors/skipped**，桌面编译通过。新增真实 loopback socket 协议测试与真实 UDP 发现测试。未验证真实 Windows↔Android 跨机、防火墙、物理扬声器；详见 `LAN_PLAYBACK.md`。
