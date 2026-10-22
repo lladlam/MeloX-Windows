@@ -36,7 +36,7 @@ def main():
     paths = git(args.android, "ls-tree", "-r", "--name-only", ANDROID_SHA).splitlines()
     android = {p: git(args.android, "show", f"{ANDROID_SHA}:{p}") for p in paths
                if p.endswith((".kt", ".xml")) and ("/src/main/" in p or "/src/test/" in p)}
-    windows = {str(p.relative_to(ROOT)): p.read_text() for folder in ("shared/src", "desktop/src")
+    windows = {str(p.relative_to(ROOT)): p.read_text(encoding='utf-8') for folder in ("shared/src", "desktop/src")
                for p in (ROOT / folder).rglob("*") if p.suffix in (".kt", ".xml")}
     by_name = collections.defaultdict(list)
     for p in windows:

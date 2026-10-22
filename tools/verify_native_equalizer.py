@@ -29,7 +29,7 @@ def main():
     files = sorted(args.directory.glob("*.json"))
     assert len(files) == 5, "Both single-output modes and genuine dual decode must be present"
     for file in files:
-        metadata = json.loads(file.read_text())
+        metadata = json.loads(file.read_text(encoding='utf-8'))
         assert metadata["origin"] == "GENERATED_AUDIO_PRODUCTION_NATIVE_DECODER"
         assert metadata["output"] == "CONTROLLED_SOFTWARE_SOURCE_DATA_LINE"
         assert (metadata["sample_rate"], metadata["channels"], metadata["format"]) == (44100, 2, "S16LE")

@@ -9,13 +9,13 @@ parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument('capture', type=Path)
 parser.add_argument('--output', type=Path, required=True)
 args = parser.parse_args()
-capture = json.loads((args.capture / 'capture.json').read_text())
+capture = json.loads((args.capture / 'capture.json').read_text(encoding='utf-8'))
 scenes = []
 for scene in capture['scenes']:
     if '-frame-' in scene['file'] or scene['page'] != 'Lyrics' or scene['is_playing']:
         continue
     path = args.capture / Path(scene['file']).with_suffix('.semantics.json')
-    nodes = json.loads(path.read_text())
+    nodes = json.loads(path.read_text(encoding='utf-8'))
     panel = next((n for n in nodes if n.get('tag') == 'player-lyrics'), None)
     if not panel:
         continue

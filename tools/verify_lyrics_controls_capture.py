@@ -14,14 +14,14 @@ parser.add_argument('reload', type=Path)
 parser.add_argument('--output', type=Path, required=True)
 args = parser.parse_args()
 repo = Path(__file__).resolve().parents[1]
-inventory = json.loads((repo / 'parity/3f877ea/evidence/search-player-next-lyrics-control-gaps.json').read_text())
-inputs = json.loads((args.controls / 'control-inputs.json').read_text())
+inventory = json.loads((repo / 'parity/3f877ea/evidence/search-player-next-lyrics-control-gaps.json').read_text(encoding='utf-8'))
+inputs = json.loads((args.controls / 'control-inputs.json').read_text(encoding='utf-8'))
 assert set(inputs) == set(inventory['pinned_setting_keys']) and len(inputs) == 60
 
 
 def read_capture(directory):
     path = directory / 'capture.json'
-    capture = json.loads(path.read_text())
+    capture = json.loads(path.read_text(encoding='utf-8'))
     assert capture['renderer'] == 'production ImageComposeScene'
     assert not capture['frames'], 'Control audit expects one settled scene per step'
     assert len(capture['scenes']) == len(capture['steps']) + 1, 'Truncated production replay'

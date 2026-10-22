@@ -126,7 +126,7 @@ def main():
     parser.add_argument("--run", action="store_true")
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
-    manifest = json.loads((ROOT / "desktop/src/main/resources/decoder/manifest.json").read_text())
+    manifest = json.loads((ROOT / "desktop/src/main/resources/decoder/manifest.json").read_text(encoding='utf-8'))
     results, native = [], None
     if args.sources:
         for name, expected in manifest.items():

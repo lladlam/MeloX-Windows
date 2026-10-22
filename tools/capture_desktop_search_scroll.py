@@ -44,7 +44,7 @@ with (output / 'gradle.log').open('w') as log:
 if result.returncode:
     print((output / 'gradle.log').read_text(errors='replace')[-12000:])
     raise SystemExit(result.returncode)
-data = json.loads((output / 'capture.json').read_text())
+data = json.loads((output / 'capture.json').read_text(encoding='utf-8'))
 requests = {s['file'].split('-', 1)[1].removesuffix('.png'): s['touch_keyboard_requests'] for s in data['scenes']}
 assert requests['focus'] == 0, requests
 assert requests['touch-focus'] == 1 and requests['touch-refocus'] == 2 and requests['mouse-refocus'] == 2, requests
@@ -52,7 +52,7 @@ assert requests['touch-focus'] == 1 and requests['touch-refocus'] == 2 and reque
 
 def nodes_at(name):
     entry = next(s for s in data['scenes'] if s['file'].split('-', 1)[1] == name + '.png')
-    nodes = json.loads((output / entry['file']).with_suffix('.semantics.json').read_text())
+    nodes = json.loads((output / entry['file']).with_suffix('.semantics.json').read_text(encoding='utf-8'))
     return {n['tag']: n for n in nodes if n.get('tag')}
 
 

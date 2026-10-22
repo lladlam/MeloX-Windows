@@ -12,7 +12,7 @@ def main():
     parser.add_argument("directory", type=Path)
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
-    capture = json.loads((args.directory / "capture.json").read_text())
+    capture = json.loads((args.directory / "capture.json").read_text(encoding='utf-8'))
     assert capture["audio_endpoint"] == "VALIDATION_SOFTWARE_PCM_OUTPUT"
     records = []
     overlap_seen = False

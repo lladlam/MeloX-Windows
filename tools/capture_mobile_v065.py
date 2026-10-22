@@ -92,14 +92,14 @@ with (output / 'gradle.log').open('w') as log:
 if result.returncode:
     print((output / 'gradle.log').read_text(errors='replace')[-15000:])
     raise SystemExit(result.returncode)
-data = json.loads((output / 'capture.json').read_text())
+data = json.loads((output / 'capture.json').read_text(encoding='utf-8'))
 assert all(a['passed'] for scene in data['scenes'] for a in scene.get('assertions', []))
 if mode == 'player':
     assert sum(p['written_frames'] for p in data['pcm_outputs']) > 44100
     frames = [scene for scene in data['scenes'] if '-open-frame-' in scene['file']]
     geometries = []
     for scene in frames:
-        nodes = json.loads((output / scene['file']).with_suffix('.semantics.json').read_text())
+        nodes = json.loads((output / scene['file']).with_suffix('.semantics.json').read_text(encoding='utf-8'))
         shell = next((n for n in nodes if n.get('tag') == 'player-transition-shell'), None)
         if shell:
             geometries.append({'file': scene['file'], 'bounds': shell['bounds'], 'state': shell.get('state')})

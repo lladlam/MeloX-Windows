@@ -16,7 +16,7 @@ parser.add_argument('capture', type=Path)
 parser.add_argument('--track', required=True, help='Native provider identity, e.g. netease:139774')
 parser.add_argument('--output', type=Path, required=True)
 args = parser.parse_args()
-evidence = json.loads((args.capture / 'capture.json').read_text())
+evidence = json.loads((args.capture / 'capture.json').read_text(encoding='utf-8'))
 assert evidence['audio_endpoint'] == 'VALIDATION_SOFTWARE_PCM_OUTPUT'
 playing = [scene for scene in evidence['scenes'] if scene['track'] == args.track
            and scene['is_playing'] and scene['position_ms'] >= 500 and scene['error'] is None]

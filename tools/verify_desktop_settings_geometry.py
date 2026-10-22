@@ -14,11 +14,11 @@ source = subprocess.check_output(['git', '-C', str(args.reference), 'show',
     'a41ea0e1e1fa69fb543d827b853fe3aff5420951:MeloXDesktop/Features/Settings/DesktopSettingsView.swift'], text=True)
 assert '.frame(width: 650' in source
 assert re.search(r'\.frame\(height:\s*58\)', source)
-capture = json.loads((args.capture / 'capture.json').read_text())
+capture = json.loads((args.capture / 'capture.json').read_text(encoding='utf-8'))
 checked = []
 for scene in capture['scenes']:
     path = args.capture / (Path(scene['file']).stem + '.semantics.json')
-    nodes = json.loads(path.read_text())
+    nodes = json.loads(path.read_text(encoding='utf-8'))
     panel = next((n for n in nodes if n.get('tag') == 'desktop-settings-panel'), None)
     footer = next((n for n in nodes if n.get('tag') == 'desktop-settings-footer'), None)
     if panel is None or footer is None:

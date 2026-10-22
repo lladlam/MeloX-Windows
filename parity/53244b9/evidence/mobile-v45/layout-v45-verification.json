@@ -1,0 +1,571 @@
+{
+  "desktop_reference": "a41ea0e1e1fa69fb543d827b853fe3aff5420951",
+  "status": "PASSED",
+  "scope": "Windows implementation replay/source geometry/real PCM; native source same-content pixel and hardware acceptance pending",
+  "totals": {
+    "replays": 2,
+    "scenes": 41,
+    "assertions": 82
+  },
+  "replays": [
+    {
+      "mode": "controls",
+      "home": "/mnt/ntfs_files_sda4/项目/MeloX-Windows/build/layout-v45-controls-home",
+      "scenes": 29,
+      "assertions": 67,
+      "capture_sha256": "e13ce6bc8af92115cf9ebbc8a066073ebbb5023c1a1e116bbc007e9727bb811c",
+      "geometries": [
+        {
+          "scene": "07-desktop-0.png",
+          "tag": "desktop-sidebar",
+          "bounds": [
+            8,
+            8,
+            207,
+            792
+          ]
+        },
+        {
+          "scene": "07-desktop-0.png",
+          "tag": "desktop-bottom-player",
+          "bounds": [
+            394,
+            736,
+            1094,
+            790
+          ]
+        },
+        {
+          "scene": "09-desktop-1.png",
+          "tag": "desktop-sidebar",
+          "bounds": [
+            8,
+            8,
+            207,
+            792
+          ]
+        },
+        {
+          "scene": "09-desktop-1.png",
+          "tag": "desktop-bottom-player",
+          "bounds": [
+            394,
+            736,
+            1094,
+            790
+          ]
+        },
+        {
+          "scene": "11-desktop-2.png",
+          "tag": "desktop-sidebar",
+          "bounds": [
+            8,
+            8,
+            207,
+            792
+          ]
+        },
+        {
+          "scene": "11-desktop-2.png",
+          "tag": "desktop-bottom-player",
+          "bounds": [
+            394,
+            736,
+            1094,
+            790
+          ]
+        },
+        {
+          "scene": "12-pause.png",
+          "tag": "desktop-sidebar",
+          "bounds": [
+            8,
+            8,
+            207,
+            792
+          ]
+        },
+        {
+          "scene": "12-pause.png",
+          "tag": "desktop-bottom-player",
+          "bounds": [
+            394,
+            736,
+            1094,
+            790
+          ]
+        },
+        {
+          "scene": "13-resume.png",
+          "tag": "desktop-sidebar",
+          "bounds": [
+            8,
+            8,
+            207,
+            792
+          ]
+        },
+        {
+          "scene": "13-resume.png",
+          "tag": "desktop-bottom-player",
+          "bounds": [
+            394,
+            736,
+            1094,
+            790
+          ]
+        },
+        {
+          "scene": "14-queue.png",
+          "tag": "desktop-sidebar",
+          "bounds": [
+            8,
+            8,
+            207,
+            792
+          ]
+        },
+        {
+          "scene": "14-queue.png",
+          "tag": "desktop-inspector:Queue",
+          "bounds": [
+            1022,
+            0,
+            1280,
+            800
+          ]
+        },
+        {
+          "scene": "14-queue.png",
+          "tag": "desktop-bottom-player",
+          "bounds": [
+            394,
+            736,
+            1094,
+            790
+          ]
+        },
+        {
+          "scene": "15-select-real-track.png",
+          "tag": "desktop-sidebar",
+          "bounds": [
+            8,
+            8,
+            207,
+            792
+          ]
+        },
+        {
+          "scene": "15-select-real-track.png",
+          "tag": "desktop-inspector:Queue",
+          "bounds": [
+            1022,
+            0,
+            1280,
+            800
+          ]
+        },
+        {
+          "scene": "15-select-real-track.png",
+          "tag": "desktop-bottom-player",
+          "bounds": [
+            394,
+            736,
+            1094,
+            790
+          ]
+        },
+        {
+          "scene": "16-close-queue.png",
+          "tag": "desktop-sidebar",
+          "bounds": [
+            8,
+            8,
+            207,
+            792
+          ]
+        },
+        {
+          "scene": "16-close-queue.png",
+          "tag": "desktop-bottom-player",
+          "bounds": [
+            394,
+            736,
+            1094,
+            790
+          ]
+        },
+        {
+          "scene": "17-volume.png",
+          "tag": "desktop-sidebar",
+          "bounds": [
+            8,
+            8,
+            207,
+            792
+          ]
+        },
+        {
+          "scene": "17-volume.png",
+          "tag": "desktop-bottom-player",
+          "bounds": [
+            394,
+            736,
+            1094,
+            790
+          ]
+        },
+        {
+          "scene": "18-set-volume.png",
+          "tag": "desktop-sidebar",
+          "bounds": [
+            8,
+            8,
+            207,
+            792
+          ]
+        },
+        {
+          "scene": "18-set-volume.png",
+          "tag": "desktop-bottom-player",
+          "bounds": [
+            394,
+            736,
+            1094,
+            790
+          ]
+        },
+        {
+          "scene": "19-collapse-volume.png",
+          "tag": "desktop-sidebar",
+          "bounds": [
+            8,
+            8,
+            207,
+            792
+          ]
+        },
+        {
+          "scene": "19-collapse-volume.png",
+          "tag": "desktop-bottom-player",
+          "bounds": [
+            394,
+            736,
+            1094,
+            790
+          ]
+        },
+        {
+          "scene": "20-expand-player.png",
+          "tag": "desktop-sidebar",
+          "bounds": [
+            8,
+            8,
+            207,
+            792
+          ]
+        },
+        {
+          "scene": "21-full-queue.png",
+          "tag": "desktop-sidebar",
+          "bounds": [
+            8,
+            8,
+            207,
+            792
+          ]
+        },
+        {
+          "scene": "22-full-pause.png",
+          "tag": "desktop-sidebar",
+          "bounds": [
+            8,
+            8,
+            207,
+            792
+          ]
+        },
+        {
+          "scene": "23-full-resume.png",
+          "tag": "desktop-sidebar",
+          "bounds": [
+            8,
+            8,
+            207,
+            792
+          ]
+        },
+        {
+          "scene": "24-collapse-player.png",
+          "tag": "desktop-sidebar",
+          "bounds": [
+            8,
+            8,
+            207,
+            792
+          ]
+        },
+        {
+          "scene": "24-collapse-player.png",
+          "tag": "desktop-bottom-player",
+          "bounds": [
+            394,
+            736,
+            1094,
+            790
+          ]
+        },
+        {
+          "scene": "25-search.png",
+          "tag": "desktop-sidebar",
+          "bounds": [
+            8,
+            8,
+            207,
+            792
+          ]
+        },
+        {
+          "scene": "25-search.png",
+          "tag": "desktop-bottom-player",
+          "bounds": [
+            394,
+            736,
+            1094,
+            790
+          ]
+        },
+        {
+          "scene": "26-songs.png",
+          "tag": "desktop-sidebar",
+          "bounds": [
+            8,
+            8,
+            207,
+            792
+          ]
+        },
+        {
+          "scene": "26-songs.png",
+          "tag": "desktop-bottom-player",
+          "bounds": [
+            394,
+            736,
+            1094,
+            790
+          ]
+        },
+        {
+          "scene": "27-settings.png",
+          "tag": "desktop-sidebar",
+          "bounds": [
+            8,
+            8,
+            207,
+            792
+          ]
+        },
+        {
+          "scene": "27-settings.png",
+          "tag": "desktop-bottom-player",
+          "bounds": [
+            394,
+            736,
+            1094,
+            790
+          ]
+        },
+        {
+          "scene": "28-reopen-general.png",
+          "tag": "desktop-sidebar",
+          "bounds": [
+            8,
+            8,
+            207,
+            792
+          ]
+        },
+        {
+          "scene": "28-reopen-general.png",
+          "tag": "desktop-bottom-player",
+          "bounds": [
+            394,
+            736,
+            1094,
+            790
+          ]
+        }
+      ],
+      "pcm": [
+        {
+          "file": "pcm-output-0.s16le",
+          "bytes": 4818680,
+          "written_frames": 1204670,
+          "sha256": "765a3a8ae676f259ac459348b14fefab9af8c9f6c63507ada2ea135c92022568",
+          "sample_frames": 8192,
+          "rms_s16": 2001.5551875842225,
+          "strongest_test_frequency_hz": 220,
+          "spectral_power": {
+            "110": 44660762490.65625,
+            "220": 134678544341504.0,
+            "330": 27356312933.82422,
+            "440": 798704210.4945984
+          }
+        },
+        {
+          "file": "pcm-output-1.s16le",
+          "bytes": 5144920,
+          "written_frames": 1286230,
+          "sha256": "e0bb60658c2ca6cc39abea0e5ae09943f2bc600481d02cf6cafe58030952aba7",
+          "sample_frames": 8192,
+          "rms_s16": 2000.3734697687548,
+          "strongest_test_frequency_hz": 330,
+          "spectral_power": {
+            "110": 1794805522.3518677,
+            "220": 33182470186.890625,
+            "330": 134357364655602.0,
+            "440": 30931988927.328125
+          }
+        }
+      ],
+      "status": "PASSED"
+    },
+    {
+      "mode": "lyrics-light",
+      "home": "/mnt/ntfs_files_sda4/项目/MeloX-Windows/build/layout-v45-lyrics-home",
+      "scenes": 12,
+      "assertions": 15,
+      "capture_sha256": "689421924c091b783f44dbeb879e1d8a5ea2858ce2b7e933dde04cc9d558116d",
+      "geometries": [
+        {
+          "scene": "07-enable-desktop.png",
+          "tag": "desktop-sidebar",
+          "bounds": [
+            8,
+            8,
+            207,
+            792
+          ]
+        },
+        {
+          "scene": "07-enable-desktop.png",
+          "tag": "desktop-bottom-player",
+          "bounds": [
+            394,
+            736,
+            1094,
+            790
+          ]
+        },
+        {
+          "scene": "08-show-real-local-lyrics.png",
+          "tag": "desktop-sidebar",
+          "bounds": [
+            8,
+            8,
+            207,
+            792
+          ]
+        },
+        {
+          "scene": "08-show-real-local-lyrics.png",
+          "tag": "desktop-inspector:Lyrics",
+          "bounds": [
+            920,
+            0,
+            1280,
+            800
+          ]
+        },
+        {
+          "scene": "08-show-real-local-lyrics.png",
+          "tag": "desktop-bottom-player",
+          "bounds": [
+            394,
+            736,
+            1094,
+            790
+          ]
+        },
+        {
+          "scene": "09-seek-by-real-pointer.png",
+          "tag": "desktop-sidebar",
+          "bounds": [
+            8,
+            8,
+            207,
+            792
+          ]
+        },
+        {
+          "scene": "09-seek-by-real-pointer.png",
+          "tag": "desktop-inspector:Lyrics",
+          "bounds": [
+            920,
+            0,
+            1280,
+            800
+          ]
+        },
+        {
+          "scene": "09-seek-by-real-pointer.png",
+          "tag": "desktop-bottom-player",
+          "bounds": [
+            394,
+            736,
+            1094,
+            790
+          ]
+        },
+        {
+          "scene": "10-close-lyrics.png",
+          "tag": "desktop-sidebar",
+          "bounds": [
+            8,
+            8,
+            207,
+            792
+          ]
+        },
+        {
+          "scene": "10-close-lyrics.png",
+          "tag": "desktop-bottom-player",
+          "bounds": [
+            394,
+            736,
+            1094,
+            790
+          ]
+        },
+        {
+          "scene": "11-expand-light-player.png",
+          "tag": "desktop-sidebar",
+          "bounds": [
+            8,
+            8,
+            207,
+            792
+          ]
+        }
+      ],
+      "pcm": [
+        {
+          "file": "pcm-output-0.s16le",
+          "bytes": 1101820,
+          "written_frames": 275455,
+          "sha256": "65e08f1377220641442502c12a15f4505b830224441c6d4cf6f8acdcfa7e131a",
+          "sample_frames": 8192,
+          "rms_s16": 2001.5551875842225,
+          "strongest_test_frequency_hz": 220,
+          "spectral_power": {
+            "110": 44660762490.65625,
+            "220": 134678544341504.0,
+            "330": 27356312933.82422,
+            "440": 798704210.4945984
+          }
+        }
+      ],
+      "status": "PASSED"
+    }
+  ]
+}

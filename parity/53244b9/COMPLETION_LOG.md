@@ -62,3 +62,15 @@
 - Windows PE FFmpeg **164,352,000 bytes / `af7913b7ddc324bf02b8af72fe8612b1471455ef8d9e04e45466510742abcff9`** 核验通过。CI在Windows执行JAR/app-image/ZIP解码器验证成功，下载后的Linux独立检查核对PE字节与哈希，不声称在Linux执行Windows解码器或完成真实硬件听感。
 - Windows三档流光生产Canvas报告及连续帧已下载：每档76789–76797/76800像素变化，暂停/减少动态冻结、恢复移动、周期回卷连续、无伪分析或节拍亮度脉动、36次卸载重建均通过；High两帧已人工查看。玻璃光学、组件/Popup复用释放及Windows原生沉浸placement报告均PASSED。
 - 原始输入/capture、重点分屏/语言语义/截图/日志、55份XML及核验结果在 `evidence/windows-ci-14b4df0/`；资源和解码器按精确发行提交读取。最近独立核验发行升级为 **14b4df0**，不是后续文档HEAD。整体迁移继续 **PARTIAL**：Android同内容帧、账号/硬件闭环、Library账号详情/其余路由/完整播放器双栏及用户Windows长时内存增长仍待完成。
+
+## 8. 手机版0.6.5主动对齐与沉浸式标题栏（8f9342e）
+
+- 固定Android正式发行仍为 `53244b9d6b21d7e3a609e8cb11876efef70f218b`。本机Android工作树HEAD和当前`v0.6.5`标签已漂移，未把移动标签内容混入基线；新增 `MOBILE_UI_AUDIT.md`、`mobile-ui-source-index.json` 记录20个手机UI区域的固定源路径、哈希和动画调用位置。
+- 首页“每日推荐/热歌榜/私人雷达”不再用精简页替换首页或直接开播：真实API歌曲进入 canonical 歌曲列表详情，父页保留；返回/再次打开由真实Escape验证。未登录每日推荐显示真实错误。发现页及非网易云首页的排行卡片不再空点击，按 `RankingCapability` 全页抓取并按“音源+原始ID”去重。
+- 手机版 Home/Explore/Search 的旧 `PlaylistDetailScreen` 统一委派 canonical 详情；接入封面流光背景、可读性背板、下拉隐藏式搜索栏、840×600+分屏双列；未取得真实收藏态时不显示收藏按钮，provided songs 不写入虚构歌单ID。
+- 播客详情、私信会话、账户详情改为覆盖层，保留父页滚动状态；私信登录态随真实会话revision刷新并在注销时清空。
+- MiniPlay/完整播放器改用0.6.5线性master + 归一化临界阻尼内容曲线；外壳/封面共用关闭尾段22dp单峰下沉、状态机到位后140ms圆角坐平、背景页0.83等距内缩和黑舞台、过渡期命中拦截及MiniPlay矩形内重新打开。`capture_mobile_v065 player` 用显式动画时间轴采样，避免软件渲染墙钟把100ms拖成478ms。
+- 新增持久化 `windows_immersive_caption`（默认关闭）：“沉浸式标题栏”。开启后正文避让34dp，标题按钮透明覆盖；播放器真实流光、详情封面调色板延伸到按钮栏，普通页沿用主题底色。桌面侧栏和歌词检查器也避让标题栏；拖动、双击最大化、按钮、边缘缩放、托盘关闭保留。
+- 本地顺序验证：手机首页 **13/13**、播放器 **115/22**、桌面布局 controls **29/67** + lyrics-light **12/15**、两项几何/真实PCM核验 **41/82**、标题栏设置 **25/27** + 独立JVM **1/10**、`:shared:desktopTest` **276 tests / 0 failures/errors/skipped**。本机原生标题栏审计因无正尺寸显示器为 **UNSUPPORTED**。
+- 证据在 `evidence/mobile-v45/`。整体迁移仍 **PARTIAL**：真实登录账户、物理触屏、可听硬件、长时内存、Android同内容像素和完整横屏/歌词天际/多语言仍未由本轮证明；Windows CI及发行独立核验见后续补记。
+- 首次Windows运行 **39724720557 / 8f9342e** 在“Desktop promoted drag and native Touch scene paths”失败：`capture_desktop_search_scroll.py` 用Windows默认cp1252读取UTF-8语义JSON，遇到真实中文语义字符即抛 `UnicodeDecodeError`，不是搜索/拖动功能失败。已把CI用到的语义/JSON读取统一显式设为UTF-8并重新推送；该失败运行未生成发行，不作为通过证据。
