@@ -1,0 +1,11 @@
+consent:tap@remote-reject
+ready:wait@600
+anchor:remember-point@settings-open-general
+open:tap@settings-open-general
+settled:wait@700
+close:escape
+closed:wait@700
+open-again:tap@settings-open-general
+settled-again:wait@700
+last-close:escape
+last-closed:wait@700

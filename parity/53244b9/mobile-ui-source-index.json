@@ -359,6 +359,21 @@
               "symbol": "animateFloatAsState"
             }
           ]
+        },
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/navigation/MeloXPageMotion.kt",
+          "sha256": "0dbbb06876b322196854d3ded26dd5de5919d7ac3c45de3768686653d6eac2ff",
+          "lines": 77,
+          "motion_sites": [
+            {
+              "line": 45,
+              "symbol": "meloXPageRecede"
+            },
+            {
+              "line": 55,
+              "symbol": "MeloXInterruptiblePage"
+            }
+          ]
         }
       ]
     },
@@ -922,12 +937,16 @@
       "windows": [
         {
           "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/SettingsScreen.kt",
-          "sha256": "deb83db98a93fdd9bf457a170330bc72da2784bb94e97bd62d0175943295a038",
+          "sha256": "12d34d485493269899deafebfc38d2d2ee038f2d0d6c0c11badabcc15fdb0d49",
           "lines": 675,
           "motion_sites": [
             {
-              "line": 227,
-              "symbol": "AnimatedVisibility"
+              "line": 178,
+              "symbol": "meloXPageRecede"
+            },
+            {
+              "line": 232,
+              "symbol": "MeloXInterruptiblePage"
             }
           ]
         }

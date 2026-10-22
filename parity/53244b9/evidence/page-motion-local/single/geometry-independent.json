@@ -1,0 +1,774 @@
+{
+  "status": "PASSED",
+  "mode": "single",
+  "geometry": [
+    {
+      "file": "04-open-frame-0.png",
+      "progress": 0.0,
+      "parent": [
+        0,
+        0,
+        427,
+        850
+      ],
+      "detail": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "file": "04-open-frame-50.png",
+      "progress": 0.0,
+      "parent": [
+        0,
+        0,
+        427,
+        850
+      ],
+      "detail": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "file": "04-open-frame-100.png",
+      "progress": 0.41306427,
+      "parent": [
+        0,
+        0,
+        368,
+        850
+      ],
+      "detail": [
+        251,
+        0,
+        427,
+        850
+      ]
+    },
+    {
+      "file": "04-open.png",
+      "progress": 0.7689461,
+      "parent": [
+        0,
+        0,
+        318,
+        850
+      ],
+      "detail": [
+        99,
+        0,
+        427,
+        850
+      ]
+    },
+    {
+      "file": "05-early-close-frame-0.png",
+      "progress": 0.77371794,
+      "parent": [
+        0,
+        0,
+        317,
+        850
+      ],
+      "detail": [
+        97,
+        0,
+        427,
+        850
+      ]
+    },
+    {
+      "file": "05-early-close-frame-50.png",
+      "progress": 0.5116011,
+      "parent": [
+        0,
+        0,
+        354,
+        850
+      ],
+      "detail": [
+        209,
+        0,
+        427,
+        850
+      ]
+    },
+    {
+      "file": "05-early-close-frame-100.png",
+      "progress": 0.20302638,
+      "parent": [
+        0,
+        0,
+        398,
+        850
+      ],
+      "detail": [
+        340,
+        0,
+        427,
+        850
+      ]
+    },
+    {
+      "file": "05-early-close.png",
+      "progress": 0.07005083,
+      "parent": [
+        0,
+        0,
+        417,
+        850
+      ],
+      "detail": [
+        397,
+        0,
+        427,
+        850
+      ]
+    },
+    {
+      "file": "07-open-after-cancel-frame-0.png",
+      "progress": 0.0,
+      "parent": [
+        0,
+        0,
+        427,
+        850
+      ],
+      "detail": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "file": "07-open-after-cancel-frame-50.png",
+      "progress": 0.0,
+      "parent": [
+        0,
+        0,
+        427,
+        850
+      ],
+      "detail": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "file": "07-open-after-cancel-frame-100.png",
+      "progress": 0.41303203,
+      "parent": [
+        0,
+        0,
+        368,
+        850
+      ],
+      "detail": [
+        251,
+        0,
+        427,
+        850
+      ]
+    },
+    {
+      "file": "07-open-after-cancel.png",
+      "progress": 0.7689301,
+      "parent": [
+        0,
+        0,
+        318,
+        850
+      ],
+      "detail": [
+        99,
+        0,
+        427,
+        850
+      ]
+    },
+    {
+      "file": "08-settled-frame-0.png",
+      "progress": 1.0,
+      "parent": [
+        0,
+        0,
+        285,
+        850
+      ],
+      "detail": [
+        0,
+        0,
+        427,
+        850
+      ]
+    },
+    {
+      "file": "08-settled-frame-50.png",
+      "progress": 1.0,
+      "parent": [
+        0,
+        0,
+        285,
+        850
+      ],
+      "detail": [
+        0,
+        0,
+        427,
+        850
+      ]
+    },
+    {
+      "file": "08-settled-frame-100.png",
+      "progress": 1.0,
+      "parent": [
+        0,
+        0,
+        285,
+        850
+      ],
+      "detail": [
+        0,
+        0,
+        427,
+        850
+      ]
+    },
+    {
+      "file": "08-settled.png",
+      "progress": 1.0,
+      "parent": [
+        0,
+        0,
+        285,
+        850
+      ],
+      "detail": [
+        0,
+        0,
+        427,
+        850
+      ]
+    },
+    {
+      "file": "09-close-frame-0.png",
+      "progress": 1.0,
+      "parent": [
+        0,
+        0,
+        285,
+        850
+      ],
+      "detail": [
+        0,
+        0,
+        427,
+        850
+      ]
+    },
+    {
+      "file": "09-close-frame-50.png",
+      "progress": 1.0,
+      "parent": [
+        0,
+        0,
+        285,
+        850
+      ],
+      "detail": [
+        0,
+        0,
+        427,
+        850
+      ]
+    },
+    {
+      "file": "09-close-frame-100.png",
+      "progress": 0.5869357,
+      "parent": [
+        0,
+        0,
+        343,
+        850
+      ],
+      "detail": [
+        176,
+        0,
+        427,
+        850
+      ]
+    },
+    {
+      "file": "09-close.png",
+      "progress": 0.23105392,
+      "parent": [
+        0,
+        0,
+        394,
+        850
+      ],
+      "detail": [
+        328,
+        0,
+        427,
+        850
+      ]
+    },
+    {
+      "file": "10-reverse-frame-0.png",
+      "progress": 0.07885887,
+      "parent": [
+        0,
+        0,
+        416,
+        850
+      ],
+      "detail": [
+        393,
+        0,
+        427,
+        850
+      ]
+    },
+    {
+      "file": "10-reverse-frame-50.png",
+      "progress": 0.43746427,
+      "parent": [
+        0,
+        0,
+        365,
+        850
+      ],
+      "detail": [
+        240,
+        0,
+        427,
+        850
+      ]
+    },
+    {
+      "file": "10-reverse-frame-100.png",
+      "progress": 0.78092104,
+      "parent": [
+        0,
+        0,
+        316,
+        850
+      ],
+      "detail": [
+        94,
+        0,
+        427,
+        850
+      ]
+    },
+    {
+      "file": "10-reverse.png",
+      "progress": 0.9250352,
+      "parent": [
+        0,
+        0,
+        295,
+        850
+      ],
+      "detail": [
+        32,
+        0,
+        427,
+        850
+      ]
+    },
+    {
+      "file": "11-restored-frame-0.png",
+      "progress": 1.0,
+      "parent": [
+        0,
+        0,
+        285,
+        850
+      ],
+      "detail": [
+        0,
+        0,
+        427,
+        850
+      ]
+    },
+    {
+      "file": "11-restored-frame-50.png",
+      "progress": 1.0,
+      "parent": [
+        0,
+        0,
+        285,
+        850
+      ],
+      "detail": [
+        0,
+        0,
+        427,
+        850
+      ]
+    },
+    {
+      "file": "11-restored-frame-100.png",
+      "progress": 1.0,
+      "parent": [
+        0,
+        0,
+        285,
+        850
+      ],
+      "detail": [
+        0,
+        0,
+        427,
+        850
+      ]
+    },
+    {
+      "file": "11-restored.png",
+      "progress": 1.0,
+      "parent": [
+        0,
+        0,
+        285,
+        850
+      ],
+      "detail": [
+        0,
+        0,
+        427,
+        850
+      ]
+    },
+    {
+      "file": "12-close-again-frame-0.png",
+      "progress": 1.0,
+      "parent": [
+        0,
+        0,
+        285,
+        850
+      ],
+      "detail": [
+        0,
+        0,
+        427,
+        850
+      ]
+    },
+    {
+      "file": "12-close-again-frame-50.png",
+      "progress": 1.0,
+      "parent": [
+        0,
+        0,
+        285,
+        850
+      ],
+      "detail": [
+        0,
+        0,
+        427,
+        850
+      ]
+    },
+    {
+      "file": "12-close-again-frame-100.png",
+      "progress": 0.5869681,
+      "parent": [
+        0,
+        0,
+        343,
+        850
+      ],
+      "detail": [
+        176,
+        0,
+        427,
+        850
+      ]
+    },
+    {
+      "file": "12-close-again.png",
+      "progress": 0.23106995,
+      "parent": [
+        0,
+        0,
+        394,
+        850
+      ],
+      "detail": [
+        328,
+        0,
+        427,
+        850
+      ]
+    },
+    {
+      "file": "14-open-again-frame-0.png",
+      "progress": 0.0,
+      "parent": [
+        0,
+        0,
+        427,
+        850
+      ],
+      "detail": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "file": "14-open-again-frame-50.png",
+      "progress": 0.0,
+      "parent": [
+        0,
+        0,
+        427,
+        850
+      ],
+      "detail": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "file": "14-open-again-frame-100.png",
+      "progress": 0.41306427,
+      "parent": [
+        0,
+        0,
+        368,
+        850
+      ],
+      "detail": [
+        251,
+        0,
+        427,
+        850
+      ]
+    },
+    {
+      "file": "14-open-again.png",
+      "progress": 0.7689461,
+      "parent": [
+        0,
+        0,
+        318,
+        850
+      ],
+      "detail": [
+        99,
+        0,
+        427,
+        850
+      ]
+    },
+    {
+      "file": "15-settled-again-frame-0.png",
+      "progress": 1.0,
+      "parent": [
+        0,
+        0,
+        285,
+        850
+      ],
+      "detail": [
+        0,
+        0,
+        427,
+        850
+      ]
+    },
+    {
+      "file": "15-settled-again-frame-50.png",
+      "progress": 1.0,
+      "parent": [
+        0,
+        0,
+        285,
+        850
+      ],
+      "detail": [
+        0,
+        0,
+        427,
+        850
+      ]
+    },
+    {
+      "file": "15-settled-again-frame-100.png",
+      "progress": 1.0,
+      "parent": [
+        0,
+        0,
+        285,
+        850
+      ],
+      "detail": [
+        0,
+        0,
+        427,
+        850
+      ]
+    },
+    {
+      "file": "15-settled-again.png",
+      "progress": 1.0,
+      "parent": [
+        0,
+        0,
+        285,
+        850
+      ],
+      "detail": [
+        0,
+        0,
+        427,
+        850
+      ]
+    },
+    {
+      "file": "16-last-close-frame-0.png",
+      "progress": 1.0,
+      "parent": [
+        0,
+        0,
+        285,
+        850
+      ],
+      "detail": [
+        0,
+        0,
+        427,
+        850
+      ]
+    },
+    {
+      "file": "16-last-close-frame-50.png",
+      "progress": 1.0,
+      "parent": [
+        0,
+        0,
+        285,
+        850
+      ],
+      "detail": [
+        0,
+        0,
+        427,
+        850
+      ]
+    },
+    {
+      "file": "16-last-close-frame-100.png",
+      "progress": 0.5869357,
+      "parent": [
+        0,
+        0,
+        343,
+        850
+      ],
+      "detail": [
+        176,
+        0,
+        427,
+        850
+      ]
+    },
+    {
+      "file": "16-last-close.png",
+      "progress": 0.23105392,
+      "parent": [
+        0,
+        0,
+        394,
+        850
+      ],
+      "detail": [
+        328,
+        0,
+        427,
+        850
+      ]
+    },
+    {
+      "file": "17-closing-escape-frame-0.png",
+      "progress": 0.22628205,
+      "parent": [
+        0,
+        0,
+        395,
+        850
+      ],
+      "detail": [
+        330,
+        0,
+        427,
+        850
+      ]
+    },
+    {
+      "file": "17-closing-escape-frame-50.png",
+      "progress": 0.07533463,
+      "parent": [
+        0,
+        0,
+        416,
+        850
+      ],
+      "detail": [
+        395,
+        0,
+        427,
+        850
+      ]
+    },
+    {
+      "file": "17-closing-escape-frame-100.png",
+      "progress": 0.023255648,
+      "parent": [
+        0,
+        0,
+        424,
+        850
+      ],
+      "detail": [
+        417,
+        0,
+        427,
+        850
+      ]
+    },
+    {
+      "file": "17-closing-escape.png",
+      "progress": 0.0070269094,
+      "parent": [
+        0,
+        0,
+        426,
+        850
+      ],
+      "detail": [
+        424,
+        0,
+        427,
+        850
+      ]
+    }
+  ]
+}

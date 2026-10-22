@@ -135,6 +135,15 @@ jobs:
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           python tools/verify_desktop_layout_capture.py desktop/build/parity --require-cold-controls --output desktop/build/verification/desktop-layout.json
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Replay mobile page stack and real Local lyric artwork restoration
+        shell: pwsh
+        run: |
+          foreach ($mode in @('single', 'split', 'reduced')) {
+            python tools/capture_page_motion.py $mode "$pwd/desktop/build/parity/page-motion-$mode-home" "desktop/build/parity/page-motion-$mode"
+            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          }
+          python tools/capture_mobile_v065.py player "$pwd/desktop/build/parity/mobile-player-home" desktop/build/parity/mobile-player
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - name: Replay real Desktop album and playlist collection geometry and pointers
         shell: pwsh
         run: |
@@ -364,6 +373,15 @@ jobs:
             desktop/build/parity/desktop-layout-*/gradle.log
             desktop/build/parity/desktop-layout-*/*.png
             desktop/build/parity/desktop-layout-*/*.s16le
+            desktop/build/parity/page-motion-*/*.json
+            desktop/build/parity/page-motion-*/*.txt
+            desktop/build/parity/page-motion-*/gradle.log
+            desktop/build/parity/page-motion-*/*.png
+            desktop/build/parity/mobile-player/*.json
+            desktop/build/parity/mobile-player/*.txt
+            desktop/build/parity/mobile-player/gradle.log
+            desktop/build/parity/mobile-player/*.png
+            desktop/build/parity/mobile-player/*.s16le
             desktop/build/parity/desktop-drag/*
             desktop/build/parity/desktop-search-scroll/*
             desktop/build/parity/desktop-surfaces-Dark/*

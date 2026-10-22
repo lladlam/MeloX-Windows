@@ -150,15 +150,18 @@ fun main(args: Array<String>) = runBlocking {
         val scene = ImageComposeScene(width, height, Density(density), coroutineContext = coroutineContext) { MeloXApp() }
         val start = System.nanoTime()
         var renderClock = start
+        val controlledClock = "--controlled-animation-clock" in args
         suspend fun settle(durationMs: Long) {
             val end = System.nanoTime() + durationMs * 1_000_000L
+            val animationEnd = renderClock + durationMs * 1_000_000L
             var frames = 0
             do {
-                renderClock = maxOf(renderClock + 16_000_000L, System.nanoTime())
+                renderClock = if (controlledClock) renderClock + 16_000_000L
+                    else maxOf(renderClock + 16_000_000L, System.nanoTime())
                 scene.render(renderClock - start).close()
-                delay(16L)
+                delay(if (controlledClock) 1L else 16L)
                 frames += 1
-            } while (frames < 3 || System.nanoTime() < end)
+            } while (frames < 3 || if (controlledClock) renderClock < animationEnd else System.nanoTime() < end)
         }
         data class PlaybackCheckpoint(val track: melox.music.model.MusicResourceId, val position: Long, val outputCount: Int)
         val playbackCheckpoints = mutableMapOf<String, PlaybackCheckpoint>()
@@ -284,7 +287,7 @@ fun main(args: Array<String>) = runBlocking {
         }
         fun capture(name: String, timestamp: Long? = null) {
             renderClock = timestamp?.coerceAtLeast(renderClock + 1L)
-                ?: maxOf(renderClock + 1_000_000L, System.nanoTime())
+                ?: if (controlledClock) renderClock + 1_000_000L else maxOf(renderClock + 1_000_000L, System.nanoTime())
             scene.render(renderClock - start).use { image ->
                 image.encodeToData(EncodedImageFormat.PNG)?.use { data -> File(output, "$name.png").writeBytes(data.bytes) }
             }
@@ -582,7 +585,7 @@ fun main(args: Array<String>) = runBlocking {
                 // animation on an explicit frame clock: scene.render takes real
                 // wall time in software, so wall-clock sleeps would overshoot the
                 // requested offsets by hundreds of ms.
-                val frameBase = maxOf(renderClock + 1_000_000L, System.nanoTime())
+                val frameBase = if (controlledClock) renderClock + 1_000_000L else maxOf(renderClock + 1_000_000L, System.nanoTime())
                 frameOffsets.forEach { offset ->
                     val target = frameBase + offset * 1_000_000L
                     val frameName = "${(index + 1).toString().padStart(2, '0')}-$name-frame-$offset"
@@ -605,6 +608,7 @@ fun main(args: Array<String>) = runBlocking {
             melox.playback.PlaybackCommands.playerController()?.release()
             File(output, "capture.json").writeText(JSONObject()
                 .put("renderer", "production ImageComposeScene")
+                .put("animation_clock", if (controlledClock) "controlled scene time" else "wall clock with explicit frame samples")
                 .put("audio_endpoint", if (pcmOutput == null) "Java Sound physical output" else "VALIDATION_SOFTWARE_PCM_OUTPUT")
                 .put("physical_audible_acceptance", "BLOCKED")
                 .put("pcm_outputs", JSONArray(pcmOutput?.evidence().orEmpty()))

@@ -87,3 +87,11 @@
 - 修正旧手机回放的验证缺口：只传LRC参数没有Local扫描，因此旧115/22不证明真实歌词显示；现经生产Local扫描及持久化歌词库加载，必须出现真实歌词行。失败排查与源依据见 `DETAIL_AND_ARTWORK_FOLLOWUP.md`。
 - 本地最终：手机首页 **17 scenes / 20 assertions**，手机播放器 **145/28**，桌面controls **29/67**、lyrics-light **12/15**；独立几何/PCM重计 **41/82**；shared **57 suites / 276 tests / 0 failures/errors/skipped**，桌面编译通过。源码/回放/选定图片证据在 `evidence/mobile-v49/`，完整本地输出保留于build目录。静态桌面截图等待1200ms，不放宽几何容差。
 - Windows本批构建、完整下载和独立发行核验待补记。最近已独立核验发行仍为 **ba86270**，本批未据此标记整体迁移完成。
+
+## 10. 设置页互补退让与可中断回程
+
+- 增加声明式 `MeloXPageMotion`，设置父列表布局期左退宽度1/3，详情满宽右入；两页共用一个ζ=1、k=800弹簧进度，不分别重启animateTo。分栏左列表不退让，桌面设置保持独立tab呈现。
+- 关闭期间保留内容/返回处理器；特别覆盖尚未完成推入就返回，此时current/target都可能为false，仍须等回程结束才能移除。退出中Escape不穿透，关闭中真实指针点击原列表位置能接管并重开。
+- 新增可选显式scene时钟，仅供离屏动画回放；默认时钟行为保持原样。独立核对两个实际页面边缘的互补关系，不只检查进度标记。
+- 最终单栏 **73 scenes / 11 assertions / 48 geometry frames**、双栏 **49/8/28**、减少动态 **45/8/18**，全部通过。设置全路由 **88/65**，桌面controls **29/67**；shared测试任务成功，原始XML **57 suites / 276 tests / 0 failures/errors/skipped**。中途并发编译发生一次输出目录竞争，最终三种模式顺序编译/回放成功；未将该失败算通过。
+- 源依据、范围和验证方法见 `PAGE_MOTION_FOLLOWUP.md`；证据 `evidence/page-motion-local/`。CI加入三种模式及真实Local歌词播放器回放、完整帧上传。共享封面、搜索及通用详情的接线、0.92预测返回缩放和Lamé平滑角仍待迁移；整体保持PARTIAL。Windows构建及完整发行独立核验待补记。

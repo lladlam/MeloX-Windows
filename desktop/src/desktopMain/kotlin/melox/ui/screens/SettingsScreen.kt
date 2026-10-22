@@ -8,7 +8,6 @@ import androidx.compose.material3.HorizontalDivider
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.focusable
 import androidx.compose.foundation.horizontalScroll
@@ -68,9 +67,10 @@ import melox.ui.foundation.MeloXIosTopBar
 import melox.ui.foundation.MeloXIosGroupedList
 import melox.ui.foundation.MeloXSymbolIcon
 import melox.ui.foundation.MeloXSymbol
-import melox.ui.foundation.meloXPageEnter
-import melox.ui.foundation.meloXPageExit
 import melox.ui.navigation.MeloXBackHandler
+import melox.ui.navigation.rememberMeloXPageMotion
+import melox.ui.navigation.meloXPageRecede
+import melox.ui.navigation.MeloXInterruptiblePage
 import melox.ui.glass.MeloXGlassSegmentedControl
 import melox.ui.glass.MeloXGlassTextField
 import melox.ui.glass.MeloXSettingsDropdown
@@ -146,7 +146,8 @@ fun SettingsScreen(
     val scroll = rememberScrollState()
     var detailRoute by remember { mutableStateOf<SettingsRoute?>(null) }
     if (route != null) detailRoute = route
-    MeloXBackHandler(enabled = route != null) { route = null }
+    // Desktop uses its own settings tabs and owns no mobile push stack.
+    MeloXBackHandler(enabled = route != null && MeloXSettingsRuntime.desktopLayoutEnabled) { route = null }
     if (MeloXSettingsRuntime.desktopLayoutEnabled) {
         // The focus effect above also runs for persisted Desktop startup. Keep
         // its requester attached before that effect, just as in the legacy branch.
@@ -168,11 +169,14 @@ fun SettingsScreen(
         return
     }
     Box(Modifier.fillMaxSize().focusRequester(detailFocus).focusable()) {
+    val motion = rememberMeloXPageMotion(route != null)
     val normalized = search.trim().lowercase()
     val visibleSections = SettingsSections.mapNotNull { (title, items) ->
         items.filter { normalized.isBlank() || "${it.title} ${it.subtitle} ${it.keywords}".lowercase().contains(normalized) }
             .takeIf { it.isNotEmpty() }?.let { title to it }
     }
+    Box(Modifier.fillMaxSize().meloXPageRecede(motion, enabled = !melox.ui.layout.LocalMeloXListDetail.current)
+        .testTag("settings-parent-motion")) {
     Column(
         Modifier.fillMaxSize().testTag("settings-root").background(MeloXColors.pageBackground()).verticalScroll(scroll)
              .padding(horizontal = 20.dp).padding(top = 18.dp, bottom = MeloXBottomContentClearanceDp)
@@ -223,13 +227,9 @@ fun SettingsScreen(
             SettingsAccountActions(session)
         }
     }
+    }
     melox.ui.layout.MeloXAdaptiveDetail(route != null, onDismiss = { route = null }) { shown ->
-    AnimatedVisibility(
-        visible = shown,
-        enter = meloXPageEnter(fromRight = true),
-        exit = meloXPageExit(toRight = true),
-        modifier = Modifier.fillMaxSize().zIndex(1f),
-    ) {
+    MeloXInterruptiblePage(shown, motion, onBack = { route = null }, modifier = Modifier.zIndex(1f)) {
         detailRoute?.let { SettingsDetail(it, currentSource, onSourceSelected, onOpenMessages, onBack = { route = null }) }
     }
     }

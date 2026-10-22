@@ -1,0 +1,454 @@
+{
+  "status": "PASSED",
+  "mode": "split",
+  "geometry": [
+    {
+      "file": "04-open-frame-0.png",
+      "progress": 0.0,
+      "parent": [
+        0,
+        0,
+        550,
+        850
+      ],
+      "detail": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "file": "04-open-frame-50.png",
+      "progress": 0.0,
+      "parent": [
+        0,
+        0,
+        550,
+        850
+      ],
+      "detail": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "file": "04-open-frame-100.png",
+      "progress": 0.41306427,
+      "parent": [
+        0,
+        0,
+        550,
+        850
+      ],
+      "detail": [
+        873,
+        0,
+        1100,
+        850
+      ]
+    },
+    {
+      "file": "04-open.png",
+      "progress": 0.7689461,
+      "parent": [
+        0,
+        0,
+        550,
+        850
+      ],
+      "detail": [
+        677,
+        0,
+        1100,
+        850
+      ]
+    },
+    {
+      "file": "05-settled-frame-0.png",
+      "progress": 1.0,
+      "parent": [
+        0,
+        0,
+        550,
+        850
+      ],
+      "detail": [
+        550,
+        0,
+        1100,
+        850
+      ]
+    },
+    {
+      "file": "05-settled-frame-50.png",
+      "progress": 1.0,
+      "parent": [
+        0,
+        0,
+        550,
+        850
+      ],
+      "detail": [
+        550,
+        0,
+        1100,
+        850
+      ]
+    },
+    {
+      "file": "05-settled-frame-100.png",
+      "progress": 1.0,
+      "parent": [
+        0,
+        0,
+        550,
+        850
+      ],
+      "detail": [
+        550,
+        0,
+        1100,
+        850
+      ]
+    },
+    {
+      "file": "05-settled.png",
+      "progress": 1.0,
+      "parent": [
+        0,
+        0,
+        550,
+        850
+      ],
+      "detail": [
+        550,
+        0,
+        1100,
+        850
+      ]
+    },
+    {
+      "file": "06-close-frame-0.png",
+      "progress": 1.0,
+      "parent": [
+        0,
+        0,
+        550,
+        850
+      ],
+      "detail": [
+        550,
+        0,
+        1100,
+        850
+      ]
+    },
+    {
+      "file": "06-close-frame-50.png",
+      "progress": 1.0,
+      "parent": [
+        0,
+        0,
+        550,
+        850
+      ],
+      "detail": [
+        550,
+        0,
+        1100,
+        850
+      ]
+    },
+    {
+      "file": "06-close-frame-100.png",
+      "progress": 0.5869357,
+      "parent": [
+        0,
+        0,
+        550,
+        850
+      ],
+      "detail": [
+        777,
+        0,
+        1100,
+        850
+      ]
+    },
+    {
+      "file": "06-close.png",
+      "progress": 0.23105392,
+      "parent": [
+        0,
+        0,
+        550,
+        850
+      ],
+      "detail": [
+        973,
+        0,
+        1100,
+        850
+      ]
+    },
+    {
+      "file": "08-open-again-frame-0.png",
+      "progress": 0.0,
+      "parent": [
+        0,
+        0,
+        550,
+        850
+      ],
+      "detail": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "file": "08-open-again-frame-50.png",
+      "progress": 0.0,
+      "parent": [
+        0,
+        0,
+        550,
+        850
+      ],
+      "detail": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "file": "08-open-again-frame-100.png",
+      "progress": 0.41306427,
+      "parent": [
+        0,
+        0,
+        550,
+        850
+      ],
+      "detail": [
+        873,
+        0,
+        1100,
+        850
+      ]
+    },
+    {
+      "file": "08-open-again.png",
+      "progress": 0.7689461,
+      "parent": [
+        0,
+        0,
+        550,
+        850
+      ],
+      "detail": [
+        677,
+        0,
+        1100,
+        850
+      ]
+    },
+    {
+      "file": "09-settled-again-frame-0.png",
+      "progress": 1.0,
+      "parent": [
+        0,
+        0,
+        550,
+        850
+      ],
+      "detail": [
+        550,
+        0,
+        1100,
+        850
+      ]
+    },
+    {
+      "file": "09-settled-again-frame-50.png",
+      "progress": 1.0,
+      "parent": [
+        0,
+        0,
+        550,
+        850
+      ],
+      "detail": [
+        550,
+        0,
+        1100,
+        850
+      ]
+    },
+    {
+      "file": "09-settled-again-frame-100.png",
+      "progress": 1.0,
+      "parent": [
+        0,
+        0,
+        550,
+        850
+      ],
+      "detail": [
+        550,
+        0,
+        1100,
+        850
+      ]
+    },
+    {
+      "file": "09-settled-again.png",
+      "progress": 1.0,
+      "parent": [
+        0,
+        0,
+        550,
+        850
+      ],
+      "detail": [
+        550,
+        0,
+        1100,
+        850
+      ]
+    },
+    {
+      "file": "10-last-close-frame-0.png",
+      "progress": 1.0,
+      "parent": [
+        0,
+        0,
+        550,
+        850
+      ],
+      "detail": [
+        550,
+        0,
+        1100,
+        850
+      ]
+    },
+    {
+      "file": "10-last-close-frame-50.png",
+      "progress": 1.0,
+      "parent": [
+        0,
+        0,
+        550,
+        850
+      ],
+      "detail": [
+        550,
+        0,
+        1100,
+        850
+      ]
+    },
+    {
+      "file": "10-last-close-frame-100.png",
+      "progress": 0.5869357,
+      "parent": [
+        0,
+        0,
+        550,
+        850
+      ],
+      "detail": [
+        777,
+        0,
+        1100,
+        850
+      ]
+    },
+    {
+      "file": "10-last-close.png",
+      "progress": 0.23105392,
+      "parent": [
+        0,
+        0,
+        550,
+        850
+      ],
+      "detail": [
+        973,
+        0,
+        1100,
+        850
+      ]
+    },
+    {
+      "file": "11-closing-escape-frame-0.png",
+      "progress": 0.22628205,
+      "parent": [
+        0,
+        0,
+        550,
+        850
+      ],
+      "detail": [
+        976,
+        0,
+        1100,
+        850
+      ]
+    },
+    {
+      "file": "11-closing-escape-frame-50.png",
+      "progress": 0.07533463,
+      "parent": [
+        0,
+        0,
+        550,
+        850
+      ],
+      "detail": [
+        1059,
+        0,
+        1100,
+        850
+      ]
+    },
+    {
+      "file": "11-closing-escape-frame-100.png",
+      "progress": 0.023255648,
+      "parent": [
+        0,
+        0,
+        550,
+        850
+      ],
+      "detail": [
+        1087,
+        0,
+        1100,
+        850
+      ]
+    },
+    {
+      "file": "11-closing-escape.png",
+      "progress": 0.0070269094,
+      "parent": [
+        0,
+        0,
+        550,
+        850
+      ],
+      "detail": [
+        1096,
+        0,
+        1100,
+        850
+      ]
+    }
+  ]
+}

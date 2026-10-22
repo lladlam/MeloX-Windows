@@ -1,0 +1,8 @@
+consent=cloud-enabled:false
+ready=tag:settings-open-general
+settled=tag:settings-general
+closed=absent:settings-general,tag:settings-open-general
+settled-again=tag:settings-general
+last-closed=absent:settings-general,tag:settings-open-general
+restored=tag:settings-general
+early-closed=absent:settings-general,tag:settings-open-general

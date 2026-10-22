@@ -24,7 +24,7 @@ pairs = {
     'explore': ('discovery/MeloXDiscoveryScreens.kt', ['screens/ExploreScreen.kt']),
     'search': ('search/SearchScreen.kt', ['screens/SearchScreen.kt']),
     'library': ('library/LibraryScreen.kt', ['screens/MeloXLibraryScreen.kt', 'screens/MeloXLibraryPlaylistDetail.kt', 'screens/PlaylistDetailScreen.kt']),
-    'page-motion': ('MeloXPageTransitions.kt', ['navigation/MeloXDetailMotion.kt']),
+    'page-motion': ('MeloXPageTransitions.kt', ['navigation/MeloXDetailMotion.kt', 'navigation/MeloXPageMotion.kt']),
     'motion-specs': ('animation/MeloXMotion.kt', ['foundation/MeloXMotion.kt']),
     'mini-player': ('player/MeloXIOSMiniPlayer.kt', ['screens/MeloXMiniPlayer.kt']),
     'player-host': ('player/MeloXIOSNowPlayingSharedHost.kt', ['screens/MeloXNowPlaying.kt', 'screens/MeloXIOSPlayerScene.kt']),
