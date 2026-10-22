@@ -474,7 +474,10 @@ fun main(args: Array<String>) = runBlocking {
                     val node = checkNotNull(scene.captureSemantics().tagged(tag))
                     scene.sendPointerEvent(PointerEventType.Move, node.boundsInWindow.center)
                 } else if (coordinates.startsWith("reveal@")) {
-                    val tag = coordinates.substringAfter('@')
+                    val revealArgs = coordinates.substringAfter('@').split(',')
+                    val tag = revealArgs[0]
+                    val ownerTag = revealArgs.getOrNull(1)
+                    val initialDirection = if (revealArgs.getOrNull(2) == "up") -1f else 1f
                     var revealed = false
                     // The first settings row centers at 112dp below its 74dp
                     // header. A viewport-percentage guard (18% = 140px here)
@@ -500,13 +503,15 @@ fun main(args: Array<String>) = runBlocking {
                                 break
                             }
                         }
-                        val direction = if (rawCenterY != null && rawCenterY < topGuard) -1f else 1f
+                        val direction = if (rawCenterY == null) initialDirection else if (rawCenterY < topGuard) -1f else 1f
                         // Traverse long production settings pages by mouse wheel,
                         // with enough distance to return from their last slider.
                         // Aim inside the owning pane. Window center is the divider
                         // in list-detail mode and would scroll the other page.
-                        val centerX = node?.let { it.positionInWindow.x + it.size.width / 2f } ?: width * .5f
-                        scene.sendPointerEvent(PointerEventType.Scroll, Offset(centerX.coerceIn(1f, width - 1f), height * .55f), scrollDelta = Offset(0f, direction * 3f))
+                        val ownerBounds = ownerTag?.let { scene.captureSemantics().tagged(it)?.boundsInWindow }
+                        val centerX = ownerBounds?.center?.x ?: node?.let { it.positionInWindow.x + it.size.width / 2f } ?: width * .5f
+                        val wheelY = ownerBounds?.center?.y ?: height * .55f
+                        scene.sendPointerEvent(PointerEventType.Scroll, Offset(centerX.coerceIn(1f, width - 1f), wheelY), scrollDelta = Offset(0f, direction * 3f))
                         settle(240)
                     }
                     // Wheel inertia can carry the target back out after the
@@ -520,6 +525,22 @@ fun main(args: Array<String>) = runBlocking {
                         if (y != null && y in topGuard..bottomGuard) revealed = true
                     }
                     check(revealed) { "Could not reveal production node $tag using mouse wheel at $name" }
+                    // A screenshot between reveal and click can exceed the
+                    // production lyric follow delay. Keep this pointer gesture
+                    // atomic while still locating and hitting the actual node.
+                    if (revealArgs.getOrNull(3) == "tap") {
+                        val node = checkNotNull(scene.captureSemantics().tagged(tag))
+                        fun clickable(candidate: SemanticsNode): SemanticsNode? =
+                            if (candidate.config.contains(SemanticsActions.OnClick)) candidate
+                            else candidate.children.firstNotNullOfOrNull(::clickable)
+                        val target = checkNotNull(clickable(node))
+                        check(!target.config.contains(SemanticsProperties.Disabled))
+                        check(!target.boundsInWindow.isEmpty)
+                        val point = target.boundsInWindow.center
+                        scene.sendPointerEvent(PointerEventType.Move, point)
+                        scene.sendPointerEvent(PointerEventType.Press, point, button = PointerButton.Primary)
+                        scene.sendPointerEvent(PointerEventType.Release, point, button = PointerButton.Primary)
+                    }
                 } else if (coordinates.startsWith("wait@")) {
                     settle(coordinates.removePrefix("wait@").toLong())
                 } else if (coordinates.startsWith("text@")) {

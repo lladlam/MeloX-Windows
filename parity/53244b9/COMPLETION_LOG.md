@@ -115,3 +115,9 @@
 - 网易云API共享2并发、350ms发起间隔；429/-462/明确频繁消息触发至少60秒冷却并尊重Retry-After，显示剩余秒数；不自动重试。音频和封面CDN不参与限流。
 - 顺带将首页fallback改成缺失时才读取，复用“全部”区域热歌，减少搜索同时发生的后台请求竞争。
 - shared **58 suites / 285 tests / 0 failures/errors/skipped**，桌面编译通过。真实公开搜索13 scenes回放通过；协议层确认3次相同搜索仅1次HTTP及媒体/建议词实际Call取消。证据 `evidence/netease-search-traffic/`，说明 `NETEASE_SEARCH_TRAFFIC.md`。尚无长期风控或新Windows发行验收结论。
+
+## 14. 完整歌词回放失败的补验
+
+- 迟到的v58后台通知确认完整深浅歌词回放失败，不覆盖此前已通过的独立材质/侧面像素检查。排查语义证实目标行未创建时，reveal在窗口中央滚动首页；增加显式所属面板/方向与可选原子指针点击，避免截图耗时触发歌词自动跟随后再点击旧行。
+- 串行v61深色、单独v62浅色各 **10 scenes / 18 assertions PASSED**，实际滚轮找行、鼠标点击跳转、恢复播放及队列/歌词切换全部通过。v61浅色被外层总超时中断，不计通过。v58类加载错误本次未复现，未将推测并行构建原因记为已证实。
+- 证据 `evidence/desktop-panel-glass/full-lyrics-replay/`，详见 `DESKTOP_PANEL_GLASS.md`。本次仅修回放工具，不改生产歌词交互。

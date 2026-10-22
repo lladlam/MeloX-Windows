@@ -19,3 +19,13 @@
 1×/2×密度、深/浅主题、液态/磨砂共 **8 cases PASSED**；每例两侧超过95%的被测侧面像素随实时页面改变；正文区不被页面色块污染，相同材质像素超过95%。完整输出 `desktop/build/verification/desktop-glass/`；CI已接入该审计并上传原始PNG/JSON。
 
 真实首页滚轮回放：深/浅主题各8个场景，独立 `verify_desktop_panel_reflection.py` 按实际semantics边界重读PNG。深色Dock/歌词侧面变化97.63%/97.52%，浅色97.93%/96.09%；两次Dock正文区均0像素变化。参数、截图、语义与原始像素报告在 `evidence/desktop-panel-glass/`。另保留真实Local歌词已显示的深色生产截图。
+
+## 完整歌词回放补验
+
+早先v58的深浅完整回放失败，不能按通过计数：目标`lyric-line-1`未创建时，通用reveal把滚轮发送到窗口中央，滚动的是首页；浅色另有一次`AudioFailureKind`类加载失败。
+
+修复验证工具：reveal可显式指定所属面板和初始方向；歌词回放指向`player-lyrics`并向上滚动。可选原子鼠标点击用于找到目标后立即发送Move/Press/Release，防止中间截图耗时超过生产歌词自动跟随延迟。仍通过实际指针事件点击，没有调用semantics动作或修改生产滚动/跟随逻辑。
+
+串行重新运行：v61深色、v62浅色各 **10 scenes / 18 assertions PASSED**，包含真实Local歌词、点击第二行跳转、恢复播放、队列/歌词切换与关闭。类加载错误未再出现；只能确认本次串行构建/运行通过，旧类加载错误原因尚未独立复现。v61浅色曾被外层300秒总超时中断，不计通过，使用单独完成的v62浅色结果。
+
+原始完成清单、目标行点击帧及语义保留在 `evidence/desktop-panel-glass/full-lyrics-replay/`。
