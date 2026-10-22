@@ -4,6 +4,7 @@ import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
@@ -169,16 +170,32 @@ fun MeloXNowPlayingScreen(
     }
 
     val sourceColor = MeloXColors.sourceColors[track.id.source.storageValue] ?: MeloXColors.Primary
-    val expansion = meloXPlayerExpansion(playerExpanded, playerTargetExpanded, playerTransitionFraction)
+    val expansion = if (animatedVisibilityScope != null) {
+        val progress by animatedVisibilityScope.transition.animateFloat(
+            transitionSpec = { playerContentSpec() }, label = "full-player-expansion-progress"
+        ) { if (it == androidx.compose.animation.EnterExitState.Visible) 1f else 0f }
+        progress
+    } else meloXPlayerExpansion(playerExpanded, playerTargetExpanded, playerTransitionFraction)
     val isolation = playerIsolationAlpha(MeloXSettingsRuntime.playerBackgroundIsolationEnabled, expansion)
 
     // ── Collapse gesture (vertical drag on grabber/scene) ──
     val sharedShell = playerSharedShell(sharedTransitionScope, animatedVisibilityScope)
+    val shellSettled = animatedVisibilityScope == null ||
+        (animatedVisibilityScope.transition.currentState == androidx.compose.animation.EnterExitState.Visible &&
+            animatedVisibilityScope.transition.targetState == androidx.compose.animation.EnterExitState.Visible)
+    val flatten = remember { androidx.compose.animation.core.Animatable(if (shellSettled) 1f else 0f) }
+    LaunchedEffect(shellSettled) {
+        if (shellSettled) flatten.animateTo(1f, tween(if (MeloXSettingsRuntime.reduceMotion) 0 else 140)) else flatten.snapTo(0f)
+    }
+    val shellRadius = (24f + 8f * melox.ui.foundation.smoothStep(expansion, .5f, .9f)) * (1f - if (shellSettled) flatten.value else 0f)
     CompositionLocalProvider(LocalMeloXPlayerLyrics provides lyrics) {
     Box(
         modifier = Modifier
             .fillMaxSize()
             .then(sharedShell)
+            .testTag("player-transition-shell")
+            .semantics { stateDescription = "expansion=$expansion;corner=$shellRadius;settled=$shellSettled" }
+            .clip(RoundedCornerShape(shellRadius.dp))
             .background(Color.Black),
     ) {
         if (isolation > 0f) {
@@ -203,6 +220,7 @@ fun MeloXNowPlayingScreen(
 
         CompositionLocalProvider(melox.ui.glass.LocalMeloXLayerBackdrop provides playerBackdrop) {
             val classic = MeloXSettingsRuntime.playerShell == MeloXPlayerShell.Classic
+            Box(Modifier.fillMaxSize().padding(top = melox.ui.desktop.LocalMeloXCaptionInset.current)) {
             if (MeloXSettingsRuntime.desktopLayoutEnabled) {
                 melox.ui.desktop.MeloXDesktopNowPlaying(track,
                     onDismiss = { onDismiss?.invoke() ?: navState?.goBack() },
@@ -253,6 +271,7 @@ fun MeloXNowPlayingScreen(
                 )
             }
 
+            }
             if (!classic || MeloXSettingsRuntime.desktopLayoutEnabled) {
                 MeloXSongActionsOverlay(
                     song = actionSong,
@@ -317,13 +336,14 @@ private fun playerSharedShell(
     visibility: androidx.compose.animation.AnimatedVisibilityScope?,
 ): Modifier {
     if (scope == null || visibility == null) return Modifier
+    val bounds = rememberPlayerBoundsTransform()
     return with(scope) {
         Modifier.sharedBounds(
             sharedContentState = rememberSharedContentState(MeloXPlayerShellKey),
             animatedVisibilityScope = visibility,
             enter = androidx.compose.animation.EnterTransition.None,
             exit = androidx.compose.animation.ExitTransition.None,
-            boundsTransform = MeloXPlayerShellBoundsTransform,
+            boundsTransform = bounds,
             resizeMode = androidx.compose.animation.SharedTransitionScope.ResizeMode.RemeasureToBounds,
         )
     }
@@ -337,11 +357,13 @@ private fun playerSharedElement(
     mediaId: String?,
 ): Modifier {
     if (scope == null || visibility == null) return Modifier
+    val bounds = rememberPlayerBoundsTransform()
     return with(scope) {
         Modifier.sharedElement(
             sharedContentState = rememberSharedContentState(MeloXPlayerArtworkKey(mediaId)),
             animatedVisibilityScope = visibility,
-            boundsTransform = MeloXArtworkBoundsTransform,
+            boundsTransform = bounds,
+            zIndexInOverlay = 100f,
         )
     }
 }

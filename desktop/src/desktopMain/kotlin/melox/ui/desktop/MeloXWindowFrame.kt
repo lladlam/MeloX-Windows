@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.WindowPlacement
 import androidx.compose.ui.window.FrameWindowScope
+import androidx.compose.ui.zIndex
 import androidx.compose.ui.window.WindowState
 import java.awt.Cursor
 import java.awt.MouseInfo
@@ -51,31 +52,58 @@ internal class MeloXWindowChrome(
 }
 
 internal val LocalMeloXWindowChrome = staticCompositionLocalOf<MeloXWindowChrome?> { null }
+internal val LocalMeloXCaptionInset = staticCompositionLocalOf { 0.dp }
+internal class MeloXCaptionPalette {
+    class Entry(val background: Color, val foreground: Color)
+    val layers = mutableStateListOf<Entry>()
+}
+private val LocalMeloXCaptionPalette = staticCompositionLocalOf<MeloXCaptionPalette?> { null }
+
+/** Palette-backed details extend their own surface into the Windows caption. */
+@Composable
+internal fun MeloXCaptionSurface(background: Color, foreground: Color) {
+    val palette = LocalMeloXCaptionPalette.current ?: return
+    val entry = remember(background, foreground) { MeloXCaptionPalette.Entry(background, foreground) }
+    DisposableEffect(palette, entry) {
+        palette.layers.add(entry)
+        onDispose { palette.layers.remove(entry) }
+    }
+}
 
 /** App-owned caption. The six page surfaces remain inside the client area. */
 @Composable
-internal fun MeloXWindowFrame(content: @Composable () -> Unit) {
+internal fun MeloXWindowFrame(playerVisible: Boolean = false, content: @Composable () -> Unit) {
     val owner = LocalMeloXWindowChrome.current
     if (owner == null) { content(); return }
+    val immersive = melox.settings.MeloXSettingsRuntime.immersiveCaptionEnabled
+    val palette = remember { MeloXCaptionPalette() }
+    val surface = palette.layers.lastOrNull()
+    val foreground = if (immersive && playerVisible) Color.White else if (immersive) surface?.foreground ?: MaterialTheme.colorScheme.onBackground else MaterialTheme.colorScheme.onBackground
     Box(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
         Column(Modifier.fillMaxSize()) {
-            Row(Modifier.fillMaxWidth().height(34.dp).testTag("window-caption")) {
+            if (!immersive) Spacer(Modifier.height(34.dp))
+            CompositionLocalProvider(LocalMeloXCaptionInset provides if (immersive) 34.dp else 0.dp,
+                LocalMeloXCaptionPalette provides if (immersive) palette else null) {
+                Box(Modifier.weight(1f).fillMaxWidth()) { content() }
+            }
+        }
+            Row(Modifier.fillMaxWidth().height(34.dp).align(Alignment.TopCenter).zIndex(100f)
+                .background(if (immersive && !playerVisible) surface?.background ?: Color.Transparent else Color.Transparent)
+                .testTag("window-caption")) {
                 with(owner.scope) {
                     WindowDraggableArea(Modifier.weight(1f).fillMaxHeight()
                         .testTag("window-drag-area").pointerInput(owner) {
                             detectTapGestures(onDoubleTap = { owner.toggleMaximized() })
                         }) {
                         Box(Modifier.fillMaxSize().padding(start = 14.dp), contentAlignment = Alignment.CenterStart) {
-                            Text("MeloX", fontSize = 12.sp, color = MaterialTheme.colorScheme.onBackground.copy(alpha = .7f))
+                            Text("MeloX", fontSize = 12.sp, color = foreground.copy(alpha = .7f))
                         }
                     }
                 }
-                CaptionButton("minimize") { owner.state.isMinimized = true }
-                CaptionButton(if (owner.state.placement == WindowPlacement.Floating) "maximize" else "restore") { owner.toggleMaximized() }
-                CaptionButton("close", owner.onClose)
+                CaptionButton("minimize", foreground) { owner.state.isMinimized = true }
+                CaptionButton(if (owner.state.placement == WindowPlacement.Floating) "maximize" else "restore", foreground) { owner.toggleMaximized() }
+                CaptionButton("close", foreground, owner.onClose)
             }
-            Box(Modifier.weight(1f).fillMaxWidth()) { content() }
-        }
         if (owner.state.placement == WindowPlacement.Floating) {
             ResizeEdge(owner, -1, 0, Modifier.align(Alignment.CenterStart).width(5.dp).fillMaxHeight())
             ResizeEdge(owner, 1, 0, Modifier.align(Alignment.CenterEnd).width(5.dp).fillMaxHeight())
@@ -90,10 +118,10 @@ internal fun MeloXWindowFrame(content: @Composable () -> Unit) {
 }
 
 @Composable
-private fun CaptionButton(action: String, onClick: () -> Unit) {
+private fun CaptionButton(action: String, captionForeground: Color, onClick: () -> Unit) {
     val interaction = remember { MutableInteractionSource() }
     val hovered by interaction.collectIsHoveredAsState()
-    val foreground = if (action == "close" && hovered) Color.White else MaterialTheme.colorScheme.onBackground
+    val foreground = if (action == "close" && hovered) Color.White else captionForeground
     Box(Modifier.width(46.dp).fillMaxHeight().testTag("window-$action")
         .background(if (!hovered) Color.Transparent else if (action == "close") Color(0xFFC42B1C) else foreground.copy(alpha = .1f))
         .semantics { contentDescription = desktopPlatformString("window_$action") }

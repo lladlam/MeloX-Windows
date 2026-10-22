@@ -21,6 +21,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
@@ -42,18 +43,20 @@ import melox.settings.MeloXSettingsRuntime
 
 @Composable
 fun MessagesScreen(onBack: (() -> Unit)? = null, onLogin: (() -> Unit)? = null) {
-    val loggedIn = remember { NeteaseSessionStore.containsMusicU(NeteaseSessionStore.readCookie()) }
+    val revision by NeteaseSessionStore.revision.collectAsState()
+    val loggedIn = remember(revision) { NeteaseSessionStore.containsMusicU(NeteaseSessionStore.readCookie()) }
     var contacts by remember { mutableStateOf<List<MeloXMessageContact>>(emptyList()) }
     var selected by remember { mutableStateOf<MeloXMessageContact?>(null) }
     var loading by remember { mutableStateOf(loggedIn) }
     var error by remember { mutableStateOf<String?>(null) }
-    LaunchedEffect(loggedIn) {
+    LaunchedEffect(revision) {
+        contacts = emptyList(); selected = null; error = null; loading = loggedIn
         if (!loggedIn) return@LaunchedEffect
         runCatching {
             val profile = NeteaseSearchClient(cookieProvider = { NeteaseSessionStore.readCookie() }).accountProfile()
             NeteaseMusicOperationsClient(cookieProvider = { NeteaseSessionStore.readCookie() }).messageContacts(profile.userId)
         }.onSuccess { contacts = it }
-            .onFailure { error = it.message ?: "私信加载失败" }
+            .onFailure { if (it is kotlinx.coroutines.CancellationException) throw it; error = it.message ?: "私信加载失败" }
         loading = false
     }
     val open = selected
@@ -61,10 +64,7 @@ fun MessagesScreen(onBack: (() -> Unit)? = null, onLogin: (() -> Unit)? = null) 
         melox.ui.desktop.MeloXDesktopMessages(onLogin ?: { onBack?.invoke() ?: Unit })
         return
     }
-    if (open != null) {
-        MessageThread(contact = open, onBack = { selected = null })
-        return
-    }
+    Box(Modifier.fillMaxSize()) {
     Column(Modifier.fillMaxSize().background(MeloXColors.pageBackground()).padding(top = 18.dp)) {
         MeloXIosTopBar(title = "私信", onBack = onBack)
         when {
@@ -91,6 +91,8 @@ fun MessagesScreen(onBack: (() -> Unit)? = null, onLogin: (() -> Unit)? = null) 
                 }
             }
         }
+    }
+    melox.ui.navigation.MeloXDetailOverlay(open, { selected = null }) { MessageThread(contact = it, onBack = { selected = null }) }
     }
 }
 

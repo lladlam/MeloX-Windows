@@ -11,8 +11,9 @@ import androidx.compose.animation.core.tween
  * Animation constants — exact 1:1 port of Android ui/animation/MeloXMotion.kt.
  */
 object MeloXMotion {
-    const val PageEnterMillis = 280
-    const val PageExitMillis = 220
+    const val PageTransitionMillis = 350
+    const val PageEnterMillis = PageTransitionMillis
+    const val PageExitMillis = PageTransitionMillis
     const val ContentEnterMillis = 320
     const val ContentExitMillis = 240
     const val IconEnterMillis = 180
@@ -100,12 +101,17 @@ fun sprungFrac(value: Float): Float = value.coerceIn(-0.09f, 1.09f)
 
 fun meloXPageEnter(fromRight: Boolean = true): androidx.compose.animation.EnterTransition =
     androidx.compose.animation.slideInHorizontally(
-        animationSpec = MeloXMotion.pageEnterTween(),
+        animationSpec = meloXPagePushSpec(),
         initialOffsetX = { if (fromRight) it else -it / 4 },
-    ) + androidx.compose.animation.fadeIn(MeloXMotion.pageEnterTween())
+    )
 
 fun meloXPageExit(toRight: Boolean = true): androidx.compose.animation.ExitTransition =
     androidx.compose.animation.slideOutHorizontally(
-        animationSpec = MeloXMotion.pageExitTween(),
-        targetOffsetX = { if (toRight) it / 4 else -it / 4 },
-    ) + androidx.compose.animation.fadeOut(MeloXMotion.pageExitTween())
+        animationSpec = meloXPagePushSpec(),
+        targetOffsetX = { if (toRight) it else -it },
+    )
+
+/** 0.6.5 interruptible page carrier: critical spring, 1px end threshold. */
+internal fun meloXPagePushSpec(): androidx.compose.animation.core.FiniteAnimationSpec<androidx.compose.ui.unit.IntOffset> =
+    if (melox.settings.MeloXSettingsRuntime.reduceMotion) tween(0) else spring(
+        dampingRatio = 1f, stiffness = 800f, visibilityThreshold = androidx.compose.ui.unit.IntOffset(1, 1))

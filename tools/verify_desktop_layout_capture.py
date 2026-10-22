@@ -12,10 +12,15 @@ parser.add_argument('directory', type=Path)
 parser.add_argument('--prefix', default='desktop-layout-')
 parser.add_argument('--output', type=Path, required=True)
 parser.add_argument('--require-cold-controls', action='store_true')
+parser.add_argument('--modes', default='', help='Optional comma-separated subset for targeted replays')
 args = parser.parse_args()
 modes = ['controls', 'reload', 'restore', 'reload-current', 'home-dark', 'home-light', 'lyrics-light']
 if args.require_cold_controls or (args.directory / (args.prefix + 'cold-controls') / 'capture.json').is_file():
     modes.append('cold-controls')
+if args.modes:
+    requested = args.modes.split(',')
+    assert all(mode in modes for mode in requested), requested
+    modes = requested
 reports = []
 
 def digest(path):
@@ -40,13 +45,14 @@ for mode in modes:
         image = directory / scene['file']
         assert image.is_file()
         nodes = json.loads(image.with_suffix('.semantics.json').read_text(encoding='utf-8'))
-        inspector_width = 360 if any(n.get('tag') == 'desktop-inspector:Lyrics' for n in nodes) else 258 if any(n.get('tag') == 'desktop-inspector:Queue' for n in nodes) else 0
         for node in nodes:
             if node['tag'] not in dimensions:
                 continue
             width, height = dimensions[node['tag']]
             if node['tag'] == 'desktop-bottom-player':
-                width = min(700, data['width'] / data['density'] - 207 - 48 - inspector_width)
+                # DesktopRootView places the inspector behind the persistent
+                # bottom player; opening an overlay never changes player width.
+                width = min(700, data['width'] / data['density'] - 207 - 48)
             x0, y0, x1, y1 = node['bounds']
             assert abs((x1 - x0) / data['density'] - width) <= 1, (mode, scene['file'], node['tag'])
             if height is not None:
@@ -83,9 +89,10 @@ for mode in modes:
         assert sum(p['written_frames'] for p in pcm) > 44100
     reports.append({'mode': mode, 'home': data['home'], 'scenes': len(scenes), 'assertions': len(assertions),
                     'capture_sha256': digest(path), 'geometries': geometries, 'pcm': pcm, 'status': 'PASSED'})
-assert reports[0]['home'] == reports[1]['home'], 'controls and reload must share one persisted home'
-assert reports[2]['home'] == reports[3]['home'], 'restore and reload-current must share one persisted home'
-assert reports[0]['home'] != reports[2]['home'], 'Desktop-On and restored-Off replays must use independent homes'
+if len(reports) >= 4:
+    assert reports[0]['home'] == reports[1]['home'], 'controls and reload must share one persisted home'
+    assert reports[2]['home'] == reports[3]['home'], 'restore and reload-current must share one persisted home'
+    assert reports[0]['home'] != reports[2]['home'], 'Desktop-On and restored-Off replays must use independent homes'
 result = {'desktop_reference': 'a41ea0e1e1fa69fb543d827b853fe3aff5420951', 'status': 'PASSED',
           'scope': 'Windows implementation replay/source geometry/real PCM; native source same-content pixel and hardware acceptance pending',
           'totals': {'replays': len(reports), 'scenes': sum(r['scenes'] for r in reports), 'assertions': sum(r['assertions'] for r in reports)},

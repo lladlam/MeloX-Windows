@@ -55,10 +55,20 @@ private fun formatTotalDuration(ms: Long): String {
 }
 
 @Composable
+@OptIn(androidx.compose.animation.ExperimentalSharedTransitionApi::class)
 fun PlaylistDetailScreen(
     playlist: NeteasePlaylistSummary,
     onBack: () -> Unit,
 ) {
+    if (!MeloXSettingsRuntime.desktopLayoutEnabled) {
+        val mobileClient = remember { NeteaseLibraryClient(cookieProvider = { NeteaseSessionStore.readCookie() }) }
+        androidx.compose.animation.SharedTransitionLayout(Modifier.fillMaxSize().testTag("playlist-detail")) {
+            androidx.compose.animation.AnimatedVisibility(visible = true) {
+                MeloXLibraryPlaylistDetailScreen(playlist, mobileClient, onBack, this@SharedTransitionLayout, this)
+            }
+        }
+        return
+    }
     val client = remember { NeteaseLibraryClient(cookieProvider = { NeteaseSessionStore.readCookie() }) }
     var detail by remember(playlist.id, playlist.providerPlaylist?.id) { mutableStateOf<NeteasePlaylistDetail?>(null) }
     var loading by remember(playlist.id, playlist.providerPlaylist?.id) { mutableStateOf(true) }

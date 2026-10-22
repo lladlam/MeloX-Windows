@@ -64,6 +64,8 @@ internal fun desktopPlatformString(key: String): String {
         "login_choose_profile" -> if (chinese) "发现多个客户端数据目录，请选择后再读取" else "Multiple client profiles were found. Choose one, then import it."
         "services_title" -> if (chinese) "音乐服务" else "Music Services"
         "tray_title" -> if (chinese) "关闭窗口时隐藏到系统托盘" else "Hide to system tray when closing the window"
+        "caption_title" -> if (chinese) "沉浸式标题栏" else "Immersive title bar"
+        "caption_hint" -> if (chinese) "窗口按钮融入页面背景，跟随界面和主题变化。" else "Blend window controls into the page background and theme."
         "tray_hint" -> if (chinese) "保留后台播放；从托盘显示窗口或退出 MeloX。" else "Keep playback running; show the window or quit MeloX from the tray."
         "tray_show" -> if (chinese) "显示 MeloX" else "Show MeloX"
         "tray_quit" -> if (chinese) "退出 MeloX" else "Quit MeloX"

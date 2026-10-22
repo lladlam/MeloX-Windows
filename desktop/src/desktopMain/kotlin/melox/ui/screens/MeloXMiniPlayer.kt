@@ -31,6 +31,8 @@ import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.onSizeChanged
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.layout.boundsInWindow
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
@@ -72,6 +74,7 @@ fun MeloXMiniPlayer(
     onExpand: () -> Unit = {},
     sharedTransitionScope: androidx.compose.animation.SharedTransitionScope? = null,
     animatedVisibilityScope: androidx.compose.animation.AnimatedVisibilityScope? = null,
+    onHitRect: (androidx.compose.ui.geometry.Rect) -> Unit = {},
 ) {
     val player = livePlayer()
     val playerState by AudioPlayer.state.collectAsState()
@@ -114,15 +117,15 @@ fun MeloXMiniPlayer(
 
     val expansionProgress = if (animatedVisibilityScope != null) {
         val value by animatedVisibilityScope.transition.animateFloat(
-            transitionSpec = { androidx.compose.animation.core.tween(
-                MeloXSettingsRuntime.playerTransitionDurationMs,
-                easing = androidx.compose.animation.core.FastOutSlowInEasing,
-            ) }, label = "mini-player-expansion-progress",
+            transitionSpec = { playerContentSpec() }, label = "mini-player-expansion-progress",
         ) { if (it == EnterExitState.Visible) 0f else 1f }
         value
     } else 0f
     val miniChromeAlpha = 1f - smoothStep(expansionProgress, 0.10f, 0.58f)
     val miniSurfaceAlpha = 1f - smoothStep(expansionProgress, 0.02f, 0.48f)
+    // The shared artwork's source corner must match the destination's 12dp
+    // overlay copy frame-by-frame; a constant 6dp reads as a visible snap.
+    val artworkCorner = (6f + 6f * expansionProgress.coerceIn(0f, 1f)).dp
     val playerArtworkScale = if (MeloXSettingsRuntime.reduceMotion || !MeloXSettingsRuntime.artworkMotionEnabled || playerState.isPlaying) 1f else 0.74f
     val sharedArtworkScale = 1f + (playerArtworkScale - 1f) * smoothStep(expansionProgress, 0.30f, 0.88f)
 
@@ -159,18 +162,18 @@ fun MeloXMiniPlayer(
 
     val sharedShell = sharedShellModifier(sharedTransitionScope, animatedVisibilityScope)
     if (vertical) {
-        Box(Modifier.fillMaxWidth().height(lerpDpF(236.dp, 48.dp, compact)).then(sharedShell)
+        Box(Modifier.fillMaxWidth().height(lerpDpF(236.dp, 48.dp, compact)).onGloballyPositioned { onHitRect(it.boundsInWindow()) }.then(sharedShell)
             .meloXLiquidBottomBar(shape = RoundedCornerShape(50), tint = bottomLiquidGlassTint(),
                 surfaceColor = bottomGlassSurfaceColor(), dark = bottomBarTone() > .5f)) {
             if (compact > .75f) {
                 Box(Modifier.fillMaxSize().testTag("mini-player-expand").clickable(onClick = onExpand), contentAlignment = Alignment.Center) {
-                    MiniArtwork(36.dp, track.artworkUrl, sharedElementModifier(sharedTransitionScope, animatedVisibilityScope, mediaId))
+                    MiniArtwork(36.dp, track.artworkUrl, sharedElementModifier(sharedTransitionScope, animatedVisibilityScope, mediaId), corner = artworkCorner)
                 }
             } else {
                 Column(Modifier.fillMaxSize().padding(horizontal = 4.dp, vertical = 8.dp), horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.spacedBy(6.dp, Alignment.CenterVertically)) {
                     Column(Modifier.fillMaxWidth().testTag("mini-player-expand").clickable(onClick = onExpand), horizontalAlignment = Alignment.CenterHorizontally) {
-                        MiniArtwork(40.dp, track.artworkUrl, sharedElementModifier(sharedTransitionScope, animatedVisibilityScope, mediaId), scale = sharedArtworkScale)
+                        MiniArtwork(40.dp, track.artworkUrl, sharedElementModifier(sharedTransitionScope, animatedVisibilityScope, mediaId), scale = sharedArtworkScale, corner = artworkCorner)
                         Text(track.title, maxLines = 2, overflow = TextOverflow.Ellipsis, fontSize = titleFontSize, lineHeight = lineHeight, color = MeloXColors.pageOnSurface())
                         Text(track.artistText, maxLines = 1, overflow = TextOverflow.Ellipsis, fontSize = artistFontSize, lineHeight = lineHeight, color = MeloXColors.pageOnSurface())
                     }
@@ -186,6 +189,8 @@ fun MeloXMiniPlayer(
         modifier = Modifier
             .fillMaxWidth()
             .height(MeloXChromeTokens.MiniHeight)
+            .testTag("mini-player-shell")
+            .onGloballyPositioned { onHitRect(it.boundsInWindow()) }
             .onSizeChanged { swipeWidth = it.width.toFloat().coerceAtLeast(1f) }
             .then(sharedShell),
     ) {
@@ -224,7 +229,7 @@ fun MeloXMiniPlayer(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(MeloXChromeTokens.MiniHeight)
-                    .clip(RoundedCornerShape(50))
+                    .then(if (expansionProgress > .001f) Modifier else Modifier.clip(RoundedCornerShape(50)))
                     .padding(
                         horizontal = lerpDpF(12.dp, 8.dp, compact),
                         vertical = lerpDpF(4.dp, 3.dp, compact),
@@ -296,6 +301,7 @@ fun MeloXMiniPlayer(
                             shown?.artworkUrl ?: track.artworkUrl,
                             sharedElementModifier(sharedTransitionScope, animatedVisibilityScope, mediaId),
                             scale = sharedArtworkScale,
+                            corner = artworkCorner,
                         )
 
                         Column(
@@ -482,6 +488,7 @@ private fun MiniArtwork(
     artworkUrl: String?,
     sharedModifier: Modifier = Modifier,
     scale: Float = 1f,
+    corner: androidx.compose.ui.unit.Dp = 6.dp,
 ) {
     val currentTrack by AudioPlayer.currentTrack.collectAsState()
     val sourceColor = MeloXColors.sourceColors[currentTrack?.id?.source?.storageValue] ?: MeloXColors.Primary
@@ -492,7 +499,7 @@ private fun MiniArtwork(
             .requiredSize(size)
             .then(sharedModifier)
             .graphicsLayer { scaleX = scale; scaleY = scale }
-            .clip(RoundedCornerShape(6.dp)),
+            .clip(RoundedCornerShape(corner)),
     )
 }
 
@@ -507,13 +514,14 @@ private fun sharedShellModifier(
     visibility: androidx.compose.animation.AnimatedVisibilityScope?,
 ): Modifier {
     if (scope == null || visibility == null) return Modifier
+    val bounds = rememberPlayerBoundsTransform()
     return with(scope) {
         Modifier.sharedBounds(
             sharedContentState = rememberSharedContentState(key = MeloXPlayerShellKey),
             animatedVisibilityScope = visibility,
             enter = androidx.compose.animation.EnterTransition.None,
             exit = androidx.compose.animation.ExitTransition.None,
-            boundsTransform = MeloXPlayerShellBoundsTransform,
+            boundsTransform = bounds,
             resizeMode = androidx.compose.animation.SharedTransitionScope.ResizeMode.RemeasureToBounds,
         )
     }
@@ -527,11 +535,13 @@ private fun sharedElementModifier(
     mediaId: String?,
 ): Modifier {
     if (scope == null || visibility == null) return Modifier
+    val bounds = rememberPlayerBoundsTransform()
     return with(scope) {
         Modifier.sharedElement(
             sharedContentState = rememberSharedContentState(key = MeloXPlayerArtworkKey(mediaId)),
             animatedVisibilityScope = visibility,
-            boundsTransform = MeloXArtworkBoundsTransform,
+            boundsTransform = bounds,
+            zIndexInOverlay = 99f,
         )
     }
 }

@@ -97,11 +97,12 @@ fun HomeScreen(
     source: MusicSource = MusicSource.Netease,
     onOpenTool: (String) -> Unit = {},
     onOpenPlaylist: (melox.library.NeteasePlaylistSummary) -> Unit = {},
+    onOpenProviderPlaylist: (MusicPlaylistSummary) -> Unit = {},
 ) {
     if (source == MusicSource.Netease) {
         NeteaseHome(onOpenTool, onOpenPlaylist)
     } else {
-        ProviderHome(source)
+        ProviderHome(source, onOpenProviderPlaylist)
     }
 }
 
@@ -124,6 +125,7 @@ private fun NeteaseHome(
     var desktopActionKey by remember { mutableStateOf("daily_songs") }
     var recentSongs by remember { mutableStateOf<List<melox.model.SearchSong>>(emptyList()) }
     var homePodcast by remember { mutableStateOf<melox.network.MeloXPodcast?>(null) }
+    var accountId by remember { mutableStateOf<Long?>(null) }
     val collectionClient = remember { melox.network.NeteaseCollectionDetailsClient(cookieProvider = { melox.account.NeteaseSessionStore.readCookie() }) }
     val podcastClient = remember { melox.network.NeteaseUniversalSearchClient(cookieProvider = { melox.account.NeteaseSessionStore.readCookie() }) }
 
@@ -159,12 +161,6 @@ private fun NeteaseHome(
                 .onSuccess { recentSongs = it }.onFailure { if (it is kotlinx.coroutines.CancellationException) throw it }
         }
         if (melox.library.NeteaseLibraryCache.beginHomeColdStartRefresh(cacheKey)) refresh(false)
-    }
-
-    if (dailySongs.isNotEmpty() && !melox.settings.MeloXSettingsRuntime.desktopLayoutEnabled) {
-        DailySongsPage(dailySongs, onBack = { dailySongs = emptyList() }, title =
-            if (melox.settings.MeloXSettingsRuntime.desktopLayoutEnabled) melox.ui.desktop.desktopString("ui.home.action.$desktopActionKey") else "每日推荐")
-        return
     }
 
     val blocks = content?.let { value ->
@@ -265,6 +261,7 @@ private fun NeteaseHome(
         return
     }
 
+    Box(Modifier.fillMaxSize()) {
     LazyColumn(
         modifier = Modifier.fillMaxSize().testTag("home-sections")
             .semantics { stateDescription = blocks.mapNotNull { it.section }.joinToString(",") }
@@ -274,7 +271,7 @@ private fun NeteaseHome(
     ) {
         item {
             MeloXIosTopBar(title = "首页", actions = {
-                session.profile?.let { HomeAccountButton(it.avatarUrl) }
+                 session.profile?.let { profile -> HomeAccountButton(profile.avatarUrl) { accountId = profile.userId } }
             })
         }
         item {
@@ -285,20 +282,34 @@ private fun NeteaseHome(
                 color = MeloXColors.pageOnBackground().copy(alpha = 0.58f),
             )
         }
+        error?.let { message ->
+            item {
+                Text(
+                    message,
+                    modifier = Modifier.padding(horizontal = 20.dp).testTag("home-error"),
+                    color = MeloXColors.Error,
+                    fontSize = 13.sp,
+                )
+            }
+        }
         blocks.forEach { block ->
         if (block.section == "QuickActions") {
             item {
                 HomeQuickActionsRow(activeAction, neteaseActions()) { action ->
                     if (action.tool != null) { onOpenTool(action.tool); return@HomeQuickActionsRow }
                     activeAction = action.title
+                    error = null
                     scope.launch {
-                        runCatching { action.run(client, session) }
+                        runCatching { withContext(Dispatchers.IO) { action.run(client, session) } }
                             .onSuccess { songs ->
-                                if (action.title == "每日推荐") dailySongs = songs
+                                if (action.title in setOf("每日推荐", "热歌榜", "私人雷达") && songs.isNotEmpty()) {
+                                    desktopActionKey = action.title
+                                    dailySongs = songs
+                                }
                                 else songs.firstOrNull()?.let { melox.playback.PlaybackCommands.playQueue(songs, it.id, heartMode = action.title == "心动模式") }
                                     ?: run { error = "没有可播放的推荐歌曲" }
                             }
-                            .onFailure { error = it.message ?: "${action.title} 加载失败" }
+                            .onFailure { if (it is kotlinx.coroutines.CancellationException) throw it; error = it.message ?: "${action.title} 加载失败" }
                         activeAction = null
                     }
                 }
@@ -312,7 +323,11 @@ private fun NeteaseHome(
         if (content != null && blocks.none { it.section != "QuickActions" } && error == null) {
             item { Text("网易云音乐当前没有返回可展示内容", Modifier.padding(horizontal = 20.dp), color = MeloXColors.pageOnBackground().copy(alpha = .5f)) }
         }
-        error?.let { message -> item { Text(message, Modifier.padding(horizontal = 20.dp), color = MeloXColors.Error, fontSize = 13.sp) } }
+    }
+    melox.ui.navigation.MeloXDetailOverlay(dailySongs.takeIf { it.isNotEmpty() }, { dailySongs = emptyList() }) { songs ->
+        MeloXProviderSongListDetail(songs, desktopActionKey) { dailySongs = emptyList() }
+    }
+    melox.ui.navigation.MeloXDetailOverlay(accountId, { accountId = null }) { AccountProfileScreen(it) { accountId = null } }
     }
 }
 
@@ -414,11 +429,13 @@ private fun NeteaseSongRow(song: melox.model.SearchSong, onClick: () -> Unit) {
 }
 
 @Composable
-private fun ProviderHome(source: MusicSource) {
+private fun ProviderHome(source: MusicSource, onOpenPlaylist: (MusicPlaylistSummary) -> Unit) {
     val scope = rememberCoroutineScope()
     var feed by remember(source) { mutableStateOf<MusicHomeFeed?>(null) }
     var loading by remember(source) { mutableStateOf(true) }
     var error by remember(source) { mutableStateOf<String?>(null) }
+    var rankingSongs by remember(source) { mutableStateOf<List<melox.model.SearchSong>?>(null) }
+    var rankingTitle by remember(source) { mutableStateOf("") }
     LaunchedEffect(source) {
         loading = true
         val registry = melox.music.provider.MeloXMusicProviders.create()
@@ -437,6 +454,7 @@ private fun ProviderHome(source: MusicSource) {
     val recommended = feed?.recommendedPlaylists.orEmpty()
     val rankings = feed?.rankings.orEmpty()
     val newSongs = feed?.newSongs.orEmpty()
+    Box(Modifier.fillMaxSize()) {
     LazyColumn(Modifier.fillMaxSize(), contentPadding = PaddingValues(top = 18.dp, bottom = 146.dp), verticalArrangement = Arrangement.spacedBy(22.dp)) {
         item {
             Text(
@@ -447,12 +465,26 @@ private fun ProviderHome(source: MusicSource) {
             )
         }
         item { Text(homeGreeting(), Modifier.padding(horizontal = 20.dp), style = MeloXTypography.headline, color = MeloXColors.pageOnBackground().copy(alpha = 0.58f)) }
-        if (recommended.isNotEmpty()) { item { SectionTitle("推荐歌单", source.displayName) }; item { CollectionRow(recommended) {} } }
-        if (rankings.isNotEmpty()) { item { SectionTitle("排行榜", source.displayName) }; item { CollectionRowRankings(rankings) {} } }
+        if (recommended.isNotEmpty()) { item { SectionTitle("推荐歌单", source.displayName) }; item { CollectionRow(recommended, onOpenPlaylist) } }
+        if (rankings.isNotEmpty()) { item { SectionTitle("排行榜", source.displayName) }; item { CollectionRowRankings(rankings) { ranking ->
+            rankingTitle = ranking.title
+            error = null
+            scope.launch {
+                try {
+                    rankingSongs = loadProviderRankingSongs(source, ranking)
+                } catch (cancelled: kotlinx.coroutines.CancellationException) { throw cancelled }
+                catch (failure: Exception) { error = failure.message ?: "排行榜加载失败" }
+            }
+        } } }
         if (newSongs.isNotEmpty()) { item { SectionTitle("为你推荐", "新歌") }; item { ThreeLineSongCarousel(newSongs) { track -> melox.playback.ProviderPlaybackCommands.playQueue(newSongs, track.id) } } }
         if (recommended.isEmpty() && rankings.isEmpty() && newSongs.isEmpty()) {
             item { Text(error ?: "${source.displayName} 当前没有返回可展示内容", Modifier.padding(horizontal = 20.dp), color = if (error != null) MeloXColors.Error else MeloXColors.pageOnBackground().copy(alpha = .5f)) }
         }
+        if (error != null && (recommended.isNotEmpty() || rankings.isNotEmpty() || newSongs.isNotEmpty())) item {
+            Text(error.orEmpty(), Modifier.padding(horizontal = 20.dp), color = MeloXColors.Error)
+        }
+    }
+    melox.ui.navigation.MeloXDetailOverlay(rankingSongs, { rankingSongs = null }) { MeloXProviderSongListDetail(it, rankingTitle) { rankingSongs = null } }
     }
 }
 
@@ -470,7 +502,8 @@ private fun HomeQuickActionsRow(
         items(actions, key = { it.title }) { action ->
             Column(
                 Modifier
-                    .width(310.dp)
+                     .width(310.dp)
+                     .testTag("home-action-${action.title}")
                     .then(if (action.tool != null) Modifier.testTag("home-tool-${action.tool.lowercase()}") else Modifier)
                     .clickable(enabled = active == null) { perform(action) },
             ) {
@@ -654,10 +687,12 @@ private fun CollectionCard(
 }
 
 @Composable
-private fun HomeAccountButton(avatarUrl: String?) {
+private fun HomeAccountButton(avatarUrl: String?, onClick: () -> Unit) {
     Box(
         modifier = Modifier
             .size(42.dp)
+            .testTag("home-account")
+            .clickable(onClick = onClick)
             .meloXGlassSurface(
                 shape = CircleShape,
                 tint = MeloXSystemColors.Red.copy(alpha = 0.12f),

@@ -36,7 +36,9 @@ import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -99,9 +101,12 @@ import melox.ui.screens.ProviderServicesScreen
 import melox.ui.screens.SearchScreen
 import melox.ui.screens.SettingsScreen
 import melox.ui.theme.MeloXColors
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.ui.graphics.graphicsLayer
+import melox.ui.navigation.meloXPlayerTransitionInput
 
 private fun playerAutomaticFractionSpec() = tween<Float>(
-    durationMillis = MeloXSettingsRuntime.playerTransitionDurationMs,
+    durationMillis = if (MeloXSettingsRuntime.reduceMotion) 0 else MeloXSettingsRuntime.playerTransitionDurationMs,
     easing = androidx.compose.animation.core.LinearEasing,
 )
 
@@ -233,11 +238,16 @@ fun MeloXApp(onExit: () -> Unit = { kotlin.system.exitProcess(0) }) {
     val rootPageState = rememberSaveableStateHolder()
     val playerScope = rememberCoroutineScope()
     var playerTransitionJob by remember { mutableStateOf<kotlinx.coroutines.Job?>(null) }
+    var playerClosingIntent by remember { mutableStateOf(false) }
+    var miniPlayerHitRect by remember { mutableStateOf<androidx.compose.ui.geometry.Rect?>(null) }
     val playerTransitionState = remember { SeekableTransitionState(false) }
     val playerTransition = rememberTransition(
         transitionState = playerTransitionState,
         label = "melox-player-transition",
     )
+    val pageRecede by playerTransition.animateFloat(
+        transitionSpec = { melox.ui.screens.playerContentSpec() }, label = "player-page-recede"
+    ) { if (it) 1f else 0f }
 
     val currentTrack by AudioPlayer.currentTrack.collectAsState()
     val hasMedia = currentTrack != null
@@ -253,6 +263,7 @@ fun MeloXApp(onExit: () -> Unit = { kotlin.system.exitProcess(0) }) {
 
     val openPlayer: () -> Unit = {
         if (hasMedia) {
+            playerClosingIntent = false
             playerTransitionJob?.cancel()
             playerTransitionJob = playerScope.launch {
                 playerTransitionState.animateTo(true, playerAutomaticFractionSpec())
@@ -260,6 +271,7 @@ fun MeloXApp(onExit: () -> Unit = { kotlin.system.exitProcess(0) }) {
         }
     }
     val closePlayer: () -> Unit = {
+        playerClosingIntent = true
         playerTransitionJob?.cancel()
         playerTransitionJob = playerScope.launch {
             playerTransitionState.animateTo(false, playerAutomaticFractionSpec())
@@ -278,6 +290,8 @@ fun MeloXApp(onExit: () -> Unit = { kotlin.system.exitProcess(0) }) {
     }
     LaunchedEffect(collectionTarget) { if (collectionTarget != null) closePlayer() }
     val rootFocus = remember { FocusRequester() }
+    SideEffect { melox.ui.navigation.MeloXRootFocus.requester = rootFocus }
+    DisposableEffect(Unit) { onDispose { melox.ui.navigation.MeloXRootFocus.requester = null } }
     LaunchedEffect(Unit) { rootFocus.requestFocus() }
     LaunchedEffect(playerOpen, currentTrack?.id) {
         // Selecting an upcoming row removes that focused row from the list.
@@ -424,7 +438,8 @@ fun MeloXApp(onExit: () -> Unit = { kotlin.system.exitProcess(0) }) {
                 },
             )
         }
-        melox.ui.desktop.MeloXWindowFrame {
+        melox.ui.desktop.MeloXWindowFrame(playerVisible = playerOpen) {
+        CompositionLocalProvider(melox.ui.screens.LocalMeloXPlayerClosing provides playerClosingIntent) {
         SharedTransitionLayout(modifier = Modifier.fillMaxSize()) {
             val sharedScope = this
             Box(
@@ -454,6 +469,16 @@ fun MeloXApp(onExit: () -> Unit = { kotlin.system.exitProcess(0) }) {
                 // (Android Scaffold structure — content is NOT clipped
                 // above the bottom chrome) ──
                 val pageBackdrop = melox.ui.glass.rememberMeloXLayerBackdrop()
+                Box(Modifier.fillMaxSize().background(if (pageRecede > .0005f && !MeloXSettingsRuntime.desktopLayoutEnabled) Color.Black else MaterialTheme.colorScheme.background)) {
+                Box(Modifier.fillMaxSize().testTag("player-receding-page").graphicsLayer {
+                    val p = if (MeloXSettingsRuntime.reduceMotion || MeloXSettingsRuntime.desktopLayoutEnabled) 0f else pageRecede
+                    scaleX = 1f - .17f * p
+                    scaleY = 1f - .17f * size.width / size.height.coerceAtLeast(1f) * p
+                    translationY = 30.dp.toPx() * p
+                    clip = p > .0005f
+                    shape = androidx.compose.foundation.shape.RoundedCornerShape(32.dp)
+                    alpha = 1f - .24f * p
+                }) {
                 CompositionLocalProvider(melox.ui.glass.LocalMeloXLayerBackdrop provides pageBackdrop) {
                 CompositionLocalProvider(melox.ui.glass.LocalMeloXLayerBackdrop provides null) {
                 melox.ui.desktop.MeloXInterfaceLayout(
@@ -466,7 +491,8 @@ fun MeloXApp(onExit: () -> Unit = { kotlin.system.exitProcess(0) }) {
                     onLogin = { selectedTab = AppTab.Settings; settingsRouteRequest = "NeteaseLogin" },
                     onExpandPlayer = openPlayer, playerOpen = playerOpen,
                     backdrop = pageBackdrop,
-                    modifier = Modifier.meloXRecordBackdrop(pageBackdrop).nestedScroll(tabBarMinimizeConnection),
+                     modifier = Modifier.padding(top = melox.ui.desktop.LocalMeloXCaptionInset.current)
+                         .meloXRecordBackdrop(pageBackdrop).nestedScroll(tabBarMinimizeConnection),
                     collectionOverlay = { collectionLayer() },
                 ) {
                 AnimatedContent(
@@ -513,6 +539,8 @@ fun MeloXApp(onExit: () -> Unit = { kotlin.system.exitProcess(0) }) {
                 }
                 }
                 }
+                }
+                }
 
                 // ── Bottom chrome overlay (Android: aligned BottomCenter,
                 // not inside a Column) ──
@@ -541,6 +569,7 @@ fun MeloXApp(onExit: () -> Unit = { kotlin.system.exitProcess(0) }) {
                                 onExpand = openPlayer,
                                 sharedTransitionScope = sharedScope,
                                 animatedVisibilityScope = miniVisibility,
+                                onHitRect = { miniPlayerHitRect = it },
                             )
                         }
                     },
@@ -549,7 +578,7 @@ fun MeloXApp(onExit: () -> Unit = { kotlin.system.exitProcess(0) }) {
 
                 AnimatedVisibility(
                     visible = messagesVisible,
-                    modifier = Modifier.fillMaxSize().zIndex(15f),
+                    modifier = Modifier.fillMaxSize().padding(top = melox.ui.desktop.LocalMeloXCaptionInset.current).zIndex(15f),
                     enter = slideInHorizontally(tween(300, easing = FastOutSlowInEasing)) { it },
                     exit = slideOutHorizontally(tween(300, easing = FastOutSlowInEasing)) { it },
                 ) {
@@ -571,6 +600,9 @@ fun MeloXApp(onExit: () -> Unit = { kotlin.system.exitProcess(0) }) {
                     Box(
                         modifier = Modifier
                             .fillMaxSize()
+                            .meloXPlayerTransitionInput(
+                                transitioning = playerTransitionState.currentState != playerTransitionState.targetState,
+                                closing = playerClosingIntent, miniRect = miniPlayerHitRect, onReopen = openPlayer)
                             .clickable(
                                 interactionSource = remember { MutableInteractionSource() },
                                 indication = null,
@@ -592,11 +624,13 @@ fun MeloXApp(onExit: () -> Unit = { kotlin.system.exitProcess(0) }) {
                             playerTargetExpanded = playerTransitionState.targetState,
                             playerTransitionFraction = playerTransitionState.fraction,
                             onSeekCollapse = { fraction ->
+                                playerClosingIntent = false
                                 playerTransitionJob?.cancel()
                                 playerTransitionJob = null
                                 playerTransitionState.seekTo(fraction.coerceIn(0f, 0.999f), targetState = false)
                             },
                             onSettleCollapse = { collapse ->
+                                playerClosingIntent = collapse
                                 playerTransitionJob?.cancel()
                                 playerTransitionJob = null
                                 playerTransitionState.animateTo(
@@ -613,8 +647,10 @@ fun MeloXApp(onExit: () -> Unit = { kotlin.system.exitProcess(0) }) {
             }
         }
         }
+        }
         // The legal consent gate is Windows-specific and is shown first. The
         // Mac three-page onboarding then replaces only the Connect stage.
+        Box(Modifier.fillMaxSize().padding(top = melox.ui.desktop.LocalMeloXCaptionInset.current)) {
         if (MeloXSettingsRuntime.desktopLayoutEnabled && onboarding.stage == melox.legal.MeloXOnboardingStage.Connect) {
             melox.ui.desktop.MeloXDesktopOnboarding { login ->
                 onboarding.finishConnection()
@@ -646,6 +682,7 @@ fun MeloXApp(onExit: () -> Unit = { kotlin.system.exitProcess(0) }) {
                 } },
             )
             melox.legal.MeloXOnboardingStage.Complete -> Unit
+        }
         }
         }
     }
@@ -702,7 +739,7 @@ private fun TabContent(
     }
     Box(Modifier.fillMaxSize()) {
         when (tab) {
-            AppTab.Home -> HomeScreen(source = source, onOpenTool = onOpenTool, onOpenPlaylist = openPlaylist)
+            AppTab.Home -> HomeScreen(source = source, onOpenTool = onOpenTool, onOpenPlaylist = openPlaylist, onOpenProviderPlaylist = openProviderPlaylist)
             AppTab.Explore -> ExploreScreen(
                 source = source,
                 onOpenPodcasts = { onOpenTool("Podcasts") },

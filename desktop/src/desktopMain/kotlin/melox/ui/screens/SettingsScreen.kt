@@ -515,6 +515,11 @@ private fun GeneralSettings() {
             subtitle = melox.ui.desktop.desktopPlatformString("tray_hint")) {
             MeloXSettingsPreferences.setBoolean("windows_close_to_tray", it)
         }
+        SettingsExternalToggleRow(melox.ui.desktop.desktopPlatformString("caption_title"),
+            MeloXSettingsRuntime.immersiveCaptionEnabled, "setting-windows_immersive_caption",
+            subtitle = melox.ui.desktop.desktopPlatformString("caption_hint")) {
+            MeloXSettingsPreferences.setBoolean("windows_immersive_caption", it)
+        }
         SettingsChoice("settings_general_theme", "theme_mode", MeloXSettingsRuntime.themeMode,
             listOf(MeloXThemeMode.System to pinnedString("settings_general_theme_system"), MeloXThemeMode.Light to pinnedString("settings_general_theme_light"),
                 MeloXThemeMode.Dark to pinnedString("settings_general_theme_dark"))) { MeloXSettingsPreferences.setString("theme_mode", it.name) }

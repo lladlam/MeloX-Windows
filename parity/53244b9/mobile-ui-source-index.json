@@ -1,0 +1,1106 @@
+{
+  "android_sha": "53244b9d6b21d7e3a609e8cb11876efef70f218b",
+  "scope": "source inventory; manual findings in MOBILE_UI_AUDIT.md; not a parity verdict",
+  "areas": {
+    "home": {
+      "android": {
+        "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/discovery/MeloXDiscoveryScreens.kt",
+        "sha256": "eef0e0562d981ec31004db689ed619021dbfba7d7fc2b8b95d6e2ec4d7bb5567",
+        "lines": 1966,
+        "motion_sites": [
+          {
+            "line": 416,
+            "symbol": "animateTo"
+          },
+          {
+            "line": 562,
+            "symbol": "animateTo"
+          },
+          {
+            "line": 564,
+            "symbol": "animateTo"
+          },
+          {
+            "line": 567,
+            "symbol": "MeloXInterruptiblePage"
+          },
+          {
+            "line": 600,
+            "symbol": "AnimatedContent"
+          },
+          {
+            "line": 620,
+            "symbol": "AnimatedVisibility"
+          },
+          {
+            "line": 721,
+            "symbol": "animateTo"
+          },
+          {
+            "line": 1053,
+            "symbol": "animateTo"
+          },
+          {
+            "line": 1155,
+            "symbol": "animateTo"
+          },
+          {
+            "line": 1411,
+            "symbol": "AnimatedVisibility"
+          },
+          {
+            "line": 1698,
+            "symbol": "sharedElement"
+          }
+        ]
+      },
+      "windows": [
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/HomeScreen.kt",
+          "sha256": "0c941f7ce6cfbcdf43e3213e270b40fb08c14fb2a75331de6355cfa5ebf99a76",
+          "lines": 782,
+          "motion_sites": [
+            {
+              "line": 251,
+              "symbol": "MeloXDetailOverlay"
+            },
+            {
+              "line": 254,
+              "symbol": "MeloXDetailOverlay"
+            },
+            {
+              "line": 327,
+              "symbol": "MeloXDetailOverlay"
+            },
+            {
+              "line": 330,
+              "symbol": "MeloXDetailOverlay"
+            },
+            {
+              "line": 487,
+              "symbol": "MeloXDetailOverlay"
+            }
+          ]
+        }
+      ]
+    },
+    "explore": {
+      "android": {
+        "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/discovery/MeloXDiscoveryScreens.kt",
+        "sha256": "eef0e0562d981ec31004db689ed619021dbfba7d7fc2b8b95d6e2ec4d7bb5567",
+        "lines": 1966,
+        "motion_sites": [
+          {
+            "line": 416,
+            "symbol": "animateTo"
+          },
+          {
+            "line": 562,
+            "symbol": "animateTo"
+          },
+          {
+            "line": 564,
+            "symbol": "animateTo"
+          },
+          {
+            "line": 567,
+            "symbol": "MeloXInterruptiblePage"
+          },
+          {
+            "line": 600,
+            "symbol": "AnimatedContent"
+          },
+          {
+            "line": 620,
+            "symbol": "AnimatedVisibility"
+          },
+          {
+            "line": 721,
+            "symbol": "animateTo"
+          },
+          {
+            "line": 1053,
+            "symbol": "animateTo"
+          },
+          {
+            "line": 1155,
+            "symbol": "animateTo"
+          },
+          {
+            "line": 1411,
+            "symbol": "AnimatedVisibility"
+          },
+          {
+            "line": 1698,
+            "symbol": "sharedElement"
+          }
+        ]
+      },
+      "windows": [
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/ExploreScreen.kt",
+          "sha256": "dece64b075b78334c954db3a6f6a2104c9ee1f50c629e68476f839550ba3ac80",
+          "lines": 426,
+          "motion_sites": [
+            {
+              "line": 241,
+              "symbol": "MeloXDetailOverlay"
+            }
+          ]
+        }
+      ]
+    },
+    "search": {
+      "android": {
+        "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/search/SearchScreen.kt",
+        "sha256": "e391d4a8733e79a664abdd60478f437656dfdd10ad0768e41a55ee34f4a2a00a",
+        "lines": 1852,
+        "motion_sites": [
+          {
+            "line": 646,
+            "symbol": "animateTo"
+          },
+          {
+            "line": 648,
+            "symbol": "animateTo"
+          },
+          {
+            "line": 681,
+            "symbol": "animateTo"
+          },
+          {
+            "line": 687,
+            "symbol": "AnimatedVisibility"
+          },
+          {
+            "line": 865,
+            "symbol": "MeloXInterruptiblePage"
+          },
+          {
+            "line": 917,
+            "symbol": "MeloXInterruptiblePage"
+          },
+          {
+            "line": 977,
+            "symbol": "sharedElement"
+          },
+          {
+            "line": 1001,
+            "symbol": "AnimatedVisibility"
+          }
+        ]
+      },
+      "windows": [
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/SearchScreen.kt",
+          "sha256": "f5cebb528be264883caa46b4612bd1b8d638e2e2a4c98dcf2b15ab23f9d52aca",
+          "lines": 1017,
+          "motion_sites": [
+            {
+              "line": 567,
+              "symbol": "MeloXDetailOverlay"
+            }
+          ]
+        }
+      ]
+    },
+    "library": {
+      "android": {
+        "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/library/LibraryScreen.kt",
+        "sha256": "79f2df3579d33f0a7a5492e3d6edf7709376870abe9c2a97aae85657450e6077",
+        "lines": 3554,
+        "motion_sites": [
+          {
+            "line": 472,
+            "symbol": "AnimatedContent"
+          },
+          {
+            "line": 711,
+            "symbol": "MeloXInterruptiblePage"
+          },
+          {
+            "line": 727,
+            "symbol": "AnimatedVisibility"
+          },
+          {
+            "line": 1048,
+            "symbol": "MeloXInterruptiblePage"
+          },
+          {
+            "line": 1299,
+            "symbol": "animateFloatAsState"
+          },
+          {
+            "line": 1623,
+            "symbol": "AnimatedVisibility"
+          },
+          {
+            "line": 1774,
+            "symbol": "sharedElement"
+          },
+          {
+            "line": 1920,
+            "symbol": "AnimatedVisibility"
+          },
+          {
+            "line": 1954,
+            "symbol": "AnimatedVisibility"
+          },
+          {
+            "line": 1990,
+            "symbol": "AnimatedVisibility"
+          },
+          {
+            "line": 2045,
+            "symbol": "AnimatedVisibility"
+          },
+          {
+            "line": 2398,
+            "symbol": "animateTo"
+          },
+          {
+            "line": 2400,
+            "symbol": "animateTo"
+          },
+          {
+            "line": 3076,
+            "symbol": "sharedElement"
+          }
+        ]
+      },
+      "windows": [
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXLibraryScreen.kt",
+          "sha256": "9042b0f4c948ba6e3429783435963e8c9a6b3414db8da71877280de2c515947a",
+          "lines": 998,
+          "motion_sites": [
+            {
+              "line": 322,
+              "symbol": "AnimatedContent"
+            },
+            {
+              "line": 516,
+              "symbol": "AnimatedVisibility"
+            },
+            {
+              "line": 523,
+              "symbol": "AnimatedVisibility"
+            },
+            {
+              "line": 643,
+              "symbol": "animateFloatAsState"
+            },
+            {
+              "line": 924,
+              "symbol": "sharedElement"
+            }
+          ]
+        },
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXLibraryPlaylistDetail.kt",
+          "sha256": "7ed7329d64f098d334cfd65e3951b255de85dd6fec35f68524e69c871134e38c",
+          "lines": 850,
+          "motion_sites": [
+            {
+              "line": 616,
+              "symbol": "sharedElement"
+            }
+          ]
+        },
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/PlaylistDetailScreen.kt",
+          "sha256": "8eb91382c8956021ad9c7eaf08d8e331d7f7147aa2dc857e447983c2a6c98449",
+          "lines": 463,
+          "motion_sites": [
+            {
+              "line": 66,
+              "symbol": "AnimatedVisibility"
+            }
+          ]
+        }
+      ]
+    },
+    "page-motion": {
+      "android": {
+        "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/MeloXPageTransitions.kt",
+        "sha256": "f0adffa73c08ac71e57120f9e0e1b81e8fe1bfead8c27f25c7d32fbc5a96bb66",
+        "lines": 456,
+        "motion_sites": [
+          {
+            "line": 218,
+            "symbol": "meloXPageRecede"
+          },
+          {
+            "line": 309,
+            "symbol": "MeloXInterruptiblePage"
+          },
+          {
+            "line": 332,
+            "symbol": "AnimatedContent"
+          }
+        ]
+      },
+      "windows": [
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/navigation/MeloXDetailMotion.kt",
+          "sha256": "1da6ec7c1a2a025be68a37cce1865bb4785d75838649f77651a5aa0f5baed7e5",
+          "lines": 130,
+          "motion_sites": [
+            {
+              "line": 50,
+              "symbol": "MeloXDetailOverlay"
+            },
+            {
+              "line": 57,
+              "symbol": "AnimatedContent"
+            },
+            {
+              "line": 80,
+              "symbol": "animateFloatAsState"
+            }
+          ]
+        }
+      ]
+    },
+    "motion-specs": {
+      "android": {
+        "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/animation/MeloXMotion.kt",
+        "sha256": "9f9224cb55a4dc67e06bd2811801a437dee723a6cd2696f651427c22f8607533",
+        "lines": 672,
+        "motion_sites": []
+      },
+      "windows": [
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/foundation/MeloXMotion.kt",
+          "sha256": "685ee43f77d06d33f65b36b95c9529f62e1ed64ef2c0aa04b632ed28dceeab87",
+          "lines": 117,
+          "motion_sites": []
+        }
+      ]
+    },
+    "mini-player": {
+      "android": {
+        "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXIOSMiniPlayer.kt",
+        "sha256": "803f21ca5ae1c08984400b68d70fd61ea86801e72240c7af3fc26043cd478634",
+        "lines": 1110,
+        "motion_sites": [
+          {
+            "line": 153,
+            "symbol": "animateTo"
+          },
+          {
+            "line": 250,
+            "symbol": "sharedBounds"
+          },
+          {
+            "line": 518,
+            "symbol": "sharedElement"
+          },
+          {
+            "line": 639,
+            "symbol": "animateTo"
+          },
+          {
+            "line": 659,
+            "symbol": "animateTo"
+          },
+          {
+            "line": 665,
+            "symbol": "animateTo"
+          },
+          {
+            "line": 690,
+            "symbol": "sharedElement"
+          }
+        ]
+      },
+      "windows": [
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXMiniPlayer.kt",
+          "sha256": "e4e5ba3e3c18c3ebcf23d408cdb095b0f81c5dc74cca6f0d6b194c634157e441",
+          "lines": 547,
+          "motion_sites": [
+            {
+              "line": 112,
+              "symbol": "animateTo"
+            },
+            {
+              "line": 271,
+              "symbol": "animateTo"
+            },
+            {
+              "line": 278,
+              "symbol": "animateTo"
+            },
+            {
+              "line": 284,
+              "symbol": "animateTo"
+            },
+            {
+              "line": 519,
+              "symbol": "sharedBounds"
+            },
+            {
+              "line": 540,
+              "symbol": "sharedElement"
+            }
+          ]
+        }
+      ]
+    },
+    "player-host": {
+      "android": {
+        "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXIOSNowPlayingSharedHost.kt",
+        "sha256": "6de42e06e68f89b1ef954627450363e42047b7434c25e406f030d0d9fe99f669",
+        "lines": 1836,
+        "motion_sites": [
+          {
+            "line": 210,
+            "symbol": "animateTo"
+          },
+          {
+            "line": 417,
+            "symbol": "animateTo"
+          },
+          {
+            "line": 456,
+            "symbol": "sharedBounds"
+          },
+          {
+            "line": 908,
+            "symbol": "animateFloatAsState"
+          },
+          {
+            "line": 917,
+            "symbol": "animateFloatAsState"
+          },
+          {
+            "line": 955,
+            "symbol": "animateTo"
+          },
+          {
+            "line": 992,
+            "symbol": "animateTo"
+          },
+          {
+            "line": 1014,
+            "symbol": "animateFloatAsState"
+          },
+          {
+            "line": 1210,
+            "symbol": "sharedElement"
+          },
+          {
+            "line": 1234,
+            "symbol": "sharedElement"
+          },
+          {
+            "line": 1775,
+            "symbol": "animateFloatAsState"
+          }
+        ]
+      },
+      "windows": [
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXNowPlaying.kt",
+          "sha256": "38b3fc87c05c82520c5aa29741309560165de77587d574f34ccfc097de48ddb6",
+          "lines": 939,
+          "motion_sites": [
+            {
+              "line": 188,
+              "symbol": "animateTo"
+            },
+            {
+              "line": 307,
+              "symbol": "animateFloatAsState"
+            },
+            {
+              "line": 341,
+              "symbol": "sharedBounds"
+            },
+            {
+              "line": 362,
+              "symbol": "sharedElement"
+            },
+            {
+              "line": 387,
+              "symbol": "animateFloatAsState"
+            },
+            {
+              "line": 392,
+              "symbol": "animateFloatAsState"
+            },
+            {
+              "line": 615,
+              "symbol": "animateDpAsState"
+            },
+            {
+              "line": 695,
+              "symbol": "AnimatedContent"
+            },
+            {
+              "line": 737,
+              "symbol": "animateFloatAsState"
+            },
+            {
+              "line": 767,
+              "symbol": "animateDpAsState"
+            },
+            {
+              "line": 772,
+              "symbol": "animateDpAsState"
+            },
+            {
+              "line": 900,
+              "symbol": "animateFloatAsState"
+            },
+            {
+              "line": 905,
+              "symbol": "animateFloatAsState"
+            },
+            {
+              "line": 907,
+              "symbol": "animateFloatAsState"
+            }
+          ]
+        },
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXIOSPlayerScene.kt",
+          "sha256": "e1ecef8a774ca24a9712744691e7d1141c06d288441c1fe768bb343b1ac9a0ad",
+          "lines": 320,
+          "motion_sites": [
+            {
+              "line": 242,
+              "symbol": "AnimatedVisibility"
+            },
+            {
+              "line": 290,
+              "symbol": "animateFloatAsState"
+            },
+            {
+              "line": 292,
+              "symbol": "animateFloatAsState"
+            },
+            {
+              "line": 295,
+              "symbol": "animateDpAsState"
+            }
+          ]
+        }
+      ]
+    },
+    "player-motion": {
+      "android": {
+        "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXPlayerTransitionSpec.kt",
+        "sha256": "3f565cf3badad893acd15788a6548cc2d3f33d3664b2aa5e07ac77d33d9b566c",
+        "lines": 1029,
+        "motion_sites": []
+      },
+      "windows": [
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerTransition.kt",
+          "sha256": "70c434ab9c07902c5e6ec03201543a8611d2748eb2075df46dcee83432cfc82c",
+          "lines": 75,
+          "motion_sites": []
+        }
+      ]
+    },
+    "player-landscape": {
+      "android": {
+        "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXIOSNowPlayingScene.kt",
+        "sha256": "373fe11aeeb5cc2b7eb54bba1c900b8c7473f0a203e83268c9e3225a7412103e",
+        "lines": 1933,
+        "motion_sites": [
+          {
+            "line": 161,
+            "symbol": "AnimatedVisibility"
+          },
+          {
+            "line": 334,
+            "symbol": "animateDpAsState"
+          },
+          {
+            "line": 480,
+            "symbol": "AnimatedVisibility"
+          },
+          {
+            "line": 539,
+            "symbol": "AnimatedVisibility"
+          },
+          {
+            "line": 575,
+            "symbol": "sharedElement"
+          },
+          {
+            "line": 749,
+            "symbol": "AnimatedVisibility"
+          },
+          {
+            "line": 816,
+            "symbol": "animateDpAsState"
+          },
+          {
+            "line": 872,
+            "symbol": "animateFloatAsState"
+          },
+          {
+            "line": 991,
+            "symbol": "AnimatedContent"
+          },
+          {
+            "line": 1190,
+            "symbol": "AnimatedVisibility"
+          },
+          {
+            "line": 1652,
+            "symbol": "animateFloatAsState"
+          },
+          {
+            "line": 1668,
+            "symbol": "animateTo"
+          },
+          {
+            "line": 1723,
+            "symbol": "animateFloatAsState"
+          },
+          {
+            "line": 1814,
+            "symbol": "animateFloatAsState"
+          }
+        ]
+      },
+      "windows": [
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXIOSLandscapePlayerScene.kt",
+          "sha256": "3bc899638b03f610cd8532ce7ac08bcfefe871496631a280e41ee68345a5b7e5",
+          "lines": 136,
+          "motion_sites": [
+            {
+              "line": 84,
+              "symbol": "AnimatedContent"
+            },
+            {
+              "line": 98,
+              "symbol": "AnimatedVisibility"
+            }
+          ]
+        }
+      ]
+    },
+    "lyrics": {
+      "android": {
+        "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXIOSLyricsPanel.kt",
+        "sha256": "73c50a827e56fab54c4966fae9583191649ed56432b040ac0d599a4d4d2f0fc0",
+        "lines": 2780,
+        "motion_sites": [
+          {
+            "line": 789,
+            "symbol": "animateTo"
+          },
+          {
+            "line": 809,
+            "symbol": "animateTo"
+          },
+          {
+            "line": 822,
+            "symbol": "animateTo"
+          },
+          {
+            "line": 1079,
+            "symbol": "animateTo"
+          },
+          {
+            "line": 1104,
+            "symbol": "animateTo"
+          },
+          {
+            "line": 1566,
+            "symbol": "AnimatedVisibility"
+          }
+        ]
+      },
+      "windows": [
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerLyrics.kt",
+          "sha256": "4f8245345896b9dc4cd90163ad19ba1361ed1ad4118c15806dcd6a0d9d7d50a5",
+          "lines": 573,
+          "motion_sites": [
+            {
+              "line": 273,
+              "symbol": "animateFloatAsState"
+            },
+            {
+              "line": 276,
+              "symbol": "animateFloatAsState"
+            }
+          ]
+        }
+      ]
+    },
+    "lyric-styles": {
+      "android": {
+        "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXAlternativeLyricsPanels.kt",
+        "sha256": "f0e044aea907ff08dbb15b8cefa6d2ff263cd30146aa02cfadf455cc52035cf3",
+        "lines": 789,
+        "motion_sites": [
+          {
+            "line": 256,
+            "symbol": "AnimatedContent"
+          },
+          {
+            "line": 367,
+            "symbol": "animateTo"
+          },
+          {
+            "line": 387,
+            "symbol": "AnimatedContent"
+          },
+          {
+            "line": 620,
+            "symbol": "animateTo"
+          },
+          {
+            "line": 680,
+            "symbol": "sharedElement"
+          },
+          {
+            "line": 693,
+            "symbol": "sharedElement"
+          },
+          {
+            "line": 712,
+            "symbol": "AnimatedContent"
+          }
+        ]
+      },
+      "windows": [
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXAlternativeLyricsPanels.kt",
+          "sha256": "eedd63b598efb121fde3d9787d3d2f0decbd01907cfff1e28e0613764982ff41",
+          "lines": 267,
+          "motion_sites": [
+            {
+              "line": 87,
+              "symbol": "AnimatedContent"
+            },
+            {
+              "line": 101,
+              "symbol": "animateTo"
+            },
+            {
+              "line": 106,
+              "symbol": "AnimatedContent"
+            },
+            {
+              "line": 221,
+              "symbol": "animateTo"
+            },
+            {
+              "line": 243,
+              "symbol": "AnimatedContent"
+            }
+          ]
+        }
+      ]
+    },
+    "song-actions": {
+      "android": {
+        "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXSongActionsOverlay.kt",
+        "sha256": "10ea9377904babd5cc62d86ddc3145aad3e58f32248b68d5d42a510b433a0c7d",
+        "lines": 814,
+        "motion_sites": [
+          {
+            "line": 267,
+            "symbol": "AnimatedContent"
+          }
+        ]
+      },
+      "windows": [
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXSongActionsOverlay.kt",
+          "sha256": "b5e0da49b586124b9193fb1ca53b5a7a6584d24b9c6e429e4e7c65e95445149f",
+          "lines": 625,
+          "motion_sites": [
+            {
+              "line": 237,
+              "symbol": "AnimatedContent"
+            }
+          ]
+        }
+      ]
+    },
+    "podcasts": {
+      "android": {
+        "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/podcast/MeloXPodcastScreens.kt",
+        "sha256": "637b880c8dada08957f35bca3a28a1d607b76f13be06f4d8b49bf00cf85c3240",
+        "lines": 803,
+        "motion_sites": [
+          {
+            "line": 116,
+            "symbol": "sharedElement"
+          },
+          {
+            "line": 190,
+            "symbol": "animateTo"
+          },
+          {
+            "line": 214,
+            "symbol": "MeloXInterruptiblePage"
+          },
+          {
+            "line": 567,
+            "symbol": "AnimatedContent"
+          },
+          {
+            "line": 601,
+            "symbol": "AnimatedVisibility"
+          }
+        ]
+      },
+      "windows": [
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/PodcastsScreen.kt",
+          "sha256": "68f7906db76a4fd65341fc943aee42c77087c35857bffe6609a4effa348d82fe",
+          "lines": 239,
+          "motion_sites": [
+            {
+              "line": 69,
+              "symbol": "MeloXDetailOverlay"
+            }
+          ]
+        }
+      ]
+    },
+    "messages": {
+      "android": {
+        "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/messages/MessagesScreen.kt",
+        "sha256": "525dee1f47b32bb2d5131a05968a3770bc25b04f48290ba44886ea1960723b3d",
+        "lines": 751,
+        "motion_sites": []
+      },
+      "windows": [
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/MessagesScreen.kt",
+          "sha256": "2af8818a8e2a783bbc232eb7839f2e632b0e5669d65d892c3c87d3db41b93ef1",
+          "lines": 154,
+          "motion_sites": [
+            {
+              "line": 95,
+              "symbol": "MeloXDetailOverlay"
+            }
+          ]
+        }
+      ]
+    },
+    "cloud": {
+      "android": {
+        "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/cloud/MeloXCloudMusicScreen.kt",
+        "sha256": "033bb0a161d52c212dbb4c7cd6f6936fb62648bcf7e6f7a91382d224929628ac",
+        "lines": 264,
+        "motion_sites": []
+      },
+      "windows": [
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/CloudScreen.kt",
+          "sha256": "171cdb8d21947dfca80ac0d1b8a98b83ea38f6219fdcbe1c2b500d0f07302fee",
+          "lines": 225,
+          "motion_sites": []
+        }
+      ]
+    },
+    "settings": {
+      "android": {
+        "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/settings/SettingsScreen.kt",
+        "sha256": "d422aa164553891c0be20c48352a43f869eadefda3a8c770af3f2a990be2d103",
+        "lines": 3448,
+        "motion_sites": []
+      },
+      "windows": [
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/SettingsScreen.kt",
+          "sha256": "deb83db98a93fdd9bf457a170330bc72da2784bb94e97bd62d0175943295a038",
+          "lines": 675,
+          "motion_sites": [
+            {
+              "line": 227,
+              "symbol": "AnimatedVisibility"
+            }
+          ]
+        }
+      ]
+    },
+    "provider-services": {
+      "android": {
+        "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/provider/ProviderServicesScreen.kt",
+        "sha256": "4b3a827d34527ad31dc8d983d45e970875c4806c7fd4c9436f33e242c5656ca9",
+        "lines": 739,
+        "motion_sites": []
+      },
+      "windows": [
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/ProviderServicesScreen.kt",
+          "sha256": "8277eca010e1535157e5d2dc9c5cdb2aa91bf27320d39f2dccac2d511e9ed423",
+          "lines": 546,
+          "motion_sites": []
+        }
+      ]
+    },
+    "app-navigation": {
+      "android": {
+        "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/MeloXApp.kt",
+        "sha256": "5f6dbd62e5d4313803a85e40646b0d2d31683d2fb7d0eeb6d31fa6bbd843b052",
+        "lines": 2594,
+        "motion_sites": [
+          {
+            "line": 318,
+            "symbol": "SeekableTransitionState"
+          },
+          {
+            "line": 447,
+            "symbol": "animateTo"
+          },
+          {
+            "line": 474,
+            "symbol": "animateTo"
+          },
+          {
+            "line": 575,
+            "symbol": "animateTo"
+          },
+          {
+            "line": 922,
+            "symbol": "AnimatedContent"
+          },
+          {
+            "line": 1078,
+            "symbol": "AnimatedVisibility"
+          },
+          {
+            "line": 1123,
+            "symbol": "AnimatedVisibility"
+          },
+          {
+            "line": 1150,
+            "symbol": "AnimatedVisibility"
+          },
+          {
+            "line": 1170,
+            "symbol": "AnimatedVisibility"
+          },
+          {
+            "line": 1296,
+            "symbol": "animateTo"
+          },
+          {
+            "line": 1554,
+            "symbol": "animateFloatAsState"
+          },
+          {
+            "line": 1598,
+            "symbol": "animateFloatAsState"
+          },
+          {
+            "line": 1608,
+            "symbol": "animateDpAsState"
+          },
+          {
+            "line": 1871,
+            "symbol": "animateTo"
+          },
+          {
+            "line": 2077,
+            "symbol": "animateFloatAsState"
+          }
+        ]
+      },
+      "windows": [
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/MeloXApp.kt",
+          "sha256": "894240247a734d6bafa6d64fb43ffb4a592d6068f915726f8e9e809301587bae",
+          "lines": 839,
+          "motion_sites": [
+            {
+              "line": 150,
+              "symbol": "AnimatedContent"
+            },
+            {
+              "line": 243,
+              "symbol": "SeekableTransitionState"
+            },
+            {
+              "line": 269,
+              "symbol": "animateTo"
+            },
+            {
+              "line": 277,
+              "symbol": "animateTo"
+            },
+            {
+              "line": 498,
+              "symbol": "AnimatedContent"
+            },
+            {
+              "line": 560,
+              "symbol": "AnimatedVisibility"
+            },
+            {
+              "line": 579,
+              "symbol": "AnimatedVisibility"
+            },
+            {
+              "line": 591,
+              "symbol": "AnimatedVisibility"
+            },
+            {
+              "line": 636,
+              "symbol": "animateTo"
+            },
+            {
+              "line": 772,
+              "symbol": "MeloXDetailOverlay"
+            },
+            {
+              "line": 778,
+              "symbol": "MeloXDetailOverlay"
+            }
+          ]
+        },
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/navigation/MeloXBottomChrome.kt",
+          "sha256": "19ebed9a315340724f5ba15893d4aa8d5ff71caa14f903fe719a85c8b4035015",
+          "lines": 466,
+          "motion_sites": [
+            {
+              "line": 79,
+              "symbol": "animateFloatAsState"
+            },
+            {
+              "line": 92,
+              "symbol": "animateFloatAsState"
+            },
+            {
+              "line": 318,
+              "symbol": "animateFloatAsState"
+            }
+          ]
+        }
+      ]
+    },
+    "split-layout": {
+      "android": {
+        "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/layout/MeloXPositionedChrome.kt",
+        "sha256": "8eb2140fbb030c8a1bc4f69dde6996668d40c1349653a53c7a21d7564540ecf2",
+        "lines": 141,
+        "motion_sites": []
+      },
+      "windows": [
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/layout/MeloXPositionedChrome.kt",
+          "sha256": "2d028ab3f48c03511ad9781c677ad620922a3524ed8879602d03d06a49a94a11",
+          "lines": 52,
+          "motion_sites": []
+        }
+      ]
+    }
+  }
+}

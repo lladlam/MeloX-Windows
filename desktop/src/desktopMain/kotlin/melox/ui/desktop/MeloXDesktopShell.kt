@@ -117,7 +117,8 @@ internal fun MeloXInterfaceLayout(
                 MeloXListDetailLayout(hasMedia, modifier) { content() }
                 if (desktop) {
                     collectionOverlay()
-                    androidx.compose.animation.AnimatedVisibility(inspector != null && !playerOpen, Modifier.align(Alignment.CenterEnd).width(inspectorWidth.dp).fillMaxHeight(),
+                    androidx.compose.animation.AnimatedVisibility(inspector != null && !playerOpen, Modifier.align(Alignment.CenterEnd).width(inspectorWidth.dp).fillMaxHeight()
+                        .padding(top = melox.ui.desktop.LocalMeloXCaptionInset.current),
                         enter = slideInHorizontally(tween(duration)) { it } + fadeIn(tween(duration)),
                         exit = slideOutHorizontally(tween(duration)) { it } + fadeOut(tween(duration))) {
                         var retained by remember { mutableStateOf(inspector ?: DesktopInspector.Lyrics) }
@@ -156,7 +157,7 @@ internal fun MeloXInterfaceLayout(
 private fun DesktopSidebar(selectedTab: AppTab, source: MusicSource, libraryPage: String?,
     onSelect: (AppTab, String?) -> Unit, session: melox.account.NeteaseSessionStore, onAccount: () -> Unit) {
     val colors = MaterialTheme.colorScheme
-    Column(Modifier.padding(start = 8.dp, top = 8.dp, bottom = 8.dp).width(DesktopMetrics.Sidebar.dp).fillMaxHeight()
+    Column(Modifier.padding(start = 8.dp, top = 8.dp + melox.ui.desktop.LocalMeloXCaptionInset.current, bottom = 8.dp).width(DesktopMetrics.Sidebar.dp).fillMaxHeight()
         .desktopLiquidPanel(RoundedCornerShape(18.dp))
         .testTag("desktop-sidebar")) {
         Column(Modifier.weight(1f).desktopVerticalScroll().padding(horizontal = 9.dp, vertical = 38.dp)) {

@@ -8,6 +8,9 @@ import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.focusable
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
@@ -30,6 +33,11 @@ internal object MeloXPointerMode {
     var touch by mutableStateOf(false)
 }
 
+/** Root keyboard focus, restored when a pushed detail closes. */
+internal object MeloXRootFocus {
+    var requester: FocusRequester? = null
+}
+
 internal fun Modifier.meloXTrackPointerMode() = pointerInput(Unit) {
     awaitEachGesture {
         val down = awaitFirstDown(requireUnconsumed = false, pass = PointerEventPass.Initial)
@@ -40,15 +48,20 @@ internal fun Modifier.meloXTrackPointerMode() = pointerInput(Unit) {
 /** Retain the real parent page below the destination, including its LazyListState. */
 @Composable
 internal fun <T> MeloXDetailOverlay(target: T?, onBack: () -> Unit, content: @Composable (T) -> Unit) {
-    val reduceMotion = MeloXSettingsRuntime.reduceMotion
+    MeloXBackHandler(target != null) { onBack() }
+    val focus = remember { FocusRequester() }
+    LaunchedEffect(target) {
+        if (target != null) focus.requestFocus()
+        else runCatching { MeloXRootFocus.requester?.requestFocus() }
+    }
     AnimatedContent(target, modifier = Modifier.fillMaxSize().clipToBounds(),
         transitionSpec = {
-            val incoming = slideInHorizontally(tween(if (reduceMotion) 0 else 300, easing = FastOutSlowInEasing)) { it } + fadeIn(tween(if (reduceMotion) 0 else 180))
-            val outgoing = slideOutHorizontally(tween(if (reduceMotion) 0 else 260, easing = FastOutSlowInEasing)) { it } + fadeOut(tween(if (reduceMotion) 0 else 200))
+            val incoming = slideInHorizontally(melox.ui.foundation.meloXPagePushSpec()) { it }
+            val outgoing = slideOutHorizontally(melox.ui.foundation.meloXPagePushSpec()) { it }
             if (targetState == null) EnterTransition.None togetherWith outgoing
             else incoming togetherWith ExitTransition.None
         }, label = "collection-route") { destination ->
-        if (destination != null) Box(Modifier.fillMaxSize().meloXEdgeSwipeBack(onBack)) { content(destination) }
+        if (destination != null) Box(Modifier.fillMaxSize().focusRequester(focus).focusable().meloXEdgeSwipeBack(onBack)) { content(destination) }
     }
 }
 

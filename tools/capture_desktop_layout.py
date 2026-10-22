@@ -81,6 +81,10 @@ elif mode.startswith('reference-player'):
     add('collapsed', 'tap@player-collapse', ['tag:desktop-bottom-player', 'absent:desktop-player-column'])
 elif mode == 'lyrics-light':
     add('consent', 'tap@remote-reject', ['cloud-enabled:false'])
+    # Pause at 0:00 before layout switching: the lyric line anchors scroll with
+    # playback, so a slow desktop recomposition must not move line 1 off-screen.
+    add('ready', 'wait@1500', ['playing:true', 'tag:mini-player-play-pause'])
+    add('pause-before-layout', 'tap@mini-player-play-pause', ['playing:false'])
     add('reveal-general', 'reveal@settings-open-general')
     add('general', 'tap@settings-open-general', ['tag:settings-general'])
     add('reveal-switch', 'reveal@setting-general_desktop_layout')

@@ -7,6 +7,12 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.WindowPlacement
 import androidx.compose.ui.window.application
@@ -41,12 +47,19 @@ fun main(args: Array<String>) {
     application(exitProcessOnExit = false) {
         val state = rememberWindowState(width = 640.dp, height = 480.dp)
         var dark by remember { mutableStateOf(true) }
+        var immersive by remember { mutableStateOf(false) }
+        var gradientPlayer by remember { mutableStateOf(false) }
         Window(onCloseRequest = ::exitApplication, state = state, undecorated = true, title = "MeloX window chrome audit") {
             val owner = remember(window, state) { MeloXWindowChrome(this, state) { closedByButton = true } }
             val density = LocalDensity.current.density
             CompositionLocalProvider(LocalMeloXWindowChrome provides owner) {
                 MaterialTheme(colorScheme = if (dark) darkColorScheme() else lightColorScheme()) {
-                    MeloXWindowFrame { Text("Production app-owned caption / physical native pointer audit") }
+                    MeloXWindowFrame(playerVisible = gradientPlayer) {
+                        Box(Modifier.fillMaxSize().background(if (gradientPlayer) Brush.horizontalGradient(listOf(Color(0xFF24558A), Color(0xFF7C346D)))
+                            else Brush.horizontalGradient(listOf(MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.background)))) {
+                            Text("Production app-owned caption / physical native pointer audit")
+                        }
+                    }
                 }
             }
             LaunchedEffect(window) {
@@ -123,6 +136,25 @@ fun main(args: Array<String>) {
                     dark = false
                     delay(400)
                     ImageIO.write(robot.createScreenCapture(window.bounds), "png", File(output.parentFile, "window-caption-light.png"))
+                    melox.settings.MeloXSettingsPreferences.setBoolean("windows_immersive_caption", true)
+                    immersive = true
+                    gradientPlayer = true
+                    delay(500)
+                    val blended = robot.createScreenCapture(window.bounds)
+                    ImageIO.write(blended, "png", File(output.parentFile, "window-caption-immersive.png"))
+                    // A horizontal player gradient must continue unchanged through
+                    // the transparent caption, away from text/buttons and borders.
+                    val x = blended.width / 2
+                    val above = blended.getRGB(x, (12 * density).toInt()) and 0xffffff
+                    val below = blended.getRGB(x, (60 * density).toInt()) and 0xffffff
+                    check(above == below) { "Caption interrupts the page surface: $above != $below" }
+                    record("immersive-continuous-player-surface")
+                    captionClick(1)
+                    await { window.placement == WindowPlacement.Maximized }
+                    record("immersive-physical-maximize")
+                    captionClick(1)
+                    await { window.placement == WindowPlacement.Floating }
+                    record("immersive-physical-restore")
                     captionClick(0)
                     await { closedByButton }
                     record("physical-close")
@@ -130,6 +162,7 @@ fun main(args: Array<String>) {
                     failure = error
                     record("failed")
                 } finally {
+                    if (immersive) melox.settings.MeloXSettingsPreferences.setBoolean("windows_immersive_caption", false)
                     output.writeText(JSONObject().put("status", if (failure == null && closedByButton) "PASSED" else "FAILED")
                         .put("os", System.getProperty("os.name")).put("input", "java.awt.Robot real pointer")
                         .put("error", failure?.toString()).put("samples", samples).toString(2) + "\n")

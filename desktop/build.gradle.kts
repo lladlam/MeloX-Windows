@@ -225,6 +225,8 @@ tasks.register<JavaExec>("auditWindowChrome") {
     val compilation = kotlin.targets.getByName("desktop").compilations.getByName("main")
     classpath = files(compilation.output.allOutputs, compilation.runtimeDependencyFiles)
     mainClass.set("melox.validation.MeloXWindowChromeAuditKt")
+    jvmArgs(productionJvmArgs)
+    systemProperty("user.home", layout.buildDirectory.dir("verification/window-chrome-home").get().asFile.absolutePath)
     args(layout.buildDirectory.file("verification/window-chrome.json").get().asFile.absolutePath)
 }
 

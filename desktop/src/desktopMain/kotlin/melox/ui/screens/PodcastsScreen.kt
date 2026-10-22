@@ -64,10 +64,11 @@ fun PodcastsScreen(
     val client = remember(cookie) { NeteaseUniversalSearchClient(cookieProvider = { cookie }) }
     key(client) {
     var selected by remember { mutableStateOf<MeloXPodcast?>(null) }
-    if (selected != null) {
-        PodcastDetail(client, selected!!, onBack = { selected = null })
-    } else {
+    Box(Modifier.fillMaxSize()) {
         PodcastHome(client, modifier, onPodcast = { selected = it })
+        melox.ui.navigation.MeloXDetailOverlay(selected, { selected = null }) { podcast ->
+            PodcastDetail(client, podcast, onBack = { selected = null })
+        }
     }
     }
 }

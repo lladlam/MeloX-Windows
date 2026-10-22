@@ -29,6 +29,7 @@ import melox.account.NeteaseSessionStore
 import melox.library.NeteaseLibraryCache
 import melox.library.NeteaseLibraryClient
 import melox.library.NeteasePlaylistSummary
+import melox.model.SearchSong
 import melox.music.model.MusicHomeFeed
 import melox.music.model.MusicPlaylistSummary
 import melox.music.model.MusicRankingSummary
@@ -182,6 +183,8 @@ private fun ProviderExploreDataScreen(
     var category by remember(source) { mutableStateOf("推荐歌单") }
     var refreshing by remember(source) { mutableStateOf(false) }
     var error by remember(source) { mutableStateOf<String?>(null) }
+    var rankingSongs by remember(source) { mutableStateOf<List<SearchSong>?>(null) }
+    var rankingTitle by remember(source) { mutableStateOf("") }
 
     fun refresh() {
         if (refreshing || home == null) return
@@ -219,9 +222,25 @@ private fun ProviderExploreDataScreen(
         refreshing = refreshing,
         error = if (home == null) "${source.displayName} 暂未提供发现数据" else error,
         onCollection = { collection ->
-            if (collection is ExploreCollection.ProviderPlaylist) onOpenProviderPlaylist(collection.playlist)
+            when (collection) {
+                is ExploreCollection.ProviderPlaylist -> onOpenProviderPlaylist(collection.playlist)
+                is ExploreCollection.ProviderRanking -> {
+                    rankingTitle = collection.ranking.title
+                    error = null
+                    scope.launch {
+                        try {
+                            rankingSongs = loadProviderRankingSongs(source, collection.ranking)
+                        } catch (cancelled: kotlinx.coroutines.CancellationException) { throw cancelled }
+                        catch (failure: Exception) { error = failure.message ?: "排行榜加载失败" }
+                    }
+                }
+                is ExploreCollection.Netease -> Unit
+            }
         },
     )
+    melox.ui.navigation.MeloXDetailOverlay(rankingSongs, { rankingSongs = null }) { songs ->
+        MeloXProviderSongListDetail(songs, rankingTitle) { rankingSongs = null }
+    }
 }
 
 @Composable

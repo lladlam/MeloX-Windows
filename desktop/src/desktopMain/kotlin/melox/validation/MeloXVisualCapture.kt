@@ -149,11 +149,13 @@ fun main(args: Array<String>) = runBlocking {
         }
         val scene = ImageComposeScene(width, height, Density(density), coroutineContext = coroutineContext) { MeloXApp() }
         val start = System.nanoTime()
+        var renderClock = start
         suspend fun settle(durationMs: Long) {
             val end = System.nanoTime() + durationMs * 1_000_000L
             var frames = 0
             do {
-                scene.render(System.nanoTime() - start).close()
+                renderClock = maxOf(renderClock + 16_000_000L, System.nanoTime())
+                scene.render(renderClock - start).close()
                 delay(16L)
                 frames += 1
             } while (frames < 3 || System.nanoTime() < end)
@@ -280,8 +282,10 @@ fun main(args: Array<String>) = runBlocking {
             val deadline = System.nanoTime() + timeoutMs * 1_000_000L
             while (!condition() && System.nanoTime() < deadline) settle(16)
         }
-        fun capture(name: String) {
-            scene.render(System.nanoTime() - start).use { image ->
+        fun capture(name: String, timestamp: Long? = null) {
+            renderClock = timestamp?.coerceAtLeast(renderClock + 1L)
+                ?: maxOf(renderClock + 1_000_000L, System.nanoTime())
+            scene.render(renderClock - start).use { image ->
                 image.encodeToData(EncodedImageFormat.PNG)?.use { data -> File(output, "$name.png").writeBytes(data.bytes) }
             }
             println("Captured $name: ${width}x$height density=$density")
@@ -355,10 +359,22 @@ fun main(args: Array<String>) = runBlocking {
             expectations["00-${startTab.lowercase()}"]?.let { assertions -> awaitUi { assertions.all(::assertionMatches) } }
             capture("00-${startTab.lowercase()}")
             assertScene("00-${startTab.lowercase()}")
+            val savedPoints = mutableMapOf<String, Offset>()
             steps.forEachIndexed { index, step ->
                 val (name, coordinates) = step.split(':', limit = 2)
                 val eventStart = System.nanoTime()
-                if (coordinates == "reload-settings") {
+                if (coordinates.startsWith("remember-point@")) {
+                    val tag = coordinates.substringAfter('@')
+                    val node = checkNotNull(scene.captureSemantics().tagged(tag)) { "No production anchor $tag" }
+                    savedPoints[name] = node.boundsInWindow.center
+                } else if (coordinates.startsWith("tap-saved@")) {
+                    val point = checkNotNull(savedPoints[coordinates.substringAfter('@')])
+                    inputEvidence.put(JSONObject().put("step", name).put("type", "Mouse").put("action", "tap-saved-coordinate")
+                        .put("position", JSONArray(listOf(point.x, point.y))))
+                    scene.sendPointerEvent(PointerEventType.Press, point, button = PointerButton.Primary)
+                    settle(32)
+                    scene.sendPointerEvent(PointerEventType.Release, point, button = PointerButton.Primary)
+                } else if (coordinates == "reload-settings") {
                     // Re-read genuine canonical preferences; no validation values are injected.
                     melox.settings.MeloXSettingsRuntime.initialize(force = true)
                 } else if (coordinates == "escape") {
@@ -562,12 +578,16 @@ fun main(args: Array<String>) = runBlocking {
                     scene.sendPointerEvent(PointerEventType.Press, point, button = PointerButton.Primary)
                     scene.sendPointerEvent(PointerEventType.Release, point, button = PointerButton.Primary)
                 }
+                // Pointer-target stabilization above can take seconds. Sample the
+                // animation on an explicit frame clock: scene.render takes real
+                // wall time in software, so wall-clock sleeps would overshoot the
+                // requested offsets by hundreds of ms.
+                val frameBase = maxOf(renderClock + 1_000_000L, System.nanoTime())
                 frameOffsets.forEach { offset ->
-                    val remainingMs = (eventStart + offset * 1_000_000L - System.nanoTime()) / 1_000_000L
-                    if (remainingMs > 0) settle(remainingMs)
+                    val target = frameBase + offset * 1_000_000L
                     val frameName = "${(index + 1).toString().padStart(2, '0')}-$name-frame-$offset"
-                    val elapsedMs = (System.nanoTime() - eventStart) / 1_000_000.0
-                    capture(frameName)
+                    val elapsedMs = (target - frameBase) / 1_000_000.0
+                    capture(frameName, target)
                     frameEvidence.put(JSONObject().put("file", "$frameName.png").put("requested_ms", offset).put("actual_ms", elapsedMs))
                 }
                 settle(waitMs)
