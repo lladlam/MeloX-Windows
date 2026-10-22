@@ -1,0 +1,442 @@
+{
+  "replays": [
+    {
+      "directory": "bilibili-alignment-controls",
+      "scenes": 10,
+      "assertions": 15,
+      "passed": true,
+      "count_ok": true,
+      "endpoint": "Java Sound physical output",
+      "physical": "BLOCKED"
+    },
+    {
+      "directory": "bilibili-alignment-reload",
+      "scenes": 6,
+      "assertions": 6,
+      "passed": true,
+      "count_ok": true,
+      "endpoint": "Java Sound physical output",
+      "physical": "BLOCKED"
+    },
+    {
+      "directory": "desktop-drag",
+      "scenes": 8,
+      "assertions": 0,
+      "passed": true,
+      "count_ok": true,
+      "endpoint": "Java Sound physical output",
+      "physical": "BLOCKED"
+    },
+    {
+      "directory": "desktop-layout-cold-controls",
+      "scenes": 23,
+      "assertions": 41,
+      "passed": true,
+      "count_ok": true,
+      "endpoint": "VALIDATION_SOFTWARE_PCM_OUTPUT",
+      "physical": "BLOCKED"
+    },
+    {
+      "directory": "desktop-layout-controls",
+      "scenes": 29,
+      "assertions": 67,
+      "passed": true,
+      "count_ok": true,
+      "endpoint": "VALIDATION_SOFTWARE_PCM_OUTPUT",
+      "physical": "BLOCKED"
+    },
+    {
+      "directory": "desktop-layout-home-dark",
+      "scenes": 3,
+      "assertions": 8,
+      "passed": true,
+      "count_ok": true,
+      "endpoint": "VALIDATION_SOFTWARE_PCM_OUTPUT",
+      "physical": "BLOCKED"
+    },
+    {
+      "directory": "desktop-layout-home-light",
+      "scenes": 3,
+      "assertions": 8,
+      "passed": true,
+      "count_ok": true,
+      "endpoint": "VALIDATION_SOFTWARE_PCM_OUTPUT",
+      "physical": "BLOCKED"
+    },
+    {
+      "directory": "desktop-layout-lyrics-light",
+      "scenes": 12,
+      "assertions": 15,
+      "passed": true,
+      "count_ok": true,
+      "endpoint": "VALIDATION_SOFTWARE_PCM_OUTPUT",
+      "physical": "BLOCKED"
+    },
+    {
+      "directory": "desktop-layout-reload",
+      "scenes": 7,
+      "assertions": 6,
+      "passed": true,
+      "count_ok": true,
+      "endpoint": "VALIDATION_SOFTWARE_PCM_OUTPUT",
+      "physical": "BLOCKED"
+    },
+    {
+      "directory": "desktop-layout-reload-current",
+      "scenes": 5,
+      "assertions": 6,
+      "passed": true,
+      "count_ok": true,
+      "endpoint": "VALIDATION_SOFTWARE_PCM_OUTPUT",
+      "physical": "BLOCKED"
+    },
+    {
+      "directory": "desktop-layout-restore",
+      "scenes": 8,
+      "assertions": 14,
+      "passed": true,
+      "count_ok": true,
+      "endpoint": "VALIDATION_SOFTWARE_PCM_OUTPUT",
+      "physical": "BLOCKED"
+    },
+    {
+      "directory": "desktop-onboarding",
+      "scenes": 8,
+      "assertions": 8,
+      "passed": true,
+      "count_ok": true,
+      "endpoint": "Java Sound physical output",
+      "physical": "BLOCKED"
+    },
+    {
+      "directory": "desktop-search-scroll",
+      "scenes": 13,
+      "assertions": 0,
+      "passed": true,
+      "count_ok": true,
+      "endpoint": "Java Sound physical output",
+      "physical": "BLOCKED"
+    },
+    {
+      "directory": "desktop-surfaces-Dark",
+      "scenes": 58,
+      "assertions": 77,
+      "passed": true,
+      "count_ok": true,
+      "endpoint": "Java Sound physical output",
+      "physical": "BLOCKED"
+    },
+    {
+      "directory": "desktop-surfaces-Light",
+      "scenes": 58,
+      "assertions": 77,
+      "passed": true,
+      "count_ok": true,
+      "endpoint": "Java Sound physical output",
+      "physical": "BLOCKED"
+    },
+    {
+      "directory": "glass-dock-Dark",
+      "scenes": 7,
+      "assertions": 9,
+      "passed": true,
+      "count_ok": true,
+      "endpoint": "Java Sound physical output",
+      "physical": "BLOCKED"
+    },
+    {
+      "directory": "glass-dock-Light",
+      "scenes": 7,
+      "assertions": 9,
+      "passed": true,
+      "count_ok": true,
+      "endpoint": "Java Sound physical output",
+      "physical": "BLOCKED"
+    },
+    {
+      "directory": "home-final-dark",
+      "scenes": 40,
+      "assertions": 56,
+      "passed": true,
+      "count_ok": true,
+      "endpoint": "Java Sound physical output",
+      "physical": "BLOCKED"
+    },
+    {
+      "directory": "home-final-light",
+      "scenes": 29,
+      "assertions": 44,
+      "passed": true,
+      "count_ok": true,
+      "endpoint": "Java Sound physical output",
+      "physical": "BLOCKED"
+    },
+    {
+      "directory": "lyric-language-controls",
+      "scenes": 22,
+      "assertions": 22,
+      "passed": true,
+      "count_ok": true,
+      "endpoint": "Java Sound physical output",
+      "physical": "BLOCKED"
+    },
+    {
+      "directory": "lyric-language-reload",
+      "scenes": 11,
+      "assertions": 13,
+      "passed": true,
+      "count_ok": true,
+      "endpoint": "Java Sound physical output",
+      "physical": "BLOCKED"
+    },
+    {
+      "directory": "lyrics-controls",
+      "scenes": 151,
+      "assertions": 260,
+      "passed": true,
+      "count_ok": true,
+      "endpoint": "Java Sound physical output",
+      "physical": "BLOCKED"
+    },
+    {
+      "directory": "lyrics-reload",
+      "scenes": 2,
+      "assertions": 241,
+      "passed": true,
+      "count_ok": true,
+      "endpoint": "Java Sound physical output",
+      "physical": "BLOCKED"
+    },
+    {
+      "directory": "reference-lyrics",
+      "scenes": 11,
+      "assertions": 18,
+      "passed": true,
+      "count_ok": true,
+      "endpoint": "VALIDATION_SOFTWARE_PCM_OUTPUT",
+      "physical": "BLOCKED"
+    },
+    {
+      "directory": "reference-lyrics-light",
+      "scenes": 11,
+      "assertions": 18,
+      "passed": true,
+      "count_ok": true,
+      "endpoint": "VALIDATION_SOFTWARE_PCM_OUTPUT",
+      "physical": "BLOCKED"
+    },
+    {
+      "directory": "reference-player",
+      "scenes": 21,
+      "assertions": 35,
+      "passed": true,
+      "count_ok": true,
+      "endpoint": "VALIDATION_SOFTWARE_PCM_OUTPUT",
+      "physical": "BLOCKED"
+    },
+    {
+      "directory": "reference-player-reload",
+      "scenes": 6,
+      "assertions": 11,
+      "passed": true,
+      "count_ok": true,
+      "endpoint": "VALIDATION_SOFTWARE_PCM_OUTPUT",
+      "physical": "BLOCKED"
+    },
+    {
+      "directory": "settings-controls",
+      "scenes": 74,
+      "assertions": 55,
+      "passed": true,
+      "count_ok": true,
+      "endpoint": "Java Sound physical output",
+      "physical": "BLOCKED"
+    },
+    {
+      "directory": "settings-desktop-controls",
+      "scenes": 25,
+      "assertions": 27,
+      "passed": true,
+      "count_ok": true,
+      "endpoint": "Java Sound physical output",
+      "physical": "BLOCKED"
+    },
+    {
+      "directory": "settings-desktop-dark",
+      "scenes": 95,
+      "assertions": 31,
+      "passed": true,
+      "count_ok": true,
+      "endpoint": "Java Sound physical output",
+      "physical": "BLOCKED"
+    },
+    {
+      "directory": "settings-desktop-light",
+      "scenes": 95,
+      "assertions": 31,
+      "passed": true,
+      "count_ok": true,
+      "endpoint": "Java Sound physical output",
+      "physical": "BLOCKED"
+    },
+    {
+      "directory": "settings-desktop-reload",
+      "scenes": 1,
+      "assertions": 10,
+      "passed": true,
+      "count_ok": true,
+      "endpoint": "Java Sound physical output",
+      "physical": "BLOCKED"
+    },
+    {
+      "directory": "settings-en-US",
+      "scenes": 88,
+      "assertions": 65,
+      "passed": true,
+      "count_ok": true,
+      "endpoint": "Java Sound physical output",
+      "physical": "BLOCKED"
+    },
+    {
+      "directory": "settings-ja-JP",
+      "scenes": 88,
+      "assertions": 65,
+      "passed": true,
+      "count_ok": true,
+      "endpoint": "Java Sound physical output",
+      "physical": "BLOCKED"
+    },
+    {
+      "directory": "settings-reload",
+      "scenes": 8,
+      "assertions": 18,
+      "passed": true,
+      "count_ok": true,
+      "endpoint": "Java Sound physical output",
+      "physical": "BLOCKED"
+    },
+    {
+      "directory": "settings-zh-CN",
+      "scenes": 88,
+      "assertions": 65,
+      "passed": true,
+      "count_ok": true,
+      "endpoint": "Java Sound physical output",
+      "physical": "BLOCKED"
+    },
+    {
+      "directory": "settings-zh-TW",
+      "scenes": 88,
+      "assertions": 65,
+      "passed": true,
+      "count_ok": true,
+      "endpoint": "Java Sound physical output",
+      "physical": "BLOCKED"
+    },
+    {
+      "directory": "controls",
+      "scenes": 58,
+      "assertions": 87,
+      "passed": true,
+      "count_ok": true,
+      "endpoint": "Java Sound physical output",
+      "physical": "BLOCKED"
+    },
+    {
+      "directory": "reload",
+      "scenes": 3,
+      "assertions": 73,
+      "passed": true,
+      "count_ok": true,
+      "endpoint": "Java Sound physical output",
+      "physical": "BLOCKED"
+    },
+    {
+      "directory": "reload-reset",
+      "scenes": 3,
+      "assertions": 73,
+      "passed": true,
+      "count_ok": true,
+      "endpoint": "Java Sound physical output",
+      "physical": "BLOCKED"
+    },
+    {
+      "directory": "reset",
+      "scenes": 6,
+      "assertions": 109,
+      "passed": true,
+      "count_ok": true,
+      "endpoint": "Java Sound physical output",
+      "physical": "BLOCKED"
+    },
+    {
+      "directory": "smartqueue-limit-controls",
+      "scenes": 26,
+      "assertions": 13,
+      "passed": true,
+      "count_ok": true,
+      "endpoint": "Java Sound physical output",
+      "physical": "BLOCKED"
+    },
+    {
+      "directory": "smartqueue-limit-reload",
+      "scenes": 5,
+      "assertions": 4,
+      "passed": true,
+      "count_ok": true,
+      "endpoint": "Java Sound physical output",
+      "physical": "BLOCKED"
+    },
+    {
+      "directory": "song-actions-controls",
+      "scenes": 38,
+      "assertions": 34,
+      "passed": true,
+      "count_ok": true,
+      "endpoint": "VALIDATION_SOFTWARE_PCM_OUTPUT",
+      "physical": "BLOCKED"
+    },
+    {
+      "directory": "song-actions-reload",
+      "scenes": 30,
+      "assertions": 29,
+      "passed": true,
+      "count_ok": true,
+      "endpoint": "VALIDATION_SOFTWARE_PCM_OUTPUT",
+      "physical": "BLOCKED"
+    },
+    {
+      "directory": "split-layout-controls",
+      "scenes": 58,
+      "assertions": 69,
+      "passed": true,
+      "count_ok": true,
+      "endpoint": "VALIDATION_SOFTWARE_PCM_OUTPUT",
+      "physical": "BLOCKED"
+    },
+    {
+      "directory": "split-layout-portrait",
+      "scenes": 6,
+      "assertions": 12,
+      "passed": true,
+      "count_ok": true,
+      "endpoint": "VALIDATION_SOFTWARE_PCM_OUTPUT",
+      "physical": "BLOCKED"
+    },
+    {
+      "directory": "split-layout-reload",
+      "scenes": 6,
+      "assertions": 14,
+      "passed": true,
+      "count_ok": true,
+      "endpoint": "VALIDATION_SOFTWARE_PCM_OUTPUT",
+      "physical": "BLOCKED"
+    }
+  ],
+  "totals": {
+    "replays": 48,
+    "scenes": 1458,
+    "assertions": 2033
+  },
+  "failures": []
+}

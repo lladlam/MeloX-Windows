@@ -54,4 +54,6 @@
 - `capture_settings_pages.py desktop-controls/desktop-reload`：**25 scenes / 27 assertions** 与独立JVM **1 scene / 10 assertions PASSED**。真实点击三次标题栏开关后运行时和持久化偏好均为true，另起JVM读取。
 - `:desktop:auditWindowChrome`：本机无正尺寸原生显示器，编译与任务完成、结果为**UNSUPPORTED**；Windows CI必须在真实AWT窗口上执行，包含沉浸式渐变像素连续、最大化/还原与关闭。不能用 ImageComposeScene 截图代替。
 
+- Windows **[39729927138](https://github.com/lladlam/MeloX-Windows/actions/runs/39729927138) / `ba86270` PASSED**：57 suites / 276 tests（0失败/错误/跳过），48份capture / 1,458 scenes / 2,033 assertions 全部通过；真实AWT窗口的沉浸式渐变像素连续与最大化/还原也PASSED。发行ZIP独立核验 **337,978,332 bytes / SHA-256 `6b72c72189dcdb10543b2abb10a0150f9913461abaf97aacaf345403938de443`**，证据在 `evidence/windows-ci-ba86270/`。
+
 各项最终结果在完成后补记；离屏Touch和软件PCM不代替物理触屏/可听音频验收。

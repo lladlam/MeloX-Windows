@@ -1,0 +1,84 @@
+{
+  "input": "java.awt.Robot real pointer",
+  "os": "Windows Server 2025",
+  "samples": [
+    {
+      "undecorated": true,
+      "stage": "floating-no-native-titlebar",
+      "bounds": "java.awt.Rectangle[x=48,y=48,width=640,height=480]",
+      "placement": "Floating",
+      "minimized": false
+    },
+    {
+      "undecorated": true,
+      "stage": "physical-maximize",
+      "bounds": "java.awt.Rectangle[x=0,y=0,width=1024,height=768]",
+      "placement": "Maximized",
+      "minimized": false
+    },
+    {
+      "undecorated": true,
+      "stage": "physical-restore",
+      "bounds": "java.awt.Rectangle[x=48,y=48,width=640,height=480]",
+      "placement": "Floating",
+      "minimized": false
+    },
+    {
+      "undecorated": true,
+      "stage": "physical-fullscreen-restore",
+      "bounds": "java.awt.Rectangle[x=48,y=48,width=640,height=480]",
+      "placement": "Floating",
+      "minimized": false
+    },
+    {
+      "undecorated": true,
+      "stage": "physical-minimize",
+      "bounds": "java.awt.Rectangle[x=48,y=48,width=640,height=480]",
+      "placement": "Floating",
+      "minimized": true
+    },
+    {
+      "undecorated": true,
+      "stage": "physical-caption-double-click",
+      "bounds": "java.awt.Rectangle[x=0,y=0,width=1024,height=768]",
+      "placement": "Maximized",
+      "minimized": false
+    },
+    {
+      "undecorated": true,
+      "stage": "physical-corner-resize",
+      "bounds": "java.awt.Rectangle[x=48,y=48,width=712,height=528]",
+      "placement": "Floating",
+      "minimized": false
+    },
+    {
+      "undecorated": true,
+      "stage": "immersive-continuous-player-surface",
+      "bounds": "java.awt.Rectangle[x=48,y=48,width=712,height=528]",
+      "placement": "Floating",
+      "minimized": false
+    },
+    {
+      "undecorated": true,
+      "stage": "immersive-physical-maximize",
+      "bounds": "java.awt.Rectangle[x=0,y=0,width=1024,height=768]",
+      "placement": "Maximized",
+      "minimized": false
+    },
+    {
+      "undecorated": true,
+      "stage": "immersive-physical-restore",
+      "bounds": "java.awt.Rectangle[x=48,y=48,width=712,height=528]",
+      "placement": "Floating",
+      "minimized": false
+    },
+    {
+      "undecorated": true,
+      "stage": "physical-close",
+      "bounds": "java.awt.Rectangle[x=48,y=48,width=712,height=528]",
+      "placement": "Floating",
+      "minimized": false
+    }
+  ],
+  "status": "PASSED"
+}
