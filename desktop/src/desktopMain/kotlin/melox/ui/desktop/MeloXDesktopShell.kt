@@ -200,7 +200,7 @@ private fun DesktopSidebar(selectedTab: AppTab, source: MusicSource, libraryPage
             val profile = session.profile
             if (profile?.avatarUrl != null) MeloXArtworkImage(profile.avatarUrl, colors.primary, Modifier.size(30.dp).clip(CircleShape))
             else Box(Modifier.size(30.dp).clip(CircleShape).background(Color(0xFF7AA1E0)), contentAlignment = Alignment.Center) {
-                Text(desktopString("ui.desktop.sidebar.fallback_avatar_initial"), color = Color.White, fontWeight = FontWeight.Bold, fontSize = 14.sp)
+                Text(desktopPlatformString("avatar_initial"), color = Color.White, fontWeight = FontWeight.Bold, fontSize = 14.sp)
             }
             Text(profile?.nickname ?: if (session.isLoggedIn) desktopPlatformString("services_signed_in") else desktopString("ui.desktop.sidebar.not_signed_in"), fontSize = 13.5.sp, fontWeight = FontWeight.SemiBold,
                 maxLines = 1, overflow = TextOverflow.Ellipsis, modifier = Modifier.weight(1f))

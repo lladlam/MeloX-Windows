@@ -54,7 +54,7 @@ internal fun MeloXDesktopOnboarding(onFinish: (login: Boolean) -> Unit) {
                         when (selected) {
                             0 -> Column(Modifier.fillMaxSize().padding(horizontal = 42.dp), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(28.dp)) {
                                 Spacer(Modifier.weight(1f))
-                                Image(painterResource("parity/desktop-logo.png"), null, Modifier.size(132.dp).clip(RoundedCornerShape(28.dp)))
+                                Image(painterResource("branding/melox-windows.png"), null, Modifier.size(132.dp).clip(RoundedCornerShape(28.dp)))
                                 Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(10.dp)) {
                                     Text("MeloX", fontSize = 38.sp, fontWeight = FontWeight.Bold)
                                     Text(desktopString("ui.desktop.onboarding.subtitle"), fontSize = 17.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)

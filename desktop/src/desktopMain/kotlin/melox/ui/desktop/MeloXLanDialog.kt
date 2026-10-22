@@ -1,6 +1,9 @@
 package melox.ui.desktop
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.ui.semantics.Role
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -102,13 +105,13 @@ internal fun MeloXLanDialog(visible: Boolean, onDismiss: () -> Unit) {
             Text("PIN ${runtime.identity.pin}  ·  ${runtime.status.collectAsState().value}", fontSize = 12.sp,
                 color = MaterialTheme.colorScheme.onSurfaceVariant)
             Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                DesktopDialogButton(if (enabled) "关闭局域网" else "开启局域网", "lan-enabled") {
+                LanButton(if (enabled) "关闭局域网" else "开启局域网", "lan-enabled") {
                     enabled = !enabled; runtime.setEnabled(enabled)
                 }
-                DesktopDialogButton("重新生成PIN", "lan-new-pin") {
+                LanButton("重新生成PIN", "lan-new-pin") {
                     runtime.identity.regeneratePin()
                 }
-                DesktopDialogButton("扫描设备", "lan-scan") { rescan() }
+                LanButton("扫描设备", "lan-scan") { rescan() }
             }
             if (scanning) CircularProgressIndicator(Modifier.size(18.dp), strokeWidth = 2.dp)
             error?.let { Text(it, color = Color(0xFFFF6B6B), fontSize = 12.sp, modifier = Modifier.testTag("lan-error")) }
@@ -117,18 +120,18 @@ internal fun MeloXLanDialog(visible: Boolean, onDismiss: () -> Unit) {
                 Text("已连接 ${selected?.name.orEmpty()}", fontWeight = FontWeight.SemiBold, modifier = Modifier.testTag("lan-connected"))
                 Text(state?.optString("title").orEmpty().ifBlank { "未在播放" } + " — " + state?.optString("artist").orEmpty(), fontSize = 13.sp)
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    DesktopDialogButton("上一首", "lan-previous") { command("previous") }
-                    DesktopDialogButton(if (state?.optBoolean("playing") == true) "暂停" else "播放", "lan-toggle") { command("toggle") }
-                    DesktopDialogButton("下一首", "lan-next") { command("next") }
+                    LanButton("上一首", "lan-previous") { command("previous") }
+                    LanButton(if (state?.optBoolean("playing") == true) "暂停" else "播放", "lan-toggle") { command("toggle") }
+                    LanButton("下一首", "lan-next") { command("next") }
                 }
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    DesktopDialogButton("接力播放", "lan-transfer") { remoteAction("transfer") }
-                    DesktopDialogButton("投放音频", "lan-cast") { busy = true; scope.launch {
+                    LanButton("接力播放", "lan-transfer") { remoteAction("transfer") }
+                    LanButton("投放音频", "lan-cast") { busy = true; scope.launch {
                         runCatching { withContext(Dispatchers.IO) { runtime.cast() } }.onFailure { error = it.message }; busy = false } }
-                    DesktopDialogButton("同步听歌", "lan-together") { busy = true; scope.launch {
+                    LanButton("同步听歌", "lan-together") { busy = true; scope.launch {
                         runCatching { withContext(Dispatchers.IO) { runtime.together(useRelay = true) } }.onFailure { error = it.message }; busy = false } }
                 }
-                DesktopDialogButton("断开", "lan-disconnect") {
+                LanButton("断开", "lan-disconnect") {
                     runtime.endSession(); connected = false; selected = null; remote = null
                 }
             } else {
@@ -140,7 +143,7 @@ internal fun MeloXLanDialog(visible: Boolean, onDismiss: () -> Unit) {
                             Text("${device.platform} · ${device.address}:${device.port}${if (device.trusted) " · 已信任" else ""}",
                                 fontSize = 11.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
                         }
-                        DesktopDialogButton("连接", "lan-connect:${device.id}", prominent = true) { connect(device) }
+                        LanButton("连接", "lan-connect:${device.id}", prominent = true) { connect(device) }
                     }
                 }
                 if (devices.isEmpty() && !scanning) Text("点“扫描设备”查找同一局域网内的 MeloX", fontSize = 12.sp,
@@ -155,7 +158,7 @@ internal fun MeloXLanDialog(visible: Boolean, onDismiss: () -> Unit) {
                 trusted.forEach { peer ->
                     Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
                         Text(peer.optString("name").ifBlank { peer.optString("deviceId") }, Modifier.weight(1f), fontSize = 12.sp)
-                        DesktopDialogButton("移除", "lan-untrust:${peer.optString("deviceId")}") {
+                        LanButton("移除", "lan-untrust:${peer.optString("deviceId")}") {
                             runtime.identity.untrust(peer.optString("deviceId")); trusted = runtime.identity.trusted()
                         }
                     }
@@ -163,7 +166,19 @@ internal fun MeloXLanDialog(visible: Boolean, onDismiss: () -> Unit) {
             }
             if (recent.isNotEmpty()) Text("最近连接：${recent.joinToString { it.optString("name") }}", fontSize = 11.sp,
                 color = MaterialTheme.colorScheme.onSurfaceVariant)
-            DesktopDialogButton("关闭", "lan-close") { onDismiss() }
+            LanButton("关闭", "lan-close") { onDismiss() }
         }
+    }
+}
+
+@Composable
+private fun LanButton(label: String, tag: String, prominent: Boolean = false, onClick: () -> Unit) {
+    val shape = RoundedCornerShape(6.dp)
+    Box(Modifier.height(28.dp).widthIn(min = 72.dp).clip(shape)
+        .background(if (prominent) Color(0xFFDC0011) else MaterialTheme.colorScheme.onSurface.copy(alpha = .07f))
+        .border(.5.dp, MaterialTheme.colorScheme.onSurface.copy(alpha = .14f), shape)
+        .testTag(tag).clickable(role = Role.Button, onClick = onClick).padding(horizontal = 10.dp),
+        contentAlignment = Alignment.Center) {
+        Text(label, fontSize = 12.5.sp, color = if (prominent) Color.White else MaterialTheme.colorScheme.onSurface)
     }
 }

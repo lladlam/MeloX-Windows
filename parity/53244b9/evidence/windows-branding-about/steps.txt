@@ -1,0 +1,5 @@
+early:wait@1200
+consent:tap@remote-reject
+dev:tap@desktop-settings-tab:Developer
+open:tap@desktop-settings-about
+shown:wait@1800

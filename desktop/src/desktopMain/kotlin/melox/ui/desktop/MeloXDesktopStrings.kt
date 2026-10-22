@@ -37,6 +37,9 @@ internal fun desktopQualityTitle(quality: melox.audio.MusicQuality): String = de
 internal fun desktopPlatformString(key: String): String {
     val chinese = Locale.getDefault().language == "zh"
     return when (key) {
+        "about_developer" -> if (chinese) "开发者：lladlam（MeloX Windows）" else "Developer: lladlam (MeloX Windows)"
+        "about_copyright" -> if (chinese) "© %d lladlam。MeloX 是非官方第三方网易云音乐客户端。" else "© %d lladlam. MeloX is an unofficial third-party NetEase Cloud Music client."
+        "avatar_initial" -> "M"
         "layout_title" -> if (chinese) "电脑端布局" else "Desktop layout"
         "layout_hint" -> if (chinese) "使用 MeloX 电脑端侧栏和底部播放器；关闭可切回当前布局" else "Use the MeloX desktop sidebar and bottom player; turn off to restore the current layout"
         "settings" -> if (chinese) "设置" else "Settings"

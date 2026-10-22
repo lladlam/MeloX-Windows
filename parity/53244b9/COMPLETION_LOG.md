@@ -133,3 +133,8 @@
 - 依据 Android `docs/MELOX-LAN.md` 与 `lan/` 源码迁移发现、PIN/信任、控制、接力、PCM 投放、Together 及中继 token。
 - 播放全部接真实 PlaybackCommands/AudioPlayer；投放只取 Java Sound 实际接受的 PCM；中继只代理真实 Range 音频且不泄露 Cookie。底栏与设置入口提供设备名/端口/PIN/信任列表/最近连接。
 - shared **292 tests / 0 failures/errors/skipped**，桌面编译通过。新增真实 loopback socket 协议测试与真实 UDP 发现测试。未验证真实 Windows↔Android 跨机、防火墙、物理扬声器；详见 `LAN_PLAYBACK.md`。
+
+## 17. Windows 关于页品牌与图标
+
+- 关于页原读取 macOS 参考字符串，显示“洛汐聚合体”并复用 macOS Logo；改为 Windows 自有 `branding/melox-windows.png`（派生自 MeloX-Android 固定启动图标）与 lladlam 开发者/版权信息，首次引导、托盘、侧栏占位同步。
+- 真实设置导航+鼠标点击截图验证；参考资源字节未改。详见 `WINDOWS_ABOUT_BRANDING.md`，证据 `evidence/windows-branding-about/`。
