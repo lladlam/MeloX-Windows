@@ -170,7 +170,7 @@ args = ['--locale', 'en-US', '--source', 'Netease' if mode.startswith(('home-', 
     '--width', '2414' if mode.startswith('reference-lyrics') else '1960' if mode.startswith('reference-player') else '1280',
     '--height', '1356' if mode.startswith('reference-lyrics') else '1184' if mode.startswith('reference-player') else '800',
     '--density', '2' if mode.startswith('reference-') else '1', '--capture-pcm',
-    '--output', str(output), '--wait-ms', '650', '--startup-wait-ms', '1200',
+    '--output', str(output), '--wait-ms', '1200', '--startup-wait-ms', '1200',
     '--steps-file', str(output / 'steps.txt'), '--expect-file', str(output / 'expect.txt')]
 if not mode.startswith('home-'):
     args += ['--scan-local-dir', str(home), '--local-lyrics-file', str(lyrics), '--local-wavs', ','.join(map(str, fixtures))]

@@ -78,3 +78,12 @@
 - `window-chrome.json` 在Windows Server 2025以真实AWT Robot通过：无原生标题栏、物理最大化/还原/全屏还原/最小化/双击/右下角缩放/关闭，以及**沉浸式标题栏**渐变上下像素连续、沉浸状态再次最大化和还原。`immersive-window`、`glass-optics`、`display-awake`、`desktop-layout`、`lyrics-controls`、`settings-icons` 均PASSED。原生输入、下载核验与独立重计在 `evidence/windows-ci-ba86270/`。
 - 独立核验内层发行ZIP **337,978,332 bytes**，SHA-256 **`6b72c72189dcdb10543b2abb10a0150f9913461abaf97aacaf345403938de443`**；357条目CRC、构建修订戳等于`ba86270`、JAR/app-image/最终ZIP解码器与固定资源检查通过。最近可独立核验的Windows发行升级为 **ba86270**。
 - 整体迁移仍为 **PARTIAL**：真实网易云账号收藏/云盘/私信、物理触屏与触摸键盘、可听Windows硬件输出、长时内存、Android同内容像素，以及播放器横屏双栏/天际歌词/完整多语言仍未由这些回放证明。
+
+## 9. 统一详情操作与竖屏封面续迁
+
+- 分享按钮和更多入口接通真实分享文本/系统剪贴板、四种排序、详情信息与真实歌单刷新；provided songs 分享真实歌曲链接，不拼接虚构网易云歌单链接。可见排序行与实际分享的200首公开热歌榜数据独立比较通过。
+- 收藏态随真实会话revision刷新，未知状态不显示旧账户收藏态；订阅请求固定Cookie、旧会话结果不回写；自己的歌单不显示取消订阅。取消异常传播，已有歌曲时错误也可见。
+- 按固定源保留480ms header tween，补22dp顶部落点、竖屏封面独立上抬30dp、MiniPlay展开时目标页封面姿态与切歌回弹（AutoMix期间不重复叠加）。横屏统一时间线与双栏仍待继续。
+- 修正旧手机回放的验证缺口：只传LRC参数没有Local扫描，因此旧115/22不证明真实歌词显示；现经生产Local扫描及持久化歌词库加载，必须出现真实歌词行。失败排查与源依据见 `DETAIL_AND_ARTWORK_FOLLOWUP.md`。
+- 本地最终：手机首页 **17 scenes / 20 assertions**，手机播放器 **145/28**，桌面controls **29/67**、lyrics-light **12/15**；独立几何/PCM重计 **41/82**；shared **57 suites / 276 tests / 0 failures/errors/skipped**，桌面编译通过。源码/回放/选定图片证据在 `evidence/mobile-v49/`，完整本地输出保留于build目录。静态桌面截图等待1200ms，不放宽几何容差。
+- Windows本批构建、完整下载和独立发行核验待补记。最近已独立核验发行仍为 **ba86270**，本批未据此标记整体迁移完成。

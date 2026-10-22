@@ -1,0 +1,16 @@
+consent:tap@remote-reject
+loaded:wait@7000
+public-hot:touch-drag@home-quick-actions,-220,0
+hot:tap@home-action-热歌榜
+hot-loaded:wait@8000
+share-list:tap@playlist-share
+close-share:tap@playlist-actions-close
+list-more:tap@playlist-more
+sort-title:tap@playlist-sort:Title
+back:escape
+hot-again:tap@home-action-热歌榜
+hot-loaded-again:wait@8000
+back-again:escape
+daily-reveal:touch-drag@home-quick-actions,220,0
+daily-needs-session:tap@home-action-每日推荐
+daily-error:wait@1000

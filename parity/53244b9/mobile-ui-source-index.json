@@ -298,11 +298,11 @@
         },
         {
           "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXLibraryPlaylistDetail.kt",
-          "sha256": "7ed7329d64f098d334cfd65e3951b255de85dd6fec35f68524e69c871134e38c",
-          "lines": 850,
+          "sha256": "c92cfc1d7e3a4fd5ed3cc51458d642dce0b43f749619091033647c07477167e0",
+          "lines": 923,
           "motion_sites": [
             {
-              "line": 616,
+              "line": 688,
               "symbol": "sharedElement"
             }
           ]
@@ -343,7 +343,7 @@
       "windows": [
         {
           "path": "desktop/src/desktopMain/kotlin/melox/ui/navigation/MeloXDetailMotion.kt",
-          "sha256": "1da6ec7c1a2a025be68a37cce1865bb4785d75838649f77651a5aa0f5baed7e5",
+          "sha256": "69d30e0857aa01e38ff305ee799298b4f93187294955ef10c346e9e2bff533cb",
           "lines": 130,
           "motion_sites": [
             {
@@ -503,7 +503,7 @@
       "windows": [
         {
           "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXNowPlaying.kt",
-          "sha256": "38b3fc87c05c82520c5aa29741309560165de77587d574f34ccfc097de48ddb6",
+          "sha256": "96b9b51cb269d9012a044301a383da6b7da26c8eb2e3e64ae2643bfe17eeb404",
           "lines": 939,
           "motion_sites": [
             {
@@ -566,23 +566,27 @@
         },
         {
           "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXIOSPlayerScene.kt",
-          "sha256": "e1ecef8a774ca24a9712744691e7d1141c06d288441c1fe768bb343b1ac9a0ad",
-          "lines": 320,
+          "sha256": "5b722b498a330d19efdaa5720a75485f3f7cfc748f2ec8d16b211ca0725582ff",
+          "lines": 342,
           "motion_sites": [
             {
-              "line": 242,
+              "line": 243,
               "symbol": "AnimatedVisibility"
             },
             {
-              "line": 290,
+              "line": 291,
               "symbol": "animateFloatAsState"
             },
             {
-              "line": 292,
+              "line": 302,
+              "symbol": "animateTo"
+            },
+            {
+              "line": 305,
               "symbol": "animateFloatAsState"
             },
             {
-              "line": 295,
+              "line": 308,
               "symbol": "animateDpAsState"
             }
           ]
@@ -599,8 +603,8 @@
       "windows": [
         {
           "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerTransition.kt",
-          "sha256": "70c434ab9c07902c5e6ec03201543a8611d2748eb2075df46dcee83432cfc82c",
-          "lines": 75,
+          "sha256": "b6defb23b742ca69939b9a10271a6ec482915c8b617ce57b7320696029dba622",
+          "lines": 62,
           "motion_sites": []
         }
       ]

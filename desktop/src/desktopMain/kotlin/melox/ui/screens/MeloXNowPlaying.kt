@@ -312,7 +312,7 @@ internal fun Grabber(
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .height(30.dp)
+            .height(22.dp)
             .testTag("player-collapse")
             .then(dragModifier)
             .clickable(interactionSource = interaction, indication = null, onClick = onDismiss),

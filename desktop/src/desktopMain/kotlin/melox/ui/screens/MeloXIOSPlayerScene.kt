@@ -2,6 +2,7 @@ package melox.ui.screens
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.animateDp
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloat
@@ -288,13 +289,30 @@ private fun PersistentPlayerArtwork(
 ) {
     val mix by melox.playback.MeloXAutoMixTransitionRuntime.state.collectAsState()
     val headerProgress by animateFloatAsState(if (page == 0) 0f else 1f,
-        tween(480, easing = FastOutSlowInEasing), label = "persistent-artwork-page-frame")
+        tween(if (MeloXSettingsRuntime.reduceMotion) 0 else 480, easing = FastOutSlowInEasing), label = "persistent-artwork-page-frame")
+    val switchBounce = remember { Animatable(1f) }
+    var previousMediaId by remember { mutableStateOf(track.id) }
+    LaunchedEffect(track.id, MeloXSettingsRuntime.reduceMotion, MeloXSettingsRuntime.artworkMotionEnabled) {
+        val changed = previousMediaId != track.id
+        previousMediaId = track.id
+        switchBounce.snapTo(1f)
+        if (changed && !MeloXSettingsRuntime.reduceMotion && MeloXSettingsRuntime.artworkMotionEnabled &&
+            !mix.active && !mix.handedOff) {
+            switchBounce.snapTo(0f)
+            switchBounce.animateTo(1f, spring(dampingRatio = .42f, stiffness = 480f, visibilityThreshold = .001f))
+        }
+    }
     val playbackScale by animateFloatAsState(
         if (MeloXSettingsRuntime.reduceMotion || !MeloXSettingsRuntime.artworkMotionEnabled || isPlaying) 1f else .74f,
         if (isPlaying) MeloXMotion.artworkGrowSpec() else MeloXMotion.artworkShrinkSpec(), label = "shared-artwork-playback-scale")
     val elevation by animateDpAsState(if (isPlaying) 26.dp else 14.dp, spring(.92f, 320f), label = "shared-artwork-shadow")
     val blend = smoothStep(expansion, .30f, .88f)
-    val pageFrameProgress = if (isLandscape) 0f else headerProgress
+    // During MiniPlay morph, register the artwork at the destination page's
+    // real frame immediately. Otherwise restored Lyrics first opens a large
+    // cover and then jumps to its 72dp header after the shell has settled.
+    val destinationFrame = if (isLandscape || page == 0) 0f else 1f
+    val pageFrameProgress = if (expansion > .01f && expansion < .99f) destinationFrame
+        else if (isLandscape) 0f else headerProgress
     val effectiveScale = 1f + (playbackScale - 1f) * blend * (1f - pageFrameProgress)
     BoxWithConstraints(Modifier.fillMaxSize().padding(horizontal = if (isLandscape) 20.dp else 32.dp)) {
         val contentTop = 30.dp
@@ -302,16 +320,20 @@ private fun PersistentPlayerArtwork(
         val fullSize = if (isLandscape) minOf(460.dp, (maxHeight - 42.dp).coerceAtLeast(1.dp), maxWidth * .43f)
             else minOf(maxWidth, portraitHeight - 92.dp).coerceAtLeast(1.dp)
         val fullX = (((if (isLandscape) maxWidth * .43f else maxWidth) - fullSize) / 2f).coerceAtLeast(0.dp)
-        val fullY = (contentTop + ((if (isLandscape) maxHeight - contentTop - fullSize
-            else portraitHeight - fullSize - 20.dp - 58.dp) / 2f).coerceAtLeast(0.dp))
-            .coerceIn(contentTop, (maxHeight - fullSize).coerceAtLeast(contentTop))
+        val fullY = if (isLandscape) (maxHeight - fullSize) / 2f
+            else (contentTop + portraitHeight - fullSize - 78.dp - 30.dp).coerceAtLeast(0.dp)
         val coverSize = fullSize + (72.dp - fullSize) * pageFrameProgress
         val x = fullX * (1f - pageFrameProgress)
-        val y = fullY + (contentTop - fullY) * pageFrameProgress
-        val shape = RoundedCornerShape(12.dp)
-        Box(Modifier.offset(x, y).size(coverSize).then(sharedModifier)) {
+        val y = fullY + (22.dp - fullY) * pageFrameProgress
+        val shape = RoundedCornerShape((6f + 6f * expansion.coerceIn(0f, 1f)).dp)
+        Box(Modifier.offset(x, y).size(coverSize).then(sharedModifier)
+            .testTag("player-persistent-artwork").semantics {
+                stateDescription = "page=$page;frame=$pageFrameProgress;size=${coverSize.value};y=${y.value};motion=${switchBounce.value}"
+            }) {
             MeloXAutoMixArtwork(track, sourceColor, Modifier.fillMaxSize().graphicsLayer {
-                scaleX = effectiveScale; scaleY = effectiveScale
+                val bounceScale = .90f + .10f * switchBounce.value
+                scaleX = effectiveScale * bounceScale; scaleY = effectiveScale * bounceScale
+                alpha = .55f + .45f * (switchBounce.value / .4f).coerceIn(0f, 1f)
             }.then(if (mix.active || mix.handedOff) Modifier else Modifier
                 .shadow(elevation * blend * (1f - pageFrameProgress * .55f), shape, clip = false,
                     ambientColor = Color.Black.copy(alpha = .28f), spotColor = Color.Black.copy(alpha = .28f)).clip(shape)))

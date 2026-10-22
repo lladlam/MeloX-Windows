@@ -2,7 +2,7 @@
 """Production mobile Home and shared player regression; only pointer/keyboard input.
 
 home uses public NetEase charts; player uses genuine generated WAV -> PCM + timed LRC.
-Intermediate frames carry their actual wall-clock offsets, not assumed frame times.
+Intermediate frames use the explicit scene animation clock, independent of rendering cost.
 """
 import json
 import math
@@ -41,6 +41,10 @@ if mode == 'home':
     add('public-hot', 'touch-drag@home-quick-actions,-220,0')
     add('hot', 'tap@home-action-热歌榜')
     add('hot-loaded', 'wait@8000', ['tag:home-song-list-detail', 'absent:now-playing'])
+    add('share-list', 'tap@playlist-share', ['tag:playlist-share-text', 'tag:playlist-copy-share'])
+    add('close-share', 'tap@playlist-actions-close', ['absent:playlist-actions-dialog'])
+    add('list-more', 'tap@playlist-more', ['tag:playlist-sort:Title', 'absent:playlist-refresh'])
+    add('sort-title', 'tap@playlist-sort:Title', ['state:playlist-tracks:Title', 'absent:playlist-actions-dialog'])
     add('back', 'escape', ['tag:home-quick-actions', 'absent:home-song-list-detail'])
     add('hot-again', 'tap@home-action-热歌榜')
     add('hot-loaded-again', 'wait@8000', ['tag:home-song-list-detail'])
@@ -59,13 +63,13 @@ else:
         wavs.append(str(file))
     lrc = home / 'mobile-generated.lrc'
     lrc.write_text('\n'.join(f'[{i // 15:02d}:{i * 4 % 60:02d}.00]Mobile timed lyric {i + 1}' for i in range(22)) + '\n')
-    args += ['--local-wavs', ','.join(wavs), '--local-lyrics-file', str(lrc), '--capture-pcm', '--frames-ms', '0,200,500,700,820']
+    args += ['--scan-local-dir', str(home), '--local-wavs', ','.join(wavs), '--local-lyrics-file', str(lrc), '--capture-pcm', '--frames-ms', '0,200,500,700,820']
     add('playing', 'wait@1500', ['playing:true', 'tag:mini-player-expand'])
     add('mini-anchor', 'remember-point@mini-player-expand')
     add('open', 'tap@mini-player-expand')
     add('opened', 'wait@1300', ['tag:player-transition-shell', 'page:Artwork', 'no-playback-error:true'])
     add('pause', 'tap@player-play-pause', ['playing:false'])
-    add('lyrics', 'tap@player-show-lyrics', ['page:Lyrics', 'tag:player-lyrics'])
+    add('lyrics', 'tap@player-show-lyrics', ['page:Lyrics', 'tag:player-lyrics', 'tag-prefix:lyric-line-'])
     add('queue', 'tap@player-show-queue', ['page:Queue'])
     add('artwork', 'tap@player-show-queue', ['page:Artwork'])
     add('close-interrupt', 'tap@player-collapse')
@@ -76,6 +80,11 @@ else:
     add('open-again', 'tap@mini-player-expand')
     add('opened-again', 'wait@1300', ['page:Artwork'])
     add('resume', 'tap@player-play-pause', ['playing:true', 'no-playback-error:true'])
+    add('lyrics-again', 'tap@player-show-lyrics', ['page:Lyrics'])
+    add('close-on-lyrics', 'tap@player-collapse')
+    add('lyrics-mini', 'wait@1300', ['absent:now-playing'])
+    add('reopen-lyrics', 'tap@mini-player-expand')
+    add('lyrics-restored', 'wait@1300', ['page:Lyrics', 'playing:true', 'tag-prefix:lyric-line-'])
     add('final-close', 'tap@player-collapse')
     add('final-closed', 'wait@1300', ['absent:now-playing', 'playing:true'])
 
@@ -105,4 +114,36 @@ if mode == 'player':
             geometries.append({'file': scene['file'], 'bounds': shell['bounds'], 'state': shell.get('state')})
     assert len({tuple(g['bounds']) for g in geometries}) >= 2, 'Shared shell did not animate through distinct bounds'
     (output / 'motion-geometries.json').write_text(json.dumps(geometries, indent=2) + '\n')
+    restored = next(s for s in data['scenes'] if s['file'].endswith('-lyrics-restored.png'))
+    nodes = json.loads((output / restored['file']).with_suffix('.semantics.json').read_text(encoding='utf-8'))
+    artwork = next(n for n in nodes if n.get('tag') == 'player-persistent-artwork')
+    pose = dict(part.split('=', 1) for part in artwork['state'].split(';'))
+    assert float(pose['size']) == 72 and float(pose['y']) == 22, artwork
+    for scene in data['scenes']:
+        if '-reopen-lyrics-frame-' not in scene['file']:
+            continue
+        nodes = json.loads((output / scene['file']).with_suffix('.semantics.json').read_text(encoding='utf-8'))
+        art = next(n for n in nodes if n.get('tag') == 'player-persistent-artwork')
+        pose = dict(part.split('=', 1) for part in art['state'].split(';'))
+        assert float(pose['size']) == 72, (scene['file'], pose)
+else:
+    shared = next(s for s in data['scenes'] if s['file'].endswith('-share-list.png'))
+    nodes = json.loads((output / shared['file']).with_suffix('.semantics.json').read_text(encoding='utf-8'))
+    text = next(n for n in nodes if n.get('tag') == 'playlist-share-text')['text']
+    assert 'https://music.163.com/song?id=' in str(text), text
+    assert 'playlist?id=-' not in str(text), 'A synthetic recommendation ID leaked into a playlist URL'
+    # Compare visible numbered rows with the songs actually offered for share;
+    # a changed sort-mode flag alone does not prove the list was reordered.
+    titles = [entry.splitlines()[0].rsplit(' - ', 1)[0] for entry in text.split('\n\n')[1:]]
+    expected = sorted(titles, key=str.lower)
+    sorted_scene = next(s for s in data['scenes'] if s['file'].endswith('-sort-title.png'))
+    rows = json.loads((output / sorted_scene['file']).with_suffix('.semantics.json').read_text(encoding='utf-8'))
+    verified = 0
+    for index, node in enumerate(rows[:-1]):
+        if str(node.get('text', '')).isdigit() and rows[index + 1].get('bounds', [0, -1])[1] == node['bounds'][1]:
+            number = int(node['text'])
+            if 1 <= number <= len(expected):
+                assert rows[index + 1]['text'] == expected[number - 1], (number, rows[index + 1]['text'], expected[number - 1])
+                verified += 1
+    assert verified >= 3, 'Too few visible sorted song rows were verified'
 print(f'PASS mobile {mode}: {len(data["scenes"])} scenes / ' + str(sum(len(s.get('assertions', [])) for s in data['scenes'])) + ' assertions')

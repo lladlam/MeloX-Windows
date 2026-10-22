@@ -1,0 +1,11 @@
+consent=cloud-enabled:false
+loaded=tag:home-quick-actions,tag:home-action-每日推荐
+hot-loaded=tag:home-song-list-detail,absent:now-playing
+share-list=tag:playlist-share-text,tag:playlist-copy-share
+close-share=absent:playlist-actions-dialog
+list-more=tag:playlist-sort:Title,absent:playlist-refresh
+sort-title=state:playlist-tracks:Title,absent:playlist-actions-dialog
+back=tag:home-quick-actions,absent:home-song-list-detail
+hot-loaded-again=tag:home-song-list-detail
+back-again=tag:home-quick-actions,absent:home-song-list-detail
+daily-error=tag:home-error,absent:home-song-list-detail,absent:now-playing

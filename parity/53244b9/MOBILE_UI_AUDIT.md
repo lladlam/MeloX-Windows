@@ -37,19 +37,21 @@
 
 1. **首页/发现/搜索/播客卡片 → 详情hero共享封面**：卡片与统一详情还未全部进入同一SharedTransitionScope；搜索分类子页仍有直接条件切页；通用覆盖层尚未实现真源旧页布局期左退1/3的完整通道。
 2. **页面滑动几何**：Windows边缘返回已有跟手位移/回弹，未完整接入源的0.92缩放、平滑角和两页互补几何；Windows没有Android硬件屏幕圆角真值，本轮播放器以32dp平台fallback、圆弧shape实现，不能称Lamé平滑角一比一。
-3. **播放器横竖屏/大屏**：目前仍是旧43/57横屏场景；真源有转屏统一时钟、840×600+双栏内封面居中↔歌词/队列分栏、歌词天际封面morph，尚未完整迁移。竖屏当前封面→header也仍有旧480ms独立tween。
+3. **播放器横竖屏/大屏**：目前仍是旧43/57横屏场景；真源有转屏统一时钟、840×600+双栏内封面居中↔歌词/队列分栏、歌词天际封面morph，尚未完整迁移。**勘误：480ms封面→header tween 本身就在固定真源 SharedHost:908–915 中，不属于应删除的旧时钟。** 本次继续迁移其22dp header落点、竖屏封面单独上抬30dp和展开时目标页姿态锁定；完整转屏仍待迁移。
 4. **首页数据和操作**：本地推荐结果展示、播客数据区块、真实下拉刷新、听歌识曲浮层入口未全接入；Provider首页快捷工具尚未与Android统一。识曲设置页不能当作识曲功能入口交付。
 5. **发现页**：旧网格/固定标题，缺真源折叠大标题及卡片退场占位/延长保活；分类加载取消/重试还需专门回归。
 6. **搜索和Provider详情**：已具备实际搜索/多类型/详情业务，但统一公共菜单、长按/分页/集合权限需按源逐项核销；有少量选择/子页切换仍未共用源的InterruptiblePage。
-7. **统一详情完整操作**：下拉搜索与canonical UI已推进；分享按钮/更多菜单、自己的歌单删除与取消订阅区分、收藏失败回滚及已喜欢系统歌单保护尚需独立收尾。不能把新增providedSongs路径发向歌单读写API。
+7. **统一详情完整操作**：下拉搜索与canonical UI已推进；本次接通分享预览/系统剪贴板、原序/歌曲/艺人/专辑排序、详情信息与真实刷新。推荐列表分享实际歌曲链接，不拼接虚构歌单链接；自己的歌单不再显示取消订阅按钮。删除、自建/已喜欢系统歌单权限与更多账号写入仍待独立收尾。
 8. **歌词/天际/TextPV**：统一歌词语言及流光此前已接入，但若干样式是Windows重绘；完整模板动效、词级切换/封面联动须同内容回放，现有本地自测不等于Android像素MATCH。
 9. **私信UI**：联系人头像、分组、刷新/未读、会话内更多操作和消息展示细节仍与源不同；真实发信需账号验收。
 10. **完整多语言/平台输入**：多处手机版硬编码中文仍未迁到0.6.5全量资源；现有legacy资源保持原来源，不能覆盖为改写文案后声称纯导出。物理触屏、触摸键盘、长时内存等仍须实机。
 
 ## 验证
 
+- 本次续迁：Home **17 scenes / 20 assertions**；实际Local歌词播放器 **145/28**；桌面controls **29/67**、lyrics-light **12/15**；独立几何/PCM **41/82**；单元测试 **57 suites / 276 tests / 0 failures/errors/skipped**。证据 `evidence/mobile-v49/`，操作与真源依据 `DETAIL_AND_ARTWORK_FOLLOWUP.md`。本批Windows结果待补记。
+
 - `capture_mobile_v065.py home`：**13 scenes / 13 assertions PASSED**。真实公开排行榜打开统一详情、保留首页；返回后再次打开并由Escape关闭，证明详情覆盖层的键盘焦点已归还；未登录每日推荐实际显示“请先登录网易云音乐”，不生成假歌单。
-- `capture_mobile_v065.py player`：**115 scenes / 22 assertions PASSED**。427×850、真实WAV→PCM与LRC；显式动画时间轴截取展开0/200/500/700/820ms，外壳bounds与圆角确实逐帧变化；关闭尾段在820ms仍可见下沉；关闭途中按真实MiniPlay中心重新打开；再次关闭、重开、恢复播放后PCM继续写入。软件PCM不代表可听硬件验收。
+- 前轮 `capture_mobile_v065.py player`：**115 scenes / 22 assertions PASSED**。427×850、真实WAV→PCM；显式动画时间轴截取展开0/200/500/700/820ms，外壳bounds与圆角确实逐帧变化；关闭尾段在820ms仍可见下沉；关闭途中按真实MiniPlay中心重新打开；再次关闭、重开、恢复播放后PCM继续写入。**本轮勘误：此前虽传入LRC文件，但缺少Local扫描，实际未入歌词库；旧通过数只证明歌词页打开，不证明真实歌词显示。** 本轮补扫描与实际歌词行断言。软件PCM不代表可听硬件验收。
 - `capture_desktop_layout.py controls`：**29 scenes / 67 assertions PASSED**；`lyrics-light`：**12 scenes / 15 assertions PASSED**。lyrics-light 在布局切换前暂停于0:00，真实点击 `lyric-line-1` 后位置前进；独立几何核验两份回放 **41 scenes / 82 assertions PASSED**，`desktop-bottom-player` 700dp、sidebar 199dp、lyrics inspector 360dp 均与源几何一致。完整CI仍会跑全部六种布局模式及cold-controls。
 - `capture_settings_pages.py desktop-controls/desktop-reload`：**25 scenes / 27 assertions** 与独立JVM **1 scene / 10 assertions PASSED**。真实点击三次标题栏开关后运行时和持久化偏好均为true，另起JVM读取。
 - `:desktop:auditWindowChrome`：本机无正尺寸原生显示器，编译与任务完成、结果为**UNSUPPORTED**；Windows CI必须在真实AWT窗口上执行，包含沉浸式渐变像素连续、最大化/还原与关闭。不能用 ImageComposeScene 截图代替。

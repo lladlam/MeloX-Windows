@@ -1,0 +1,15 @@
+consent=cloud-enabled:false
+playing=playing:true,tag:mini-player-expand
+opened=tag:player-transition-shell,page:Artwork,no-playback-error:true
+pause=playing:false
+lyrics=page:Lyrics,tag:player-lyrics,tag-prefix:lyric-line-
+queue=page:Queue
+artwork=page:Artwork
+reopened=tag:player-transition-shell,page:Artwork,playing:false
+closed=absent:now-playing,tag:mini-player-shell,playing:false
+opened-again=page:Artwork
+resume=playing:true,no-playback-error:true
+lyrics-again=page:Lyrics
+lyrics-mini=absent:now-playing
+lyrics-restored=page:Lyrics,playing:true,tag-prefix:lyric-line-
+final-closed=absent:now-playing,playing:true

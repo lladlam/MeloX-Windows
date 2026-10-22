@@ -1,0 +1,123 @@
+[
+  {
+    "scene": "07-enable-desktop.png",
+    "tag": "desktop-sidebar",
+    "bounds": [
+      8,
+      8,
+      207,
+      792
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "07-enable-desktop.png",
+    "tag": "desktop-bottom-player",
+    "bounds": [
+      394,
+      736,
+      1094,
+      790
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "08-show-real-local-lyrics.png",
+    "tag": "desktop-sidebar",
+    "bounds": [
+      8,
+      8,
+      207,
+      792
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "08-show-real-local-lyrics.png",
+    "tag": "desktop-bottom-player",
+    "bounds": [
+      394,
+      736,
+      1094,
+      790
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "08-show-real-local-lyrics.png",
+    "tag": "desktop-inspector:Lyrics",
+    "bounds": [
+      920,
+      0,
+      1280,
+      800
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "09-seek-by-real-pointer.png",
+    "tag": "desktop-sidebar",
+    "bounds": [
+      8,
+      8,
+      207,
+      792
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "09-seek-by-real-pointer.png",
+    "tag": "desktop-bottom-player",
+    "bounds": [
+      394,
+      736,
+      1094,
+      790
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "09-seek-by-real-pointer.png",
+    "tag": "desktop-inspector:Lyrics",
+    "bounds": [
+      920,
+      0,
+      1280,
+      800
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "10-close-lyrics.png",
+    "tag": "desktop-sidebar",
+    "bounds": [
+      8,
+      8,
+      207,
+      792
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "10-close-lyrics.png",
+    "tag": "desktop-bottom-player",
+    "bounds": [
+      394,
+      736,
+      1094,
+      790
+    ],
+    "source_metrics_match": true
+  },
+  {
+    "scene": "11-expand-light-player.png",
+    "tag": "desktop-sidebar",
+    "bounds": [
+      8,
+      8,
+      207,
+      792
+    ],
+    "source_metrics_match": true
+  }
+]
