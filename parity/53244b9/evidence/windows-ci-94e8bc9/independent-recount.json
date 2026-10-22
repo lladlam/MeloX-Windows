@@ -1,0 +1,116 @@
+{
+  "run_id": 39743199195,
+  "head_sha": "94e8bc9bd37edd871787f03a2ef8a026c360681b",
+  "status": "FAILED",
+  "suites": 57,
+  "tests": 276,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "replays": [
+    {
+      "path": "desktop/build/parity/desktop-layout-cold-controls/capture.json",
+      "scenes": 23,
+      "assertions": 41,
+      "passed": true
+    },
+    {
+      "path": "desktop/build/parity/desktop-layout-controls/capture.json",
+      "scenes": 29,
+      "assertions": 67,
+      "passed": true
+    },
+    {
+      "path": "desktop/build/parity/desktop-layout-home-dark/capture.json",
+      "scenes": 3,
+      "assertions": 8,
+      "passed": true
+    },
+    {
+      "path": "desktop/build/parity/desktop-layout-home-light/capture.json",
+      "scenes": 3,
+      "assertions": 8,
+      "passed": true
+    },
+    {
+      "path": "desktop/build/parity/desktop-layout-lyrics-light/capture.json",
+      "scenes": 12,
+      "assertions": 15,
+      "passed": true
+    },
+    {
+      "path": "desktop/build/parity/desktop-layout-reload/capture.json",
+      "scenes": 7,
+      "assertions": 6,
+      "passed": true
+    },
+    {
+      "path": "desktop/build/parity/desktop-layout-reload-current/capture.json",
+      "scenes": 5,
+      "assertions": 6,
+      "passed": true
+    },
+    {
+      "path": "desktop/build/parity/desktop-layout-restore/capture.json",
+      "scenes": 8,
+      "assertions": 14,
+      "passed": true
+    },
+    {
+      "path": "desktop/build/parity/glass-dock-Dark/capture.json",
+      "scenes": 7,
+      "assertions": 9,
+      "passed": true
+    },
+    {
+      "path": "desktop/build/parity/glass-dock-Light/capture.json",
+      "scenes": 7,
+      "assertions": 9,
+      "passed": true
+    },
+    {
+      "path": "desktop/build/parity/lyric-language-controls/capture.json",
+      "scenes": 22,
+      "assertions": 22,
+      "passed": true
+    },
+    {
+      "path": "desktop/build/parity/lyric-language-reload/capture.json",
+      "scenes": 11,
+      "assertions": 13,
+      "passed": true
+    },
+    {
+      "path": "desktop/build/parity/smartqueue-limit-controls/capture.json",
+      "scenes": 26,
+      "assertions": 13,
+      "passed": true
+    },
+    {
+      "path": "desktop/build/parity/smartqueue-limit-reload/capture.json",
+      "scenes": 5,
+      "assertions": 4,
+      "passed": true
+    },
+    {
+      "path": "desktop/build/parity/split-layout-controls/capture.json",
+      "scenes": 58,
+      "assertions": 69,
+      "passed": true
+    },
+    {
+      "path": "desktop/build/parity/split-layout-portrait/capture.json",
+      "scenes": 6,
+      "assertions": 12,
+      "passed": true
+    },
+    {
+      "path": "desktop/build/parity/split-layout-reload/capture.json",
+      "scenes": 6,
+      "assertions": 14,
+      "passed": true
+    }
+  ],
+  "missing_evidence": "collection-playlist-dark failure screenshot/semantics not uploaded by this revision",
+  "delivery": "NOT PRODUCED"
+}

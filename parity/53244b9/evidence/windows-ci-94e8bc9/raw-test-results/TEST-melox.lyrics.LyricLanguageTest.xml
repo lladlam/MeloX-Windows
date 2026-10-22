@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="LyricLanguageTest[desktop]" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-10-22T07:54:44.243Z" hostname="runnervmuzpk7" time="0.272">
+  <properties/>
+  <testcase name="chineseOnlyProviderNeverMasqueradesAsRequestedForeignTranslation[desktop]" classname="melox.lyrics.LyricLanguageTest" time="0.236"/>
+  <testcase name="regionalVariantsShareCacheButLanguagesAndChineseScriptsDoNot[desktop]" classname="melox.lyrics.LyricLanguageTest" time="0.001"/>
+  <testcase name="metadataAndBackgroundUseTargetLanguageAndDoNotBorrowAnotherTrack[desktop]" classname="melox.lyrics.LyricLanguageTest" time="0.024"/>
+  <testcase name="inlineTranslationUsesTargetLanguageWithoutChangingWordsOrTimings[desktop]" classname="melox.lyrics.LyricLanguageTest" time="0.006"/>
+  <testcase name="explicitLanguageAndChineseScriptOverrideLocale[desktop]" classname="melox.lyrics.LyricLanguageTest" time="0.0"/>
+  <testcase name="chinesePreferenceDoesNotFallBackToForeignTranslation[desktop]" classname="melox.lyrics.LyricLanguageTest" time="0.005"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

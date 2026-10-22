@@ -595,7 +595,9 @@ fun main(args: Array<String>) = runBlocking {
                 }
                 settle(waitMs)
                 val assertions = expectations[name].orEmpty()
-                if (assertions.isNotEmpty()) awaitUi { assertions.all(::assertionMatches) }
+                if (assertions.isNotEmpty()) awaitUi(timeoutMs = option("--assert-timeout-ms", "5000").toLong()) {
+                    assertions.all(::assertionMatches)
+                }
                 capture("${(index + 1).toString().padStart(2, '0')}-$name")
                 sceneEvidence.getJSONObject(sceneEvidence.length() - 1)
                     .put("action_elapsed_ms", (System.nanoTime() - eventStart) / 1_000_000.0)

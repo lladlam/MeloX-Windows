@@ -373,6 +373,10 @@ jobs:
             desktop/build/parity/desktop-layout-*/gradle.log
             desktop/build/parity/desktop-layout-*/*.png
             desktop/build/parity/desktop-layout-*/*.s16le
+            desktop/build/parity/collection-*/*.json
+            desktop/build/parity/collection-*/*.txt
+            desktop/build/parity/collection-*/gradle.log
+            desktop/build/parity/collection-*/*.png
             desktop/build/parity/page-motion-*/*.json
             desktop/build/parity/page-motion-*/*.txt
             desktop/build/parity/page-motion-*/gradle.log

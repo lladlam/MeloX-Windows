@@ -86,7 +86,7 @@
 - 按固定源保留480ms header tween，补22dp顶部落点、竖屏封面独立上抬30dp、MiniPlay展开时目标页封面姿态与切歌回弹（AutoMix期间不重复叠加）。横屏统一时间线与双栏仍待继续。
 - 修正旧手机回放的验证缺口：只传LRC参数没有Local扫描，因此旧115/22不证明真实歌词显示；现经生产Local扫描及持久化歌词库加载，必须出现真实歌词行。失败排查与源依据见 `DETAIL_AND_ARTWORK_FOLLOWUP.md`。
 - 本地最终：手机首页 **17 scenes / 20 assertions**，手机播放器 **145/28**，桌面controls **29/67**、lyrics-light **12/15**；独立几何/PCM重计 **41/82**；shared **57 suites / 276 tests / 0 failures/errors/skipped**，桌面编译通过。源码/回放/选定图片证据在 `evidence/mobile-v49/`，完整本地输出保留于build目录。静态桌面截图等待1200ms，不放宽几何容差。
-- Windows本批构建、完整下载和独立发行核验待补记。最近已独立核验发行仍为 **ba86270**，本批未据此标记整体迁移完成。
+- Windows **39743199195 / 94e8bc9 FAILED**：album回放通过，随后真实首页歌单打开详情容器但未在默认5秒断言预算内出现内容header。下载原始Verification后独立重计 **57 suites / 276 tests / 0 failures/errors/skipped**；上传的17组回放 **238 scenes / 330 assertions**。该revision漏传collection目录，无法从产物独立判断是请求错误还是加载时序；不把它判为已修复，不生成发行。记录 `evidence/windows-ci-94e8bc9/`。后续补collection完整上传，并为真实网络详情单独设30秒断言预算，仍要求实际header加载。最近已独立核验发行仍为 **ba86270**。
 
 ## 10. 设置页互补退让与可中断回程
 
@@ -95,3 +95,8 @@
 - 新增可选显式scene时钟，仅供离屏动画回放；默认时钟行为保持原样。独立核对两个实际页面边缘的互补关系，不只检查进度标记。
 - 最终单栏 **73 scenes / 11 assertions / 48 geometry frames**、双栏 **49/8/28**、减少动态 **45/8/18**，全部通过。设置全路由 **88/65**，桌面controls **29/67**；shared测试任务成功，原始XML **57 suites / 276 tests / 0 failures/errors/skipped**。中途并发编译发生一次输出目录竞争，最终三种模式顺序编译/回放成功；未将该失败算通过。
 - 源依据、范围和验证方法见 `PAGE_MOTION_FOLLOWUP.md`；证据 `evidence/page-motion-local/`。CI加入三种模式及真实Local歌词播放器回放、完整帧上传。共享封面、搜索及通用详情的接线、0.92预测返回缩放和Lamé平滑角仍待迁移；整体保持PARTIAL。Windows构建及完整发行独立核验待补记。
+
+## 11. Windows collection失败取证补齐
+
+- 为后续Windows失败补传collection完整截图、semantics、参数与日志；真实网络详情断言预算改为30秒，默认其它回放仍为5秒。历史94e8bc9失败原因尚不能由缺失帧独立确定，不声称已经证明修复根因。
+- 本地实际公开歌单深色en-US、浅色zh-CN各 **38 scenes / 45 assertions** 全通过，包含真实首页入口、拖动/搜索、歌曲菜单、入队、歌曲详情、艺人路由与返回。源几何独立核验通过；证据 `evidence/collection-v55/`。等待新Windows构建和完整发行独立核验。

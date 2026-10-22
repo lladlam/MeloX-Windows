@@ -101,7 +101,8 @@ add('back', 'tap@desktop-collection-back', ['absent:desktop-' + args.page + '-de
 (output / 'expect.txt').write_text('\n'.join(name + '=' + ','.join(values) for name, values in checks.items() if values) + '\n', encoding='utf-8')
 parameters = ['--locale', args.locale, '--source', 'Netease', '--start-tab', 'Settings', '--theme', args.theme,
               '--width', str(args.width), '--height', str(args.height), '--density', str(args.density), '--output', str(output), '--wait-ms', '650',
-              '--startup-wait-ms', '1800', '--steps-file', str(output / 'steps.txt'), '--expect-file', str(output / 'expect.txt')]
+               '--startup-wait-ms', '1800', '--assert-timeout-ms', '30000',
+               '--steps-file', str(output / 'steps.txt'), '--expect-file', str(output / 'expect.txt')]
 if args.page == 'album':
     parameters += ['--album-id', args.album_id]
 (output / 'arguments.txt').write_text('\n'.join(parameters) + '\n', encoding='utf-8')

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="LastPlaybackStoreTest[desktop]" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-10-22T07:55:01.200Z" hostname="runnervmuzpk7" time="0.467">
+  <properties/>
+  <testcase name="lastSongIsOnlyRestoredWhenQueuePersistenceIsOff[desktop]" classname="melox.playback.LastPlaybackStoreTest" time="0.445"/>
+  <testcase name="savedSongKeepsLegacyIdentityAndPositionAndHonoursTheSwitch[desktop]" classname="melox.playback.LastPlaybackStoreTest" time="0.022"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

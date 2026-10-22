@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="PersonalizationEraseBoundaryTest[desktop]" tests="1" skipped="0" failures="0" errors="0" timestamp="2026-10-22T07:55:10.644Z" hostname="runnervmuzpk7" time="0.045">
+  <properties/>
+  <testcase name="confirmedEraseClearsLearnedDataButPreservesAlgorithmPreferenceAndAccount[desktop]" classname="melox.recommendation.PersonalizationEraseBoundaryTest" time="0.045"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="SmartQueueBudgetTest[desktop]" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-10-22T07:55:01.908Z" hostname="runnervmuzpk7" time="0.021">
+  <properties/>
+  <testcase name="preferenceDefaultUnlimitedAndBoundsFollowRelease[desktop]" classname="melox.playback.SmartQueueBudgetTest" time="0.016"/>
+  <testcase name="futureBudgetExcludesHistoryAndFallbackDoesNotWaitForUnanalyzedTail[desktop]" classname="melox.playback.SmartQueueBudgetTest" time="0.002"/>
+  <testcase name="staleGenerationCannotChangeNewTargetsAnalysisOrConsumption[desktop]" classname="melox.playback.SmartQueueBudgetTest" time="0.003"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
