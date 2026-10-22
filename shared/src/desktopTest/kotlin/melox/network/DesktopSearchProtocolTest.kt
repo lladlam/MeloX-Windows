@@ -103,4 +103,31 @@ class DesktopSearchProtocolTest {
         release.countDown()
         assertEquals(2, NeteaseSearchClient(httpClient = http).searchSongs("fixture").size)
     }
+
+    @Test fun repeatedQueriesAcrossClientsReuseOneRealHttpResponse() = runBlocking<Unit> {
+        NeteaseSearchClient(httpClient = http).searchSongs("repeated")
+        NeteaseUniversalSearchClient(httpClient = http).searchSongs("repeated")
+        NeteaseSearchClient(httpClient = http).searchSongs("repeated")
+        assertEquals(1, requests.count { it.first == "/api/search/get" })
+        NeteaseUniversalSearchClient(httpClient = http).searchMedia("repeated", MeloXSearchKind.Albums)
+        assertEquals(2, requests.count { it.first == "/api/search/get" })
+    }
+
+    @Test fun replacingMediaSearchCancelsTheActualSocket() = runBlocking<Unit> {
+        val work = async(Dispatchers.IO) {
+            NeteaseUniversalSearchClient(httpClient = http).searchMedia("blocked", MeloXSearchKind.Albums)
+        }
+        assertTrue(withContext(Dispatchers.IO) { started.await(10, TimeUnit.SECONDS) })
+        withTimeout(2000) { work.cancelAndJoin() }
+        assertTrue(cancelled.get(), "Media search must cancel its real OkHttp Call")
+    }
+
+    @Test fun replacingSuggestionsCancelsTheActualSocket() = runBlocking<Unit> {
+        val work = async(Dispatchers.IO) {
+            NeteaseUniversalSearchClient(httpClient = http).searchSuggestions("blocked")
+        }
+        assertTrue(withContext(Dispatchers.IO) { started.await(10, TimeUnit.SECONDS) })
+        withTimeout(2000) { work.cancelAndJoin() }
+        assertTrue(cancelled.get(), "Suggestions must cancel their real OkHttp Call")
+    }
 }

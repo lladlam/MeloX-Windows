@@ -1,0 +1,27 @@
+{
+  "renderer": "production ImageComposeScene",
+  "physical_touch_verified": false,
+  "positions": {
+    "loaded": 0,
+    "mouse-scroll": 112,
+    "touch-scroll": 224
+  },
+  "public_query": "love",
+  "kind": "albums",
+  "suggestions_overlay": true,
+  "touch_keyboard_requests": {
+    "home": 0,
+    "consent": 0,
+    "search": 0,
+    "focus": 0,
+    "touch-focus": 1,
+    "touch-refocus": 2,
+    "mouse-refocus": 2,
+    "query": 2,
+    "suggestions": 2,
+    "albums": 2,
+    "loaded": 2,
+    "mouse-scroll": 2,
+    "touch-scroll": 2
+  }
+}

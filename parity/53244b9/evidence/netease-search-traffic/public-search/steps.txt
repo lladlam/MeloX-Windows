@@ -1,0 +1,12 @@
+consent:tap@remote-reject
+search:tap@desktop-nav:Search
+focus:tap@search-query
+touch-focus:touch-tap@search-query
+touch-refocus:touch-tap@search-query
+mouse-refocus:tap@search-query
+query:type@love
+suggestions:wait@5000
+albums:tap@search-kind-albums
+loaded:wait@5000
+mouse-scroll:mouse-drag@desktop-search-media-scroll,0,-130
+touch-scroll:touch-drag@desktop-search-media-scroll,0,-130

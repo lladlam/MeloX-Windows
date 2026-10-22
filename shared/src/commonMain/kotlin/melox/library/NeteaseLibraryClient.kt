@@ -55,12 +55,14 @@ class NeteaseLibraryClient(
             }.getOrNull()
         } else null
 
-        val playlistsResponse = eapi(
-            "/api/personalized/playlist",
-            JSONObject().put("limit", limit).put("total", true).put("n", 1_000),
-            authenticated,
-        )
-        val fallbackPlaylists = parsePlaylists(playlistsResponse.optJSONArray("result") ?: JSONArray())
+        val fallbackPlaylists by lazy {
+            val playlistsResponse = eapi(
+                "/api/personalized/playlist",
+                JSONObject().put("limit", limit).put("total", true).put("n", 1_000),
+                authenticated,
+            )
+            parsePlaylists(playlistsResponse.optJSONArray("result") ?: JSONArray())
+        }
         val songData = JSONObject().put("type", "recommend").put("limit", limit).put("areaId", areaId(area))
         val songsResponse = if (authenticated) try {
             authenticatedWeapi.post("/api/personalized/newsong", songData)
@@ -76,18 +78,20 @@ class NeteaseLibraryClient(
             }
         }
 
-        val accountPlaylists = if (authenticated && userId != null) {
+        val accountPlaylists by lazy { if (authenticated && userId != null) {
             runCatching { userPlaylistsBlocking(userId).drop(1) }.getOrDefault(emptyList())
+        } else emptyList() }
+        val fallbackRadar by lazy { accountPlaylists.filter { it.name.contains("雷达") }.take(limit) }
+        val fallbackPersonal by lazy { accountPlaylists.filter { it.creatorUserId == userId }.take(limit) }
+        val fallbackRecent = if (serverBlocks?.recentlyTrending.isNullOrEmpty() || (area == "全部" && serverBlocks?.regionalSongs.isNullOrEmpty())) runCatching { topSongs("全部", limit) }.getOrDefault(emptyList()) else emptyList()
+        val fallbackCharts = if (serverBlocks?.chartPlaylists.isNullOrEmpty()) runCatching { explorePlaylists("排行榜", limit) }.getOrDefault(emptyList()) else emptyList()
+        val fallbackRegional = if (serverBlocks?.regionalSongs.isNullOrEmpty()) {
+            if (area == "全部") fallbackRecent else runCatching { topSongs(area, limit) }.getOrDefault(emptyList())
         } else emptyList()
-        val fallbackRadar = accountPlaylists.filter { it.name.contains("雷达") }.take(limit)
-        val fallbackPersonal = accountPlaylists.filter { it.creatorUserId == userId }.take(limit)
-        val fallbackRecent = runCatching { topSongs("全部", limit) }.getOrDefault(emptyList())
-        val fallbackCharts = runCatching { explorePlaylists("排行榜", limit) }.getOrDefault(emptyList())
-        val fallbackRegional = runCatching { topSongs(area, limit) }.getOrDefault(emptyList())
-        val fallbackRoaming = if (authenticated) runCatching { personalFm(explore = true, limit = limit) }.getOrDefault(emptyList()) else emptyList()
-        val likedSeedId = if (authenticated && userId != null) runCatching { likedSongIdsBlocking(userId).firstOrNull() }.getOrNull() else null
-        val fallbackSimilar = likedSeedId?.let { runCatching { similarSongsBlocking(it, limit) }.getOrDefault(emptyList()) }.orEmpty()
-        val fallbackPodcasts = if (podcastsEnabled) runCatching {
+        val fallbackRoaming = if (authenticated && serverBlocks?.roamingSongs.isNullOrEmpty()) runCatching { personalFm(explore = true, limit = limit) }.getOrDefault(emptyList()) else emptyList()
+        val likedSeedId by lazy { if (authenticated && userId != null) runCatching { likedSongIdsBlocking(userId).firstOrNull() }.getOrNull() else null }
+        val fallbackSimilar by lazy { likedSeedId?.let { runCatching { similarSongsBlocking(it, limit) }.getOrDefault(emptyList()) }.orEmpty() }
+        val fallbackPodcasts by lazy { if (podcastsEnabled) runCatching {
             val path = "/api/program/recommend/v1"
             val data = JSONObject().put("limit", limit.coerceIn(1, 50)).put("offset", 0)
             val result = if (authenticated) try {
@@ -114,21 +118,21 @@ class NeteaseLibraryClient(
                     add(NeteaseHomePodcast(radioId, programName, cover, program.optLong("id", 0L).takeIf { it > 0L }, playbackSong))
                 }
             }.distinctBy(NeteaseHomePodcast::id).take(limit)
-        }.getOrDefault(emptyList()) else emptyList()
+        }.getOrDefault(emptyList()) else emptyList() }
 
-        fun <T> serverOrFallback(server: List<T>?, fallback: List<T>): List<T> = server?.takeIf { it.isNotEmpty() } ?: fallback
+        fun <T> serverOrFallback(server: List<T>?, fallback: () -> List<T>): List<T> = server?.takeIf { it.isNotEmpty() } ?: fallback()
         NeteaseHomeContent(
-            playlists = serverOrFallback(serverBlocks?.recommendedPlaylists, fallbackPlaylists),
+            playlists = serverOrFallback(serverBlocks?.recommendedPlaylists) { fallbackPlaylists },
             newSongs = fallbackNewSongs,
-            recentlyTrending = serverOrFallback(serverBlocks?.recentlyTrending, fallbackRecent),
+            recentlyTrending = serverOrFallback(serverBlocks?.recentlyTrending) { fallbackRecent },
             tailoredSongs = serverBlocks?.tailoredSongs.orEmpty(),
-            chartPlaylists = serverOrFallback(serverBlocks?.chartPlaylists, fallbackCharts),
-            radarPlaylists = serverOrFallback(serverBlocks?.radarPlaylists, fallbackRadar),
-            personalPlaylists = serverOrFallback(serverBlocks?.personalPlaylists, fallbackPersonal),
-            regionalSongs = serverOrFallback(serverBlocks?.regionalSongs, fallbackRegional),
-            roamingSongs = serverOrFallback(serverBlocks?.roamingSongs, fallbackRoaming),
-            similarSongs = serverOrFallback(serverBlocks?.likedSongRecommendations, fallbackSimilar),
-            podcasts = if (podcastsEnabled) serverOrFallback(serverBlocks?.podcasts, fallbackPodcasts) else emptyList(),
+            chartPlaylists = serverOrFallback(serverBlocks?.chartPlaylists) { fallbackCharts },
+            radarPlaylists = serverOrFallback(serverBlocks?.radarPlaylists) { fallbackRadar },
+            personalPlaylists = serverOrFallback(serverBlocks?.personalPlaylists) { fallbackPersonal },
+            regionalSongs = serverOrFallback(serverBlocks?.regionalSongs) { fallbackRegional },
+            roamingSongs = serverOrFallback(serverBlocks?.roamingSongs) { fallbackRoaming },
+            similarSongs = serverOrFallback(serverBlocks?.likedSongRecommendations) { fallbackSimilar },
+            podcasts = if (podcastsEnabled) serverOrFallback(serverBlocks?.podcasts) { fallbackPodcasts } else emptyList(),
             newAlbums = runCatching {
                 melox.network.NeteaseCollectionDetailsClient(cookieProvider, httpClient).newAlbums(
                     limit = 16, area = when (area) { "华语", "中国" -> "ZH"; "日本", "日语" -> "JP"; "韩国", "韩语" -> "KR"; "欧美" -> "EA"; else -> "ALL" })

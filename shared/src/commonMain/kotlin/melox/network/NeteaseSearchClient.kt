@@ -261,8 +261,21 @@ class NeteaseSearchClient(
         cookieHeaderOverride: String? = null,
         owner: kotlinx.coroutines.Job? = null,
     ): JSONObject {
+        val cookie = cookieHeaderOverride ?: cookieProvider()
+        return NeteaseSearchResponseCache.shared.get(uri, data, cookie, owner, httpClient) {
+            eapiUncached(uri, data, authenticated, cookie, owner)
+        }
+    }
+
+    private fun eapiUncached(
+        uri: String,
+        data: JSONObject,
+        authenticated: Boolean?,
+        cookieHeaderOverride: String,
+        owner: kotlinx.coroutines.Job?,
+    ): JSONObject {
         val timestampMillis = System.currentTimeMillis()
-        val cookieHeader = cookieHeaderOverride ?: cookieProvider()
+        val cookieHeader = cookieHeaderOverride
         val cookies = NeteaseSessionStore.parseCookie(cookieHeader)
         val useAuthenticatedSession = authenticated
             ?: NeteaseSessionStore.containsMusicU(cookieHeader)

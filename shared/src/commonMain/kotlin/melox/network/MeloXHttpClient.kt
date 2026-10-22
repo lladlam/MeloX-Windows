@@ -8,7 +8,9 @@ import okhttp3.OkHttpClient
 
 /** One process-wide connection pool, dispatcher and bounded HTTP cache. */
 object MeloXHttpClient {
-    private val base = OkHttpClient.Builder().build()
+    private val base = OkHttpClient.Builder()
+        .addInterceptor(NeteaseRequestGovernor())
+        .build()
 
     @Volatile
     private var client: OkHttpClient = base

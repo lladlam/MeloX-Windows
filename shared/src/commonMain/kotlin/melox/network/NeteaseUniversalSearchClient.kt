@@ -164,6 +164,7 @@ class NeteaseUniversalSearchClient(
             val response = eapi(
                 "/api/search/get",
                 JSONObject().put("s", query).put("type", kind.apiType).put("limit", limit.coerceIn(1, 50)).put("offset", 0),
+                owner = kotlinx.coroutines.currentCoroutineContext()[kotlinx.coroutines.Job],
             )
             val result = response.optJSONObject("result") ?: return@withContext emptyList()
             val values = when (kind) {
@@ -276,7 +277,8 @@ class NeteaseUniversalSearchClient(
     suspend fun searchSuggestions(keyword: String, limit: Int = 8): List<String> = withContext(Dispatchers.IO) {
         val query = keyword.trim()
         if (query.isEmpty()) return@withContext emptyList()
-        val response = eapi("/api/search/suggest/keyword", JSONObject().put("s", query))
+        val response = eapi("/api/search/suggest/keyword", JSONObject().put("s", query),
+            owner = kotlinx.coroutines.currentCoroutineContext()[kotlinx.coroutines.Job])
         val result = response.optJSONObject("result") ?: return@withContext emptyList()
         val matches = result.optJSONArray("allMatch") ?: JSONArray()
         buildList {
@@ -425,8 +427,14 @@ class NeteaseUniversalSearchClient(
         data: JSONObject,
         owner: kotlinx.coroutines.Job? = null,
     ): JSONObject {
+        val cookie = cookieProvider()
+        return NeteaseSearchResponseCache.shared.get(uri, data, cookie, owner, httpClient) {
+            eapiUncached(uri, data, owner, cookie)
+        }
+    }
+
+    private fun eapiUncached(uri: String, data: JSONObject, owner: kotlinx.coroutines.Job?, cookieHeader: String): JSONObject {
         val timestampMillis = System.currentTimeMillis()
-        val cookieHeader = cookieProvider()
         val cookies = NeteaseSessionStore.parseCookie(cookieHeader)
         val useAuthenticatedSession = NeteaseSessionStore.containsMusicU(cookieHeader)
 
