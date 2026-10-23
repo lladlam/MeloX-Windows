@@ -54,11 +54,11 @@ internal fun MeloXDesktopProviderLibrary(source: MusicSource, playlists: List<Ne
                 }
                 playlists.isEmpty() -> Column(Modifier.fillMaxWidth().heightIn(min = 340.dp),
                     horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(14.dp, Alignment.CenterVertically)) {
-                    Text(desktopString(if (error == null) "ui.desktop.library.empty" else "ui.desktop.library.sign_in_title"),
+                    Text(desktopString(if (accountName == null) "ui.desktop.library.sign_in_title" else "ui.desktop.library.empty"),
                         fontSize = 22.sp, fontWeight = FontWeight.Bold)
                     Text(error ?: desktopString("ui.desktop.library.empty.message"), color = MaterialTheme.colorScheme.onSurfaceVariant)
-                    if (error == null && accountName == null) DesktopDialogButton("ui.common.login", prominent = true, onClick = onLogin)
-                    else if (error != null) DesktopDialogButton("ui.common.retry", onClick = onRetry)
+                    if (accountName == null) DesktopDialogButton("ui.common.login", prominent = true, tag = "provider-library-login", onClick = onLogin)
+                    if (error != null) DesktopDialogButton("ui.common.retry", tag = "provider-library-retry", onClick = onRetry)
                 }
                 else -> BoxWithConstraints(Modifier.fillMaxWidth()) {
                     val count = floor((maxWidth.value + 20) / 165).toInt().coerceAtLeast(1)

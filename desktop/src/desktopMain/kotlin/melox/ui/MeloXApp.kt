@@ -132,6 +132,9 @@ fun MeloXApp(onExit: () -> Unit = { kotlin.system.exitProcess(0) }) {
     val playerBackDispatcher = remember { MeloXBackDispatcher() }
     var settingsRouteRequest by remember { mutableStateOf<String?>(null) }
     var desktopLibraryPage by remember { mutableStateOf<String?>(null) }
+    LaunchedEffect(selectedSource) {
+        desktopLibraryPage = melox.settings.MeloXContentLayout.initialLibraryPage(selectedSource)
+    }
     var onboardingLoginPending by remember { mutableStateOf(false) }
     LaunchedEffect(onboarding.stage, onboardingLoginPending) {
         if (onboarding.stage == melox.legal.MeloXOnboardingStage.Complete && onboardingLoginPending) {

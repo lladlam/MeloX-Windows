@@ -57,7 +57,14 @@ class KugouRankingClient(
     }
 
     private fun parseTrack(item: JSONObject): MusicTrack? {
-        val hash = firstString(item, "FileHash", "Hash", "hash", "filehash").uppercase()
+        val audio = item.optJSONObject("audio_info")
+        val deprecated = item.optJSONObject("deprecated")
+        val albumInfo = item.optJSONObject("album_info")
+        // KMR v2 separates the track's identity/audio encodings from its title.
+        // Flattening alone cannot join a child hash back to its parent song.
+        val hash = firstString(item, "FileHash", "Hash", "hash", "filehash")
+            .ifBlank { audio?.let { firstString(it, "hash_128", "hash_320", "hash_flac", "hash_high") }.orEmpty() }
+            .ifBlank { deprecated?.let { firstString(it, "hash") }.orEmpty() }.uppercase()
         if (hash.isBlank()) return null
         val (title, singer) = recoverKugouTrackText(
             firstString(item, "SongName", "songname", "AudioName", "audio_name", "FileName", "filename", "name"),
@@ -65,6 +72,7 @@ class KugouRankingClient(
         )
         if (title.isBlank()) return null
         val albumName = firstString(item, "AlbumName", "album_name", "albumname")
+            .ifBlank { albumInfo?.let { firstString(it, "album_name", "name") }.orEmpty() }
         val albumId = firstString(item, "AlbumID", "album_id", "albumid").takeIf(String::isNotBlank)
         val albumAudioId = firstLong(item, "album_audio_id", "MixSongID", "mixsongid", "AlbumAudioID", "Audioid", "audio_id")
             .takeIf { it > 0 }
@@ -87,7 +95,9 @@ class KugouRankingClient(
                 )
             },
             artworkUrl = artwork,
-            durationMs = firstLong(item, "Duration", "duration", "time_length").takeIf { it > 0 }?.times(1_000L),
+            durationMs = audio?.let { firstLong(it, "duration_128", "duration_320", "duration_flac", "duration_high") }?.takeIf { it > 0 }
+                ?: deprecated?.let { firstLong(it, "duration") }?.takeIf { it > 0 }
+                ?: firstLong(item, "Duration", "duration", "time_length").takeIf { it > 0 }?.times(1_000L),
             providerMetadata = ProviderTrackMetadata.Kugou(
                 hash = hash,
                 albumAudioId = albumAudioId,

@@ -1,0 +1,102 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.5.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build
+> Task :desktop:kmpPartiallyResolvedDependenciesChecker
+> Task :desktop:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :desktop:extractPinnedGlassGeometry UP-TO-DATE
+> Task :desktop:convertXmlValueResourcesForCommonMain NO-SOURCE
+> Task :desktop:copyNonXmlValueResourcesForCommonMain NO-SOURCE
+> Task :desktop:prepareComposeResourcesTaskForCommonMain NO-SOURCE
+> Task :desktop:generateResourceAccessorsForCommonMain SKIPPED
+> Task :desktop:convertXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :desktop:copyNonXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :desktop:prepareComposeResourcesTaskForDesktopMain NO-SOURCE
+> Task :desktop:generateResourceAccessorsForDesktopMain SKIPPED
+> Task :desktop:generateActualResourceCollectorsForDesktopMain SKIPPED
+> Task :desktop:generateComposeResClass SKIPPED
+> Task :desktop:generateExpectResourceCollectorsForCommonMain SKIPPED
+> Task :innertube:kmpPartiallyResolvedDependenciesChecker
+> Task :innertube:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :innertube:extractAndroidInnerTube UP-TO-DATE
+> Task :innertube:compileKotlinDesktop UP-TO-DATE
+> Task :innertube:compileDesktopMainJava NO-SOURCE
+> Task :innertube:desktopProcessResources NO-SOURCE
+> Task :innertube:processDesktopMainResources SKIPPED
+> Task :innertube:desktopMainClasses UP-TO-DATE
+> Task :innertube:desktopJar UP-TO-DATE
+> Task :shared:kmpPartiallyResolvedDependenciesChecker
+> Task :shared:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :shared:convertXmlValueResourcesForCommonMain NO-SOURCE
+> Task :shared:copyNonXmlValueResourcesForCommonMain NO-SOURCE
+> Task :shared:prepareComposeResourcesTaskForCommonMain NO-SOURCE
+> Task :shared:generateResourceAccessorsForCommonMain SKIPPED
+> Task :shared:convertXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :shared:copyNonXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :shared:prepareComposeResourcesTaskForDesktopMain NO-SOURCE
+> Task :shared:generateResourceAccessorsForDesktopMain SKIPPED
+> Task :shared:generateActualResourceCollectorsForDesktopMain SKIPPED
+> Task :shared:generateComposeResClass SKIPPED
+> Task :shared:generateExpectResourceCollectorsForCommonMain SKIPPED
+> Task :shared:compileKotlinDesktop UP-TO-DATE
+> Task :shared:compileDesktopMainJava NO-SOURCE
+> Task :shared:assembleDesktopMainResources UP-TO-DATE
+> Task :shared:desktopProcessResources UP-TO-DATE
+> Task :shared:processDesktopMainResources SKIPPED
+> Task :shared:desktopMainClasses UP-TO-DATE
+> Task :shared:desktopJar UP-TO-DATE
+> Task :desktop:compileKotlinDesktop UP-TO-DATE
+> Task :desktop:compileDesktopMainJava NO-SOURCE
+> Task :desktop:assembleDesktopMainResources UP-TO-DATE
+> Task :desktop:desktopProcessResources UP-TO-DATE
+> Task :desktop:processDesktopMainResources SKIPPED
+> Task :desktop:desktopMainClasses UP-TO-DATE
+
+> Task :desktop:captureUi
+Production Local scanner indexed 55 real files
+[INFO MeloXFont] Android MiLan Pro static instances loaded: CSS=[100, 200, 300, 400, 500, 600, 700, 800, 900] files=mi_lan_pro_w{100..800}.ttf (CSS 900 shares frozen axis-700 instance)
+SLF4J(W): No SLF4J providers were found.
+SLF4J(W): Defaulting to no-operation (NOP) logger implementation
+SLF4J(W): See https://www.slf4j.org/codes.html#noProviders for further details.
+Captured 00-library: 1280x800 density=1.0
+Physical click consent: remote-reject at Offset(530.5, 528.0)
+Captured 01-consent: 1280x800 density=1.0
+Verified consent: cloud-enabled:false
+Captured 02-library: 1280x800 density=1.0
+Verified library: tag:desktop-provider-library:Local
+Verified library: absent:library-pages
+Verified library: absent:desktop-nav:Home
+Verified library: absent:desktop-nav:Explore
+Physical click songs: desktop-nav:Songs at Offset(107.5, 144.0)
+Captured 03-songs: 1280x800 density=1.0
+Verified songs: tag:desktop-provider-library:Local
+Verified songs: tag:provider-library-play-all
+Captured 04-more-scroll: 1280x800 density=1.0
+Captured 05-more-settled: 1280x800 density=1.0
+Verified more-settled: tag:provider-library-more
+Physical click more: provider-library-more at Offset(281.5, 596.0)
+Captured 06-more: 1280x800 density=1.0
+Verified more: absent:provider-library-more
+Physical click playlists: desktop-nav:Playlists at Offset(107.5, 176.0)
+Captured 07-playlists: 1280x800 density=1.0
+Verified playlists: tag:provider-library-create
+Verified playlists: tag:provider-library-empty
+Physical click create-dialog: provider-library-create at Offset(1205.5, 60.0)
+Captured 08-create-dialog: 1280x800 density=1.0
+Verified create-dialog: tag:provider-playlist-name
+Captured 09-create-name: 1280x800 density=1.0
+Physical click create: provider-playlist-create-confirm at Offset(751.0, 464.0)
+Captured 10-create: 1280x800 density=1.0
+Captured 11-created: 1280x800 density=1.0
+Verified created: tag-prefix:provider-library-card:Local:
+Verified created: absent:provider-library-empty
+Physical click detail: provider-library-card:Local:5041954c-8fba-4a98-93bd-5167781f2d1b at Offset(316.5, 184.5)
+Captured 12-detail: 1280x800 density=1.0
+Captured 13-detail-loaded: 1280x800 density=1.0
+Verified detail-loaded: tag:desktop-playlist-detail
+Verified detail-loaded: text:Generated library replay
+Captured 14-back: 1280x800 density=1.0
+Verified back: tag:desktop-provider-library:Local
+Verified back: tag-prefix:provider-library-card:Local:
+
+BUILD SUCCESSFUL in 31s
+15 actionable tasks: 4 executed, 11 up-to-date
+Consider enabling configuration cache to speed up this build: https://docs.gradle.org/9.5.1/userguide/configuration_cache_enabling.html

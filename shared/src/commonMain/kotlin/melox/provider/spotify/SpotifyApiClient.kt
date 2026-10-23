@@ -394,7 +394,8 @@ class SpotifyApiClient(
         if (current.accessToken.isNotBlank() && current.accessToken != failedAccessToken && !current.needsRefresh()) {
             current
         } else {
-            if (clientId.isBlank()) throw IOException("未配置 Spotify Client ID；请设置 Gradle property meloxSpotifyClientId")
+            if (clientId.ifBlank { SpotifyClientConfig.effective() }.isBlank())
+                throw IOException("未配置 Spotify Client ID；请在 Spotify 登录页填写")
             oauth.refresh(current)
         }
     }

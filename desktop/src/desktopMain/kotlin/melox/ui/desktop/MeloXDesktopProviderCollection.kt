@@ -44,7 +44,7 @@ internal fun MeloXDesktopProviderCollection(title: String, subtitle: String, art
                         .clickable(role = androidx.compose.ui.semantics.Role.Button, onClick = onBack)
                         .padding(end = 6.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
                         MeloXSymbolIcon(MeloXSymbol.ChevronLeft, size = 12)
-                        Text(desktopString("ui.navigation.search"), fontSize = 12.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        Text(desktopString("ui.common.back"), fontSize = 12.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     }
                     Row(verticalAlignment = Alignment.Bottom, horizontalArrangement = Arrangement.spacedBy(24.dp)) {
                         MeloXArtworkImage(artwork, MaterialTheme.colorScheme.surfaceVariant, Modifier.size(220.dp).clip(RoundedCornerShape(10.dp)))

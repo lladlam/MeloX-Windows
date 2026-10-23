@@ -430,13 +430,15 @@ private fun NeteaseSongRow(song: melox.model.SearchSong, onClick: () -> Unit) {
 
 @Composable
 private fun ProviderHome(source: MusicSource, onOpenPlaylist: (MusicPlaylistSummary) -> Unit) {
-    val scope = rememberCoroutineScope()
+    val scope = key(source) { rememberCoroutineScope() }
+    var rankingRequest by remember(source) { mutableStateOf<kotlinx.coroutines.Job?>(null) }
     var feed by remember(source) { mutableStateOf<MusicHomeFeed?>(null) }
     var loading by remember(source) { mutableStateOf(true) }
     var error by remember(source) { mutableStateOf<String?>(null) }
     var rankingSongs by remember(source) { mutableStateOf<List<melox.model.SearchSong>?>(null) }
     var rankingTitle by remember(source) { mutableStateOf("") }
-    LaunchedEffect(source) {
+    var retry by remember(source) { mutableIntStateOf(0) }
+    LaunchedEffect(source, retry) {
         loading = true
         val registry = melox.music.provider.MeloXMusicProviders.create()
         val provider = runCatching { registry.require(source) }.getOrNull()
@@ -444,8 +446,23 @@ private fun ProviderHome(source: MusicSource, onOpenPlaylist: (MusicPlaylistSumm
         if (home == null) { error = "${source.displayName} 暂未提供首页数据"; loading = false; return@LaunchedEffect }
         runCatching { withContext(Dispatchers.IO) { home.homeFeed() } }
             .onSuccess { feed = it; error = null }
-            .onFailure { error = it.message ?: "首页加载失败" }
+            .onFailure { if (it is kotlinx.coroutines.CancellationException) throw it; error = it.message ?: "首页加载失败" }
         loading = false
+    }
+    if (melox.settings.MeloXSettingsRuntime.desktopLayoutEnabled) {
+        Box(Modifier.fillMaxSize()) {
+            melox.ui.desktop.MeloXDesktopProviderHome(source, feed, loading, error, { retry++ }, onOpenPlaylist) { ranking ->
+                rankingTitle = ranking.title
+                rankingRequest?.cancel()
+                rankingRequest = scope.launch {
+                    try { rankingSongs = loadProviderRankingSongs(source, ranking) }
+                    catch (cancelled: kotlinx.coroutines.CancellationException) { throw cancelled }
+                    catch (failure: Exception) { error = failure.message ?: "排行榜加载失败" }
+                }
+            }
+            melox.ui.navigation.MeloXDetailOverlay(rankingSongs, { rankingSongs = null }) { MeloXProviderSongListDetail(it, rankingTitle) { rankingSongs = null } }
+        }
+        return
     }
     if (loading && feed == null) {
         Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) { CircularProgressIndicator(color = HomeAccent) }
@@ -469,7 +486,8 @@ private fun ProviderHome(source: MusicSource, onOpenPlaylist: (MusicPlaylistSumm
         if (rankings.isNotEmpty()) { item { SectionTitle("排行榜", source.displayName) }; item { CollectionRowRankings(rankings) { ranking ->
             rankingTitle = ranking.title
             error = null
-            scope.launch {
+            rankingRequest?.cancel()
+            rankingRequest = scope.launch {
                 try {
                     rankingSongs = loadProviderRankingSongs(source, ranking)
                 } catch (cancelled: kotlinx.coroutines.CancellationException) { throw cancelled }

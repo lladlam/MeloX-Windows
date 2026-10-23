@@ -1,0 +1,464 @@
+{
+  "renderer": "production ImageComposeScene",
+  "start_tab": "Library",
+  "density": 1,
+  "frames": [],
+  "inputs": [
+    {
+      "x": 530.5,
+      "action": "tap",
+      "y": 528,
+      "step": "consent",
+      "type": "Mouse"
+    },
+    {
+      "x": 744,
+      "action": "tap",
+      "y": 321.5,
+      "step": "login",
+      "type": "Mouse"
+    }
+  ],
+  "physical_audible_acceptance": "BLOCKED",
+  "locale": "zh-CN",
+  "steps": [
+    "consent:tap@remote-reject",
+    "library:wait@800",
+    "signed-out:wait@1200",
+    "login:tap@provider-library-login"
+  ],
+  "home": "/tmp/opencode/provider-v4-Jellyfin-desktop",
+  "animation_clock": "wall clock with explicit frame samples",
+  "enabled_start_tab": false,
+  "play_id": null,
+  "play_query": "",
+  "pcm_outputs": [],
+  "width": 1280,
+  "scenes": [
+    {
+      "memory": {
+        "direct_buffer_bytes": 8192,
+        "heap_used_bytes": 17204560,
+        "resident_bytes": 243601408,
+        "uptime_ms": 2733,
+        "heap_max_bytes": 1037959168,
+        "threads": 15,
+        "heap_committed_bytes": 19869696,
+        "non_heap_used_bytes": 44703912
+      },
+      "legal_consent_version": "",
+      "skia": {
+        "font_cache_bytes": 86635,
+        "live_objects": null,
+        "resource_cache_bytes": 0
+      },
+      "cloud_enabled": false,
+      "title": null,
+      "error": null,
+      "touch_keyboard_requests": 0,
+      "onboarding_completed": true,
+      "automix_status": "idle",
+      "file": "00-library.png",
+      "equalizer": {
+        "bands_db": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "preamp_db": 0,
+        "preset": "Flat",
+        "enabled": false
+      },
+      "text_pv_style": "BlueBold",
+      "artwork_cache": {
+        "entries": 0,
+        "budget_bytes": 67108864,
+        "budgeted_bytes": 0
+      },
+      "pointer_mode": "Mouse",
+      "is_playing": false,
+      "play_when_ready": false,
+      "selected_quality": "standard",
+      "is_loading": false,
+      "personalization_consent": false,
+      "assertions": [],
+      "track": null,
+      "cloud_choice_made": false,
+      "queue_count": 0,
+      "lyric_style": "AppleMusic",
+      "text_pv_intensity": 1,
+      "error_kind": null,
+      "queue_tracks": [],
+      "lyric_document": null,
+      "automix_progress": 0,
+      "automix_active": false,
+      "duration_ms": 0,
+      "position_ms": 0,
+      "is_paused": false,
+      "captured_elapsed_ms": 1742.864027,
+      "page": null,
+      "queue_entry_ids": [],
+      "lyric_word_lines": null,
+      "queue_index": -1,
+      "text_pv_speed": 2,
+      "controls_visible": false,
+      "autoplay_enabled": false
+    },
+    {
+      "memory": {
+        "direct_buffer_bytes": 8192,
+        "heap_used_bytes": 17268360,
+        "resident_bytes": 314462208,
+        "uptime_ms": 4700,
+        "heap_max_bytes": 1037959168,
+        "threads": 15,
+        "heap_committed_bytes": 19869696,
+        "non_heap_used_bytes": 46727576
+      },
+      "legal_consent_version": "",
+      "skia": {
+        "font_cache_bytes": 86635,
+        "live_objects": null,
+        "resource_cache_bytes": 0
+      },
+      "cloud_enabled": false,
+      "title": null,
+      "error": null,
+      "touch_keyboard_requests": 0,
+      "onboarding_completed": true,
+      "automix_status": "idle",
+      "file": "01-consent.png",
+      "equalizer": {
+        "bands_db": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "preamp_db": 0,
+        "preset": "Flat",
+        "enabled": false
+      },
+      "text_pv_style": "BlueBold",
+      "artwork_cache": {
+        "entries": 0,
+        "budget_bytes": 67108864,
+        "budgeted_bytes": 0
+      },
+      "pointer_mode": "Mouse",
+      "is_playing": false,
+      "play_when_ready": false,
+      "selected_quality": "standard",
+      "is_loading": false,
+      "personalization_consent": false,
+      "assertions": [{
+        "expected": "cloud-enabled:false",
+        "passed": true
+      }],
+      "track": null,
+      "cloud_choice_made": true,
+      "queue_count": 0,
+      "lyric_style": "AppleMusic",
+      "text_pv_intensity": 1,
+      "error_kind": null,
+      "queue_tracks": [],
+      "lyric_document": null,
+      "automix_progress": 0,
+      "automix_active": false,
+      "duration_ms": 0,
+      "position_ms": 0,
+      "is_paused": false,
+      "captured_elapsed_ms": 3700.623054,
+      "page": null,
+      "queue_entry_ids": [],
+      "lyric_word_lines": null,
+      "queue_index": -1,
+      "text_pv_speed": 2,
+      "controls_visible": false,
+      "autoplay_enabled": false,
+      "action_elapsed_ms": 1953.226619
+    },
+    {
+      "memory": {
+        "direct_buffer_bytes": 8192,
+        "heap_used_bytes": 12474448,
+        "resident_bytes": 352444416,
+        "uptime_ms": 6122,
+        "heap_max_bytes": 1037959168,
+        "threads": 15,
+        "heap_committed_bytes": 19869696,
+        "non_heap_used_bytes": 46819952
+      },
+      "legal_consent_version": "",
+      "skia": {
+        "font_cache_bytes": 86635,
+        "live_objects": null,
+        "resource_cache_bytes": 0
+      },
+      "cloud_enabled": false,
+      "title": null,
+      "error": null,
+      "touch_keyboard_requests": 0,
+      "onboarding_completed": true,
+      "automix_status": "idle",
+      "file": "02-library.png",
+      "equalizer": {
+        "bands_db": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "preamp_db": 0,
+        "preset": "Flat",
+        "enabled": false
+      },
+      "text_pv_style": "BlueBold",
+      "artwork_cache": {
+        "entries": 0,
+        "budget_bytes": 67108864,
+        "budgeted_bytes": 0
+      },
+      "pointer_mode": "Mouse",
+      "is_playing": false,
+      "play_when_ready": false,
+      "selected_quality": "standard",
+      "is_loading": false,
+      "personalization_consent": false,
+      "assertions": [
+        {
+          "expected": "tag:desktop-provider-library",
+          "passed": true
+        },
+        {
+          "expected": "absent:library-pages",
+          "passed": true
+        },
+        {
+          "expected": "absent:desktop-nav:Home",
+          "passed": true
+        },
+        {
+          "expected": "absent:desktop-nav:Explore",
+          "passed": true
+        }
+      ],
+      "track": null,
+      "cloud_choice_made": true,
+      "queue_count": 0,
+      "lyric_style": "AppleMusic",
+      "text_pv_intensity": 1,
+      "error_kind": null,
+      "queue_tracks": [],
+      "lyric_document": null,
+      "automix_progress": 0,
+      "automix_active": false,
+      "duration_ms": 0,
+      "position_ms": 0,
+      "is_paused": false,
+      "captured_elapsed_ms": 5122.39893,
+      "page": null,
+      "queue_entry_ids": [],
+      "lyric_word_lines": null,
+      "queue_index": -1,
+      "text_pv_speed": 2,
+      "controls_visible": false,
+      "autoplay_enabled": false,
+      "action_elapsed_ms": 1421.433543
+    },
+    {
+      "memory": {
+        "direct_buffer_bytes": 8192,
+        "heap_used_bytes": 12991984,
+        "resident_bytes": 353558528,
+        "uptime_ms": 7912,
+        "heap_max_bytes": 1037959168,
+        "threads": 15,
+        "heap_committed_bytes": 19869696,
+        "non_heap_used_bytes": 46971600
+      },
+      "legal_consent_version": "",
+      "skia": {
+        "font_cache_bytes": 86635,
+        "live_objects": null,
+        "resource_cache_bytes": 0
+      },
+      "cloud_enabled": false,
+      "title": null,
+      "error": null,
+      "touch_keyboard_requests": 0,
+      "onboarding_completed": true,
+      "automix_status": "idle",
+      "file": "03-signed-out.png",
+      "equalizer": {
+        "bands_db": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "preamp_db": 0,
+        "preset": "Flat",
+        "enabled": false
+      },
+      "text_pv_style": "BlueBold",
+      "artwork_cache": {
+        "entries": 0,
+        "budget_bytes": 67108864,
+        "budgeted_bytes": 0
+      },
+      "pointer_mode": "Mouse",
+      "is_playing": false,
+      "play_when_ready": false,
+      "selected_quality": "standard",
+      "is_loading": false,
+      "personalization_consent": false,
+      "assertions": [
+        {
+          "expected": "tag:provider-library-login",
+          "passed": true
+        },
+        {
+          "expected": "absent:provider-library-empty",
+          "passed": true
+        }
+      ],
+      "track": null,
+      "cloud_choice_made": true,
+      "queue_count": 0,
+      "lyric_style": "AppleMusic",
+      "text_pv_intensity": 1,
+      "error_kind": null,
+      "queue_tracks": [],
+      "lyric_document": null,
+      "automix_progress": 0,
+      "automix_active": false,
+      "duration_ms": 0,
+      "position_ms": 0,
+      "is_paused": false,
+      "captured_elapsed_ms": 6912.286758,
+      "page": null,
+      "queue_entry_ids": [],
+      "lyric_word_lines": null,
+      "queue_index": -1,
+      "text_pv_speed": 2,
+      "controls_visible": false,
+      "autoplay_enabled": false,
+      "action_elapsed_ms": 1789.415062
+    },
+    {
+      "memory": {
+        "direct_buffer_bytes": 8192,
+        "heap_used_bytes": 18791248,
+        "resident_bytes": 368787456,
+        "uptime_ms": 9710,
+        "heap_max_bytes": 1037959168,
+        "threads": 15,
+        "heap_committed_bytes": 30707712,
+        "non_heap_used_bytes": 53171800
+      },
+      "legal_consent_version": "",
+      "skia": {
+        "font_cache_bytes": 123958,
+        "live_objects": null,
+        "resource_cache_bytes": 0
+      },
+      "cloud_enabled": false,
+      "title": null,
+      "error": null,
+      "touch_keyboard_requests": 0,
+      "onboarding_completed": true,
+      "automix_status": "idle",
+      "file": "04-login.png",
+      "equalizer": {
+        "bands_db": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "preamp_db": 0,
+        "preset": "Flat",
+        "enabled": false
+      },
+      "text_pv_style": "BlueBold",
+      "artwork_cache": {
+        "entries": 0,
+        "budget_bytes": 67108864,
+        "budgeted_bytes": 0
+      },
+      "pointer_mode": "Mouse",
+      "is_playing": false,
+      "play_when_ready": false,
+      "selected_quality": "standard",
+      "is_loading": false,
+      "personalization_consent": false,
+      "assertions": [
+        {
+          "expected": "tag:account-screen",
+          "passed": true
+        },
+        {
+          "expected": "tag:account-form-jellyfin",
+          "passed": true
+        }
+      ],
+      "track": null,
+      "cloud_choice_made": true,
+      "queue_count": 0,
+      "lyric_style": "AppleMusic",
+      "text_pv_intensity": 1,
+      "error_kind": null,
+      "queue_tracks": [],
+      "lyric_document": null,
+      "automix_progress": 0,
+      "automix_active": false,
+      "duration_ms": 0,
+      "position_ms": 0,
+      "is_paused": false,
+      "captured_elapsed_ms": 8710.176622,
+      "page": null,
+      "queue_entry_ids": [],
+      "lyric_word_lines": null,
+      "queue_index": -1,
+      "text_pv_speed": 2,
+      "controls_visible": false,
+      "autoplay_enabled": false,
+      "action_elapsed_ms": 1797.696101
+    }
+  ],
+  "theme": "Dark",
+  "audio_endpoint": "Java Sound physical output",
+  "height": 800
+}

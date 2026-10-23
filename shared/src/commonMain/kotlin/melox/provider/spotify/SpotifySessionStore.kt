@@ -2,6 +2,8 @@ package melox.provider.spotify
 
 import melox.account.SecureSessionPreferences
 import melox.platform.getPreferences
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 data class SpotifySession(
     val accessToken: String = "",
@@ -24,6 +26,8 @@ data class SpotifyAuthorizationTransaction(
 )
 
 object SpotifySessionStore {
+    private val mutableRevision = MutableStateFlow(0L)
+    val revision = mutableRevision.asStateFlow()
     private const val PreferencesName = "melox_spotify_session"
     private const val AccessToken = "access_token"
     private const val RefreshToken = "refresh_token"
@@ -46,12 +50,18 @@ object SpotifySessionStore {
     }
 
     fun write(session: SpotifySession) {
+        val previous = read()
         prefs().putValues(mapOf(AccessToken to session.accessToken, RefreshToken to session.refreshToken,
             ExpiresAt to session.expiresAtEpochMs.toString(), AccountId to session.accountId))
+        // Access-token refreshes must not restart the library request performing that refresh.
+        if (previous.accountId != session.accountId || previous.isLoggedIn != session.isLoggedIn ||
+            previous.refreshToken != session.refreshToken) mutableRevision.value++
     }
 
     fun updateAccountId(accountId: String) {
+        val previous = read().accountId
         prefs().putString(AccountId, accountId)
+        if (previous != accountId) mutableRevision.value++
     }
 
     fun saveTransaction(transaction: SpotifyAuthorizationTransaction) {
@@ -85,5 +95,6 @@ object SpotifySessionStore {
     fun clear() {
         SpotifyLibrespotPlayback.shared.disconnect()
         prefs().clear()
+        mutableRevision.value++
     }
 }

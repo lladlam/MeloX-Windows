@@ -1,6 +1,5 @@
 package melox.music.provider
 
-import melox.MeloXBuildConfig
 import melox.platform.MeloXPreferences
 import melox.platform.getPreferences
 import melox.music.model.MusicSource
@@ -25,12 +24,10 @@ object MusicProviderSelectionStore {
 
     private fun prefs(): MeloXPreferences = getPreferences(PreferencesName)
 
-    /** Providers that need build-time credentials remain internal until configured. */
+    /** Spotify's public Client ID is configured in its login form, not required to select it. */
     fun visibleSources(): List<MusicSource> =
         MusicSource.entries.filter { source ->
-            source != MusicSource.AppleMusic &&
-                source != MusicSource.Kuwo &&
-                (source != MusicSource.Spotify || MeloXBuildConfig.SPOTIFY_CLIENT_ID.isNotBlank())
+            source != MusicSource.AppleMusic && source != MusicSource.Kuwo
         }
 
     fun selectedSource(): MusicSource =

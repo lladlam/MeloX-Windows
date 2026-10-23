@@ -1,0 +1,7 @@
+consent=cloud-enabled:false
+home=tag:desktop-provider-home:Kugou,absent:home-quick-actions
+detail=tag:desktop-provider-ranking-detail,tag:desktop-collection-back
+back=tag:desktop-provider-home:Kugou,absent:desktop-provider-ranking-detail
+explore=tag:desktop-explore
+explore-detail=tag:desktop-provider-ranking-detail
+explore-back=tag:desktop-explore,absent:desktop-provider-ranking-detail

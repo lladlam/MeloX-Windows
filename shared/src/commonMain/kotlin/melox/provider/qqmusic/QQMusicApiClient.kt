@@ -444,6 +444,9 @@ class QQMusicApiClient(
                     val id = firstString(top, "topId", "id")
                         .ifBlank { firstLong(top, "topId", "id").takeIf { it > 0 }?.toString().orEmpty() }
                     if (id.isBlank()) continue
+                    val title = firstString(top, "title", "titleDetail", "name").ifBlank { "QQ音乐排行榜" }
+                    // MV榜 is a video catalog, not a song ranking understood by RankingCapability.
+                    if (title.contains("MV榜", ignoreCase = true)) continue
                     val previews = top.optJSONArray("song") ?: JSONArray()
                     val previewText = buildList {
                         for (index in 0 until minOf(previews.length(), 3)) {
@@ -456,7 +459,7 @@ class QQMusicApiClient(
                     add(
                         MusicRankingSummary(
                             id = MusicResourceId(MusicSource.QQMusic, id),
-                            title = firstString(top, "title", "titleDetail", "name").ifBlank { "QQ音乐排行榜" },
+                            title = title,
                             artworkUrl = firstString(top, "frontPicUrl", "headPicUrl", "cover")
                                 .takeIf(String::isNotBlank)?.let(::secureUrl),
                             subtitle = previewText.ifBlank { firstString(top, "titleSub", "period", "updateTime") }

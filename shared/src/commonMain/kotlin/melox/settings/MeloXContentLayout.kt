@@ -8,17 +8,19 @@ import melox.music.model.MusicSource
 object MeloXContentLayout {
     val tabs = listOf("Home", "Explore", "Library", "Podcasts", "Downloads", "Cloud", "Settings")
     val homeSections = listOf("QuickActions", "Playlists", "NewSongs")
+    private val feedSources = setOf(MusicSource.Netease, MusicSource.QQMusic, MusicSource.Kugou,
+        MusicSource.AppleMusic, MusicSource.YouTubeMusic)
 
     fun visibleTabs(source: MusicSource): List<String> {
         val order = if (source == MusicSource.Bilibili) listOf("Library", "Settings") else MeloXSettingsRuntime.tabOrder
         return order.filter { page ->
             when (page) {
-                "Home" -> MeloXSettingsRuntime.homeTabEnabled
-                "Explore" -> MeloXSettingsRuntime.exploreTabEnabled
+                "Home" -> source in feedSources && MeloXSettingsRuntime.homeTabEnabled
+                "Explore" -> source in feedSources && MeloXSettingsRuntime.exploreTabEnabled
                 "Library" -> MeloXSettingsRuntime.libraryTabEnabled
-                "Podcasts" -> MeloXSettingsRuntime.podcastsEnabled && MeloXSettingsRuntime.podcastsTabPlacement
+                "Podcasts" -> source == MusicSource.Netease && MeloXSettingsRuntime.podcastsEnabled && MeloXSettingsRuntime.podcastsTabPlacement
                 "Downloads" -> MeloXSettingsRuntime.downloadsEnabled && MeloXSettingsRuntime.downloadsTabPlacement
-                "Cloud" -> MeloXSettingsRuntime.cloudMusicEnabled && MeloXSettingsRuntime.cloudTabPlacement
+                "Cloud" -> source == MusicSource.Netease && MeloXSettingsRuntime.cloudMusicEnabled && MeloXSettingsRuntime.cloudTabPlacement
                 "Settings" -> true
                 else -> false
             }
@@ -35,7 +37,8 @@ object MeloXContentLayout {
     }
 
     fun libraryPages(source: MusicSource): List<String> = when (source) {
-        MusicSource.Local -> listOf("Songs")
+        MusicSource.Local -> listOf("Songs", "Playlists")
+        MusicSource.Spotify, MusicSource.YouTubeMusic -> listOf("Playlists", "Albums", "Artists")
         MusicSource.Bilibili -> listOfNotNull("Playlists", "Downloads".takeIf {
             MeloXSettingsRuntime.downloadsEnabled && MeloXSettingsRuntime.downloadsLibraryPlacement
         })

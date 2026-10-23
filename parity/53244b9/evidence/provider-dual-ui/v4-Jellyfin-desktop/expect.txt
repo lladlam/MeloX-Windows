@@ -1,0 +1,4 @@
+consent=cloud-enabled:false
+library=tag:desktop-provider-library,absent:library-pages,absent:desktop-nav:Home,absent:desktop-nav:Explore
+signed-out=tag:provider-library-login,absent:provider-library-empty
+login=tag:account-screen,tag:account-form-jellyfin

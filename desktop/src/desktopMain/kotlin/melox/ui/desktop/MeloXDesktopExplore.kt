@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 import melox.account.NeteaseSessionStore
 import melox.library.NeteaseLibraryClient
 import melox.library.NeteasePlaylistSummary
@@ -44,6 +45,10 @@ internal fun MeloXDesktopExplore(source: MusicSource, onPlaylist: (NeteasePlayli
     var loading by remember(source) { mutableStateOf(true) }
     var error by remember(source) { mutableStateOf<String?>(null) }
     var retry by remember { mutableIntStateOf(0) }
+    val scope = key(source) { rememberCoroutineScope() }
+    var rankingRequest by remember(source) { mutableStateOf<kotlinx.coroutines.Job?>(null) }
+    var rankingSongs by remember(source) { mutableStateOf<List<SearchSong>?>(null) }
+    var rankingTitle by remember(source) { mutableStateOf("") }
     val revision by NeteaseSessionStore.revision.collectAsState()
     LaunchedEffect(source, revision, retry) {
         loading = true; error = null
@@ -85,15 +90,16 @@ internal fun MeloXDesktopExplore(source: MusicSource, onPlaylist: (NeteasePlayli
                             add(DesktopExploreCard(value.title, value.creatorName.orEmpty(), value.artworkUrl, value.playCount ?: 0L,
                                 "desktop-explore-provider:${value.id.value}") { onProviderPlaylist(value) })
                         }
-                        // A ranking has no playlist detail route. Play its real preview
-                        // tracks when the provider supplies them; otherwise omit the card
-                        // instead of rendering a no-op target.
                         feed.rankings.forEach { value: MusicRankingSummary ->
-                            if (value.previewTracks.isEmpty()) return@forEach
-                            val tracks = value.previewTracks.map(MeloXLegacyUiBridge::track)
                             add(DesktopExploreCard(value.title, value.subtitle.orEmpty(), value.artworkUrl, 0L,
                                 "desktop-explore-ranking:${value.id.value}") {
-                                PlaybackCommands.playQueue(tracks, tracks.first().id)
+                                rankingTitle = value.title
+                                rankingRequest?.cancel()
+                                rankingRequest = scope.launch {
+                                    try { rankingSongs = melox.ui.screens.loadProviderRankingSongs(source, value) }
+                                    catch (cancelled: CancellationException) { throw cancelled }
+                                    catch (failure: Exception) { error = failure.message ?: desktopString("ui.error.unknown") }
+                                }
                             })
                         }
                     }
@@ -151,6 +157,9 @@ internal fun MeloXDesktopExplore(source: MusicSource, onPlaylist: (NeteasePlayli
                     }
                 }
                 item("clearance") { Spacer(Modifier.height(80.dp)) }
+            }
+            melox.ui.navigation.MeloXDetailOverlay(rankingSongs, { rankingSongs = null }) {
+                melox.ui.screens.MeloXProviderSongListDetail(it, rankingTitle) { rankingSongs = null }
             }
         }
     }

@@ -1,0 +1,93 @@
+{
+  "status": "PASSED",
+  "replays": [
+    {
+      "case": "v3-Kugou-desktop",
+      "scenes": 5,
+      "assertions": 7,
+      "failures": 0
+    },
+    {
+      "case": "v3-QQMusic-desktop",
+      "scenes": 5,
+      "assertions": 7,
+      "failures": 0
+    },
+    {
+      "case": "v3-YouTubeMusic-desktop",
+      "scenes": 7,
+      "assertions": 11,
+      "failures": 0
+    },
+    {
+      "case": "v3-YouTubeMusic-mobile",
+      "scenes": 7,
+      "assertions": 11,
+      "failures": 0
+    },
+    {
+      "case": "v4-Bilibili-desktop",
+      "scenes": 5,
+      "assertions": 9,
+      "failures": 0
+    },
+    {
+      "case": "v4-Jellyfin-desktop",
+      "scenes": 5,
+      "assertions": 9,
+      "failures": 0
+    },
+    {
+      "case": "v4-Local-desktop",
+      "scenes": 15,
+      "assertions": 18,
+      "failures": 0
+    },
+    {
+      "case": "v4-Local-mobile",
+      "scenes": 17,
+      "assertions": 17,
+      "failures": 0
+    },
+    {
+      "case": "v4-Spotify-desktop",
+      "scenes": 7,
+      "assertions": 13,
+      "failures": 0
+    },
+    {
+      "case": "v4-Spotify-mobile",
+      "scenes": 7,
+      "assertions": 11,
+      "failures": 0
+    },
+    {
+      "case": "v5-Kugou-home",
+      "scenes": 13,
+      "assertions": 13,
+      "failures": 0
+    },
+    {
+      "case": "v6-QQMusic-home",
+      "scenes": 14,
+      "assertions": 13,
+      "failures": 0
+    }
+  ],
+  "total_captures": 12,
+  "total_scenes": 107,
+  "total_assertions": 139,
+  "excluded_navigation_only": [
+    "v3-QQMusic-home",
+    "v3-Kugou-home"
+  ],
+  "shared_tests": {
+    "suites": 61,
+    "tests": 297,
+    "failures": 0,
+    "errors": 0
+  },
+  "scope": "Production pointer/wheel/keyboard. Local real indexing/persistence (50 to 55 tracks); signed-out native account forms; live QQ/Kugou charts require actual track rows. No private-account or audible-hardware acceptance.",
+  "source_base": "0f88da7",
+  "local_source_dirty": true
+}

@@ -1,0 +1,12 @@
+consent:tap@remote-reject
+home:wait@8000
+ranking:tap@desktop-provider-home-ranking:49223
+detail:wait@12000
+back:tap@desktop-collection-back
+explore:tap@desktop-nav:Explore
+explore-loaded:wait@8000
+explore-scroll:scroll@800,600,200
+explore-scroll-settled:wait@1500
+explore-ranking:tap@desktop-explore-ranking:49223
+explore-detail:wait@12000
+explore-back:escape

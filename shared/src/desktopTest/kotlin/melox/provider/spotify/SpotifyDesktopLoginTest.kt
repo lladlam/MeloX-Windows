@@ -11,6 +11,51 @@ import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 
 class SpotifyDesktopLoginTest {
+    @Test fun unauthorizedLibraryProfileRefreshUsesUserConfiguredClientId() = runBlocking {
+        val server = MockWebServer()
+        server.start()
+        val previousSession = SpotifySessionStore.read()
+        val previousClient = SpotifyClientConfig.read()
+        try {
+            SpotifyClientConfig.write("protocol-test-client")
+            SpotifySessionStore.write(SpotifySession("expired-by-server", "test-refresh", System.currentTimeMillis() + 3_600_000L, "account-a"))
+            server.enqueue(MockResponse().setResponseCode(401).setBody("{}"))
+            server.enqueue(MockResponse().setHeader("Content-Type", "application/json")
+                .setBody("""{"access_token":"new-access","expires_in":3600}"""))
+            server.enqueue(MockResponse().setHeader("Content-Type", "application/json")
+                .setBody("""{"id":"account-a","display_name":"Protocol account"}"""))
+            val http = OkHttpClient.Builder().addInterceptor { chain ->
+                chain.proceed(chain.request().newBuilder().url(server.url(chain.request().url.encodedPath)).build())
+            }.build()
+            assertEquals("account-a", SpotifyApiClient("", http).accountSummary()?.id)
+            assertEquals("Bearer expired-by-server", server.takeRequest().getHeader("Authorization"))
+            val refresh = server.takeRequest()
+            assertEquals("protocol-test-client", SpotifyDesktopLogin.parseCallbackQuery(refresh.body.readUtf8())["client_id"])
+            assertEquals("Bearer new-access", server.takeRequest().getHeader("Authorization"))
+        } finally {
+            SpotifySessionStore.write(previousSession)
+            if (previousClient.isBlank()) SpotifyClientConfig.clear() else SpotifyClientConfig.write(previousClient)
+            server.shutdown()
+        }
+    }
+
+    @Test fun tokenRefreshKeepsLibraryGenerationButAccountSwitchInvalidatesIt() {
+        val previous = SpotifySessionStore.read()
+        try {
+            val session = SpotifySession("test-initial", "test-refresh", 1_000L, "account-a")
+            SpotifySessionStore.write(session)
+            val generation = SpotifySessionStore.revision.value
+            SpotifySessionStore.write(session.copy(accessToken = "test-refreshed", expiresAtEpochMs = 9_000L))
+            assertEquals(generation, SpotifySessionStore.revision.value,
+                "A library read refreshing its token must not cancel and restart itself")
+            SpotifySessionStore.updateAccountId("account-b")
+            assertTrue(SpotifySessionStore.revision.value > generation,
+                "Account switches must discard the previous account's library")
+        } finally {
+            SpotifySessionStore.write(previous)
+        }
+    }
+
     @Test fun pkceUsesRfc7636Challenge() {
         assertEquals("E9Melhoa2OwvFrEMTJguCHaoeK1t8URWbuGJSstw-cM",
             SpotifyOAuthLogic.codeChallenge("dBjftJeZ4CVP-mB92K27uhbUJU1p1r_wW1gFWFOEjXk"))

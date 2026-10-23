@@ -138,3 +138,12 @@
 
 - 关于页原读取 macOS 参考字符串，显示“洛汐聚合体”并复用 macOS Logo；改为 Windows 自有 `branding/melox-windows.png`（派生自 MeloX-Android 固定启动图标）与 lladlam 开发者/版权信息，首次引导、托盘、侧栏占位同步。
 - 真实设置导航+鼠标点击截图验证；参考资源字节未改。详见 `WINDOWS_ABOUT_BRANDING.md`，证据 `evidence/windows-branding-about/`。
+
+## 18. 第三方音乐源双 UI 入口与真实收藏能力
+
+- QQ／酷狗／YouTube 首页新增独立电脑排版；电脑发现页的原生榜单不再被缺少预览歌曲过滤，统一读取真实 RankingCapability 分页后打开桌面详情，保留完整队列、筛选、随机播放与歌曲菜单。
+- Spotify／YouTube 音乐库补齐歌单、收藏专辑、关注歌手；本地音乐补齐歌单和新建歌单，歌曲列表提供实际分页与桌面菜单。手机沿用固定标题、液态分段选择器、66dp 歌曲行及独立详情；电脑使用侧栏、封面网格与桌面行。
+- 修复第三方音乐库登录误开网易云表单，QQ／酷狗／Bilibili／Jellyfin 未登录也保持电脑布局和对应登录入口。Spotify 可以进入已有 Client ID／OAuth 配置页，未登录账号读取遵守可空契约，401 刷新接受用户配置的 Client ID。
+- 首页／发现按来源实际 feed 能力过滤，云盘／播客限定网易云；来源切换恢复各自栏目。Spotify／YouTube 会话 revision 清理旧音乐库组合与栏目任务，普通 Spotify access-token 刷新不反复重启读取。
+- 本地桌面编译、61 suites／297 tests 通过，零失败；12 组生产 UI 回放共 107 scenes／139 assertions 通过，覆盖真实鼠标／滚轮／键盘、本地 50→55 首分页、新建与打开歌单、来源账号表单、QQ／酷狗真实公开首页和发现页榜单进退。最终榜单断言必须出现实际歌曲行；旧 v3 两组仅导航回放不计内容验收。补齐酷狗 KMR v2 嵌套音频 hash／毫秒时长解析，并过滤 QQ 不支持音频详情的 MV 榜。
+- 回放未构造登录账号、Cookie 或在线收藏数据；私人账号实际收藏数量、真实 OAuth 成功与新 Windows 发行完整 ZIP 尚未在本批验收。失败回放及补验口径见 `PROVIDER_DUAL_UI.md`，原始通过证据 `evidence/provider-dual-ui/`。

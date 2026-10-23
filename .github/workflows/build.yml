@@ -169,6 +169,21 @@ jobs:
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           python tools/verify_desktop_account_capture.py desktop/build/parity/home-final-light
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Replay provider collections in both production layouts
+        shell: pwsh
+        run: |
+          foreach ($source in @("Local", "Spotify", "YouTubeMusic")) {
+            foreach ($layout in @("desktop", "mobile")) {
+              $case = "provider-$source-$layout"
+              python tools/capture_provider_collections.py $source $layout "$pwd/desktop/build/parity/$case-home" "desktop/build/parity/$case"
+              if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+            }
+          }
+          foreach ($source in @("QQMusic", "Kugou", "Bilibili", "Jellyfin")) {
+            $case = "provider-$source-desktop"
+            python tools/capture_provider_collections.py $source desktop "$pwd/desktop/build/parity/$case-home" "desktop/build/parity/$case"
+            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          }
       - name: Replay reference Desktop player, queue, volume and independent favorite reload
         shell: pwsh
         run: |

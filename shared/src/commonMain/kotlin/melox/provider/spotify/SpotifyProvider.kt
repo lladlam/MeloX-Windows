@@ -33,7 +33,8 @@ class SpotifyProvider(
     override suspend fun searchPlaylists(query: String, page: Int, pageSize: Int) = api.searchPlaylists(query, page, pageSize)
     override suspend fun searchAlbums(query: String, page: Int, pageSize: Int) = api.searchAlbums(query, page, pageSize)
     override suspend fun searchArtists(query: String, page: Int, pageSize: Int) = api.searchArtists(query, page, pageSize)
-    override suspend fun accountSummary(): MusicAccountSummary? = api.accountSummary()
+    override suspend fun accountSummary(): MusicAccountSummary? =
+        if (SpotifySessionStore.read().isLoggedIn) api.accountSummary() else null
     override suspend fun userPlaylists(page: Int, pageSize: Int) = api.userPlaylists(page, pageSize)
     override suspend fun writablePlaylists(page: Int, pageSize: Int) = api.writablePlaylists(page, pageSize)
     override suspend fun playlistDetail(playlist: MusicPlaylistSummary, page: Int, pageSize: Int) = api.playlistDetail(playlist, page, pageSize)

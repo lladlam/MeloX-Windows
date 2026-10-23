@@ -941,7 +941,7 @@ private fun SearchCategoryPage(
 }
 
 @Composable
-private fun ProviderCollectionDetail(
+internal fun ProviderCollectionDetail(
     title: String,
     subtitle: String,
     artwork: String?,
@@ -954,6 +954,7 @@ private fun ProviderCollectionDetail(
     var reload by remember(title, artwork) { mutableIntStateOf(0) }
     LaunchedEffect(title, artwork, reload) {
         loading = true
+        error = null
         runCatching { load() }
             .onSuccess { tracks = it }
             .onFailure { if (it is kotlinx.coroutines.CancellationException) throw it; error = it.message ?: pinnedString("search_content_failed") }

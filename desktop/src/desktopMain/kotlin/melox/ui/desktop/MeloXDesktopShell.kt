@@ -168,9 +168,10 @@ private fun DesktopSidebar(selectedTab: AppTab, source: MusicSource, libraryPage
         Column(Modifier.weight(1f).desktopVerticalScroll().padding(horizontal = 9.dp, vertical = 38.dp)) {
             fun selected(tab: AppTab, page: String? = null) = tab == selectedTab && (page == null || libraryPage == page)
             DesktopNavigationRow("Search", "ui.navigation.search", MeloXSymbol.Search, selected(AppTab.Search)) { onSelect(AppTab.Search, null) }
-            if (MeloXSettingsRuntime.homeTabEnabled)
+            val rootPages = MeloXContentLayout.visibleTabs(source)
+            if ("Home" in rootPages)
                 DesktopNavigationRow("Home", "ui.navigation.home", MeloXSymbol.Home, selected(AppTab.Home)) { onSelect(AppTab.Home, null) }
-            if (MeloXSettingsRuntime.exploreTabEnabled)
+            if ("Explore" in rootPages)
                 DesktopNavigationRow("Explore", "ui.navigation.explore", MeloXSymbol.SquareGrid, selected(AppTab.Explore)) { onSelect(AppTab.Explore, null) }
             if (MeloXSettingsRuntime.podcastsEnabled && source == MusicSource.Netease)
                 DesktopNavigationRow("Radio", "ui.navigation.podcasts", MeloXSymbol.Podcast, selected(AppTab.Podcasts)) { onSelect(AppTab.Podcasts, null) }

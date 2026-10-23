@@ -1,0 +1,93 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.5.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build
+> Task :desktop:kmpPartiallyResolvedDependenciesChecker
+> Task :desktop:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :desktop:extractPinnedGlassGeometry UP-TO-DATE
+> Task :desktop:convertXmlValueResourcesForCommonMain NO-SOURCE
+> Task :desktop:copyNonXmlValueResourcesForCommonMain NO-SOURCE
+> Task :desktop:prepareComposeResourcesTaskForCommonMain NO-SOURCE
+> Task :desktop:generateResourceAccessorsForCommonMain SKIPPED
+> Task :desktop:convertXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :desktop:copyNonXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :desktop:prepareComposeResourcesTaskForDesktopMain NO-SOURCE
+> Task :desktop:generateResourceAccessorsForDesktopMain SKIPPED
+> Task :desktop:generateActualResourceCollectorsForDesktopMain SKIPPED
+> Task :desktop:generateComposeResClass SKIPPED
+> Task :desktop:generateExpectResourceCollectorsForCommonMain SKIPPED
+> Task :innertube:kmpPartiallyResolvedDependenciesChecker
+> Task :innertube:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :innertube:extractAndroidInnerTube UP-TO-DATE
+> Task :innertube:compileKotlinDesktop UP-TO-DATE
+> Task :innertube:compileDesktopMainJava NO-SOURCE
+> Task :innertube:desktopProcessResources NO-SOURCE
+> Task :innertube:processDesktopMainResources SKIPPED
+> Task :innertube:desktopMainClasses UP-TO-DATE
+> Task :innertube:desktopJar UP-TO-DATE
+> Task :shared:kmpPartiallyResolvedDependenciesChecker
+> Task :shared:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :shared:convertXmlValueResourcesForCommonMain NO-SOURCE
+> Task :shared:copyNonXmlValueResourcesForCommonMain NO-SOURCE
+> Task :shared:prepareComposeResourcesTaskForCommonMain NO-SOURCE
+> Task :shared:generateResourceAccessorsForCommonMain SKIPPED
+> Task :shared:convertXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :shared:copyNonXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :shared:prepareComposeResourcesTaskForDesktopMain NO-SOURCE
+> Task :shared:generateResourceAccessorsForDesktopMain SKIPPED
+> Task :shared:generateActualResourceCollectorsForDesktopMain SKIPPED
+> Task :shared:generateComposeResClass SKIPPED
+> Task :shared:generateExpectResourceCollectorsForCommonMain SKIPPED
+> Task :shared:compileKotlinDesktop UP-TO-DATE
+> Task :shared:compileDesktopMainJava NO-SOURCE
+> Task :shared:assembleDesktopMainResources UP-TO-DATE
+> Task :shared:desktopProcessResources UP-TO-DATE
+> Task :shared:processDesktopMainResources SKIPPED
+> Task :shared:desktopMainClasses UP-TO-DATE
+> Task :shared:desktopJar UP-TO-DATE
+> Task :desktop:compileKotlinDesktop UP-TO-DATE
+> Task :desktop:compileDesktopMainJava NO-SOURCE
+> Task :desktop:assembleDesktopMainResources UP-TO-DATE
+> Task :desktop:desktopProcessResources UP-TO-DATE
+> Task :desktop:processDesktopMainResources SKIPPED
+> Task :desktop:desktopMainClasses UP-TO-DATE
+
+> Task :desktop:captureUi
+[INFO MeloXFont] Android MiLan Pro static instances loaded: CSS=[100, 200, 300, 400, 500, 600, 700, 800, 900] files=mi_lan_pro_w{100..800}.ttf (CSS 900 shares frozen axis-700 instance)
+SLF4J(W): No SLF4J providers were found.
+SLF4J(W): Defaulting to no-operation (NOP) logger implementation
+SLF4J(W): See https://www.slf4j.org/codes.html#noProviders for further details.
+Captured 00-home: 1280x1000 density=1.0
+Physical click consent: remote-reject at Offset(530.5, 628.0)
+Captured 01-consent: 1280x1000 density=1.0
+Verified consent: cloud-enabled:false
+Captured 02-home: 1280x1000 density=1.0
+Verified home: tag:desktop-provider-home:QQMusic
+Verified home: absent:home-quick-actions
+Physical click ranking: desktop-provider-home-ranking:62 at Offset(328.5, 552.5)
+Captured 03-ranking: 1280x1000 density=1.0
+Captured 04-detail: 1280x1000 density=1.0
+Verified detail: tag:desktop-provider-ranking-detail
+Verified detail: tag:desktop-collection-back
+Verified detail: tag-prefix:desktop-collection-track:
+Physical click back: desktop-collection-back at Offset(233.0, 26.0)
+Captured 05-back: 1280x1000 density=1.0
+Verified back: tag:desktop-provider-home:QQMusic
+Verified back: absent:desktop-provider-ranking-detail
+Physical click explore: desktop-nav:Explore at Offset(107.5, 126.0)
+Captured 06-explore: 1280x1000 density=1.0
+Verified explore: tag:desktop-explore
+Captured 07-explore-loaded: 1280x1000 density=1.0
+Captured 08-explore-scroll: 1280x1000 density=1.0
+Captured 09-explore-scroll-settled: 1280x1000 density=1.0
+Captured 10-explore-ranking-reveal: 1280x1000 density=1.0
+Physical click explore-ranking: desktop-explore-ranking:62 at Offset(596.0, 120.0)
+Captured 11-explore-ranking: 1280x1000 density=1.0
+Captured 12-explore-detail: 1280x1000 density=1.0
+Verified explore-detail: tag:desktop-provider-ranking-detail
+Verified explore-detail: tag-prefix:desktop-collection-track:
+Captured 13-explore-back: 1280x1000 density=1.0
+Verified explore-back: tag:desktop-explore
+Verified explore-back: absent:desktop-provider-ranking-detail
+
+BUILD SUCCESSFUL in 1m 16s
+15 actionable tasks: 4 executed, 11 up-to-date
+Consider enabling configuration cache to speed up this build: https://docs.gradle.org/9.5.1/userguide/configuration_cache_enabling.html

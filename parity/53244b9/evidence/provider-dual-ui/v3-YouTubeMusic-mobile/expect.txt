@@ -1,0 +1,6 @@
+consent=cloud-enabled:false
+library=tag:mobile-provider-library:YouTubeMusic,tag:library-pages
+signed-out=tag:provider-library-login,absent:provider-library-empty
+albums=tag:mobile-provider-library:YouTubeMusic,tag:provider-library-login
+artists=tag:mobile-provider-library:YouTubeMusic,tag:provider-library-login
+login=tag:account-screen,tag:account-form-youtubemusic

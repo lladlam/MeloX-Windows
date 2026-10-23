@@ -3,6 +3,8 @@ package melox.provider.youtubemusic
 import melox.account.SecureSessionPreferences
 import java.security.MessageDigest
 import com.metrolist.innertube.YouTube
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 /** Square-compatible YouTube Music session: cookie plus visitor/data-sync context. */
 data class YouTubeSession(
@@ -18,6 +20,8 @@ data class YouTubeSession(
 }
 
 object YouTubeSessionStore {
+    private val mutableRevision = MutableStateFlow(0L)
+    val revision = mutableRevision.asStateFlow()
     private const val PreferencesName = "melox_youtube_music_session"
     private const val Cookie = "cookie"
     private const val VisitorData = "visitor_data"
@@ -42,9 +46,11 @@ object YouTubeSessionStore {
     fun apply(): YouTubeSession = read().also(::applyToInnerTube)
 
     fun write(session: YouTubeSession) {
+        val previous = read()
         preferences().putValues(mapOf(Cookie to session.cookie, VisitorData to session.visitorData,
             DataSyncId to session.dataSyncId, PageId to session.pageId, AccountName to session.accountName))
         applyToInnerTube(session)
+        if (previous != session) mutableRevision.value++
     }
 
     fun clear() {
@@ -54,6 +60,7 @@ object YouTubeSessionStore {
         YouTube.dataSyncId = null
         YouTube.pageId = null
         appliedFingerprint = null
+        mutableRevision.value++
     }
 
     fun authFingerprint(): String = fingerprintOf(read())

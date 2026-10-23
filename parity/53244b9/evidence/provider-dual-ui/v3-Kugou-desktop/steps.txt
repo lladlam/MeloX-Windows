@@ -1,0 +1,4 @@
+consent:tap@remote-reject
+library:wait@800
+signed-out:wait@1200
+login:tap@provider-library-login

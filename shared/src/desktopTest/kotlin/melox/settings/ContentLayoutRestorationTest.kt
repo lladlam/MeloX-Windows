@@ -9,6 +9,22 @@ class ContentLayoutRestorationTest {
     @BeforeTest fun reset() = MeloXSettingsPreferences.reset()
     @AfterTest fun cleanup() = MeloXSettingsPreferences.reset()
 
+    @Test fun rootDestinationsMatchRealFeedCapabilitiesAndKeepNeteaseModulesSourceScoped() {
+        MeloXSettingsPreferences.setString("tab_order", "Home,Explore,Library,Podcasts,Cloud,Settings")
+        MeloXSettingsPreferences.setBoolean("placement_podcasts_tab", true)
+        MeloXSettingsPreferences.setBoolean("placement_cloud_tab", true)
+        val providers = melox.music.provider.MeloXMusicProviders.create()
+        for (source in MusicSource.entries) {
+            val pages = MeloXContentLayout.visibleTabs(source)
+            val hasFeed = source == MusicSource.Netease || providers.require(source) is melox.music.provider.HomeFeedCapability
+            assertEquals(hasFeed, "Home" in pages, "$source Home capability")
+            assertEquals(hasFeed, "Explore" in pages, "$source Explore capability")
+            assertEquals(source == MusicSource.Netease, "Cloud" in pages, "$source Cloud ownership")
+            assertEquals(source == MusicSource.Netease, "Podcasts" in pages, "$source Podcasts ownership")
+        }
+        assertTrue(MeloXSettingsPreferences.boolean("placement_cloud_tab"))
+    }
+
     @Test fun persistedTabOrderAndPlacementSurviveCriticalThenFullStartupWithoutLosingSettings() {
         MeloXSettingsPreferences.setString("tab_order", "Cloud,Library,Settings,Home,Explore,Downloads,Podcasts")
         MeloXSettingsPreferences.setBoolean("placement_cloud_tab", true)
@@ -28,10 +44,14 @@ class ContentLayoutRestorationTest {
         MeloXContentLayout.rememberLibraryPage(MusicSource.Netease, "Cloud")
         MeloXContentLayout.rememberLibraryPage(MusicSource.Bilibili, "Downloads")
         MeloXContentLayout.rememberLibraryPage(MusicSource.Local, "Songs")
+        MeloXContentLayout.rememberLibraryPage(MusicSource.Spotify, "Artists")
+        MeloXContentLayout.rememberLibraryPage(MusicSource.YouTubeMusic, "Albums")
         MeloXSettingsRuntime.initialize(force = true)
         assertEquals("Cloud", MeloXContentLayout.initialLibraryPage(MusicSource.Netease))
         assertEquals("Downloads", MeloXContentLayout.initialLibraryPage(MusicSource.Bilibili))
         assertEquals("Songs", MeloXContentLayout.initialLibraryPage(MusicSource.Local))
+        assertEquals("Artists", MeloXContentLayout.initialLibraryPage(MusicSource.Spotify))
+        assertEquals("Albums", MeloXContentLayout.initialLibraryPage(MusicSource.YouTubeMusic))
         assertEquals("Cloud", MeloXSettingsPreferences.string("library_last_page"))
         assertEquals("Downloads", MeloXSettingsPreferences.string("library_last_page_bilibili"))
         MeloXSettingsPreferences.setString("library_default_page", "Playlists")
@@ -41,7 +61,7 @@ class ContentLayoutRestorationTest {
         MeloXSettingsPreferences.setBoolean("feature_downloads", false)
         assertEquals(listOf("Playlists"), MeloXContentLayout.libraryPages(MusicSource.Bilibili))
         assertEquals("Playlists", MeloXContentLayout.initialLibraryPage(MusicSource.Bilibili))
-        assertEquals(listOf("Songs"), MeloXContentLayout.libraryPages(MusicSource.Local))
+        assertEquals(listOf("Songs", "Playlists"), MeloXContentLayout.libraryPages(MusicSource.Local))
     }
 
     @Test fun rememberingOffUsesDefaultWithoutOverwritingPreviousPerProviderHistory() {

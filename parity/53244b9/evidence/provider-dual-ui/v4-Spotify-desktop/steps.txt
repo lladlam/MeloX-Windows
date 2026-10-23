@@ -1,0 +1,6 @@
+consent:tap@remote-reject
+library:wait@800
+signed-out:wait@1200
+albums:tap@desktop-nav:Albums
+artists:tap@desktop-nav:Artists
+login:tap@provider-library-login
