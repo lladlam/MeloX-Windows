@@ -1,0 +1,9 @@
+consent=cloud-enabled:false
+playing=playing:true,tag:mini-player-expand
+opened=page:Artwork,no-playback-error:true
+mixing=mix-active:true,text:generated-4000hz,disabled:player-progress,tag:automix-paired-artwork
+queue=page:Queue,mix-active:true,absent:automix-paired-artwork
+artwork=page:Artwork,mix-active:true,absent:automix-paired-artwork
+handoff=title:generated-4000hz,mix-active:false,enabled:player-progress
+settled=absent:automix-paired-artwork,playing:true,no-playback-error:true
+pause=playing:false

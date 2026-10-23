@@ -608,10 +608,12 @@ internal fun ProgressSection(
     progress: Float,
     durationMs: Long,
     qualityChip: (@Composable () -> Unit)? = null,
+    seekEnabled: Boolean = true,
     onSeekFinished: (Float) -> Unit,
 ) {
     var isScrubbing by remember { mutableStateOf(false) }
     var scrub by remember { mutableFloatStateOf(progress) }
+    LaunchedEffect(seekEnabled) { if (!seekEnabled) isScrubbing = false }
     val trackHeight by animateDpAsState(
         targetValue = if (isScrubbing) 6.dp else 4.dp,
         animationSpec = tween(120),
@@ -626,13 +628,14 @@ internal fun ProgressSection(
         verticalArrangement = Arrangement.Center,
     ) {
         Slider(
+            enabled = seekEnabled,
             value = shownProgress,
             onValueChange = {
                 isScrubbing = true
                 scrub = it
             },
             onValueChangeFinished = {
-                onSeekFinished(scrub)
+                if (seekEnabled) onSeekFinished(scrub)
                 isScrubbing = false
             },
             modifier = Modifier

@@ -173,7 +173,8 @@ fun MeloXBottomChrome(
                 val selectionTravelWidthPx = (tabBarMaxWidthPx - selectionEdgeInsetPx * 2f).coerceAtLeast(1f)
                 val tabCount = primaryTabs.size.coerceAtLeast(1)
                 val selectionSegmentPx = selectionTravelWidthPx / tabCount.toFloat()
-                val selectionWidth = (maxWidth - selectionEdgeInset * 2f) / tabCount.toFloat()
+                // Use this capsule's constraints, not the outer page's shadowed maxWidth.
+                val selectionWidth = with(density) { selectionSegmentPx.toDp() }
                 val dropletHeight = (navHeight - 8.dp).coerceAtLeast(1.dp)
                 val dropletWidth = (selectionWidth * 1.15f + 2.dp)
                     .coerceAtMost(selectionWidth + 12.dp).coerceAtLeast(1.dp)
@@ -326,14 +327,15 @@ fun MeloXBottomChrome(
                             // Sibling overlay, not content inside the panel
                             // backdrop: it can lift beyond one tab unclipped.
                             .width(dropletWidth)
-                             .height(dropletHeight)
-                             .graphicsLayer { alpha = lensVisibility }
+                            .height(dropletHeight)
+                            .graphicsLayer { alpha = lensVisibility }
                             .offset {
                                 IntOffset(
                                     x = (selectionEdgeInsetPx + (dampedDock.value + 0.5f) * selectionSegmentPx - with(density) { dropletWidth.toPx() } / 2f).roundToInt(),
                                     y = with(density) { 4.dp.toPx() }.roundToInt(),
                                 )
                             }
+                            .testTag("bottom-tab-selection")
                             .meloXLiquidTabSelection(
                                  shape = MeloXShapes.capsule,
                                  selected = lensVisibility > 0.001f,

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="DesktopAutoMixIntegrationTest[desktop]" tests="9" skipped="0" failures="0" errors="0" timestamp="2026-10-23T06:37:30.656Z" hostname="lladlam-arch" time="21.03">
+  <properties/>
+  <testcase name="nextDuringOverlapContinuesAtHeardIncomingPositionAndPreviousReturnsToPrimary[desktop]" classname="melox.playback.DesktopAutoMixIntegrationTest" time="7.128"/>
+  <testcase name="pauseDuringOverlapCancelsBothDecksKeepsPrimaryPositionAndSeekZeroStillWorks[desktop]" classname="melox.playback.DesktopAutoMixIntegrationTest" time="2.421"/>
+  <testcase name="analysisBudgetResolvesOnlySourceAndFirstFutureTargetsAndDoesNotRestartForEachTrack[desktop]" classname="melox.playback.DesktopAutoMixIntegrationTest" time="1.584"/>
+  <testcase name="threeRealTracksPerformTwoConsecutiveHandoffsWithoutReopeningTheOutput[desktop]" classname="melox.playback.DesktopAutoMixIntegrationTest" time="3.183"/>
+  <testcase name="immediatelyResolvedNextStartsAtHeardIncomingPositionWithoutOpeningAtZero[desktop]" classname="melox.playback.DesktopAutoMixIntegrationTest" time="2.026"/>
+  <testcase name="actualControllerPreloadsMixesPromotesIncomingAndFinishesOnTheSameOutput[desktop]" classname="melox.playback.DesktopAutoMixIntegrationTest" time="2.591"/>
+  <testcase name="disablingSmartQueueRetainsOriginalUnconsumedTrackEvenWhenItsAnalysisFailed[desktop]" classname="melox.playback.DesktopAutoMixIntegrationTest" time="0.417"/>
+  <testcase name="smartQueueActuallyAnalyzesCandidatePcmAndReordersTheCompleteVisibleTimeline[desktop]" classname="melox.playback.DesktopAutoMixIntegrationTest" time="0.975"/>
+  <testcase name="muteAndSoftwareVolumeChangeActualPcmWhenDeviceHasNoMasterGain[desktop]" classname="melox.playback.DesktopAutoMixIntegrationTest" time="0.701"/>
+  <system-out><![CDATA[[DEBUG MeloXThirdParty] resolve detail source=local id=fixture- title=generated-1000 artists=未知歌手 durationMs=8000 metadata=Local
+[INFO MeloXThirdParty] Resolve start source=local quality=Standard thirdParty=false
+[INFO MeloXThirdParty] Resolve fallback source=local stage=provider chksz=disabled
+[DEBUG AudioPlayer] Bundled FFmpeg verified: sha256=ee930e8def21a993f4b8c680757df15054da1c8f2698da0fdf87f1f3b15bd633 bytes=172690600
+[DEBUG MeloXThirdParty] resolve detail source=local id=fixture- title=generated-4000 artists=未知歌手 durationMs=6000 metadata=Local
+[INFO MeloXThirdParty] Resolve start source=local quality=Standard thirdParty=false
+[INFO MeloXThirdParty] Resolve fallback source=local stage=provider chksz=disabled
+[DEBUG MeloXThirdParty] resolve detail source=local id=fixture- title=generated-1000 artists=未知歌手 durationMs=8000 metadata=Local
+[INFO MeloXThirdParty] Resolve start source=local quality=Standard thirdParty=false
+[INFO MeloXThirdParty] Resolve fallback source=local stage=provider chksz=disabled
+[DEBUG MeloXThirdParty] resolve detail source=local id=fixture- title=generated-4000 artists=未知歌手 durationMs=6000 metadata=Local
+[INFO MeloXThirdParty] Resolve start source=local quality=Standard thirdParty=false
+[INFO MeloXThirdParty] Resolve fallback source=local stage=provider chksz=disabled
+v0.6.5 analysis budget: 15 visible tracks, selected index 2, 11 actual analyzed/resolved tracks, no history/tail analysis, no per-track budget restart
+[DEBUG MeloXThirdParty] resolve detail source=local id=fixture- title=generated-1000 artists=未知歌手 durationMs=8000 metadata=Local
+[INFO MeloXThirdParty] Resolve start source=local quality=Standard thirdParty=false
+[INFO MeloXThirdParty] Resolve fallback source=local stage=provider chksz=disabled
+[DEBUG MeloXThirdParty] resolve detail source=local id=fixture- title=generated-2000 artists=未知歌手 durationMs=10000 metadata=Local
+[INFO MeloXThirdParty] Resolve start source=local quality=Standard thirdParty=false
+[INFO MeloXThirdParty] Resolve fallback source=local stage=provider chksz=disabled
+[DEBUG MeloXThirdParty] resolve detail source=local id=fixture- title=generated-4000 artists=未知歌手 durationMs=6000 metadata=Local
+[INFO MeloXThirdParty] Resolve start source=local quality=Standard thirdParty=false
+[INFO MeloXThirdParty] Resolve fallback source=local stage=provider chksz=disabled
+Production chained AutoMix: 3 real tracks / 2 rendered-clock handoffs / 1 output / 18s PCM / zero native decoder leaks
+[DEBUG MeloXThirdParty] resolve detail source=local id=fixture- title=generated-1000 artists=未知歌手 durationMs=8000 metadata=Local
+[INFO MeloXThirdParty] Resolve start source=local quality=Standard thirdParty=false
+[INFO MeloXThirdParty] Resolve fallback source=local stage=provider chksz=disabled
+[DEBUG MeloXThirdParty] resolve detail source=local id=fixture- title=generated-4000 artists=未知歌手 durationMs=6000 metadata=Local
+[INFO MeloXThirdParty] Resolve start source=local quality=Standard thirdParty=false
+[INFO MeloXThirdParty] Resolve fallback source=local stage=provider chksz=disabled
+Production controller AutoMix: same_output=true accepted_bytes=1940400 queue_index=1 final_position_ms=6000
+[DEBUG MeloXThirdParty] resolve detail source=local id=fixture- title=generated-130 artists=未知歌手 durationMs=16000 metadata=Local
+[INFO MeloXThirdParty] Resolve start source=local quality=Standard thirdParty=false
+[INFO MeloXThirdParty] Resolve fallback source=local stage=provider chksz=disabled
+[DEBUG MeloXThirdParty] resolve detail source=local id=fixture- title=generated-130 artists=未知歌手 durationMs=16000 metadata=Local
+[DEBUG MeloXThirdParty] resolve detail source=local id=fixture- title=generated-130 artists=未知歌手 durationMs=16000 metadata=Local
+[INFO MeloXThirdParty] Resolve start source=local quality=Standard thirdParty=false
+[INFO MeloXThirdParty] Resolve start source=local quality=Standard thirdParty=false
+[INFO MeloXThirdParty] Resolve fallback source=local stage=provider chksz=disabled
+[INFO MeloXThirdParty] Resolve fallback source=local stage=provider chksz=disabled
+Real analyzed Smart Queue: 92 BPM moved before 140 BPM for 90 BPM source; complete timeline retained before/after disable
+[DEBUG MeloXThirdParty] resolve detail source=local id=fixture- title=generated-1000 artists=未知歌手 durationMs=8000 metadata=Local
+[INFO MeloXThirdParty] Resolve start source=local quality=Standard thirdParty=false
+[INFO MeloXThirdParty] Resolve fallback source=local stage=provider chksz=disabled
+]]></system-out>
+  <system-err><![CDATA[SLF4J(W): No SLF4J providers were found.
+SLF4J(W): Defaulting to no-operation (NOP) logger implementation
+SLF4J(W): See https://www.slf4j.org/codes.html#noProviders for further details.
+]]></system-err>
+</testsuite>

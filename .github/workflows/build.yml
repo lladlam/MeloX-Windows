@@ -144,6 +144,22 @@ jobs:
           }
           python tools/capture_mobile_v065.py player "$pwd/desktop/build/parity/mobile-player-home" desktop/build/parity/mobile-player
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Replay mobile Dock geometry and real dual PCM AutoMix
+        shell: pwsh
+        run: |
+          python -m pip install --quiet Pillow numpy
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          foreach ($case in @(@('Local', 430, 1), @('Netease', 390, 1), @('Local', 360, 1.25), @('Netease', 430, 2))) {
+            $id = "$($case[0])-$($case[1])-$($case[2])"
+            python tools/capture_mobile_dock_selection.py ($case[0]) ($case[1]) ($case[2]) "$pwd/desktop/build/parity/mobile-dock-$id-home" "desktop/build/parity/mobile-dock-$id"
+            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          }
+          foreach ($mode in @('on', 'off', 'leave', 'reduced')) {
+            python tools/capture_mobile_automix.py $mode "$pwd/desktop/build/parity/mobile-automix-$mode-home" "desktop/build/parity/mobile-automix-$mode"
+            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+            Get-ChildItem "desktop/build/parity/mobile-automix-$mode" -Filter '*.s16le' | ForEach-Object { python -m gzip $_.FullName }
+            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          }
       - name: Replay real Desktop album and playlist collection geometry and pointers
         shell: pwsh
         run: |
@@ -379,6 +395,15 @@ jobs:
             desktop/build/parity/glass-dock-Light/*
             desktop/build/parity/smartqueue-limit-controls/*
             desktop/build/parity/smartqueue-limit-reload/*
+            desktop/build/parity/mobile-dock-*/*.json
+            desktop/build/parity/mobile-dock-*/*.txt
+            desktop/build/parity/mobile-dock-*/*.png
+            desktop/build/parity/mobile-dock-*/gradle.log
+            desktop/build/parity/mobile-automix-*/*.json
+            desktop/build/parity/mobile-automix-*/*.txt
+            desktop/build/parity/mobile-automix-*/*.png
+            desktop/build/parity/mobile-automix-*/*.gz
+            desktop/build/parity/mobile-automix-*/gradle.log
             desktop/build/parity/lyric-language-controls/*
             desktop/build/parity/lyric-language-reload/*
             desktop/build/parity/split-layout-*/*.json

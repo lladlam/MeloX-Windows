@@ -1,0 +1,6 @@
+consent:tap@remote-reject
+settings:wait@1200
+library:tap@root-tab:Library
+library-settled:wait@1200
+return:hold-drag-between@root-tab:Library,root-tab:Settings
+return-settled:wait@1200

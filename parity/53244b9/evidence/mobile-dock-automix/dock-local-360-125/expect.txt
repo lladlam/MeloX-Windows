@@ -1,0 +1,4 @@
+consent=cloud-enabled:false
+settings=dock-selection:Settings
+library-settled=dock-selection:Library
+return-settled=tag:settings-root,dock-selection:Settings

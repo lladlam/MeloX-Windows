@@ -70,7 +70,8 @@ private fun PinnedAutoMixSettings() {
         SettingsExternalToggleRow(pinnedString("settings_automix"), modes.autoMixEnabled, "setting-auto_mix") {
             PlaybackCommands.playerController()?.setAutoMixEnabled(it) ?: MeloXPlaybackModePreferences.setAutoMix(it)
         }
-        SettingsToggleRow("settings_transition_animation", "transition_ui_enabled", true)
+        SettingsExternalToggleRow(pinnedString("settings_transition_animation"), MeloXSettingsRuntime.transitionUiEnabled,
+            "setting-transition_ui_enabled") { MeloXSettingsPreferences.setBoolean("transition_ui_enabled", it) }
     }
     if (modes.autoMixEnabled) {
         Spacer(Modifier.height(10.dp))

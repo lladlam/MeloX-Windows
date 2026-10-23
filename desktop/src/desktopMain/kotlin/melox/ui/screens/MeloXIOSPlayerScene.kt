@@ -84,6 +84,8 @@ internal fun MeloXIOSPlayerScene(
     player: MeloXDesktopPlayer?,
     sharedArtworkModifier: Modifier,
 ) {
+    val mix by melox.playback.MeloXAutoMixTransitionRuntime.state.collectAsState()
+    val displayedTrack = if (mix.active || mix.handedOff) mix.incoming ?: track else track
     var showsLyricsControls by remember(track.id) { mutableStateOf(true) }
     var activityGeneration by remember(track.id) { mutableIntStateOf(0) }
     var showSkyline by remember { mutableStateOf(false) }
@@ -204,7 +206,7 @@ internal fun MeloXIOSPlayerScene(
                     Box(Modifier.fillMaxSize().zIndex(if (page == 0) 2f else 0f).graphicsLayer {
                         alpha = artworkAlpha; translationY = artworkOffset.toPx()
                     }.then(if (page != 0) Modifier.clearAndSetSemantics { } else Modifier)) {
-                        ArtworkDetails(track, onShowActions, interactive = page == 0)
+                        ArtworkDetails(displayedTrack, onShowActions, interactive = page == 0)
                     }
 
                     Box(Modifier.fillMaxSize().zIndex(if (page == 1) 2f else 0f).graphicsLayer {
@@ -228,9 +230,9 @@ internal fun MeloXIOSPlayerScene(
                         .then(if (page == 2) Modifier.meloXBackdropBlur(headerShape, 20.dp, Color.Black.copy(alpha = .10f)) else Modifier)
                         .padding(start = 84.dp, end = 8.dp), verticalAlignment = Alignment.CenterVertically) {
                         Column(Modifier.weight(1f)) {
-                            Text(track.title, color = Color.White, fontSize = 20.sp, lineHeight = 24.sp,
+                            Text(displayedTrack.title, color = Color.White, fontSize = 20.sp, lineHeight = 24.sp,
                                 fontWeight = FontWeight.SemiBold, maxLines = 1, overflow = TextOverflow.Ellipsis)
-                            Text(track.artistText, color = Color.White.copy(alpha = .64f), fontSize = 18.sp,
+                            Text(displayedTrack.artistText, color = Color.White.copy(alpha = .64f), fontSize = 18.sp,
                                 lineHeight = 22.sp, maxLines = 1, overflow = TextOverflow.Ellipsis, modifier = Modifier.padding(top = 2.dp))
                         }
                         Box(Modifier.size(40.dp).testTag("player-actions").clip(CircleShape)
@@ -266,7 +268,7 @@ private fun ArtworkDetails(track: MusicTrack, onShowActions: () -> Unit, interac
             Spacer(Modifier.height(20.dp))
             Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
                 Column(Modifier.weight(1f)) {
-                    Text(track.title, color = Color.White, fontSize = 20.sp, lineHeight = 24.sp,
+                    Text(track.title, modifier = Modifier.testTag("player-artwork-title"), color = Color.White, fontSize = 20.sp, lineHeight = 24.sp,
                         fontWeight = FontWeight.SemiBold, maxLines = 1, overflow = TextOverflow.Ellipsis)
                     Text(track.artistText, color = Color.White.copy(alpha = .64f), fontSize = 20.sp,
                         lineHeight = 24.sp, maxLines = 1, overflow = TextOverflow.Ellipsis, modifier = Modifier.padding(top = 2.dp))
@@ -288,6 +290,15 @@ private fun PersistentPlayerArtwork(
     isLandscape: Boolean,
 ) {
     val mix by melox.playback.MeloXAutoMixTransitionRuntime.state.collectAsState()
+    // Eligibility is decided at transition entry. Visiting Lyrics/Queue must not
+    // replay the paired-cover entrance when returning in the middle of a mix.
+    var transitionEligible by remember(mix.outgoing?.id, mix.incoming?.id) {
+        mutableStateOf(mix.active && page == 0 && MeloXSettingsRuntime.transitionUiEnabled && !MeloXSettingsRuntime.reduceMotion)
+    }
+    LaunchedEffect(page, MeloXSettingsRuntime.transitionUiEnabled, MeloXSettingsRuntime.reduceMotion) {
+        if (page != 0 || !MeloXSettingsRuntime.transitionUiEnabled || MeloXSettingsRuntime.reduceMotion) transitionEligible = false
+    }
+    val showTransition = transitionEligible && page == 0 && MeloXSettingsRuntime.transitionUiEnabled && !MeloXSettingsRuntime.reduceMotion
     val headerProgress by animateFloatAsState(if (page == 0) 0f else 1f,
         tween(if (MeloXSettingsRuntime.reduceMotion) 0 else 480, easing = FastOutSlowInEasing), label = "persistent-artwork-page-frame")
     val switchBounce = remember { Animatable(1f) }
@@ -334,9 +345,9 @@ private fun PersistentPlayerArtwork(
                 val bounceScale = .90f + .10f * switchBounce.value
                 scaleX = effectiveScale * bounceScale; scaleY = effectiveScale * bounceScale
                 alpha = .55f + .45f * (switchBounce.value / .4f).coerceIn(0f, 1f)
-            }.then(if (mix.active || mix.handedOff) Modifier else Modifier
+            }.then(if (showTransition && (mix.active || mix.handedOff)) Modifier else Modifier
                 .shadow(elevation * blend * (1f - pageFrameProgress * .55f), shape, clip = false,
-                    ambientColor = Color.Black.copy(alpha = .28f), spotColor = Color.Black.copy(alpha = .28f)).clip(shape)))
+                    ambientColor = Color.Black.copy(alpha = .28f), spotColor = Color.Black.copy(alpha = .28f)).clip(shape)), transitionEligible = showTransition)
         }
     }
 }

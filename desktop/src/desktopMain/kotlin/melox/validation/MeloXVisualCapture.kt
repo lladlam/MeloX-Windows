@@ -208,6 +208,14 @@ fun main(args: Array<String>) = runBlocking {
                     semantics.tagged(tag)?.config?.getOrNull(melox.ui.glass.MeloXToggleVisualProgressKey)
                         ?.let { kotlin.math.abs(it - value.toFloat()) <= .01f } == true
                 }
+                "dock-selection" -> {
+                    val tab = semantics.tagged("root-tab:$expected")?.boundsInWindow
+                    val lens = semantics.tagged("bottom-tab-selection")?.boundsInWindow
+                    tab != null && lens != null && !tab.isEmpty && !lens.isEmpty &&
+                        kotlin.math.abs(lens.center.x - tab.center.x) <= 1.5f * density &&
+                        kotlin.math.abs(lens.center.y - tab.center.y) <= 1.5f * density &&
+                        kotlin.math.abs(lens.width - minOf((tab.width + 8f * density) * 1.15f + 2f * density, tab.width + 20f * density)) <= 2f * density
+                }
                 "quality" -> melox.audio.MusicQualityPreferences.read().apiLevel == expected
                 "eq-enabled" -> melox.playback.MeloXEqualizerSettings.current.value.enabled == expected.toBooleanStrict()
                 "eq-preset" -> melox.playback.MeloXEqualizerSettings.current.value.preset == expected
@@ -271,6 +279,7 @@ fun main(args: Array<String>) = runBlocking {
                 "track" -> melox.player.AudioPlayer.currentTrack.value?.id?.let { "${it.source.storageValue}:${it.value}" } == expected
                 "error-kind" -> melox.player.AudioPlayer.state.value.errorKind?.name == expected
                 "mix-active" -> melox.playback.MeloXAutoMixTransitionRuntime.state.value.active == expected.toBooleanStrict()
+                "transition-ui" -> melox.settings.MeloXSettingsRuntime.transitionUiEnabled == expected.toBooleanStrict()
                 "focus-anchor" -> {
                     val line = semantics.tagged("lyric-line-$expected")?.boundsInWindow
                     val panel = semantics.tagged("player-lyrics")?.boundsInWindow

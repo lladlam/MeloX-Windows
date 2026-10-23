@@ -154,3 +154,11 @@
 - 实际指针基线复现拖动中途禁用后滑块卡在中间；修复拖动态清理、按压释放、连续拖动累计及旧定位任务覆盖回弹，拒绝变更继续以外部 checked 为准。减少动态时直接定位且不拉伸。
 - 桌面编译与完整 `auditGlassOptics` 通过，三档密度／深浅色／液态和磨砂共 12 组均通过滑块居中、拒绝拖动回弹、中途禁用恢复及下一次点击唯一提交断言，原生滤镜释放与弹窗回归通过。
 - 详见 `LIQUID_TOGGLE_FIX.md` 及 `evidence/liquid-toggle-fix/`；尚不声称固定 Android 像素逐点一致或新 Windows 发行 ZIP 验收完成。
+
+## 20. 手机版 Dock 选中块与 AutoMix 过渡补齐
+
+- 修正内层胶囊使用外层页面 maxWidth 计算选中块宽度的问题；标签定位与选中块尺寸统一使用导航胶囊实际 constraints，保留拖动、按压及液态材质。
+- AutoMix 动画开关按固定 Android 默认关闭，并即时更新 runtime；过渡中曲名、艺人与进度使用真实 incoming deck，混音期间禁止进度拖动。封面入场按开关及当前页面准入，离开再返回不补播半途分裂动画，减少动态效果关闭双封面形变。
+- 四组 Dock 生产指针回放共 28 scenes／20 assertions；AutoMix on/off/leave/reduced 四组共 39 scenes／73 assertions 全通过，每组实际输出 PCM 均由独立频谱工具确认主曲→双路重叠→下一首。Windows workflow 加入同样回放与证据上传。
+- 设置即时启停30 scenes／24 assertions、独立JVM恢复6 scenes／9 assertions、原有手机播放器及歌词页恢复145 scenes／28 assertions全部通过；本批UI合计248 scenes／154 assertions。既有真实双路播放集成9 tests零失败／错误／跳过，原始XML与日志归档。
+- 详见 `MOBILE_DOCK_AUTOMIX.md` 与 `evidence/mobile-dock-automix/`；实际扬声器可听及 Android 同内容逐像素验收仍未完成。

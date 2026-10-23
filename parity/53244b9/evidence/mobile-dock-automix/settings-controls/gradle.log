@@ -1,0 +1,132 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.5.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :desktop:kmpPartiallyResolvedDependenciesChecker
+> Task :desktop:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :desktop:extractPinnedGlassGeometry UP-TO-DATE
+> Task :desktop:convertXmlValueResourcesForCommonMain NO-SOURCE
+> Task :desktop:copyNonXmlValueResourcesForCommonMain NO-SOURCE
+> Task :desktop:prepareComposeResourcesTaskForCommonMain NO-SOURCE
+> Task :desktop:generateResourceAccessorsForCommonMain SKIPPED
+> Task :desktop:convertXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :desktop:copyNonXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :desktop:prepareComposeResourcesTaskForDesktopMain NO-SOURCE
+> Task :desktop:generateResourceAccessorsForDesktopMain SKIPPED
+> Task :desktop:generateActualResourceCollectorsForDesktopMain SKIPPED
+> Task :desktop:generateComposeResClass SKIPPED
+> Task :desktop:generateExpectResourceCollectorsForCommonMain SKIPPED
+> Task :innertube:kmpPartiallyResolvedDependenciesChecker
+> Task :innertube:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :innertube:extractAndroidInnerTube UP-TO-DATE
+> Task :innertube:compileKotlinDesktop UP-TO-DATE
+> Task :innertube:compileDesktopMainJava NO-SOURCE
+> Task :innertube:desktopProcessResources NO-SOURCE
+> Task :innertube:processDesktopMainResources SKIPPED
+> Task :innertube:desktopMainClasses UP-TO-DATE
+> Task :innertube:desktopJar UP-TO-DATE
+> Task :shared:kmpPartiallyResolvedDependenciesChecker
+> Task :shared:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :shared:convertXmlValueResourcesForCommonMain NO-SOURCE
+> Task :shared:copyNonXmlValueResourcesForCommonMain NO-SOURCE
+> Task :shared:prepareComposeResourcesTaskForCommonMain NO-SOURCE
+> Task :shared:generateResourceAccessorsForCommonMain SKIPPED
+> Task :shared:convertXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :shared:copyNonXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :shared:prepareComposeResourcesTaskForDesktopMain NO-SOURCE
+> Task :shared:generateResourceAccessorsForDesktopMain SKIPPED
+> Task :shared:generateActualResourceCollectorsForDesktopMain SKIPPED
+> Task :shared:generateComposeResClass SKIPPED
+> Task :shared:generateExpectResourceCollectorsForCommonMain SKIPPED
+> Task :shared:compileKotlinDesktop UP-TO-DATE
+> Task :shared:compileDesktopMainJava NO-SOURCE
+> Task :shared:assembleDesktopMainResources UP-TO-DATE
+> Task :shared:desktopProcessResources UP-TO-DATE
+> Task :shared:processDesktopMainResources SKIPPED
+> Task :shared:desktopMainClasses UP-TO-DATE
+> Task :shared:desktopJar UP-TO-DATE
+> Task :desktop:compileKotlinDesktop
+> Task :desktop:compileDesktopMainJava NO-SOURCE
+> Task :desktop:assembleDesktopMainResources UP-TO-DATE
+> Task :desktop:desktopProcessResources UP-TO-DATE
+> Task :desktop:processDesktopMainResources SKIPPED
+> Task :desktop:desktopMainClasses
+
+> Task :desktop:captureUi
+[INFO MeloXFont] Android MiLan Pro static instances loaded: CSS=[100, 200, 300, 400, 500, 600, 700, 800, 900] files=mi_lan_pro_w{100..800}.ttf (CSS 900 shares frozen axis-700 instance)
+Captured 00-settings: 1100x780 density=1.0
+Verified 00-settings: tag:settings-root
+Verified 00-settings: absent:mobile-provider-library:Local
+Physical click remote-reject: remote-reject at Offset(295.5, 468.0)
+Captured 01-remote-reject: 1100x780 density=1.0
+Verified remote-reject: cloud-enabled:false
+Captured 02-reveal-playback: 1100x780 density=1.0
+Physical click open-playback: settings-open-playback at Offset(550.0, 603.0)
+Captured 03-open-playback: 1100x780 density=1.0
+Verified open-playback: tag:settings-playback
+Captured 04-reveal-automix: 1100x780 density=1.0
+Physical click automix-on: setting-auto_mix at Offset(1032.0, 568.0)
+Captured 05-automix-on: 1100x780 density=1.0
+Verified automix-on: automix-mode:Smart
+Verified automix-on: smart-queue-analysis-limit:60
+Captured 06-reveal-transition: 1100x780 density=1.0
+Verified reveal-transition: unchecked:setting-transition_ui_enabled
+Verified reveal-transition: transition-ui:false
+Physical click transition-on: setting-transition_ui_enabled at Offset(1032.0, 540.0)
+Captured 07-transition-on: 1100x780 density=1.0
+Verified transition-on: checked:setting-transition_ui_enabled
+Verified transition-on: transition-ui:true
+Verified transition-on: pref-bool:transition_ui_enabled:true
+Physical click transition-off: setting-transition_ui_enabled at Offset(1032.0, 540.0)
+Captured 08-transition-off: 1100x780 density=1.0
+Verified transition-off: unchecked:setting-transition_ui_enabled
+Verified transition-off: transition-ui:false
+Physical click transition-persist: setting-transition_ui_enabled at Offset(1032.0, 540.0)
+Captured 09-transition-persist: 1100x780 density=1.0
+Verified transition-persist: transition-ui:true
+Verified transition-persist: pref-bool:transition_ui_enabled:true
+Captured 10-reveal-20: 1100x780 density=1.0
+Physical click menu-20: automix_smart_queue_analysis_limit at Offset(1022.0, 533.5)
+Captured 11-menu-20: 1100x780 density=1.0
+Physical click choose-20: settings-option:前 20 首 at Offset(945.0, 389.0)
+Captured 12-choose-20: 1100x780 density=1.0
+Verified choose-20: smart-queue-analysis-limit:20
+Captured 13-reveal-40: 1100x780 density=1.0
+Physical click menu-40: automix_smart_queue_analysis_limit at Offset(1021.5, 533.5)
+Captured 14-menu-40: 1100x780 density=1.0
+Physical click choose-40: settings-option:前 40 首 at Offset(945.0, 433.0)
+Captured 15-choose-40: 1100x780 density=1.0
+Verified choose-40: smart-queue-analysis-limit:40
+Captured 16-reveal-60: 1100x780 density=1.0
+Physical click menu-60: automix_smart_queue_analysis_limit at Offset(1021.5, 533.5)
+Captured 17-menu-60: 1100x780 density=1.0
+Physical click choose-60: settings-option:前 60 首 at Offset(945.0, 477.0)
+Captured 18-choose-60: 1100x780 density=1.0
+Verified choose-60: smart-queue-analysis-limit:60
+Captured 19-reveal-100: 1100x780 density=1.0
+Physical click menu-100: automix_smart_queue_analysis_limit at Offset(1022.0, 533.5)
+Captured 20-menu-100: 1100x780 density=1.0
+Physical click choose-100: settings-option:前 100 首 at Offset(945.0, 521.0)
+Captured 21-choose-100: 1100x780 density=1.0
+Verified choose-100: smart-queue-analysis-limit:100
+Captured 22-reveal--1: 1100x780 density=1.0
+Physical click menu--1: automix_smart_queue_analysis_limit at Offset(1018.0, 533.5)
+Captured 23-menu--1: 1100x780 density=1.0
+Physical click choose--1: settings-option:不限 at Offset(945.0, 345.0)
+Captured 24-choose--1: 1100x780 density=1.0
+Verified choose--1: smart-queue-analysis-limit:-1
+Captured 25-reveal-mode: 1100x780 density=1.0
+Physical click mode-menu: automix_mode at Offset(1029.5, 421.5)
+Captured 26-mode-menu: 1100x780 density=1.0
+Physical click fixed: settings-option:Fixed length at Offset(945.0, 478.0)
+Captured 27-fixed: 1100x780 density=1.0
+Verified fixed: automix-mode:Fixed
+Verified fixed: absent:automix_smart_queue_analysis_limit
+Physical click mode-menu-again: automix_mode at Offset(1003.0, 365.5)
+Captured 28-mode-menu-again: 1100x780 density=1.0
+Physical click smart: settings-option:Smart at Offset(945.0, 378.0)
+Captured 29-smart: 1100x780 density=1.0
+Verified smart: automix-mode:Smart
+Verified smart: smart-queue-analysis-limit:-1
+
+BUILD SUCCESSFUL in 1m 52s
+15 actionable tasks: 5 executed, 10 up-to-date
+Consider enabling configuration cache to speed up this build: https://docs.gradle.org/9.5.1/userguide/configuration_cache_enabling.html

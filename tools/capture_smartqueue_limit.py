@@ -34,6 +34,10 @@ add('open-playback', 'tap@settings-open-playback', ['tag:settings-playback'])
 if mode == 'controls':
     add('reveal-automix', 'reveal@setting-auto_mix')
     add('automix-on', 'tap@setting-auto_mix', ['automix-mode:Smart', 'smart-queue-analysis-limit:60'])
+    add('reveal-transition', 'reveal@setting-transition_ui_enabled', ['unchecked:setting-transition_ui_enabled', 'transition-ui:false'])
+    add('transition-on', 'tap@setting-transition_ui_enabled', ['checked:setting-transition_ui_enabled', 'transition-ui:true', 'pref-bool:transition_ui_enabled:true'])
+    add('transition-off', 'tap@setting-transition_ui_enabled', ['unchecked:setting-transition_ui_enabled', 'transition-ui:false'])
+    add('transition-persist', 'tap@setting-transition_ui_enabled', ['transition-ui:true', 'pref-bool:transition_ui_enabled:true'])
     # These strings are literal labels in the official release, not invented translations.
     for value, label in [(20, '前 20 首'), (40, '前 40 首'), (60, '前 60 首'), (100, '前 100 首'), (-1, '不限')]:
         add(f'reveal-{value}', f'reveal@{key}')
@@ -45,6 +49,7 @@ if mode == 'controls':
     add('mode-menu-again', 'tap@automix_mode')
     add('smart', 'tap@settings-option:' + strings['settings_automix_smart'], ['automix-mode:Smart', 'smart-queue-analysis-limit:-1'])
 else:
+    add('reveal-transition', 'reveal@setting-transition_ui_enabled', ['checked:setting-transition_ui_enabled', 'transition-ui:true', 'pref-bool:transition_ui_enabled:true'])
     add('reveal-persisted', f'reveal@{key}')
     add('persisted', 'wait@100', ['smart-queue-analysis-limit:-1', 'text:不限'])
 

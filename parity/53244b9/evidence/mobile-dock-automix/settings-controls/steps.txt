@@ -1,0 +1,29 @@
+remote-reject:tap@remote-reject
+reveal-playback:reveal@settings-open-playback
+open-playback:tap@settings-open-playback
+reveal-automix:reveal@setting-auto_mix
+automix-on:tap@setting-auto_mix
+reveal-transition:reveal@setting-transition_ui_enabled
+transition-on:tap@setting-transition_ui_enabled
+transition-off:tap@setting-transition_ui_enabled
+transition-persist:tap@setting-transition_ui_enabled
+reveal-20:reveal@automix_smart_queue_analysis_limit
+menu-20:tap@automix_smart_queue_analysis_limit
+choose-20:tap@settings-option:前 20 首
+reveal-40:reveal@automix_smart_queue_analysis_limit
+menu-40:tap@automix_smart_queue_analysis_limit
+choose-40:tap@settings-option:前 40 首
+reveal-60:reveal@automix_smart_queue_analysis_limit
+menu-60:tap@automix_smart_queue_analysis_limit
+choose-60:tap@settings-option:前 60 首
+reveal-100:reveal@automix_smart_queue_analysis_limit
+menu-100:tap@automix_smart_queue_analysis_limit
+choose-100:tap@settings-option:前 100 首
+reveal--1:reveal@automix_smart_queue_analysis_limit
+menu--1:tap@automix_smart_queue_analysis_limit
+choose--1:tap@settings-option:不限
+reveal-mode:reveal@automix_mode
+mode-menu:tap@automix_mode
+fixed:tap@settings-option:Fixed length
+mode-menu-again:tap@automix_mode
+smart:tap@settings-option:Smart

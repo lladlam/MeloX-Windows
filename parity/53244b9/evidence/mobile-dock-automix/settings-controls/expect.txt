@@ -1,0 +1,15 @@
+00-settings=tag:settings-root,absent:mobile-provider-library:Local
+remote-reject=cloud-enabled:false
+open-playback=tag:settings-playback
+automix-on=automix-mode:Smart,smart-queue-analysis-limit:60
+reveal-transition=unchecked:setting-transition_ui_enabled,transition-ui:false
+transition-on=checked:setting-transition_ui_enabled,transition-ui:true,pref-bool:transition_ui_enabled:true
+transition-off=unchecked:setting-transition_ui_enabled,transition-ui:false
+transition-persist=transition-ui:true,pref-bool:transition_ui_enabled:true
+choose-20=smart-queue-analysis-limit:20
+choose-40=smart-queue-analysis-limit:40
+choose-60=smart-queue-analysis-limit:60
+choose-100=smart-queue-analysis-limit:100
+choose--1=smart-queue-analysis-limit:-1
+fixed=automix-mode:Fixed,absent:automix_smart_queue_analysis_limit
+smart=automix-mode:Smart,smart-queue-analysis-limit:-1

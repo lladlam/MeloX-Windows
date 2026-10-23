@@ -54,6 +54,7 @@ object MeloXSettingsPreferences {
             "reduce_motion" -> MeloXSettingsRuntime.reduceMotion = value
             "player_background_isolation" -> MeloXSettingsRuntime.playerBackgroundIsolationEnabled = value
             "player_frosted_glass" -> MeloXSettingsRuntime.frostedGlassEnabled = value
+            "transition_ui_enabled" -> MeloXSettingsRuntime.transitionUiEnabled = value
             "player_keep_screen_on" -> MeloXSettingsRuntime.keepScreenOn = value
             "lyrics_translation" -> MeloXSettingsRuntime.showLyricTranslation = value
             "general_desktop_layout" -> MeloXSettingsRuntime.desktopLayoutEnabled = value

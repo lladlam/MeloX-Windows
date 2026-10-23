@@ -1,0 +1,4 @@
+00-settings=tag:settings-root,absent:mobile-provider-library:Local,smart-queue-analysis-limit:-1
+open-playback=tag:settings-playback
+reveal-transition=checked:setting-transition_ui_enabled,transition-ui:true,pref-bool:transition_ui_enabled:true
+persisted=smart-queue-analysis-limit:-1,text:不限

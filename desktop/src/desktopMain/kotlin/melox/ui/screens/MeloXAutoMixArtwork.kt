@@ -19,11 +19,11 @@ import androidx.compose.ui.unit.dp
 
 /** Pinned shared host split (28%, ease-out-back 1.24), 16dp gap, 620ms incoming cover handoff. */
 @Composable
-internal fun MeloXAutoMixArtwork(track: MusicTrack, color: Color, modifier: Modifier) {
+internal fun MeloXAutoMixArtwork(track: MusicTrack, color: Color, modifier: Modifier, transitionEligible: Boolean) {
     val mix by MeloXAutoMixTransitionRuntime.state.collectAsState()
     val exit by animateFloatAsState(if (mix.handedOff) 1f else 0f,
         tween(if (MeloXSettingsRuntime.reduceMotion) 0 else 620, easing = CubicBezierEasing(.16f, 1f, .3f, 1f)), label = "automix-cover-handoff")
-    if ((!mix.active && !mix.handedOff) || mix.incoming == null) {
+    if (!transitionEligible || (!mix.active && !mix.handedOff) || mix.incoming == null) {
         MeloXArtworkImage(track.artworkUrl, color, modifier)
         return
     }
@@ -38,11 +38,11 @@ internal fun MeloXAutoMixArtwork(track: MusicTrack, color: Color, modifier: Modi
         val outgoingX = -(paired + gap) * exit
         val incomingPairedX = full + gap + ((paired + gap) - (full + gap)) * split
         val incomingX = incomingPairedX * (1 - exit)
-        Box(Modifier.offset(outgoingX, (full - outgoingSize) / 2).size(outgoingSize).graphicsLayer { alpha = 1 - exit }
+        Box(Modifier.offset(outgoingX, (full - outgoingSize) / 2).size(outgoingSize).testTag("automix-outgoing-artwork").graphicsLayer { alpha = 1 - exit }
             .shadow(26.dp, RoundedCornerShape(12.dp), clip = false).clip(RoundedCornerShape(12.dp))) {
             MeloXArtworkImage(mix.outgoing?.artworkUrl ?: track.artworkUrl, color, Modifier.fillMaxSize())
         }
-        if (split > .01f) Box(Modifier.offset(incomingX, (full - incomingSize) / 2).size(incomingSize)
+        if (split > .01f) Box(Modifier.offset(incomingX, (full - incomingSize) / 2).size(incomingSize).testTag("automix-incoming-artwork")
             .shadow(26.dp, RoundedCornerShape(12.dp), clip = false).clip(RoundedCornerShape(12.dp))) {
             MeloXArtworkImage(mix.incoming?.artworkUrl, color, Modifier.fillMaxSize())
         }

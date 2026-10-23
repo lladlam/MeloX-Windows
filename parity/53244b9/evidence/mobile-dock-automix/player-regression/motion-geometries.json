@@ -1,0 +1,52 @@
+[
+  {
+    "file": "04-open-frame-0.png",
+    "bounds": [
+      12,
+      728,
+      415,
+      776
+    ],
+    "state": "expansion=0.0;corner=24.0;settled=false"
+  },
+  {
+    "file": "04-open-frame-200.png",
+    "bounds": [
+      12,
+      728,
+      415,
+      776
+    ],
+    "state": "expansion=0.3917371;corner=24.0;settled=false"
+  },
+  {
+    "file": "04-open-frame-500.png",
+    "bounds": [
+      3,
+      166,
+      425,
+      833
+    ],
+    "state": "expansion=0.9298342;corner=32.0;settled=false"
+  },
+  {
+    "file": "04-open-frame-700.png",
+    "bounds": [
+      1,
+      37,
+      427,
+      846
+    ],
+    "state": "expansion=0.9949156;corner=32.0;settled=false"
+  },
+  {
+    "file": "04-open-frame-820.png",
+    "bounds": [
+      0,
+      10,
+      427,
+      850
+    ],
+    "state": "expansion=1.0;corner=32.0;settled=false"
+  }
+]

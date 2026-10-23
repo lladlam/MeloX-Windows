@@ -1,0 +1,10 @@
+consent:tap@remote-reject
+playing:wait@300
+open:tap@mini-player-expand
+opened:wait@1000
+mixing:wait@0
+queue:tap@player-show-queue
+artwork:tap@player-show-queue
+handoff:wait@0
+settled:wait@1000
+pause:tap@player-play-pause

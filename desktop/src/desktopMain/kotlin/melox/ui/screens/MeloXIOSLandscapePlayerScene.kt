@@ -39,6 +39,8 @@ internal fun MeloXIOSLandscapePlayerScene(
     onInterfaceVisibilityChange: (Boolean) -> Unit, grabberDragModifier: Modifier,
     showSkyline: Boolean = false, onShowSkyline: () -> Unit = {}, onHideSkyline: () -> Unit = {},
 ) {
+    val mix by melox.playback.MeloXAutoMixTransitionRuntime.state.collectAsState()
+    val displayedTrack = if (mix.active || mix.handedOff) mix.incoming ?: track else track
     if (showSkyline && page == 1) {
         Box(Modifier.fillMaxSize()) {
             MeloXSkylineLyricsPanel(track, Modifier.fillMaxSize(), onInterfaceInteraction)
@@ -67,9 +69,9 @@ internal fun MeloXIOSLandscapePlayerScene(
                             if (MeloXPlaybackModeRuntime.heartModeActive) {
                                 Text("心动模式", color = Color(0xFFFF7BA5), fontSize = 10.sp, fontWeight = FontWeight.Bold)
                             }
-                            Text(track.title, color = Color.White, fontSize = 19.sp, lineHeight = 23.sp,
+                            Text(displayedTrack.title, color = Color.White, fontSize = 19.sp, lineHeight = 23.sp,
                                 fontWeight = FontWeight.SemiBold, maxLines = 1, overflow = TextOverflow.Ellipsis)
-                            Text(track.artistText, color = Color.White.copy(alpha = .58f), fontSize = 15.sp,
+                            Text(displayedTrack.artistText, color = Color.White.copy(alpha = .58f), fontSize = 15.sp,
                                 lineHeight = 19.sp, maxLines = 1, overflow = TextOverflow.Ellipsis)
                         }
                         if (page == 1 && MeloXSettingsRuntime.skylineEnabled) {
@@ -120,10 +122,17 @@ internal fun MeloXPlayerCoreControls(
     player: MeloXDesktopPlayer?, onPage: (Int) -> Unit, onShowQuality: () -> Unit,
     onShowOutput: () -> Unit, onInterfaceInteraction: () -> Unit, modifier: Modifier = Modifier,
 ) {
+    val mix by melox.playback.MeloXAutoMixTransitionRuntime.state.collectAsState()
+    val incoming = mix.incoming.takeIf { mix.active }
+    val displayedDuration = incoming?.durationMs?.takeIf { it > 0 } ?: durationMs
+    val displayedProgress = if (incoming != null && displayedDuration > 0) {
+        (mix.incomingPositionMs.toFloat() / displayedDuration).coerceIn(0f, 1f)
+    } else progress
     Column(modifier.fillMaxWidth().height(279.dp).testTag("player-controls")) {
         key(track.id) {
-            ProgressSection(progress, durationMs,
+            ProgressSection(displayedProgress, displayedDuration,
                 qualityChip = if (MeloXSettingsRuntime.showPlayerQualityTip) ({ MeloXPlayerQualityChip(track, onShowQuality) }) else null,
+                seekEnabled = !mix.active,
             ) { player?.seekTo((it * durationMs).toLong()) }
         }
         Spacer(Modifier.height(19.dp))
