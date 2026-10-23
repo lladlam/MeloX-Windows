@@ -47,3 +47,10 @@ Windows 发行的验收应继续以完整下载的发行 ZIP 和对应来源 SHA
 - v3 Local 手机详情已显示真实新建的歌单，但回放断言误用了不存在的 `playlist-header`；最终断言使用实际 `playlist-tracks` 与歌单标题，保留失败截图，不把原失败计为通过。
 - v3 QQ／酷狗的页面进退断言虽通过，整理原图时发现酷狗详情及 QQ 的 MV 榜为 0 首；这两组旧回放只保留为导航取证，不计歌曲内容验收。酷狗 KMR v2 把 hash／毫秒时长放在 `audio_info`，旧解析丢失父子关联；补齐解析并回归专辑、封面、时长及 album_audio_id。QQ MV 榜属于视频目录，未实现视频能力时不作为歌曲榜单展示。
 - 公开回放加强为首页和发现页均必须存在 `desktop-collection-track:` 真正歌曲行，选择真实公开的 QQ 62 榜与酷狗 49223 榜重新验收，不以“详情页面存在”替代“歌曲已加载”。
+
+## Windows CI 首次失败补验
+
+- `39877380043`／`baa0c95`：Windows uber JAR 编译、原生 EQ、窗口／触摸与玻璃光学审计通过，在旧玻璃 Dock 回放的 Local 根导航断言失败。原断言写死 `Home>Explore>Library>Settings`，来源能力策略已改为 `Library>Settings`。
+- 修正 `capture_glass_navigation.py` 的准确导航顺序，并增加 Home／Explore 不存在断言；保留四次真实指针拖动选中／返回音乐库和设置的覆盖。
+- 本次 CI 未运行到新增来源回放及发行打包，不计 Windows 发行验收通过。
+- 修正后本地 Dark／Light 各 7 scenes／11 assertions 通过，均执行真实 Dock 拖动；两主题合计 14 scenes／22 assertions。原始回放记录保存在 `evidence/provider-dual-ui/dock-fix-{Dark,Light}/`。

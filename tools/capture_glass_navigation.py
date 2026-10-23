@@ -14,7 +14,8 @@ assert theme in ('Dark', 'Light')
 output.mkdir(parents=True, exist_ok=True)
 steps = [
     ('remote-reject', 'tap@remote-reject', ['cloud-enabled:false']),
-    ('settings', 'tap@root-tab:Settings', ['tag:settings-root', 'state:bottom-root-tabs:Home>Explore>Library>Settings']),
+    ('settings', 'tap@root-tab:Settings', ['tag:settings-root', 'state:bottom-root-tabs:Library>Settings',
+        'absent:root-tab:Home', 'absent:root-tab:Explore']),
     ('drag-library', 'hold-drag-between@root-tab:Settings,root-tab:Library', ['absent:settings-root', 'tag:library-pages']),
     ('drag-settings', 'hold-drag-between@root-tab:Library,root-tab:Settings', ['tag:settings-root']),
     ('repeat-library', 'hold-drag-between@root-tab:Settings,root-tab:Library', ['absent:settings-root', 'tag:library-pages']),
