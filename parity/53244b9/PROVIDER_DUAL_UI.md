@@ -54,3 +54,6 @@ Windows 发行的验收应继续以完整下载的发行 ZIP 和对应来源 SHA
 - 修正 `capture_glass_navigation.py` 的准确导航顺序，并增加 Home／Explore 不存在断言；保留四次真实指针拖动选中／返回音乐库和设置的覆盖。
 - 本次 CI 未运行到新增来源回放及发行打包，不计 Windows 发行验收通过。
 - 修正后本地 Dark／Light 各 7 scenes／11 assertions 通过，均执行真实 Dock 拖动；两主题合计 14 scenes／22 assertions。原始回放记录保存在 `evidence/provider-dual-ui/dock-fix-{Dark,Light}/`。
+- `39879035266`／`2456c3d`：Windows Dock 回放通过，智能队列回放在查找播放设置入口时失败。下载的失败截图显示实际停在 Local 音乐库；根因是初始临时 Home 的来源可用性校验与保存标签恢复竞争，校验可能覆盖已恢复的 Settings。修复为恢复完成后才校验及写回标签偏好，并在智能队列冷启动断言实际 `settings-root`，而非等后续定位超时。
+- 首次本地修复只增加恢复门控仍复现：旧 effect 捕获了 Home 对应的 `selectedPageAvailable=false`，恢复协程却已把共享状态更新为 Settings。最终校验在执行时重新读取当前来源／标签的可用性，避免把旧组合计算结果应用到恢复后的新状态；该首次失败不计通过。
+- 最终本地编译通过，智能队列 controls 26 scenes／15 assertions、独立 JVM reload 5 scenes／6 assertions 通过；两次冷启动均断言实际设置页，验证五档分析额度、Smart／Fixed 切换与“不限”持久化。中间一次修订误用 composable 包装函数导致编译失败，已改为直接读取共享策略；该失败不计通过。补验见 `evidence/provider-dual-ui/tab-restore-{controls,reload}/`。

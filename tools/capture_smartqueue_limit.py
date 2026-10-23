@@ -13,6 +13,7 @@ repo = Path(__file__).resolve().parents[1]
 home, output = Path(home).resolve(), Path(output).resolve()
 output.mkdir(parents=True, exist_ok=True)
 steps, checks = [], {}
+checks['00-settings'] = ['tag:settings-root', 'absent:mobile-provider-library:Local']
 
 
 def add(name, action, assertions=()):
@@ -27,7 +28,7 @@ strings = dict(line.split('=', 1) for line in (repo / 'desktop/src/main/resource
 if mode == 'controls':
     add('remote-reject', 'tap@remote-reject', ['cloud-enabled:false'])
 else:
-    checks['00-settings'] = ['smart-queue-analysis-limit:-1']
+    checks['00-settings'].append('smart-queue-analysis-limit:-1')
 add('reveal-playback', 'reveal@settings-open-playback')
 add('open-playback', 'tap@settings-open-playback', ['tag:settings-playback'])
 if mode == 'controls':

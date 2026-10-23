@@ -125,6 +125,7 @@ fun MeloXApp(onExit: () -> Unit = { kotlin.system.exitProcess(0) }) {
         }
     }
     var selectedTab by remember { mutableStateOf(AppTab.Home) }
+    var tabRestored by remember { mutableStateOf(false) }
     var selectedSource by remember { mutableStateOf(MusicProviderSelectionStore.selectedSource()) }
     var messagesVisible by remember { mutableStateOf(false) }
     var heartModeLaunchAttempted by remember { mutableStateOf(false) }
@@ -191,6 +192,7 @@ fun MeloXApp(onExit: () -> Unit = { kotlin.system.exitProcess(0) }) {
             MeloXSettingsRuntime.defaultTab
         }
         selectedTab = runCatching { AppTab.valueOf(restored) }.getOrDefault(AppTab.Home)
+        tabRestored = true
     }
 
     // MainActivity.onResume: scan after the first frame on each foreground entry.
@@ -226,8 +228,8 @@ fun MeloXApp(onExit: () -> Unit = { kotlin.system.exitProcess(0) }) {
         }
     }
 
-    LaunchedEffect(selectedTab) {
-        if (MeloXSettingsRuntime.rememberLastTab) {
+    LaunchedEffect(selectedTab, tabRestored) {
+        if (tabRestored && MeloXSettingsRuntime.rememberLastTab) {
             MeloXSettingsPreferences.setString("general_last_tab", selectedTab.name)
         }
     }
@@ -347,9 +349,10 @@ fun MeloXApp(onExit: () -> Unit = { kotlin.system.exitProcess(0) }) {
     }
 
     val selectedPageAvailable = melox.settings.MeloXContentLayout.rootPageAvailable(selectedSource, selectedTab.name)
-    LaunchedEffect(visibleTabs, selectedTab, selectedPageAvailable) {
-        if (!selectedPageAvailable) {
-            selectedTab = visibleTabs.first()
+    LaunchedEffect(visibleTabs, selectedTab, selectedPageAvailable, tabRestored) {
+        // Validate the restored destination, not the temporary Home used during startup.
+        if (tabRestored && !melox.settings.MeloXContentLayout.rootPageAvailable(selectedSource, selectedTab.name)) {
+            selectedTab = AppTab.valueOf(melox.settings.MeloXContentLayout.visibleTabs(selectedSource).first())
         }
     }
 
