@@ -175,6 +175,7 @@ fun MeloXGlassIconButton(
 
 /** Compact iOS-style switch used by settings and provider controls. */
 val MeloXToggleVisualProgressKey = SemanticsPropertyKey<Float>("MeloXToggleVisualProgress")
+val MeloXToggleOpticalStateKey = SemanticsPropertyKey<List<Float>>("MeloXToggleOpticalState")
 
 @Composable
 fun MeloXGlassToggle(
@@ -197,10 +198,14 @@ fun MeloXGlassToggle(
     val scope = rememberCoroutineScope()
     var didDrag by remember { mutableStateOf(false) }
     var dragDistance by remember { mutableStateOf(0f) }
+    var dragPosition by remember { mutableStateOf(if (checked) 1f else 0f) }
+    var dragSnapJob by remember { mutableStateOf<kotlinx.coroutines.Job?>(null) }
     var settleRevision by remember { mutableIntStateOf(0) }
     val animated = remember { Animatable(if (checked) 1f else 0f) }
     val currentChecked by rememberUpdatedState(checked)
+    val currentEnabled by rememberUpdatedState(enabled)
     val currentOnChange by rememberUpdatedState(onCheckedChange)
+    val reduceMotion = melox.settings.MeloXSettingsRuntime.reduceMotion
     val trackBackdrop = rememberMeloXLayerBackdrop()
     val pageBackdrop = LocalMeloXLayerBackdrop.current
     val optics = remember(scope) {
@@ -209,15 +214,26 @@ fun MeloXGlassToggle(
     }
     LaunchedEffect(optics) { snapshotFlow { animated.value }.collectLatest(optics::updateValue) }
 
-    androidx.compose.runtime.LaunchedEffect(checked, didDrag, settleRevision) {
+    LaunchedEffect(enabled) {
+        if (!enabled) {
+            dragSnapJob?.cancel()
+            didDrag = false
+            dragDistance = 0f
+            settleRevision++
+            optics.release()
+        }
+    }
+    androidx.compose.runtime.LaunchedEffect(checked, didDrag, settleRevision, reduceMotion) {
         val target = if (checked) 1f else 0f
         if (kotlin.math.abs(animated.value - target) > 0.01f && !didDrag) {
-            animated.animateTo(target, spring(dampingRatio = 0.86f, stiffness = 480f))
+            if (reduceMotion) animated.snapTo(target)
+            else animated.animateTo(target, spring(dampingRatio = 0.86f, stiffness = 480f))
         }
     }
 
     fun settle(target: Float) {
-        currentOnChange(target == 1f)
+        dragSnapJob?.cancel()
+        if (currentEnabled) currentOnChange(target == 1f)
         // Callers may require confirmation or reject the change. Only checked owns
         // the resting appearance; drag position is transient until the release.
         didDrag = false
@@ -255,20 +271,22 @@ fun MeloXGlassToggle(
             .pointerInput(enabled, travelPx, isLtr) {
                 if (!enabled) return@pointerInput
                 detectHorizontalDragGestures(
-                    onDragStart = { didDrag = false; dragDistance = 0f },
+                    onDragStart = { didDrag = false; dragDistance = 0f; dragPosition = animated.value },
                     onHorizontalDrag = { _, dragAmount ->
                         dragDistance += kotlin.math.abs(dragAmount)
                         if (dragDistance > tapThresholdPx) didDrag = true
                         val delta = dragAmount / travelPx * if (isLtr) 1f else -1f
-                        val next = (animated.value + delta).coerceIn(0f, 1f)
-                        scope.launch { animated.snapTo(next) }
+                        val next = (dragPosition + delta).coerceIn(0f, 1f)
+                        dragPosition = next
+                        dragSnapJob?.cancel()
+                        dragSnapJob = scope.launch { animated.snapTo(next) }
                     },
                     onDragEnd = {
-                        if (didDrag) settle(if (animated.value >= 0.5f) 1f else 0f)
+                        if (didDrag) settle(if (dragPosition >= 0.5f) 1f else 0f)
                         else settleRevision++
                         didDrag = false
                     },
-                    onDragCancel = { didDrag = false; settleRevision++ },
+                    onDragCancel = { dragSnapJob?.cancel(); didDrag = false; settleRevision++ },
                 )
             },
         contentAlignment = Alignment.CenterStart,
@@ -283,28 +301,35 @@ fun MeloXGlassToggle(
         )
         Box(
             Modifier
+                .semantics {
+                    this[MeloXToggleOpticalStateKey] = listOf(
+                        if (reduceMotion) 0f else safeGlassProgress(optics.pressProgress),
+                        if (reduceMotion) 1f else optics.scaleX.glassFinite(),
+                        if (reduceMotion) 1f else optics.scaleY.glassFinite())
+                }
                 .offset {
                     val padding = with(density) { 2.dp.roundToPx() }
                     IntOffset(
                         x = (padding + travelPx * shown).roundToInt(),
-                        y = padding,
+                         y = 0,
                     )
                 }
                 .graphicsLayer {
                     val velocity = optics.velocity.glassFinite() / 50f
-                    scaleX = if (pageBackdrop == null) 1f else (optics.scaleX.glassFinite() / (1f - (velocity * .75f).coerceIn(-.2f, .2f))).glassFinite()
-                    scaleY = if (pageBackdrop == null) 1f else (optics.scaleY.glassFinite() * (1f - (velocity * .25f).coerceIn(-.2f, .2f))).glassFinite()
+                    scaleX = if (pageBackdrop == null || reduceMotion) 1f else (optics.scaleX.glassFinite() / (1f - (velocity * .75f).coerceIn(-.2f, .2f))).glassFinite()
+                    scaleY = if (pageBackdrop == null || reduceMotion) 1f else (optics.scaleY.glassFinite() * (1f - (velocity * .25f).coerceIn(-.2f, .2f))).glassFinite()
                     alpha = if (enabled) 1f else .45f
                 }
                 .then(if (pageBackdrop == null) Modifier.background(Color.White, MeloXShapes.capsule) else {
-                    val p = safeGlassProgress(optics.pressProgress)
+                    val p = if (reduceMotion) 0f else safeGlassProgress(optics.pressProgress)
                     Modifier.meloXGlassShadow(MeloXShapes.capsule, 1f, .05f, 4.dp)
                         .meloXGlassDecoration(MeloXShapes.capsule, p, 4.dp * p, p, .15f,
                             rimWidth = .5.dp / 1.5f, ambient = true)
                         .clip(MeloXShapes.capsule)
                         .meloXSampleBackdrop(8.dp * (1f - p), trackBackdrop, shape = MeloXShapes.capsule,
                             lensHeight = if (p > .001f) 5.dp * p else 0.dp,
-                            lensAmount = if (p > .001f) 10.dp * p else 0.dp, dispersion = true, underlay = pageBackdrop)
+                            lensAmount = if (p > .001f) 10.dp * p else 0.dp, dispersion = true, underlay = pageBackdrop,
+                            sampleScale = androidx.compose.ui.geometry.Offset(2f / 3f + (0.75f - 2f / 3f) * p, 0.75f * p))
                         .drawBehind { drawRect(Color.White.copy(alpha = 1f - p)) }
                 })
                 .size(width = 40.dp, height = 24.dp),

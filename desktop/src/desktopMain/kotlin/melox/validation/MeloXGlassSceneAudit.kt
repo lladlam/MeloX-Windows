@@ -51,6 +51,8 @@ internal fun auditMeloXGlassScene(output: File) = runBlocking {
             var mounted by mutableStateOf(true)
             var checked by mutableStateOf(false)
             var acceptChange by mutableStateOf(true)
+            var toggleEnabled by mutableStateOf(true)
+            var toggleCommits = 0
             var clicks = 0
             var sliderValue by mutableFloatStateOf(.4f)
             var sliderEnabled by mutableStateOf(true)
@@ -77,7 +79,8 @@ internal fun auditMeloXGlassScene(output: File) = runBlocking {
                                 MeloXGlassButton(onClick = { clicks++ }, modifier = Modifier.size(160.dp, 48.dp).testTag("glass-button"),
                                     tint = Color.White.copy(alpha = .1f), surfaceColor = Color.White.copy(alpha = .08f)) { Text("Glass") }
                                 Spacer(Modifier.height(24.dp))
-                                MeloXGlassToggle(checked, { if (acceptChange) checked = it }, modifier = Modifier.testTag("glass-toggle"))
+                                MeloXGlassToggle(checked, { toggleCommits++; if (acceptChange) checked = it },
+                                    enabled = toggleEnabled, modifier = Modifier.testTag("glass-toggle"))
                                 Spacer(Modifier.height(24.dp))
                                 MeloXLiquidSlider(sliderValue, { sliderValue = it; sliderCommits++; sliderEvents += "commit:$it enabled=$sliderEnabled" },
                                     onTransientValueChange = { sliderEvents += "transient:$it enabled=$sliderEnabled" },
@@ -154,6 +157,10 @@ internal fun auditMeloXGlassScene(output: File) = runBlocking {
                 }
                 check(changedInside > 100 * density * density) { "Cached sampler did not refresh its actual background" }
                 val toggle = point("glass-toggle")
+                val restingThumb = scene.captureSemantics().single { it.config.getOrNull(MeloXToggleOpticalStateKey) != null }
+                check(kotlin.math.abs(restingThumb.boundsInWindow.center.y - toggle.y) <= .6f) {
+                    "Switch thumb is not vertically centered in its track"
+                }
                 send(PointerEventType.Move, toggle); send(PointerEventType.Press, toggle); settle(300)
                 snapshot("toggle-pressed")
                 send(PointerEventType.Release, toggle); settle(800)
@@ -166,6 +173,26 @@ internal fun auditMeloXGlassScene(output: File) = runBlocking {
                 check(checked && node.config.getOrNull(SemanticsProperties.ToggleableState) == ToggleableState.On)
                 check((node.config.getOrNull(MeloXToggleVisualProgressKey) ?: 0f) >= .99f) { "Rejected switch drag left stale visual state" }
                 snapshot("toggle-rejected-drag")
+                acceptChange = true
+                val beforeDisabledDrag = toggleCommits
+                send(PointerEventType.Move, toggle); send(PointerEventType.Press, toggle); settle(100)
+                repeat(6) { index -> send(PointerEventType.Move, toggle - Offset((index + 1) * 3f * density, 0f)); settle(24) }
+                toggleEnabled = false; settle(150)
+                send(PointerEventType.Release, toggle - Offset(18f * density, 0f)); settle(700)
+                check(toggleCommits == beforeDisabledDrag && checked) { "Switch committed after being disabled during drag" }
+                toggleEnabled = true; settle(800)
+                val restoredToggle = checkNotNull(scene.captureSemantics().tagged("glass-toggle"))
+                check((restoredToggle.config.getOrNull(MeloXToggleVisualProgressKey) ?: 0f) >= .99f) {
+                    "Disabling a switch during drag left its thumb between states"
+                }
+                snapshot("toggle-cancel-restored")
+                val restoredOptics = scene.captureSemantics().mapNotNull { it.config.getOrNull(MeloXToggleOpticalStateKey) }.single()
+                check(restoredOptics[0] <= .001f && kotlin.math.abs(restoredOptics[1] - 1f) <= .001f && kotlin.math.abs(restoredOptics[2] - 1f) <= .001f) {
+                    "Cancelled switch retained pressed optical deformation: $restoredOptics"
+                }
+                send(PointerEventType.Move, toggle); send(PointerEventType.Press, toggle); settle(100)
+                send(PointerEventType.Release, toggle); settle(800)
+                check(!checked && toggleCommits == beforeDisabledDrag + 1) { "First switch tap after cancellation was lost or duplicated" }
                 val sliderBounds = checkNotNull(scene.captureSemantics().tagged("glass-slider")).boundsInWindow
                 val sliderTap = Offset(sliderBounds.left + sliderBounds.width * .8f, sliderBounds.center.y)
                 send(PointerEventType.Move, sliderTap); send(PointerEventType.Press, sliderTap); settle(100)
@@ -218,6 +245,7 @@ internal fun auditMeloXGlassScene(output: File) = runBlocking {
                 repeat(8) { mounted = false; settle(32); mounted = true; settle(32) }
                 samples.put(JSONObject().put("density", density).put("dark", dark).put("frosted", frosted).put("physical_button_clicks", clicks)
                     .put("changed_pixels_inside_glass", changedInside).put("rejected_switch_drag_restored", true)
+                    .put("switch_centered_thumb", true).put("switch_inflight_cancel_restored", true)
                     .put("scaled_background_aligned_pixels", alignedPixels).put("scaled_background_checked_pixels", sampledPixels)
                     .put("slider_value", sliderValue).put("disabled_slider_preserved_value", true)
                     .put("resize_and_inflight_cancel", if (frosted) "not exercised: Material fallback" else "PASSED")
