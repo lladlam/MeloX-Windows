@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="DesktopProcessLogsTest[desktop]" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-10-24T16:10:40.213Z" hostname="lladlam-arch" time="0.292">
+  <properties/>
+  <testcase name="credentialsAndSignedUrlPathsAreRedactedBeforeEitherBufferOrDisk[desktop]" classname="melox.diagnostics.DesktopProcessLogsTest" time="0.243"/>
+  <testcase name="diagnosticExporterIncludesRealCurrentProcessLinesInsteadOfAnEmptyStub[desktop]" classname="melox.diagnostics.DesktopProcessLogsTest" time="0.036"/>
+  <testcase name="logRotationPreservesUtf8LatestAndPreviousRecordsAtTheActualByteLimit[desktop]" classname="melox.diagnostics.DesktopProcessLogsTest" time="0.012"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

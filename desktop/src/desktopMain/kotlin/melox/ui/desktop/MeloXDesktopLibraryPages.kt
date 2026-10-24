@@ -35,7 +35,7 @@ internal fun DesktopLibrarySongs(titleKey: String, songs: List<SearchSong>, load
     preamble: LazyListScope.() -> Unit = {}, rowActions: (@Composable (SearchSong) -> Unit)? = null, tag: String) {
     val scroll = rememberLazyListState()
     val queue by PlaybackCommands.queue.collectAsState()
-    val playback by melox.player.AudioPlayer.state.collectAsState()
+    val playback by melox.playback.MeloXPlaybackOutput.state.collectAsState()
     val current = queue.songs.getOrNull(queue.index)?.id
     var selected by remember { mutableStateOf<SearchSong?>(null) }
     var anchor by remember { mutableStateOf<IntOffset?>(null) }

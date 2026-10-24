@@ -123,10 +123,10 @@ fun MeloXNowPlayingScreen(
     animatedVisibilityScope: androidx.compose.animation.AnimatedVisibilityScope? = null,
 ) {
     val player = livePlayer()
-    val playerState by AudioPlayer.state.collectAsState()
-    val playerProgress by AudioPlayer.progress.collectAsState()
+    val playerState by melox.playback.MeloXPlaybackOutput.state.collectAsState()
+    val playerProgress by melox.playback.MeloXPlaybackOutput.progress.collectAsState()
     val currentTrack by AudioPlayer.currentTrack.collectAsState()
-    val durationMs by AudioPlayer.durationMs.collectAsState()
+    val durationMs by melox.playback.MeloXPlaybackOutput.durationMs.collectAsState()
     val track = currentTrack ?: return
 
     val rememberPage = MeloXSettingsPreferences.boolean("playback_remember_page", true)
@@ -158,8 +158,9 @@ fun MeloXNowPlayingScreen(
     var showActions by remember { mutableStateOf(false) }
     var showQuality by remember { mutableStateOf(false) }
     var outputError by remember { mutableStateOf<String?>(null) }
+    var showLanOutput by remember { mutableStateOf(false) }
     val uiScope = rememberCoroutineScope()
-    val showOutputSwitcher = {
+    val showSystemOutputSwitcher = {
         uiScope.launch {
             try {
                 kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) { melox.platform.showSystemAudioOutputSwitcher() }
@@ -168,6 +169,7 @@ fun MeloXNowPlayingScreen(
         }
         Unit
     }
+    val showOutputSwitcher = { showLanOutput = true }
 
     val sourceColor = MeloXColors.sourceColors[track.id.source.storageValue] ?: MeloXColors.Primary
     val expansion = if (animatedVisibilityScope != null) {
@@ -286,6 +288,7 @@ fun MeloXNowPlayingScreen(
             MeloXPlayerQualityOverlay(track, showQuality, onDismiss = { showQuality = false },
                 onOpenPlaybackSettings = onOpenPlaybackSettings)
             MeloXPlayerOutputError(outputError, onDismiss = { outputError = null })
+            MeloXLanOutputPanel(showLanOutput, showSystemOutputSwitcher) { showLanOutput = false }
             MeloXPlayerPlaybackError(playerState, onRetry = { player?.play() })
         }
         lyrics.shareIndex?.let { initial ->
@@ -765,8 +768,11 @@ private fun PressScaleButton(
 @OptIn(androidx.compose.material3.ExperimentalMaterial3Api::class)
 @Composable
 internal fun VolumeSection(player: MeloXDesktopPlayer?) {
-    var volume by remember { mutableFloatStateOf(1f) }
+    val outputVolume by melox.playback.MeloXPlaybackOutput.volumeLevel.collectAsState()
+    val dlna by melox.dlna.DlnaSession.state.collectAsState()
+    var volume by remember { mutableFloatStateOf(outputVolume) }
     var dragging by remember { mutableStateOf(false) }
+    LaunchedEffect(outputVolume, dragging) { if (!dragging) volume = outputVolume }
     val thumbSize by animateDpAsState(
         targetValue = if (dragging) 16.dp else 14.dp,
         animationSpec = tween(120),
@@ -785,6 +791,7 @@ internal fun VolumeSection(player: MeloXDesktopPlayer?) {
         MeloXSymbolIcon(MeloXSymbol.Volume, color = Color.White.copy(alpha = 0.62f), size = 12)
         Slider(
             value = volume.coerceIn(0f, 1f),
+            enabled = dlna.device == null || dlna.device?.rendering != null,
             onValueChange = {
                 dragging = true
                 volume = it.coerceIn(0f, 1f)

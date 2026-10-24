@@ -1,0 +1,16 @@
+{
+  "check": "source/packaged decoder integrity",
+  "resources": [
+    {
+      "location": "/mnt/ntfs_files_sda4/\u9879\u76ee/MeloX-Windows/desktop/build/verification/delivery-39912792424/artifact/MeloX-Desktop-Windows.zip!/app/MeloX-Desktop-windows-x64-1.0.0.jar!/decoder/ffmpeg.exe",
+      "bytes": 164352000,
+      "sha256": "af7913b7ddc324bf02b8af72fe8612b1471455ef8d9e04e45466510742abcff9",
+      "magic": "PE",
+      "verified": true
+    }
+  ],
+  "native": {
+    "decoder_native_run": "NOT_RUN"
+  },
+  "audible_acceptance": "BLOCKED"
+}

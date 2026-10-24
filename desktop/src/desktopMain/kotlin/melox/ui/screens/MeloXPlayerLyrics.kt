@@ -111,7 +111,7 @@ internal fun rememberMeloXPlayerLyrics(track: MusicTrack): MeloXPlayerLyricsStat
         state.error = null
         try {
             MeloXLyricsLoad.shared.observe(track, preference = preference).collect { document ->
-                if (state.document == null || AudioPlayer.positionMs.value <= MeloXLyricsLoad.AmllUpgradeWindowMs) {
+                if (state.document == null || melox.playback.MeloXPlaybackOutput.positionMs.value <= MeloXLyricsLoad.AmllUpgradeWindowMs) {
                     state.document = document
                 }
                 state.loading = false
@@ -143,12 +143,12 @@ internal fun LyricsPage(
         return
     }
     val state = LocalMeloXPlayerLyrics.current ?: rememberMeloXPlayerLyrics(track)
-    val playback by AudioPlayer.state.collectAsState()
-    val renderedPosition = remember(track.id) { mutableLongStateOf(AudioPlayer.positionMs.value) }
-    var anchorPosition by remember(track.id) { mutableLongStateOf(AudioPlayer.positionMs.value) }
+    val playback by melox.playback.MeloXPlaybackOutput.state.collectAsState()
+    val renderedPosition = remember(track.id) { mutableLongStateOf(melox.playback.MeloXPlaybackOutput.positionMs.value) }
+    var anchorPosition by remember(track.id) { mutableLongStateOf(melox.playback.MeloXPlaybackOutput.positionMs.value) }
     var anchorNanos by remember(track.id) { mutableLongStateOf(System.nanoTime()) }
     LaunchedEffect(track.id) {
-        AudioPlayer.positionMs.collect {
+        melox.playback.MeloXPlaybackOutput.positionMs.collect {
             anchorPosition = it
             anchorNanos = System.nanoTime()
             renderedPosition.longValue = it

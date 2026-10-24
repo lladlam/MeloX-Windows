@@ -1,0 +1,32 @@
+[
+  {
+    "file": "pcm-output-0.s16le",
+    "bytes": 3833756,
+    "sha256": "abb8aa0642e7374a963f2c87cd9fbf42eebbbf50ad9979b1156923746b2f215c",
+    "archive": "pcm-output-0.s16le.gz"
+  },
+  {
+    "file": "pcm-output-1.s16le",
+    "bytes": 23629780,
+    "sha256": "b4ff9af21f7bb7aa677476d79bc3d77439b39badecaf79a4829c99a38d43a566",
+    "archive": "pcm-output-1.s16le.gz"
+  },
+  {
+    "file": "pcm-output-2.s16le",
+    "bytes": 5001564,
+    "sha256": "d2b43b42116b4923ba6b79b217831291714e6868394a2268d6020c8cb832bd38",
+    "archive": "pcm-output-2.s16le.gz"
+  },
+  {
+    "file": "pcm-output-3.s16le",
+    "bytes": 4209244,
+    "sha256": "c1e9856275c0dc6b3d0be97b527868bf95a4761d10f5121592459e727294a882",
+    "archive": "pcm-output-3.s16le.gz"
+  },
+  {
+    "file": "peer-cast-0.s16le",
+    "bytes": 5283464,
+    "sha256": "abbda35d5fec38bd697cbc2e1e93ab0ad28c982c49303c9b44471bfdfd49c6f9",
+    "archive": "peer-cast-0.s16le.gz"
+  }
+]

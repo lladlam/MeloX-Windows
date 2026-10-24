@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="DesktopPlaybackStateTest[desktop]" tests="25" skipped="0" failures="0" errors="0" timestamp="2026-10-24T16:12:36.905Z" hostname="lladlam-arch" time="40.132">
+  <properties/>
+  <testcase name="recommendationArrivingAfterNaturalEndAppendsAndResumesTheNewEntry[desktop]" classname="melox.playback.DesktopPlaybackStateTest" time="0.465"/>
+  <testcase name="qualityChangePreservesQueueEntryIdentityAndPausedZeroPosition[desktop]" classname="melox.playback.DesktopPlaybackStateTest" time="0.632"/>
+  <testcase name="tailRecoveryRepreparesPausedPositionOnceAndExplicitPlayCanRetryAgain[desktop]" classname="melox.playback.DesktopPlaybackStateTest" time="0.777"/>
+  <testcase name="periodicPositionUsesTheAndroidTwoSecondIntervalAndStopsOnRelease[desktop]" classname="melox.playback.DesktopPlaybackStateTest" time="0.4"/>
+  <testcase name="decoderFailureSkipsToNextEntryEvenInRepeatOneMode[desktop]" classname="melox.playback.DesktopPlaybackStateTest" time="0.266"/>
+  <testcase name="releasingAnOldControllerCannotStopTheNewControllersSelectedAudio[desktop]" classname="melox.playback.DesktopPlaybackStateTest" time="0.175"/>
+  <testcase name="exhaustedRepeatAllQueueStopsInsteadOfSpinningOnBrokenEntries[desktop]" classname="melox.playback.DesktopPlaybackStateTest" time="0.752"/>
+  <testcase name="missingOutputDoesNotConsumeTheWholeQueue[desktop]" classname="melox.playback.DesktopPlaybackStateTest" time="0.738"/>
+  <testcase name="startupQueueRestoreDoesNotResolveOrStartAudioUntilPlayAndRetainsSeek[desktop]" classname="melox.playback.DesktopPlaybackStateTest" time="1.958"/>
+  <testcase name="queueReorderDuringResolutionKeepsTheSelectedEntryPlayable[desktop]" classname="melox.playback.DesktopPlaybackStateTest" time="1.058"/>
+  <testcase name="collectionIdsSurviveQueuePersistenceAndBecomePlaybackMetadata[desktop]" classname="melox.playback.DesktopPlaybackStateTest" time="1.302"/>
+  <testcase name="resolutionFailurePublishesTheNewTrackAndCanBeRetried[desktop]" classname="melox.playback.DesktopPlaybackStateTest" time="0.572"/>
+  <testcase name="userSeekBeforeQueuedEndDispatchKeepsTheCurrentTrackAndNewPosition[desktop]" classname="melox.playback.DesktopPlaybackStateTest" time="0.429"/>
+  <testcase name="localContentLocationSurvivesQueuePersistenceForDeferredPlayback[desktop]" classname="melox.playback.DesktopPlaybackStateTest" time="0.635"/>
+  <testcase name="pauseAndSeekDuringResolutionAreAppliedToTheDecoderStart[desktop]" classname="melox.playback.DesktopPlaybackStateTest" time="0.868"/>
+  <testcase name="callbacksFromAnOlderPlayOfTheSameTrackCannotAdvanceOrFailTheNewSelection[desktop]" classname="melox.playback.DesktopPlaybackStateTest" time="0.871"/>
+  <testcase name="shuffleOnlyReordersTheFutureAndKeepsManualEntriesAheadOfBaseTracks[desktop]" classname="melox.playback.DesktopPlaybackStateTest" time="3.759"/>
+  <testcase name="persistedProviderQueueRestoresIndexPositionIdentityAndStartsPaused[desktop]" classname="melox.playback.DesktopPlaybackStateTest" time="8.19"/>
+  <testcase name="jellyfinServerAndDuplicateMembershipIdsSurviveQueuePersistence[desktop]" classname="melox.playback.DesktopPlaybackStateTest" time="1.11"/>
+  <testcase name="offlineFailureAndNaturalEndPreferDownloadedFutureEntries[desktop]" classname="melox.playback.DesktopPlaybackStateTest" time="8.065"/>
+  <testcase name="explicitClearStopsAudioAndCannotRestoreStaleQueueOrAcceptLateCallbacks[desktop]" classname="melox.playback.DesktopPlaybackStateTest" time="6.083"/>
+  <testcase name="userPauseBeforeQueuedEndDispatchPreventsAutomaticAdvance[desktop]" classname="melox.playback.DesktopPlaybackStateTest" time="0.262"/>
+  <testcase name="aLateCancelledResolverCannotStartThePreviousTrack[desktop]" classname="melox.playback.DesktopPlaybackStateTest" time="0.253"/>
+  <testcase name="explicitPauseAfterNaturalEndPreventsLateRecommendationsFromRestartingAudio[desktop]" classname="melox.playback.DesktopPlaybackStateTest" time="0.373"/>
+  <testcase name="repeatAllRestartsASingleItemInsteadOfLeavingItFinished[desktop]" classname="melox.playback.DesktopPlaybackStateTest" time="0.135"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[[ERROR MeloXPlayback] decoder failed (Content): AudioPlaybackFailure: decoder failure <- IOException: decoder failure
+[ERROR MeloXPlayback] decoder failed (Content): AudioPlaybackFailure: decoder failure <- IOException: decoder failure
+[ERROR MeloXPlayback] decoder failed (Content): AudioPlaybackFailure: decoder failure <- IOException: decoder failure
+[ERROR MeloXPlayback] decoder failed (Content): AudioPlaybackFailure: decoder failure <- IOException: decoder failure
+[ERROR MeloXPlayback] decoder failed (Content): AudioPlaybackFailure: decoder failure <- IOException: decoder failure
+[ERROR MeloXPlayback] decoder failed (Content): AudioPlaybackFailure: decoder failure <- IOException: decoder failure
+[ERROR MeloXPlayback] decoder failed (Output): AudioPlaybackFailure: decoder failure <- IOException: decoder failure
+[ERROR MeloXPlayback] resolve failed: IOException: provider unavailable <- IOException: provider unavailable
+[ERROR MeloXPlayback] decoder failed (Content): AudioPlaybackFailure: decoder failure <- IOException: decoder failure
+]]></system-err>
+</testsuite>

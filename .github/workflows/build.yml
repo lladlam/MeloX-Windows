@@ -160,6 +160,24 @@ jobs:
             Get-ChildItem "desktop/build/parity/mobile-automix-$mode" -Filter '*.s16le' | ForEach-Object { python -m gzip $_.FullName }
             if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           }
+      - name: Replay process-owned LAN outputs in both production layouts
+        shell: pwsh
+        run: |
+          foreach ($mode in @('mobile', 'desktop')) {
+            python tools/capture_lan_update.py $mode "$pwd/desktop/build/parity/lan-update-$mode-home" "desktop/build/parity/lan-update-$mode"
+            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+            Get-ChildItem "desktop/build/parity/lan-update-$mode" -Filter '*.s16le' | ForEach-Object { python -m gzip $_.FullName }
+            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          }
+      - name: Replay real DLNA discovery SOAP and Range audio in both layouts
+        shell: pwsh
+        run: |
+          foreach ($mode in @('mobile', 'desktop')) {
+            python tools/capture_dlna_update.py $mode "$pwd/desktop/build/parity/dlna-update-$mode-home" "desktop/build/parity/dlna-update-$mode"
+            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+            Get-ChildItem "desktop/build/parity/dlna-update-$mode" -Filter '*.s16le' | ForEach-Object { python -m gzip $_.FullName }
+            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          }
       - name: Replay real Desktop album and playlist collection geometry and pointers
         shell: pwsh
         run: |
@@ -404,6 +422,17 @@ jobs:
             desktop/build/parity/mobile-automix-*/*.png
             desktop/build/parity/mobile-automix-*/*.gz
             desktop/build/parity/mobile-automix-*/gradle.log
+            desktop/build/parity/lan-update-*/*.json
+            desktop/build/parity/lan-update-*/*.txt
+            desktop/build/parity/lan-update-*/*.png
+            desktop/build/parity/lan-update-*/*.gz
+            desktop/build/parity/lan-update-*/gradle.log
+            desktop/build/parity/dlna-update-*/*.json
+            desktop/build/parity/dlna-update-*/*.txt
+            desktop/build/parity/dlna-update-*/*.png
+            desktop/build/parity/dlna-update-*/*.bin
+            desktop/build/parity/dlna-update-*/*.gz
+            desktop/build/parity/dlna-update-*/gradle.log
             desktop/build/parity/lyric-language-controls/*
             desktop/build/parity/lyric-language-reload/*
             desktop/build/parity/split-layout-*/*.json

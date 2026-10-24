@@ -55,7 +55,7 @@ internal fun MeloXDesktopArtistDetail(id: Long, onBack: () -> Unit) {
     var revision by remember(id) { mutableIntStateOf(0) }
     var selected by remember(id) { mutableStateOf<SearchSong?>(null) }
     var anchor by remember { mutableStateOf<IntOffset?>(null) }
-    val playback by melox.player.AudioPlayer.state.collectAsState()
+    val playback by melox.playback.MeloXPlaybackOutput.state.collectAsState()
     val queue by PlaybackCommands.queue.collectAsState()
     val currentId = queue.songs.getOrNull(queue.index)?.id
     LaunchedEffect(id, revision) {

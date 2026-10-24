@@ -76,7 +76,7 @@ fun PlaylistDetailScreen(
     val currentSongId by remember { derivedStateOf { PlaybackCommands.currentSongId() } }
     val queue by PlaybackCommands.queue.collectAsState()
     val playingId = queue.songs.getOrNull(queue.index)?.id ?: currentSongId
-    val playbackState by melox.player.AudioPlayer.state.collectAsState()
+    val playbackState by melox.playback.MeloXPlaybackOutput.state.collectAsState()
     val scope = rememberCoroutineScope()
     var filter by remember(playlist.id) { mutableStateOf("") }
     var showSearch by remember(playlist.id, MeloXSettingsRuntime.playlistSearchBarHidden) { mutableStateOf(!MeloXSettingsRuntime.playlistSearchBarHidden) }

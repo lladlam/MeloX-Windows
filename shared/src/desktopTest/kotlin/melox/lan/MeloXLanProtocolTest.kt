@@ -66,6 +66,7 @@ class MeloXLanProtocolTest {
             frames.forEach { out.write(it.toInt() and 255); out.write((it.toInt() shr 8) and 255) }
         }.toByteArray()
         val received = java.io.ByteArrayOutputStream()
+        val delivered = java.util.concurrent.CountDownLatch(1)
         val line = object : SourceDataLine {
             override fun open() {}
             override fun open(format: AudioFormat?) {}
@@ -89,7 +90,9 @@ class MeloXLanProtocolTest {
             override fun addLineListener(listener: javax.sound.sampled.LineListener?) {}
             override fun removeLineListener(listener: javax.sound.sampled.LineListener?) {}
             override fun write(b: ByteArray?, off: Int, len: Int): Int {
-                received.write(b, off, len); return len
+                received.write(b, off, len)
+                if (received.size() >= frames.size * 2) delivered.countDown()
+                return len
             }
             override fun close() {}
             override fun isOpen() = true
@@ -101,7 +104,7 @@ class MeloXLanProtocolTest {
         try {
             Socket(InetAddress.getLoopbackAddress(), receiver.port).use { socket ->
                 socket.getOutputStream().write(bytes); socket.getOutputStream().flush()
-                Thread.sleep(400)
+                assertTrue(delivered.await(5, java.util.concurrent.TimeUnit.SECONDS), "PCM delivery must complete before closing its socket")
             }
             assertTrue(received.size() >= frames.size * 2)
         } finally { receiver.close() }

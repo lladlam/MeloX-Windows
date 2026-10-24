@@ -1,0 +1,10 @@
+consent=cloud-enabled:false
+playing=playing:true
+open-output=tag:lan-dialog
+discover=tag:lan-dlna-cast:uuid:melox-ui-ad6b7166-3361-416e-a167-2fe0453d4004
+cast=tag:lan-dlna-disconnect,playing:false,output-playing:true
+close-output=absent:lan-dialog
+pause=output-playing:false
+resume=output-playing:true
+reopen=tag:lan-dlna-disconnect
+local=playing:true,absent:lan-dlna-disconnect

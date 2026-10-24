@@ -1,0 +1,12 @@
+consent=cloud-enabled:false
+playing=playing:true
+open-output=tag:lan-output-panel
+discover=tag:lan-output-device:dlna:uuid:melox-ui-34a536be-f56f-438f-9261-e94befd13009
+cast=absent:lan-output-panel,playing:false,output-playing:true
+reopen=selected:lan-output-device:dlna:uuid:melox-ui-34a536be-f56f-438f-9261-e94befd13009
+pause=output-playing:false
+resume=output-playing:true
+volume=output-volume:0.37
+dismiss-output=absent:lan-output-panel
+reopen-again=selected:lan-output-device:dlna:uuid:melox-ui-34a536be-f56f-438f-9261-e94befd13009
+local=selected:lan-output-device:local,playing:true

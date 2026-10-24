@@ -48,9 +48,17 @@ object AudioPlayer {
     val volumeLevel: StateFlow<Float> = _volumeLevel.asStateFlow()
     private val playbackLock = Any()
     private val paused = AtomicBoolean(false)
+    private val togetherBarrier = AtomicBoolean(false)
+    fun setTogetherBarrier(value: Boolean) {
+        togetherBarrier.set(value)
+        if (value) pause()
+    }
     private val pauseVersion = AtomicLong()
     private val ready = AtomicBoolean(false)
     private val writtenFrames = AtomicLong(0L)
+    private val rateMediaFrames = AtomicLong(0L)
+    @Volatile private var correctionRate = 1f
+    fun setTogetherRate(value: Float) { correctionRate = value.coerceIn(.97f, 1.03f) }
     private val pendingSeekMs = AtomicLong(-1L)
     private val seekRevision = AtomicLong(0L)
     private val session = AtomicReference<PlayRequest?>(null)
@@ -109,14 +117,14 @@ object AudioPlayer {
         autoMix: Boolean = melox.playback.MeloXPlaybackModeRuntime.autoMixEnabled,
     ) {
         selectTrack(track, startPositionMs, knownDurationMs)
-        paused.set(!playWhenReady)
-        _state.value = _state.value.copy(isPaused = !playWhenReady)
+        paused.set(!playWhenReady || togetherBarrier.get())
+        _state.value = _state.value.copy(isPaused = paused.get())
         pendingSeekMs.set(startPositionMs.coerceAtLeast(0L))
         val request = PlayRequest(url, headers, knownDurationMs.coerceAtLeast(0L), onEnded, onFailure)
         session.set(request)
         currentJob = scope.launch {
             try {
-                if (autoMix) runDualSession(request, track, startPositionMs) else runSession(request)
+                if (autoMix && !melox.lan.MeloXLanRuntime.isTogether) runDualSession(request, track, startPositionMs) else runSession(request)
             } catch (cancelled: CancellationException) {
                 throw cancelled
             } catch (e: Exception) {
@@ -228,6 +236,7 @@ object AudioPlayer {
             val (launched, launchedRevision) = synchronized(playbackLock) {
                 if (session.get() !== request) return
                 writtenFrames.set(0L)
+                rateMediaFrames.set(0L)
                 val startAt = pendingSeekMs.get().coerceAtLeast(0L)
                 playbackOffsetMs.set(startAt)
                 ready.set(false)
@@ -275,6 +284,7 @@ object AudioPlayer {
             }
             val buffer = ByteArray(PCM_SAMPLE_RATE * PCM_BYTES_PER_FRAME / 5)
             val equalizer = melox.playback.MeloXEqualizerController()
+            val rateProcessor = MeloXPcmRate()
             var started = false
             var endedNaturally = false
             var requestedEnd = false
@@ -286,7 +296,7 @@ object AudioPlayer {
                         restartingForSeek = true
                         break
                     }
-                    if (paused.get()) {
+                    if (paused.get() && started) {
                         Thread.sleep(40)
                         continue
                     }
@@ -347,8 +357,11 @@ object AudioPlayer {
                         }
                         progressJob = startProgress(request)
                     }
-                    equalizer.process(buffer, read, volumeLinear)
-                    val written = writePcmBlock(line, buffer, read,
+                    val rate = correctionRate
+                    val output = rateProcessor.process(buffer, read, rate)
+                    val outputCount = if (output === buffer) read else output.size
+                    equalizer.process(output, outputCount, volumeLinear)
+                    val written = writePcmBlock(line, output, outputCount,
                         isCurrent = { session.get() === request && seekRevision.get() == launchedRevision },
                         isPaused = paused::get, pauseVersion = pauseVersion::get,
                         startIfPlaying = { synchronized(playbackLock) {
@@ -358,10 +371,11 @@ object AudioPlayer {
                         synchronized(playbackLock) {
                             if (session.get() === request && seekRevision.get() == launchedRevision) {
                                 writtenFrames.addAndGet(accepted / PCM_BYTES_PER_FRAME.toLong())
+                                rateMediaFrames.addAndGet(((accepted / PCM_BYTES_PER_FRAME.toDouble()) * rate * 1_000_000).toLong())
                             }
                         }
                     }
-                    if (session.get() === request && seekRevision.get() == launchedRevision) publishPcmEnergy(buffer, written)
+                    if (session.get() === request && seekRevision.get() == launchedRevision) publishPcmEnergy(output, written)
                 }
             } catch (error: Exception) {
                 if (session.get() !== request) return
@@ -385,7 +399,7 @@ object AudioPlayer {
                 if (seekRevision.get() != launchedRevision) continue
                 if (endedNaturally) {
                     ready.set(false)
-                    val finalPosition = if (requestedEnd) _durationMs.value else positionMs(launched, writtenFrames.get())
+                    val finalPosition = if (requestedEnd) _durationMs.value else positionMs(launched, rateMediaFrames.get() / 1_000_000)
                     _positionMs.value = finalPosition
                     _progress.value = if (_durationMs.value > 0L) (finalPosition.toFloat() / _durationMs.value).coerceIn(0f, 1f) else 0f
                     _state.value = _state.value.copy(isPlaying = false, isPaused = false, isLoading = false, isFinished = true)
@@ -439,7 +453,8 @@ object AudioPlayer {
                     if (session.get() !== request || !ready.get()) return@launch
                     val written = writtenFrames.get()
                     val buffered = currentLine?.let { unplayedFrames(it, written) } ?: 0L
-                    val position = displayedPosition(pendingSeekMs.get(), playbackOffsetMs.get(), written, buffered)
+                    val mediaWritten = rateMediaFrames.get() / 1_000_000
+                    val position = displayedPosition(pendingSeekMs.get(), playbackOffsetMs.get(), mediaWritten, (buffered * correctionRate).toLong())
                     val duration = _durationMs.value
                     _positionMs.value = position
                     _progress.value = if (duration > 0L) (position.toFloat() / duration).coerceIn(0f, 1f) else 0f
@@ -456,6 +471,7 @@ object AudioPlayer {
 
 
     fun pause() {
+        correctionRate = 1f
         synchronized(playbackLock) {
             if (_currentTrack.value == null) return
             paused.set(true)
@@ -467,6 +483,7 @@ object AudioPlayer {
     }
 
     fun resume() {
+        if (togetherBarrier.get()) return
         synchronized(playbackLock) {
             if (_currentTrack.value == null || _state.value.error != null || _state.value.isFinished) return
             paused.set(false)
@@ -488,6 +505,8 @@ object AudioPlayer {
             ready.set(false)
             paused.set(false)
             writtenFrames.set(0L)
+            rateMediaFrames.set(0L)
+            correctionRate = 1f
             pendingSeekMs.set(-1L)
             seekRevision.incrementAndGet()
             _progress.value = 0f
@@ -512,6 +531,7 @@ object AudioPlayer {
         }
         val decoder = synchronized(playbackLock) {
             pendingSeekMs.set(target)
+            ready.set(false)
             seekRevision.incrementAndGet()
             _positionMs.value = target
             val duration = _durationMs.value

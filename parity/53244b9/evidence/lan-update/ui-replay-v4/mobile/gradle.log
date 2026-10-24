@@ -1,0 +1,202 @@
+Picked up JAVA_TOOL_OPTIONS: -Djava.io.tmpdir=/mnt/ntfs_files_sda4/项目/MeloX-Windows/desktop/build/lan-validation-tmp
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.5.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build
+> Task :desktop:kmpPartiallyResolvedDependenciesChecker
+> Task :desktop:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :desktop:extractPinnedGlassGeometry UP-TO-DATE
+> Task :desktop:convertXmlValueResourcesForCommonMain NO-SOURCE
+> Task :desktop:copyNonXmlValueResourcesForCommonMain NO-SOURCE
+> Task :desktop:prepareComposeResourcesTaskForCommonMain NO-SOURCE
+> Task :desktop:generateResourceAccessorsForCommonMain SKIPPED
+> Task :desktop:convertXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :desktop:copyNonXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :desktop:prepareComposeResourcesTaskForDesktopMain NO-SOURCE
+> Task :desktop:generateResourceAccessorsForDesktopMain SKIPPED
+> Task :desktop:generateActualResourceCollectorsForDesktopMain SKIPPED
+> Task :desktop:generateComposeResClass SKIPPED
+> Task :desktop:generateExpectResourceCollectorsForCommonMain SKIPPED
+> Task :innertube:kmpPartiallyResolvedDependenciesChecker
+> Task :innertube:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :innertube:extractAndroidInnerTube UP-TO-DATE
+> Task :innertube:compileKotlinDesktop UP-TO-DATE
+> Task :innertube:compileDesktopMainJava NO-SOURCE
+> Task :innertube:desktopProcessResources NO-SOURCE
+> Task :innertube:processDesktopMainResources SKIPPED
+> Task :innertube:desktopMainClasses UP-TO-DATE
+> Task :innertube:desktopJar UP-TO-DATE
+> Task :shared:kmpPartiallyResolvedDependenciesChecker
+> Task :shared:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :shared:convertXmlValueResourcesForCommonMain NO-SOURCE
+> Task :shared:copyNonXmlValueResourcesForCommonMain NO-SOURCE
+> Task :shared:prepareComposeResourcesTaskForCommonMain NO-SOURCE
+> Task :shared:generateResourceAccessorsForCommonMain SKIPPED
+> Task :shared:convertXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :shared:copyNonXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :shared:prepareComposeResourcesTaskForDesktopMain NO-SOURCE
+> Task :shared:generateResourceAccessorsForDesktopMain SKIPPED
+> Task :shared:generateActualResourceCollectorsForDesktopMain SKIPPED
+> Task :shared:generateComposeResClass SKIPPED
+> Task :shared:generateExpectResourceCollectorsForCommonMain SKIPPED
+> Task :shared:compileKotlinDesktop UP-TO-DATE
+> Task :shared:compileDesktopMainJava NO-SOURCE
+> Task :shared:assembleDesktopMainResources UP-TO-DATE
+> Task :shared:desktopProcessResources UP-TO-DATE
+> Task :shared:processDesktopMainResources SKIPPED
+> Task :shared:desktopMainClasses UP-TO-DATE
+> Task :shared:desktopJar UP-TO-DATE
+> Task :desktop:compileKotlinDesktop
+> Task :desktop:compileDesktopMainJava NO-SOURCE
+> Task :desktop:assembleDesktopMainResources UP-TO-DATE
+> Task :desktop:desktopProcessResources UP-TO-DATE
+> Task :desktop:processDesktopMainResources SKIPPED
+> Task :desktop:desktopMainClasses
+
+> Task :desktop:captureUi
+Picked up JAVA_TOOL_OPTIONS: -Djava.io.tmpdir=/mnt/ntfs_files_sda4/项目/MeloX-Windows/desktop/build/lan-validation-tmp
+Production Local scanner indexed 2 real files
+SLF4J(W): No SLF4J providers were found.
+SLF4J(W): Defaulting to no-operation (NOP) logger implementation
+SLF4J(W): See https://www.slf4j.org/codes.html#noProviders for further details.
+[DEBUG MeloXThirdParty] resolve detail source=local id=8768722a title=lan-generated-0 artists=Generated PCM fixture durationMs=600000 metadata=Local
+[INFO MeloXThirdParty] Resolve start source=local quality=Standard thirdParty=false
+[INFO MeloXThirdParty] Resolve fallback source=local stage=provider chksz=disabled
+[INFO MeloXFont] Android MiLan Pro static instances loaded: CSS=[100, 200, 300, 400, 500, 600, 700, 800, 900] files=mi_lan_pro_w{100..800}.ttf (CSS 900 shares frozen axis-700 instance)
+Captured 00-settings: 430x850 density=1.0
+Physical click consent: remote-reject at Offset(128.0, 556.0)
+[DEBUG AudioPlayer] Bundled FFmpeg verified: sha256=ee930e8def21a993f4b8c680757df15054da1c8f2698da0fdf87f1f3b15bd633 bytes=172690600
+[DEBUG AudioPlayer] FFmpeg binary=/mnt/ntfs_files_sda4/项目/MeloX-Windows/desktop/build/lan-validation-tmp/melox-decoder-ffmpeg-ee930e8def21a993 os=Linux sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+Captured 01-consent: 430x850 density=1.0
+Verified consent: cloud-enabled:false
+Captured 02-playing: 430x850 density=1.0
+Verified playing: playing:true
+Captured 03-reveal-open-player: 430x850 density=1.0
+Physical click open-player: mini-player-expand at Offset(167.5, 752.0)
+Captured 04-open-player: 430x850 density=1.0
+Captured 05-opened: 430x850 density=1.0
+Verified opened: page:Artwork
+Captured 06-reveal-output: 430x850 density=1.0
+Physical click output: player-output at Offset(215.0, 825.0)
+Captured 07-output: 430x850 density=1.0
+Verified output: tag:lan-output-panel
+Verified output: selected:lan-output-device:local
+Captured 08-reveal-pause: 430x850 density=1.0
+Physical click pause: lan-output-toggle at Offset(275.0, 224.0)
+Captured 09-pause: 430x850 density=1.0
+Verified pause: playing:false
+Captured 10-reveal-next: 430x850 density=1.0
+Physical click next: lan-output-next at Offset(359.0, 224.0)
+[DEBUG MeloXThirdParty] resolve detail source=local id=96319cf3 title=lan-generated-1 artists=Generated PCM fixture durationMs=600000 metadata=Local
+[INFO MeloXThirdParty] Resolve start source=local quality=Standard thirdParty=false
+[INFO MeloXThirdParty] Resolve fallback source=local stage=provider chksz=disabled
+[DEBUG AudioPlayer] FFmpeg binary=/mnt/ntfs_files_sda4/项目/MeloX-Windows/desktop/build/lan-validation-tmp/melox-decoder-ffmpeg-ee930e8def21a993 os=Linux sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+Captured 11-next: 430x850 density=1.0
+Verified next: title:lan-generated-1
+Captured 12-reveal-resume: 430x850 density=1.0
+Physical click resume: lan-output-toggle at Offset(275.0, 224.0)
+Captured 13-resume: 430x850 density=1.0
+Verified resume: playing:true
+Captured 14-reveal-management: 430x850 density=1.0
+Physical click management: lan-output-settings at Offset(215.0, 637.0)
+Captured 15-management: 430x850 density=1.0
+Verified management: tag:lan-dialog
+Captured 16-reveal-focus-lan-manual-address: 430x850 density=1.0
+Physical click focus-lan-manual-address: lan-manual-address at Offset(215.5, 456.5)
+Captured 17-focus-lan-manual-address: 430x850 density=1.0
+Captured 18-select-lan-manual-address: 430x850 density=1.0
+Captured 19-type-lan-manual-address: 430x850 density=1.0
+Captured 20-reveal-focus-lan-manual-port: 430x850 density=1.0
+Physical click focus-lan-manual-port: lan-manual-port at Offset(215.5, 507.5)
+Captured 21-focus-lan-manual-port: 430x850 density=1.0
+Captured 22-select-lan-manual-port: 430x850 density=1.0
+Captured 23-type-lan-manual-port: 430x850 density=1.0
+Captured 24-reveal-focus-lan-pin: 430x850 density=1.0
+Physical click focus-lan-pin: lan-pin at Offset(215.5, 371.5)
+Captured 25-focus-lan-pin: 430x850 density=1.0
+Captured 26-select-lan-pin: 430x850 density=1.0
+Captured 27-type-lan-pin: 430x850 density=1.0
+Captured 28-reveal-connect: 430x850 density=1.0
+Physical click connect: lan-manual-connect at Offset(80.0, 553.0)
+Captured 29-connect: 430x850 density=1.0
+Verified connect: tag:lan-connected
+Captured 30-reveal-trust-peer: 430x850 density=1.0
+Physical click trust-peer: lan-trust:130708d3-d262-4875-bc8e-8adc9bbdc2a2 at Offset(351.0, 765.0)
+Captured 31-trust-peer: 430x850 density=1.0
+Verified trust-peer: tag:lan-untrust:130708d3-d262-4875-bc8e-8adc9bbdc2a2
+Captured 32-reveal-untrust-peer: 430x850 density=1.0
+Physical click untrust-peer: lan-untrust:130708d3-d262-4875-bc8e-8adc9bbdc2a2 at Offset(351.0, 765.0)
+Captured 33-untrust-peer: 430x850 density=1.0
+Verified untrust-peer: tag:lan-trust:130708d3-d262-4875-bc8e-8adc9bbdc2a2
+Captured 34-reveal-management-close: 430x850 density=1.0
+Physical click management-close: lan-close at Offset(80.0, 790.0)
+Captured 35-management-close: 430x850 density=1.0
+Verified management-close: tag:lan-output-panel
+Captured 36-reveal-panel-close: 430x850 density=1.0
+Physical click panel-close: lan-output-close at Offset(215.0, 783.0)
+Captured 37-panel-close: 430x850 density=1.0
+Verified panel-close: absent:lan-output-panel
+Captured 38-reveal-reopen: 430x850 density=1.0
+Physical click reopen: player-output at Offset(215.0, 825.0)
+Captured 39-reopen: 430x850 density=1.0
+Verified reopen: tag:lan-output-disconnect
+Captured 40-reveal-cast: 430x850 density=1.0
+Physical click cast: lan-output-cast at Offset(215.0, 292.0)
+[INFO MeloXCast] First PCM sent: bytes=8
+Captured 41-cast: 430x850 density=1.0
+Verified cast: absent:lan-output-panel
+Captured 42-cast-playing: 430x850 density=1.0
+Verified cast-playing: playing:true
+Captured 43-reveal-cast-reopen: 430x850 density=1.0
+Physical click cast-reopen: player-output at Offset(215.0, 825.0)
+Captured 44-cast-reopen: 430x850 density=1.0
+Verified cast-reopen: tag:lan-output-disconnect
+Verified cast-reopen: unselected:lan-output-device:local
+Captured 45-reveal-cast-previous: 430x850 density=1.0
+Physical click cast-previous: lan-output-previous at Offset(191.0, 121.0)
+[DEBUG AudioPlayer] FFmpeg binary=/mnt/ntfs_files_sda4/项目/MeloX-Windows/desktop/build/lan-validation-tmp/melox-decoder-ffmpeg-ee930e8def21a993 os=Linux sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+Captured 46-cast-previous: 430x850 density=1.0
+Verified cast-previous: title:lan-generated-0
+Captured 47-cast-survives-track: 430x850 density=1.0
+Verified cast-survives-track: unselected:lan-output-device:local
+Captured 48-reveal-local: 430x850 density=1.0
+Physical click local: lan-output-device:local at Offset(215.0, 394.0)
+[INFO MeloXCast] Sender stopped: sent_bytes=5283464
+Captured 49-local: 430x850 density=1.0
+Verified local: selected:lan-output-device:local
+Captured 50-local-audio: 430x850 density=1.0
+Verified local-audio: playing:true
+Captured 51-reveal-together: 430x850 density=1.0
+Physical click together: lan-output-together at Offset(325.0, 292.0)
+[DEBUG AudioPlayer] FFmpeg binary=/mnt/ntfs_files_sda4/项目/MeloX-Windows/desktop/build/lan-validation-tmp/melox-decoder-ffmpeg-ee930e8def21a993 os=Linux sourceHost=local
+[DEBUG AudioPlayer] decode local source at 28069ms
+[DEBUG AudioPlayer] FFmpeg binary=/mnt/ntfs_files_sda4/项目/MeloX-Windows/desktop/build/lan-validation-tmp/melox-decoder-ffmpeg-ee930e8def21a993 os=Linux sourceHost=local
+[DEBUG AudioPlayer] decode local source at 28069ms
+Captured 52-together: 430x850 density=1.0
+Verified together: absent:lan-output-panel
+Captured 53-reveal-together-reopen: 430x850 density=1.0
+Physical click together-reopen: player-output at Offset(215.0, 825.0)
+Captured 54-together-reopen: 430x850 density=1.0
+Verified together-reopen: tag:lan-output-together-stop
+Captured 55-reveal-together-stop: 430x850 density=1.0
+Physical click together-stop: lan-output-together-stop at Offset(215.0, 372.0)
+Captured 56-together-stop: 430x850 density=1.0
+Verified together-stop: selected:lan-output-device:local
+Captured 57-reveal-transfer: 430x850 density=1.0
+Physical click transfer: lan-output-transfer at Offset(105.0, 292.0)
+Captured 58-transfer: 430x850 density=1.0
+Verified transfer: absent:lan-output-panel
+Verified transfer: playing:false
+Captured 59-reveal-transfer-reopen: 430x850 density=1.0
+Physical click transfer-reopen: player-output at Offset(215.0, 825.0)
+Captured 60-transfer-reopen: 430x850 density=1.0
+Verified transfer-reopen: tag:lan-output-disconnect
+Captured 61-reveal-disconnect: 430x850 density=1.0
+Physical click disconnect: lan-output-disconnect at Offset(215.0, 699.0)
+Captured 62-disconnect: 430x850 density=1.0
+Verified disconnect: absent:lan-output-disconnect
+
+BUILD SUCCESSFUL in 5m 39s
+15 actionable tasks: 5 executed, 10 up-to-date
+Consider enabling configuration cache to speed up this build: https://docs.gradle.org/9.5.1/userguide/configuration_cache_enabling.html

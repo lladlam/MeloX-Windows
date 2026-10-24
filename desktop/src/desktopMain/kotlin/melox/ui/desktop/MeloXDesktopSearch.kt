@@ -176,7 +176,7 @@ private fun DesktopSearchKindPicker(kinds: List<MeloXSearchKind>, selected: Melo
 private fun DesktopSearchSongs(songs: List<SearchSong>, onPlay: (SearchSong) -> Unit, onMenu: (SearchSong, IntOffset?) -> Unit) {
     val scroll = rememberLazyListState()
     val queue by PlaybackCommands.queue.collectAsState()
-    val playback by melox.player.AudioPlayer.state.collectAsState()
+    val playback by melox.playback.MeloXPlaybackOutput.state.collectAsState()
     LazyColumn(Modifier.fillMaxSize().desktopPromotedDragScroll(scroll), state = scroll,
         contentPadding = PaddingValues(horizontal = 34.dp, vertical = 24.dp), verticalArrangement = Arrangement.spacedBy(2.dp)) {
         itemsIndexed(songs, key = { _, it -> it.id }) { index, song ->

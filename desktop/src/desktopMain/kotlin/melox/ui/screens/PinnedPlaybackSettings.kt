@@ -50,9 +50,12 @@ internal fun PinnedPlaybackSettings() {
     PinnedAutoMixSettings()
     Spacer(Modifier.height(10.dp))
     var clear by remember { mutableStateOf(false) }
+    var lan by remember { mutableStateOf(false) }
     SettingsGlassGroup {
+        SettingsActionButton("局域网互联", Modifier.testTag("settings-open-lan")) { lan = true }
         SettingsActionButton(pinnedString("settings_clear_analysis_cache"), Modifier.testTag("analysis-cache-clear")) { clear = true }
     }
+    if (lan) melox.ui.desktop.MeloXLanDialog(true) { lan = false }
     if (clear) SettingsConfirmation(pinnedString("settings_clear_analysis_cache_confirm"), onDismiss = { clear = false }) {
         PlaybackCommands.playerController()?.clearAnalysisCache() ?: MeloXAudioAnalysisStore().clear()
         clear = false

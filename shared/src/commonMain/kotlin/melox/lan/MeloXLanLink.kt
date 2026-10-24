@@ -17,6 +17,11 @@ class LanServer(val identity: LanIdentity, private val host: LanHost,
     private val clients = ConcurrentHashMap<Socket, OutputStream>()
     private val failedPins = ConcurrentHashMap<String, Pair<Int, Long>>()
     private val together = ConcurrentHashMap.newKeySet<Socket>()
+    private val preparations = ConcurrentHashMap<Socket, JSONObject>()
+    private fun capabilities() = JSONArray(listOf("control", "cast", "transfer", "together") +
+        if (host.supportsBarrier) listOf(LAN_TOGETHER_BARRIER) else emptyList())
+    @Volatile private var togetherOwner: Socket? = null
+    @Volatile private var castOwner: Socket? = null
     @Volatile private var server: ServerSocket? = null
     @Volatile private var udp: DatagramSocket? = null
     val port: Int get() = server?.localPort ?: -1
@@ -46,9 +51,10 @@ class LanServer(val identity: LanIdentity, private val host: LanHost,
             clients.forEach { (socket, out) ->
                 runCatching {
                     writeLanJson(out, JSONObject().put("type", "event").put("event", "state").put("state", host.state()))
+                    if (socket === togetherOwner) host.togetherStatus()?.let { writeLanJson(out, it) }
                 }.onFailure { runCatching { socket.close() } }
             }
-        }, 1, 1, TimeUnit.SECONDS)
+        }, 200, 200, TimeUnit.MILLISECONDS)
         return port
     }
 
@@ -57,7 +63,7 @@ class LanServer(val identity: LanIdentity, private val host: LanHost,
         .put("deviceId", identity.deviceId).put("name", identity.deviceName).put("platform", identity.platform)
         .put("model", System.getProperty("os.name")).put("appVersion", "0.6.5")
         .put("port", port).put("pinRequired", !identity.isTrusted(requester)).put("trusted", identity.isTrusted(requester))
-        .put("capabilities", JSONArray(listOf("control", "cast", "transfer", "together")))
+        .put("capabilities", capabilities())
         .put("state", host.state()).put("nonce", nonce)
 
     private fun discoverLoop() {
@@ -92,7 +98,8 @@ class LanServer(val identity: LanIdentity, private val host: LanHost,
                     identity.remember(id, msg.optString("deviceName"), msg.optString("platform"), ip)
                     failedPins.remove(ip)
                     writeLanJson(out, JSONObject().put("type", "auth_ok").put("trusted", trusted)
-                        .put("sessionId", UUID.randomUUID().toString()).put("deviceId", identity.deviceId))
+                        .put("sessionId", UUID.randomUUID().toString()).put("deviceId", identity.deviceId)
+                        .put("capabilities", capabilities()))
                     authenticated = true; break
                 }
                 if (failedPins.size > 128) failedPins.clear()
@@ -105,27 +112,52 @@ class LanServer(val identity: LanIdentity, private val host: LanHost,
             while (!socket.isClosed) {
                 val message = readLanJson(input) ?: break
                 if (message.optString("type") == "event") {
-                    if (socket in together && message.optString("event") == "together.state") {
-                        host.request("together.state", message, socket.inetAddress)
+                    if (socket === togetherOwner && message.optString("event") in setOf("together.state", "together.commit")) {
+                        host.request(message.optString("event"), message, socket.inetAddress)
                     }
                     continue
                 }
                 if (message.optString("type") != "request") continue
                 val action = message.optString("action")
+                if (action == "together.prepare") {
+                    preparations[socket] = message
+                    workers.execute {
+                        val result = runCatching { host.request(action, message, socket.inetAddress) }
+                            .getOrElse { JSONObject().put("ok", false).put("error", it.message ?: "prepare_failed") }
+                        if (result.optBoolean("ok") && !socket.isClosed) {
+                            takeTogetherOwnership(socket)
+                        }
+                        preparations.remove(socket, message)
+                        runCatching { writeLanJson(out, result.put("type", "response").put("id", message.optString("id"))) }
+                    }
+                    continue
+                }
                 val result = try {
                     when (action) {
                         "state" -> JSONObject().put("ok", true).put("state", host.state())
                         "ping" -> JSONObject().put("ok", true).put("t0", message.opt("t0")).put("serverTimeMs", System.currentTimeMillis())
+                        "together.stop" -> if (socket === togetherOwner) host.request(action, message, socket.inetAddress)
+                            else JSONObject().put("ok", false).put("error", "not_session_owner")
                         else -> host.request(action, message, socket.inetAddress)
                     }
                 } catch (error: Exception) { JSONObject().put("ok", false).put("error", error.message ?: "request_failed") }
-                if (action == "together.start" && result.optBoolean("ok")) { joined = true; together += socket }
-                if (action == "together.stop") { joined = false; together -= socket }
+                if (action in setOf("together.start", "together.prepare") && result.optBoolean("ok")) {
+                    joined = true; takeTogetherOwnership(socket)
+                }
+                if (action == "cast.start" && result.optBoolean("ok")) castOwner = socket
+                if (action == "together.stop" && socket === togetherOwner) {
+                    joined = false; together -= socket; togetherOwner = null
+                }
                 writeLanJson(out, result.put("type", "response").put("id", message.optString("id")))
             }
         } catch (_: Exception) { /* Connection-local failure, close all owned resources. */ }
         finally {
-            if (joined) host.disconnected()
+            preparations.remove(socket)?.let { host.cancelPreparation(it.optString("sessionId"), it.optLong("generation")) }
+            if (socket === togetherOwner) { togetherOwner = null; host.disconnected() }
+            if (socket === castOwner) {
+                castOwner = null
+                runCatching { host.request("cast.stop", JSONObject(), socket.inetAddress) }
+            }
             together -= socket; clients.remove(socket); sockets -= socket; runCatching { socket.close() }
         }
     }
@@ -136,6 +168,29 @@ class LanServer(val identity: LanIdentity, private val host: LanHost,
         return runCatching { writeLanJson(out, JSONObject().put("type", "request").put("id", UUID.randomUUID().toString())
             .put("action", "control").put("command", command).put("positionMs", position)); true }.getOrDefault(false)
     }
+    @Synchronized private fun takeTogetherOwnership(socket: Socket) {
+        val previous = togetherOwner
+        together.clear(); together += socket; togetherOwner = socket
+        if (previous != null && previous !== socket) clients[previous]?.let { out -> runCatching {
+            writeLanJson(out, JSONObject().put("type", "event").put("event", "together.stopped"))
+        } }
+    }
+
+    fun stopTogetherSession() {
+        val socket = togetherOwner ?: return
+        togetherOwner = null; together -= socket
+        host.disconnected()
+        clients[socket]?.let { out -> runCatching {
+            writeLanJson(out, JSONObject().put("type", "event").put("event", "together.stopped"))
+        } }
+    }
+    fun castStopped() {
+        val socket = castOwner ?: return
+        castOwner = null
+        clients[socket]?.let { out -> runCatching {
+            writeLanJson(out, JSONObject().put("type", "event").put("event", "cast.stopped"))
+        } }
+    }
 
     override fun close() {
         runCatching { udp?.close() }; runCatching { server?.close() }; server = null
@@ -144,13 +199,18 @@ class LanServer(val identity: LanIdentity, private val host: LanHost,
     }
 }
 
-class LanClient(val device: LanDevice, private val identity: LanIdentity,
+class LanClient(device: LanDevice, private val identity: LanIdentity,
     private val onEvent: (JSONObject) -> Unit = {}, private val onRequest: (JSONObject) -> JSONObject = { JSONObject().put("ok", false) },
     private val onClose: () -> Unit = {}) : AutoCloseable {
     private var socket: Socket? = null
     private var output: OutputStream? = null
     private val pending = ConcurrentHashMap<String, CompletableFuture<JSONObject>>()
     private val closed = AtomicBoolean()
+    var device = device
+        private set
+    val isConnected get() = socket?.isConnected == true && !closed.get()
+    @Volatile var capabilities = device.capabilities
+        private set
     private val workers = Executors.newScheduledThreadPool(2) { Thread(it, "MeloX-LAN-client").apply { isDaemon = true } }
     fun connect(pin: String): JSONObject {
         require(socket == null)
@@ -163,7 +223,12 @@ class LanClient(val device: LanDevice, private val identity: LanIdentity,
                 .put("deviceName", identity.deviceName).put("platform", identity.platform).put("appVersion", "0.6.5").put("pin", pin))
             val auth = readLanJson(input) ?: throw EOFException()
             if (auth.optString("type") != "auth_ok") { close(); return auth }
-            identity.remember(device.id, device.name, device.platform, device.address)
+            auth.optJSONArray("capabilities")?.let { values ->
+                capabilities = (0 until values.length()).map { values.optString(it) }.toSet()
+            }
+            val authenticatedId = auth.optString("deviceId").ifBlank { device.id }
+            device = device.copy(id = authenticatedId, capabilities = capabilities)
+            identity.remember(authenticatedId, device.name, device.platform, device.address)
             workers.execute {
                 try { while (!s.isClosed) {
                     val j = readLanJson(input) ?: break
@@ -181,12 +246,12 @@ class LanClient(val device: LanDevice, private val identity: LanIdentity,
             return auth
         } catch (error: Exception) { close(); throw error }
     }
-    fun request(action: String, fields: JSONObject = JSONObject()): JSONObject {
+    fun request(action: String, fields: JSONObject = JSONObject(), timeoutMs: Long = 12000): JSONObject {
         check(!closed.get()) { "LAN connection closed" }
         val id = UUID.randomUUID().toString(); val future = CompletableFuture<JSONObject>(); pending[id] = future
         try {
             writeLanJson(checkNotNull(output), JSONObject(fields.toString()).put("id", id).put("type", "request").put("action", action))
-            return future.get(12, TimeUnit.SECONDS)
+            return future.get(timeoutMs, TimeUnit.MILLISECONDS)
         } finally { pending.remove(id) }
     }
     fun event(event: JSONObject) { writeLanJson(checkNotNull(output), event.put("type", "event")) }

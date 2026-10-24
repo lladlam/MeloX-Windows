@@ -12,8 +12,13 @@ import org.json.JSONObject
 import okhttp3.Request
 
 /** Session-only, IP/queue-bound proxy. No upstream URL or credential is sent to a guest. */
+internal data class LanRelayPolicy(val contentType: String? = null, val path: String = "/audio",
+    val firstUseTimeoutMs: Long = 10000, val maxLifetimeMs: Long = 21_600_000, val dlnaHeaders: Boolean = false)
 internal class LanAudioRelay(private val bind: InetAddress, private val peer: InetAddress,
-    tracks: List<LanTrack>, private val resolve: (LanTrack) -> DesktopPlaybackRequest) : AutoCloseable {
+    tracks: List<LanTrack>, private val resolve: (LanTrack) -> DesktopPlaybackRequest,
+    private val policy: LanRelayPolicy = LanRelayPolicy()) : AutoCloseable {
+    @Volatile var failure: String? = null
+        private set
     private val allowed = tracks.associateBy { it.id }
     private val issuedAt = System.nanoTime()
     private val used = AtomicBoolean()
@@ -23,7 +28,7 @@ internal class LanAudioRelay(private val bind: InetAddress, private val peer: In
     private val workers = Executors.newFixedThreadPool(4) { Thread(it, "MeloX-LAN-relay").apply { isDaemon = true } }
     private val server = HttpServer.create(InetSocketAddress(bind, 0), 4).apply {
         executor = workers
-        createContext("/audio") { exchange ->
+        createContext(policy.path) { exchange ->
             try {
                 val query = exchange.requestURI.rawQuery.orEmpty().split('&').associate {
                     val p = it.split('=', limit = 2)
@@ -31,14 +36,18 @@ internal class LanAudioRelay(private val bind: InetAddress, private val peer: In
                 }
                 val elapsed = System.nanoTime() - issuedAt
                 val track = allowed[query["songId"]]
-                if (!active.get() || exchange.remoteAddress.address != peer || query["token"] != token || track == null ||
-                    (!used.get() && elapsed > 10_000_000_000L) || elapsed > 21_600_000_000_000L) {
+                if (!active.get() || exchange.requestURI.path != policy.path || exchange.remoteAddress.address != peer || query["token"] != token || track == null ||
+                    (!used.get() && elapsed / 1_000_000 > policy.firstUseTimeoutMs) || elapsed / 1_000_000 > policy.maxLifetimeMs) {
                     exchange.sendResponseHeaders(403, -1); return@createContext
                 }
                 if (exchange.requestMethod !in listOf("GET", "HEAD")) { exchange.sendResponseHeaders(405, -1); return@createContext }
                 if (!permits.tryAcquire()) { exchange.sendResponseHeaders(503, -1); return@createContext }
                 try {
                     used.set(true)
+                    if (policy.dlnaHeaders) {
+                        exchange.responseHeaders.set("transferMode.dlna.org", "Streaming")
+                        exchange.responseHeaders.set("contentFeatures.dlna.org", "DLNA.ORG_OP=01;DLNA.ORG_CI=0")
+                    }
                     val source = resolve(track)
                     val range = exchange.requestHeaders.getFirst("Range")
                     val uri = runCatching { URI(source.uri) }.getOrNull()
@@ -50,7 +59,8 @@ internal class LanAudioRelay(private val bind: InetAddress, private val peer: In
                         }.build()
                         melox.network.MeloXHttpClient.shared.newCall(request).execute().use { response ->
                             // Never forward Set-Cookie, redirects or upstream error bodies.
-                            if (response.code !in listOf(200, 206, 416)) { exchange.sendResponseHeaders(502, -1); return@use }
+                            if (response.code !in listOf(200, 206, 416)) { failure = "音频源返回 HTTP ${response.code}"; exchange.sendResponseHeaders(502, -1); return@use }
+                            failure = null
                             listOf("Content-Type", "Content-Range", "Accept-Ranges", "Content-Length").forEach { h ->
                                 response.header(h)?.let { exchange.responseHeaders.set(h, it) }
                             }
@@ -64,6 +74,7 @@ internal class LanAudioRelay(private val bind: InetAddress, private val peer: In
                         val file = if (uri?.scheme == "file") File(uri) else File(source.uri)
                         require(file.isFile && file.canRead())
                         val length = file.length()
+                        policy.contentType?.let { exchange.responseHeaders.set("Content-Type", it) }
                         val match = range?.let { Regex("bytes=(\\d*)-(\\d*)").matchEntire(it) }
                         var start = 0L; var end = length - 1
                         if (range != null) {
@@ -90,11 +101,17 @@ internal class LanAudioRelay(private val bind: InetAddress, private val peer: In
                         }
                     }
                 } finally { permits.release() }
-            } catch (_: Exception) { runCatching { exchange.sendResponseHeaders(502, -1) } }
+            } catch (error: Exception) {
+                if (active.get() && error !is SocketException) failure = error.message ?: "音频代理失败"
+                runCatching { exchange.sendResponseHeaders(502, -1) }
+            }
             finally { exchange.close() }
         }
         start()
     }
     fun description() = JSONObject().put("baseUrl", "http://${bind.hostAddress}:${server.address.port}").put("token", token)
+    fun resourceUrl(id: String): String {
+        return "http://${bind.hostAddress}:${server.address.port}${policy.path}?token=$token&songId=${URLEncoder.encode(id, "UTF-8")}"
+    }
     override fun close() { if (active.compareAndSet(true, false)) { server.stop(0); workers.shutdownNow() } }
 }

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="PlaybackLinkTest[desktop]" tests="9" skipped="0" failures="0" errors="0" timestamp="2026-10-24T16:13:39.480Z" hostname="lladlam-arch" time="30.268">
+  <properties/>
+  <testcase name="miniBarsFollowPcmEnergyAndIdleIsNotFixedPulse[desktop]" classname="melox.player.PlaybackLinkTest" time="0.037"/>
+  <testcase name="positionIncludesDecoderOffset[desktop]" classname="melox.player.PlaybackLinkTest" time="0.0"/>
+  <testcase name="previousRestartsOnlyWhenSettingEnabled[desktop]" classname="melox.player.PlaybackLinkTest" time="0.262"/>
+  <testcase name="bundledDecoderEmitsPcmAndIsResolvedAgain[desktop]" classname="melox.player.PlaybackLinkTest" time="28.288"/>
+  <testcase name="classicQueueKeepsPlainNeteaseSongsAndDoesNotRestartCurrent[desktop]" classname="melox.player.PlaybackLinkTest" time="0.639"/>
+  <testcase name="providerTrackSurvivesQueueItem[desktop]" classname="melox.player.PlaybackLinkTest" time="0.002"/>
+  <testcase name="decoderArgsMatchTheProcessCommand[desktop]" classname="melox.player.PlaybackLinkTest" time="0.002"/>
+  <testcase name="locatorUsesContextClassLoaderAndReportsMissingBundle[desktop]" classname="melox.player.PlaybackLinkTest" time="0.318"/>
+  <testcase name="playNextPrecedesManualQueueAndManualQueuePrecedesBaseTracks[desktop]" classname="melox.player.PlaybackLinkTest" time="0.719"/>
+  <system-out><![CDATA[[DEBUG MeloXQuality] Resolving playback: song=1 requested=standard loggedIn=false candidates=standard
+[WARN MeloXQuality] Playback candidate rejected: song=1 quality=standard; IOException: no URL for standard
+[INFO MeloXPlayback] Cross-provider fallback: skipped song=1: disabled or missing metadata
+[DEBUG AudioPlayer] Bundled FFmpeg verified: sha256=ee930e8def21a993f4b8c680757df15054da1c8f2698da0fdf87f1f3b15bd633 bytes=172690600
+[DEBUG MeloXQuality] Resolving playback: song=1 requested=standard loggedIn=false candidates=standard
+[DEBUG AudioPlayer] Bundled FFmpeg verified: sha256=306c6ca7407560340797866e077e053627ad409277d1b9da58106fce4cf717cb bytes=17
+[WARN MeloXQuality] Playback candidate rejected: song=1 quality=standard; IOException: no URL for standard
+[INFO MeloXPlayback] Cross-provider fallback: skipped song=1: disabled or missing metadata
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

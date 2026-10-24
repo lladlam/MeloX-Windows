@@ -170,7 +170,7 @@ internal fun MeloXDesktopPodcastDetail(client: NeteaseUniversalSearchClient, ini
     var selected by remember { mutableStateOf<SearchSong?>(null) }
     var anchor by remember { mutableStateOf<IntOffset?>(null) }
     val scope = rememberCoroutineScope()
-    val playback by melox.player.AudioPlayer.state.collectAsState()
+    val playback by melox.playback.MeloXPlaybackOutput.state.collectAsState()
     val queue by PlaybackCommands.queue.collectAsState()
     val current = queue.songs.getOrNull(queue.index)?.id
     suspend fun page(reset: Boolean) {

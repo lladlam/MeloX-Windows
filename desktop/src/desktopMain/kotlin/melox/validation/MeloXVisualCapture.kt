@@ -267,6 +267,8 @@ fun main(args: Array<String>) = runBlocking {
                 "word-lines-min" -> (semantics.tagged("player-lyrics")?.config?.getOrNull(melox.ui.screens.MeloXLyricWordLinesKey) ?: 0) >= expected.toInt()
                 "play-ready" -> melox.playback.PlaybackCommands.playerController()?.playWhenReady == expected.toBooleanStrict()
                 "playing" -> melox.player.AudioPlayer.state.value.isPlaying == expected.toBooleanStrict()
+                "output-playing" -> melox.playback.MeloXPlaybackOutput.state.value.isPlaying == expected.toBooleanStrict()
+                "output-volume" -> kotlin.math.abs(melox.playback.MeloXPlaybackOutput.volumeLevel.value - expected.toFloat()) < .05f
                 "sleep-timer" -> (melox.playback.MeloXSleepTimer.endEpochMs.value > System.currentTimeMillis()) == expected.toBooleanStrict()
                 "ui-font" -> (melox.ui.theme.MeloXMaterialTypography.bodyLarge.fontFamily == androidx.compose.ui.text.font.FontFamily.Default) == (expected == "system")
                 "local-playlist-size" -> melox.provider.local.LocalMusicRepository().playlists()
@@ -393,6 +395,10 @@ fun main(args: Array<String>) = runBlocking {
                     // Synthetic input is confined to this version-pinned capture harness.
                     scene.sendKeyEvent(KeyEvent(key = Key.Escape, type = KeyEventType.KeyDown))
                     check(scene.sendKeyEvent(KeyEvent(key = Key.Escape, type = KeyEventType.KeyUp))) { "Escape was not handled at $name" }
+                } else if (coordinates == "select-all") {
+                    scene.sendKeyEvent(KeyEvent(key = Key.A, type = KeyEventType.KeyDown, isCtrlPressed = true))
+                    scene.sendKeyEvent(KeyEvent(key = Key.A, type = KeyEventType.KeyUp, isCtrlPressed = true))
+                    inputEvidence.put(JSONObject().put("step", name).put("type", "Keyboard").put("action", "Ctrl+A"))
                 } else if (coordinates.startsWith("type@")) {
                     val keyboard = java.awt.Canvas()
                     coordinates.substringAfter('@').forEach { character ->
@@ -482,7 +488,7 @@ fun main(args: Array<String>) = runBlocking {
                     awaitUi { scene.captureSemantics().tagged(tag) != null }
                     val node = checkNotNull(scene.captureSemantics().tagged(tag))
                     scene.sendPointerEvent(PointerEventType.Move, node.boundsInWindow.center)
-                } else if (coordinates.startsWith("reveal@")) {
+                } else if (coordinates.startsWith("reveal@") || coordinates.startsWith("reveal-edge@")) {
                     val revealArgs = coordinates.substringAfter('@').split(',')
                     val tag = revealArgs[0]
                     val ownerTag = revealArgs.getOrNull(1)
@@ -491,8 +497,9 @@ fun main(args: Array<String>) = runBlocking {
                     // The first settings row centers at 112dp below its 74dp
                     // header. A viewport-percentage guard (18% = 140px here)
                     // made it impossible to reveal that row at the top limit.
-                    val topGuard = 80f * density
-                    val bottomGuard = height - 170f * density
+                    val edge = coordinates.startsWith("reveal-edge@")
+                    val topGuard = (if (edge) 16f else 80f) * density
+                    val bottomGuard = height - (if (edge) 16f else 170f) * density
                     for (attempt in 0 until 400) {
                         val node = scene.captureSemantics().lastOrNull { it.config.getOrNull(SemanticsProperties.TestTag) == tag }
                         // Window bounds are authoritative for scroll visibility;

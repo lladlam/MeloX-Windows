@@ -14,6 +14,7 @@ internal suspend fun writePcmBlock(
     startIfPlaying: () -> Boolean, onAccepted: (Int) -> Unit,
 ): Int {
     var offset = 0
+    var silence: ByteArray? = null
     while (offset < count && isCurrent()) {
         currentCoroutineContext().ensureActive()
         val version = pauseVersion()
@@ -24,7 +25,10 @@ internal suspend fun writePcmBlock(
         if (!isCurrent()) break
         if (isPaused()) continue
         val remaining = count - offset
-        val accepted = try { line.write(bytes, offset, remaining) }
+        val output = if (melox.lan.LanPcmTap.muteLocalOutput) {
+            silence ?: ByteArray(count).also { silence = it }
+        } else bytes
+        val accepted = try { line.write(output, offset, remaining) }
         catch (error: Exception) { throw AudioPlaybackFailure(AudioFailureKind.Output, error) }
         if (accepted == 0 && isCurrent() && line.isOpen && (isPaused() || pauseVersion() != version)) {
             // pause may already have been followed by resume before write returns.

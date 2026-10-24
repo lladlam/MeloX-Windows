@@ -1,0 +1,12 @@
+consent=cloud-enabled:false
+playing=playing:true
+management=tag:lan-dialog
+connect=tag:lan-connected
+trust-peer=tag:lan-untrust:3d26fc6e-8e6d-4088-89f2-341420ff907a
+untrust-peer=tag:lan-trust:3d26fc6e-8e6d-4088-89f2-341420ff907a
+close=absent:lan-dialog
+reopen=tag:lan-connected
+local=tag:lan-connected
+transfer=playing:false
+disconnect=absent:lan-connected
+close-again=absent:lan-dialog

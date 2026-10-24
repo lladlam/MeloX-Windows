@@ -1,0 +1,17 @@
+consent:tap@remote-reject
+playing:wait@1500
+reveal-open-output:reveal-edge@desktop-lan
+open-output:tap@desktop-lan
+discover:wait@3500
+reveal-cast:reveal-edge@lan-dlna-cast:uuid:melox-ui-ad6b7166-3361-416e-a167-2fe0453d4004
+cast:tap@lan-dlna-cast:uuid:melox-ui-ad6b7166-3361-416e-a167-2fe0453d4004
+reveal-close-output:reveal-edge@lan-close
+close-output:tap@lan-close
+reveal-pause:reveal-edge@mini-player-play-pause
+pause:tap@mini-player-play-pause
+reveal-resume:reveal-edge@mini-player-play-pause
+resume:tap@mini-player-play-pause
+reveal-reopen:reveal-edge@desktop-lan
+reopen:tap@desktop-lan
+reveal-local:reveal-edge@lan-dlna-disconnect
+local:tap@lan-dlna-disconnect

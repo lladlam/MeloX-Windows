@@ -22,6 +22,7 @@ data class LanPcmFormat(val sampleRate: Int = 48000, val channels: Int = 2) {
 
 /** Receives only the bytes actually accepted by MeloX's production output line. */
 object LanPcmTap {
+    @Volatile var muteLocalOutput = false
     private val listeners = CopyOnWriteArraySet<(ByteArray) -> Unit>()
     fun subscribe(listener: (ByteArray) -> Unit) { listeners += listener }
     fun unsubscribe(listener: (ByteArray) -> Unit) { listeners -= listener }
@@ -33,8 +34,11 @@ object LanPcmTap {
 }
 
 class LanCastSender(private val address: InetAddress, private val port: Int, private val onStop: () -> Unit = {}) : AutoCloseable {
-    private val packets = ArrayBlockingQueue<ByteArray>(12)
+    private val packets = ArrayBlockingQueue<ByteArray>(64)
     @Volatile private var running = false
+    val isRunning get() = running
+    private val closed = java.util.concurrent.atomic.AtomicBoolean()
+    private val sentBytes = java.util.concurrent.atomic.AtomicLong()
     private var socket: Socket? = null
     private val tap: (ByteArray) -> Unit = { bytes ->
         if (running) {
@@ -60,11 +64,16 @@ class LanCastSender(private val address: InetAddress, private val port: Int, pri
                 while (running) {
                     val bytes = packets.poll(500, TimeUnit.MILLISECONDS) ?: continue
                     out.writeInt(bytes.size); out.write(bytes); out.flush()
+                    if (sentBytes.getAndAdd(bytes.size.toLong()) == 0L) melox.platform.logInfo("MeloXCast", "First PCM sent: bytes=${bytes.size}")
                 }
             } catch (_: Exception) {} finally { close(); onStop() }
         }, "MeloX-LAN-PCM-send").apply { isDaemon = true; start() }
     }
-    override fun close() { running = false; LanPcmTap.unsubscribe(tap); runCatching { socket?.close() }; packets.clear() }
+    override fun close() {
+        if (!closed.compareAndSet(false, true)) return
+        running = false; LanPcmTap.unsubscribe(tap); runCatching { socket?.close() }; packets.clear()
+        melox.platform.logInfo("MeloXCast", "Sender stopped: sent_bytes=${sentBytes.get()}")
+    }
 }
 
 class LanCastReceiver(private val bind: InetAddress, private val peer: InetAddress, val format: LanPcmFormat,
@@ -72,7 +81,9 @@ class LanCastReceiver(private val bind: InetAddress, private val peer: InetAddre
         (AudioSystem.getLine(DataLine.Info(SourceDataLine::class.java, f)) as SourceDataLine).apply {
             open(f, (f.sampleRate * f.frameSize * .2f).toInt())
         }
-    }, private val onError: (String) -> Unit = {}) : AutoCloseable {
+    }, private val onError: (String) -> Unit = {}, private val onStopped: () -> Unit = {}) : AutoCloseable {
+    private val closed = java.util.concurrent.atomic.AtomicBoolean()
+    private val receivedBytes = java.util.concurrent.atomic.AtomicLong()
     private val server = ServerSocket(0, 1, bind).apply { soTimeout = 15000 }
     private val packets = ArrayBlockingQueue<ByteArray>(12)
     @Volatile private var running = false
@@ -93,12 +104,13 @@ class LanCastReceiver(private val bind: InetAddress, private val peer: InetAddre
                     if (candidate.inetAddress == peer) { accepted = candidate; break } else candidate.close()
                 }
                 val s = accepted ?: throw IOException("cast_connect_timeout")
-                socket = s; server.close(); s.soTimeout = 15000
+                socket = s; server.close(); s.soTimeout = 0
                 val input = DataInputStream(BufferedInputStream(s.getInputStream()))
                 while (running) {
                     val count = input.readInt()
                     require(count in 1..65536 && count % format.frameBytes == 0) { "invalid_pcm_packet" }
                     val bytes = ByteArray(count); input.readFully(bytes)
+                    if (receivedBytes.getAndAdd(count.toLong()) == 0L) melox.platform.logInfo("MeloXCast", "First PCM received: bytes=$count")
                     if (!packets.offer(bytes)) { packets.poll(); packets.offer(bytes) }
                 }
             } catch (error: Exception) { if (running && error !is EOFException) onError(error.message ?: "cast_failed") }
@@ -127,7 +139,10 @@ class LanCastReceiver(private val bind: InetAddress, private val peer: InetAddre
         }, "MeloX-LAN-PCM-play").apply { isDaemon = true; start() }
     }
     override fun close() {
+        if (!closed.compareAndSet(false, true)) return
         running = false; runCatching { server.close() }; runCatching { socket?.close() }
         runCatching { line?.stop() }; runCatching { line?.close() }; packets.clear()
+        onStopped()
+        melox.platform.logInfo("MeloXCast", "Receiver stopped: received_bytes=${receivedBytes.get()}")
     }
 }

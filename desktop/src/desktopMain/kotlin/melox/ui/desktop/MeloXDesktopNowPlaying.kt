@@ -45,8 +45,8 @@ private enum class DesktopPlayerPage { Artwork, Lyrics, Queue }
 /** Source geometry over the existing player, artwork loader, timed lyrics and live queue. */
 @Composable
 internal fun MeloXDesktopNowPlaying(track: MusicTrack, onDismiss: () -> Unit, onActions: () -> Unit, actionsVisible: Boolean = false) {
-    val state by AudioPlayer.state.collectAsState()
-    val volume by AudioPlayer.volumeLevel.collectAsState()
+    val state by melox.playback.MeloXPlaybackOutput.state.collectAsState()
+    val volume by melox.playback.MeloXPlaybackOutput.volumeLevel.collectAsState()
     val rememberPage = MeloXSettingsPreferences.boolean("playback_remember_page", true)
     var page by remember(rememberPage) {
         mutableStateOf(if (rememberPage) DesktopPlayerPage.entries.firstOrNull {
@@ -162,12 +162,14 @@ internal fun DesktopPlayerCircleButton(symbol: MeloXSymbol, tag: String, label: 
 
 @Composable
 private fun DesktopVolumeMute(volume: Float) {
+    val dlna by melox.dlna.DlnaSession.state.collectAsState()
+    val enabled = dlna.device == null || dlna.device?.rendering != null
     var unmuted by remember { mutableFloatStateOf(volume.takeIf { it > .001f } ?: 1f) }
     LaunchedEffect(volume) { if (volume > .001f) unmuted = volume }
     Box(Modifier.size(30.dp).testTag("desktop-full-mute").semantics { contentDescription = desktopString("ui.desktop.player.toggle_mute") }
-        .clickable(role = Role.Button) { PlaybackCommands.playerController()?.setVolume(if (volume <= .001f) unmuted.coerceAtLeast(.2f) else 0f) }, contentAlignment = Alignment.Center) {
+        .clickable(enabled = enabled, role = Role.Button) { PlaybackCommands.playerController()?.setVolume(if (volume <= .001f) unmuted.coerceAtLeast(.2f) else 0f) }, contentAlignment = Alignment.Center) {
         val symbol = when { volume <= .001f -> MeloXSymbol.VolumeMuted; volume < .35f -> MeloXSymbol.VolumeLow
             volume < .7f -> MeloXSymbol.Volume; else -> MeloXSymbol.VolumeHigh }
-        MeloXSymbolIcon(symbol, size = 15, weight = FontWeight.SemiBold, color = Color.White)
+        MeloXSymbolIcon(symbol, size = 15, weight = FontWeight.SemiBold, color = Color.White.copy(alpha = if (enabled) 1f else .35f))
     }
 }

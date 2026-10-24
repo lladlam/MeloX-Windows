@@ -74,7 +74,7 @@ private fun ProviderLibraryContent(source: MusicSource, requestedPage: String?, 
     var menuSong by remember(source, section) { mutableStateOf<melox.model.SearchSong?>(null) }
     var menuAnchor by remember(source, section) { mutableStateOf<IntOffset?>(null) }
     val queue by melox.playback.PlaybackCommands.queue.collectAsState()
-    val playback by melox.player.AudioPlayer.state.collectAsState()
+    val playback by melox.playback.MeloXPlaybackOutput.state.collectAsState()
     val scope = key(source, section) { rememberCoroutineScope() }
     val desktop = MeloXSettingsRuntime.desktopLayoutEnabled
     val title = when (section) { "Songs" -> "歌曲"; "Albums" -> "收藏专辑"; "Artists" -> "关注歌手"; else -> "歌单" }

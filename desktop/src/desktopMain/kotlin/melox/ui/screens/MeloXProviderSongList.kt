@@ -45,7 +45,7 @@ internal fun MeloXProviderSongListDetail(
     }
     if (melox.settings.MeloXSettingsRuntime.desktopLayoutEnabled) {
         val queue by melox.playback.PlaybackCommands.queue.collectAsState()
-        val playback by melox.player.AudioPlayer.state.collectAsState()
+        val playback by melox.playback.MeloXPlaybackOutput.state.collectAsState()
         var filter by remember(title, songs) { mutableStateOf("") }
         var selected by remember(title, songs) { mutableStateOf<SearchSong?>(null) }
         var anchor by remember { mutableStateOf<androidx.compose.ui.unit.IntOffset?>(null) }

@@ -54,7 +54,7 @@ fun AlbumDetailScreen(
     var error by remember(albumId) { mutableStateOf(if (parsedId == null) "无效的专辑" else null) }
     val queue by PlaybackCommands.queue.collectAsState()
     val playingId = queue.songs.getOrNull(queue.index)?.id ?: PlaybackCommands.currentSongId()
-    val playbackState by melox.player.AudioPlayer.state.collectAsState()
+    val playbackState by melox.playback.MeloXPlaybackOutput.state.collectAsState()
     val scope = rememberCoroutineScope()
     var refreshRevision by remember(albumId) { mutableStateOf(0) }
     var subscribed by remember(albumId) { mutableStateOf(false) }

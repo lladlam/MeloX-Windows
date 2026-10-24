@@ -237,7 +237,7 @@ private fun DesktopBottomPlayer(inspector: DesktopInspector?, onInspector: (Desk
     val song = track ?: return
     val color = MaterialTheme.colorScheme.onSurface
     val player = PlaybackCommands.playerController()
-    val volume by AudioPlayer.volumeLevel.collectAsState()
+    val volume by melox.playback.MeloXPlaybackOutput.volumeLevel.collectAsState()
     var volumeExpanded by remember { mutableStateOf(false) }
     var lanOpen by remember { mutableStateOf(false) }
     Row(Modifier.widthIn(max = DesktopMetrics.PlayerWidth.dp).fillMaxWidth().height(DesktopMetrics.PlayerHeight.dp)
@@ -261,6 +261,7 @@ private fun DesktopBottomPlayer(inspector: DesktopInspector?, onInspector: (Desk
         Spacer(Modifier.width(9.dp))
         if (volumeExpanded) {
             MeloXLiquidSlider(volume, { player?.setVolume(it) }, valueRange = 0f..1f,
+                enabled = melox.dlna.DlnaSession.state.collectAsState().value.device?.let { it.rendering != null } ?: true,
                 modifier = Modifier.width(100.dp).height(36.dp).testTag("desktop-volume-slider"), contentDescription = desktopString("ui.player.volume"))
         } else {
             DesktopIconButton(MeloXSymbol.Quote, "desktop-show-lyrics", desktopString("ui.desktop.commands.show_lyrics"),
@@ -277,7 +278,7 @@ private fun DesktopBottomPlayer(inspector: DesktopInspector?, onInspector: (Desk
 @Composable
 internal fun DesktopTransport(modifier: Modifier, tint: Color, prominent: Boolean = false, scale: Float = 1f) {
     val player = PlaybackCommands.playerController()
-    val state by AudioPlayer.state.collectAsState()
+    val state by melox.playback.MeloXPlaybackOutput.state.collectAsState()
     val queue by PlaybackCommands.queue.collectAsState()
     val shuffle by player?.shuffleEnabled?.collectAsState() ?: remember { mutableStateOf(false) }
     val repeat by player?.repeatMode?.collectAsState() ?: remember { mutableIntStateOf(0) }
@@ -314,8 +315,8 @@ internal fun DesktopIconButton(symbol: MeloXSymbol, tag: String, label: String, 
 
 @Composable
 internal fun DesktopSeekBar(modifier: Modifier, tint: Color) {
-    val progress by AudioPlayer.progress.collectAsState()
-    val duration by AudioPlayer.durationMs.collectAsState()
+    val progress by melox.playback.MeloXPlaybackOutput.progress.collectAsState()
+    val duration by melox.playback.MeloXPlaybackOutput.durationMs.collectAsState()
     var drag by remember { mutableStateOf<Float?>(null) }
     val latestDuration by rememberUpdatedState(duration)
     fun seek(fraction: Float) { PlaybackCommands.playerController()?.seekTo((latestDuration * fraction.coerceIn(0f, 1f)).toLong()) }

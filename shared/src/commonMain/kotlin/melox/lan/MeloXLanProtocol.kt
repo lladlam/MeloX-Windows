@@ -11,6 +11,7 @@ import org.json.JSONObject
 const val LAN_DISCOVERY_PORT = 47830
 const val LAN_CONTROL_PORT = 47831
 const val LAN_MAX_LINE = 256 * 1024
+const val LAN_TOGETHER_BARRIER = "together_barrier_v2"
 
 data class LanTrack(val source: String, val id: String, val title: String, val artist: String,
     val album: String = "", val artworkUrl: String? = null, val durationMs: Long = 0) {
@@ -32,7 +33,8 @@ data class LanTrack(val source: String, val id: String, val title: String, val a
 }
 
 data class LanDevice(val id: String, val name: String, val address: String, val port: Int,
-    val platform: String = "", val trusted: Boolean = false, val state: JSONObject = JSONObject())
+    val platform: String = "", val trusted: Boolean = false, val state: JSONObject = JSONObject(),
+    val capabilities: Set<String> = emptySet())
 
 class LanIdentity(name: String = "melox_lan") {
     private val prefs = MeloXPreferences(name)
@@ -92,8 +94,11 @@ internal fun lanAddress(): InetAddress = NetworkInterface.getNetworkInterfaces()
 internal fun isLanAddress(address: InetAddress) = address.isSiteLocalAddress || address.isLoopbackAddress || address.isLinkLocalAddress
 
 interface LanHost {
+    val supportsBarrier: Boolean get() = false
     fun state(): JSONObject
     fun queue(): List<LanTrack>
     fun request(action: String, message: JSONObject, peer: InetAddress): JSONObject
     fun disconnected() {}
+    fun togetherStatus(): JSONObject? = null
+    fun cancelPreparation(sessionId: String, generation: Long) {}
 }

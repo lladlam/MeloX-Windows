@@ -1,0 +1,14 @@
+[
+  {
+    "file": "pcm-output-0.s16le",
+    "bytes": 5943820,
+    "sha256": "6aafea7f3cd28b1d1b84c650d7c0d991c3ea668fdc18f2d14965b1bbc5260a8a",
+    "archive": "pcm-output-0.s16le.gz"
+  },
+  {
+    "file": "pcm-output-1.s16le",
+    "bytes": 276592,
+    "sha256": "885e1e81b65ff052da65ce39683a4c4c00afa269c7fe2c77b83458db033fdfcb",
+    "archive": "pcm-output-1.s16le.gz"
+  }
+]

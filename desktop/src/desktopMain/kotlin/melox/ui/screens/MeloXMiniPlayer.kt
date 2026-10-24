@@ -77,7 +77,7 @@ fun MeloXMiniPlayer(
     onHitRect: (androidx.compose.ui.geometry.Rect) -> Unit = {},
 ) {
     val player = livePlayer()
-    val playerState by AudioPlayer.state.collectAsState()
+    val playerState by melox.playback.MeloXPlaybackOutput.state.collectAsState()
     val currentTrack by AudioPlayer.currentTrack.collectAsState()
     val queue by PlaybackCommands.queue.collectAsState()
     val repeatMode by player?.repeatMode?.collectAsState() ?: remember { mutableIntStateOf(PlaybackCommands.REPEAT_OFF) }

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="NeteaseLibrarySectionsTest[desktop]" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-10-24T16:11:42.571Z" hostname="lladlam-arch" time="1.377">
+  <properties/>
+  <testcase name="genuinelyEmptyFavoritesDoNotFetchSongDetails[desktop]" classname="melox.library.NeteaseLibrarySectionsTest" time="1.171"/>
+  <testcase name="likedSongsDoNotDependOnPlaylistsOrHistoryAndRetainIdOrder[desktop]" classname="melox.library.NeteaseLibrarySectionsTest" time="0.12"/>
+  <testcase name="playlistsDoNotDependOnLikedSongsOrHistory[desktop]" classname="melox.library.NeteaseLibrarySectionsTest" time="0.046"/>
+  <testcase name="leavingPlaylistsCancelsActualHttpCall[desktop]" classname="melox.library.NeteaseLibrarySectionsTest" time="0.039"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

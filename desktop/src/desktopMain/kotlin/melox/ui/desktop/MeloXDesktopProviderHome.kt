@@ -21,7 +21,7 @@ internal fun MeloXDesktopProviderHome(source: MusicSource, feed: MusicHomeFeed?,
     onRetry: () -> Unit, onPlaylist: (MusicPlaylistSummary) -> Unit, onRanking: (MusicRankingSummary) -> Unit) {
     val scroll = rememberLazyListState()
     val queue by PlaybackCommands.queue.collectAsState()
-    val state by melox.player.AudioPlayer.state.collectAsState()
+    val state by melox.playback.MeloXPlaybackOutput.state.collectAsState()
     CompositionLocalProvider(LocalTextStyle provides androidx.compose.ui.text.TextStyle(
         fontFamily = melox.ui.theme.MeloXDesktopTextFontFamily, fontSize = 13.sp, color = MaterialTheme.colorScheme.onSurface)) {
     LazyColumn(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background).desktopPromotedDragScroll(scroll)

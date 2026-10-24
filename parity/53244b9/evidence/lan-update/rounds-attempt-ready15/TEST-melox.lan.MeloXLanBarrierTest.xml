@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="MeloXLanBarrierTest[desktop]" tests="4" skipped="0" failures="1" errors="0" timestamp="2026-10-23T18:35:08.893Z" hostname="lladlam-arch" time="57.945">
+  <properties/>
+  <testcase name="timestampExtrapolationRequiresReadyPlayingAndCapsExtrapolation[desktop]" classname="melox.lan.MeloXLanBarrierTest" time="12.751"/>
+  <testcase name="naturalEndWaitIsBoundedAndExplicitSkipCancelsThePendingGeneration[desktop]" classname="melox.lan.MeloXLanBarrierTest" time="23.624">
+    <failure message="kotlinx.coroutines.TimeoutCancellationException: Timed out waiting for 15000 ms" type="kotlinx.coroutines.TimeoutCancellationException">kotlinx.coroutines.TimeoutCancellationException: Timed out waiting for 15000 ms
+	at _COROUTINE._BOUNDARY._(CoroutineDebugging.kt:42)
+	at melox.lan.MeloXLanBarrierTest$until$2.invokeSuspend(MeloXLanBarrierTest.kt:61)
+	at melox.lan.MeloXLanBarrierTest$naturalEndWaitIsBoundedAndExplicitSkipCancelsThePendingGeneration$1.invokeSuspend(MeloXLanBarrierTest.kt:141)
+Caused by: kotlinx.coroutines.TimeoutCancellationException: Timed out waiting for 15000 ms
+	at kotlinx.coroutines.TimeoutKt.TimeoutCancellationException(Timeout.kt:281)
+	at kotlinx.coroutines.TimeoutCoroutine.run(Timeout.kt:243)
+	at kotlinx.coroutines.EventLoopImplBase$DelayedRunnableTask.run(EventLoop.common.kt:498)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:256)
+	at kotlinx.coroutines.DefaultExecutor.run(DefaultExecutor.kt:105)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+</failure>
+  </testcase>
+  <testcase name="hostPreparesMultiplePeersKeepsConnectionsAndReplacesQueueAtSameIndex[desktop]" classname="melox.lan.MeloXLanBarrierTest" time="17.428"/>
+  <testcase name="receiverAcknowledgesRealReadyPausedThenSchedulesAndFencesStaleRounds[desktop]" classname="melox.lan.MeloXLanBarrierTest" time="4.12"/>
+  <system-out><![CDATA[[DEBUG AudioPlayer] Bundled FFmpeg verified: sha256=ee930e8def21a993f4b8c680757df15054da1c8f2698da0fdf87f1f3b15bd633 bytes=172690600
+[DEBUG AudioPlayer] FFmpeg binary=/mnt/ntfs_files_sda4/项目/MeloX-Windows/desktop/build/lan-validation-tmp/melox-decoder-ffmpeg-ee930e8def21a993 os=Linux sourceHost=local
+[DEBUG AudioPlayer] FFmpeg binary=/mnt/ntfs_files_sda4/项目/MeloX-Windows/desktop/build/lan-validation-tmp/melox-decoder-ffmpeg-ee930e8def21a993 os=Linux sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+[DEBUG AudioPlayer] decode local source at 0ms
+[DEBUG AudioPlayer] FFmpeg binary=/mnt/ntfs_files_sda4/项目/MeloX-Windows/desktop/build/lan-validation-tmp/melox-decoder-ffmpeg-ee930e8def21a993 os=Linux sourceHost=local
+[DEBUG AudioPlayer] decode local source at 1850ms
+[DEBUG AudioPlayer] FFmpeg binary=/mnt/ntfs_files_sda4/项目/MeloX-Windows/desktop/build/lan-validation-tmp/melox-decoder-ffmpeg-ee930e8def21a993 os=Linux sourceHost=local
+[DEBUG AudioPlayer] decode local source at 1850ms
+[DEBUG AudioPlayer] FFmpeg binary=/mnt/ntfs_files_sda4/项目/MeloX-Windows/desktop/build/lan-validation-tmp/melox-decoder-ffmpeg-ee930e8def21a993 os=Linux sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+[DEBUG AudioPlayer] FFmpeg binary=/mnt/ntfs_files_sda4/项目/MeloX-Windows/desktop/build/lan-validation-tmp/melox-decoder-ffmpeg-ee930e8def21a993 os=Linux sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+[DEBUG AudioPlayer] FFmpeg binary=/mnt/ntfs_files_sda4/项目/MeloX-Windows/desktop/build/lan-validation-tmp/melox-decoder-ffmpeg-ee930e8def21a993 os=Linux sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+[DEBUG MeloXPlayback] Playback queue dispatched: size=1, start=0, offline=false, quality=standard
+[DEBUG AudioPlayer] FFmpeg binary=/mnt/ntfs_files_sda4/项目/MeloX-Windows/desktop/build/lan-validation-tmp/melox-decoder-ffmpeg-ee930e8def21a993 os=Linux sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

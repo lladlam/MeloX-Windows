@@ -1,0 +1,190 @@
+Picked up JAVA_TOOL_OPTIONS: -Djava.io.tmpdir=/mnt/ntfs_files_sda4/项目/MeloX-Windows/desktop/build/lan-validation-tmp
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.5.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build
+> Task :desktop:kmpPartiallyResolvedDependenciesChecker
+> Task :desktop:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :desktop:extractPinnedGlassGeometry UP-TO-DATE
+> Task :desktop:convertXmlValueResourcesForCommonMain NO-SOURCE
+> Task :desktop:copyNonXmlValueResourcesForCommonMain NO-SOURCE
+> Task :desktop:prepareComposeResourcesTaskForCommonMain NO-SOURCE
+> Task :desktop:generateResourceAccessorsForCommonMain SKIPPED
+> Task :desktop:convertXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :desktop:copyNonXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :desktop:prepareComposeResourcesTaskForDesktopMain NO-SOURCE
+> Task :desktop:generateResourceAccessorsForDesktopMain SKIPPED
+> Task :desktop:generateActualResourceCollectorsForDesktopMain SKIPPED
+> Task :desktop:generateComposeResClass SKIPPED
+> Task :desktop:generateExpectResourceCollectorsForCommonMain SKIPPED
+> Task :innertube:kmpPartiallyResolvedDependenciesChecker
+> Task :innertube:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :innertube:extractAndroidInnerTube UP-TO-DATE
+> Task :innertube:compileKotlinDesktop UP-TO-DATE
+> Task :innertube:compileDesktopMainJava NO-SOURCE
+> Task :innertube:desktopProcessResources NO-SOURCE
+> Task :innertube:processDesktopMainResources SKIPPED
+> Task :innertube:desktopMainClasses UP-TO-DATE
+> Task :innertube:desktopJar UP-TO-DATE
+> Task :shared:kmpPartiallyResolvedDependenciesChecker
+> Task :shared:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :shared:convertXmlValueResourcesForCommonMain NO-SOURCE
+> Task :shared:copyNonXmlValueResourcesForCommonMain NO-SOURCE
+> Task :shared:prepareComposeResourcesTaskForCommonMain NO-SOURCE
+> Task :shared:generateResourceAccessorsForCommonMain SKIPPED
+> Task :shared:convertXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :shared:copyNonXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :shared:prepareComposeResourcesTaskForDesktopMain NO-SOURCE
+> Task :shared:generateResourceAccessorsForDesktopMain SKIPPED
+> Task :shared:generateActualResourceCollectorsForDesktopMain SKIPPED
+> Task :shared:generateComposeResClass SKIPPED
+> Task :shared:generateExpectResourceCollectorsForCommonMain SKIPPED
+> Task :shared:compileKotlinDesktop
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/audio/NeteaseQualityClient.kt:317:37 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/download/MeloXDownloadStore.kt:381:46 Elvis operator (?:) always returns the left operand of non-nullable type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/download/MeloXDownloadStore.kt:517:46 Elvis operator (?:) always returns the left operand of non-nullable type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/library/NeteaseLibraryClient.kt:110:113 Unnecessary safe call on a non-null receiver of type 'NeteaseParsedHomeBlocks'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/library/NeteaseLibraryClient.kt:512:37 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/lyrics/AmlldbLyricsClient.kt:84:75 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/lyrics/LrcLibLyricsClient.kt:44:64 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/network/NeteaseAuthenticatedEapi.kt:30:36 Elvis operator (?:) always returns the left operand of non-nullable type 'JSONObject'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/network/NeteaseAuthenticatedEapi.kt:67:37 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/network/NeteaseAuthenticatedWeapi.kt:77:37 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/network/NeteaseCloudUploadClient.kt:95:70 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/network/NeteaseCloudUploadClient.kt:124:34 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/network/NeteaseMusicOperationsClient.kt:579:35 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/network/NeteaseRequestGovernor.kt:15:27 This class is not recommended for use in Kotlin. Use 'kotlin.Any' instead.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/network/NeteaseSearchClient.kt:332:37 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/network/NeteaseUniversalSearchClient.kt:176:17 'when' is exhaustive so 'else' is redundant here.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/network/NeteaseUniversalSearchClient.kt:209:25 'when' is exhaustive so 'else' is redundant here.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/network/NeteaseUniversalSearchClient.kt:487:37 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/platform/MeloXPreferences.kt:10:1 'expect'/'actual' classes (including interfaces, objects, annotations, enums, and 'actual' typealiases) are in Beta. Consider using the '-Xexpect-actual-classes' flag to suppress this warning. Also see: https://youtrack.jetbrains.com/issue/KT-61573
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/playback/PlaybackCommands.kt:280:43 Unnecessary safe call on a non-null receiver of type 'MusicTrack'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/playback/ProviderPlaybackResolver.kt:235:69 Elvis operator (?:) always returns the left operand of non-nullable type 'String'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/playback/ProviderPlaybackResolver.kt:265:17 Elvis operator (?:) always returns the left operand of non-nullable type 'Pair<String, Long>'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/player/MeloXDualDecodeSession.kt:129:68 Return in function with expression body and without explicit return type. Use block body '{...}' or add an explicit return type. This will become an error in language version 2.5. See https://youtrack.jetbrains.com/issue/KTLC-288.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/player/MeloXDualDecodeSession.kt:130:44 Return in function with expression body and without explicit return type. Use block body '{...}' or add an explicit return type. This will become an error in language version 2.5. See https://youtrack.jetbrains.com/issue/KTLC-288.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/player/MeloXDualDecodeSession.kt:148:72 Return in function with expression body and without explicit return type. Use block body '{...}' or add an explicit return type. This will become an error in language version 2.5. See https://youtrack.jetbrains.com/issue/KTLC-288.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/player/MeloXDualDecodeSession.kt:207:34 Unnecessary safe call on a non-null receiver of type 'MeloXBufferedPcmDeck'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/player/MeloXDualDecodeSession.kt:248:51 Condition is always 'true'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/player/MeloXDualDecodeSession.kt:249:30 Unnecessary safe call on a non-null receiver of type 'MeloXBufferedPcmDeck'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/jellyfin/JellyfinApiClient.kt:89:17 Condition is always 'true'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/jellyfin/JellyfinApiClient.kt:90:29 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/kugou/KugouApiClient.kt:337:62 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/kugou/KugouLoginClient.kt:129:37 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/kugou/KugouRequestClient.kt:113:45 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/kuwo/KuwoPhoneAuthClient.kt:95:38 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/kuwo/KuwoRequestClient.kt:36:42 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/kuwo/KuwoRequestClient.kt:63:33 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/local/LocalRecognitionCoordinator.kt:46:58 Unnecessary safe call on a non-null receiver of type 'LyricsDocument'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/lxuser/ChkszApiClient.kt:40:59 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicApiClient.kt:380:37 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicApiClient.kt:558:37 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicCatalogClient.kt:331:37 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicFavoriteClient.kt:111:62 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicFavoriteClient.kt:182:37 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicFavoriteClient.kt:252:38 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicPhoneAuthClient.kt:62:41 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicPlaybackVkeyClient.kt:126:37 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicPlaylistClient.kt:158:37 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicQrLoginClient.kt:137:38 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicQrLoginClient.kt:170:51 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicQrLoginClient.kt:182:38 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicQrLoginClient.kt:247:51 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicQrLoginClient.kt:264:53 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicQrLoginClient.kt:381:62 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicQrLoginClient.kt:411:62 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicRankingClient.kt:151:37 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicRichLyricsClient.kt:140:38 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicRichLyricsClient.kt:254:37 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicRichLyricsClient.kt:303:67 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/spotify/SpotifyApiClient.kt:371:45 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/spotify/SpotifyOAuth.kt:169:45 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/provider/youtubemusic/YouTubeMusicProvider.kt:247:106 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/update/MeloXUpdateClient.kt:42:48 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/update/MeloXUpdateClient.kt:58:48 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/update/UpdateChecker.kt:51:37 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/update/UpdateChecker.kt:102:46 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/commonMain/kotlin/melox/update/UpdateChecker.kt:105:26 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///mnt/ntfs_files_sda4/%E9%A1%B9%E7%9B%AE/MeloX-Windows/shared/src/desktopMain/kotlin/melox/platform/MeloXPreferences.kt:7:1 'expect'/'actual' classes (including interfaces, objects, annotations, enums, and 'actual' typealiases) are in Beta. Consider using the '-Xexpect-actual-classes' flag to suppress this warning. Also see: https://youtrack.jetbrains.com/issue/KT-61573
+
+> Task :shared:compileDesktopMainJava NO-SOURCE
+> Task :shared:assembleDesktopMainResources UP-TO-DATE
+> Task :shared:desktopProcessResources UP-TO-DATE
+> Task :shared:processDesktopMainResources SKIPPED
+> Task :shared:desktopMainClasses
+> Task :shared:desktopJar
+> Task :desktop:compileKotlinDesktop UP-TO-DATE
+> Task :desktop:compileDesktopMainJava NO-SOURCE
+> Task :desktop:assembleDesktopMainResources UP-TO-DATE
+> Task :desktop:desktopProcessResources UP-TO-DATE
+> Task :desktop:processDesktopMainResources SKIPPED
+> Task :desktop:desktopMainClasses UP-TO-DATE
+
+> Task :desktop:captureUi
+Picked up JAVA_TOOL_OPTIONS: -Djava.io.tmpdir=/mnt/ntfs_files_sda4/项目/MeloX-Windows/desktop/build/lan-validation-tmp
+Production Local scanner indexed 1 real files
+SLF4J(W): No SLF4J providers were found.
+SLF4J(W): Defaulting to no-operation (NOP) logger implementation
+SLF4J(W): See https://www.slf4j.org/codes.html#noProviders for further details.
+[DEBUG MeloXThirdParty] resolve detail source=local id=7720cc59 title=dlna-generated artists=Generated PCM fixture durationMs=600000 metadata=Local
+[INFO MeloXThirdParty] Resolve start source=local quality=Standard thirdParty=false
+[INFO MeloXThirdParty] Resolve fallback source=local stage=provider chksz=disabled
+[INFO MeloXFont] Android MiLan Pro static instances loaded: CSS=[100, 200, 300, 400, 500, 600, 700, 800, 900] files=mi_lan_pro_w{100..800}.ttf (CSS 900 shares frozen axis-700 instance)
+Captured 00-settings: 430x850 density=1.0
+Physical click consent: remote-reject at Offset(128.0, 556.0)
+Captured 01-consent: 430x850 density=1.0
+Verified consent: cloud-enabled:false
+[DEBUG AudioPlayer] Bundled FFmpeg verified: sha256=ee930e8def21a993f4b8c680757df15054da1c8f2698da0fdf87f1f3b15bd633 bytes=172690600
+[DEBUG AudioPlayer] FFmpeg binary=/mnt/ntfs_files_sda4/项目/MeloX-Windows/desktop/build/lan-validation-tmp/melox-decoder-ffmpeg-ee930e8def21a993 os=Linux sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+Captured 02-playing: 430x850 density=1.0
+Verified playing: playing:true
+Captured 03-reveal-open-player: 430x850 density=1.0
+Physical click open-player: mini-player-expand at Offset(167.5, 752.0)
+Captured 04-open-player: 430x850 density=1.0
+Captured 05-reveal-open-output: 430x850 density=1.0
+Physical click open-output: player-output at Offset(215.0, 825.0)
+Captured 06-open-output: 430x850 density=1.0
+Verified open-output: tag:lan-output-panel
+Captured 07-discover: 430x850 density=1.0
+Verified discover: tag:lan-output-device:dlna:uuid:melox-ui-34a536be-f56f-438f-9261-e94befd13009
+Captured 08-reveal-cast: 430x850 density=1.0
+Physical click cast: lan-output-device:dlna:uuid:melox-ui-34a536be-f56f-438f-9261-e94befd13009 at Offset(215.0, 567.0)
+[INFO MeloXDlna] Renderer PLAYING confirmed; proxy=true
+Captured 09-cast: 430x850 density=1.0
+Verified cast: absent:lan-output-panel
+Verified cast: playing:false
+Verified cast: output-playing:true
+Captured 10-reveal-reopen: 430x850 density=1.0
+Physical click reopen: player-output at Offset(215.0, 825.0)
+Captured 11-reopen: 430x850 density=1.0
+Verified reopen: selected:lan-output-device:dlna:uuid:melox-ui-34a536be-f56f-438f-9261-e94befd13009
+Captured 12-reveal-pause: 430x850 density=1.0
+Physical click pause: lan-output-toggle at Offset(275.0, 176.0)
+Captured 13-pause: 430x850 density=1.0
+Verified pause: output-playing:false
+Captured 14-reveal-resume: 430x850 density=1.0
+Physical click resume: lan-output-toggle at Offset(275.0, 176.0)
+Captured 15-resume: 430x850 density=1.0
+Verified resume: output-playing:true
+Captured 16-reveal-volume: 430x850 density=1.0
+Captured 17-volume: 430x850 density=1.0
+Verified volume: output-volume:0.37
+Captured 18-reveal-dismiss-output: 430x850 density=1.0
+Physical click dismiss-output: lan-output-close at Offset(215.0, 727.0)
+Captured 19-dismiss-output: 430x850 density=1.0
+Verified dismiss-output: absent:lan-output-panel
+Captured 20-reveal-reopen-again: 430x850 density=1.0
+Physical click reopen-again: player-output at Offset(215.0, 825.0)
+Captured 21-reopen-again: 430x850 density=1.0
+Verified reopen-again: selected:lan-output-device:dlna:uuid:melox-ui-34a536be-f56f-438f-9261-e94befd13009
+Captured 22-reveal-local: 430x850 density=1.0
+Physical click local: lan-output-device:local at Offset(215.0, 360.0)
+[DEBUG AudioPlayer] FFmpeg binary=/mnt/ntfs_files_sda4/项目/MeloX-Windows/desktop/build/lan-validation-tmp/melox-decoder-ffmpeg-ee930e8def21a993 os=Linux sourceHost=local
+[DEBUG AudioPlayer] decode local source at 44325ms
+Captured 23-local: 430x850 density=1.0
+Verified local: selected:lan-output-device:local
+Verified local: playing:true
+
+BUILD SUCCESSFUL in 8m 45s
+15 actionable tasks: 6 executed, 9 up-to-date
+Consider enabling configuration cache to speed up this build: https://docs.gradle.org/9.5.1/userguide/configuration_cache_enabling.html

@@ -30,8 +30,8 @@ import melox.settings.MeloXSettingsRuntime
 /** DesktopNowPlayingProgress: full-width capsule, rectangular fill, 8→18pt scrubbing. */
 @Composable
 internal fun DesktopPlayerProgress(scale: Float) {
-    val position by AudioPlayer.positionMs.collectAsState()
-    val duration by AudioPlayer.durationMs.collectAsState()
+    val position by melox.playback.MeloXPlaybackOutput.positionMs.collectAsState()
+    val duration by melox.playback.MeloXPlaybackOutput.durationMs.collectAsState()
     var scrub by remember { mutableStateOf<Float?>(null) }
     val latestDuration by rememberUpdatedState(duration)
     val fraction = scrub ?: (position.toFloat() / duration.coerceAtLeast(1)).coerceIn(0f, 1f)

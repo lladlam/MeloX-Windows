@@ -113,7 +113,7 @@ internal fun MeloXDesktopExplore(source: MusicSource, onPlaylist: (NeteasePlayli
         fontSize = 13.sp, color = MaterialTheme.colorScheme.onSurface)) {
         val scroll = rememberLazyListState()
         val queue by PlaybackCommands.queue.collectAsState()
-        val playback by melox.player.AudioPlayer.state.collectAsState()
+        val playback by melox.playback.MeloXPlaybackOutput.state.collectAsState()
         Box(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background).testTag("desktop-explore")) {
             LazyColumn(Modifier.fillMaxSize().desktopPromotedDragScroll(scroll), state = scroll,
                 contentPadding = PaddingValues(horizontal = 34.dp, vertical = 28.dp), verticalArrangement = Arrangement.spacedBy(34.dp)) {

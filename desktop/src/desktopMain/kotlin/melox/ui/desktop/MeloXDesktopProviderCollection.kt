@@ -31,7 +31,7 @@ import melox.ui.theme.MeloXDesktopTextFontFamily
 internal fun MeloXDesktopProviderCollection(title: String, subtitle: String, artwork: String?, tracks: List<MusicTrack>,
     loading: Boolean, error: String?, onBack: () -> Unit, onRetry: () -> Unit) {
     val queue by PlaybackCommands.queue.collectAsState()
-    val playback by melox.player.AudioPlayer.state.collectAsState()
+    val playback by melox.playback.MeloXPlaybackOutput.state.collectAsState()
     val scroll = rememberLazyListState()
     CompositionLocalProvider(LocalTextStyle provides androidx.compose.ui.text.TextStyle(fontFamily = MeloXDesktopTextFontFamily,
         fontSize = 13.sp, color = MaterialTheme.colorScheme.onSurface)) {

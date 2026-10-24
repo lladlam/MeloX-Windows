@@ -12,6 +12,7 @@ import java.io.PrintWriter
 import java.io.StringWriter
 import java.text.SimpleDateFormat
 import java.util.Date
+import kotlinx.coroutines.launch
 
 fun main() {
     melox.platform.logInfo("MeloXStartup", "commit=${MeloXBuildConfig.BUILD_COMMIT} pid=${ProcessHandle.current().pid()} os=${System.getProperty("os.name")} ${System.getProperty("os.version")} arch=${System.getProperty("os.arch")} java=${System.getProperty("java.version")}")
@@ -66,10 +67,20 @@ fun main() {
             LaunchedEffect(windowVisible, windowState.isMinimized) {
                 melox.remoteconfig.MeloXRemoteConfigRuntime.setForeground(windowVisible && !windowState.isMinimized)
             }
+            val quitScope = rememberCoroutineScope()
+            var quitting by remember { mutableStateOf(false) }
             val quitApplication: () -> Unit = {
-                melox.lan.MeloXLanRuntime.stop()
-                melox.playback.PlaybackCommands.playerController()?.release()
-                exitApplication()
+                if (!quitting) {
+                    quitting = true
+                    quitScope.launch {
+                        try { melox.dlna.DlnaSession.disconnect(resumeLocal = false) }
+                        finally {
+                            kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) { melox.lan.MeloXLanRuntime.stop() }
+                            melox.playback.PlaybackCommands.playerController()?.release()
+                            exitApplication()
+                        }
+                    }
+                }
             }
             val showWindow: () -> Unit = { windowVisible = true; windowState.isMinimized = false; restoreRequest++ }
             val currentShow by rememberUpdatedState(showWindow)

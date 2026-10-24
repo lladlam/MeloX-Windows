@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ChkszProtocolTest[desktop]" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-10-24T16:14:22.218Z" hostname="lladlam-arch" time="0.898">
+  <properties/>
+  <testcase name="failedMalformedAndNonHttpResponsesRemainUnresolved[desktop]" classname="melox.provider.lxuser.ChkszProtocolTest" time="0.538"/>
+  <testcase name="qqAndKugouUseNativeMetadataAndPinnedSizeMapping[desktop]" classname="melox.provider.lxuser.ChkszProtocolTest" time="0.143"/>
+  <testcase name="blankKeyMakesNoRequestAndNeteaseUsesPinnedEndpointLevelsAndIdentity[desktop]" classname="melox.provider.lxuser.ChkszProtocolTest" time="0.217"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

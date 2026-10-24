@@ -478,6 +478,7 @@ class MeloXDesktopPlayer internal constructor(
             playWhenReady = false
             MeloXPlaybackQueueStore.clear()
         }
+        melox.lan.MeloXLanRuntime.playbackChanged(newRound = true)
     }
 
     fun addMediaItem(index: Int, song: SearchSong) {
@@ -589,6 +590,15 @@ class MeloXDesktopPlayer internal constructor(
         )
 
     private suspend fun resolveRequest(entry: QueueEntry) = withContext(resolutionDispatcher) { resolutionOverride?.invoke(entry) ?: resolve(entry) }
+
+    /** Reuse the real controller's source resolver, including its current AutoMix deck. Called on Main. */
+    internal suspend fun playbackSourceForOutput(): DesktopPlaybackRequest {
+        val entry = items.getOrNull(currentMediaItemIndex) ?: error("No track selected")
+        if (playingEntryId == entry.entryId) currentResolved?.let { return it }
+        val request = resolveRequest(entry)
+        check(items.getOrNull(currentMediaItemIndex)?.entryId == entry.entryId) { "Playback selection changed while resolving output" }
+        return request
+    }
 
     private fun cancelMix() {
         mixJob?.cancel(); mixJob = null; mixAttemptFor = null
@@ -733,6 +743,7 @@ class MeloXDesktopPlayer internal constructor(
     fun play() {
         if (melox.lan.MeloXLanRuntime.forwardGuestControl("play")) return
         playWhenReady = true
+        melox.lan.MeloXLanRuntime.playbackChanged()
         MeloXPlaybackEvents.publish(this, MeloXPlaybackEvents.Kind.Play)
         if (deferredRestore) {
             prepare()
@@ -757,6 +768,7 @@ class MeloXDesktopPlayer internal constructor(
         if (melox.lan.MeloXLanRuntime.forwardGuestControl("pause")) return
         actionRevision += 1
         playWhenReady = false
+        melox.lan.MeloXLanRuntime.playbackChanged()
         awaitingAutoplay = false
         currentPosition = AudioPlayer.getCurrentPositionMs()
         MeloXPlaybackEvents.publish(this, MeloXPlaybackEvents.Kind.Pause)
@@ -766,6 +778,7 @@ class MeloXDesktopPlayer internal constructor(
     }
 
     fun togglePlay() {
+        if (melox.lan.MeloXLanRuntime.forwardGuestControl("toggle")) return
         if (playWhenReady && AudioPlayer.state.value.error == null && !AudioPlayer.state.value.isFinished) pause() else play()
     }
 
@@ -851,6 +864,7 @@ class MeloXDesktopPlayer internal constructor(
         currentPosition = target
         pendingSeekMs = target
         AudioPlayer.seekTo(target)
+        melox.lan.MeloXLanRuntime.playbackChanged(seek = true)
         MeloXPlaybackEvents.publish(this, MeloXPlaybackEvents.Kind.Seek)
         persistSnapshot()
     }
@@ -867,6 +881,7 @@ class MeloXDesktopPlayer internal constructor(
         currentPosition = startPositionMs.coerceAtLeast(0L)
         pendingSeekMs = currentPosition
         prepare()
+        melox.lan.MeloXLanRuntime.playbackChanged(newRound = true)
         PlaybackCommands.publishQueue(this)
     }
 
@@ -929,6 +944,7 @@ class MeloXDesktopPlayer internal constructor(
     }
 
     fun setVolume(level: Float) {
+        if (melox.dlna.DlnaSession.active) { melox.dlna.DlnaSession.changeVolume(level); return }
         volume = level.coerceIn(0f, 1f)
         AudioPlayer.setVolume(volume)
     }
@@ -1009,9 +1025,14 @@ class MeloXDesktopPlayer internal constructor(
         return (forward + wrapped).firstOrNull { isDownloaded(items[it].song) && items[it].entryId !in failedEntries }
     }
 
-    private fun onNaturalEnd(token: Int, entryId: String, action: Int) {
+    private fun onNaturalEnd(token: Int, entryId: String, action: Int, togetherReleased: Boolean = false) {
         scope.launch {
             if (!ownsEvent(token, entryId) || action != actionRevision) return@launch
+            if (!togetherReleased) {
+                if (melox.lan.MeloXLanRuntime.isGuest) return@launch
+                if (melox.lan.MeloXLanTogetherCoordinator.ended { onNaturalEnd(token, entryId, action, true) }) return@launch
+            }
+            if (togetherReleased) melox.lan.MeloXLanRuntime.playbackChanged(newRound = true)
             resetFailureRecovery()
             if (!playWhenReady) {
                 persistSnapshot()

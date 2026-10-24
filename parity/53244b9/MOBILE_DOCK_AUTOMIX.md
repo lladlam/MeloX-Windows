@@ -33,3 +33,5 @@ Local 两标签、网易云多标签分别覆盖 360/390/430dp，以及 1/1.25/2
 已通过的生产输入回放：Dock 四组共 **28 scenes / 20 assertions**；AutoMix 四组共 **39 scenes / 73 assertions**，每组都通过独立 PCM 频谱核验。证据包含原始 capture/semantics、步骤、参数、日志、选定截图及压缩的实际输出 PCM。
 
 补充回归全部通过：设置即时启停 **30 scenes / 24 assertions**；独立 JVM 重载 **6 scenes / 9 assertions**；原有手机播放器／歌词页恢复 **145 scenes / 28 assertions**。既有 `DesktopAutoMixIntegrationTest` **9 tests，零失败／错误／跳过**，覆盖实际双路解码、交接、取消、连续交接、下一首／上一首、软件音量和智能队列。原始 XML 与完整日志已归档。合计十一次 UI 回放 **248 scenes / 154 assertions**。
+
+Windows CI `39912792424`（`0e5a3d15dec5bf02fdc62bd0e5cdafc32d2a5f56`）成功后已完整独立下载发行 ZIP 核验：338589963 bytes，SHA-256 `43a53da46cc7ce97b936f6eddf5e3752e9c56613531f1fdf6251ef5c5f601dbd`，357 个 ZIP 条目，全部 ZIP/JAR CRC、build-info revision、pinned 资源与 Windows PE 解码器字节检查通过。核验 JSON 见 `evidence/windows-download-39912792424/`。

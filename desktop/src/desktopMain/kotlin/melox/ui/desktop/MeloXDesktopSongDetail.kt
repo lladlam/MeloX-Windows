@@ -64,7 +64,7 @@ internal fun MeloXDesktopSongDetail(id: Long, onBack: () -> Unit) {
         catch (cancelled: CancellationException) { throw cancelled }
         catch (_: Exception) { /* Keep unknown until a real read succeeds. */ }
     }
-    val playback by melox.player.AudioPlayer.state.collectAsState()
+    val playback by melox.playback.MeloXPlaybackOutput.state.collectAsState()
     LaunchedEffect(id, revision) {
         loading = true
         error = null

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="MeloXLanSessionTest[desktop]" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-10-23T18:37:09.169Z" hostname="lladlam-arch" time="3.942">
+  <properties/>
+  <testcase name="togetherCorrectionWaitsForReadyAndThreeSecondsAfterSeek[desktop]" classname="melox.lan.MeloXLanSessionTest" time="0.857"/>
+  <testcase name="castSilencesOnlyLocalAcceptedPcmAndRestoresItWithoutDisconnecting[desktop]" classname="melox.lan.MeloXLanSessionTest" time="1.129"/>
+  <testcase name="transferCarriesFullQueueAndTogetherStopRetainsControlSocket[desktop]" classname="melox.lan.MeloXLanSessionTest" time="1.132"/>
+  <testcase name="processConnectionSurvivesModeResetAndServerDisconnectClearsSnapshot[desktop]" classname="melox.lan.MeloXLanSessionTest" time="0.824"/>
+  <system-out><![CDATA[[INFO MeloXCast] First PCM received: bytes=128
+[INFO MeloXCast] First PCM sent: bytes=128
+[INFO MeloXCast] Receiver stopped: received_bytes=1024
+[INFO MeloXCast] Sender stopped: sent_bytes=1024
+[INFO MeloXTogether] Legacy peer: no READY barrier
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

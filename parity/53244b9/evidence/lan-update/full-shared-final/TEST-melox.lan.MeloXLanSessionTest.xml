@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="MeloXLanSessionTest[desktop]" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-10-24T16:11:38.259Z" hostname="lladlam-arch" time="3.379">
+  <properties/>
+  <testcase name="togetherCorrectionWaitsForReadyAndThreeSecondsAfterSeek[desktop]" classname="melox.lan.MeloXLanSessionTest" time="1.062"/>
+  <testcase name="castSilencesOnlyLocalAcceptedPcmAndRestoresItWithoutDisconnecting[desktop]" classname="melox.lan.MeloXLanSessionTest" time="0.54"/>
+  <testcase name="selectingNewAndReusedConnectionsStopsTheOriginalCastBeforeChangingItsOwner[desktop]" classname="melox.lan.MeloXLanSessionTest" time="0.711"/>
+  <testcase name="transferCarriesFullQueueAndTogetherStopRetainsControlSocket[desktop]" classname="melox.lan.MeloXLanSessionTest" time="0.529"/>
+  <testcase name="processConnectionSurvivesModeResetAndServerDisconnectClearsSnapshot[desktop]" classname="melox.lan.MeloXLanSessionTest" time="0.537"/>
+  <system-out><![CDATA[[INFO MeloXCast] First PCM received: bytes=128
+[INFO MeloXCast] First PCM sent: bytes=128
+[INFO MeloXCast] Receiver stopped: received_bytes=128
+[INFO MeloXCast] Sender stopped: sent_bytes=128
+[INFO MeloXCast] Sender stopped: sent_bytes=0
+[INFO MeloXCast] Receiver stopped: received_bytes=0
+[INFO MeloXCast] Sender stopped: sent_bytes=0
+[INFO MeloXCast] Receiver stopped: received_bytes=0
+[INFO MeloXTogether] Legacy peer: no READY barrier
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

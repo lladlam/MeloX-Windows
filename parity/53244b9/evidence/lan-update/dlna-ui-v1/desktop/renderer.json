@@ -1,0 +1,245 @@
+{
+  "kind": "loopback renderer, not physical DLNA",
+  "calls": [
+    {
+      "action": "Stop",
+      "fields": {
+        "InstanceID": "0"
+      }
+    },
+    {
+      "action": "SetAVTransportURI",
+      "fields": {
+        "InstanceID": "0",
+        "CurrentURI": "http://127.0.0.1:36815/cast/ec1c6f8c-1e37-4550-b71c-f82f4fe86aa2.wav?token=7d7e1ddb5f4cde9db4f8c865aceb8ac369abda591d1edaf9bc818e504a17fe32&songId=local%3Ab3bd7714adacd445f94cbd5d",
+        "CurrentURIMetaData": "<DIDL-Lite xmlns=\"urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/\" xmlns:dc=\"http://purl.org/dc/elements/1.1/\" xmlns:upnp=\"urn:schemas-upnp-org:metadata-1-0/upnp/\"><item id=\"0\" parentID=\"-1\" restricted=\"1\"><dc:title>dlna-generated</dc:title><upnp:artist>Generated PCM fixture</upnp:artist><upnp:album></upnp:album><upnp:class>object.item.audioItem.musicTrack</upnp:class><res protocolInfo=\"http-get:*:audio/wav:*\" duration=\"00:10:00\">http://127.0.0.1:36815/cast/ec1c6f8c-1e37-4550-b71c-f82f4fe86aa2.wav?token=7d7e1ddb5f4cde9db4f8c865aceb8ac369abda591d1edaf9bc818e504a17fe32&amp;songId=local%3Ab3bd7714adacd445f94cbd5d</res></item></DIDL-Lite>"
+      }
+    },
+    {
+      "action": "Play",
+      "fields": {
+        "InstanceID": "0",
+        "Speed": "1"
+      }
+    },
+    {
+      "action": "GetTransportInfo",
+      "fields": {
+        "InstanceID": "0"
+      }
+    },
+    {
+      "action": "Seek",
+      "fields": {
+        "InstanceID": "0",
+        "Unit": "REL_TIME",
+        "Target": "00:00:30"
+      }
+    },
+    {
+      "action": "GetTransportInfo",
+      "fields": {
+        "InstanceID": "0"
+      }
+    },
+    {
+      "action": "GetPositionInfo",
+      "fields": {
+        "InstanceID": "0"
+      }
+    },
+    {
+      "action": "GetVolume",
+      "fields": {
+        "InstanceID": "0",
+        "Channel": "Master"
+      }
+    },
+    {
+      "action": "GetTransportInfo",
+      "fields": {
+        "InstanceID": "0"
+      }
+    },
+    {
+      "action": "GetPositionInfo",
+      "fields": {
+        "InstanceID": "0"
+      }
+    },
+    {
+      "action": "GetVolume",
+      "fields": {
+        "InstanceID": "0",
+        "Channel": "Master"
+      }
+    },
+    {
+      "action": "GetTransportInfo",
+      "fields": {
+        "InstanceID": "0"
+      }
+    },
+    {
+      "action": "GetPositionInfo",
+      "fields": {
+        "InstanceID": "0"
+      }
+    },
+    {
+      "action": "GetVolume",
+      "fields": {
+        "InstanceID": "0",
+        "Channel": "Master"
+      }
+    },
+    {
+      "action": "Pause",
+      "fields": {
+        "InstanceID": "0"
+      }
+    },
+    {
+      "action": "GetTransportInfo",
+      "fields": {
+        "InstanceID": "0"
+      }
+    },
+    {
+      "action": "GetPositionInfo",
+      "fields": {
+        "InstanceID": "0"
+      }
+    },
+    {
+      "action": "GetVolume",
+      "fields": {
+        "InstanceID": "0",
+        "Channel": "Master"
+      }
+    },
+    {
+      "action": "GetTransportInfo",
+      "fields": {
+        "InstanceID": "0"
+      }
+    },
+    {
+      "action": "GetPositionInfo",
+      "fields": {
+        "InstanceID": "0"
+      }
+    },
+    {
+      "action": "GetVolume",
+      "fields": {
+        "InstanceID": "0",
+        "Channel": "Master"
+      }
+    },
+    {
+      "action": "Play",
+      "fields": {
+        "InstanceID": "0",
+        "Speed": "1"
+      }
+    },
+    {
+      "action": "GetTransportInfo",
+      "fields": {
+        "InstanceID": "0"
+      }
+    },
+    {
+      "action": "GetPositionInfo",
+      "fields": {
+        "InstanceID": "0"
+      }
+    },
+    {
+      "action": "GetVolume",
+      "fields": {
+        "InstanceID": "0",
+        "Channel": "Master"
+      }
+    },
+    {
+      "action": "GetTransportInfo",
+      "fields": {
+        "InstanceID": "0"
+      }
+    },
+    {
+      "action": "GetPositionInfo",
+      "fields": {
+        "InstanceID": "0"
+      }
+    },
+    {
+      "action": "GetVolume",
+      "fields": {
+        "InstanceID": "0",
+        "Channel": "Master"
+      }
+    },
+    {
+      "action": "GetTransportInfo",
+      "fields": {
+        "InstanceID": "0"
+      }
+    },
+    {
+      "action": "GetPositionInfo",
+      "fields": {
+        "InstanceID": "0"
+      }
+    },
+    {
+      "action": "GetVolume",
+      "fields": {
+        "InstanceID": "0",
+        "Channel": "Master"
+      }
+    },
+    {
+      "action": "GetTransportInfo",
+      "fields": {
+        "InstanceID": "0"
+      }
+    },
+    {
+      "action": "GetPositionInfo",
+      "fields": {
+        "InstanceID": "0"
+      }
+    },
+    {
+      "action": "GetVolume",
+      "fields": {
+        "InstanceID": "0",
+        "Channel": "Master"
+      }
+    },
+    {
+      "action": "Stop",
+      "fields": {
+        "InstanceID": "0"
+      }
+    }
+  ],
+  "ranges": [
+    {
+      "status": 206,
+      "content_range": "bytes 0-4095/105840044",
+      "bytes": 4096,
+      "mime": "audio/wav"
+    },
+    {
+      "status": 206,
+      "content_range": "bytes 0-4095/105840044",
+      "bytes": 4096,
+      "mime": "audio/wav"
+    }
+  ],
+  "errors": []
+}

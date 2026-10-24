@@ -1,0 +1,12 @@
+{
+  "mobile": {
+    "scenes": 24,
+    "assertions": 15,
+    "audio_range_requests": 2
+  },
+  "desktop": {
+    "scenes": 18,
+    "assertions": 13,
+    "audio_range_requests": 2
+  }
+}

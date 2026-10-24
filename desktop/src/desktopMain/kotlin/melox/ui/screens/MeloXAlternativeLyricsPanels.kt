@@ -46,9 +46,9 @@ private fun rememberAlternativeLyrics(track: MusicTrack, active: Boolean, author
     val document = remember(loaded.document, authoredOnly, MeloXSettingsRuntime.lyricPseudoTimingEnabled) {
         loaded.document?.let { if (!authoredOnly && MeloXSettingsRuntime.lyricPseudoTimingEnabled) it.withPseudoTiming() else it }
     }
-    val position by AudioPlayer.positionMs.collectAsState()
-    val playback by AudioPlayer.state.collectAsState()
-    val duration by AudioPlayer.durationMs.collectAsState()
+    val position by melox.playback.MeloXPlaybackOutput.positionMs.collectAsState()
+    val playback by melox.playback.MeloXPlaybackOutput.state.collectAsState()
+    val duration by melox.playback.MeloXPlaybackOutput.durationMs.collectAsState()
     val lines = document?.lines.orEmpty()
     val advance = effectiveBilibiliLyricAdvance(MeloXSettingsRuntime.lyricAdvanceMs, rememberBilibiliLyricOffset(track))
     var index by remember(track.id, document) { mutableIntStateOf(document?.highlightedIndex(position + advance)?.coerceIn(0, lines.lastIndex.coerceAtLeast(0)) ?: 0) }
@@ -213,7 +213,7 @@ private fun TextPVComposition(line: LyricLine, next: LyricLine?, style: MeloXTex
 @Composable
 internal fun MeloXSkylineLyricsPanel(track: MusicTrack, modifier: Modifier = Modifier, onInteraction: () -> Unit = {}, active: Boolean = true) {
     val state = rememberAlternativeLyrics(track, active)
-    val position by AudioPlayer.positionMs.collectAsState()
+    val position by melox.playback.MeloXPlaybackOutput.positionMs.collectAsState()
     val advance = effectiveBilibiliLyricAdvance(MeloXSettingsRuntime.lyricAdvanceMs, rememberBilibiliLyricOffset(track))
     val phase = remember { Animatable(0f) }
     LaunchedEffect(active, MeloXSettingsRuntime.lyricReduceMotion, MeloXSettingsRuntime.skylineAmbientDrift) {

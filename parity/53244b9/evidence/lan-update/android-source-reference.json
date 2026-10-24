@@ -1,0 +1,64 @@
+{
+  "repository": "/mnt/ntfs_files_sda4/\u9879\u76ee/MeloX-Android",
+  "head": "be7c33d15c3944bcdab6b70d8c80ffddc9c9895f",
+  "captured_utc": "2026-10-23T16:28:12.551073+00:00",
+  "reference": "local working tree including uncommitted LAN changes",
+  "files": [
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/lan/MeloXLanAudioProxy.kt",
+      "sha256": "9b2d22b2bb23cb9b32266cc6116046d0c80427e72d3977e0f07b7af349b985ca"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/lan/MeloXLanCast.kt",
+      "sha256": "6654bc37177388b0613bbc92db91e4d7dec8a74e3f66b47cdd9ffeab42074234"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/lan/MeloXLanClient.kt",
+      "sha256": "7af86dba2df83783acdbcb8ec5aab89fd0a542cd1a8afc14770b0a1a5c35dd2c"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/lan/MeloXLanDiscovery.kt",
+      "sha256": "de6ec43151a53300d05ee4e934cf7679720c2276132e36c46816357e274afe59"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/lan/MeloXLanModels.kt",
+      "sha256": "63fd9d4b03497c04ea08e2c1b7da1b8c717f2032821a16e6f1740e1cc67090be"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/lan/MeloXLanPermissions.kt",
+      "sha256": "26bbcfed9a6232ad87cd3719e28520a744b9b6fd098391dfc9e8c98a345368af"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/lan/MeloXLanRelayDataSource.kt",
+      "sha256": "d156902fb818b261c4b6b3df94521cda806dbefa81b6fddc1646e4def7235bbd"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/lan/MeloXLanRuntime.kt",
+      "sha256": "f126d2ae458151fe5d90a3ed9a84ddc10e4150e17f601d211f094ab9d76e474e"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/lan/MeloXLanServer.kt",
+      "sha256": "3eb21986fa18b961621c1baacce7c7a2ebe44398ca8073a5749db7f5ddce0542"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/lan/MeloXLanSession.kt",
+      "sha256": "f1ad23f762288925aa694d93fcc3b32931417c0b38832991eba381ca20c332e8"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/lan/MeloXLanTogetherSync.kt",
+      "sha256": "2dd15db4b78bfd516b242fa571cb52f43da901427996d4f4eb0dd705ac67fe6b"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXLanOutputPanel.kt",
+      "sha256": "2fdd0cc14d78f133ae9150ba6f081ce4df2556542d779a7f72d60055a72eb150"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXAudioOutputPlaybackPanel.kt",
+      "sha256": "410d467f2bcf6d1c99b58cc81615460a4d0998e3d4a6ec5cbc62548a6e5b0477"
+    },
+    {
+      "path": "docs/MELOX-LAN.md",
+      "sha256": "6f5513324882c905c537a8599a69093a5fd25bf04d94e7813a97fcd183b3b5f4"
+    }
+  ]
+}
