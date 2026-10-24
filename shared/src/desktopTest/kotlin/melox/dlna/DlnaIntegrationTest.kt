@@ -55,6 +55,14 @@ class DlnaIntegrationTest {
     }
     private suspend fun until(timeoutMs: Long = 30_000, block: () -> Boolean) = withTimeout(timeoutMs) { while (!block()) delay(10) }
 
+    @Test fun nativeWindowsPathsAndEscapedUrisKeepTheirAudioFormat() {
+        assertEquals("audio/wav", dlnaMimeType("D:\\Music files\\测试 tone.WAV"))
+        assertEquals("audio/flac", dlnaMimeType("\\\\server\\Music files\\tone.flac"))
+        assertEquals("audio/wav", dlnaMimeType("file:///D:/Music%20files/tone.wav"))
+        assertEquals("audio/flac", dlnaMimeType("https://example.com/tone.flac?token=x.mp3"))
+        assertEquals("audio/wav", dlnaMimeType("/home/music files/tone.wav"))
+    }
+
     @Test fun confirmedRendererFetchesRealAudioAndAllTransportControlsRouteToSoap() = runBlocking {
         // Decoder extraction of the bundled 172MB FFmpeg is disk-bound; allow for
         // a concurrently loaded machine without touching protocol deadlines.

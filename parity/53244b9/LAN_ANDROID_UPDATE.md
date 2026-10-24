@@ -54,4 +54,10 @@ DLNA 双布局生产回放同样通过：手机 **24 scenes / 15 assertions**、
 
 最终收尾的 **shared 全量回归 64 suites / 312 tests，零失败／错误／跳过**，并完成桌面编译。额外验证所有参与者拒绝 prepare 后按原播放意图恢复本机、保留控制连接；对应方法 `aRejectedPrepareRestoresLocalPlaybackAndRetainsItsControlConnection` 已在全量 XML 中确认执行。完整 XML、日志及汇总在 `evidence/lan-update/full-shared-final/`。上述四次 LAN/DLNA UI 回放合计 **142 scenes / 70 assertions**。
 
+### Windows CI 原生路径修正
+
+上述 312 项全量通过发生于本地 Linux。Windows CI `40111100874`（`b08ce04`）实际为 **312 tests / 1 failure**：DLNA Range 取到 WAV 字节，但 MIME 断言期望 `audio/wav`、实际 `audio/mpeg`，未生成发行 ZIP。原始失败 XML 与摘要在 `evidence/lan-update/windows-ci-40111100874-failure/`。根因是把 `D:\...\generated.wav` 原生路径传入 `URI` 解析，异常后丢弃了扩展名；现保留原始路径回退，并补充 Windows 盘符／UNC、空格／中文、file URI、带查询参数 HTTP URI 回归。新 Windows 运行与发行独立核验结果另行记录。
+
+修正后本地 **5 项 DLNA 测试全部通过，桌面编译通过**，包含原始真实 SOAP/Range/WAV 严格 MIME 断言和新增跨平台路径用例；XML 与摘要在 `evidence/lan-update/windows-path-fix/`。
+
 尚未闭环：真实跨机 Windows↔Android、多网卡/防火墙、物理音响和长时同步漂移。不要把 loopback fixture 写成手机互通已验收。

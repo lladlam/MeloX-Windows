@@ -14,6 +14,19 @@ import melox.lan.*
 import melox.playback.PlaybackCommands
 import melox.player.AudioPlayer
 
+internal fun dlnaMimeType(source: String): String {
+    // Native Windows paths are not URIs (backslashes/spaces and drive letters).
+    // Keep the original path when URI parsing fails or produces no path.
+    val path = runCatching { URI(source).path }.getOrNull() ?: source
+    return when (path.substringAfterLast('.').lowercase()) {
+        "wav" -> "audio/wav"
+        "flac" -> "audio/flac"
+        "m4a", "aac" -> "audio/mp4"
+        "ogg", "opus" -> "audio/ogg"
+        else -> "audio/mpeg"
+    }
+}
+
 data class DlnaSnapshot(val device: DlnaDevice? = null, val busy: Boolean = false, val playing: Boolean = false,
     val positionMs: Long = 0, val durationMs: Long = 0, val volume: Float? = null, val error: String? = null,
     val sampledNanos: Long = System.nanoTime()) {
@@ -60,8 +73,7 @@ object DlnaSession {
         val track = MeloXLanRuntime.fromSong(q.songs.getOrNull(q.index) ?: error("当前没有可投放的歌曲"))
         val request = PlaybackCommands.playerController()?.playbackSourceForOutput()
             ?: withContext(Dispatchers.IO) { MeloXLanRuntime.resolve(track) }
-        val extension = runCatching { URI(request.uri).path.substringAfterLast('.').lowercase() }.getOrDefault("")
-        val mime = when (extension) { "wav" -> "audio/wav"; "flac" -> "audio/flac"; "m4a", "aac" -> "audio/mp4"; "ogg", "opus" -> "audio/ogg"; else -> "audio/mpeg" }
+        val mime = dlnaMimeType(request.uri)
         return DlnaMediaSource(request.uri, request.headers, track.title, track.artist, track.album, track.artworkUrl,
             track.durationMs, AudioPlayer.getCurrentPositionMs(), "${track.source}:${track.id}", mime)
     }

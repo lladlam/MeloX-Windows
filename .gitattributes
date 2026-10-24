@@ -17,3 +17,4 @@ parity/desktop-a41ea0e/evidence/six-ui-local/**/*.log -whitespace
 desktop/src/main/resources/parity/legal/*.txt text eol=lf
 desktop/src/main/resources/parity/legal/*.md text eol=lf
 desktop/src/main/resources/parity/desktop-logo.png -text
+parity/53244b9/evidence/lan-update/**/*.xml text eol=lf
