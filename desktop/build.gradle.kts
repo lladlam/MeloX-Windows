@@ -58,6 +58,7 @@ kotlin {
                 implementation(libs.kotlinx.coroutines.swing)
                 implementation(libs.okhttp)
                 implementation(libs.org.json)
+                implementation("com.google.zxing:core:3.5.3")
                 // Same JNA already shipped by shared; native input verification uses its Win32 ABI.
                 implementation("net.java.dev.jna:jna-platform:5.17.0")
                 implementation(compose.ui)

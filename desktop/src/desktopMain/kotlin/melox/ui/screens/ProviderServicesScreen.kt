@@ -65,6 +65,7 @@ private val allProviders = listOf(
     ServiceProvider("netease", "网易云音乐", Color(0xFFFF2442)),
     ServiceProvider("qq", "QQ音乐", Color(0xFF12B7F5)),
     ServiceProvider("kugou", "酷狗音乐", Color(0xFF2CA2F9)),
+    ServiceProvider("qishui", "汽水音乐", Color(0xFF00B6BC)),
     ServiceProvider("kuwo", "酷我音乐", Color(0xFFFF6600)),
     ServiceProvider("bilibili", "哔哩哔哩", Color(0xFFFB7299)),
     ServiceProvider("spotify", "Spotify", Color(0xFF1DB954)),

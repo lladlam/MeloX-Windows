@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="PlayerAppearanceTest[desktop]" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-10-25T05:03:48.188Z" hostname="lladlam-arch" time="0.292">
+  <properties/>
+  <testcase name="backgroundModesMapToDistinctKindsAndShellsDiffer[desktop]" classname="melox.settings.PlayerAppearanceTest" time="0.118"/>
+  <testcase name="playerExpansionFollowsTheCollapseGestureDirection[desktop]" classname="melox.settings.PlayerAppearanceTest" time="0.0"/>
+  <testcase name="writingPlayerShellUpdatesRuntime[desktop]" classname="melox.settings.PlayerAppearanceTest" time="0.153"/>
+  <testcase name="themeModesResolveDarkLightAndSystem[desktop]" classname="melox.settings.PlayerAppearanceTest" time="0.017"/>
+  <testcase name="glassBlurAndLensChangeTheDraw[desktop]" classname="melox.settings.PlayerAppearanceTest" time="0.004"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

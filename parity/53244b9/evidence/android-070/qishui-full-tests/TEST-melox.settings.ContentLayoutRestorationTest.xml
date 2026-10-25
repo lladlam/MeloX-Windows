@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ContentLayoutRestorationTest[desktop]" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-10-25T05:01:53.826Z" hostname="lladlam-arch" time="10.245">
+  <properties/>
+  <testcase name="homeReorderingKeepsQuickActionsInTheirSavedPositionAndHonorsFeatureTogglesAfterReload[desktop]" classname="melox.settings.ContentLayoutRestorationTest" time="7.751"/>
+  <testcase name="rootDestinationsMatchRealFeedCapabilitiesAndKeepNeteaseModulesSourceScoped[desktop]" classname="melox.settings.ContentLayoutRestorationTest" time="0.507"/>
+  <testcase name="shortcutCanOpenEnabledCloudWithoutChangingDockOrPretendingOtherProviderOwnsIt[desktop]" classname="melox.settings.ContentLayoutRestorationTest" time="0.267"/>
+  <testcase name="rememberingOffUsesDefaultWithoutOverwritingPreviousPerProviderHistory[desktop]" classname="melox.settings.ContentLayoutRestorationTest" time="0.415"/>
+  <testcase name="libraryRemembersPerSourceAndDisabledSavedPageFallsBackToConfiguredVisibleDefault[desktop]" classname="melox.settings.ContentLayoutRestorationTest" time="0.799"/>
+  <testcase name="persistedTabOrderAndPlacementSurviveCriticalThenFullStartupWithoutLosingSettings[desktop]" classname="melox.settings.ContentLayoutRestorationTest" time="0.505"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[SLF4J(W): No SLF4J providers were found.
+SLF4J(W): Defaulting to no-operation (NOP) logger implementation
+SLF4J(W): See https://www.slf4j.org/codes.html#noProviders for further details.
+]]></system-err>
+</testsuite>

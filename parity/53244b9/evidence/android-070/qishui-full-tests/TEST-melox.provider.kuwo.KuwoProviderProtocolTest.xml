@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="KuwoProviderProtocolTest[desktop]" tests="1" skipped="0" failures="0" errors="0" timestamp="2026-10-25T05:03:33.757Z" hostname="lladlam-arch" time="0.043">
+  <properties/>
+  <testcase name="providerActuallyDelegatesNativeSearchPlaybackAndAuthenticatedPlaylists[desktop]" classname="melox.provider.kuwo.KuwoProviderProtocolTest" time="0.042"/>
+  <system-out><![CDATA[[INFO KuwoApiClient] Playback URL resolved: mid=71 format=mp3 endpoint=https://media.example/<redacted>
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

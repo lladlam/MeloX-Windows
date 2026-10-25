@@ -35,6 +35,7 @@ class ProviderAccountManager(
         MusicSource.YouTubeMusic -> YouTubeSessionStore.read().let { AccountState(source, it.isLoggedIn, it.accountName.takeIf(String::isNotBlank)) }
         MusicSource.Jellyfin -> JellyfinSessionStore.read().let { AccountState(source, it.isLoggedIn, it.userName.takeIf(String::isNotBlank)) }
         MusicSource.Local -> AccountState(source, true, "local")
+        MusicSource.Qishui -> melox.provider.qishui.QishuiSessionStore.read().let { AccountState(source, it.isLoggedIn, it.userId.takeIf(String::isNotBlank)) }
     }
 
     fun allStates(): List<AccountState> = MusicSource.entries.map(::state)
@@ -51,6 +52,7 @@ class ProviderAccountManager(
             MusicSource.YouTubeMusic -> YouTubeSessionStore.clear()
             MusicSource.Jellyfin -> JellyfinSessionStore.clear()
             MusicSource.Local -> Unit
+            MusicSource.Qishui -> melox.provider.qishui.QishuiSessionStore.clear()
         }
     }
 

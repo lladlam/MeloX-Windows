@@ -1,0 +1,10 @@
+{
+  "mobile": {
+    "scenes": 9,
+    "assertions": 12
+  },
+  "desktop": {
+    "scenes": 9,
+    "assertions": 12
+  }
+}

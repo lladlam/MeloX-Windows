@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Record/check the live Android LAN worktree without modifying that repository."""
+"""Record/check live Android feature sources without modifying that repository."""
 import argparse
 import datetime
 import hashlib
@@ -22,6 +22,15 @@ while True:
             files.update(root.glob(f'android/app/src/{source}/java/com/lladlam/melox/{package}/*.java'))
     files.update(root.glob('android/app/src/main/kotlin/com/lladlam/melox/ui/player/*Output*.kt'))
     files.update(root.glob('android/app/src/main/cpp/*usb*'))
+    # Features can land outside the output packages while this migration runs.
+    # Track the complete Kotlin/Java/UI/test surface and release documentation.
+    for source in ('main', 'test', 'androidTest'):
+        for extension in ('kt', 'java'):
+            files.update(root.glob(f'android/app/src/{source}/**/*.{extension}'))
+    files.update(root.glob('docs/**/*.md'))
+    files.update(root.glob('android/app/src/main/assets/legal/*'))
+    files.update(root.glob('android/app/src/main/res/values*/strings.xml'))
+    files.add(root/'android/app/build.gradle.kts')
     contents = {str(p.relative_to(root)): p.read_bytes() for p in sorted(files)}
     current = {name: hashlib.sha256(data).hexdigest() for name, data in contents.items()}
     old = json.loads(args.output.read_text()) if args.output.exists() else {}

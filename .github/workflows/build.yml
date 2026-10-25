@@ -206,7 +206,7 @@ jobs:
       - name: Replay provider collections in both production layouts
         shell: pwsh
         run: |
-          foreach ($source in @("Local", "Spotify", "YouTubeMusic")) {
+          foreach ($source in @("Local", "Spotify", "YouTubeMusic", "Qishui")) {
             foreach ($layout in @("desktop", "mobile")) {
               $case = "provider-$source-$layout"
               python tools/capture_provider_collections.py $source $layout "$pwd/desktop/build/parity/$case-home" "desktop/build/parity/$case"

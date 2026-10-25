@@ -181,5 +181,11 @@ object MusicExperiences {
         MusicSource.YouTubeMusic -> youtubeMusic
         MusicSource.Jellyfin -> jellyfin
         MusicSource.Local -> local
+        MusicSource.Qishui -> MusicExperience(
+            source = source,
+            homeSections = listOf(HomeSectionKind.Recommendations, HomeSectionKind.Playlists),
+            providerNativeCapabilities = setOf(MusicCapability.Search, MusicCapability.Playback, MusicCapability.Lyrics,
+                MusicCapability.HomeRecommendations, MusicCapability.Playlists, MusicCapability.Library),
+        )
     }
 }

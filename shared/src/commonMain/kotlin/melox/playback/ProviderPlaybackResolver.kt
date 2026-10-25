@@ -270,6 +270,7 @@ class ResolvedRequest(
             queryParam(uri, SpotifyIsrcQuery)?.takeIf(String::isNotBlank),
         )
         MusicSource.YouTubeMusic -> ProviderTrackMetadata.Empty
+        MusicSource.Qishui -> ProviderTrackMetadata.Empty
         MusicSource.Jellyfin -> queryParam(uri, "jellyfinServer")?.takeIf(String::isNotBlank)?.let {
             ProviderTrackMetadata.Jellyfin(it, queryParam(uri, "jellyfinPlaylist"), queryParam(uri, "jellyfinEntry"))
         } ?: ProviderTrackMetadata.Empty

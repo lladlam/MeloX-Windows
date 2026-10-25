@@ -120,7 +120,7 @@ fun LibraryScreen(
         melox.ui.navigation.MeloXLoginRequestBus.request(requestedSource)
         navState?.navigateTo(melox.ui.navigation.Route.Login)
     }
-    if (requestedSource in setOf(MusicSource.Local, MusicSource.Spotify, MusicSource.YouTubeMusic)) {
+    if (requestedSource in setOf(MusicSource.Local, MusicSource.Spotify, MusicSource.YouTubeMusic, MusicSource.Qishui)) {
         MeloXProviderLibraryScreen(requestedSource, requestedPage, openSourceLogin)
         return
     }

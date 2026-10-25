@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="NeteaseOfficialCookieReaderTest[desktop]" tests="9" skipped="0" failures="0" errors="0" timestamp="2026-10-25T05:02:04.189Z" hostname="lladlam-arch" time="5.417">
+  <properties/>
+  <testcase name="readsCommittedWalCookiesWhileWriterConnectionRemainsOpen[desktop]" classname="melox.account.NeteaseOfficialCookieReaderTest" time="0.764"/>
+  <testcase name="rejectsUnknownEncryptionAndTamperedGcmTagAndCleansTemporaryCopies[desktop]" classname="melox.account.NeteaseOfficialCookieReaderTest" time="0.742"/>
+  <testcase name="dpapiAndMalformedPreferencesFailuresAreSanitizedAndCleaned[desktop]" classname="melox.account.NeteaseOfficialCookieReaderTest" time="0.314"/>
+  <testcase name="rejectsUnknownSchemaAndUnselectedProfile[desktop]" classname="melox.account.NeteaseOfficialCookieReaderTest" time="0.443"/>
+  <testcase name="rejectsCookieDelimiterInjectionAndDuplicateRootSessions[desktop]" classname="melox.account.NeteaseOfficialCookieReaderTest" time="0.997"/>
+  <testcase name="rejectsExpiredOrMissingMainCookie[desktop]" classname="melox.account.NeteaseOfficialCookieReaderTest" time="0.507"/>
+  <testcase name="rejectedImportedCookieDoesNotReplaceExistingSession[desktop]" classname="melox.account.NeteaseOfficialCookieReaderTest" time="0.417"/>
+  <testcase name="importsOnlySessionCookiesAndUsesExistingSessionValidationWithoutModifyingSource[desktop]" classname="melox.account.NeteaseOfficialCookieReaderTest" time="0.823"/>
+  <testcase name="discoversOnlyCompleteProfilesAndDoesNotChooseBetweenMultipleProfiles[desktop]" classname="melox.account.NeteaseOfficialCookieReaderTest" time="0.408"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

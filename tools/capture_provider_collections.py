@@ -16,7 +16,7 @@ import sys
 import wave
 
 source, layout, home, output = sys.argv[1:5]
-assert source in ('Local', 'Spotify', 'YouTubeMusic', 'QQMusic', 'Kugou', 'Bilibili', 'Jellyfin')
+assert source in ('Local', 'Spotify', 'YouTubeMusic', 'QQMusic', 'Kugou', 'Bilibili', 'Jellyfin', 'Qishui')
 assert layout in ('desktop', 'mobile')
 home, output = Path(home).resolve(), Path(output).resolve()
 repo = Path(__file__).resolve().parents[1]
@@ -40,7 +40,7 @@ def section(value):
     return f'tap@desktop-nav:{value}' if desktop else f'tap@library-page:{value}'
 
 
-native_collections = source in ('Local', 'Spotify', 'YouTubeMusic')
+native_collections = source in ('Local', 'Spotify', 'YouTubeMusic', 'Qishui')
 assert native_collections or desktop, 'Generic provider regression targets its Desktop login gate'
 root = f'{layout}-provider-library:{source}' if native_collections else 'desktop-provider-library'
 add('consent', 'tap@remote-reject', 'cloud-enabled:false')
@@ -78,12 +78,17 @@ if source == 'Local':
     add('back', 'escape', f'tag:{root}', f'tag-prefix:provider-library-card:{source}:')
 else:
     add('signed-out', 'wait@1200', 'tag:provider-library-login', 'absent:provider-library-empty')
-    if native_collections:
+    if native_collections and source != 'Qishui':
         add('albums', section('Albums'), f'tag:{root}', 'tag:provider-library-login')
         add('artists', section('Artists'), f'tag:{root}', 'tag:provider-library-login')
     provider_id = {'Spotify': 'spotify', 'YouTubeMusic': 'youtubemusic', 'QQMusic': 'qq',
-                   'Kugou': 'kugou', 'Bilibili': 'bilibili', 'Jellyfin': 'jellyfin'}[source]
+                    'Kugou': 'kugou', 'Bilibili': 'bilibili', 'Jellyfin': 'jellyfin', 'Qishui': 'qishui'}[source]
     add('login', 'tap@provider-library-login', 'tag:account-screen', f'tag:account-form-{provider_id}')
+    if source == 'Qishui':
+        add('qr-loaded', 'wait@25000', 'tag:qishui-login-qr', 'tag:qishui-login-refresh')
+        add('qr-refresh', 'tap@qishui-login-refresh', 'tag:qishui-login')
+        add('qr-reloaded', 'wait@25000', 'tag:qishui-login-qr')
+        add('close-login', 'tap@account-dialog-close', 'absent:account-form-qishui')
 
 (output / 'steps.txt').write_text('\n'.join(steps) + '\n', encoding='utf-8')
 (output / 'expect.txt').write_text('\n'.join(expectations) + '\n', encoding='utf-8')

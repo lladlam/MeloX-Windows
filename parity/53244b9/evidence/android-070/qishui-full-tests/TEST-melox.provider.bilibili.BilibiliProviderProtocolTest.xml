@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="BilibiliProviderProtocolTest[desktop]" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-10-25T05:03:32.996Z" hostname="lladlam-arch" time="0.039">
+  <properties/>
+  <testcase name="dashRetries403WithNewKeyAndUsesReplacementOnlyForPhysicalPlayback[desktop]" classname="melox.provider.bilibili.BilibiliProviderProtocolTest" time="0.015"/>
+  <testcase name="searchSignsWbiAndPreservesNativeVideoPageIdentity[desktop]" classname="melox.provider.bilibili.BilibiliProviderProtocolTest" time="0.003"/>
+  <testcase name="favoriteFolderExpandsMultiPageVideoAndDoesNotTurnApiErrorIntoEmptyData[desktop]" classname="melox.provider.bilibili.BilibiliProviderProtocolTest" time="0.021"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -84,6 +84,7 @@ object TrackAggregation {
             melox.music.model.MusicSource.QQMusic -> 5
             melox.music.model.MusicSource.Netease -> 3
             melox.music.model.MusicSource.Kugou -> 2
+            melox.music.model.MusicSource.Qishui -> 2
             melox.music.model.MusicSource.Kuwo -> 2
             melox.music.model.MusicSource.AppleMusic -> 4
             melox.music.model.MusicSource.Bilibili -> 1

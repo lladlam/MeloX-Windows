@@ -87,6 +87,7 @@ private val allProviders = listOf(
     LoginProvider("netease", "网易云音乐", Color(0xFFFF2442), "手机号登录 / 本机客户端"),
     LoginProvider("qq", "QQ音乐", Color(0xFF12B7F5), "扫码登录"),
     LoginProvider("kugou", "酷狗音乐", Color(0xFF2CA2F9), "扫码登录"),
+    LoginProvider("qishui", "汽水音乐", Color(0xFF00B6BC), "抖音扫码登录"),
     LoginProvider("kuwo", "酷我音乐", Color(0xFFFF6600), "手机号登录"),
     LoginProvider("bilibili", "哔哩哔哩", Color(0xFFFB7299), "WebView登录"),
     LoginProvider("spotify", "Spotify", Color(0xFF1DB954), "OAuth登录"),
@@ -317,7 +318,7 @@ private fun LoginDialog(
             ) {
                 when (provider.id) {
                     "netease" -> NeteaseLoginForm(state, onLoginSuccess)
-                    "qq", "kugou" -> QRCodeLoginForm(provider, state, onLoginSuccess)
+                    "qq", "kugou", "qishui" -> QRCodeLoginForm(provider, state, onLoginSuccess)
                     "kuwo" -> PhoneCodeLoginForm(provider, state, onLoginSuccess)
                     "bilibili" -> WebViewLoginForm(provider, state, onLoginSuccess)
                     "spotify" -> OAuthLoginForm(provider, state, onLoginSuccess)
@@ -591,6 +592,7 @@ private fun QRCodeLoginForm(provider: LoginProvider, state: LoginScreenState, on
     when (provider.id) {
         "qq" -> QqQrLoginPane(state, onLoginSuccess)
         "kugou" -> KugouQrLoginPane(state, onLoginSuccess)
+        "qishui" -> QishuiQrLoginPane(onLoginSuccess)
         else -> Text(
             text = "该来源没有扫码登录",
             color = MeloXColors.TextSecondary,

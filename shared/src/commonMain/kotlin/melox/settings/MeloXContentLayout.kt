@@ -9,7 +9,7 @@ object MeloXContentLayout {
     val tabs = listOf("Home", "Explore", "Library", "Podcasts", "Downloads", "Cloud", "Settings")
     val homeSections = listOf("QuickActions", "Playlists", "NewSongs")
     private val feedSources = setOf(MusicSource.Netease, MusicSource.QQMusic, MusicSource.Kugou,
-        MusicSource.AppleMusic, MusicSource.YouTubeMusic)
+        MusicSource.AppleMusic, MusicSource.YouTubeMusic, MusicSource.Qishui)
 
     fun visibleTabs(source: MusicSource): List<String> {
         val order = if (source == MusicSource.Bilibili) listOf("Library", "Settings") else MeloXSettingsRuntime.tabOrder
