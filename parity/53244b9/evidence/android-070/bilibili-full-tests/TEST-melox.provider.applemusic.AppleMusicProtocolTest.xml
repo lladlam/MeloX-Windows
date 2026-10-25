@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="AppleMusicProtocolTest[desktop]" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-10-25T05:36:05.798Z" hostname="lladlam-arch" time="0.189">
+  <properties/>
+  <testcase name="lyricsUseRealTtmlAndPlainAppleResponseWithoutSyntheticWordTiming[desktop]" classname="melox.provider.applemusic.AppleMusicProtocolTest" time="0.045"/>
+  <testcase name="searchUsesOfficialCatalogAndPreservesNativeIdentityWithoutPreviewPlayback[desktop]" classname="melox.provider.applemusic.AppleMusicProtocolTest" time="0.037"/>
+  <testcase name="invalidCatalogIdentityIsRejectedInsteadOfReachingUrlPath[desktop]" classname="melox.provider.applemusic.AppleMusicProtocolTest" time="0.052"/>
+  <testcase name="credentialValidationVerifiesAuthorizedStorefrontAndNeverAcceptsPartialCredentials[desktop]" classname="melox.provider.applemusic.AppleMusicProtocolTest" time="0.052"/>
+  <testcase name="sessionTokensArePrivateInLogsAndRoundTripWithoutLoss[desktop]" classname="melox.provider.applemusic.AppleMusicProtocolTest" time="0.003"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

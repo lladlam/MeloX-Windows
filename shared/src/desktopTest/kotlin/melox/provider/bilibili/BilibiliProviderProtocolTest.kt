@@ -74,6 +74,7 @@ class BilibiliProviderProtocolTest {
     @Test fun favoriteFolderExpandsMultiPageVideoAndDoesNotTurnApiErrorIntoEmptyData() = runBlocking<Unit> {
         val http = client { request -> when (request.url.encodedPath) {
             "/x/v3/fav/folder/created/list-all" -> """{"code":0,"data":{"list":[{"id":7,"title":"Folder","cover":"https://images.example/cover","media_count":1}]}}"""
+            "/x/v3/fav/folder/collected/list" -> """{"code":0,"data":{"list":[]}}"""
             "/x/v3/fav/resource/list" -> {
                 assertEquals("2", request.url.queryParameter("pn"))
                 assertEquals("20", request.url.queryParameter("ps"))
@@ -90,5 +91,67 @@ class BilibiliProviderProtocolTest {
         assertIs<PlaybackResolution.LoginRequired>(BilibiliProvider(httpClient = http).resolvePlayback(detail.tracks.first(), AudioQualityTier.Standard))
         val failing = BilibiliProvider({ session }, client { """{"code":-101,"message":"login expired"}""" }, apiCache = null)
         assertFailsWith<java.io.IOException> { failing.userPlaylists(1, 20) }
+    }
+
+    @Test fun collectedFoldersAndSeasonsPreserveDistinctIdentitiesAndPageTheLibrary() = runBlocking<Unit> {
+        val pages = mutableListOf<String?>()
+        val http = client { request -> when (request.url.encodedPath) {
+            "/x/v3/fav/folder/created/list-all" -> """{"code":0,"data":{"list":[{"id":7,"title":"Created","cover":"https://images.example/7"}]}}"""
+            "/x/v3/fav/folder/collected/list" -> {
+                pages += request.url.queryParameter("pn")
+                assertEquals("9", request.url.queryParameter("up_mid"))
+                val items = org.json.JSONArray()
+                if (request.url.queryParameter("pn") == "1") {
+                    repeat(40) { items.put(org.json.JSONObject().put("id", 100 + it).put("title", "Collected $it").put("cover", "https://images.example/$it")) }
+                } else {
+                    items.put(org.json.JSONObject("""{"id":7,"title":"Duplicate folder","cover":"https://images.example/7"}"""))
+                    items.put(org.json.JSONObject("""{"id":7,"type":21,"mid":99,"title":"Season"}"""))
+                }
+                org.json.JSONObject().put("code", 0).put("data", org.json.JSONObject().put("list", items)).toString()
+            }
+            else -> error("Unexpected endpoint ${request.url}")
+        } }
+        val provider = BilibiliProvider({ session }, http, apiCache = null)
+        val first = provider.userPlaylists(1, 40)
+        assertEquals(42L, first.total); assertTrue(first.hasMore)
+        val last = provider.userPlaylists(2, 40)
+        assertEquals(listOf("139", "season:99:7"), last.items.map { it.id.value })
+        assertFalse(MusicCapability.PlaylistWrite in provider.capabilities); assertFalse(last.hasMore)
+        assertEquals(listOf<String?>("1", "2", "1", "2"), pages)
+    }
+
+    @Test fun seasonUsesItsOwnEndpointAndPaginationWithNativeVideoIds() = runBlocking<Unit> {
+        val http = client { request ->
+            assertEquals("/x/polymer/web-space/seasons_archives_list", request.url.encodedPath)
+            assertEquals("99", request.url.queryParameter("mid")); assertEquals("7", request.url.queryParameter("season_id"))
+            assertEquals("2", request.url.queryParameter("page_num")); assertEquals("20", request.url.queryParameter("page_size"))
+            """{"code":0,"data":{"meta":{"name":"Native season","cover":"//images.example/season"},"page":{"total":45},"archives":[{"bvid":"BVseason","cid":72,"aid":12,"title":"Track","duration":180}]}}"""
+        }
+        val provider = BilibiliProvider({ session }, http, apiCache = null)
+        val detail = provider.playlistDetail(MusicPlaylistSummary(MusicResourceId(MusicSource.Bilibili, "season:99:7"), "Season"), 2, 100)
+        assertEquals("Native season", detail.summary.title); assertEquals(45L, detail.total); assertEquals(true, detail.hasMore)
+        assertEquals("BVseason:72", detail.tracks.single().id.value); assertEquals(180000L, detail.tracks.single().durationMs)
+    }
+
+    @Test fun aDeletedVideoDoesNotDiscardOtherFavoritesOrMorePages() = runBlocking<Unit> {
+        val http = client { request -> when (request.url.encodedPath) {
+            "/x/v3/fav/resource/list" -> """{"code":0,"data":{"info":{"media_count":30},"has_more":true,"medias":[{"bvid":"BVgone","title":"Private"},{"bvid":"BVgood","ugc":{"first_cid":73},"title":"Good","duration":200},{"type":12,"bvid":"BVnotVideo"}]}}"""
+            "/x/web-interface/view" -> """{"code":-404,"message":"deleted"}"""
+            else -> error("Unexpected endpoint ${request.url}")
+        } }
+        val detail = BilibiliProvider({ session }, http, apiCache = null).playlistDetail(
+            MusicPlaylistSummary(MusicResourceId(MusicSource.Bilibili, "7"), "Folder"), 1, 100)
+        assertEquals(listOf("BVgood:73"), detail.tracks.map { it.id.value }); assertEquals(true, detail.hasMore)
+    }
+
+    @Test fun collectedEndpointFailureStillShowsCreatedFoldersButDetailFailureIsExplicit() = runBlocking<Unit> {
+        val http = client { request -> when (request.url.encodedPath) {
+            "/x/v3/fav/folder/created/list-all" -> """{"code":0,"data":{"list":[{"id":7,"title":"Created","cover":"https://images.example/7"}]}}"""
+            else -> """{"code":-403,"message":"forbidden"}"""
+        } }
+        val provider = BilibiliProvider({ session }, http, apiCache = null)
+        val folder = provider.userPlaylists(1, 20).items.single()
+        assertFailsWith<java.io.IOException> { provider.playlistDetail(folder, 1, 20) }
+        assertFailsWith<IllegalArgumentException> { provider.playlistDetail(folder.copy(id = MusicResourceId(MusicSource.Bilibili, "season:0:7")), 1, 20) }
     }
 }

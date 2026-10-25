@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="DlnaIntegrationTest[desktop]" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-10-25T05:33:48.949Z" hostname="lladlam-arch" time="15.821">
+  <properties/>
+  <testcase name="confirmedRendererFetchesRealAudioAndAllTransportControlsRouteToSoap[desktop]" classname="melox.dlna.DlnaIntegrationTest" time="10.494"/>
+  <testcase name="changingTheRealQueueRetainsTheRendererAndInstallsTheNewTrackAfterThePanelIsGone[desktop]" classname="melox.dlna.DlnaIntegrationTest" time="2.462"/>
+  <testcase name="descriptionAndChunkedSoapUseRealHttpAndRejectExternalEntityXml[desktop]" classname="melox.dlna.DlnaIntegrationTest" time="0.107"/>
+  <testcase name="nativeWindowsPathsAndEscapedUrisKeepTheirAudioFormat[desktop]" classname="melox.dlna.DlnaIntegrationTest" time="0.034"/>
+  <testcase name="rendererThatNeverConfirmsPlaybackIsAnErrorAndDoesNotPauseTheLocalPlayer[desktop]" classname="melox.dlna.DlnaIntegrationTest" time="2.723"/>
+  <system-out><![CDATA[[DEBUG AudioPlayer] Bundled FFmpeg verified: sha256=ee930e8def21a993f4b8c680757df15054da1c8f2698da0fdf87f1f3b15bd633 bytes=172690600
+[DEBUG AudioPlayer] FFmpeg binary=/mnt/ntfs_files_sda4/项目/MeloX-Windows/desktop/build/lan-validation-tmp/melox-decoder-ffmpeg-ee930e8def21a993 os=Linux sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+[INFO MeloXDlna] Renderer PLAYING confirmed; proxy=true
+[DEBUG AudioPlayer] FFmpeg binary=/mnt/ntfs_files_sda4/项目/MeloX-Windows/desktop/build/lan-validation-tmp/melox-decoder-ffmpeg-ee930e8def21a993 os=Linux sourceHost=local
+[DEBUG AudioPlayer] decode local source at 4083ms
+[DEBUG AudioPlayer] FFmpeg binary=/mnt/ntfs_files_sda4/项目/MeloX-Windows/desktop/build/lan-validation-tmp/melox-decoder-ffmpeg-ee930e8def21a993 os=Linux sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+[INFO MeloXDlna] Renderer PLAYING confirmed; proxy=true
+[DEBUG AudioPlayer] FFmpeg binary=/mnt/ntfs_files_sda4/项目/MeloX-Windows/desktop/build/lan-validation-tmp/melox-decoder-ffmpeg-ee930e8def21a993 os=Linux sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+[INFO MeloXDlna] Renderer PLAYING confirmed; proxy=true
+[DEBUG AudioPlayer] FFmpeg binary=/mnt/ntfs_files_sda4/项目/MeloX-Windows/desktop/build/lan-validation-tmp/melox-decoder-ffmpeg-ee930e8def21a993 os=Linux sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

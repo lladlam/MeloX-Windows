@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="NeteaseSearchTrafficTest[desktop]" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-10-25T05:35:01.536Z" hostname="lladlam-arch" time="0.544">
+  <properties/>
+  <testcase name="failedAndCancelledSearchesAreNotReused[desktop]" classname="melox.network.NeteaseSearchTrafficTest" time="0.0"/>
+  <testcase name="normalErrorsDoNotTriggerRiskCooldown[desktop]" classname="melox.network.NeteaseSearchTrafficTest" time="0.001"/>
+  <testcase name="searchCacheDeduplicatesAndSeparatesSessionsAndKinds[desktop]" classname="melox.network.NeteaseSearchTrafficTest" time="0.0"/>
+  <testcase name="concurrentIdenticalSearchesOnlyLoadOnce[desktop]" classname="melox.network.NeteaseSearchTrafficTest" time="0.051"/>
+  <testcase name="apiBurstIsSpacedAndConcurrencyIsBounded[desktop]" classname="melox.network.NeteaseSearchTrafficTest" time="0.486"/>
+  <testcase name="rateLimitStopsOtherApiHostsUntilCooldownButNotAudio[desktop]" classname="melox.network.NeteaseSearchTrafficTest" time="0.005"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

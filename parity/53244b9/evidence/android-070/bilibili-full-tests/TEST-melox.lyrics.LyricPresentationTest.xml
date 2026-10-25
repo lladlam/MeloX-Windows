@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="LyricPresentationTest[desktop]" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-10-25T05:34:52.612Z" hostname="lladlam-arch" time="0.179">
+  <properties/>
+  <testcase name="focusOnlyAnnotationsNeverShowEmptyDisabledOrUnfocusedText[desktop]" classname="melox.lyrics.LyricPresentationTest" time="0.075"/>
+  <testcase name="InstrumentalGapsStartAfterTheLastAuthoredWordRatherThanTheNominalLineDuration[desktop]" classname="melox.lyrics.LyricPresentationTest" time="0.028"/>
+  <testcase name="ReducedMotionKeepsWordProgressButRemovesLiftExpansionGlowAndShake[desktop]" classname="melox.lyrics.LyricPresentationTest" time="0.074"/>
+  <testcase name="UntimedPunctuationAndZeroDurationProviderWordsDoNotCreateInvalidGlyphEffects[desktop]" classname="melox.lyrics.LyricPresentationTest" time="0.0"/>
+  <testcase name="LatinLongToneCombinesSyllablesWhileLiftStillRespectsTheChosenGrouping[desktop]" classname="melox.lyrics.LyricPresentationTest" time="0.0"/>
+  <testcase name="repeatedWordsKeepTheirOwnProviderTimesAndDoNotConsumeTheGap[desktop]" classname="melox.lyrics.LyricPresentationTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

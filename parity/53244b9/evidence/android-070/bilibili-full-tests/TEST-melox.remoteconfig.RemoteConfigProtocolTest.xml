@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="RemoteConfigProtocolTest[desktop]" tests="11" skipped="0" failures="0" errors="0" timestamp="2026-10-25T05:36:12.956Z" hostname="lladlam-arch" time="9.554">
+  <properties/>
+  <testcase name="signedLoginBreakersPreventActualPhoneRequestsAndBrowserOpeningWhileLocalStillResolves[desktop]" classname="melox.remoteconfig.RemoteConfigProtocolTest" time="1.304"/>
+  <testcase name="foregroundResumeRefreshesSignedPolicyAndStopPreventsLaterAutomaticRequests[desktop]" classname="melox.remoteconfig.RemoteConfigProtocolTest" time="1.015"/>
+  <testcase name="disabledRuntimeMakesNoRequestAndExplicitConsentPerformsGenuineSignedRefresh[desktop]" classname="melox.remoteconfig.RemoteConfigProtocolTest" time="0.867"/>
+  <testcase name="tamperedSignatureRetainsLastValidCacheAndReturnsActualVerificationError[desktop]" classname="melox.remoteconfig.RemoteConfigProtocolTest" time="0.743"/>
+  <testcase name="corruptCachedEnvelopeDropsConditionalEtagAndRefetchesWithoutLosingRollbackFloor[desktop]" classname="melox.remoteconfig.RemoteConfigProtocolTest" time="0.717"/>
+  <testcase name="clearingCachePreservesRollbackFloorAndRejectsOlderEvenCorrectlySignedEnvelope[desktop]" classname="melox.remoteconfig.RemoteConfigProtocolTest" time="0.923"/>
+  <testcase name="legacySignedOrderUsesExpandedBuiltInOrderAndRetainsDisabledSources[desktop]" classname="melox.remoteconfig.RemoteConfigProtocolTest" time="0.649"/>
+  <testcase name="oversizedChunkedBodyIsBoundedAndNeverBecomesCachedConfiguration[desktop]" classname="melox.remoteconfig.RemoteConfigProtocolTest" time="0.751"/>
+  <testcase name="withdrawingDuringBlockedResponseCancelsSocketClearsCacheAndRestoresBuiltinPolicyPromptly[desktop]" classname="melox.remoteconfig.RemoteConfigProtocolTest" time="1.149"/>
+  <testcase name="versionAndConsentGateTheActualPolicyAndNeverDisableUserAddedOrLocalSources[desktop]" classname="melox.remoteconfig.RemoteConfigProtocolTest" time="0.734"/>
+  <testcase name="realSignedHttpPersistsEtagAnd304KeepsVerifiedConfigWithoutAccountHeaders[desktop]" classname="melox.remoteconfig.RemoteConfigProtocolTest" time="0.701"/>
+  <system-out><![CDATA[[DEBUG MeloXThirdParty] resolve detail source=local id=own-file title=Local artists=未知歌手 durationMs=null metadata=Local
+[INFO MeloXThirdParty] Resolve start source=local quality=Standard thirdParty=true
+[INFO MeloXThirdParty] Resolve fallback source=local stage=provider chksz=unavailable
+[WARN MeloXRemoteConfig] Remote config failed through GhFast: Remote config signature verification failed
+[WARN MeloXRemoteConfig] Remote config failed through GhFast: Remote config rollback rejected
+[WARN MeloXRemoteConfig] Remote config failed through GhFast: Remote config response is too large
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
