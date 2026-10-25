@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="DesktopSearchProtocolTest[desktop]" tests="7" skipped="0" failures="0" errors="0" timestamp="2026-10-25T05:20:15.458Z" hostname="lladlam-arch" time="0.311">
+  <properties/>
+  <testcase name="replacingMediaSearchCancelsTheActualSocket[desktop]" classname="melox.network.DesktopSearchProtocolTest" time="0.013"/>
+  <testcase name="providerSearchPreservesNativeCollectionIdsForUnifiedResultActions[desktop]" classname="melox.network.DesktopSearchProtocolTest" time="0.052"/>
+  <testcase name="repeatedQueriesAcrossClientsReuseOneRealHttpResponse[desktop]" classname="melox.network.DesktopSearchProtocolTest" time="0.061"/>
+  <testcase name="replacingSuggestionsCancelsTheActualSocket[desktop]" classname="melox.network.DesktopSearchProtocolTest" time="0.012"/>
+  <testcase name="replacingSearchCancelsTheActualInflightSocketWithoutPublishingOldResults[desktop]" classname="melox.network.DesktopSearchProtocolTest" time="0.019"/>
+  <testcase name="paginatedUniversalSearchUsesRealPinnedRouteAndPropagatesServiceErrors[desktop]" classname="melox.network.DesktopSearchProtocolTest" time="0.098"/>
+  <testcase name="canonicalSearchEnrichesMissingArtworkAndRetainsRealSongArtistAlbumAndDurationIds[desktop]" classname="melox.network.DesktopSearchProtocolTest" time="0.055"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

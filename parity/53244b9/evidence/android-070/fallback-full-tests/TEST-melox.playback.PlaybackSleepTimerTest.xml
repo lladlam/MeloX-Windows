@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="PlaybackSleepTimerTest[desktop]" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-10-25T05:20:39.200Z" hostname="lladlam-arch" time="0.014">
+  <properties/>
+  <testcase name="replacementAndCancellationNeverPauseAtOldDeadline[desktop]" classname="melox.playback.PlaybackSleepTimerTest" time="0.011"/>
+  <testcase name="restoredDeadlineSurvivesPanelLifetimeAndExpiresExactlyOnce[desktop]" classname="melox.playback.PlaybackSleepTimerTest" time="0.002"/>
+  <testcase name="processDisposalStopsWorkerButPreservesDeadlineForNextLaunch[desktop]" classname="melox.playback.PlaybackSleepTimerTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -341,6 +341,15 @@ class MeloXDesktopPlayer internal constructor(
     private val maintenanceJob: Job
     private val chkszPlayback = ChkszPlaybackResolver()
     private val lxUserPlayback = LxUserPlaybackResolver()
+    private val crossProviderFallback = CrossProviderPlaybackFallbackResolver(
+        enabledProvider = { CrossProviderPlaybackPreferences.enabled() && melox.remoteconfig.MeloXRemoteConfigPolicy.capabilityEnabled("cross_provider_fallback") },
+        registryProvider = { ProviderPlaybackRuntime.initialize(); ProviderPlaybackRuntime.registryOrNull() },
+        cacheIdentityProvider = { CrossProviderPlaybackFallbackResolver.EligibleSources
+            .sortedBy { it.storageValue }.joinToString(":") { ProviderPlaybackRuntime.authKey(it) } },
+        fallbackConfigProvider = { melox.remoteconfig.MeloXRemoteConfigPolicy.activeConfig().fallback },
+        providerPlaybackEnabled = melox.remoteconfig.MeloXRemoteConfigPolicy::providerPlaybackEnabled,
+        eventLogger = { message -> melox.platform.logInfo("MeloXPlayback", "Cross-provider fallback: $message") },
+    )
     private val neteaseResolver = NeteasePlaybackResolver(
         cookieProvider = { PlaybackAccountStore.neteaseCookie() },
         localSourceProvider = { songId -> MeloXDownloadStore.instance().localPlaybackString(songId) },
@@ -349,15 +358,7 @@ class MeloXDesktopPlayer internal constructor(
         lxUserPlayback = lxUserPlayback,
         thirdPartySourcesEnabled = ThirdPartyMusicSourceConsentStore::enabled,
         thirdPartyOnlyForMembership = ThirdPartyMusicSourceConsentStore::membershipFallbackOnly,
-        crossProviderFallback = CrossProviderPlaybackFallbackResolver(
-            enabledProvider = { CrossProviderPlaybackPreferences.enabled() && melox.remoteconfig.MeloXRemoteConfigPolicy.capabilityEnabled("cross_provider_fallback") },
-            registryProvider = { ProviderPlaybackRuntime.initialize(); ProviderPlaybackRuntime.registryOrNull() },
-            cacheIdentityProvider = { CrossProviderPlaybackFallbackResolver.EligibleSources
-                .sortedBy { it.storageValue }.joinToString(":") { ProviderPlaybackRuntime.authKey(it) } },
-            fallbackConfigProvider = { melox.remoteconfig.MeloXRemoteConfigPolicy.activeConfig().fallback },
-            providerPlaybackEnabled = melox.remoteconfig.MeloXRemoteConfigPolicy::providerPlaybackEnabled,
-            eventLogger = { message -> melox.platform.logInfo("MeloXPlayback", "Cross-provider fallback: $message") },
-        ),
+        crossProviderFallback = crossProviderFallback,
     )
     private var providerResolver: ProviderPlaybackResolver? = null
     private val autoplay = DesktopAutoplayCoordinator(scope, recommendationSource,
@@ -1113,6 +1114,7 @@ class MeloXDesktopPlayer internal constructor(
                 lxUserPlayback = lxUserPlayback,
                 thirdPartySourcesEnabled = ThirdPartyMusicSourceConsentStore::enabled,
                 thirdPartyOnlyForMembership = ThirdPartyMusicSourceConsentStore::membershipFallbackOnly,
+                crossProviderFallback = crossProviderFallback,
             ).also { providerResolver = it }
             val uri = ProviderPlaybackResolver.uriForTrack(track, MusicQualityRuntime.selected.toCommonTier())
             val request = resolver.resolveProviderRequest(uri)

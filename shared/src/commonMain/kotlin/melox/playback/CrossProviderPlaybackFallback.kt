@@ -17,9 +17,7 @@ import melox.provider.spotify.SpotifyTrackMatcher
 import melox.remoteconfig.MeloXRemoteConfigDefaults
 import melox.remoteconfig.MeloXRemoteFallbackConfig
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
-import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withTimeoutOrNull
 import java.util.concurrent.ConcurrentHashMap
@@ -55,6 +53,8 @@ internal data class CrossProviderFallbackRequest(
     val artist: String,
     val durationMs: Long?,
     val quality: AudioQualityTier,
+    val source: MusicSource = MusicSource.Netease,
+    val resourceId: String = songId.toString(),
 )
 
 internal data class CrossProviderFallbackResult(
@@ -98,7 +98,7 @@ class CrossProviderPlaybackFallbackResolver(
         val order = fallbackConfig.order.withIndex().associate { (index, source) -> source to index }
         val providers = registryProvider()?.providers.orEmpty()
             .filter(::isEligibleFallbackProvider)
-            .filter { it.source.storageValue in fallbackConfig.order }
+            .filterNot { it.source == request.source }
             .filter { providerPlaybackEnabled(it.source) }
             .filterNot { it.source.storageValue in fallbackConfig.disabledProviders }
             .sortedBy { order[it.source.storageValue] ?: Int.MAX_VALUE }
@@ -110,63 +110,44 @@ class CrossProviderPlaybackFallbackResolver(
         val artists = splitArtists(request.artist)
         val primaryArtist = artists.firstOrNull() ?: return null
         val sourceTrack = MusicTrack(
-            id = MusicResourceId(MusicSource.Netease, request.songId.toString()),
+            id = MusicResourceId(request.source, request.resourceId),
             title = request.title,
             artists = artists.map { MusicArtistRef(name = it) },
             durationMs = request.durationMs?.takeIf { it > 0L },
             availability = TrackAvailability.Unavailable,
-            providerMetadata = ProviderTrackMetadata.Netease(request.songId),
+            providerMetadata = if (request.source == MusicSource.Netease) ProviderTrackMetadata.Netease(request.songId) else ProviderTrackMetadata.Empty,
         )
         val query = "${request.title} $primaryArtist"
 
         return runBlocking(Dispatchers.IO) {
             val resolved = withTimeoutOrNull(fallbackConfig.timeoutMs.toLong()) {
-            val candidates = coroutineScope {
-                providers.map { provider ->
-                    async {
-                        val search = provider as SearchCapability
-                        runCatching { search.searchSongs(query, page = 1, pageSize = 10).items }
-                            .onSuccess { eventLogger("search ${provider.source.storageValue}: ${it.size} candidates") }
-                            .onFailure { eventLogger("search ${provider.source.storageValue} failed: ${it.javaClass.simpleName}") }
-                            .getOrDefault(emptyList())
+                // Provider order is the priority; a later source must not win a parallel race.
+                for (provider in providers) {
+                    val search = provider as SearchCapability
+                    val candidates = runCatching { search.searchSongs(query, page = 1, pageSize = 10).items }
+                        .onFailure { if (it is CancellationException) throw it }
+                        .onSuccess { eventLogger("search ${provider.source.storageValue}: ${it.size} candidates") }
+                        .onFailure { eventLogger("search ${provider.source.storageValue} failed: ${it.javaClass.simpleName}") }
+                        .getOrDefault(emptyList())
+                    val ranked = SpotifyTrackMatcher.rank(sourceTrack, candidates).let { matches ->
+                        if (sourceTrack.durationMs != null) matches else matches.filter { artistSet(sourceTrack) == artistSet(it.candidate) }
                     }
-                }.awaitAll().flatten()
-            }
-            val ranked = if (sourceTrack.durationMs != null) {
-                SpotifyTrackMatcher.rank(sourceTrack, candidates)
-            } else {
-                val sourceArtists = TrackAggregation.normalizeArtist(sourceTrack.artistText)
-                candidates.asSequence()
-                    .mapNotNull { SpotifyTrackMatcher.score(sourceTrack, it) }
-                    .filter { match ->
-                        TrackAggregation.normalizeArtist(match.candidate.artistText) == sourceArtists
+                    eventLogger("strict matches ${provider.source.storageValue} song=${request.songId}: ${ranked.size}")
+                    for (match in ranked) {
+                        if (provider.source != match.candidate.id.source) continue
+                        val playback = provider as PlaybackCapability
+                        val resolution = runCatching { playback.resolvePlayback(match.candidate, request.quality) }
+                            .onFailure { if (it is CancellationException) throw it }.getOrNull()
+                        if (resolution is PlaybackResolution.Playable) {
+                            eventLogger("resolved song=${request.songId} via ${provider.source.storageValue}")
+                            return@withTimeoutOrNull CrossProviderFallbackResult(provider.source, match.candidate.id.value,
+                                resolution.url, resolution.requestHeaders, resolution.actualQuality ?: resolution.requestedQuality,
+                                resolution.expiresAtEpochMs)
+                        }
+                        eventLogger("playback ${provider.source.storageValue} rejected: ${resolution?.javaClass?.simpleName ?: "error"}")
                     }
-                    .sortedByDescending { it.score }
-                    .toList()
-            }
-            eventLogger("strict matches song=${request.songId}: ${ranked.size}")
-            for (match in ranked) {
-                val provider = providers.firstOrNull { it.source == match.candidate.id.source } ?: continue
-                val playback = provider as PlaybackCapability
-                val resolution = runCatching {
-                    playback.resolvePlayback(match.candidate, request.quality)
-                }.getOrNull()
-                if (resolution is PlaybackResolution.Playable) {
-                    eventLogger("resolved song=${request.songId} via ${provider.source.storageValue}")
-                    return@withTimeoutOrNull CrossProviderFallbackResult(
-                        source = provider.source,
-                        resourceId = match.candidate.id.value,
-                        url = resolution.url,
-                        requestHeaders = resolution.requestHeaders,
-                        actualQuality = resolution.actualQuality ?: resolution.requestedQuality,
-                        expiresAtEpochMs = resolution.expiresAtEpochMs,
-                    )
                 }
-                eventLogger(
-                    "playback ${provider.source.storageValue} rejected: ${resolution?.javaClass?.simpleName ?: "error"}",
-                )
-            }
-            null
+                null
             }
             if (resolved == null) eventLogger("unresolved or timed out song=${request.songId}")
             resolved
@@ -176,10 +157,14 @@ class CrossProviderPlaybackFallbackResolver(
     private fun isEligibleFallbackProvider(provider: MusicProvider): Boolean =
         provider.source in EligibleSources && provider is SearchCapability && provider is PlaybackCapability
 
+    private fun artistSet(track: MusicTrack) = track.artists.map { TrackAggregation.normalizeArtist(it.name) }.filter(String::isNotBlank).toSet()
+
     companion object {
         val EligibleSources = setOf(
+            MusicSource.Netease,
             MusicSource.QQMusic,
             MusicSource.Kugou,
+            MusicSource.Qishui,
             MusicSource.Kuwo,
             MusicSource.Bilibili,
         )

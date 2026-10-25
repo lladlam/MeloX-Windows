@@ -60,6 +60,31 @@ class NeteasePlaybackRequestTest {
         assertEquals("https://audio.invalid/full.mp3", resolver.resolveUri("melox://song/139774?quality=standard&legacyFlag").uri)
     }
 
+    @Test fun nativeNeteaseFullAudioAlwaysPrecedesConfiguredThirdParty() {
+        availability(); playable()
+        var thirdCalls = 0
+        val third = ThirdPartyPlaybackResolver({ true }, { false }, listOf(ThirdPartySource { _, _ ->
+            thirdCalls++; ThirdPartyTrack("https://audio.invalid/third", sourceLabel = "fixture")
+        }))
+        val resolver = NeteasePlaybackResolver(qualityClient = qualityClient(), thirdPartyPlayback = third)
+        val uri = NeteasePlaybackResolver.uriForSong(139774, MusicQuality.Standard, "Song", "Artist", 200000)
+        assertEquals("https://audio.invalid/full.mp3", resolver.resolveUri(uri).uri)
+        assertEquals(0, thirdCalls)
+    }
+
+    @Test fun terminalNeteaseFailureUsesConfiguredThirdPartyAfterBuiltInsAreDisabled() {
+        availability()
+        server.enqueue(json("""{"code":200,"data":[{"id":139774,"url":null,"code":404}]}"""))
+        val third = ThirdPartyPlaybackResolver({ true }, { false }, listOf(ThirdPartySource { track, _ ->
+            assertEquals("139774", track.id.value)
+            ThirdPartyTrack("https://audio.invalid/third", mapOf("Referer" to "https://origin.invalid/"), "fixture")
+        }))
+        val resolver = NeteasePlaybackResolver(qualityClient = qualityClient(), thirdPartyPlayback = third)
+        val result = resolver.resolveUri(NeteasePlaybackResolver.uriForSong(139774, MusicQuality.Standard, "Song", "Artist", 200000))
+        assertEquals("https://audio.invalid/third", result.uri)
+        assertEquals("https://origin.invalid/", result.headers["Referer"])
+    }
+
     @Test fun anonymousPreviewAndNoUrlDoNotBecomeFalseFullPlaybackSuccess() {
         availability()
         server.enqueue(json("""{"code":200,"data":[{"id":139774,"url":"https://audio.invalid/preview.mp3","freeTrialInfo":{"start":0,"end":30}}]}"""))

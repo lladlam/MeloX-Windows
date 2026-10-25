@@ -36,7 +36,11 @@ class ProviderPlaybackResolver(
     private val lxUserPlayback: LxUserPlaybackResolver? = null,
     private val thirdPartySourcesEnabled: () -> Boolean = { true },
     private val thirdPartyOnlyForMembership: () -> Boolean = { false },
+    private val crossProviderFallback: CrossProviderPlaybackFallbackResolver? = null,
+    thirdPartyPlayback: ThirdPartyPlaybackResolver? = null,
 ) {
+    private val fallbackChain = PlaybackFallbackChain(crossProviderFallback, thirdPartyPlayback ?: ThirdPartyPlaybackResolver(
+        thirdPartySourcesEnabled, thirdPartyOnlyForMembership, chkszPlayback, lxUserPlayback))
     private data class ResolveKey(
         val requestUri: String,
         val authKey: String,
@@ -104,8 +108,7 @@ class ResolvedRequest(
             return ResolvedRequest(netease.uri, netease.headers, netease.expiresAtEpochMs)
         }
         val key = ResolveKey(uri, authKeyProvider(source), quality,
-            "${thirdPartySourcesEnabled()}:${thirdPartyOnlyForMembership()}:" +
-                "${chkszPlayback?.cacheIdentity().orEmpty()}:${lxUserPlayback?.cacheIdentity().orEmpty()}")
+            fallbackChain.cacheIdentity())
         cached(key)?.let { return it }
         val pending = CompletableFuture<ResolvedRequest>()
         val existing = inFlight.putIfAbsent(key, pending)
@@ -126,31 +129,6 @@ class ResolvedRequest(
             logDebug(TAG, "resolve detail source=${source.storageValue} id=${resourceValue.take(8)} title=${track.title.take(40)} " +
                 "artists=${track.artistText.take(60)} durationMs=${track.durationMs} metadata=${track.providerMetadata.javaClass.simpleName}")
             logInfo(TAG, "Resolve start source=${source.storageValue} quality=${quality.name} thirdParty=${thirdPartySourcesEnabled()}")
-            val allowExternalResolver = source != MusicSource.Jellyfin && source != MusicSource.Local
-            val lx = if (allowExternalResolver && thirdPartySourcesEnabled() && !thirdPartyOnlyForMembership()) {
-                runCatching { lxUserPlayback?.resolve(track, quality) }
-                    .onFailure { logWarn(TAG, "LX stage failed source=${source.storageValue} error=${it.javaClass.simpleName}") }
-                    .getOrNull()
-            } else null
-            if (lx != null) {
-                logInfo(TAG, "Resolve success source=${source.storageValue} stage=lx script=${lx.sourceId}")
-                val result = ResolvedRequest(lx.url, lx.requestHeaders)
-                synchronized(cacheLock) { resolvedUris[key] = result }
-                pending.complete(result)
-                return result
-            }
-            val thirdParty = if (allowExternalResolver && thirdPartySourcesEnabled() && !thirdPartyOnlyForMembership()) {
-                runCatching { chkszPlayback?.resolve(track, quality) }
-                    .onFailure { logWarn(TAG, "CHKSZ stage failed source=${source.storageValue} error=${it.javaClass.simpleName}") }
-                    .getOrNull()
-            } else null
-            if (thirdParty != null) {
-                logInfo(TAG, "Resolve success source=${source.storageValue} stage=chksz")
-                val result = ResolvedRequest(thirdParty.url, emptyMap())
-                synchronized(cacheLock) { resolvedUris[key] = result }
-                pending.complete(result)
-                return result
-            }
             logInfo(
                 TAG,
                 "Resolve fallback source=${source.storageValue} stage=provider chksz=${chkszPlayback?.cacheIdentity() ?: "unavailable"}",
@@ -160,6 +138,11 @@ class ResolvedRequest(
                 ?: throw IOException("${provider.displayName} 当前没有实现播放能力")
             val resolution = runBlocking(Dispatchers.IO) {
                 playback.resolvePlayback(track, quality)
+            }
+            fun fallbackOrThrow(message: String, membershipFailure: Boolean): ResolvedRequest {
+                val fallback = fallbackChain.resolve(track, quality, membershipFailure) ?: throw IOException(message)
+                fallback.crossProvider?.let { cross -> ProviderPlaybackQualityRuntime.recordActual(id, quality, cross.actualQuality) }
+                return ResolvedRequest(fallback.url, fallback.requestHeaders, fallback.expiresAtEpochMs)
             }
             val result = when (resolution) {
                 is PlaybackResolution.Playable -> {
@@ -174,19 +157,10 @@ class ResolvedRequest(
                 }
                 is PlaybackResolution.Preview -> ResolvedRequest(resolution.url, emptyMap())
                 PlaybackResolution.LoginRequired -> throw IOException("${provider.displayName} 需要登录后播放")
-                PlaybackResolution.SubscriptionRequired -> {
-                    if (allowExternalResolver && thirdPartySourcesEnabled()) {
-                        resolveThirdParty(track, quality, source)
-                            ?: throw IOException("${provider.displayName} 当前歌曲需要对应会员权益")
-                    } else {
-                        throw IOException("${provider.displayName} 当前歌曲需要对应会员权益")
-                    }
-                }
-                PlaybackResolution.RegionRestricted -> throw IOException("${provider.displayName} 当前地区不可播放")
-                PlaybackResolution.CopyrightRestricted -> throw IOException("${provider.displayName} 当前版权不可播放")
-                is PlaybackResolution.Unavailable -> throw IOException(
-                    resolution.reason ?: "${provider.displayName} 暂时没有可播放音源",
-                )
+                PlaybackResolution.SubscriptionRequired -> fallbackOrThrow("${provider.displayName} 当前歌曲需要对应会员权益", true)
+                PlaybackResolution.RegionRestricted -> fallbackOrThrow("${provider.displayName} 当前地区不可播放", true)
+                PlaybackResolution.CopyrightRestricted -> fallbackOrThrow("${provider.displayName} 当前版权不可播放", true)
+                is PlaybackResolution.Unavailable -> fallbackOrThrow(resolution.reason ?: "${provider.displayName} 暂时没有可播放音源", false)
             }
             synchronized(cacheLock) { resolvedUris[key] = result }
             pending.complete(result)
@@ -197,21 +171,6 @@ class ResolvedRequest(
         } finally {
             inFlight.remove(key, pending)
         }
-    }
-
-    private fun resolveThirdParty(
-        track: MusicTrack,
-        quality: AudioQualityTier,
-        source: MusicSource,
-    ): ResolvedRequest? {
-        val lx = runCatching { lxUserPlayback?.resolve(track, quality) }
-            .onFailure { logWarn(TAG, "LX membership fallback failed source=${source.storageValue}: ${it.message}") }
-            .getOrNull()
-        if (lx != null) return ResolvedRequest(lx.url, lx.requestHeaders)
-        val chksz = runCatching { chkszPlayback?.resolve(track, quality) }
-            .onFailure { logWarn(TAG, "CHKSZ membership fallback failed source=${source.storageValue}: ${it.message}") }
-            .getOrNull()
-        return chksz?.let { ResolvedRequest(it.url, emptyMap()) }
     }
 
     private fun cached(key: ResolveKey): ResolvedRequest? = synchronized(cacheLock) {

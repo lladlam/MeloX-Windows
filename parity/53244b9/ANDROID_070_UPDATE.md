@@ -29,3 +29,11 @@
 ## 持续检查
 
 `tools/check_android_lan_reference.py` 已扩展为覆盖全部 Kotlin/Java 源码与测试、资源字符串、法律文本、构建信息及 docs；除输出包外的功能改动同样纳入哈希与按内容快照。完整功能哈希单独保存在 `evidence/android-070/android-live-reference.json`。
+
+## 下一批：播放回退顺序
+
+对照 Android `PlaybackFallbackChain`、`ThirdPartyPlaybackResolver` 与两套 native resolver 迁移。当前音源先尝试；明确的会员／地区／版权／资源不可用结果才按用户开关进入内置跨平台严格匹配，然后尝试已配置的 CHKSZ、LX。登录缺失保持明确错误，网络异常保持其错误语义，本地和 Jellyfin 不进入外部回退。当前源返回的试听仍标为试听；跨平台候选只接受 Playable，不接受 Preview。
+
+内置平台搜索由并行竞争改为按配置串行，跳过刚失败来源；网易云和汽水纳入候选，保留现有酷狗 `kugou` 身份。Android 的独立 `kugou_lite` 平台及其每日双签到尚未迁移，不能把标准酷狗标为概念版。源／账号／回退开关变化参与缓存指纹，跨平台 headers、实际音质及过期信息传递到真实播放请求。
+
+新增顺序、试听排除、开关／缓存、登录错误、第三方失败隔离和网易云 native 优先回归；最终 **66 suites / 333 tests 全部通过，零失败／错误／跳过，桌面编译通过**，证据在 `evidence/android-070/fallback-full-tests/`。首轮 331 项中云控签名测试仍提供旧的三来源顺序，触发既有完整清单校验后回退内置顺序；测试数据已扩展并补测旧签名清单的回退及禁用来源保留，随后全量重跑通过。

@@ -57,12 +57,13 @@ class RemoteConfigProtocolTest {
         root.deleteRecursively()
     }
 
-    private fun envelope(version: Int = 5, min: Int = 10, max: Int = 20, disabled: List<String> = listOf("qq_playback")): String {
+    private val fixtureOrder = listOf("bilibili", "kugou", "qq_music", "netease", "qishui", "kuwo")
+    private fun envelope(version: Int = 5, min: Int = 10, max: Int = 20, disabled: List<String> = listOf("qq_playback"), order: List<String> = fixtureOrder): String {
         val payload = JSONObject().put("schemaVersion", 1).put("configVersion", version).put("issuedAtEpochSeconds", 100)
             .put("minVersionCode", min).put("maxVersionCode", max).put("disabledCapabilities", JSONArray(disabled))
             .put("strategies", JSONObject().put("netease_playback", "v1").put("qq_playback", "v1").put("kugou_playback", "v1"))
             .put("crossProviderFallback", JSONObject().put("enabled", true).put("timeoutMs", 4000)
-                .put("order", JSONArray(listOf("bilibili", "kugou", "qq_music"))).put("disabledProviders", JSONArray(listOf("kugou"))))
+                .put("order", JSONArray(order)).put("disabledProviders", JSONArray(listOf("kugou"))))
             .toString().toByteArray()
         val signature = Signature.getInstance("SHA256withECDSA").run { initSign(key.private); update(payload); sign() }
         return JSONObject().put("keyId", "fixture-p256").put("algorithm", "SHA256withECDSA")
@@ -78,7 +79,7 @@ class RemoteConfigProtocolTest {
         val first = refresh()
         assertEquals(MeloXRemoteConfigSource.VerifiedRemote, first.source)
         assertEquals(5, first.config.configVersion)
-        assertEquals(listOf("bilibili", "kugou", "qq_music"), first.config.fallback.order)
+        assertEquals(fixtureOrder, first.config.fallback.order)
         val request = checkNotNull(server.takeRequest(1, TimeUnit.SECONDS))
         assertNull(request.getHeader("Cookie")); assertNull(request.getHeader("Authorization"))
         assertEquals("MeloX-Desktop", request.getHeader("User-Agent"))
@@ -89,6 +90,14 @@ class RemoteConfigProtocolTest {
         assertEquals(2000L, next.lastCheckedAtEpochMs); assertEquals(1000L, next.lastUpdatedAtEpochMs)
         assertEquals(5, store.read().highestConfigVersion)
         assertEquals(5, client.load(20).config.configVersion)
+    }
+
+    @Test fun legacySignedOrderUsesExpandedBuiltInOrderAndRetainsDisabledSources() = runBlocking {
+        server.enqueue(response(envelope(order = listOf("bilibili", "kugou", "qq_music"))))
+        val status = refresh()
+        assertEquals(MeloXRemoteConfigSource.VerifiedRemote, status.source)
+        assertEquals(MeloXRemoteConfigDefaults.FallbackOrder, status.config.fallback.order)
+        assertEquals(setOf("kugou"), status.config.fallback.disabledProviders)
     }
 
     @Test fun tamperedSignatureRetainsLastValidCacheAndReturnsActualVerificationError() = runBlocking {
