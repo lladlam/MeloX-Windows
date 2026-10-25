@@ -1,0 +1,12 @@
+{
+  "source_commit": "15e2a75753530f6cb94b24acf3c84a88fc03deb6",
+  "peer": "explicit loopback fixture",
+  "mobile": {
+    "scenes": 63,
+    "assertions": 30
+  },
+  "desktop": {
+    "scenes": 37,
+    "assertions": 12
+  }
+}

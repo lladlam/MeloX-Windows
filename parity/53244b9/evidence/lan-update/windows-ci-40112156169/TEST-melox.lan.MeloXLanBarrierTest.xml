@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="MeloXLanBarrierTest[desktop]" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-10-24T16:39:40.797Z" hostname="runnervmdaln5" time="31.511">
+  <properties/>
+  <testcase name="timestampExtrapolationRequiresReadyPlayingAndCapsExtrapolation[desktop]" classname="melox.lan.MeloXLanBarrierTest" time="0.017"/>
+  <testcase name="naturalEndWaitIsBoundedAndExplicitSkipCancelsThePendingGeneration[desktop]" classname="melox.lan.MeloXLanBarrierTest" time="22.628"/>
+  <testcase name="boundedRateCorrectionChangesActualDecodedPcmAndItsMediaClockWithoutRestartingDecoder[desktop]" classname="melox.lan.MeloXLanBarrierTest" time="6.493"/>
+  <testcase name="hostPreparesMultiplePeersKeepsConnectionsAndReplacesQueueAtSameIndex[desktop]" classname="melox.lan.MeloXLanBarrierTest" time="0.436"/>
+  <testcase name="aRejectedPrepareRestoresLocalPlaybackAndRetainsItsControlConnection[desktop]" classname="melox.lan.MeloXLanBarrierTest" time="0.171"/>
+  <testcase name="receiverAcknowledgesRealReadyPausedThenSchedulesAndFencesStaleRounds[desktop]" classname="melox.lan.MeloXLanBarrierTest" time="1.765"/>
+  <system-out><![CDATA[[DEBUG AudioPlayer] FFmpeg binary=C:\Users\runneradmin\AppData\Local\Temp\melox-decoder-ffmpeg-af7913b7ddc324bf.exe os=Windows Server 2025 sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+[DEBUG AudioPlayer] FFmpeg binary=C:\Users\runneradmin\AppData\Local\Temp\melox-decoder-ffmpeg-af7913b7ddc324bf.exe os=Windows Server 2025 sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+[DEBUG AudioPlayer] FFmpeg binary=C:\Users\runneradmin\AppData\Local\Temp\melox-decoder-ffmpeg-af7913b7ddc324bf.exe os=Windows Server 2025 sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+[DEBUG AudioPlayer] FFmpeg binary=C:\Users\runneradmin\AppData\Local\Temp\melox-decoder-ffmpeg-af7913b7ddc324bf.exe os=Windows Server 2025 sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+[DEBUG AudioPlayer] FFmpeg binary=C:\Users\runneradmin\AppData\Local\Temp\melox-decoder-ffmpeg-af7913b7ddc324bf.exe os=Windows Server 2025 sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+[DEBUG AudioPlayer] FFmpeg binary=C:\Users\runneradmin\AppData\Local\Temp\melox-decoder-ffmpeg-af7913b7ddc324bf.exe os=Windows Server 2025 sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+[DEBUG AudioPlayer] FFmpeg binary=C:\Users\runneradmin\AppData\Local\Temp\melox-decoder-ffmpeg-af7913b7ddc324bf.exe os=Windows Server 2025 sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+[DEBUG AudioPlayer] FFmpeg binary=C:\Users\runneradmin\AppData\Local\Temp\melox-decoder-ffmpeg-af7913b7ddc324bf.exe os=Windows Server 2025 sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+[DEBUG AudioPlayer] FFmpeg binary=C:\Users\runneradmin\AppData\Local\Temp\melox-decoder-ffmpeg-af7913b7ddc324bf.exe os=Windows Server 2025 sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+[DEBUG AudioPlayer] FFmpeg binary=C:\Users\runneradmin\AppData\Local\Temp\melox-decoder-ffmpeg-af7913b7ddc324bf.exe os=Windows Server 2025 sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+[DEBUG AudioPlayer] FFmpeg binary=C:\Users\runneradmin\AppData\Local\Temp\melox-decoder-ffmpeg-af7913b7ddc324bf.exe os=Windows Server 2025 sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+[DEBUG AudioPlayer] FFmpeg binary=C:\Users\runneradmin\AppData\Local\Temp\melox-decoder-ffmpeg-af7913b7ddc324bf.exe os=Windows Server 2025 sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+[DEBUG AudioPlayer] FFmpeg binary=C:\Users\runneradmin\AppData\Local\Temp\melox-decoder-ffmpeg-af7913b7ddc324bf.exe os=Windows Server 2025 sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+[DEBUG AudioPlayer] FFmpeg binary=C:\Users\runneradmin\AppData\Local\Temp\melox-decoder-ffmpeg-af7913b7ddc324bf.exe os=Windows Server 2025 sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+[DEBUG AudioPlayer] FFmpeg binary=C:\Users\runneradmin\AppData\Local\Temp\melox-decoder-ffmpeg-af7913b7ddc324bf.exe os=Windows Server 2025 sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+[DEBUG AudioPlayer] FFmpeg binary=C:\Users\runneradmin\AppData\Local\Temp\melox-decoder-ffmpeg-af7913b7ddc324bf.exe os=Windows Server 2025 sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+[DEBUG AudioPlayer] FFmpeg binary=C:\Users\runneradmin\AppData\Local\Temp\melox-decoder-ffmpeg-af7913b7ddc324bf.exe os=Windows Server 2025 sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+[DEBUG MeloXPlayback] Playback queue dispatched: size=1, start=0, offline=false, quality=standard
+[DEBUG AudioPlayer] FFmpeg binary=C:\Users\runneradmin\AppData\Local\Temp\melox-decoder-ffmpeg-af7913b7ddc324bf.exe os=Windows Server 2025 sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+[DEBUG AudioPlayer] FFmpeg binary=C:\Users\runneradmin\AppData\Local\Temp\melox-decoder-ffmpeg-af7913b7ddc324bf.exe os=Windows Server 2025 sourceHost=local
+[DEBUG AudioPlayer] decode local source at 20000ms
+[DEBUG MeloXPlayback] Playback queue dispatched: size=1, start=0, offline=false, quality=standard
+[DEBUG AudioPlayer] FFmpeg binary=C:\Users\runneradmin\AppData\Local\Temp\melox-decoder-ffmpeg-af7913b7ddc324bf.exe os=Windows Server 2025 sourceHost=local
+[DEBUG AudioPlayer] decode local source at 1000ms
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

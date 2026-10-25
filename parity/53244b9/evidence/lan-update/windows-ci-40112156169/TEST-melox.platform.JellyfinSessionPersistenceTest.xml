@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="JellyfinSessionPersistenceTest[desktop]" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-10-24T16:40:16.187Z" hostname="runnervmdaln5" time="0.043">
+  <properties/>
+  <testcase name="stableKeySurvivesIndependentReopenAndSessionReplacement[desktop]" classname="melox.platform.JellyfinSessionPersistenceTest" time="0.028"/>
+  <testcase name="unrecoverableOldCiphertextIsPreservedUntilActualNewLogin[desktop]" classname="melox.platform.JellyfinSessionPersistenceTest" time="0.013"/>
+  <testcase name="failedProtectedCommitLeavesPreviousSessionAndKeyUntouched[desktop]" classname="melox.platform.JellyfinSessionPersistenceTest" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="DesktopPcmOutputTest[desktop]" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-10-24T16:40:32.501Z" hostname="runnervmdaln5" time="0.004">
+  <properties/>
+  <testcase name="missingDefaultOutputTriesAnotherRealCandidateWithTheExactDecoderFormat[desktop]" classname="melox.player.DesktopPcmOutputTest" time="0.002"/>
+  <testcase name="exhaustionKeepsBothGenuineDeviceErrorsAndDoesNotReturnAnUnopenedLine[desktop]" classname="melox.player.DesktopPcmOutputTest" time="0.001"/>
+  <testcase name="rejectedOpenClosesThePartiallyCreatedDeviceBeforeTryingTheNextOutput[desktop]" classname="melox.player.DesktopPcmOutputTest" time="0.001"/>
+  <system-out><![CDATA[[WARN AudioPlayer] PCM output rejected: unavailable default; IllegalArgumentException: No default line
+[INFO AudioPlayer] PCM output opened: available speaker; 44100Hz stereo S16LE; buffer=176400
+[WARN AudioPlayer] PCM output rejected: busy; LineUnavailableException: Device busy
+[WARN AudioPlayer] PCM output rejected: missing; IllegalArgumentException: No output
+[WARN AudioPlayer] PCM output rejected: busy; LineUnavailableException: Device busy
+[INFO AudioPlayer] PCM output opened: working; 44100Hz stereo S16LE; buffer=176400
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

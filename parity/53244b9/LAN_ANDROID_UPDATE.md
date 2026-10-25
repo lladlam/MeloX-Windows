@@ -60,4 +60,12 @@ DLNA 双布局生产回放同样通过：手机 **24 scenes / 15 assertions**、
 
 修正后本地 **5 项 DLNA 测试全部通过，桌面编译通过**，包含原始真实 SOAP/Range/WAV 严格 MIME 断言和新增跨平台路径用例；XML 与摘要在 `evidence/lan-update/windows-path-fix/`。
 
+后续监听捕获 `MeloXPlaybackService.kt` 与 `docs/MELOX-LAN.md`：逐快照比对确认前者调整第三方音源选项与 Android 通知栏播放模式，后者仅更新示例 appVersion 为 `0.7.0`。本次增量没有修改 LAN/DLNA 消息、屏障时序或音频格式；最新工作区哈希已更新至 `android-live-reference.json`。
+
+修复提交 `15e2a75` 的最终本地 LAN v5 回放通过：手机 **63 scenes / 30 assertions**、电脑 **37 scenes / 12 assertions**，截图、协议与压缩 PCM 归档至 `evidence/lan-update/ui-replay-v5/`。
+
+Windows CI **`40112156169` 成功**：64 suites / **313 tests，零失败／错误／跳过**，并通过 Windows 上的 LAN 手机 63/30、电脑 37/12，DLNA 手机 24/15、电脑 18/13 生产输入回放。对应 XML、协议/semantics 与汇总在 `evidence/lan-update/windows-ci-40112156169/`。这是 Windows runner 上的回环协议验证，跨设备与物理扬声器边界仍按前述记录。
+
+该运行的 Windows 发行 ZIP 已完整独立下载核验通过：**338909804 bytes**，SHA-256 **`b2831627110bf01ebf6d2cd85bcb8682a29a505489f581a611a123a448a3577d`**，357 个 ZIP 条目；全部 ZIP/JAR CRC、build-info 提交 `15e2a75753530f6cb94b24acf3c84a88fc03deb6`、固定资源及 Windows PE 解码器字节检查通过。独立核验 JSON 在 `evidence/windows-download-40112156169/`，完整下载保存在 `desktop/build/verification/delivery-40112156169/artifact/MeloX-Desktop-Windows.zip`。本机未执行该 Windows 包的物理音频验收。
+
 尚未闭环：真实跨机 Windows↔Android、多网卡/防火墙、物理音响和长时同步漂移。不要把 loopback fixture 写成手机互通已验收。

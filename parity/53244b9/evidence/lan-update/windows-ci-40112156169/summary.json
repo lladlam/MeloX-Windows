@@ -1,0 +1,28 @@
+{
+  "suites": 64,
+  "tests": 313,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "ui": {
+    "lan-update-mobile": {
+      "scenes": 63,
+      "assertions": 30
+    },
+    "lan-update-desktop": {
+      "scenes": 37,
+      "assertions": 12
+    },
+    "dlna-update-mobile": {
+      "scenes": 24,
+      "assertions": 15
+    },
+    "dlna-update-desktop": {
+      "scenes": 18,
+      "assertions": 13
+    }
+  },
+  "run_id": 40112156169,
+  "commit": "15e2a75753530f6cb94b24acf3c84a88fc03deb6",
+  "status": "success"
+}

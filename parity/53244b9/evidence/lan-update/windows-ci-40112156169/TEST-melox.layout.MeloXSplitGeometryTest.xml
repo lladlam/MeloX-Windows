@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="MeloXSplitGeometryTest[desktop]" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-10-24T16:40:14.029Z" hostname="runnervmdaln5" time="0.008">
+  <properties/>
+  <testcase name="distinctWindowPoliciesAndToggle[desktop]" classname="melox.layout.MeloXSplitGeometryTest" time="0.002"/>
+  <testcase name="everyPositionPairHasExpectedPaneReservationAndCoupling[desktop]" classname="melox.layout.MeloXSplitGeometryTest" time="0.001"/>
+  <testcase name="goldenRailsAndCompactSlot[desktop]" classname="melox.layout.MeloXSplitGeometryTest" time="0.005"/>
+  <testcase name="goldenSharedCorners[desktop]" classname="melox.layout.MeloXSplitGeometryTest" time="0.0"/>
+  <testcase name="railsOwnOuterEdgeAndSafeInsetsDoNotMoveDivider[desktop]" classname="melox.layout.MeloXSplitGeometryTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

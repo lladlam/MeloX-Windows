@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="DlnaIntegrationTest[desktop]" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-10-24T16:39:32.696Z" hostname="runnervmdaln5" time="8.097">
+  <properties/>
+  <testcase name="confirmedRendererFetchesRealAudioAndAllTransportControlsRouteToSoap[desktop]" classname="melox.dlna.DlnaIntegrationTest" time="3.717"/>
+  <testcase name="changingTheRealQueueRetainsTheRendererAndInstallsTheNewTrackAfterThePanelIsGone[desktop]" classname="melox.dlna.DlnaIntegrationTest" time="2.042"/>
+  <testcase name="descriptionAndChunkedSoapUseRealHttpAndRejectExternalEntityXml[desktop]" classname="melox.dlna.DlnaIntegrationTest" time="0.021"/>
+  <testcase name="nativeWindowsPathsAndEscapedUrisKeepTheirAudioFormat[desktop]" classname="melox.dlna.DlnaIntegrationTest" time="0.016"/>
+  <testcase name="rendererThatNeverConfirmsPlaybackIsAnErrorAndDoesNotPauseTheLocalPlayer[desktop]" classname="melox.dlna.DlnaIntegrationTest" time="2.301"/>
+  <system-out><![CDATA[[DEBUG AudioPlayer] Bundled FFmpeg verified: sha256=af7913b7ddc324bf02b8af72fe8612b1471455ef8d9e04e45466510742abcff9 bytes=164352000
+[DEBUG AudioPlayer] FFmpeg binary=C:\Users\runneradmin\AppData\Local\Temp\melox-decoder-ffmpeg-af7913b7ddc324bf.exe os=Windows Server 2025 sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+[INFO MeloXDlna] Renderer PLAYING confirmed; proxy=true
+[DEBUG AudioPlayer] FFmpeg binary=C:\Users\runneradmin\AppData\Local\Temp\melox-decoder-ffmpeg-af7913b7ddc324bf.exe os=Windows Server 2025 sourceHost=local
+[DEBUG AudioPlayer] decode local source at 4019ms
+[DEBUG AudioPlayer] FFmpeg binary=C:\Users\runneradmin\AppData\Local\Temp\melox-decoder-ffmpeg-af7913b7ddc324bf.exe os=Windows Server 2025 sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+[INFO MeloXDlna] Renderer PLAYING confirmed; proxy=true
+[DEBUG AudioPlayer] FFmpeg binary=C:\Users\runneradmin\AppData\Local\Temp\melox-decoder-ffmpeg-af7913b7ddc324bf.exe os=Windows Server 2025 sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+[INFO MeloXDlna] Renderer PLAYING confirmed; proxy=true
+[DEBUG AudioPlayer] FFmpeg binary=C:\Users\runneradmin\AppData\Local\Temp\melox-decoder-ffmpeg-af7913b7ddc324bf.exe os=Windows Server 2025 sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

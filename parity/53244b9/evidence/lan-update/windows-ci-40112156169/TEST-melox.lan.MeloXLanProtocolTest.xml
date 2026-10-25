@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="MeloXLanProtocolTest[desktop]" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-10-24T16:40:12.311Z" hostname="runnervmdaln5" time="1.579">
+  <properties/>
+  <testcase name="castReceiverAcceptsLengthPrefixedPcmOnlyForExpectedPeer[desktop]" classname="melox.lan.MeloXLanProtocolTest" time="0.005"/>
+  <testcase name="pinTrustControlPingAndUnsupportedTransferStayOnWireProtocol[desktop]" classname="melox.lan.MeloXLanProtocolTest" time="0.015"/>
+  <testcase name="discoveryRejectsForeignMagicAndOwnIdButFindsAnnounce[desktop]" classname="melox.lan.MeloXLanProtocolTest" time="1.558"/>
+  <system-out><![CDATA[[INFO MeloXCast] First PCM received: bytes=960
+[INFO MeloXCast] Receiver stopped: received_bytes=960
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="NeteaseClipboardIntakeTest[desktop]" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-10-24T16:40:15.708Z" hostname="runnervmdaln5" time="0.006">
+  <properties/>
+  <testcase name="invitationsPreserveRoomAndInviterAndTakePriorityOverSongIdAcrossProviders[desktop]" classname="melox.network.NeteaseClipboardIntakeTest" time="0.003"/>
+  <testcase name="disabledScanDoesNotConsumeClipboardAndOtherProvidersDoNotLaunchNeteasePlayback[desktop]" classname="melox.network.NeteaseClipboardIntakeTest" time="0.002"/>
+  <testcase name="foregroundRescansDeduplicateCancelledRequestsButAcceptChangedClipboard[desktop]" classname="melox.network.NeteaseClipboardIntakeTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

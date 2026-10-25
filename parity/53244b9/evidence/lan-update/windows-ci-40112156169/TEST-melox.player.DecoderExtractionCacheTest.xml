@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="DecoderExtractionCacheTest[desktop]" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-10-24T16:40:29.920Z" hostname="runnervmdaln5" time="0.02">
+  <properties/>
+  <testcase name="validLegacyBinaryIsContentVerifiedAndReusedWithoutWritingAnotherCopy[desktop]" classname="melox.player.DecoderExtractionCacheTest" time="0.011"/>
+  <testcase name="sameLengthStaleLegacyDecoderCannotReplaceThePackagedVersion[desktop]" classname="melox.player.DecoderExtractionCacheTest" time="0.008"/>
+  <system-out><![CDATA[[DEBUG AudioPlayer] Bundled FFmpeg verified: sha256=a63325d33184aeacbaefa4bce272b00110194d497c04242eacb47777f2c9a3bc bytes=24
+[DEBUG AudioPlayer] Bundled FFmpeg verified: sha256=fcb5d17b960ae214b40656280c1dcde25411482f78e4cbf7b4ef2090c8dc98d7 bytes=11
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

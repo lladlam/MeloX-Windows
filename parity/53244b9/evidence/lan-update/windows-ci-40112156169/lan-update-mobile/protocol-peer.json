@@ -1,0 +1,1648 @@
+{
+  "kind": "loopback protocol fixture, not Android",
+  "requests": [
+    {
+      "action": "state",
+      "id": "d64fe334-4b01-4327-b4c5-9373fdbd8cbb",
+      "type": "request"
+    },
+    {
+      "action": "state",
+      "id": "f6a76362-1114-4cc1-bd23-479d27d4973e",
+      "type": "request"
+    },
+    {
+      "action": "ping",
+      "id": "3b254d5e-6d93-438c-83b7-bce416d5c07b",
+      "t0": 1792861693542,
+      "type": "request"
+    },
+    {
+      "action": "ping",
+      "id": "e69a6830-7ec5-404e-a4d4-1d5a4aea17fc",
+      "t0": 1792861698543,
+      "type": "request"
+    },
+    {
+      "action": "ping",
+      "id": "a6929689-3b28-480f-b0ff-9dbbc384fb5d",
+      "t0": 1792861703542,
+      "type": "request"
+    },
+    {
+      "action": "ping",
+      "id": "b2faed6e-0c72-48ec-8549-0ade869e2b3e",
+      "t0": 1792861708543,
+      "type": "request"
+    },
+    {
+      "action": "ping",
+      "id": "21854069-1de7-4860-a45d-8a6bca9131a5",
+      "t0": 1792861713542,
+      "type": "request"
+    },
+    {
+      "format": {
+        "codec": "pcm_s16le",
+        "channels": 2,
+        "sampleRate": 44100
+      },
+      "action": "cast.start",
+      "id": "00027695-6212-4d75-8418-cf8b1233b9ba",
+      "type": "request"
+    },
+    {
+      "action": "ping",
+      "id": "aa6d3189-171a-4ee7-9181-9c91f58d89ea",
+      "t0": 1792861718542,
+      "type": "request"
+    },
+    {
+      "action": "ping",
+      "id": "afaf76d2-35f6-46d3-8d73-ac47662b0cea",
+      "t0": 1792861723543,
+      "type": "request"
+    },
+    {
+      "action": "ping",
+      "id": "a78bfc7a-0dcc-416b-86b6-8da65585d526",
+      "t0": 1792861728543,
+      "type": "request"
+    },
+    {
+      "action": "ping",
+      "id": "3fc39a43-815a-4514-8981-b5ed528ef14f",
+      "t0": 1792861733542,
+      "type": "request"
+    },
+    {
+      "action": "cast.stop",
+      "id": "9a10a916-6f07-485c-971f-8fa087d1300e",
+      "type": "request"
+    },
+    {
+      "action": "ping",
+      "id": "a0486a13-ce50-480a-ab71-3f143da06bd4",
+      "t0": 1792861738542,
+      "type": "request"
+    },
+    {
+      "action": "ping",
+      "id": "ae8bdf0f-e703-4cc2-9586-0b5ad99dc212",
+      "t0": 1792861743542,
+      "type": "request"
+    },
+    {
+      "action": "ping",
+      "id": "daefeba8-a95c-41e7-878b-4565f913b211",
+      "t0": 1792861744071,
+      "type": "request"
+    },
+    {
+      "action": "ping",
+      "id": "768f1c35-6320-4d65-b151-1bba20a1db14",
+      "t0": 1792861744072,
+      "type": "request"
+    },
+    {
+      "action": "ping",
+      "id": "7213fe26-b612-4b61-9d17-355282717969",
+      "t0": 1792861744073,
+      "type": "request"
+    },
+    {
+      "generation": 1,
+      "trackId": "local:0568a791fbd01724672a1c31",
+      "relay": {
+        "baseUrl": "http://192.168.208.1:52375",
+        "token": "9cc393fce1fdd21409fc406c1308cccbb5f92dc4150c9f8d7cce06a4f325e17b"
+      },
+      "index": 0,
+      "action": "together.prepare",
+      "playing": true,
+      "sessionId": "4aa55ad7-5bb6-42a8-b1c4-033c755ef3cf",
+      "id": "b05a67bf-925a-4b78-b58b-366303c749bf",
+      "queueRevision": "local:0568a791fbd01724672a1c31|local:6c62b3aed5e50da26f9953aa/0/local:0568a791fbd01724672a1c31/3",
+      "type": "request",
+      "queue": [
+        {
+          "artist": "Generated PCM fixture",
+          "album": "",
+          "source": "local",
+          "id": "0568a791fbd01724672a1c31",
+          "title": "lan-generated-0",
+          "durationMs": 600000
+        },
+        {
+          "artist": "Generated PCM fixture",
+          "album": "",
+          "source": "local",
+          "id": "6c62b3aed5e50da26f9953aa",
+          "title": "lan-generated-1",
+          "durationMs": 600000
+        }
+      ],
+      "positionMs": 16055
+    },
+    {
+      "action": "ping",
+      "id": "2a6a601d-89c5-4fb3-b649-97156dcddaa1",
+      "t0": 1792861748543,
+      "type": "request"
+    },
+    {
+      "action": "together.stop",
+      "id": "a6210f01-04bf-4a33-a610-126b2b4dc54d",
+      "type": "request"
+    },
+    {
+      "action": "ping",
+      "id": "e670bf78-54ab-4d6a-b781-84c57383a36e",
+      "t0": 1792861753542,
+      "type": "request"
+    },
+    {
+      "action": "transfer",
+      "id": "0b1edd60-d7b2-4d76-a70a-e5c281ce4fa3",
+      "track": {
+        "artist": "Generated PCM fixture",
+        "album": "",
+        "source": "local",
+        "id": "0568a791fbd01724672a1c31",
+        "title": "lan-generated-0",
+        "durationMs": 600000
+      },
+      "type": "request",
+      "queue": [
+        {
+          "artist": "Generated PCM fixture",
+          "album": "",
+          "source": "local",
+          "id": "0568a791fbd01724672a1c31",
+          "title": "lan-generated-0",
+          "durationMs": 600000
+        },
+        {
+          "artist": "Generated PCM fixture",
+          "album": "",
+          "source": "local",
+          "id": "6c62b3aed5e50da26f9953aa",
+          "title": "lan-generated-1",
+          "durationMs": 600000
+        }
+      ],
+      "positionMs": 29012
+    },
+    {
+      "action": "ping",
+      "id": "27119e7a-5d26-4c46-a9e0-a01d046c75ca",
+      "t0": 1792861758542,
+      "type": "request"
+    },
+    {
+      "action": "ping",
+      "id": "19b993d5-e27e-47bc-822d-61c052133029",
+      "t0": 1792861763542,
+      "type": "request"
+    }
+  ],
+  "events": [
+    {
+      "generation": 1,
+      "late": false,
+      "clockOffsetMs": 0,
+      "startAtMs": 1792861744421,
+      "playing": true,
+      "sessionId": "4aa55ad7-5bb6-42a8-b1c4-033c755ef3cf",
+      "event": "together.commit",
+      "type": "event",
+      "positionMs": 16055
+    },
+    {
+      "generation": 1,
+      "late": false,
+      "clockOffsetMs": 0,
+      "sessionId": "4aa55ad7-5bb6-42a8-b1c4-033c755ef3cf",
+      "state": {
+        "serverTimeMs": 1792861744652,
+        "canNext": true,
+        "queueLength": 2,
+        "artist": "Generated PCM fixture",
+        "album": "",
+        "trackId": "local:0568a791fbd01724672a1c31",
+        "index": 0,
+        "source": "local",
+        "title": "lan-generated-0",
+        "volume": 100,
+        "ready": true,
+        "hasQueue": true,
+        "ended": false,
+        "playing": true,
+        "durationMs": 600000,
+        "canPrevious": false,
+        "queue": [
+          {
+            "artist": "Generated PCM fixture",
+            "album": "",
+            "source": "local",
+            "id": "0568a791fbd01724672a1c31",
+            "title": "lan-generated-0",
+            "durationMs": 600000
+          },
+          {
+            "artist": "Generated PCM fixture",
+            "album": "",
+            "source": "local",
+            "id": "6c62b3aed5e50da26f9953aa",
+            "title": "lan-generated-1",
+            "durationMs": 600000
+          }
+        ],
+        "positionMs": 16176
+      },
+      "event": "together.state",
+      "type": "event",
+      "seek": false
+    },
+    {
+      "generation": 1,
+      "late": false,
+      "clockOffsetMs": 0,
+      "sessionId": "4aa55ad7-5bb6-42a8-b1c4-033c755ef3cf",
+      "state": {
+        "serverTimeMs": 1792861744853,
+        "canNext": true,
+        "queueLength": 2,
+        "artist": "Generated PCM fixture",
+        "album": "",
+        "trackId": "local:0568a791fbd01724672a1c31",
+        "index": 0,
+        "source": "local",
+        "title": "lan-generated-0",
+        "volume": 100,
+        "ready": true,
+        "hasQueue": true,
+        "ended": false,
+        "playing": true,
+        "durationMs": 600000,
+        "canPrevious": false,
+        "queue": [
+          {
+            "artist": "Generated PCM fixture",
+            "album": "",
+            "source": "local",
+            "id": "0568a791fbd01724672a1c31",
+            "title": "lan-generated-0",
+            "durationMs": 600000
+          },
+          {
+            "artist": "Generated PCM fixture",
+            "album": "",
+            "source": "local",
+            "id": "6c62b3aed5e50da26f9953aa",
+            "title": "lan-generated-1",
+            "durationMs": 600000
+          }
+        ],
+        "positionMs": 16378
+      },
+      "event": "together.state",
+      "type": "event",
+      "seek": false
+    },
+    {
+      "generation": 1,
+      "late": false,
+      "clockOffsetMs": 0,
+      "sessionId": "4aa55ad7-5bb6-42a8-b1c4-033c755ef3cf",
+      "state": {
+        "serverTimeMs": 1792861745211,
+        "canNext": true,
+        "queueLength": 2,
+        "artist": "Generated PCM fixture",
+        "album": "",
+        "trackId": "local:0568a791fbd01724672a1c31",
+        "index": 0,
+        "source": "local",
+        "title": "lan-generated-0",
+        "volume": 100,
+        "ready": true,
+        "hasQueue": true,
+        "ended": false,
+        "playing": true,
+        "durationMs": 600000,
+        "canPrevious": false,
+        "queue": [
+          {
+            "artist": "Generated PCM fixture",
+            "album": "",
+            "source": "local",
+            "id": "0568a791fbd01724672a1c31",
+            "title": "lan-generated-0",
+            "durationMs": 600000
+          },
+          {
+            "artist": "Generated PCM fixture",
+            "album": "",
+            "source": "local",
+            "id": "6c62b3aed5e50da26f9953aa",
+            "title": "lan-generated-1",
+            "durationMs": 600000
+          }
+        ],
+        "positionMs": 16783
+      },
+      "event": "together.state",
+      "type": "event",
+      "seek": false
+    },
+    {
+      "generation": 1,
+      "late": false,
+      "clockOffsetMs": 0,
+      "sessionId": "4aa55ad7-5bb6-42a8-b1c4-033c755ef3cf",
+      "state": {
+        "serverTimeMs": 1792861745412,
+        "canNext": true,
+        "queueLength": 2,
+        "artist": "Generated PCM fixture",
+        "album": "",
+        "trackId": "local:0568a791fbd01724672a1c31",
+        "index": 0,
+        "source": "local",
+        "title": "lan-generated-0",
+        "volume": 100,
+        "ready": true,
+        "hasQueue": true,
+        "ended": false,
+        "playing": true,
+        "durationMs": 600000,
+        "canPrevious": false,
+        "queue": [
+          {
+            "artist": "Generated PCM fixture",
+            "album": "",
+            "source": "local",
+            "id": "0568a791fbd01724672a1c31",
+            "title": "lan-generated-0",
+            "durationMs": 600000
+          },
+          {
+            "artist": "Generated PCM fixture",
+            "album": "",
+            "source": "local",
+            "id": "6c62b3aed5e50da26f9953aa",
+            "title": "lan-generated-1",
+            "durationMs": 600000
+          }
+        ],
+        "positionMs": 16986
+      },
+      "event": "together.state",
+      "type": "event",
+      "seek": false
+    },
+    {
+      "generation": 1,
+      "late": false,
+      "clockOffsetMs": 0,
+      "sessionId": "4aa55ad7-5bb6-42a8-b1c4-033c755ef3cf",
+      "state": {
+        "serverTimeMs": 1792861745642,
+        "canNext": true,
+        "queueLength": 2,
+        "artist": "Generated PCM fixture",
+        "album": "",
+        "trackId": "local:0568a791fbd01724672a1c31",
+        "index": 0,
+        "source": "local",
+        "title": "lan-generated-0",
+        "volume": 100,
+        "ready": true,
+        "hasQueue": true,
+        "ended": false,
+        "playing": true,
+        "durationMs": 600000,
+        "canPrevious": false,
+        "queue": [
+          {
+            "artist": "Generated PCM fixture",
+            "album": "",
+            "source": "local",
+            "id": "0568a791fbd01724672a1c31",
+            "title": "lan-generated-0",
+            "durationMs": 600000
+          },
+          {
+            "artist": "Generated PCM fixture",
+            "album": "",
+            "source": "local",
+            "id": "6c62b3aed5e50da26f9953aa",
+            "title": "lan-generated-1",
+            "durationMs": 600000
+          }
+        ],
+        "positionMs": 17188
+      },
+      "event": "together.state",
+      "type": "event",
+      "seek": false
+    },
+    {
+      "generation": 1,
+      "late": false,
+      "clockOffsetMs": 0,
+      "sessionId": "4aa55ad7-5bb6-42a8-b1c4-033c755ef3cf",
+      "state": {
+        "serverTimeMs": 1792861745850,
+        "canNext": true,
+        "queueLength": 2,
+        "artist": "Generated PCM fixture",
+        "album": "",
+        "trackId": "local:0568a791fbd01724672a1c31",
+        "index": 0,
+        "source": "local",
+        "title": "lan-generated-0",
+        "volume": 100,
+        "ready": true,
+        "hasQueue": true,
+        "ended": false,
+        "playing": true,
+        "durationMs": 600000,
+        "canPrevious": false,
+        "queue": [
+          {
+            "artist": "Generated PCM fixture",
+            "album": "",
+            "source": "local",
+            "id": "0568a791fbd01724672a1c31",
+            "title": "lan-generated-0",
+            "durationMs": 600000
+          },
+          {
+            "artist": "Generated PCM fixture",
+            "album": "",
+            "source": "local",
+            "id": "6c62b3aed5e50da26f9953aa",
+            "title": "lan-generated-1",
+            "durationMs": 600000
+          }
+        ],
+        "positionMs": 17391
+      },
+      "event": "together.state",
+      "type": "event",
+      "seek": false
+    },
+    {
+      "generation": 1,
+      "late": false,
+      "clockOffsetMs": 0,
+      "sessionId": "4aa55ad7-5bb6-42a8-b1c4-033c755ef3cf",
+      "state": {
+        "serverTimeMs": 1792861746145,
+        "canNext": true,
+        "queueLength": 2,
+        "artist": "Generated PCM fixture",
+        "album": "",
+        "trackId": "local:0568a791fbd01724672a1c31",
+        "index": 0,
+        "source": "local",
+        "title": "lan-generated-0",
+        "volume": 100,
+        "ready": true,
+        "hasQueue": true,
+        "ended": false,
+        "playing": true,
+        "durationMs": 600000,
+        "canPrevious": false,
+        "queue": [
+          {
+            "artist": "Generated PCM fixture",
+            "album": "",
+            "source": "local",
+            "id": "0568a791fbd01724672a1c31",
+            "title": "lan-generated-0",
+            "durationMs": 600000
+          },
+          {
+            "artist": "Generated PCM fixture",
+            "album": "",
+            "source": "local",
+            "id": "6c62b3aed5e50da26f9953aa",
+            "title": "lan-generated-1",
+            "durationMs": 600000
+          }
+        ],
+        "positionMs": 17693
+      },
+      "event": "together.state",
+      "type": "event",
+      "seek": false
+    },
+    {
+      "generation": 1,
+      "late": false,
+      "clockOffsetMs": 0,
+      "sessionId": "4aa55ad7-5bb6-42a8-b1c4-033c755ef3cf",
+      "state": {
+        "serverTimeMs": 1792861746356,
+        "canNext": true,
+        "queueLength": 2,
+        "artist": "Generated PCM fixture",
+        "album": "",
+        "trackId": "local:0568a791fbd01724672a1c31",
+        "index": 0,
+        "source": "local",
+        "title": "lan-generated-0",
+        "volume": 100,
+        "ready": true,
+        "hasQueue": true,
+        "ended": false,
+        "playing": true,
+        "durationMs": 600000,
+        "canPrevious": false,
+        "queue": [
+          {
+            "artist": "Generated PCM fixture",
+            "album": "",
+            "source": "local",
+            "id": "0568a791fbd01724672a1c31",
+            "title": "lan-generated-0",
+            "durationMs": 600000
+          },
+          {
+            "artist": "Generated PCM fixture",
+            "album": "",
+            "source": "local",
+            "id": "6c62b3aed5e50da26f9953aa",
+            "title": "lan-generated-1",
+            "durationMs": 600000
+          }
+        ],
+        "positionMs": 17895
+      },
+      "event": "together.state",
+      "type": "event",
+      "seek": false
+    },
+    {
+      "generation": 1,
+      "late": false,
+      "clockOffsetMs": 0,
+      "sessionId": "4aa55ad7-5bb6-42a8-b1c4-033c755ef3cf",
+      "state": {
+        "serverTimeMs": 1792861746572,
+        "canNext": true,
+        "queueLength": 2,
+        "artist": "Generated PCM fixture",
+        "album": "",
+        "trackId": "local:0568a791fbd01724672a1c31",
+        "index": 0,
+        "source": "local",
+        "title": "lan-generated-0",
+        "volume": 100,
+        "ready": true,
+        "hasQueue": true,
+        "ended": false,
+        "playing": true,
+        "durationMs": 600000,
+        "canPrevious": false,
+        "queue": [
+          {
+            "artist": "Generated PCM fixture",
+            "album": "",
+            "source": "local",
+            "id": "0568a791fbd01724672a1c31",
+            "title": "lan-generated-0",
+            "durationMs": 600000
+          },
+          {
+            "artist": "Generated PCM fixture",
+            "album": "",
+            "source": "local",
+            "id": "6c62b3aed5e50da26f9953aa",
+            "title": "lan-generated-1",
+            "durationMs": 600000
+          }
+        ],
+        "positionMs": 18097
+      },
+      "event": "together.state",
+      "type": "event",
+      "seek": false
+    },
+    {
+      "generation": 1,
+      "late": false,
+      "clockOffsetMs": 0,
+      "sessionId": "4aa55ad7-5bb6-42a8-b1c4-033c755ef3cf",
+      "state": {
+        "serverTimeMs": 1792861747138,
+        "canNext": true,
+        "queueLength": 2,
+        "artist": "Generated PCM fixture",
+        "album": "",
+        "trackId": "local:0568a791fbd01724672a1c31",
+        "index": 0,
+        "source": "local",
+        "title": "lan-generated-0",
+        "volume": 100,
+        "ready": true,
+        "hasQueue": true,
+        "ended": false,
+        "playing": true,
+        "durationMs": 600000,
+        "canPrevious": false,
+        "queue": [
+          {
+            "artist": "Generated PCM fixture",
+            "album": "",
+            "source": "local",
+            "id": "0568a791fbd01724672a1c31",
+            "title": "lan-generated-0",
+            "durationMs": 600000
+          },
+          {
+            "artist": "Generated PCM fixture",
+            "album": "",
+            "source": "local",
+            "id": "6c62b3aed5e50da26f9953aa",
+            "title": "lan-generated-1",
+            "durationMs": 600000
+          }
+        ],
+        "positionMs": 18702
+      },
+      "event": "together.state",
+      "type": "event",
+      "seek": false
+    },
+    {
+      "generation": 1,
+      "late": false,
+      "clockOffsetMs": 0,
+      "sessionId": "4aa55ad7-5bb6-42a8-b1c4-033c755ef3cf",
+      "state": {
+        "serverTimeMs": 1792861747351,
+        "canNext": true,
+        "queueLength": 2,
+        "artist": "Generated PCM fixture",
+        "album": "",
+        "trackId": "local:0568a791fbd01724672a1c31",
+        "index": 0,
+        "source": "local",
+        "title": "lan-generated-0",
+        "volume": 100,
+        "ready": true,
+        "hasQueue": true,
+        "ended": false,
+        "playing": true,
+        "durationMs": 600000,
+        "canPrevious": false,
+        "queue": [
+          {
+            "artist": "Generated PCM fixture",
+            "album": "",
+            "source": "local",
+            "id": "0568a791fbd01724672a1c31",
+            "title": "lan-generated-0",
+            "durationMs": 600000
+          },
+          {
+            "artist": "Generated PCM fixture",
+            "album": "",
+            "source": "local",
+            "id": "6c62b3aed5e50da26f9953aa",
+            "title": "lan-generated-1",
+            "durationMs": 600000
+          }
+        ],
+        "positionMs": 18903
+      },
+      "event": "together.state",
+      "type": "event",
+      "seek": false
+    },
+    {
+      "generation": 1,
+      "late": false,
+      "clockOffsetMs": 0,
+      "sessionId": "4aa55ad7-5bb6-42a8-b1c4-033c755ef3cf",
+      "state": {
+        "serverTimeMs": 1792861747565,
+        "canNext": true,
+        "queueLength": 2,
+        "artist": "Generated PCM fixture",
+        "album": "",
+        "trackId": "local:0568a791fbd01724672a1c31",
+        "index": 0,
+        "source": "local",
+        "title": "lan-generated-0",
+        "volume": 100,
+        "ready": true,
+        "hasQueue": true,
+        "ended": false,
+        "playing": true,
+        "durationMs": 600000,
+        "canPrevious": false,
+        "queue": [
+          {
+            "artist": "Generated PCM fixture",
+            "album": "",
+            "source": "local",
+            "id": "0568a791fbd01724672a1c31",
+            "title": "lan-generated-0",
+            "durationMs": 600000
+          },
+          {
+            "artist": "Generated PCM fixture",
+            "album": "",
+            "source": "local",
+            "id": "6c62b3aed5e50da26f9953aa",
+            "title": "lan-generated-1",
+            "durationMs": 600000
+          }
+        ],
+        "positionMs": 19106
+      },
+      "event": "together.state",
+      "type": "event",
+      "seek": false
+    },
+    {
+      "generation": 1,
+      "late": false,
+      "clockOffsetMs": 0,
+      "sessionId": "4aa55ad7-5bb6-42a8-b1c4-033c755ef3cf",
+      "state": {
+        "serverTimeMs": 1792861747773,
+        "canNext": true,
+        "queueLength": 2,
+        "artist": "Generated PCM fixture",
+        "album": "",
+        "trackId": "local:0568a791fbd01724672a1c31",
+        "index": 0,
+        "source": "local",
+        "title": "lan-generated-0",
+        "volume": 100,
+        "ready": true,
+        "hasQueue": true,
+        "ended": false,
+        "playing": true,
+        "durationMs": 600000,
+        "canPrevious": false,
+        "queue": [
+          {
+            "artist": "Generated PCM fixture",
+            "album": "",
+            "source": "local",
+            "id": "0568a791fbd01724672a1c31",
+            "title": "lan-generated-0",
+            "durationMs": 600000
+          },
+          {
+            "artist": "Generated PCM fixture",
+            "album": "",
+            "source": "local",
+            "id": "6c62b3aed5e50da26f9953aa",
+            "title": "lan-generated-1",
+            "durationMs": 600000
+          }
+        ],
+        "positionMs": 19308
+      },
+      "event": "together.state",
+      "type": "event",
+      "seek": false
+    },
+    {
+      "generation": 1,
+      "late": false,
+      "clockOffsetMs": 0,
+      "sessionId": "4aa55ad7-5bb6-42a8-b1c4-033c755ef3cf",
+      "state": {
+        "serverTimeMs": 1792861747983,
+        "canNext": true,
+        "queueLength": 2,
+        "artist": "Generated PCM fixture",
+        "album": "",
+        "trackId": "local:0568a791fbd01724672a1c31",
+        "index": 0,
+        "source": "local",
+        "title": "lan-generated-0",
+        "volume": 100,
+        "ready": true,
+        "hasQueue": true,
+        "ended": false,
+        "playing": true,
+        "durationMs": 600000,
+        "canPrevious": false,
+        "queue": [
+          {
+            "artist": "Generated PCM fixture",
+            "album": "",
+            "source": "local",
+            "id": "0568a791fbd01724672a1c31",
+            "title": "lan-generated-0",
+            "durationMs": 600000
+          },
+          {
+            "artist": "Generated PCM fixture",
+            "album": "",
+            "source": "local",
+            "id": "6c62b3aed5e50da26f9953aa",
+            "title": "lan-generated-1",
+            "durationMs": 600000
+          }
+        ],
+        "positionMs": 19511
+      },
+      "event": "together.state",
+      "type": "event",
+      "seek": false
+    },
+    {
+      "generation": 1,
+      "late": false,
+      "clockOffsetMs": 0,
+      "sessionId": "4aa55ad7-5bb6-42a8-b1c4-033c755ef3cf",
+      "state": {
+        "serverTimeMs": 1792861748190,
+        "canNext": true,
+        "queueLength": 2,
+        "artist": "Generated PCM fixture",
+        "album": "",
+        "trackId": "local:0568a791fbd01724672a1c31",
+        "index": 0,
+        "source": "local",
+        "title": "lan-generated-0",
+        "volume": 100,
+        "ready": true,
+        "hasQueue": true,
+        "ended": false,
+        "playing": true,
+        "durationMs": 600000,
+        "canPrevious": false,
+        "queue": [
+          {
+            "artist": "Generated PCM fixture",
+            "album": "",
+            "source": "local",
+            "id": "0568a791fbd01724672a1c31",
+            "title": "lan-generated-0",
+            "durationMs": 600000
+          },
+          {
+            "artist": "Generated PCM fixture",
+            "album": "",
+            "source": "local",
+            "id": "6c62b3aed5e50da26f9953aa",
+            "title": "lan-generated-1",
+            "durationMs": 600000
+          }
+        ],
+        "positionMs": 19715
+      },
+      "event": "together.state",
+      "type": "event",
+      "seek": false
+    },
+    {
+      "generation": 1,
+      "late": false,
+      "clockOffsetMs": 0,
+      "sessionId": "4aa55ad7-5bb6-42a8-b1c4-033c755ef3cf",
+      "state": {
+        "serverTimeMs": 1792861748757,
+        "canNext": true,
+        "queueLength": 2,
+        "artist": "Generated PCM fixture",
+        "album": "",
+        "trackId": "local:0568a791fbd01724672a1c31",
+        "index": 0,
+        "source": "local",
+        "title": "lan-generated-0",
+        "volume": 100,
+        "ready": true,
+        "hasQueue": true,
+        "ended": false,
+        "playing": true,
+        "durationMs": 600000,
+        "canPrevious": false,
+        "queue": [
+          {
+            "artist": "Generated PCM fixture",
+            "album": "",
+            "source": "local",
+            "id": "0568a791fbd01724672a1c31",
+            "title": "lan-generated-0",
+            "durationMs": 600000
+          },
+          {
+            "artist": "Generated PCM fixture",
+            "album": "",
+            "source": "local",
+            "id": "6c62b3aed5e50da26f9953aa",
+            "title": "lan-generated-1",
+            "durationMs": 600000
+          }
+        ],
+        "positionMs": 20323
+      },
+      "event": "together.state",
+      "type": "event",
+      "seek": false
+    },
+    {
+      "generation": 1,
+      "late": false,
+      "clockOffsetMs": 0,
+      "sessionId": "4aa55ad7-5bb6-42a8-b1c4-033c755ef3cf",
+      "state": {
+        "serverTimeMs": 1792861748987,
+        "canNext": true,
+        "queueLength": 2,
+        "artist": "Generated PCM fixture",
+        "album": "",
+        "trackId": "local:0568a791fbd01724672a1c31",
+        "index": 0,
+        "source": "local",
+        "title": "lan-generated-0",
+        "volume": 100,
+        "ready": true,
+        "hasQueue": true,
+        "ended": false,
+        "playing": true,
+        "durationMs": 600000,
+        "canPrevious": false,
+        "queue": [
+          {
+            "artist": "Generated PCM fixture",
+            "album": "",
+            "source": "local",
+            "id": "0568a791fbd01724672a1c31",
+            "title": "lan-generated-0",
+            "durationMs": 600000
+          },
+          {
+            "artist": "Generated PCM fixture",
+            "album": "",
+            "source": "local",
+            "id": "6c62b3aed5e50da26f9953aa",
+            "title": "lan-generated-1",
+            "durationMs": 600000
+          }
+        ],
+        "positionMs": 20526
+      },
+      "event": "together.state",
+      "type": "event",
+      "seek": false
+    },
+    {
+      "generation": 1,
+      "late": false,
+      "clockOffsetMs": 0,
+      "sessionId": "4aa55ad7-5bb6-42a8-b1c4-033c755ef3cf",
+      "state": {
+        "serverTimeMs": 1792861749204,
+        "canNext": true,
+        "queueLength": 2,
+        "artist": "Generated PCM fixture",
+        "album": "",
+        "trackId": "local:0568a791fbd01724672a1c31",
+        "index": 0,
+        "source": "local",
+        "title": "lan-generated-0",
+        "volume": 100,
+        "ready": true,
+        "hasQueue": true,
+        "ended": false,
+        "playing": true,
+        "durationMs": 600000,
+        "canPrevious": false,
+        "queue": [
+          {
+            "artist": "Generated PCM fixture",
+            "album": "",
+            "source": "local",
+            "id": "0568a791fbd01724672a1c31",
+            "title": "lan-generated-0",
+            "durationMs": 600000
+          },
+          {
+            "artist": "Generated PCM fixture",
+            "album": "",
+            "source": "local",
+            "id": "6c62b3aed5e50da26f9953aa",
+            "title": "lan-generated-1",
+            "durationMs": 600000
+          }
+        ],
+        "positionMs": 20728
+      },
+      "event": "together.state",
+      "type": "event",
+      "seek": false
+    },
+    {
+      "generation": 1,
+      "late": false,
+      "clockOffsetMs": 0,
+      "sessionId": "4aa55ad7-5bb6-42a8-b1c4-033c755ef3cf",
+      "state": {
+        "serverTimeMs": 1792861749413,
+        "canNext": true,
+        "queueLength": 2,
+        "artist": "Generated PCM fixture",
+        "album": "",
+        "trackId": "local:0568a791fbd01724672a1c31",
+        "index": 0,
+        "source": "local",
+        "title": "lan-generated-0",
+        "volume": 100,
+        "ready": true,
+        "hasQueue": true,
+        "ended": false,
+        "playing": true,
+        "durationMs": 600000,
+        "canPrevious": false,
+        "queue": [
+          {
+            "artist": "Generated PCM fixture",
+            "album": "",
+            "source": "local",
+            "id": "0568a791fbd01724672a1c31",
+            "title": "lan-generated-0",
+            "durationMs": 600000
+          },
+          {
+            "artist": "Generated PCM fixture",
+            "album": "",
+            "source": "local",
+            "id": "6c62b3aed5e50da26f9953aa",
+            "title": "lan-generated-1",
+            "durationMs": 600000
+          }
+        ],
+        "positionMs": 20931
+      },
+      "event": "together.state",
+      "type": "event",
+      "seek": false
+    },
+    {
+      "generation": 1,
+      "late": false,
+      "clockOffsetMs": 0,
+      "sessionId": "4aa55ad7-5bb6-42a8-b1c4-033c755ef3cf",
+      "state": {
+        "serverTimeMs": 1792861749626,
+        "canNext": true,
+        "queueLength": 2,
+        "artist": "Generated PCM fixture",
+        "album": "",
+        "trackId": "local:0568a791fbd01724672a1c31",
+        "index": 0,
+        "source": "local",
+        "title": "lan-generated-0",
+        "volume": 100,
+        "ready": true,
+        "hasQueue": true,
+        "ended": false,
+        "playing": true,
+        "durationMs": 600000,
+        "canPrevious": false,
+        "queue": [
+          {
+            "artist": "Generated PCM fixture",
+            "album": "",
+            "source": "local",
+            "id": "0568a791fbd01724672a1c31",
+            "title": "lan-generated-0",
+            "durationMs": 600000
+          },
+          {
+            "artist": "Generated PCM fixture",
+            "album": "",
+            "source": "local",
+            "id": "6c62b3aed5e50da26f9953aa",
+            "title": "lan-generated-1",
+            "durationMs": 600000
+          }
+        ],
+        "positionMs": 21134
+      },
+      "event": "together.state",
+      "type": "event",
+      "seek": false
+    },
+    {
+      "generation": 1,
+      "late": false,
+      "clockOffsetMs": 0,
+      "sessionId": "4aa55ad7-5bb6-42a8-b1c4-033c755ef3cf",
+      "state": {
+        "serverTimeMs": 1792861749837,
+        "canNext": true,
+        "queueLength": 2,
+        "artist": "Generated PCM fixture",
+        "album": "",
+        "trackId": "local:0568a791fbd01724672a1c31",
+        "index": 0,
+        "source": "local",
+        "title": "lan-generated-0",
+        "volume": 100,
+        "ready": true,
+        "hasQueue": true,
+        "ended": false,
+        "playing": true,
+        "durationMs": 600000,
+        "canPrevious": false,
+        "queue": [
+          {
+            "artist": "Generated PCM fixture",
+            "album": "",
+            "source": "local",
+            "id": "0568a791fbd01724672a1c31",
+            "title": "lan-generated-0",
+            "durationMs": 600000
+          },
+          {
+            "artist": "Generated PCM fixture",
+            "album": "",
+            "source": "local",
+            "id": "6c62b3aed5e50da26f9953aa",
+            "title": "lan-generated-1",
+            "durationMs": 600000
+          }
+        ],
+        "positionMs": 21436
+      },
+      "event": "together.state",
+      "type": "event",
+      "seek": false
+    },
+    {
+      "generation": 1,
+      "late": false,
+      "clockOffsetMs": 0,
+      "sessionId": "4aa55ad7-5bb6-42a8-b1c4-033c755ef3cf",
+      "state": {
+        "serverTimeMs": 1792861750046,
+        "canNext": true,
+        "queueLength": 2,
+        "artist": "Generated PCM fixture",
+        "album": "",
+        "trackId": "local:0568a791fbd01724672a1c31",
+        "index": 0,
+        "source": "local",
+        "title": "lan-generated-0",
+        "volume": 100,
+        "ready": true,
+        "hasQueue": true,
+        "ended": false,
+        "playing": true,
+        "durationMs": 600000,
+        "canPrevious": false,
+        "queue": [
+          {
+            "artist": "Generated PCM fixture",
+            "album": "",
+            "source": "local",
+            "id": "0568a791fbd01724672a1c31",
+            "title": "lan-generated-0",
+            "durationMs": 600000
+          },
+          {
+            "artist": "Generated PCM fixture",
+            "album": "",
+            "source": "local",
+            "id": "6c62b3aed5e50da26f9953aa",
+            "title": "lan-generated-1",
+            "durationMs": 600000
+          }
+        ],
+        "positionMs": 21638
+      },
+      "event": "together.state",
+      "type": "event",
+      "seek": false
+    },
+    {
+      "generation": 1,
+      "late": false,
+      "clockOffsetMs": 0,
+      "sessionId": "4aa55ad7-5bb6-42a8-b1c4-033c755ef3cf",
+      "state": {
+        "serverTimeMs": 1792861750254,
+        "canNext": true,
+        "queueLength": 2,
+        "artist": "Generated PCM fixture",
+        "album": "",
+        "trackId": "local:0568a791fbd01724672a1c31",
+        "index": 0,
+        "source": "local",
+        "title": "lan-generated-0",
+        "volume": 100,
+        "ready": true,
+        "hasQueue": true,
+        "ended": false,
+        "playing": true,
+        "durationMs": 600000,
+        "canPrevious": false,
+        "queue": [
+          {
+            "artist": "Generated PCM fixture",
+            "album": "",
+            "source": "local",
+            "id": "0568a791fbd01724672a1c31",
+            "title": "lan-generated-0",
+            "durationMs": 600000
+          },
+          {
+            "artist": "Generated PCM fixture",
+            "album": "",
+            "source": "local",
+            "id": "6c62b3aed5e50da26f9953aa",
+            "title": "lan-generated-1",
+            "durationMs": 600000
+          }
+        ],
+        "positionMs": 21839
+      },
+      "event": "together.state",
+      "type": "event",
+      "seek": false
+    },
+    {
+      "generation": 1,
+      "late": false,
+      "clockOffsetMs": 0,
+      "sessionId": "4aa55ad7-5bb6-42a8-b1c4-033c755ef3cf",
+      "state": {
+        "serverTimeMs": 1792861750472,
+        "canNext": true,
+        "queueLength": 2,
+        "artist": "Generated PCM fixture",
+        "album": "",
+        "trackId": "local:0568a791fbd01724672a1c31",
+        "index": 0,
+        "source": "local",
+        "title": "lan-generated-0",
+        "volume": 100,
+        "ready": true,
+        "hasQueue": true,
+        "ended": false,
+        "playing": true,
+        "durationMs": 600000,
+        "canPrevious": false,
+        "queue": [
+          {
+            "artist": "Generated PCM fixture",
+            "album": "",
+            "source": "local",
+            "id": "0568a791fbd01724672a1c31",
+            "title": "lan-generated-0",
+            "durationMs": 600000
+          },
+          {
+            "artist": "Generated PCM fixture",
+            "album": "",
+            "source": "local",
+            "id": "6c62b3aed5e50da26f9953aa",
+            "title": "lan-generated-1",
+            "durationMs": 600000
+          }
+        ],
+        "positionMs": 22040
+      },
+      "event": "together.state",
+      "type": "event",
+      "seek": false
+    },
+    {
+      "generation": 1,
+      "late": false,
+      "clockOffsetMs": 0,
+      "sessionId": "4aa55ad7-5bb6-42a8-b1c4-033c755ef3cf",
+      "state": {
+        "serverTimeMs": 1792861750682,
+        "canNext": true,
+        "queueLength": 2,
+        "artist": "Generated PCM fixture",
+        "album": "",
+        "trackId": "local:0568a791fbd01724672a1c31",
+        "index": 0,
+        "source": "local",
+        "title": "lan-generated-0",
+        "volume": 100,
+        "ready": true,
+        "hasQueue": true,
+        "ended": false,
+        "playing": true,
+        "durationMs": 600000,
+        "canPrevious": false,
+        "queue": [
+          {
+            "artist": "Generated PCM fixture",
+            "album": "",
+            "source": "local",
+            "id": "0568a791fbd01724672a1c31",
+            "title": "lan-generated-0",
+            "durationMs": 600000
+          },
+          {
+            "artist": "Generated PCM fixture",
+            "album": "",
+            "source": "local",
+            "id": "6c62b3aed5e50da26f9953aa",
+            "title": "lan-generated-1",
+            "durationMs": 600000
+          }
+        ],
+        "positionMs": 22243
+      },
+      "event": "together.state",
+      "type": "event",
+      "seek": false
+    },
+    {
+      "generation": 1,
+      "late": false,
+      "clockOffsetMs": 0,
+      "sessionId": "4aa55ad7-5bb6-42a8-b1c4-033c755ef3cf",
+      "state": {
+        "serverTimeMs": 1792861750907,
+        "canNext": true,
+        "queueLength": 2,
+        "artist": "Generated PCM fixture",
+        "album": "",
+        "trackId": "local:0568a791fbd01724672a1c31",
+        "index": 0,
+        "source": "local",
+        "title": "lan-generated-0",
+        "volume": 100,
+        "ready": true,
+        "hasQueue": true,
+        "ended": false,
+        "playing": true,
+        "durationMs": 600000,
+        "canPrevious": false,
+        "queue": [
+          {
+            "artist": "Generated PCM fixture",
+            "album": "",
+            "source": "local",
+            "id": "0568a791fbd01724672a1c31",
+            "title": "lan-generated-0",
+            "durationMs": 600000
+          },
+          {
+            "artist": "Generated PCM fixture",
+            "album": "",
+            "source": "local",
+            "id": "6c62b3aed5e50da26f9953aa",
+            "title": "lan-generated-1",
+            "durationMs": 600000
+          }
+        ],
+        "positionMs": 22446
+      },
+      "event": "together.state",
+      "type": "event",
+      "seek": false
+    },
+    {
+      "generation": 1,
+      "late": false,
+      "clockOffsetMs": 0,
+      "sessionId": "4aa55ad7-5bb6-42a8-b1c4-033c755ef3cf",
+      "state": {
+        "serverTimeMs": 1792861751117,
+        "canNext": true,
+        "queueLength": 2,
+        "artist": "Generated PCM fixture",
+        "album": "",
+        "trackId": "local:0568a791fbd01724672a1c31",
+        "index": 0,
+        "source": "local",
+        "title": "lan-generated-0",
+        "volume": 100,
+        "ready": true,
+        "hasQueue": true,
+        "ended": false,
+        "playing": true,
+        "durationMs": 600000,
+        "canPrevious": false,
+        "queue": [
+          {
+            "artist": "Generated PCM fixture",
+            "album": "",
+            "source": "local",
+            "id": "0568a791fbd01724672a1c31",
+            "title": "lan-generated-0",
+            "durationMs": 600000
+          },
+          {
+            "artist": "Generated PCM fixture",
+            "album": "",
+            "source": "local",
+            "id": "6c62b3aed5e50da26f9953aa",
+            "title": "lan-generated-1",
+            "durationMs": 600000
+          }
+        ],
+        "positionMs": 22647
+      },
+      "event": "together.state",
+      "type": "event",
+      "seek": false
+    },
+    {
+      "generation": 1,
+      "late": false,
+      "clockOffsetMs": 0,
+      "sessionId": "4aa55ad7-5bb6-42a8-b1c4-033c755ef3cf",
+      "state": {
+        "serverTimeMs": 1792861751326,
+        "canNext": true,
+        "queueLength": 2,
+        "artist": "Generated PCM fixture",
+        "album": "",
+        "trackId": "local:0568a791fbd01724672a1c31",
+        "index": 0,
+        "source": "local",
+        "title": "lan-generated-0",
+        "volume": 100,
+        "ready": true,
+        "hasQueue": true,
+        "ended": false,
+        "playing": true,
+        "durationMs": 600000,
+        "canPrevious": false,
+        "queue": [
+          {
+            "artist": "Generated PCM fixture",
+            "album": "",
+            "source": "local",
+            "id": "0568a791fbd01724672a1c31",
+            "title": "lan-generated-0",
+            "durationMs": 600000
+          },
+          {
+            "artist": "Generated PCM fixture",
+            "album": "",
+            "source": "local",
+            "id": "6c62b3aed5e50da26f9953aa",
+            "title": "lan-generated-1",
+            "durationMs": 600000
+          }
+        ],
+        "positionMs": 22849
+      },
+      "event": "together.state",
+      "type": "event",
+      "seek": false
+    },
+    {
+      "generation": 1,
+      "late": false,
+      "clockOffsetMs": 0,
+      "sessionId": "4aa55ad7-5bb6-42a8-b1c4-033c755ef3cf",
+      "state": {
+        "serverTimeMs": 1792861751547,
+        "canNext": true,
+        "queueLength": 2,
+        "artist": "Generated PCM fixture",
+        "album": "",
+        "trackId": "local:0568a791fbd01724672a1c31",
+        "index": 0,
+        "source": "local",
+        "title": "lan-generated-0",
+        "volume": 100,
+        "ready": true,
+        "hasQueue": true,
+        "ended": false,
+        "playing": true,
+        "durationMs": 600000,
+        "canPrevious": false,
+        "queue": [
+          {
+            "artist": "Generated PCM fixture",
+            "album": "",
+            "source": "local",
+            "id": "0568a791fbd01724672a1c31",
+            "title": "lan-generated-0",
+            "durationMs": 600000
+          },
+          {
+            "artist": "Generated PCM fixture",
+            "album": "",
+            "source": "local",
+            "id": "6c62b3aed5e50da26f9953aa",
+            "title": "lan-generated-1",
+            "durationMs": 600000
+          }
+        ],
+        "positionMs": 23051
+      },
+      "event": "together.state",
+      "type": "event",
+      "seek": false
+    },
+    {
+      "generation": 1,
+      "late": false,
+      "clockOffsetMs": 0,
+      "sessionId": "4aa55ad7-5bb6-42a8-b1c4-033c755ef3cf",
+      "state": {
+        "serverTimeMs": 1792861751760,
+        "canNext": true,
+        "queueLength": 2,
+        "artist": "Generated PCM fixture",
+        "album": "",
+        "trackId": "local:0568a791fbd01724672a1c31",
+        "index": 0,
+        "source": "local",
+        "title": "lan-generated-0",
+        "volume": 100,
+        "ready": true,
+        "hasQueue": true,
+        "ended": false,
+        "playing": true,
+        "durationMs": 600000,
+        "canPrevious": false,
+        "queue": [
+          {
+            "artist": "Generated PCM fixture",
+            "album": "",
+            "source": "local",
+            "id": "0568a791fbd01724672a1c31",
+            "title": "lan-generated-0",
+            "durationMs": 600000
+          },
+          {
+            "artist": "Generated PCM fixture",
+            "album": "",
+            "source": "local",
+            "id": "6c62b3aed5e50da26f9953aa",
+            "title": "lan-generated-1",
+            "durationMs": 600000
+          }
+        ],
+        "positionMs": 23355
+      },
+      "event": "together.state",
+      "type": "event",
+      "seek": false
+    },
+    {
+      "generation": 1,
+      "late": false,
+      "clockOffsetMs": 0,
+      "sessionId": "4aa55ad7-5bb6-42a8-b1c4-033c755ef3cf",
+      "state": {
+        "serverTimeMs": 1792861751975,
+        "canNext": true,
+        "queueLength": 2,
+        "artist": "Generated PCM fixture",
+        "album": "",
+        "trackId": "local:0568a791fbd01724672a1c31",
+        "index": 0,
+        "source": "local",
+        "title": "lan-generated-0",
+        "volume": 100,
+        "ready": true,
+        "hasQueue": true,
+        "ended": false,
+        "playing": true,
+        "durationMs": 600000,
+        "canPrevious": false,
+        "queue": [
+          {
+            "artist": "Generated PCM fixture",
+            "album": "",
+            "source": "local",
+            "id": "0568a791fbd01724672a1c31",
+            "title": "lan-generated-0",
+            "durationMs": 600000
+          },
+          {
+            "artist": "Generated PCM fixture",
+            "album": "",
+            "source": "local",
+            "id": "6c62b3aed5e50da26f9953aa",
+            "title": "lan-generated-1",
+            "durationMs": 600000
+          }
+        ],
+        "positionMs": 23555
+      },
+      "event": "together.state",
+      "type": "event",
+      "seek": false
+    }
+  ]
+}

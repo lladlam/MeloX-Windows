@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="JellyfinProtocolTest[desktop]" tests="11" skipped="0" failures="0" errors="0" timestamp="2026-10-24T16:40:38.663Z" hostname="runnervmdaln5" time="0.703">
+  <properties/>
+  <testcase name="realWriteMethodsSendServerEndpointsAndOnlyRenameName[desktop]" classname="melox.provider.jellyfin.JellyfinProtocolTest" time="0.022"/>
+  <testcase name="catalogPaginationMappingAndPlaybackKeepNativeIdentityAndHeaders[desktop]" classname="melox.provider.jellyfin.JellyfinProtocolTest" time="0.017"/>
+  <testcase name="playlistDuplicatesUseMembershipIdsForRemoveAndMoveAnd204IsSuccess[desktop]" classname="melox.provider.jellyfin.JellyfinProtocolTest" time="0.012"/>
+  <testcase name="foreignSourceServerAndChangedSessionAreRejected[desktop]" classname="melox.provider.jellyfin.JellyfinProtocolTest" time="0.007"/>
+  <testcase name="cancellingDuringResponseBodyClosesOwnedSocketPromptly[desktop]" classname="melox.provider.jellyfin.JellyfinProtocolTest" time="0.107"/>
+  <testcase name="productionResolverRetainsServerMetadataSeparatesAccountsAndDoesNotInventQuality[desktop]" classname="melox.provider.jellyfin.JellyfinProtocolTest" time="0.007"/>
+  <testcase name="artworkCredentialsAreRestrictedToOriginBasePathAndImageEndpoint[desktop]" classname="melox.provider.jellyfin.JellyfinProtocolTest" time="0.003"/>
+  <testcase name="authenticationUsesDesktopIdentityStableDeviceAndNoQueryToken[desktop]" classname="melox.provider.jellyfin.JellyfinProtocolTest" time="0.01"/>
+  <testcase name="favoriteReadIsAuthenticatedServerBoundAndMissingStateIsNotFalse[desktop]" classname="melox.provider.jellyfin.JellyfinProtocolTest" time="0.008"/>
+  <testcase name="nativeDecoderConsumesActualAuthorizedUniversalStreamPcm[desktop]" classname="melox.provider.jellyfin.JellyfinProtocolTest" time="0.369"/>
+  <testcase name="responseBoundsErrorsAndAuthenticationRedirectsAreEnforced[desktop]" classname="melox.provider.jellyfin.JellyfinProtocolTest" time="0.14"/>
+  <system-out><![CDATA[[DEBUG MeloXQuality] Resolving playback: song=1 requested=standard loggedIn=false candidates=standard
+[DEBUG MeloXThirdParty] resolve detail source=jellyfin id=audio-on title=generated artists=未知歌手 durationMs=null metadata=Jellyfin
+[INFO MeloXThirdParty] Resolve start source=jellyfin quality=Standard thirdParty=true
+[INFO MeloXThirdParty] Resolve fallback source=jellyfin stage=provider chksz=unavailable
+[DEBUG MeloXThirdParty] resolve detail source=jellyfin id=audio-on title=generated artists=未知歌手 durationMs=null metadata=Jellyfin
+[INFO MeloXThirdParty] Resolve start source=jellyfin quality=Standard thirdParty=true
+[INFO MeloXThirdParty] Resolve fallback source=jellyfin stage=provider chksz=unavailable
+[DEBUG MeloXThirdParty] resolve detail source=jellyfin id=audio-on title=generated artists=未知歌手 durationMs=null metadata=Jellyfin
+[INFO MeloXThirdParty] Resolve start source=jellyfin quality=Standard thirdParty=true
+[INFO MeloXThirdParty] Resolve fallback source=jellyfin stage=provider chksz=unavailable
+[WARN MeloXQuality] Playback candidate rejected: song=1 quality=standard; IOException: no URL for standard
+[INFO MeloXPlayback] Cross-provider fallback: skipped song=1: disabled or missing metadata
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

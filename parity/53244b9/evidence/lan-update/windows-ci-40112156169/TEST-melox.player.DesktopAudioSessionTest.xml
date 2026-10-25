@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="DesktopAudioSessionTest[desktop]" tests="14" skipped="0" failures="0" errors="0" timestamp="2026-10-24T16:40:29.942Z" hostname="runnervmdaln5" time="1.476">
+  <properties/>
+  <testcase name="realFfmpegNonzeroExitAfterPcmIsContentFailureRatherThanNaturalEnd[desktop]" classname="melox.player.DesktopAudioSessionTest" time="0.076"/>
+  <testcase name="unexpectedDeviceCloseDuringWriteStillFailsWithLineStateDiagnostics[desktop]" classname="melox.player.DesktopAudioSessionTest" time="0.074"/>
+  <testcase name="unavailableDeviceReportsOutputFailureWithoutProducingAnEndEvent[desktop]" classname="melox.player.DesktopAudioSessionTest" time="0.014"/>
+  <testcase name="seekingToTheDecoderOriginalZeroPositionActuallyRestartsIt[desktop]" classname="melox.player.DesktopAudioSessionTest" time="0.138"/>
+  <testcase name="seekingToKnownTrackEndAcceptsAZeroPcmSuccessfulDecoderExit[desktop]" classname="melox.player.DesktopAudioSessionTest" time="0.059"/>
+  <testcase name="realOutputConsumesEqualizerPreampAndSeekingRebuildsDspWithCurrentSettings[desktop]" classname="melox.player.DesktopAudioSessionTest" time="0.13"/>
+  <testcase name="stopReleasesPausedPendingWriteWithoutFailureOrEndCallback[desktop]" classname="melox.player.DesktopAudioSessionTest" time="0.147"/>
+  <testcase name="pausedWriteReturningZeroRetainsPcmAndResumesOnTheSameDevice[desktop]" classname="melox.player.DesktopAudioSessionTest" time="0.162"/>
+  <testcase name="seekReleasesPausedPendingWriteAndOnlyReplacementPcmCanFinish[desktop]" classname="melox.player.DesktopAudioSessionTest" time="0.131"/>
+  <testcase name="replacingTheSameUriKeepsEndCallbacksOwnedByTheNewRequest[desktop]" classname="melox.player.DesktopAudioSessionTest" time="0.115"/>
+  <testcase name="genuinelyZeroProgressRunningDeviceStillReportsAnOutputFailure[desktop]" classname="melox.player.DesktopAudioSessionTest" time="0.054"/>
+  <testcase name="aDeviceStartFailureIsOutputFailureRatherThanCorruptContent[desktop]" classname="melox.player.DesktopAudioSessionTest" time="0.051"/>
+  <testcase name="decoderEofWaitsForBufferedFramesAndPauseResumePreserveTheTail[desktop]" classname="melox.player.DesktopAudioSessionTest" time="0.17"/>
+  <testcase name="quickPauseResumeBeforeInterruptedWriteReturnsKeepsZeroAndShortWriteRemainders[desktop]" classname="melox.player.DesktopAudioSessionTest" time="0.152"/>
+  <system-out><![CDATA[[DEBUG AudioPlayer] FFmpeg binary=C:\Users\runneradmin\AppData\Local\Temp\melox-decoder-ffmpeg-af7913b7ddc324bf.exe os=Windows Server 2025 sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+[DEBUG AudioPlayer] FFmpeg binary=C:\Users\runneradmin\AppData\Local\Temp\melox-decoder-ffmpeg-af7913b7ddc324bf.exe os=Windows Server 2025 sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+[DEBUG AudioPlayer] FFmpeg binary=C:\Users\runneradmin\AppData\Local\Temp\melox-decoder-ffmpeg-af7913b7ddc324bf.exe os=Windows Server 2025 sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+[DEBUG AudioPlayer] FFmpeg binary=C:\Users\runneradmin\AppData\Local\Temp\melox-decoder-ffmpeg-af7913b7ddc324bf.exe os=Windows Server 2025 sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+[DEBUG AudioPlayer] FFmpeg binary=C:\Users\runneradmin\AppData\Local\Temp\melox-decoder-ffmpeg-af7913b7ddc324bf.exe os=Windows Server 2025 sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+[DEBUG AudioPlayer] FFmpeg binary=C:\Users\runneradmin\AppData\Local\Temp\melox-decoder-ffmpeg-af7913b7ddc324bf.exe os=Windows Server 2025 sourceHost=local
+[DEBUG AudioPlayer] decode local source at 500ms
+[DEBUG AudioPlayer] FFmpeg binary=C:\Users\runneradmin\AppData\Local\Temp\melox-decoder-ffmpeg-af7913b7ddc324bf.exe os=Windows Server 2025 sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+[DEBUG AudioPlayer] FFmpeg binary=C:\Users\runneradmin\AppData\Local\Temp\melox-decoder-ffmpeg-af7913b7ddc324bf.exe os=Windows Server 2025 sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+[DEBUG AudioPlayer] FFmpeg binary=C:\Users\runneradmin\AppData\Local\Temp\melox-decoder-ffmpeg-af7913b7ddc324bf.exe os=Windows Server 2025 sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+[DEBUG AudioPlayer] FFmpeg binary=C:\Users\runneradmin\AppData\Local\Temp\melox-decoder-ffmpeg-af7913b7ddc324bf.exe os=Windows Server 2025 sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+[DEBUG AudioPlayer] PCM write interrupted by pause: offset=4096 remaining=31184 paused=true pauseVersion=89->90
+[DEBUG AudioPlayer] FFmpeg binary=C:\Users\runneradmin\AppData\Local\Temp\melox-decoder-ffmpeg-af7913b7ddc324bf.exe os=Windows Server 2025 sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+[DEBUG AudioPlayer] FFmpeg binary=C:\Users\runneradmin\AppData\Local\Temp\melox-decoder-ffmpeg-af7913b7ddc324bf.exe os=Windows Server 2025 sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+[DEBUG AudioPlayer] FFmpeg binary=C:\Users\runneradmin\AppData\Local\Temp\melox-decoder-ffmpeg-af7913b7ddc324bf.exe os=Windows Server 2025 sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+[DEBUG AudioPlayer] FFmpeg binary=C:\Users\runneradmin\AppData\Local\Temp\melox-decoder-ffmpeg-af7913b7ddc324bf.exe os=Windows Server 2025 sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+[DEBUG AudioPlayer] FFmpeg binary=C:\Users\runneradmin\AppData\Local\Temp\melox-decoder-ffmpeg-af7913b7ddc324bf.exe os=Windows Server 2025 sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+[DEBUG AudioPlayer] FFmpeg binary=C:\Users\runneradmin\AppData\Local\Temp\melox-decoder-ffmpeg-af7913b7ddc324bf.exe os=Windows Server 2025 sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+[DEBUG AudioPlayer] FFmpeg binary=C:\Users\runneradmin\AppData\Local\Temp\melox-decoder-ffmpeg-af7913b7ddc324bf.exe os=Windows Server 2025 sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+[DEBUG AudioPlayer] FFmpeg binary=C:\Users\runneradmin\AppData\Local\Temp\melox-decoder-ffmpeg-af7913b7ddc324bf.exe os=Windows Server 2025 sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+[DEBUG AudioPlayer] PCM write interrupted by pause: offset=4096 remaining=31184 paused=false pauseVersion=92->93
+[DEBUG AudioPlayer] FFmpeg binary=C:\Users\runneradmin\AppData\Local\Temp\melox-decoder-ffmpeg-af7913b7ddc324bf.exe os=Windows Server 2025 sourceHost=local
+[DEBUG AudioPlayer] decode local source at 0ms
+]]></system-out>
+  <system-err><![CDATA[[ERROR AudioPlayer] 播放失败 (Content): AudioPlaybackFailure: [in#0/wav @ 0000029e44345f80] corrupt input packet in stream 0
+[in#0/wav @ 0000029e44345f80] Task finished with error: Invalid data found when processing input
+[in#0/wav @ 0000029e44345f80] Terminating thread with error: Invalid data found when processing input <- IOException: [in#0/wav @ 0000029e44345f80] corrupt input packet in stream 0
+[in#0/wav @ 0000029e44345f80] Task finished with error: Invalid data found when processing input
+[in#0/wav @ 0000029e44345f80] Terminating thread with error: Invalid data found when processing input
+[ERROR AudioPlayer] 播放失败 (Output): AudioPlaybackFailure: Audio output stopped accepting aligned PCM frames (accepted=0 requested=31184 offset=4096 open=false running=false paused=false pauseVersion=88->88 framePosition=0 buffer=176400 available=172304) <- IOException: Audio output stopped accepting aligned PCM frames (accepted=0 requested=31184 offset=4096 open=false running=false paused=false pauseVersion=88->88 framePosition=0 buffer=176400 available=172304)
+[ERROR AudioPlayer] 播放失败 (Output): AudioPlaybackFailure: test device unavailable <- LineUnavailableException: test device unavailable
+[ERROR AudioPlayer] 播放失败 (Output): AudioPlaybackFailure: Audio output stopped accepting aligned PCM frames (accepted=0 requested=31184 offset=4096 open=true running=true paused=false pauseVersion=91->91 framePosition=0 buffer=176400 available=172304) <- IOException: Audio output stopped accepting aligned PCM frames (accepted=0 requested=31184 offset=4096 open=true running=true paused=false pauseVersion=91->91 framePosition=0 buffer=176400 available=172304)
+[ERROR AudioPlayer] 播放失败 (Output): AudioPlaybackFailure: device start failed <- IllegalStateException: device start failed
+]]></system-err>
+</testsuite>
