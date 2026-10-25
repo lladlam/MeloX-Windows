@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="NeteaseHomeCacheCompatibilityTest[desktop]" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-10-25T06:46:28.283Z" hostname="lladlam-arch" time="0.379">
+  <properties/>
+  <testcase name="preAlbumCacheStillLoadsAndDoesNotInventMissingMetadata[desktop]" classname="melox.library.NeteaseHomeCacheCompatibilityTest" time="0.276"/>
+  <testcase name="newHomeMetadataSurvivesNewCacheInstanceIncludingSparseAlbums[desktop]" classname="melox.library.NeteaseHomeCacheCompatibilityTest" time="0.103"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

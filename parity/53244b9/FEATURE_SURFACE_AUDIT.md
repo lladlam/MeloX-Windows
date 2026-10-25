@@ -1,0 +1,71 @@
+# 全页面／双 UI／功能补齐审计
+
+## 当前检查范围与判定方式
+
+本轮从 Windows `4c94f7e` 开始，直接读取本机 Android 工作区（含未提交修改）。固定 UI 的既有来源仍保留，功能增量跟随当前 Android；不改写历史验收结果。
+
+`tools/audit_feature_surface.py` 索引 32 个功能域，并另存 **全部 Android UI、Windows UI 和 shared 业务源码**的路径与 SHA-256，记录见 `evidence/feature-surface/source-index.json`。按实际路由检查 Android Activity 在 Windows 上对应的覆盖层、侧栏详情或工具窗口。文件存在、名称相似、已保存偏好或编译成功均不等于功能完成；无 basename 对应也不能直接判定漏页。
+
+当前设置字面 key 差分仅余 `player_transition_duration_ms__migrated_v2`，属于 Android 一次性迁移标记，并非用户选项。此差分只说明 key 的静态存在性；表内记录的模型推理、平台后台、渠道账号等能力缺口仍然成立。
+
+## 本轮确定缺口与补齐
+
+| 项目 | 检查结论与改动 | 验证范围 |
+| --- | --- | --- |
+| 应用语言 | Android General 有语言选择；Windows 仅随进程 Locale。新增 system／简中／繁中／英文／日文，偏好即时保存，已有 pinned 与 desktop 文案消费者观察应用语言，独立于宿主 JVM Locale | 双布局实际点击切换及独立 JVM 重载待完成；硬编码文案、桌面参考仅中英文等覆盖缺口仍存在 |
+| 手机版专辑收藏 | 原 `AlbumDetailScreen` 的 onClick 为空；两套 UI 现在共用真实 setAlbumSubscribed，读取到真实收藏状态且登录后才启用，完成服务器操作后更新，账号变化重新加载 | 公共详情与私有账号写入需分别验收；不把单元测试当私人账号验证 |
+| 手机版专辑下载 | 原 onClick 为空；接实际 MeloXDownloadStore 与用户音质，空列表或关闭下载时不可点 | 共享下载业务既有回归；本次专辑入口尚待回放 |
+| 专辑分享／重试 | 原分享是无行为图标、加载错误缺重试；增加真实系统剪贴板专辑链接、操作状态和重试 | Windows 原生剪贴板须实机验收 |
+| 隐私页入口 | Privacy 已实现，手机根设置清单缺入口；加入统一目录和搜索，电脑同组保留 | 双布局导航待回放 |
+| 电脑歌词／布局设置 | 通用 LyricsGroup／LyricsToggle 和布局组仍直接绘制手机版控件；增加独立 DesktopSettingsForm、Checkbox，保留已有所有选项、tag 和偏好 | 真实指针切换及持久化待回放 |
+| 自定义背景 | Android 当前 player_custom_background_path 在 Windows 完全缺失；新增图片模式、双 UI 选择／清除入口、私有目录复制、最长边 1280、有损坏／缺图回退；播放器与歌词分享图片消费者接线 | 有界导入、原图保留、错误不破坏旧图、仅清理应用自有图片回归；原生文件选择器待实机 |
+
+## 持续补齐清单（不能标为全部完成）
+
+| 页面／业务 | 两套 UI 当前证据或入口 | 尚需核销 |
+| --- | --- | --- |
+| 首页／发现 | `HomeScreen`、`ExploreScreen` 与 DesktopHome／Explore；真实 provider feed／ranking | 本地推荐、播客内容块、统一刷新、源快捷工具和同内容动画 |
+| 搜索 | 手机 Search、DesktopSearch，多类型 provider 能力与真实接口 | 网易云限流实网复验、分页／取消／菜单完整一致性、所有分类转场 |
+| 音乐库／歌单 | 手机 Library 与 DesktopLibrary，源身份和分页保留 | 私人收藏、自建／已喜欢权限、批量写入与成员排序实机 |
+| 专辑／艺人详情 | 共享真实网络业务＋双布局详情；本轮修复手机版专辑空操作 | provider 完整目录分页、账号写入、所有分享与封面 hero |
+| 歌曲详情／百科 | `MeloXSongDetail`、DesktopSongDetail 入口 | 按 Android 歌曲百科信息块逐项对照、所有源能力边界 |
+| 歌曲菜单／收藏 | 手机 SongActions 与 DesktopSongMenu／PlayerFavorite | 私人账号收藏读取／写入、切账号并发、不同来源收藏刷新 |
+| 下载／批量下载 | MeloXDownloadStore＋手机 Downloads／电脑 library pages | 权益、失败恢复、目标目录与批量任务实机 |
+| 云盘 | 手机 Cloud、电脑 library pages，真实上传接口 | 原生文件选择器、实际上传／删除与账号切换 |
+| 播客 | 手机 Podcasts、DesktopPodcasts | 收藏与节目详情实机、封面共享动画 |
+| 私信 | 手机 Messages、DesktopMessages，真实联系人与发信接口 | 头像／未读／分组／刷新和真实发信验收 |
+| 来源选择／账号 | 两套音乐服务页、共享登录表单；汽水 QR 已有真实上游回放 | 概念版来源缺失；Apple／酷我隐藏策略与当前 Android 对照；所有真实账号验收 |
+| YouTube Music | Cookie／visitor／data-sync／page 上下文导入、真实库与播放 | Android authUser／地区、自动校验、过期状态、频道枚举／切换 UI 与 backend 尚未迁移 |
+| 酷狗概念版 | Windows 当前为标准酷狗 provider | **独立 KugouLite provider／账号隔离／真实双奖励接口／每日去重重试／签到页全部缺失**，不能把标准酷狗改名冒充 |
+| 汽水 | `ec5753a`：真实协议、双布局、账号 QR、游标、歌词与试听识别 | 用户真实扫码确认、登录态搜索与完整播放 |
+| Bilibili | `4c94f7e`：收藏的他人列表／合集、分页与单视频隔离 | 用户私人列表；WBI 播放及音质细节与最新 Android 持续对照 |
+| 播放回退 | `566d099`：native → 内置串行严格完整匹配 → CHKSZ／LX | 概念版候选随真实 provider 迁入；真实账号／权限与网络验收 |
+| 播放器／队列／MiniPlay | 两套独立呈现＋真实 PlaybackCommands／PCM；既有 Dock／AutoMix 证据 | MiniPlay 材质与侧反射、横竖屏同一时钟、所有页面封面 morph |
+| 歌词／罗马音 | 双布局渲染、语言链、真实歌词 | Android 新 JapaneseRubyAlignment 的字符范围／视觉行对齐尚未迁移；天际／EVA／TextPV 同内容动画验收 |
+| 歌词样式选项 | Windows 仍保留 Apple Music／EVA／TextPV 可选 | Android 0.7 当前仅显示 Apple Music；现有用户设置兼容策略需随迁移明确核销 |
+| 歌词分享 | 已有真实 PNG 导出，本轮接自定义图背景 | 长按多行、背景与排版同内容对照、原生保存对话框 |
+| AutoSync 模型 | 当前没有 Windows 等价模型面板／完整推理链 | **ONNX／中文 CIF／日文 G2P、模型下载校验／存储所有权、真实推理均待实现** |
+| EQ／AutoMix | 实际 PCM DSP、智能队列分析额度与既有 Linux／Windows 回归 | 物理听感、长时内存和所有硬件输出接入 |
+| LAN／DLNA | 进程级会话、两套输出面板、真实协议与回环测试 | Windows↔Android 跨机、多网卡／防火墙／长时漂移、物理音箱 |
+| MiPlay／USB 独占 | Android 为 Binder／usbfs 平台实现 | **Windows 对应 backend 未实现**；不能仅增加开关称支持 |
+| 系统媒体／悬浮歌词 | 有设置页，未支持项显式 disabled | Windows SMTC、悬浮歌词窗／权限与原生输入等价实现 |
+| 引导／法律／关于 | 现有两套 Onboarding／About＋legal 文档页 | Android 0.7 全屏连续引导、1.3 版文本的 Windows 平台适配与品牌逐项核销 |
+| 云控／主题／规则 | 当前签名平台熔断与基础配置已实现 | 新 schema 的文案／主题／规则消费者与受限 QuickJS 脚本未完成 |
+| 多语言 | 本轮补实际语言选择；已有 pinned 资源保持原文 | 全量最新资源导出、硬编码文案、土耳其语、桌面全部 Locale 覆盖 |
+| Windows 平台集成 | 布局切换即时保存、托盘、标题栏、键鼠已有实现／部分原生证据 | 用户触屏／触摸键盘、DRM、麦克风、长时 RSS 及 DPAPI 实机验收 |
+
+### 继续追查“保存了但没有消费者”的选项
+
+额外扫描 Runtime 属性在设置定义／写入之外的引用，发现 `performanceOverlayEnabled` 缺 Windows 显示消费者；旧 `flowingBackdropEnabled` 开关与实际 background mode 选择的关联需补核。系统通知／悬浮歌词相关未消费属性对应的 UI 已 disabled，属于上表平台 backend 缺口。`downloadLyricsEnabled` 虽无属性引用，下载器实际读取 `melox_downloads.download_lyrics`，不能误报未实现；底栏禁止收缩也实际按偏好 key 读取，但启用时是否立即展开仍需回放。属性名搜索仅为线索，按真实消费者核销。
+
+六处剩余空点击已检查上下文：App 与 GlassSheet 的弹层内容、LAN／Quality 弹层内容用于消费内部点击以避免穿透到背景关闭；播放器 controls 背板用于阻断拖动／页面底层命中。均为输入屏蔽，不是可见业务按钮，不机械删除。具体行与源码哈希在 source-index 中保留。本表持续更新，已知平台／模型缺口不会因为其他批次通过而标为完成。
+
+## 验证记录
+
+本地最终：**67 suites / 341 tests，零失败／错误／跳过**；桌面编译通过。自定义背景回归覆盖尺寸约束、原图不变、解码失败保留旧图、清理不删除原图或无关文件、过大输入提前拒绝。原四模式测试扩展为五模式及独立 CustomImage kind，最终以 v4 成功日志为准。
+
+`tools/capture_feature_surface.py` 使用隔离 home 与真实指针／滚轮／键盘，双布局 controls + 独立 JVM reload 共 **98 scenes / 62 assertions**，全部通过。验证简中→日文→英文时实际 Theme 文案改变，并在系统进程 Locale 为 zh-CN 时重载保留英文；隐私页可达，歌词翻译开关真实保存，CustomImage 模式与导入入口可用。未在此回放打开原生文件选择器，也未读写私人专辑账号。
+
+最后专辑账号边界修正：按专辑 ID 与会话 revision 创建独立 composition／协程 scope，使用固定会话 Cookie 的请求 client，切换账号时销毁旧详情与操作任务；修正后额外桌面编译通过。共享业务无需因该 UI 生命周期修正重复全量运行。
+
+证据：`evidence/feature-surface/summary.json`、四组 UI capture／截图／semantics／压缩日志、shared-tests 及最终编译日志。Android 扩大监听新增 164 个原已存在的 XML／本地源码／i18n 文件；原共同监控文件内容变化为 0，新增监控不冒充 Android 本次刚新增代码。

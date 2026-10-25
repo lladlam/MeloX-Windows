@@ -1,0 +1,33 @@
+{
+  "shared_tests": {
+    "suites": 67,
+    "tests": 341,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "ui": {
+    "mobile-controls": {
+      "scenes": 43,
+      "assertions": 28,
+      "failed": 0
+    },
+    "mobile-reload": {
+      "scenes": 5,
+      "assertions": 5,
+      "failed": 0
+    },
+    "desktop-controls": {
+      "scenes": 44,
+      "assertions": 24,
+      "failed": 0
+    },
+    "desktop-reload": {
+      "scenes": 6,
+      "assertions": 5,
+      "failed": 0
+    }
+  },
+  "physical_image_picker": "pending",
+  "private_account_album_write": "pending"
+}

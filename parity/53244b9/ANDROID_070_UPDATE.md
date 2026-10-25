@@ -24,6 +24,8 @@
 
 真实上游 QR 生产输入回放 v2 通过：手机／电脑各 **9 scenes / 12 assertions**，实际进入登录、等待上游 QR 显示、鼠标点击刷新、重新显示并关闭表单。截图、只读 semantics、输入记录与压缩完整日志在 `evidence/android-070/qishui-ui-v2/`。未进行用户扫码确认或保存任何真实用户账号。
 
+汽水提交 `ec5753a` 的 Windows CI `40164499557` 成功；完整下载发行 ZIP **339546447 bytes / 357 entries**，SHA-256 **`b492f43bb8b31c6b343080fb45337bad7e2a402778887e46f8d3ee16821de83a`**。独立检查 ZIP/JAR CRC、build-info 精确提交、固定资源与 Windows PE 解码器均通过，JSON 在 `evidence/windows-download-40164499557/`。此发行只对应汽水批次，不能当作后续回退／Bilibili／设置功能发行已通过。
+
 匿名上游只读核查：推荐接口 HTTP 200 返回 10 个内容块；H5 示例曲目 `7079108541549643812` 返回原曲 297240ms、音频 30.047 秒，为试听。该检查没有进行用户登录或签到写入操作。
 
 ## 持续检查

@@ -449,6 +449,15 @@ internal fun MeloXPlayerBackdrop(
     modifier: Modifier = Modifier,
 ) {
     when {
+        mode == MeloXPlayerBackgroundMode.CustomImage -> {
+            val path = melox.settings.MeloXSettingsRuntime.customBackgroundPath
+            val custom by androidx.compose.runtime.produceState<String?>(null, path) {
+                value = withContext(Dispatchers.IO) {
+                    runCatching { melox.settings.MeloXCustomBackgroundStore().ownedImage(path)?.toURI()?.toString() }.getOrNull()
+                }
+            }
+            MeloXBlurredArtworkBackdrop(custom ?: artworkUrl, modifier)
+        }
         playerShowsLyricsArtworkBackdrop(mode, lyricsPage) -> MeloXLyricsArtworkBackdrop(
             artworkUrl = artworkUrl,
             isPlaying = isPlaying,

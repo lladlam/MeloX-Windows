@@ -526,10 +526,13 @@ private suspend fun saveLyricShareImage(track: MusicTrack, lines: List<LyricLine
                         graphics.transform = transform
                     }
                 }
-                MeloXPlayerBackgroundMode.BlurredArtwork -> {
+                MeloXPlayerBackgroundMode.BlurredArtwork, MeloXPlayerBackgroundMode.CustomImage -> {
                     graphics.color = java.awt.Color(28, 28, 30)
                     graphics.fillRect(0, 0, width, height)
-                    if (cover != null) drawShareCover(graphics, cover, 0, 0, width, height, 145)
+                    val custom = if (MeloXSettingsRuntime.playerBackgroundMode == MeloXPlayerBackgroundMode.CustomImage)
+                        runCatching { melox.settings.MeloXCustomBackgroundStore().ownedImage(MeloXSettingsRuntime.customBackgroundPath)?.let(javax.imageio.ImageIO::read) }.getOrNull() else null
+                    try { (custom ?: cover)?.let { drawShareCover(graphics, it, 0, 0, width, height, 145) } }
+                    finally { custom?.flush() }
                 }
             }
             graphics.paint = java.awt.GradientPaint(0f, 0f, java.awt.Color(255, 255, 255, 25),

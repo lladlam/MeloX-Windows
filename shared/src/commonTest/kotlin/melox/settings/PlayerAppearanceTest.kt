@@ -10,13 +10,14 @@ class PlayerAppearanceTest {
     @Test
     fun backgroundModesMapToDistinctKindsAndShellsDiffer() {
         val kinds = MeloXPlayerBackgroundMode.entries.map(::playerBackdropKind)
-        assertEquals(4, kinds.distinct().size)
+        assertEquals(5, kinds.distinct().size)
         assertEquals(
             listOf(
                 MeloXPlayerBackdropKind.FlowingLight,
                 MeloXPlayerBackdropKind.AppleLyrics,
                 MeloXPlayerBackdropKind.BlurredArtwork,
                 MeloXPlayerBackdropKind.MeiMesh,
+                MeloXPlayerBackdropKind.CustomImage,
             ),
             kinds,
         )

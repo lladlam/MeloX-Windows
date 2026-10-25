@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="BilibiliProviderProtocolTest[desktop]" tests="7" skipped="0" failures="0" errors="0" timestamp="2026-10-25T06:48:19.755Z" hostname="lladlam-arch" time="3.313">
+  <properties/>
+  <testcase name="seasonUsesItsOwnEndpointAndPaginationWithNativeVideoIds[desktop]" classname="melox.provider.bilibili.BilibiliProviderProtocolTest" time="0.951"/>
+  <testcase name="dashRetries403WithNewKeyAndUsesReplacementOnlyForPhysicalPlayback[desktop]" classname="melox.provider.bilibili.BilibiliProviderProtocolTest" time="1.217"/>
+  <testcase name="collectedFoldersAndSeasonsPreserveDistinctIdentitiesAndPageTheLibrary[desktop]" classname="melox.provider.bilibili.BilibiliProviderProtocolTest" time="0.42"/>
+  <testcase name="searchSignsWbiAndPreservesNativeVideoPageIdentity[desktop]" classname="melox.provider.bilibili.BilibiliProviderProtocolTest" time="0.351"/>
+  <testcase name="aDeletedVideoDoesNotDiscardOtherFavoritesOrMorePages[desktop]" classname="melox.provider.bilibili.BilibiliProviderProtocolTest" time="0.103"/>
+  <testcase name="favoriteFolderExpandsMultiPageVideoAndDoesNotTurnApiErrorIntoEmptyData[desktop]" classname="melox.provider.bilibili.BilibiliProviderProtocolTest" time="0.143"/>
+  <testcase name="collectedEndpointFailureStillShowsCreatedFoldersButDetailFailureIsExplicit[desktop]" classname="melox.provider.bilibili.BilibiliProviderProtocolTest" time="0.128"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

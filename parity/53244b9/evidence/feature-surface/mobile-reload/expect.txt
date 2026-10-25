@@ -1,0 +1,3 @@
+00-settings=pref-string:application_language:en-US,pref-bool:lyrics_translation:true
+open-General=tag:settings-general
+language-reloaded=text:English,pref-string:application_language:en-US

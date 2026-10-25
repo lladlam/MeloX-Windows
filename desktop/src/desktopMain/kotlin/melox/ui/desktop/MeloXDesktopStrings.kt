@@ -14,14 +14,14 @@ private object DesktopStrings {
 }
 
 internal fun desktopString(key: String): String {
-    val locale = Locale.getDefault()
+    val locale = melox.settings.MeloXAppLanguage.locale
     val simplified = locale.language == "zh" && locale.script != "Hant" && locale.country !in setOf("TW", "HK", "MO")
     return checkNotNull((if (simplified) DesktopStrings.chinese else DesktopStrings.english).getProperty(key)) { key }
 }
 
 /** Adapt Foundation format specifiers at the call site; exported values stay byte-pure. */
 internal fun desktopFormat(key: String, vararg arguments: Any): String =
-    String.format(Locale.getDefault(), desktopString(key).replace("%ld", "%d").replace("%@", "%s"), *arguments)
+    String.format(melox.settings.MeloXAppLanguage.locale, desktopString(key).replace("%ld", "%d").replace("%@", "%s"), *arguments)
 
 internal fun desktopQualityTitle(quality: melox.audio.MusicQuality): String = desktopString("ui.settings.audio_quality." + when (quality) {
     melox.audio.MusicQuality.Standard -> "standard"
@@ -35,12 +35,14 @@ internal fun desktopQualityTitle(quality: melox.audio.MusicQuality): String = de
 
 /** Windows-only integration labels: no corresponding toggle exists in the macOS source. */
 internal fun desktopPlatformString(key: String): String {
-    val chinese = Locale.getDefault().language == "zh"
+    val chinese = melox.settings.MeloXAppLanguage.locale.language == "zh"
     return when (key) {
         "about_developer" -> if (chinese) "开发者：lladlam（MeloX Windows）" else "Developer: lladlam (MeloX Windows)"
         "about_copyright" -> if (chinese) "© %d lladlam。MeloX 是非官方第三方网易云音乐客户端。" else "© %d lladlam. MeloX is an unofficial third-party NetEase Cloud Music client."
         "avatar_initial" -> "M"
         "layout_title" -> if (chinese) "电脑端布局" else "Desktop layout"
+        "language_title" -> if (chinese) "应用语言" else "Application language"
+        "language_system" -> if (chinese) "跟随系统" else "System default"
         "layout_hint" -> if (chinese) "使用 MeloX 电脑端侧栏和底部播放器；关闭可切回当前布局" else "Use the MeloX desktop sidebar and bottom player; turn off to restore the current layout"
         "settings" -> if (chinese) "设置" else "Settings"
         "window_minimize" -> if (chinese) "最小化" else "Minimize"

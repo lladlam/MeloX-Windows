@@ -1,6 +1,6 @@
 package melox.settings
 
-enum class MeloXPlayerBackdropKind { FlowingLight, AppleLyrics, BlurredArtwork, MeiMesh }
+enum class MeloXPlayerBackdropKind { FlowingLight, AppleLyrics, BlurredArtwork, MeiMesh, CustomImage }
 
 enum class MeloXResolvedPlayerShell { AppleMusicPages, ClassicColumn }
 
@@ -9,6 +9,7 @@ fun playerBackdropKind(mode: MeloXPlayerBackgroundMode): MeloXPlayerBackdropKind
     MeloXPlayerBackgroundMode.AppleLyrics -> MeloXPlayerBackdropKind.AppleLyrics
     MeloXPlayerBackgroundMode.BlurredArtwork -> MeloXPlayerBackdropKind.BlurredArtwork
     MeloXPlayerBackgroundMode.MeiMesh -> MeloXPlayerBackdropKind.MeiMesh
+    MeloXPlayerBackgroundMode.CustomImage -> MeloXPlayerBackdropKind.CustomImage
 }
 
 fun resolvedPlayerShell(shell: MeloXPlayerShell): MeloXResolvedPlayerShell = when (shell) {

@@ -188,6 +188,7 @@ object MeloXSettingsPreferences {
     }
 
     fun setString(key: String, value: String) {
+        if (key == "player_custom_background_path") MeloXSettingsRuntime.customBackgroundPath = value
         prefs().putString(key, value)
         if (key.startsWith("equalizer_")) melox.playback.MeloXEqualizerSettings.refresh()
         when (key) {

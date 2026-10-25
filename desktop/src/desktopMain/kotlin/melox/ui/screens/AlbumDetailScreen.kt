@@ -45,9 +45,16 @@ fun AlbumDetailScreen(
     albumName: String,
     onBack: () -> Unit,
 ) {
+    val revision by NeteaseSessionStore.revision.collectAsState()
+    key(albumId, revision) { AlbumDetailContent(albumId, albumName, onBack) }
+}
+
+@Composable
+private fun AlbumDetailContent(albumId: String, albumName: String, onBack: () -> Unit) {
     val parsedId = albumId.toLongOrNull()
+    val sessionCookie = remember { NeteaseSessionStore.readCookie() }
     val client = remember {
-        NeteaseCollectionDetailsClient(cookieProvider = { NeteaseSessionStore.readCookie() })
+        NeteaseCollectionDetailsClient(cookieProvider = { sessionCookie })
     }
     var detail by remember(albumId) { mutableStateOf<MeloXAlbumDetail?>(null) }
     var loading by remember(albumId) { mutableStateOf(parsedId != null) }
@@ -56,20 +63,25 @@ fun AlbumDetailScreen(
     val playingId = queue.songs.getOrNull(queue.index)?.id ?: PlaybackCommands.currentSongId()
     val playbackState by melox.playback.MeloXPlaybackOutput.state.collectAsState()
     val scope = rememberCoroutineScope()
+    val accountRevision by NeteaseSessionStore.revision.collectAsState()
+    val loggedIn = remember(accountRevision) { NeteaseSessionStore.containsMusicU(NeteaseSessionStore.readCookie()) }
     var refreshRevision by remember(albumId) { mutableStateOf(0) }
     var subscribed by remember(albumId) { mutableStateOf(false) }
     var changingSubscription by remember(albumId) { mutableStateOf(false) }
     var operation by remember(albumId) { mutableStateOf<String?>(null) }
     var actionSong by remember(albumId) { mutableStateOf<SearchSong?>(null) }
 
-    LaunchedEffect(parsedId, refreshRevision) {
+    LaunchedEffect(parsedId, refreshRevision, accountRevision) {
         if (parsedId == null) return@LaunchedEffect
         loading = true
         error = null
-        runCatching { client.albumDetail(parsedId) }
-            .onSuccess { detail = it; subscribed = it.subscribed == true }
-            .onFailure { error = it.message ?: "专辑加载失败" }
-        loading = false
+        detail = null
+        try {
+            val loaded = client.albumDetail(parsedId)
+            detail = loaded; subscribed = loaded.subscribed == true
+        } catch (cancelled: kotlinx.coroutines.CancellationException) { throw cancelled }
+        catch (failure: Exception) { error = failure.message ?: "专辑加载失败" }
+        finally { loading = false }
     }
 
     val album = detail?.album
@@ -77,6 +89,30 @@ fun AlbumDetailScreen(
     val title = album?.name?.ifBlank { albumName } ?: albumName
     val artistName = album?.artistText?.ifBlank { null } ?: "未知歌手"
     val totalMinutes = (songs.sumOf { it.durationMs } / 1000 / 60).toInt()
+    val canSubscribe = loggedIn && detail?.subscribed != null && !loading && !changingSubscription && parsedId != null
+    fun toggleSubscription() {
+        val id = parsedId ?: return
+        if (!canSubscribe) return
+        val target = !subscribed
+        val cookie = NeteaseSessionStore.readCookie()
+        changingSubscription = true
+        scope.launch {
+            try {
+                check(cookie == NeteaseSessionStore.readCookie()) { "账号已切换，请重试" }
+                client.setAlbumSubscribed(id, target)
+                check(cookie == NeteaseSessionStore.readCookie()) { "账号已切换，请刷新专辑" }
+                subscribed = target; operation = if (target) "已收藏专辑" else "已取消收藏"
+            } catch (cancelled: kotlinx.coroutines.CancellationException) { throw cancelled }
+            catch (failure: Exception) { operation = failure.message ?: "收藏操作失败" }
+            finally { changingSubscription = false }
+        }
+    }
+    fun downloadAlbum() {
+        if (loading || songs.isEmpty() || !MeloXSettingsRuntime.downloadsEnabled) return
+        val store = melox.download.MeloXDownloadStore.instance()
+        songs.forEach { store.start(it, melox.audio.MusicQualityPreferences.read()) }
+        operation = "已添加 ${songs.size} 首歌曲到下载队列"
+    }
 
     if (MeloXSettingsRuntime.desktopLayoutEnabled) {
         var menuAnchor by remember { mutableStateOf<androidx.compose.ui.unit.IntOffset?>(null) }
@@ -104,24 +140,9 @@ fun AlbumDetailScreen(
             onShuffle = { songs.shuffled().let { shuffled -> shuffled.firstOrNull()?.let { PlaybackCommands.playQueue(shuffled, it.id) } } },
             onSong = { PlaybackCommands.playQueue(songs, it.id) },
             isFavorite = subscribed,
-            favoriteEnabled = !changingSubscription && parsedId != null,
-            onFavorite = {
-                parsedId?.let { id ->
-                    val previous = subscribed
-                    subscribed = !previous
-                    changingSubscription = true
-                    scope.launch {
-                        try { client.setAlbumSubscribed(id, !previous); operation = null }
-                        catch (cancelled: kotlinx.coroutines.CancellationException) { throw cancelled }
-                        catch (failure: Exception) { subscribed = previous; operation = failure.message ?: desktopString("ui.error.favorite_failed") }
-                        finally { changingSubscription = false }
-                    }
-                }
-            },
-            onDownload = {
-                val store = melox.download.MeloXDownloadStore.instance()
-                songs.forEach { store.start(it, melox.audio.MusicQualityPreferences.read()) }
-            },
+            favoriteEnabled = canSubscribe,
+            onFavorite = ::toggleSubscription,
+            onDownload = ::downloadAlbum,
             onMore = { actionSong = it },
             onMenuAnchor = { menuAnchor = it },
             status = operation,
@@ -156,7 +177,13 @@ fun AlbumDetailScreen(
             Text(
                 text = "⤴",
                 fontSize = 20.sp,
-                color = MeloXColors.pageOnSurfaceVariant()
+                color = MeloXColors.pageOnSurfaceVariant(),
+                modifier = Modifier.testTag("album-share").clickable(enabled = parsedId != null) {
+                    runCatching {
+                        java.awt.Toolkit.getDefaultToolkit().systemClipboard.setContents(
+                            java.awt.datatransfer.StringSelection("https://music.163.com/#/album?id=$parsedId"), null)
+                    }.onSuccess { operation = "已复制专辑链接" }.onFailure { operation = it.message ?: "复制链接失败" }
+                }
             )
         }
 
@@ -241,23 +268,25 @@ fun AlbumDetailScreen(
                         )
                     }
                     OutlinedButton(
-                        onClick = { },
+                        onClick = ::toggleSubscription,
+                        enabled = canSubscribe,
                         shape = RoundedCornerShape(24.dp),
                         border = ButtonDefaults.outlinedButtonBorder,
-                        modifier = Modifier.height(36.dp)
+                        modifier = Modifier.height(36.dp).testTag("album-favorite")
                     ) {
                         Text(
-                            text = "♡ 收藏",
+                            text = if (changingSubscription) "正在更新…" else if (subscribed) "♥ 已收藏" else if (!loggedIn) "登录后收藏" else "♡ 收藏",
                             fontSize = 13.sp,
                             color = MeloXColors.pageOnSurface(),
                             fontFamily = MeloXLanTingProFontFamily
                         )
                     }
                     OutlinedButton(
-                        onClick = { },
+                        onClick = ::downloadAlbum,
+                        enabled = !loading && songs.isNotEmpty() && MeloXSettingsRuntime.downloadsEnabled,
                         shape = RoundedCornerShape(24.dp),
                         border = ButtonDefaults.outlinedButtonBorder,
-                        modifier = Modifier.height(36.dp)
+                        modifier = Modifier.height(36.dp).testTag("album-download")
                     ) {
                         Text(
                             text = "↓ 下载",
@@ -268,6 +297,8 @@ fun AlbumDetailScreen(
                     }
                 }
             }
+
+            operation?.let { message -> item { Text(message, Modifier.padding(16.dp).testTag("album-operation-status")) } }
 
             item {
                 HorizontalDivider(
@@ -283,6 +314,7 @@ fun AlbumDetailScreen(
                     }
                 }
                 error != null -> item {
+                    TextButton(onClick = { refreshRevision++ }, modifier = Modifier.testTag("album-retry")) { Text("重试") }
                     Text(
                         text = error.orEmpty(),
                         modifier = Modifier.padding(horizontal = 16.dp, vertical = 24.dp),

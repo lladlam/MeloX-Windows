@@ -1,0 +1,3619 @@
+{
+  "checked_utc": "2026-10-25T06:55:02.730652+00:00",
+  "android_head": "91adac7e778b712d3ed9ea6c90c89c2b2ca8766c",
+  "scope": "Live working-tree source inventory. Presence is not functional or visual parity; missing pattern matches require manual routing review.",
+  "areas": {
+    "home": {
+      "android": [
+        {
+          "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/discovery/MeloXDiscoveryScreens.kt",
+          "sha256": "eef0e0562d981ec31004db689ed619021dbfba7d7fc2b8b95d6e2ec4d7bb5567"
+        }
+      ],
+      "mobile": [
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/HomeScreen.kt",
+          "sha256": "a12cd649ebbb3cc7e7a8f9a426e39aaa67eb049e8bca20ab502d4d4320fd2029"
+        }
+      ],
+      "desktop": [
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/desktop/MeloXDesktopHome.kt",
+          "sha256": "04f117b5cfea6a424e50423c20b63a50d5d59e1c592d7dd97ae2514731a9d4cc"
+        },
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/desktop/MeloXDesktopHomeShelf.kt",
+          "sha256": "cde498fd5756e386867f723a275abd957fa0600b0ee01c53c81f1aacd23d4903"
+        }
+      ],
+      "business": [
+        {
+          "path": "shared/src/commonMain/kotlin/melox/music/provider/MeloXLegacyUiBridge.kt",
+          "sha256": "e13a23b9c442cf711b1b2b96a725d5dc0cae47656a9dcfb213ae177d96013cc2"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/music/provider/MeloXMusicProviders.kt",
+          "sha256": "98ec2a69822aba7dc83bdec1b57e2230c3ec0dabc395e5fc1896bcb3c13f3d6f"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/music/provider/MusicProvider.kt",
+          "sha256": "d5a1160ec633f7d7472d3c9d14fec469bb0e5b6d13793a8cd0a04742c3406059"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/music/provider/MusicProviderSelectionStore.kt",
+          "sha256": "e9b9a2cf4debdc7052432541c76399b39dee13d65f1aafe68206eb0b1bef1468"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/music/provider/PlaybackAccountSlot.kt",
+          "sha256": "3988de9bf080f90a0c77e4635937dce931e55645555c97e009a77aae04f5c1ee"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/music/provider/PlaybackAccountStore.kt",
+          "sha256": "901daaf417e40e3e39056882619349e883f536b46fd7833cede3d8cc85c518b7"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/music/provider/ProviderAccountManager.kt",
+          "sha256": "93d435c694f65fc170452bb23b990794a77e86b9dd1546e7cbdfc0ea081edbeb"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/music/provider/ProviderCollectionPaging.kt",
+          "sha256": "b229c774fab2084118262035b93a1921b8c0955adf2779b5c8607f783796a08e"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/music/provider/ThirdPartyMusicSourceConsentStore.kt",
+          "sha256": "517ea18136f70f91132cf4b6ba6443517ad29b756b0f4a3a3441b5932b798baa"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/music/provider/TrackAggregation.kt",
+          "sha256": "7310ba298972ce125265647595b4614781394828a43d631d29fc6ffb8c9c95cc"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/music/provider/UnifiedMusicService.kt",
+          "sha256": "14d76454450525db7666fde76c85ce7264d016aa52ff865b5a9d6bd833d86e63"
+        }
+      ]
+    },
+    "explore": {
+      "android": [
+        {
+          "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/discovery/MeloXDiscoveryScreens.kt",
+          "sha256": "eef0e0562d981ec31004db689ed619021dbfba7d7fc2b8b95d6e2ec4d7bb5567"
+        }
+      ],
+      "mobile": [
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/ExploreScreen.kt",
+          "sha256": "dece64b075b78334c954db3a6f6a2104c9ee1f50c629e68476f839550ba3ac80"
+        }
+      ],
+      "desktop": [
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/desktop/MeloXDesktopExplore.kt",
+          "sha256": "f6cccf1e46a88edcee9b3c5bc4155cbb737f7d276db466524419bb167f46e9ac"
+        }
+      ],
+      "business": [
+        {
+          "path": "shared/src/commonMain/kotlin/melox/music/provider/MeloXLegacyUiBridge.kt",
+          "sha256": "e13a23b9c442cf711b1b2b96a725d5dc0cae47656a9dcfb213ae177d96013cc2"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/music/provider/MeloXMusicProviders.kt",
+          "sha256": "98ec2a69822aba7dc83bdec1b57e2230c3ec0dabc395e5fc1896bcb3c13f3d6f"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/music/provider/MusicProvider.kt",
+          "sha256": "d5a1160ec633f7d7472d3c9d14fec469bb0e5b6d13793a8cd0a04742c3406059"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/music/provider/MusicProviderSelectionStore.kt",
+          "sha256": "e9b9a2cf4debdc7052432541c76399b39dee13d65f1aafe68206eb0b1bef1468"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/music/provider/PlaybackAccountSlot.kt",
+          "sha256": "3988de9bf080f90a0c77e4635937dce931e55645555c97e009a77aae04f5c1ee"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/music/provider/PlaybackAccountStore.kt",
+          "sha256": "901daaf417e40e3e39056882619349e883f536b46fd7833cede3d8cc85c518b7"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/music/provider/ProviderAccountManager.kt",
+          "sha256": "93d435c694f65fc170452bb23b990794a77e86b9dd1546e7cbdfc0ea081edbeb"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/music/provider/ProviderCollectionPaging.kt",
+          "sha256": "b229c774fab2084118262035b93a1921b8c0955adf2779b5c8607f783796a08e"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/music/provider/ThirdPartyMusicSourceConsentStore.kt",
+          "sha256": "517ea18136f70f91132cf4b6ba6443517ad29b756b0f4a3a3441b5932b798baa"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/music/provider/TrackAggregation.kt",
+          "sha256": "7310ba298972ce125265647595b4614781394828a43d631d29fc6ffb8c9c95cc"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/music/provider/UnifiedMusicService.kt",
+          "sha256": "14d76454450525db7666fde76c85ce7264d016aa52ff865b5a9d6bd833d86e63"
+        }
+      ]
+    },
+    "search": {
+      "android": [
+        {
+          "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/search/SearchScreen.kt",
+          "sha256": "e391d4a8733e79a664abdd60478f437656dfdd10ad0768e41a55ee34f4a2a00a"
+        }
+      ],
+      "mobile": [
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/SearchScreen.kt",
+          "sha256": "15030843012da0735b9babd559dcdb0d10e5fd0e9ea572dda14429963a876114"
+        }
+      ],
+      "desktop": [
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/desktop/MeloXDesktopSearch.kt",
+          "sha256": "bfecd6292fc38f09475f3817d2e0041f26b2f28a676a064b681774be17856f6e"
+        }
+      ],
+      "business": []
+    },
+    "library": {
+      "android": [
+        {
+          "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/library/LibraryScreen.kt",
+          "sha256": "957559a94164a3ffc56a0512d1c7dba4bbc7e4d8a7965ef622b68632d06721cf"
+        },
+        {
+          "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/library/MeloXBatchDownloadSheet.kt",
+          "sha256": "31a2dbf8157bfd07e3f1da7987ddbaa48d74c068dbc4279ded64a80c0116da15"
+        },
+        {
+          "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/library/MeloXDetailPalette.kt",
+          "sha256": "39ba84ab538b62a54ae2ebb89e377ff10f0cdef6977ee4550e5865e5a567f4f7"
+        },
+        {
+          "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/library/MeloXPlaylistActionsOverlay.kt",
+          "sha256": "62ecbb464020ceca133ceb2d3772deb2b9aaea93fba4d14f83f8ec576564c66a"
+        }
+      ],
+      "mobile": [
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXLibraryDownloads.kt",
+          "sha256": "24ff5b0b0a0bde6ccd4b8393ecfc426eb5dda29713f1fa683ba0f8b74ce7bf31"
+        },
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXLibraryGlyphs.kt",
+          "sha256": "ddf6c21071e863ab5958c20779bebb8f3715af233af793f6093b31c2e6a568f1"
+        },
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXLibraryPlaylistDetail.kt",
+          "sha256": "c92cfc1d7e3a4fd5ed3cc51458d642dce0b43f749619091033647c07477167e0"
+        },
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXLibraryScreen.kt",
+          "sha256": "908a50013a9c6511e7b0a6889bf834572f0ef764989ecbcff2d292ba3576334e"
+        },
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXProviderLibraryScreen.kt",
+          "sha256": "016d996a96473bb6dd0b0bb6a0acb398cb9bf43374575247cb7fc9b37d99ab82"
+        }
+      ],
+      "desktop": [
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/desktop/MeloXDesktopLibrary.kt",
+          "sha256": "ca5df0dfbe6364759c6675af1495af64db6c3b251cceb3eb66fbf13865368dac"
+        },
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/desktop/MeloXDesktopLibraryPages.kt",
+          "sha256": "0cc0ca3542cd3b2f15e7b615a9288c4175e6a244f0d75deb647b92b28dd5fcbd"
+        }
+      ],
+      "business": [
+        {
+          "path": "shared/src/commonMain/kotlin/melox/music/provider/MeloXLegacyUiBridge.kt",
+          "sha256": "e13a23b9c442cf711b1b2b96a725d5dc0cae47656a9dcfb213ae177d96013cc2"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/music/provider/MeloXMusicProviders.kt",
+          "sha256": "98ec2a69822aba7dc83bdec1b57e2230c3ec0dabc395e5fc1896bcb3c13f3d6f"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/music/provider/MusicProvider.kt",
+          "sha256": "d5a1160ec633f7d7472d3c9d14fec469bb0e5b6d13793a8cd0a04742c3406059"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/music/provider/MusicProviderSelectionStore.kt",
+          "sha256": "e9b9a2cf4debdc7052432541c76399b39dee13d65f1aafe68206eb0b1bef1468"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/music/provider/PlaybackAccountSlot.kt",
+          "sha256": "3988de9bf080f90a0c77e4635937dce931e55645555c97e009a77aae04f5c1ee"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/music/provider/PlaybackAccountStore.kt",
+          "sha256": "901daaf417e40e3e39056882619349e883f536b46fd7833cede3d8cc85c518b7"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/music/provider/ProviderAccountManager.kt",
+          "sha256": "93d435c694f65fc170452bb23b990794a77e86b9dd1546e7cbdfc0ea081edbeb"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/music/provider/ProviderCollectionPaging.kt",
+          "sha256": "b229c774fab2084118262035b93a1921b8c0955adf2779b5c8607f783796a08e"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/music/provider/ThirdPartyMusicSourceConsentStore.kt",
+          "sha256": "517ea18136f70f91132cf4b6ba6443517ad29b756b0f4a3a3441b5932b798baa"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/music/provider/TrackAggregation.kt",
+          "sha256": "7310ba298972ce125265647595b4614781394828a43d631d29fc6ffb8c9c95cc"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/music/provider/UnifiedMusicService.kt",
+          "sha256": "14d76454450525db7666fde76c85ce7264d016aa52ff865b5a9d6bd833d86e63"
+        }
+      ]
+    },
+    "playlist": {
+      "android": [
+        {
+          "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/library/LibraryScreen.kt",
+          "sha256": "957559a94164a3ffc56a0512d1c7dba4bbc7e4d8a7965ef622b68632d06721cf"
+        },
+        {
+          "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/library/MeloXBatchDownloadSheet.kt",
+          "sha256": "31a2dbf8157bfd07e3f1da7987ddbaa48d74c068dbc4279ded64a80c0116da15"
+        },
+        {
+          "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/library/MeloXDetailPalette.kt",
+          "sha256": "39ba84ab538b62a54ae2ebb89e377ff10f0cdef6977ee4550e5865e5a567f4f7"
+        },
+        {
+          "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/library/MeloXPlaylistActionsOverlay.kt",
+          "sha256": "62ecbb464020ceca133ceb2d3772deb2b9aaea93fba4d14f83f8ec576564c66a"
+        }
+      ],
+      "mobile": [
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXLibraryPlaylistDetail.kt",
+          "sha256": "c92cfc1d7e3a4fd5ed3cc51458d642dce0b43f749619091033647c07477167e0"
+        },
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlaylistSharing.kt",
+          "sha256": "372a5ce68fc2a451fa3e329db6b3aca4ebe84a5b0db642d504442c22b6dca804"
+        },
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/PlaylistDetailScreen.kt",
+          "sha256": "04195cd019cecd8ff19590e7fedffb96be7665d199cb6ffb8d4825c6f281f7d4"
+        }
+      ],
+      "desktop": [
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/desktop/MeloXDesktopCollection.kt",
+          "sha256": "83c8177f7a93cf186a93718ae60e7bec58b1a4d02c3ab2e3fc90b7c7fd5d61c8"
+        }
+      ],
+      "business": [
+        {
+          "path": "shared/src/commonMain/kotlin/melox/music/provider/ProviderCollectionPaging.kt",
+          "sha256": "b229c774fab2084118262035b93a1921b8c0955adf2779b5c8607f783796a08e"
+        }
+      ]
+    },
+    "album-artist": {
+      "android": [
+        {
+          "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/collection/MeloXArtistDetailScreen.kt",
+          "sha256": "195f42df367439007fb9d422b8f80c94117c1a2cac47408249b82d5ecb4633d8"
+        },
+        {
+          "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/collection/MeloXCollectionDetailActivity.kt",
+          "sha256": "6c63f23eda30f0c345e557b2ee27319bb333eca0e2228c328b83d6dfb4452bee"
+        }
+      ],
+      "mobile": [
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/AlbumDetailScreen.kt",
+          "sha256": "47b65ad22b6db09e3bab24058f6eb94e705919caf1dcc54582375b3653bd24c4"
+        },
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/ArtistDetailScreen.kt",
+          "sha256": "1a70274fc33036603a3390f501fe52805945d66c5b312d5d34b3a1566c17d125"
+        },
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/PlaylistDetailScreen.kt",
+          "sha256": "04195cd019cecd8ff19590e7fedffb96be7665d199cb6ffb8d4825c6f281f7d4"
+        }
+      ],
+      "desktop": [
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/desktop/MeloXDesktopArtistDetail.kt",
+          "sha256": "cd8ce128e7eb117a6f4a98e52ae3d5f63f04c208274231adc5e921c9010e431a"
+        },
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/desktop/MeloXDesktopSongDetail.kt",
+          "sha256": "971a2df6eba936715bd4aac1ab7e4c759460af998859fe06a622ded7b17800de"
+        }
+      ],
+      "business": [
+        {
+          "path": "shared/src/commonMain/kotlin/melox/network/NeteaseCollectionDetailsClient.kt",
+          "sha256": "99db0650f55466197ad2719f77aba09c174b73629ff5e45051a09b30550ddf7d"
+        }
+      ]
+    },
+    "song-detail-wiki": {
+      "android": [
+        {
+          "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/song/MeloXSongDetailActivity.kt",
+          "sha256": "ad49fae51f2ec40a15b8f35e5dc42a61d2affdfed30a969d508564dcb66d551e"
+        },
+        {
+          "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/song/MeloXSongWikiActivity.kt",
+          "sha256": "2be34f7c970eaf475f936fffef8cf03e951876d32d9743385468453400e74004"
+        }
+      ],
+      "mobile": [],
+      "desktop": [
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/desktop/MeloXDesktopSongDetail.kt",
+          "sha256": "971a2df6eba936715bd4aac1ab7e4c759460af998859fe06a622ded7b17800de"
+        }
+      ],
+      "business": []
+    },
+    "song-actions": {
+      "android": [
+        {
+          "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXNowPlayingActionsSheet.kt",
+          "sha256": "0b1b2e0210795f1b66f4797421db518882fc801e8d3b072a9d7f022fe8804b06"
+        },
+        {
+          "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXProviderSongActionsOverlay.kt",
+          "sha256": "7a8eb1e52cf165ce8aa83c5d0c216afd99c198ba35822068d07f53293414df4e"
+        },
+        {
+          "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXSongActionsOverlay.kt",
+          "sha256": "f9dcbefb05c20625c2a552dde21fd67888929805f9092377114586ce04d19556"
+        }
+      ],
+      "mobile": [
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXSongActionsOverlay.kt",
+          "sha256": "b5e0da49b586124b9193fb1ca53b5a7a6584d24b9c6e429e4e7c65e95445149f"
+        }
+      ],
+      "desktop": [
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/desktop/MeloXDesktopSongMenu.kt",
+          "sha256": "cf79905768c220630669cf5a22f7412c1f3919ba9b22e1b348fe582d6c8ce2a7"
+        }
+      ],
+      "business": []
+    },
+    "downloads": {
+      "android": [
+        {
+          "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/library/MeloXBatchDownloadSheet.kt",
+          "sha256": "31a2dbf8157bfd07e3f1da7987ddbaa48d74c068dbc4279ded64a80c0116da15"
+        }
+      ],
+      "mobile": [
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/DownloadsScreen.kt",
+          "sha256": "8e90cc51f44e5c105a50a2bc5460d2089daf45dd1fb4d0edc9d68c7ce9761661"
+        }
+      ],
+      "desktop": [
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/desktop/MeloXDesktopLibraryPages.kt",
+          "sha256": "0cc0ca3542cd3b2f15e7b615a9288c4175e6a244f0d75deb647b92b28dd5fcbd"
+        }
+      ],
+      "business": [
+        {
+          "path": "shared/src/commonMain/kotlin/melox/download/MeloXDownloadStore.kt",
+          "sha256": "74f7e1ea846dacf8fa24486a07cf28eac378d310aff9f8618838fbdb602b36ab"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/download/MeloXProviderDownloadStore.kt",
+          "sha256": "715501038f7cfbabbd9f4eb8dc5c1105acd2abdd8c5b4c0ba1fcbc99e36cc5af"
+        }
+      ]
+    },
+    "cloud": {
+      "android": [
+        {
+          "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/cloud/MeloXCloudMusicScreen.kt",
+          "sha256": "08bcfdf883954598bc3f89d4205cb23b96c32da05d92e2fdfcf9c6e1aff0976f"
+        }
+      ],
+      "mobile": [
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/CloudScreen.kt",
+          "sha256": "171cdb8d21947dfca80ac0d1b8a98b83ea38f6219fdcbe1c2b500d0f07302fee"
+        }
+      ],
+      "desktop": [
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/desktop/MeloXDesktopLibraryPages.kt",
+          "sha256": "0cc0ca3542cd3b2f15e7b615a9288c4175e6a244f0d75deb647b92b28dd5fcbd"
+        }
+      ],
+      "business": [
+        {
+          "path": "shared/src/commonMain/kotlin/melox/network/NeteaseCloudUploadClient.kt",
+          "sha256": "bbc61e9d990f316b5a231abea1e2f832585bc6669ccb27554fdaeee907e14feb"
+        }
+      ]
+    },
+    "podcasts": {
+      "android": [
+        {
+          "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/podcast/MeloXPodcastScreens.kt",
+          "sha256": "637b880c8dada08957f35bca3a28a1d607b76f13be06f4d8b49bf00cf85c3240"
+        }
+      ],
+      "mobile": [
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/PodcastsScreen.kt",
+          "sha256": "68f7906db76a4fd65341fc943aee42c77087c35857bffe6609a4effa348d82fe"
+        }
+      ],
+      "desktop": [
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/desktop/MeloXDesktopPodcasts.kt",
+          "sha256": "98c2f1694391b5b68273a799017fb769342855852e87de8334325ceadc1d0027"
+        }
+      ],
+      "business": []
+    },
+    "messages": {
+      "android": [
+        {
+          "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/messages/MessagesScreen.kt",
+          "sha256": "525dee1f47b32bb2d5131a05968a3770bc25b04f48290ba44886ea1960723b3d"
+        }
+      ],
+      "mobile": [
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/MessagesScreen.kt",
+          "sha256": "2af8818a8e2a783bbc232eb7839f2e632b0e5669d65d892c3c87d3db41b93ef1"
+        }
+      ],
+      "desktop": [
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/desktop/MeloXDesktopMessages.kt",
+          "sha256": "96cf2296941d5267ef92d3d305267997b555b1659ca481d682a02db130171be4"
+        }
+      ],
+      "business": []
+    },
+    "accounts": {
+      "android": [
+        {
+          "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/account/AppleMusicLoginScreen.kt",
+          "sha256": "6b43196530e455af7a892b013f25827ee122e068a1d7e51bbe3ab93424eb79c4"
+        },
+        {
+          "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/account/BilibiliLoginScreen.kt",
+          "sha256": "9796f2e88a506bdc6cdb9cf9fadfb3d4f6a94f11c7246f81e0898b8c85b5a911"
+        },
+        {
+          "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/account/KugouLoginScreen.kt",
+          "sha256": "2fb7bfd94ddccda3aea7d327025f7b84443ce2884f5c2e97ebef74054485dc9d"
+        },
+        {
+          "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/account/KuwoLoginScreen.kt",
+          "sha256": "74cd285316686acbce476fb0d6decf1f0e736b266d9d0aac671b411676c97e45"
+        },
+        {
+          "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/account/MeloXAccountActivity.kt",
+          "sha256": "aa36bda39cc9a06338e9aee932baea7e701420325b1d713d3105ec0787a685db"
+        },
+        {
+          "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/account/MeloXNeteaseLoginActivity.kt",
+          "sha256": "085756345b116a75812c6a4b741333d01fe327760cc2681562cabbaea22d0198"
+        },
+        {
+          "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/account/MeloXPhoneCodeLoginScreen.kt",
+          "sha256": "925de757a42fae49c8e5875fbc44de1a0782b1b0d16943f45b0de088513459d9"
+        },
+        {
+          "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/account/NeteaseLoginScreen.kt",
+          "sha256": "1425f10774af6737f9644e59a25f56d5ff9d7ee0d218afda37df2bb43c6ac437"
+        },
+        {
+          "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/account/NeteaseQrBridge.kt",
+          "sha256": "21065acf9cdabbbe4fec28de894021a510a30f39909bec4af00189d478c4ca57"
+        },
+        {
+          "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/account/NeteaseQrLoginScreen.kt",
+          "sha256": "1d09c2197be47ae39e6994f12975a3fabc9642e5c67023e4e8c2fc3d3b47b5f3"
+        },
+        {
+          "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/account/QQMusicLoginScreen.kt",
+          "sha256": "394644ec265df115d972d142e1f5c73e480dd623cb60622c59201ac64026975b"
+        },
+        {
+          "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/account/QishuiLoginScreen.kt",
+          "sha256": "edd4dda39a683279de7c139e7f4cc8eeef8f64168b09d0e52b572039edf50b9d"
+        },
+        {
+          "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/account/SpotifyLoginScreen.kt",
+          "sha256": "c440b3d616a0d62f3ecc000c799160a3cfd2912efda1ebc6e34ee1dad9b06c6b"
+        },
+        {
+          "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/account/YouTubeLoginScreen.kt",
+          "sha256": "d0de9d86467630932eee8d1bb307b8e17f57fd27424303e924be27f427fe73e0"
+        }
+      ],
+      "mobile": [
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/LoginScreen.kt",
+          "sha256": "94b6edbabf6328b93df77da4fca7662cb0e57be1adbcaf3bab5478952cc6f722"
+        },
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/QishuiQrLoginPane.kt",
+          "sha256": "b00f28100339a3bb06136c6ba17c9bbfefb36daa9dcd01b1f4354f54709378fb"
+        }
+      ],
+      "desktop": [
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/desktop/MeloXDesktopLogin.kt",
+          "sha256": "e10a191bbd6ff6a40a43a58939ae457087a0f03780654347cd09317febeb3b16"
+        }
+      ],
+      "business": [
+        {
+          "path": "shared/src/commonMain/kotlin/melox/provider/applemusic/AppleMusicSessionStore.kt",
+          "sha256": "945c6281c9bb134bcd3df97e25c4d206d05b25ba156a4bce98dd08be45448794"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/provider/bilibili/BilibiliSessionStore.kt",
+          "sha256": "961bb6682613141e6926b13167132c4640d6e72454dec4d1a306161275241804"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/provider/jellyfin/JellyfinSessionStore.kt",
+          "sha256": "fd1c6714c1b0f0a829ed4f776b89c332b24661a37c3402d6f28be1c8aa65e7e3"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/provider/kugou/KugouSessionStore.kt",
+          "sha256": "a1f06cc65fc1f8ede157f605c86d6efc25b2741378da402c8a8bfb29443faf59"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/provider/kuwo/KuwoSessionStore.kt",
+          "sha256": "58eb4aa275fd4c82d8ac6581e0e2423ee0a3956c129870bde3eb64976fceb5ab"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/provider/qishui/QishuiSessionStore.kt",
+          "sha256": "311c49951e9eae9269d3912c2f3f00a5bc1e0d80b0d62359107967a8024af2f4"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicSessionStore.kt",
+          "sha256": "c3be59131b5a5ae2942b4a54ab744e89d0449b74ed4c21daa1592ea5d2c8b195"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/provider/spotify/SpotifySessionStore.kt",
+          "sha256": "39cd573de9449a589d9223ae6d84ab4cbccce89378bb993c7a8683ff7208ba87"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/provider/youtubemusic/YouTubeSessionStore.kt",
+          "sha256": "dc90dafe5e165bc1c3907e54aed429412d6bc1f45af9a5f8f0b727dcf2a3a264"
+        }
+      ]
+    },
+    "services": {
+      "android": [
+        {
+          "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/provider/MeloXProviderServicesActivity.kt",
+          "sha256": "4857d2a91850551cc0377b3eda65806467fc169e0b1301e1e0ec80645c887f99"
+        },
+        {
+          "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/provider/ProviderServicesScreen.kt",
+          "sha256": "d1b2aa2183c0bf89aa52fe830bf52cae4247d26dcc1438029ba7e95b712fa72e"
+        }
+      ],
+      "mobile": [
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/ProviderServicesScreen.kt",
+          "sha256": "a517239b1b2cf601ef4431ad02e3afb033aa8d26b0267c631a86324dd216693f"
+        }
+      ],
+      "desktop": [
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/desktop/MeloXDesktopProviderServices.kt",
+          "sha256": "eab3e67e6f1666c296ffdad52ae58211ba0da4e80cfad10ca0434fee0275ce20"
+        }
+      ],
+      "business": [
+        {
+          "path": "shared/src/commonMain/kotlin/melox/music/provider/MeloXLegacyUiBridge.kt",
+          "sha256": "e13a23b9c442cf711b1b2b96a725d5dc0cae47656a9dcfb213ae177d96013cc2"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/music/provider/MeloXMusicProviders.kt",
+          "sha256": "98ec2a69822aba7dc83bdec1b57e2230c3ec0dabc395e5fc1896bcb3c13f3d6f"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/music/provider/MusicProvider.kt",
+          "sha256": "d5a1160ec633f7d7472d3c9d14fec469bb0e5b6d13793a8cd0a04742c3406059"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/music/provider/MusicProviderSelectionStore.kt",
+          "sha256": "e9b9a2cf4debdc7052432541c76399b39dee13d65f1aafe68206eb0b1bef1468"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/music/provider/PlaybackAccountSlot.kt",
+          "sha256": "3988de9bf080f90a0c77e4635937dce931e55645555c97e009a77aae04f5c1ee"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/music/provider/PlaybackAccountStore.kt",
+          "sha256": "901daaf417e40e3e39056882619349e883f536b46fd7833cede3d8cc85c518b7"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/music/provider/ProviderAccountManager.kt",
+          "sha256": "93d435c694f65fc170452bb23b990794a77e86b9dd1546e7cbdfc0ea081edbeb"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/music/provider/ProviderCollectionPaging.kt",
+          "sha256": "b229c774fab2084118262035b93a1921b8c0955adf2779b5c8607f783796a08e"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/music/provider/ThirdPartyMusicSourceConsentStore.kt",
+          "sha256": "517ea18136f70f91132cf4b6ba6443517ad29b756b0f4a3a3441b5932b798baa"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/music/provider/TrackAggregation.kt",
+          "sha256": "7310ba298972ce125265647595b4614781394828a43d631d29fc6ffb8c9c95cc"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/music/provider/UnifiedMusicService.kt",
+          "sha256": "14d76454450525db7666fde76c85ce7264d016aa52ff865b5a9d6bd833d86e63"
+        }
+      ]
+    },
+    "youtube-channels": {
+      "android": [
+        {
+          "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/provider/YouTubeAccountControls.kt",
+          "sha256": "57f604ac11b8225688d5d03bb85098c8be7301c53664d79bd985f555deefef0f"
+        }
+      ],
+      "mobile": [],
+      "desktop": [],
+      "business": [
+        {
+          "path": "shared/src/commonMain/kotlin/melox/provider/youtubemusic/YouTubeMusicProvider.kt",
+          "sha256": "968b392ce33b23ca534591b8ba8252a0c790eb78b65e80409266c55b10f76228"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/provider/youtubemusic/YouTubeSessionStore.kt",
+          "sha256": "dc90dafe5e165bc1c3907e54aed429412d6bc1f45af9a5f8f0b727dcf2a3a264"
+        }
+      ]
+    },
+    "kugou-lite-rewards": {
+      "android": [
+        {
+          "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/settings/KugouLiteVipSettings.kt",
+          "sha256": "dcbccd2517795f3c3d112d4972812b7e0239d1b9f7b3fd0d6110dfa4451fd75f"
+        }
+      ],
+      "mobile": [],
+      "desktop": [],
+      "business": []
+    },
+    "player": {
+      "android": [
+        {
+          "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXIOSNowPlayingScene.kt",
+          "sha256": "f48f185a9bac50feec4ba80b49fe7f2510c373c1995c7079f7835a63d030c77e"
+        },
+        {
+          "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXIOSNowPlayingSharedHost.kt",
+          "sha256": "b0ae382caa613711b39e5525595de2ac79c60b969a05bbf0a632468cee0f896b"
+        },
+        {
+          "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXIOSNowPlayingV2.kt",
+          "sha256": "068ee8f122097975019abb3bc126ebf67f63f72cbcf4a876e8f3e3b60357e18a"
+        }
+      ],
+      "mobile": [
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXIOSLandscapePlayerScene.kt",
+          "sha256": "c478f5ab1d5d3be83601361bb2b6e4b5332caa028c3d75d3f23c91966f771352"
+        },
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXIOSPlayerScene.kt",
+          "sha256": "231dc9e107af0b634fab16ebd7dcdab9899dd10afe0efa4fd9ea1295196dc036"
+        },
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXMiniPlayer.kt",
+          "sha256": "d28249f96045ca00a7452c682661d4e75005bb1c4a611b79a90e2b69d0937914"
+        },
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerLyrics.kt",
+          "sha256": "d589e9af697d41249bba6ca7f1d05bad705d83d11f71066bcf9a219e7225e085"
+        },
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerQuality.kt",
+          "sha256": "f6f76ea479d4380c8edc0eef4a8daec54538b1c236eb38148c1439722eee94f3"
+        },
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerTransition.kt",
+          "sha256": "b6defb23b742ca69939b9a10271a6ec482915c8b617ce57b7320696029dba622"
+        }
+      ],
+      "desktop": [
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/desktop/MeloXDesktopNowPlaying.kt",
+          "sha256": "ca93ae4f429fac00de6b6e2377d0881335b6ddf2bcab71f1366acffdf2ce3704"
+        }
+      ],
+      "business": [
+        {
+          "path": "shared/src/commonMain/kotlin/melox/playback/PlaybackCommands.kt",
+          "sha256": "46c0981b720095e4c7261d5c1521ebf3cd58271059c9eec58e545059ad356c44"
+        }
+      ]
+    },
+    "queue": {
+      "android": [
+        {
+          "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXQueuePanel.kt",
+          "sha256": "35c42099f8fecbc2a7dd9740979477106ba8021f476418ba512fa128446cb903"
+        }
+      ],
+      "mobile": [
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXQueuePanel.kt",
+          "sha256": "d282536ca1fb80c030757ed38240fc8ad5253d8f226e1a3cd4c205a93ce80c77"
+        }
+      ],
+      "desktop": [
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/desktop/MeloXDesktopNowPlaying.kt",
+          "sha256": "ca93ae4f429fac00de6b6e2377d0881335b6ddf2bcab71f1366acffdf2ce3704"
+        }
+      ],
+      "business": [
+        {
+          "path": "shared/src/commonMain/kotlin/melox/playback/PlaybackCommands.kt",
+          "sha256": "46c0981b720095e4c7261d5c1521ebf3cd58271059c9eec58e545059ad356c44"
+        }
+      ]
+    },
+    "lyrics": {
+      "android": [
+        {
+          "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXAlternativeLyricsPanels.kt",
+          "sha256": "b4eee57ff0e324508d19813992b35422c8cff0bfe42c7cc4edae64550cd22e01"
+        },
+        {
+          "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXEvaLyrics.kt",
+          "sha256": "8b2e7f2d86a9009fcfaf0f212eed8353a6d8e472c67adbbee5a85724694f27e7"
+        },
+        {
+          "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXFloatingLyricsPip.kt",
+          "sha256": "220c0e6a7704089dab0c76fe20365610e2cb621f73296f0bd6f1560a8921496b"
+        },
+        {
+          "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXIOSLyricsPanel.kt",
+          "sha256": "7a00f38b4c9f6961903bc4dbb3b7227f6b988f13238b161ec541f01aaf612dec"
+        },
+        {
+          "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXLyricsPanel.kt",
+          "sha256": "32987f8a09ec0814711e4c7a943d758eb927c34996b6a30a083d800e9c0b8bc0"
+        },
+        {
+          "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXProviderLyricsLoader.kt",
+          "sha256": "7e63b721dc4476c0c041c45aff197d865ae4dd910814b5292fa87c8a899e58aa"
+        },
+        {
+          "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXSkylineLyrics.kt",
+          "sha256": "9efe756c143544de5dec3d3df0d69088dba81b74eed70f1854dc4e6fc8933537"
+        },
+        {
+          "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXTextPVLyrics.kt",
+          "sha256": "8a44759c68529eaca869793fae8965e70844afe6b8c77755198b836fc2202624"
+        }
+      ],
+      "mobile": [
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/AdvancedLyricsSettings.kt",
+          "sha256": "606f60e016930e2808fd18a1bd9f32dfb8bdf64ee13f66663f7437a309d4ae53"
+        },
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/AlternativeLyricsSettings.kt",
+          "sha256": "cb23d5ebe22eee9912c60624743854d393bec5ae8be62054c1d495bae0f3a5f6"
+        },
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXAlternativeLyricsPanels.kt",
+          "sha256": "7acd2fa80675672f28ba6d3d714866c73d76e21598552c851004bdced82ecbe1"
+        },
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerLyrics.kt",
+          "sha256": "d589e9af697d41249bba6ca7f1d05bad705d83d11f71066bcf9a219e7225e085"
+        },
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/SkylineLyricsSettings.kt",
+          "sha256": "54f2991f462f882ca3cefde5ac2699ca6cd2740181d9b2584b7ffbbbfcc3b91b"
+        }
+      ],
+      "desktop": [
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/desktop/MeloXDesktopLyrics.kt",
+          "sha256": "a176afc2cd4e76da2bd9763ba9b3e83b2b62d81ee1a1afae4c192167cb9190e8"
+        }
+      ],
+      "business": [
+        {
+          "path": "shared/src/commonMain/kotlin/melox/lyrics/AmlldbLyricsClient.kt",
+          "sha256": "9ef9d82f8f8df01f155762bec2dac567d40102cf8670b4f15f0a915d6d122967"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/lyrics/BilibiliMatchedLyrics.kt",
+          "sha256": "67c9687527f950b9d771ba1510a1995f606c73a88f2be251816b1c48171a710d"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/lyrics/KugouKrcLyricsParser.kt",
+          "sha256": "11e09958f6fe5b374f5116ddffd37eea8537dce188f2c2e206be9d7ceb90b723"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/lyrics/LrcLibLyricsClient.kt",
+          "sha256": "44a2099ebd43a771c3dce77c1c6dd3c1cf994f8299387b8fa5e38eabcc9ef187"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/lyrics/LrcLyricsParser.kt",
+          "sha256": "6f25e35a943c8d12d356109c152084eef535dd7eaa7c5efda2d81f7b231e3f4c"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/lyrics/LyricBindingStore.kt",
+          "sha256": "afadd0bb52fd69c6851c9228dc5f08c6e7f44040c468d6034f58eb50ea0a0e20"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/lyrics/LyricModels.kt",
+          "sha256": "6d658c5acfab5452c136644f256bd0e38512eba17ff8134e19e2be84238955c9"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/lyrics/LyricRomanizationAligner.kt",
+          "sha256": "03b5137c025c0d1ba6b59aa1621449ad04e16b874fcd3c1765be134fdddfb5cb"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/lyrics/LyricTimelineProcessor.kt",
+          "sha256": "8ebcc89e14b4c577d9d45bba4559f64100427a957f83b73b5513945bc3abdf11"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/lyrics/MeloXLyricPresentation.kt",
+          "sha256": "36fe9a2062514dce54c53f6ced6be30641ae478666033abcdc883fd012857b4d"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/lyrics/MeloXLyricScript.kt",
+          "sha256": "0761a9da0ea60ae605d904111c0f99501fdd9a2bf4f6da21918d7133bceb59af"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/lyrics/MeloXLyricsLoad.kt",
+          "sha256": "872deefe216aeb94d0d70c40c141a80a5a55203ee54d5e5e47b517895fdd365b"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/lyrics/QQMusicMeiQrcDecoder.kt",
+          "sha256": "bb7ef356ea235370083655416b1596f6e27f8433e191cdf92fbc260917b77aac"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/lyrics/QQMusicQrcLyricsParser.kt",
+          "sha256": "ed6e5a5169c1a4a23fafc761bada8e86a14aaa10a73ddf9eb071a8ed87830c1f"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/lyrics/TtmlLyricsParser.kt",
+          "sha256": "07c279b94888c0f9a25773226c97699b907c015d968230bdbcc2e3a06d573975"
+        }
+      ]
+    },
+    "lyric-sharing": {
+      "android": [
+        {
+          "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXLyricShareDialog.kt",
+          "sha256": "0b594229ac8d7db676f51a7c6dab7d470b9fe7d837e964986366535b1bab3a48"
+        },
+        {
+          "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXLyricShareImage.kt",
+          "sha256": "ff1fab8ac0e9be8e41fcd7399adab9d96616963d632cbf72e6ce0121381501ee"
+        }
+      ],
+      "mobile": [],
+      "desktop": [
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/desktop/MeloXDesktopLyrics.kt",
+          "sha256": "a176afc2cd4e76da2bd9763ba9b3e83b2b62d81ee1a1afae4c192167cb9190e8"
+        }
+      ],
+      "business": []
+    },
+    "custom-background": {
+      "android": [
+        {
+          "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXCustomBackground.kt",
+          "sha256": "2bde291b6d5acef9f9e29b22116727661cf1f6da3c1b47395b37118f5acec3ad"
+        }
+      ],
+      "mobile": [
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/CustomBackgroundSettings.kt",
+          "sha256": "5c67cc2cf25e053610adc5f499029b6b1d03885d60a9a0e6e50741eb067f30df"
+        }
+      ],
+      "desktop": [],
+      "business": [
+        {
+          "path": "shared/src/commonMain/kotlin/melox/settings/MeloXCustomBackgroundStore.kt",
+          "sha256": "146eb4d2e6782ed32f0364054c31ef9245bafa4aa460f84d3d0fc21b125702df"
+        }
+      ]
+    },
+    "recognition": {
+      "android": [
+        {
+          "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/recognition/MeloXRecognitionOverlay.kt",
+          "sha256": "37474147f9b11ffdacf49740222de4b556db9eb3ede5026a3fe59ec5a54eef5f"
+        }
+      ],
+      "mobile": [
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/PlatformSettingsPages.kt",
+          "sha256": "4b99a1378966cc60b198bbc4dc633ceec6857d2b608ec8f49b567f88c3e398e4"
+        }
+      ],
+      "desktop": [
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/desktop/MeloXDesktopTools.kt",
+          "sha256": "aeee6a87de3d36f3f6f79006521bd0e67f11ea44e5ab09463172e0b72957fe89"
+        }
+      ],
+      "business": [
+        {
+          "path": "shared/src/commonMain/kotlin/melox/recognition/LocalAudioSegmentExtractor.kt",
+          "sha256": "61e53f1a9098a07405aa5e58fd2d5f15b40526c8c3d8490829f258d8be764a08"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/recognition/PinnedAudioFingerprint.kt",
+          "sha256": "da5c13272680071f273a6fb4cfd963f9e0dfbd7851041a5d62e6fd0c2c14c25d"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/recognition/SongRecognitionClient.kt",
+          "sha256": "b60717ad3a5b730ebd928be03f7b25ac5db6b0bf7a57763c77f4b5021aa7318d"
+        }
+      ]
+    },
+    "listen-together": {
+      "android": [
+        {
+          "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXListenTogetherInviteActivity.kt",
+          "sha256": "0560acb0fe00af3782616ee5f4cf9949c46dbda4e72900de86d54c3feedc8b8c"
+        }
+      ],
+      "mobile": [
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/PlatformSettingsPages.kt",
+          "sha256": "4b99a1378966cc60b198bbc4dc633ceec6857d2b608ec8f49b567f88c3e398e4"
+        }
+      ],
+      "desktop": [
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/desktop/MeloXDesktopTools.kt",
+          "sha256": "aeee6a87de3d36f3f6f79006521bd0e67f11ea44e5ab09463172e0b72957fe89"
+        }
+      ],
+      "business": [
+        {
+          "path": "shared/src/commonMain/kotlin/melox/playback/MeloXListenTogetherCoordinator.kt",
+          "sha256": "feeda9e070a318830ed9a5c6c9b3563369b4275b0cb0d0328b663e0523039f75"
+        }
+      ]
+    },
+    "lan-dlna": {
+      "android": [
+        {
+          "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXAudioOutputDialog.kt",
+          "sha256": "ee21f45ec97af3f3c6512ce0fb47c4e07925af2867704f5a57f1798e4c5e7034"
+        },
+        {
+          "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXAudioOutputPlaybackPanel.kt",
+          "sha256": "410d467f2bcf6d1c99b58cc81615460a4d0998e3d4a6ec5cbc62548a6e5b0477"
+        },
+        {
+          "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXLanOutputPanel.kt",
+          "sha256": "27e7cef62808a89e1331d6223dc3344cfb395533a428881b71de9f4642a1b393"
+        },
+        {
+          "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/UsbAudioOutputRows.kt",
+          "sha256": "1e21f59d5c08ae352d241f354f61f3afc310d7d29ef74a5a7fc62be42651c2b4"
+        }
+      ],
+      "mobile": [
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXLanOutputPanel.kt",
+          "sha256": "3f116c0a6f8b4bfa5fc3bd036af07bcc1287ddbe3bd317ab8da118b12ad6b8ca"
+        }
+      ],
+      "desktop": [
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/desktop/MeloXLanDialog.kt",
+          "sha256": "9f63c4c2bbf78d6261b79ac54467fabf694c992b06fd3e571a4072132f864cd2"
+        }
+      ],
+      "business": [
+        {
+          "path": "shared/src/commonMain/kotlin/melox/lan/MeloXLanAudioRelay.kt",
+          "sha256": "51d64c5c7b8e347c95037be5ebb0601c7672398c43171c9a9ffa989858af510f"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/lan/MeloXLanCast.kt",
+          "sha256": "fe1ae5ee24f6f64ac98e0f5c6843bd6c8d5a3bdd231efd35d13269c1be688bfb"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/lan/MeloXLanLink.kt",
+          "sha256": "9e69637df7bd880c7a2fe0e394fad26cff660d32717c9442d2e5ef71d4ed7c77"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/lan/MeloXLanProtocol.kt",
+          "sha256": "96cc1e7848d3c0d1af03a473f245ec0097c38796ddaebd8265fb9ebe01397108"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/lan/MeloXLanRuntime.kt",
+          "sha256": "af37cd3db9f5793f8a8e68942cf5dba68c360ed44b90fb22ca439b6be0da2b6f"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/lan/MeloXLanSession.kt",
+          "sha256": "12f5c60fb578200b1507d7b0d156ed969ff9c20caa7bea00d7193d749673ce43"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/lan/MeloXLanTogetherCoordinator.kt",
+          "sha256": "514f676e5b684cb4b9de8f779f92f5293acf94ce5b436e54a48053d52331ab0f"
+        }
+      ]
+    },
+    "miplay-usb": {
+      "android": [
+        {
+          "path": "android/app/src/main/kotlin/com/lladlam/melox/miplay/MiPlaySession.kt",
+          "sha256": "977ebe3b0d3cfecf16b89bc6a07b1da821cee22beb62ccc4000ef5bb9bbeb15c"
+        }
+      ],
+      "mobile": [
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXLanOutputPanel.kt",
+          "sha256": "3f116c0a6f8b4bfa5fc3bd036af07bcc1287ddbe3bd317ab8da118b12ad6b8ca"
+        }
+      ],
+      "desktop": [
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/desktop/MeloXLanDialog.kt",
+          "sha256": "9f63c4c2bbf78d6261b79ac54467fabf694c992b06fd3e571a4072132f864cd2"
+        }
+      ],
+      "business": []
+    },
+    "settings": {
+      "android": [
+        {
+          "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/settings/SettingsScreen.kt",
+          "sha256": "e49ee0a3546b0bba382b6ab7caff09cbe95c822596dc26d14c8ed3c5a010be7e"
+        }
+      ],
+      "mobile": [
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/AdvancedLyricsSettings.kt",
+          "sha256": "606f60e016930e2808fd18a1bd9f32dfb8bdf64ee13f66663f7437a309d4ae53"
+        },
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/AlternativeLyricsSettings.kt",
+          "sha256": "cb23d5ebe22eee9912c60624743854d393bec5ae8be62054c1d495bae0f3a5f6"
+        },
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/CustomBackgroundSettings.kt",
+          "sha256": "5c67cc2cf25e053610adc5f499029b6b1d03885d60a9a0e6e50741eb067f30df"
+        },
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/EqualizerSettings.kt",
+          "sha256": "27a468eb53caa0d138e9987f2bb8df4edea64ae37717263c01bf63b20b530768"
+        },
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/LegalSettings.kt",
+          "sha256": "39e2640c10d914b30361e1c9b075589f46a433e11de67023d4ffae71b96ffe68"
+        },
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/PinnedAboutSettings.kt",
+          "sha256": "e7739696c6692ab1d0afefa1b10e0983d4a8fe92068845b8f04211632d2df6cd"
+        },
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/PinnedPlaybackSettings.kt",
+          "sha256": "686be503480330141c9adb6976754d5ea4323c74a5190bff3da738634b4dea53"
+        },
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/PinnedStorageSettings.kt",
+          "sha256": "096973701c4eafcfab7b37ec0a323b94b3299d7c93997a44d96d927de5c2092d"
+        },
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/PlatformSettingsPages.kt",
+          "sha256": "4b99a1378966cc60b198bbc4dc633ceec6857d2b608ec8f49b567f88c3e398e4"
+        },
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/PrivacySettings.kt",
+          "sha256": "4999b61f3e9cdd2b5b677679514b02fadec5f6fbffa0686179caeac61ef04468"
+        },
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/RemoteConfigSettings.kt",
+          "sha256": "a15ebd3a623cf3376aa55c154de7be2f1cf44c833885d090da0f59b7938ea28d"
+        },
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/SettingsPageComponents.kt",
+          "sha256": "af00fe3c7e31cddcdbf817926b21d8dddd143dd5506ffdf026dee503465b90a8"
+        },
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/SettingsScreen.kt",
+          "sha256": "c5a4aba0783f359f95b3cd4790fe90b1d99cf10a41b4d3e6cae37f472ce4039c"
+        },
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/SkylineLyricsSettings.kt",
+          "sha256": "54f2991f462f882ca3cefde5ac2699ca6cd2740181d9b2584b7ffbbbfcc3b91b"
+        },
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/TabLayoutSettings.kt",
+          "sha256": "233a2ca51ec28235372fe4611478237fa9e1a6d115bd2c2b3f4ae4106c80367d"
+        }
+      ],
+      "desktop": [
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/desktop/MeloXDesktopSettingsControls.kt",
+          "sha256": "1881f799d84ebd5b0e802cbf1f0eb0080b30842240b8ac1cc8a91ea4d7dec0d2"
+        }
+      ],
+      "business": [
+        {
+          "path": "shared/src/commonMain/kotlin/melox/settings/MeloXAppLanguage.kt",
+          "sha256": "8034ae7f3d53caace842994143716143661434dde41842d36348cb77e71e34b5"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/settings/MeloXContentLayout.kt",
+          "sha256": "385f0c5807c6341dd0df0da99cfc45c0a5e885ffc5098ff4910ea93793683e13"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/settings/MeloXCustomBackgroundStore.kt",
+          "sha256": "146eb4d2e6782ed32f0364054c31ef9245bafa4aa460f84d3d0fc21b125702df"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/settings/MeloXPlayerAppearance.kt",
+          "sha256": "1279804713aee0b41ae66794704e1d1bff2c9672233750f601b3246a66580a0e"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/settings/MeloXScreenAwakePolicy.kt",
+          "sha256": "c830b8340d622e56937802b4fd1d87d46796ade775a10edf4af82ba13d58042e"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/settings/MeloXSettingsPreferences.kt",
+          "sha256": "ff4ebc887beb6d4f4edaac7f1d931318fca86fce3115adecb26ac6dcd7a29991"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/settings/MeloXSettingsRuntime.kt",
+          "sha256": "47cd1de0751b516cd5ca7c265f2e8b877e2f6a35849c9f88c2f4b225fa1ee842"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/settings/MeloXSplitChromePosition.kt",
+          "sha256": "3379456d5e48b0ab9e7f85d0b8be54ac177a75aa2cbe5f03181d9b60b4a61855"
+        }
+      ]
+    },
+    "privacy": {
+      "android": [
+        {
+          "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/settings/SettingsScreen.kt",
+          "sha256": "e49ee0a3546b0bba382b6ab7caff09cbe95c822596dc26d14c8ed3c5a010be7e"
+        }
+      ],
+      "mobile": [
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/PrivacySettings.kt",
+          "sha256": "4999b61f3e9cdd2b5b677679514b02fadec5f6fbffa0686179caeac61ef04468"
+        }
+      ],
+      "desktop": [
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/SettingsScreen.kt",
+          "sha256": "c5a4aba0783f359f95b3cd4790fe90b1d99cf10a41b4d3e6cae37f472ce4039c"
+        }
+      ],
+      "business": [
+        {
+          "path": "shared/src/commonMain/kotlin/melox/recommendation/LocalRecommendationEngine.kt",
+          "sha256": "0f36c3f368696b605574edc1cf383c8991e6541befdb1a3dab3e6087fc02b234"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/recommendation/LocalRecommendationModels.kt",
+          "sha256": "5c82ab367638664c3ada297ec0bd680fa06bc8615c7a95846f10af7e19002084"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/recommendation/LocalRecommendationStore.kt",
+          "sha256": "5c35f9097abcba3b84bf3f980c33692738f5132aa2b8e34816d6329ff729a622"
+        }
+      ]
+    },
+    "equalizer-automix": {
+      "android": [
+        {
+          "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/settings/SettingsScreen.kt",
+          "sha256": "e49ee0a3546b0bba382b6ab7caff09cbe95c822596dc26d14c8ed3c5a010be7e"
+        }
+      ],
+      "mobile": [
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/PinnedPlaybackSettings.kt",
+          "sha256": "686be503480330141c9adb6976754d5ea4323c74a5190bff3da738634b4dea53"
+        }
+      ],
+      "desktop": [
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/EqualizerSettings.kt",
+          "sha256": "27a468eb53caa0d138e9987f2bb8df4edea64ae37717263c01bf63b20b530768"
+        }
+      ],
+      "business": [
+        {
+          "path": "shared/src/commonMain/kotlin/melox/playback/ChkszPlaybackResolver.kt",
+          "sha256": "d4fb835b54107305720fb150bb042802d21d74c71a237855645161a033586d76"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/playback/CrossProviderPlaybackFallback.kt",
+          "sha256": "6afdf6505b950bee876a8119b0314f55b2c19f7b1234336804f973c1020e20ff"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/playback/LxUserPlaybackResolver.kt",
+          "sha256": "2eff4dab744693875f0c449292a768c4acfe68bfa187da3989e7ae5edab17431"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/playback/MeloXAudioAnalysisRuntime.kt",
+          "sha256": "97ac8e7e2120d14c182e50605c7e52cbefd2d5a58162b31056ef4f3b0f76ff29"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/playback/MeloXAudioAnalysisStore.kt",
+          "sha256": "a4ec49f4d6b18d219fb9a875054e10a2a07995949687b022659502581b4ff5fe"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/playback/MeloXAudioReactiveRuntime.kt",
+          "sha256": "e392ad42d34dbf6d239fc94438d62060e0e63ec0096918b877cc17972c7efb80"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/playback/MeloXAutoMix.kt",
+          "sha256": "5af8851d88b73b0a3e36206142aa75f4a7e6d5335fd1e776d8db8cb0a8c0db32"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/playback/MeloXAutoMixAudioAnalyzer.kt",
+          "sha256": "7bd3473ae20ef41230329cf7e46368ca69384f15412852c07a239ca9a23b838b"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/playback/MeloXAutoMixEqualizerEnvelope.kt",
+          "sha256": "d5b48128d74b2c3a1f0ea313032847b634bb4ab477f4d675753f449e66579d84"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/playback/MeloXAutoMixTransitionRuntime.kt",
+          "sha256": "bc54cbffe93f06e48c078041cdf66da312023e727376ef2029c9b3eb2971e2c5"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/playback/MeloXAutoMixTransitionScorer.kt",
+          "sha256": "06fbbc8363568ea42b3c4ed48c6d65a5eec4d2a08b03406056fe4ae87fadb69f"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/playback/MeloXDesktopAutoplay.kt",
+          "sha256": "e7f9da4f6a4dda8713f5472a7ee4cf81928a91eb1dc1f7216895af8b12339808"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/playback/MeloXEqualizerController.kt",
+          "sha256": "46c022ecfdc174f04ee3b27ab58f729d160209664445c199e4a2e8241b121cb9"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/playback/MeloXEqualizerSettings.kt",
+          "sha256": "8865961feb5a2393d4542131946fe453011b5efc0d58b09259771288e076fefb"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/playback/MeloXLastPlaybackStore.kt",
+          "sha256": "265b4748d1027dc6468c8fe0e9eb5323b2fc5449093150df94c7d674eb8feb3c"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/playback/MeloXListenTogetherCoordinator.kt",
+          "sha256": "feeda9e070a318830ed9a5c6c9b3563369b4275b0cb0d0328b663e0523039f75"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/playback/MeloXListenedTimeTracker.kt",
+          "sha256": "bbf3d336b9e027280e23592d2c0058f7d714fb99ec12471995d4e88c91a32117"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/playback/MeloXMediaCache.kt",
+          "sha256": "4335ec83d8eca93f42359d699cbabcae3daab65d379df4369020d6db8a6fb567"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/playback/MeloXPlaybackEvents.kt",
+          "sha256": "878441c6a697f8f12f35286795d39ea4c30f2bbee38159ecb43ff2a3596e427d"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/playback/MeloXPlaybackHistoryReporter.kt",
+          "sha256": "aa15e60041d85ea3629207cb17d438fed21662eac2318e5bc5009902ab41b6f0"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/playback/MeloXPlaybackModePreferences.kt",
+          "sha256": "9db3f2fdc564b013f9df43ec7393e1c309262a8e06eba22a4c9e147691ade2ec"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/playback/MeloXPlaybackOutput.kt",
+          "sha256": "072bb4263ef1883cab265d2064d7e39d17f342302e55766fa66acd19721f68d7"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/playback/MeloXPlaybackQueueStore.kt",
+          "sha256": "21c94a3869356865face08949365fe340fb16a13d27096c4505e867284e3ff2c"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/playback/MeloXPlaybackService.kt",
+          "sha256": "022a7fe1b86bfe2adf778a90e2982a50f8c4934f96755fc3c9388705d640a553"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/playback/MeloXPlayerTransitionState.kt",
+          "sha256": "ab4ebc76915c94249e37425bd3af6bc2590bbb4962cc28aff5d964965cb79cd0"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/playback/MeloXSleepTimer.kt",
+          "sha256": "36d822be02ff2c8f9ea25e5ef1492a78f6199105e893be8e477e068207bde730"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/playback/MeloXSmartQueueBuilder.kt",
+          "sha256": "a8ceee58d4b1057ba55d44e5e12a79e0cc10f75ac0bbffa6c97bc51cc889d2b9"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/playback/NeteasePlaybackResolver.kt",
+          "sha256": "580a5b233748f165eab102391d941d6a1964a268ad4a8ea23e14ec084d4fe486"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/playback/PlaybackCommands.kt",
+          "sha256": "46c0981b720095e4c7261d5c1521ebf3cd58271059c9eec58e545059ad356c44"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/playback/PlaybackFallbackChain.kt",
+          "sha256": "463c8aa8356281218e8f2f7f96655867ac9de6aadc8bfa3cb94a3310a5084ab9"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/playback/PlaybackTrackIdentity.kt",
+          "sha256": "f264efc468e3222a4449272e8a3f82ca61d0547855b09a0043dd0b60f9933548"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/playback/ProviderPlaybackCommands.kt",
+          "sha256": "26872deecdc32a3bf466738fdd1049bde0cb048233a5073fd77f41698f112cd7"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/playback/ProviderPlaybackQualityRuntime.kt",
+          "sha256": "f4d16639ff09b3b58beb7c49c8bae499cd55d62e57ef411383cd59e9ce46d129"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/playback/ProviderPlaybackResolver.kt",
+          "sha256": "0e831eff4ed82d557f75a21d06e0534ecc2d888e883508355c7c86a88854aa99"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/playback/ProviderPlaybackRuntime.kt",
+          "sha256": "761fc44cb58b2ad82aea6db0f5f53211b78d9071ed2323e36617a75c7e85766f"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/playback/ThirdPartyPlaybackResolver.kt",
+          "sha256": "06f88ad0e62abf4cba97c0910be8d2323d69c510ce2ec1ad60269926a1878c1e"
+        }
+      ]
+    },
+    "autosync-models": {
+      "android": [
+        {
+          "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/settings/AutoSyncModelPanel.kt",
+          "sha256": "cdc650f0481abf9cb5d1926caa7409dba95d0270ddd02c7fad58da417f39935c"
+        }
+      ],
+      "mobile": [],
+      "desktop": [],
+      "business": []
+    },
+    "remote-config": {
+      "android": [
+        {
+          "path": "android/app/src/main/kotlin/com/lladlam/melox/core/remoteconfig/MeloXHotRules.kt",
+          "sha256": "9c8f8f482221beba15a78ec202b1348a70d4d08a1c63076c64b84e8befdd278d"
+        },
+        {
+          "path": "android/app/src/main/kotlin/com/lladlam/melox/core/remoteconfig/MeloXHotScripts.kt",
+          "sha256": "3a8b44173ef9afc61c2e6179fbddbb7f2ada1ba20a1142ec928bc14288901475"
+        },
+        {
+          "path": "android/app/src/main/kotlin/com/lladlam/melox/core/remoteconfig/MeloXHotStrings.kt",
+          "sha256": "cb56e7eab07738e2ba8b1d3cb919eb66a1f5acb1143ddbd1d0faaba4037a37e1"
+        },
+        {
+          "path": "android/app/src/main/kotlin/com/lladlam/melox/core/remoteconfig/MeloXHotStyles.kt",
+          "sha256": "5d645a5314dc47e917fabcbd7d1e9049322f42345ddc2859a7fda23550cdc224"
+        },
+        {
+          "path": "android/app/src/main/kotlin/com/lladlam/melox/core/remoteconfig/MeloXRemoteConfigClient.kt",
+          "sha256": "347b22c8d83867d92eddb23a3ccb05ba87f84e50eb1937b731f29d1ec50de729"
+        },
+        {
+          "path": "android/app/src/main/kotlin/com/lladlam/melox/core/remoteconfig/MeloXRemoteConfigConsent.kt",
+          "sha256": "11654d9d62fa9562110dd6c9a6969a6b2f3e59297c5f8ff4caedda7b504bce7b"
+        },
+        {
+          "path": "android/app/src/main/kotlin/com/lladlam/melox/core/remoteconfig/MeloXRemoteConfigDefaults.kt",
+          "sha256": "77ed57b76bac3290a20514b3b43add215b9a38658ec02f989fc3b969efbc5155"
+        },
+        {
+          "path": "android/app/src/main/kotlin/com/lladlam/melox/core/remoteconfig/MeloXRemoteConfigModels.kt",
+          "sha256": "97e00c6603e34c04a075b5b2dc29d9df793e4d47ced65a0205b13676ddfeb8c7"
+        },
+        {
+          "path": "android/app/src/main/kotlin/com/lladlam/melox/core/remoteconfig/MeloXRemoteConfigPolicy.kt",
+          "sha256": "858ec703accf4d6890922877b05e85fc837e01144c9210fbdd7bf61582a3809c"
+        },
+        {
+          "path": "android/app/src/main/kotlin/com/lladlam/melox/core/remoteconfig/MeloXRemoteConfigRuntime.kt",
+          "sha256": "8267e3124932d66dde26fb69cbafb853ffce2fa03fd5b38ecadb7664ecb22083"
+        },
+        {
+          "path": "android/app/src/main/kotlin/com/lladlam/melox/core/remoteconfig/MeloXRemoteConfigStore.kt",
+          "sha256": "15a824e1dd40502da3f56d9f05bc4ee6a452d51f51ee6a7760bba34b6063cea3"
+        },
+        {
+          "path": "android/app/src/main/kotlin/com/lladlam/melox/core/remoteconfig/MeloXRemoteConfigVerifier.kt",
+          "sha256": "798d7b48d16b33f154e5f48f8a0c423051a2139116361c5c9d6177fc0ffe76da"
+        },
+        {
+          "path": "android/app/src/main/kotlin/com/lladlam/melox/core/remoteconfig/MeloXRemoteNoticeStore.kt",
+          "sha256": "b42c3ea3d863ccd73fc0bf158a59b33df0ee84135e09f07f8401fc1d0be3f478"
+        }
+      ],
+      "mobile": [
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/RemoteConfigSettings.kt",
+          "sha256": "a15ebd3a623cf3376aa55c154de7be2f1cf44c833885d090da0f59b7938ea28d"
+        }
+      ],
+      "desktop": [
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/SettingsScreen.kt",
+          "sha256": "c5a4aba0783f359f95b3cd4790fe90b1d99cf10a41b4d3e6cae37f472ce4039c"
+        }
+      ],
+      "business": [
+        {
+          "path": "shared/src/commonMain/kotlin/melox/remoteconfig/MeloXRemoteConfigClient.kt",
+          "sha256": "9bc51131ce41c8a2af6168c0b2da4c6d7f6de5c5d1941bdf809d5d31ac31b387"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/remoteconfig/MeloXRemoteConfigConsent.kt",
+          "sha256": "d118593044e64db5241a53dee5a34559982892a4ea2b76156d25ace9ab8fae36"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/remoteconfig/MeloXRemoteConfigDefaults.kt",
+          "sha256": "dea0f847dcc2e40e78abf0f718a70c0998ad9a7f4f8737eb0576e01e660129cc"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/remoteconfig/MeloXRemoteConfigModels.kt",
+          "sha256": "a41ccee7bb4339e12e045ab16549e6abd3bccdc6794949a178cd3a5eb337af25"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/remoteconfig/MeloXRemoteConfigPolicy.kt",
+          "sha256": "eaea63bc2c86e1ecddbf4b4cb88990b5e5aee0c67178b73a6dad7686d6be618c"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/remoteconfig/MeloXRemoteConfigRuntime.kt",
+          "sha256": "ce7bb2fa3be88de656297a8739cd842de974975a2d759cb3b3a4bd06da7575cf"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/remoteconfig/MeloXRemoteConfigStore.kt",
+          "sha256": "5fa98e21edcbb6db5c38cc81494d01945e2e825c2ba75341bd1a07ba42e1e1b0"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/remoteconfig/MeloXRemoteConfigVerifier.kt",
+          "sha256": "a97e016d26ac72b9c757fad846e1195cf8534b7052d259a05cbf0af4bd312e95"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/remoteconfig/MeloXRemoteNoticeStore.kt",
+          "sha256": "1273d218c237144a1fb5396640657306cddb770b61ede79557c3795c7a7119a3"
+        }
+      ]
+    },
+    "onboarding": {
+      "android": [
+        {
+          "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/MeloXOnboarding.kt",
+          "sha256": "e6ca86bf3e3500e161b287ead1844a0d48743b74a4ca8764b7e513436eede765"
+        }
+      ],
+      "mobile": [],
+      "desktop": [
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/desktop/MeloXDesktopOnboarding.kt",
+          "sha256": "e1b644c7c4c53293e89800c4e0869da41730e0474046e89f6215e19e509f930f"
+        }
+      ],
+      "business": [
+        {
+          "path": "shared/src/commonMain/kotlin/melox/legal/MeloXOnboardingSession.kt",
+          "sha256": "69fdf9b48ee832b71a18720e222f0639dba6e7e3ada0bb645da6eefc36917c31"
+        }
+      ]
+    },
+    "about-legal": {
+      "android": [
+        {
+          "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/legal/MeloXCloudControlConsentDialog.kt",
+          "sha256": "f66d60f50ae116f6572b22a9c3d5eb4b61fb69c05327368c1f4f7e3ce374393f"
+        },
+        {
+          "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/legal/MeloXLegalDocuments.kt",
+          "sha256": "ec7dc5b0adc1d70161ca6fa885516133e053410a9e9ca77e61d124379af7f427"
+        },
+        {
+          "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/legal/MeloXRemoteNoticeDialog.kt",
+          "sha256": "1598f314e55d94df0aaeedb5326f6ef14516ba22fcb1970e80104e0b63859c02"
+        }
+      ],
+      "mobile": [
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/PinnedAboutSettings.kt",
+          "sha256": "e7739696c6692ab1d0afefa1b10e0983d4a8fe92068845b8f04211632d2df6cd"
+        }
+      ],
+      "desktop": [
+        {
+          "path": "desktop/src/desktopMain/kotlin/melox/ui/desktop/MeloXDesktopAbout.kt",
+          "sha256": "d969c079bc634e2f76d4a0c9f480447530e43b9f24d24dd8e4316d57fbbe0638"
+        }
+      ],
+      "business": [
+        {
+          "path": "shared/src/commonMain/kotlin/melox/legal/MeloXOnboardingSession.kt",
+          "sha256": "69fdf9b48ee832b71a18720e222f0639dba6e7e3ada0bb645da6eefc36917c31"
+        }
+      ]
+    }
+  },
+  "all_android_ui_sources": [
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/MeloXApp.kt",
+      "sha256": "d440a376cf1a61fde6c66353e3adfbdb6ed817e66855092ebb6ea7f27528c6b7"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/MeloXChromeRuntime.kt",
+      "sha256": "9db4c2110fa9f1bb8fb15f8c5e7f6486772ddfbdef84e97e29589dfd085ced61"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/MeloXHaptics.kt",
+      "sha256": "06c120b0eb02da459929d3a6dea1a3ec4ef99f1cdf479e421c7e82c0846f1ee2"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/MeloXHotText.kt",
+      "sha256": "6c0c4ea17926e7312b21e2991738a8afe14c7d1568b6cd54cf80397bb18d0ce4"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/MeloXLayout.kt",
+      "sha256": "b39084d2bc5417dc31922276657352fa927a83aae4ed969c9d5ebc8e2e4e79e3"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/MeloXOnboarding.kt",
+      "sha256": "e6ca86bf3e3500e161b287ead1844a0d48743b74a4ca8764b7e513436eede765"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/MeloXPageTransitions.kt",
+      "sha256": "f0adffa73c08ac71e57120f9e0e1b81e8fe1bfead8c27f25c7d32fbc5a96bb66"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/MeloXPerformanceOverlay.kt",
+      "sha256": "ec92d4ec371dad96f70dd0df03eb4f38065c0dfed227b0f85a40ca56d1e071cc"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/MeloXPinkCat.kt",
+      "sha256": "b4ee62cd31351ecd0a709186db419140cdf6bd784d571eec94f1b2488c938e6a"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/account/AppleMusicLoginScreen.kt",
+      "sha256": "6b43196530e455af7a892b013f25827ee122e068a1d7e51bbe3ab93424eb79c4"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/account/BilibiliLoginScreen.kt",
+      "sha256": "9796f2e88a506bdc6cdb9cf9fadfb3d4f6a94f11c7246f81e0898b8c85b5a911"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/account/KugouLoginScreen.kt",
+      "sha256": "2fb7bfd94ddccda3aea7d327025f7b84443ce2884f5c2e97ebef74054485dc9d"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/account/KuwoLoginScreen.kt",
+      "sha256": "74cd285316686acbce476fb0d6decf1f0e736b266d9d0aac671b411676c97e45"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/account/MeloXAccountActivity.kt",
+      "sha256": "aa36bda39cc9a06338e9aee932baea7e701420325b1d713d3105ec0787a685db"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/account/MeloXNeteaseLoginActivity.kt",
+      "sha256": "085756345b116a75812c6a4b741333d01fe327760cc2681562cabbaea22d0198"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/account/MeloXPhoneCodeLoginScreen.kt",
+      "sha256": "925de757a42fae49c8e5875fbc44de1a0782b1b0d16943f45b0de088513459d9"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/account/NeteaseLoginScreen.kt",
+      "sha256": "1425f10774af6737f9644e59a25f56d5ff9d7ee0d218afda37df2bb43c6ac437"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/account/NeteaseQrBridge.kt",
+      "sha256": "21065acf9cdabbbe4fec28de894021a510a30f39909bec4af00189d478c4ca57"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/account/NeteaseQrLoginScreen.kt",
+      "sha256": "1d09c2197be47ae39e6994f12975a3fabc9642e5c67023e4e8c2fc3d3b47b5f3"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/account/QQMusicLoginScreen.kt",
+      "sha256": "394644ec265df115d972d142e1f5c73e480dd623cb60622c59201ac64026975b"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/account/QishuiLoginScreen.kt",
+      "sha256": "edd4dda39a683279de7c139e7f4cc8eeef8f64168b09d0e52b572039edf50b9d"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/account/SpotifyLoginScreen.kt",
+      "sha256": "c440b3d616a0d62f3ecc000c799160a3cfd2912efda1ebc6e34ee1dad9b06c6b"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/account/YouTubeLoginScreen.kt",
+      "sha256": "d0de9d86467630932eee8d1bb307b8e17f57fd27424303e924be27f427fe73e0"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/animation/MeloXMotion.kt",
+      "sha256": "9f9224cb55a4dc67e06bd2811801a437dee723a6cd2696f651427c22f8607533"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/animation/MeloXMotionClock.kt",
+      "sha256": "f412a864d8817bb84942f76db79c553bf38401e7422f6b293b6da5c3254d40b1"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/animation/MeloXSystemScale.kt",
+      "sha256": "d07c828997cacbac553606ecf244b4d8ee889439e2eaf81b5535a592542f7601"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/cloud/MeloXCloudMusicScreen.kt",
+      "sha256": "08bcfdf883954598bc3f89d4205cb23b96c32da05d92e2fdfcf9c6e1aff0976f"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/collection/MeloXArtistDetailScreen.kt",
+      "sha256": "195f42df367439007fb9d422b8f80c94117c1a2cac47408249b82d5ecb4633d8"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/collection/MeloXCollectionDetailActivity.kt",
+      "sha256": "6c63f23eda30f0c345e557b2ee27319bb333eca0e2228c328b83d6dfb4452bee"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/discovery/MeloXDiscoveryScreens.kt",
+      "sha256": "eef0e0562d981ec31004db689ed619021dbfba7d7fc2b8b95d6e2ec4d7bb5567"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/glass/BottomBarToneSampler.kt",
+      "sha256": "ec9dab56dcbd4103e7f0f47e4afccc9b2e71b5e98eae517b1b62ca1ad10e5217"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/glass/MeloXAdvancedGlassComponents.kt",
+      "sha256": "1d5a0e068c00ae07d24f0b7fc7ebab53b4a86d6a2fa7e02fa6f27ca3051c94fd"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/glass/MeloXBackdropComponents.kt",
+      "sha256": "368bfb6743e8df030371f229ac7b1e0cb6436c510190125a72c5930aac458a29"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/glass/MeloXGlassSafety.kt",
+      "sha256": "6bdadf114ff86cd8ded7a51f7fe678136f85a178635c945946cbf24166c3e956"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/glass/MeloXGlassSheet.kt",
+      "sha256": "c992dad6c3856555871da44e67e8025a71c22c0095c5686a2a22122cf1bffbc2"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/glass/MeloXGlassTokens.kt",
+      "sha256": "57402f3bf8cf15f287dad5e42678da19468882205b3d73345a6711657ff43efc"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/glass/MeloXIosComponents.kt",
+      "sha256": "55a24b79b5efdb2195054e530bc3ad1f41f7cfd6025463c5529188c10171c7db"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/glass/MeloXLiquidSlider.kt",
+      "sha256": "045101bdf0216cd694060e9a5b4af0846544686bfd0d0fe681f849c8b9a74b17"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/glass/MeloXNativeGlassComponents.kt",
+      "sha256": "fdda0430a815bed3a9666149a8ff1ace1151af08c92659b00cf32f02ee352998"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/glass/MeloXPinnedListPage.kt",
+      "sha256": "83365697247ecc18aa0b717f318e6385dab971d2830a2b532f7219ba7ae29e22"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/glass/MeloXSettingsDropdown.kt",
+      "sha256": "9b3c148b97b824fa06048a5cb4ac54d83e939adb6a0530179a40196b4778db37"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/glass/MeloXSwipeActionRow.kt",
+      "sha256": "782f8bef31a54be83550410506adf84706f61edb678257d734258f105cd3c6a5"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/glass/MeloXSymbol.kt",
+      "sha256": "c454d8d04a38fc13d894c098197a822c115fa3ab6aceb69cc9930203d6b9fca7"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/glass/MeloXTransformedBackdrop.kt",
+      "sha256": "78bea6ba1507698afb67a8ee6ec2d30c62918b11a0c1da899312d9e3830c9465"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/glass/liquidsliderdemo/DampedDragAnimation.kt",
+      "sha256": "29e4c43e4a6b079e8b8afb10c95bd1efcc3d108760bf2f966bb89d6e5611373b"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/glass/liquidsliderdemo/DragGestureInspector.kt",
+      "sha256": "c896fcb285955de148db683920a557a397f39148f7b42c9c144a47b1134309a6"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/glass/liquidsliderdemo/LiquidSlider.kt",
+      "sha256": "f504850804f21b190a579685b85ed2d7af4c23683ff9c06c62c72a5651312453"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/glass/publicdemo/DragGestureInspector.kt",
+      "sha256": "a5e6821bcfbe80a4e47f51b9335532b59056ee551db6a00ae1d55cc5f92a0aee"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/glass/publicdemo/LiquidDragAnimation.kt",
+      "sha256": "b014ad6a60a5a92b534b02bb99c827346b9ad1d67801bb4649d40efaa20f5782"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/glass/publicdemo/PublicDampedDragAnimation.kt",
+      "sha256": "139be0a04bdc0a211a55f993ca34285648bb2f6f30d8224938959fc26125ee7d"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/glass/publicdemo/PublicInteractiveHighlight.kt",
+      "sha256": "49448967695568b524f039cb9dfacf466fc42b8e7e59f1f6f9fa6fa1e8161491"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/layout/MeloXAdaptiveLayout.kt",
+      "sha256": "af63108c4fb8e041d3fa7fed84b998e573a2d8ef3953f6b35144b13a4bb10051"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/layout/MeloXListDetailLayout.kt",
+      "sha256": "74801fa55ecd27b1de775368bc02111b4e0e04e6063a12d8d1be81add14840ca"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/layout/MeloXPositionedChrome.kt",
+      "sha256": "8eb2140fbb030c8a1bc4f69dde6996668d40c1349653a53c7a21d7564540ecf2"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/layout/MeloXWindowInsets.kt",
+      "sha256": "ef83b6776fd811e88eea8bbe9df6b222349d09bcf62d5597040e523b1dd5d1fb"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/legal/MeloXCloudControlConsentDialog.kt",
+      "sha256": "f66d60f50ae116f6572b22a9c3d5eb4b61fb69c05327368c1f4f7e3ce374393f"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/legal/MeloXLegalDocuments.kt",
+      "sha256": "ec7dc5b0adc1d70161ca6fa885516133e053410a9e9ca77e61d124379af7f427"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/legal/MeloXRemoteNoticeDialog.kt",
+      "sha256": "1598f314e55d94df0aaeedb5326f6ef14516ba22fcb1970e80104e0b63859c02"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/library/LibraryScreen.kt",
+      "sha256": "957559a94164a3ffc56a0512d1c7dba4bbc7e4d8a7965ef622b68632d06721cf"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/library/MeloXBatchDownloadSheet.kt",
+      "sha256": "31a2dbf8157bfd07e3f1da7987ddbaa48d74c068dbc4279ded64a80c0116da15"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/library/MeloXDetailPalette.kt",
+      "sha256": "39ba84ab538b62a54ae2ebb89e377ff10f0cdef6977ee4550e5865e5a567f4f7"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/library/MeloXPlaylistActionsOverlay.kt",
+      "sha256": "62ecbb464020ceca133ceb2d3772deb2b9aaea93fba4d14f83f8ec576564c66a"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/messages/MessagesScreen.kt",
+      "sha256": "525dee1f47b32bb2d5131a05968a3770bc25b04f48290ba44886ea1960723b3d"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/ArtworkDynamicPalette.kt",
+      "sha256": "0d024e76d29327e9d01acda00356e0aef977341ca38e45e088ba18588d76747a"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/BilibiliLyricOffset.kt",
+      "sha256": "634ea04276a4ff9d0ef5f808e4c2adee99519e6629af7b283c5bd0c650310d39"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXAlternativeLyricsPanels.kt",
+      "sha256": "b4eee57ff0e324508d19813992b35422c8cff0bfe42c7cc4edae64550cd22e01"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXAudioOutputDialog.kt",
+      "sha256": "ee21f45ec97af3f3c6512ce0fb47c4e07925af2867704f5a57f1798e4c5e7034"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXAudioOutputPlaybackPanel.kt",
+      "sha256": "410d467f2bcf6d1c99b58cc81615460a4d0998e3d4a6ec5cbc62548a6e5b0477"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXClassicNowPlayingScene.kt",
+      "sha256": "53652dcd5ddeb54542ba0f39828da9c4795998f3ed712179624c8b70c56f6711"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXCustomBackground.kt",
+      "sha256": "2bde291b6d5acef9f9e29b22116727661cf1f6da3c1b47395b37118f5acec3ad"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXDisplayCorner.kt",
+      "sha256": "c9a1c3199440299334e1269fec436f63506da822df6bfecc845e51aef600510f"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXEvaLyrics.kt",
+      "sha256": "8b2e7f2d86a9009fcfaf0f212eed8353a6d8e472c67adbbee5a85724694f27e7"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXFloatingLyricsPip.kt",
+      "sha256": "220c0e6a7704089dab0c76fe20365610e2cb621f73296f0bd6f1560a8921496b"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXFlowingLightBackdrop.kt",
+      "sha256": "1b705b04c99afddb7e79aa4e5e29e7e666e882dcc9610055a44cb6c93c215b44"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXIOSLyricsPanel.kt",
+      "sha256": "7a00f38b4c9f6961903bc4dbb3b7227f6b988f13238b161ec541f01aaf612dec"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXIOSMiniPlayer.kt",
+      "sha256": "803f21ca5ae1c08984400b68d70fd61ea86801e72240c7af3fc26043cd478634"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXIOSNowPlayingScene.kt",
+      "sha256": "f48f185a9bac50feec4ba80b49fe7f2510c373c1995c7079f7835a63d030c77e"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXIOSNowPlayingSharedHost.kt",
+      "sha256": "b0ae382caa613711b39e5525595de2ac79c60b969a05bbf0a632468cee0f896b"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXIOSNowPlayingV2.kt",
+      "sha256": "068ee8f122097975019abb3bc126ebf67f63f72cbcf4a876e8f3e3b60357e18a"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXImmersivePlaybackEffect.kt",
+      "sha256": "dcef0330bf9b6629790571cb701dfd1b90203abfc59cee39c229e2896f12e8ff"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXLanDialog.kt",
+      "sha256": "b8ae8081cf184ef752ffdada0ceae64e55976177064785902cc4e55fc0ef3cea"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXLanOutputPanel.kt",
+      "sha256": "27e7cef62808a89e1331d6223dc3344cfb395533a428881b71de9f4642a1b393"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXListenTogetherInviteActivity.kt",
+      "sha256": "0560acb0fe00af3782616ee5f4cf9949c46dbda4e72900de86d54c3feedc8b8c"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXLyricShareDialog.kt",
+      "sha256": "0b594229ac8d7db676f51a7c6dab7d470b9fe7d837e964986366535b1bab3a48"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXLyricShareImage.kt",
+      "sha256": "ff1fab8ac0e9be8e41fcd7399adab9d96616963d632cbf72e6ce0121381501ee"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXLyricsPanel.kt",
+      "sha256": "32987f8a09ec0814711e4c7a943d758eb927c34996b6a30a083d800e9c0b8bc0"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXNowPlayingActionsSheet.kt",
+      "sha256": "0b1b2e0210795f1b66f4797421db518882fc801e8d3b072a9d7f022fe8804b06"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXNowPlayingCoreControls.kt",
+      "sha256": "e3e6ad92b238fb1e109f4079efc8eeee19b27fb2498bbec82c952ab36235d54b"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXPlaybackTitleMenu.kt",
+      "sha256": "9e1f8be1e849453fa2fc14534f113c119b4a663023d4b1cc788117bd58f758c4"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXPlayerInsets.kt",
+      "sha256": "ac144602849c232704d587ce6479d7bdd4d565a318330c907bdd77496b77c085"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXPlayerTransitionKeys.kt",
+      "sha256": "6b045f2587372a9a43c36318301c61a70a3bbdfebba269c698d72c6db8bba132"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXPlayerTransitionSpec.kt",
+      "sha256": "3f565cf3badad893acd15788a6548cc2d3f33d3664b2aa5e07ac77d33d9b566c"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXPlayerUi.kt",
+      "sha256": "168616450e658d8193c86a25ea84109f49d9a0468a3fd702b4b68a678d851244"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXProviderLyricsLoader.kt",
+      "sha256": "7e63b721dc4476c0c041c45aff197d865ae4dd910814b5292fa87c8a899e58aa"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXProviderSongActionsOverlay.kt",
+      "sha256": "7a8eb1e52cf165ce8aa83c5d0c216afd99c198ba35822068d07f53293414df4e"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXQualitySelectionOverlay.kt",
+      "sha256": "763975da7df39ac55ded088765169a4e557ad0b38b4e8b52fe878a986c121b4d"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXQueuePanel.kt",
+      "sha256": "35c42099f8fecbc2a7dd9740979477106ba8021f476418ba512fa128446cb903"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXSharedTransitions.kt",
+      "sha256": "1130154ccdc0ab825d4b6f2e0b5d30ee36267e47c1193875b556c8c2605777ef"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXSkylineLyrics.kt",
+      "sha256": "9efe756c143544de5dec3d3df0d69088dba81b74eed70f1854dc4e6fc8933537"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXSmoothCorner.kt",
+      "sha256": "ddfa41a2949d8b77aa434853ff6cad6b7a057c4c07f9802b2bd00e0ef3edccd2"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXSongActionsOverlay.kt",
+      "sha256": "f9dcbefb05c20625c2a552dde21fd67888929805f9092377114586ce04d19556"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXTextPVLyrics.kt",
+      "sha256": "8a44759c68529eaca869793fae8965e70844afe6b8c77755198b836fc2202624"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXTextPVTemplates.kt",
+      "sha256": "b8403691e13e3097f9f0fccdc0ecdd68389ea1be733953d5fd7c39ef14bd0021"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/UsbAudioOutputRows.kt",
+      "sha256": "1e21f59d5c08ae352d241f354f61f3afc310d7d29ef74a5a7fc62be42651c2b4"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/podcast/MeloXPodcastScreens.kt",
+      "sha256": "637b880c8dada08957f35bca3a28a1d607b76f13be06f4d8b49bf00cf85c3240"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/provider/MeloXProviderServicesActivity.kt",
+      "sha256": "4857d2a91850551cc0377b3eda65806467fc169e0b1301e1e0ec80645c887f99"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/provider/ProviderCatalogSearchScreen.kt",
+      "sha256": "03b280c5d83b40fe3d9a57cd4a0fe04e480163ccda6b1fd6751537ee88d52e51"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/provider/ProviderDiscoveryScreens.kt",
+      "sha256": "257d11d1021d87c4dbc0a8d05812215338eaadcd2daf971aa77272c59200d753"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/provider/ProviderServicesScreen.kt",
+      "sha256": "d1b2aa2183c0bf89aa52fe830bf52cae4247d26dcc1438029ba7e95b712fa72e"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/provider/ProviderSettingsHub.kt",
+      "sha256": "f8a7d222545c254b9ff35b73b2329e8cab518a362b491e5eeeb78891a683d779"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/provider/ProviderUiComponents.kt",
+      "sha256": "bda98d49396c1cbc89cebd6c3c06705237cd38821fa54c2ca027d6eaeef7d2b1"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/provider/YouTubeAccountControls.kt",
+      "sha256": "57f604ac11b8225688d5d03bb85098c8be7301c53664d79bd985f555deefef0f"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/recognition/MeloXRecognitionOverlay.kt",
+      "sha256": "37474147f9b11ffdacf49740222de4b556db9eb3ede5026a3fe59ec5a54eef5f"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/search/SearchScreen.kt",
+      "sha256": "e391d4a8733e79a664abdd60478f437656dfdd10ad0768e41a55ee34f4a2a00a"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/settings/AutoSyncModelPanel.kt",
+      "sha256": "cdc650f0481abf9cb5d1926caa7409dba95d0270ddd02c7fad58da417f39935c"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/settings/KugouLiteVipSettings.kt",
+      "sha256": "dcbccd2517795f3c3d112d4972812b7e0239d1b9f7b3fd0d6110dfa4451fd75f"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/settings/MeloXCustomBackgroundStore.kt",
+      "sha256": "1cf83d899f8ddb8d5cbf540d53ff68a2dc11e846be1efda83e910cc25db6747c"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/settings/MeloXReleaseNotes.kt",
+      "sha256": "6a4e94866eb3a28c9067068532701c62ddd58150af7de4a32f846a64d171f769"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/settings/MeloXSettingsDetailActivity.kt",
+      "sha256": "4e2fcf367d066b5c31149b5aaf653d51d59b21ae9e1faceaaee8be2e3309174e"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/settings/MeloXSettingsPreferences.kt",
+      "sha256": "5dcaeb5c2f123c8f8689f2dd70f765ebc1d1ce24ae585c09faf2f7ddd766f215"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/settings/MeloXSplitChromePosition.kt",
+      "sha256": "e20393c1f967e8fdea1586341dc4d64a7b509501fc4291b1e674ea42304a69bd"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/settings/SettingsScreen.kt",
+      "sha256": "e49ee0a3546b0bba382b6ab7caff09cbe95c822596dc26d14c8ed3c5a010be7e"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/sharing/MeloXNeteaseResourceShareActivity.kt",
+      "sha256": "f6d10304cbb0ed1c465a985875460e7daca08d3fc685cd9416cae658a00512ac"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/song/MeloXSongDetailActivity.kt",
+      "sha256": "ad49fae51f2ec40a15b8f35e5dc42a61d2affdfed30a969d508564dcb66d551e"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/song/MeloXSongWikiActivity.kt",
+      "sha256": "2be34f7c970eaf475f936fffef8cf03e951876d32d9743385468453400e74004"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/theme/MeloXHotColors.kt",
+      "sha256": "bbd2da76f1d0c6d79c6a6b398ea7d2ac9d22501ae3954e33bdc5198294da3ef0"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/theme/MeloXMiSansFont.kt",
+      "sha256": "8f1a4c5cdbb8fd4a7d9a916b9d6e3958eec53d0dc63a06917a72302b68a803d4"
+    },
+    {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/theme/MeloXTheme.kt",
+      "sha256": "ac03a5aa423208e1ba3249e14b829642e8df0d4811722c923b231cfc0be496c9"
+    }
+  ],
+  "all_windows_ui_sources": [
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/MeloXApp.kt",
+      "sha256": "083ac65913c6eb3d166ec64c5e5210e9aa58b820e371c710ce481de7bcae9061"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/MeloXClipboardDialogs.kt",
+      "sha256": "5ecff4df98eb2edebfde81a53ed4edb0f17da11c6cf27f4ead0ef009307942cf"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/artwork/MeloXArtworkDecoder.kt",
+      "sha256": "ae8950d068d75d12253363be955da1ec325077209f207cd7d507f2a16e6c7f44"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/artwork/MeloXArtworkMemoryCache.kt",
+      "sha256": "964c7750f45d3b5380825a4d2381d0f6f949c346a4f1493614e142ffd672fbaf"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/desktop/MeloXDesktopAbout.kt",
+      "sha256": "d969c079bc634e2f76d4a0c9f480447530e43b9f24d24dd8e4316d57fbbe0638"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/desktop/MeloXDesktopAccountSheet.kt",
+      "sha256": "da1ab2fb5e2b5b983c5129bbc315fa797e4422bcc57310569b513c8cad861aff"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/desktop/MeloXDesktopArtistDetail.kt",
+      "sha256": "cd8ce128e7eb117a6f4a98e52ae3d5f63f04c208274231adc5e921c9010e431a"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/desktop/MeloXDesktopCollection.kt",
+      "sha256": "83c8177f7a93cf186a93718ae60e7bec58b1a4d02c3ab2e3fc90b7c7fd5d61c8"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/desktop/MeloXDesktopDragScroll.kt",
+      "sha256": "7bedbf769ee82e182e23dc194bf8c54245d000ee6572432535856d202890f101"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/desktop/MeloXDesktopExplore.kt",
+      "sha256": "f6cccf1e46a88edcee9b3c5bc4155cbb737f7d276db466524419bb167f46e9ac"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/desktop/MeloXDesktopHome.kt",
+      "sha256": "04f117b5cfea6a424e50423c20b63a50d5d59e1c592d7dd97ae2514731a9d4cc"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/desktop/MeloXDesktopHomeShelf.kt",
+      "sha256": "cde498fd5756e386867f723a275abd957fa0600b0ee01c53c81f1aacd23d4903"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/desktop/MeloXDesktopLibrary.kt",
+      "sha256": "ca5df0dfbe6364759c6675af1495af64db6c3b251cceb3eb66fbf13865368dac"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/desktop/MeloXDesktopLibraryPages.kt",
+      "sha256": "0cc0ca3542cd3b2f15e7b615a9288c4175e6a244f0d75deb647b92b28dd5fcbd"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/desktop/MeloXDesktopLiquidPanel.kt",
+      "sha256": "ed97e730804258577580d8be2aa50d243207c3de758c29ae6d22f30120b8c5ad"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/desktop/MeloXDesktopLogin.kt",
+      "sha256": "e10a191bbd6ff6a40a43a58939ae457087a0f03780654347cd09317febeb3b16"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/desktop/MeloXDesktopLyrics.kt",
+      "sha256": "a176afc2cd4e76da2bd9763ba9b3e83b2b62d81ee1a1afae4c192167cb9190e8"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/desktop/MeloXDesktopMessages.kt",
+      "sha256": "96cf2296941d5267ef92d3d305267997b555b1659ca481d682a02db130171be4"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/desktop/MeloXDesktopNowPlaying.kt",
+      "sha256": "ca93ae4f429fac00de6b6e2377d0881335b6ddf2bcab71f1366acffdf2ce3704"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/desktop/MeloXDesktopOnboarding.kt",
+      "sha256": "e1b644c7c4c53293e89800c4e0869da41730e0474046e89f6215e19e509f930f"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/desktop/MeloXDesktopPlayerFavorite.kt",
+      "sha256": "e6d8818cd0c3deb84ba79db8a2f08004fe5b14e404e79df7e9b234447325a611"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/desktop/MeloXDesktopPlayerProgress.kt",
+      "sha256": "8b6e5bb602cadcf4731ca5b56d91ee4accd3a8a92591abeafeac9a36d3b3dcc5"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/desktop/MeloXDesktopPlayerVolume.kt",
+      "sha256": "806ee44c8916b3ea246e1ff5c8339f92acb14dee49a0809e154d43d6b55934f3"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/desktop/MeloXDesktopPodcasts.kt",
+      "sha256": "98c2f1694391b5b68273a799017fb769342855852e87de8334325ceadc1d0027"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/desktop/MeloXDesktopProviderCollection.kt",
+      "sha256": "097dc34dd91eb392705c24923cab68ed39a61f617dd4efce8031797813cf2e34"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/desktop/MeloXDesktopProviderHome.kt",
+      "sha256": "171cb500fd62ef185c8824937f6ff4b6a773a0c83fa49a5e57119a735a221d91"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/desktop/MeloXDesktopProviderServices.kt",
+      "sha256": "eab3e67e6f1666c296ffdad52ae58211ba0da4e80cfad10ca0434fee0275ce20"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/desktop/MeloXDesktopSearch.kt",
+      "sha256": "bfecd6292fc38f09475f3817d2e0041f26b2f28a676a064b681774be17856f6e"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/desktop/MeloXDesktopSettingsControls.kt",
+      "sha256": "1881f799d84ebd5b0e802cbf1f0eb0080b30842240b8ac1cc8a91ea4d7dec0d2"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/desktop/MeloXDesktopShell.kt",
+      "sha256": "ad6296a1a35f5ab8e2a26293a6145942539e79f5a0906e68a71c10170626b006"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/desktop/MeloXDesktopSongDetail.kt",
+      "sha256": "971a2df6eba936715bd4aac1ab7e4c759460af998859fe06a622ded7b17800de"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/desktop/MeloXDesktopSongMenu.kt",
+      "sha256": "cf79905768c220630669cf5a22f7412c1f3919ba9b22e1b348fe582d6c8ce2a7"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/desktop/MeloXDesktopStrings.kt",
+      "sha256": "4ec1189bbe10faa4e90c57c17f96260a591574b4d1eb1a07de29612abd48ea9a"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/desktop/MeloXDesktopTools.kt",
+      "sha256": "aeee6a87de3d36f3f6f79006521bd0e67f11ea44e5ab09463172e0b72957fe89"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/desktop/MeloXLanDialog.kt",
+      "sha256": "9f63c4c2bbf78d6261b79ac54467fabf694c992b06fd3e571a4072132f864cd2"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/desktop/MeloXWindowFrame.kt",
+      "sha256": "84e8910fbfa3d9075d036651e399b86781d3692a7e88e165cf7391eb9070848d"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/foundation/MeloXChromeTokens.kt",
+      "sha256": "288792ebf64eaa15ee1887e15b320d7f50fd4239902e099f4ff75b9f0f782610"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/foundation/MeloXComponents.kt",
+      "sha256": "042508c5dad90cb16d3ff1481e91bc3f6a029e7c212536b907a40cd60a01dfc2"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/foundation/MeloXDialog.kt",
+      "sha256": "add7b5f030c14e268fbc201099f005e2516c3bc1674015823a2802fa67aa0640"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/foundation/MeloXGlass.kt",
+      "sha256": "a48d6ec365c9f5a974f82a9372a2245378f982e96fae4453933d6e12bab14025"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/foundation/MeloXMotion.kt",
+      "sha256": "685ee43f77d06d33f65b36b95c9529f62e1ed64ef2c0aa04b632ed28dceeab87"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/foundation/MeloXSheet.kt",
+      "sha256": "57a265c4a90367c473caad73a347cab743b5bd19d3aa47dc5eb0befa063332b8"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/foundation/MeloXSymbol.kt",
+      "sha256": "bb35d28a32d16d90aa2a4efcd63a69915b244580f471aceb669264cc3b52c9be"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/glass/MeloXAdvancedGlassComponents.kt",
+      "sha256": "f648f595192bfdc91351ca10c8c52c35a64c3a1d54040dda96f7809958619c04"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/glass/MeloXBackdropComponents.kt",
+      "sha256": "43929de5662e25691e5b0ab29f47e7448bc372ca906fc3de816d2011168afc78"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/glass/MeloXBottomGlassTone.kt",
+      "sha256": "1fa5e6a77fcad15d0cc706784c83872d88ad409e4b8b066a5e95d0985930a660"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/glass/MeloXGlassDecoration.kt",
+      "sha256": "08d6fc366df0f81ef19c44a324e659432f23cca3f45c2070e5bea4ef8f4d6d4d"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/glass/MeloXGlassGeometry.kt",
+      "sha256": "bd1c010609f0b7e71d615da817ec55bd250ed62c10ee50af518548b22e8d9abc"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/glass/MeloXGlassOptics.kt",
+      "sha256": "0afb4b432be44f2ee45075277b33f145b4feab65625afc280bba00c756fecf8e"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/glass/MeloXGlassSheet.kt",
+      "sha256": "452f61a308312e815dd107fa1c9f213ba083e7c2e3f367a2306028cf0b9d1985"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/glass/MeloXGlassTokens.kt",
+      "sha256": "e96ad075a50e5581806c633bca6b766992aa61181cb7ab418906f7403bb65543"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/glass/MeloXLayerBackdrop.kt",
+      "sha256": "7f29f4cb5ecc0714813c799aa43b4da4ec2c24074ae87e81b69921db60463ade"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/glass/MeloXLiquidSlider.kt",
+      "sha256": "a36d93ca61895bfca4934c08632f01cd5bb4a35ccc45af79ecd056417f9a852b"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/glass/MeloXNativeGlassComponents.kt",
+      "sha256": "76074be8f7305aefbca813694aff0b2e429e550849d96eebc65e3058c4ff007b"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/glass/MeloXPinnedListPage.kt",
+      "sha256": "00085d153e1301108094ddb08c5d2a617a6d2b2a92ee24ce3fc534298eca0284"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/glass/MeloXSettingsDropdown.kt",
+      "sha256": "3d20b28fcb9f4167898a8d58be353af676560a569c06bd0fac14d95683d2336b"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/glass/MeloXTopFadeBackdrop.kt",
+      "sha256": "f024a914c25a7623dd333b663954d7427b0f15c3ce51f5894bfbba41008d9906"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/glass/publicdemo/PublicDampedDragAnimation.kt",
+      "sha256": "fdb27d834c861963ff18a90e1920b6fe733b688af03c8ec3bf521728758ee013"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/glass/publicdemo/PublicInteractiveHighlight.kt",
+      "sha256": "f58864ca64563fed4709a58ce060164e7dab8a972648305448f4afa99c336054"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/input/MeloXTouchKeyboard.kt",
+      "sha256": "94494e30128574ba25de7f6bbf773ad07d1d36ca5f35846ec7e0bad80c78da9e"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/input/MeloXTouchTextFields.kt",
+      "sha256": "a5e12c704f8676598d16a2a6b5e34d327592d503645f5106133bfba4ea082256"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/layout/MeloXAdaptiveLayout.kt",
+      "sha256": "26a13bc38fe48bcae6e079cc91a868b2b412300bc687bee27db1049d84f62aae"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/layout/MeloXListDetailLayout.kt",
+      "sha256": "d72ed774baa5f459212839f5d4441ce02ca90567949086c780bb82665821158d"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/layout/MeloXPositionedChrome.kt",
+      "sha256": "2d028ab3f48c03511ad9781c677ad620922a3524ed8879602d03d06a49a94a11"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/legal/MeloXLegalDocuments.kt",
+      "sha256": "e0582acd4d23abdff2142c5f9a62e009f7642bb337ce5d7f5d3ffed8cdf7cf8d"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/navigation/AppRoute.kt",
+      "sha256": "2fcac3a0583c7455ef047c1dcd76207a426afa7a98b0f2725bb4a0a2da112d58"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/navigation/MeloXBackHandler.kt",
+      "sha256": "6ab110eb97bb52fd4ee0038f3d79e12939c5f9381e210cc9b18f2f4d4b664844"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/navigation/MeloXBottomChrome.kt",
+      "sha256": "0b84d1298d7f2c45e33492868a2067726d2d6626efc1dc0b648981fb2c150721"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/navigation/MeloXCollectionLaunchBus.kt",
+      "sha256": "ebd732caa0245d330eca4dd7c1163354d8f7a1886a98eb39b0820921dfc94ede"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/navigation/MeloXDetailMotion.kt",
+      "sha256": "69d30e0857aa01e38ff305ee799298b4f93187294955ef10c346e9e2bff533cb"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/navigation/MeloXLoginRequestBus.kt",
+      "sha256": "91cd460969492352b3da1c3f236e5b0c7b9441177b78e0201fe5bf81b0aa859d"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/navigation/MeloXNavState.kt",
+      "sha256": "74f3028a013db51e0b53d2f24b9ffd75016a7d6bcad9aa294985d4f8ed459461"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/navigation/MeloXPageMotion.kt",
+      "sha256": "0dbbb06876b322196854d3ded26dd5de5919d7ac3c45de3768686653d6eac2ff"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/navigation/MeloXPlayerTransitionInput.kt",
+      "sha256": "eff44f8fb4328e17fafde6a54d2d607f949dfbf39bab625b2139c4655b49f599"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/navigation/MeloXSearchLaunchBus.kt",
+      "sha256": "ebc4d617f4f668dd7e876c5b0f00379045ced756d9143bedfef0239daf5fa88c"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/navigation/MeloXSongLinks.kt",
+      "sha256": "8f80a3587a052273bb7762422fa046bd90f09cba7279cb892ea2429003ed1008"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/player/MeloXDisplayAwake.kt",
+      "sha256": "de01c1449ed3399e7704e112cf0c17853f147f64a29a410d50e7f7c8c7e59cdd"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/player/MeloXFlowingLightBackdrop.kt",
+      "sha256": "f22ca1262979f650a92b696481610978b4e70ab74f7c0366de6fc634a01b095a"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/player/MeloXImmersivePlayback.kt",
+      "sha256": "e0bc5a59b1de14a537bef44fd0761211b3d157a66845f2f622c56267c4622e63"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/AccountProfileScreen.kt",
+      "sha256": "75b00df8dc04f85333cd54a542ad505f42c58c1b0d2334f75b08aee160a3b89d"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/AdvancedLyricsSettings.kt",
+      "sha256": "606f60e016930e2808fd18a1bd9f32dfb8bdf64ee13f66663f7437a309d4ae53"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/AlbumDetailScreen.kt",
+      "sha256": "47b65ad22b6db09e3bab24058f6eb94e705919caf1dcc54582375b3653bd24c4"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/AlternativeLyricsSettings.kt",
+      "sha256": "cb23d5ebe22eee9912c60624743854d393bec5ae8be62054c1d495bae0f3a5f6"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/ArtistDetailScreen.kt",
+      "sha256": "1a70274fc33036603a3390f501fe52805945d66c5b312d5d34b3a1566c17d125"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/BilibiliLyricOffset.kt",
+      "sha256": "1ce468a41d7446cac9574822cf2e14915f75a679c306c134eb8332392ad2cc8e"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/CloudScreen.kt",
+      "sha256": "171cdb8d21947dfca80ac0d1b8a98b83ea38f6219fdcbe1c2b500d0f07302fee"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/CrossProviderFallbackSetting.kt",
+      "sha256": "edcec3e3af02009001bdd236382b5a1084dbf809c0e7521633a31e7b93910116"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/CustomBackgroundSettings.kt",
+      "sha256": "5c67cc2cf25e053610adc5f499029b6b1d03885d60a9a0e6e50741eb067f30df"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/DownloadsScreen.kt",
+      "sha256": "8e90cc51f44e5c105a50a2bc5460d2089daf45dd1fb4d0edc9d68c7ce9761661"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/EqualizerSettings.kt",
+      "sha256": "27a468eb53caa0d138e9987f2bb8df4edea64ae37717263c01bf63b20b530768"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/ExploreScreen.kt",
+      "sha256": "dece64b075b78334c954db3a6f6a2104c9ee1f50c629e68476f839550ba3ac80"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/HomeScreen.kt",
+      "sha256": "a12cd649ebbb3cc7e7a8f9a426e39aaa67eb049e8bca20ab502d4d4320fd2029"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/LegalSettings.kt",
+      "sha256": "39e2640c10d914b30361e1c9b075589f46a433e11de67023d4ffae71b96ffe68"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/LoginScreen.kt",
+      "sha256": "94b6edbabf6328b93df77da4fca7662cb0e57be1adbcaf3bab5478952cc6f722"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXAlternativeLyricsPanels.kt",
+      "sha256": "7acd2fa80675672f28ba6d3d714866c73d76e21598552c851004bdced82ecbe1"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXArtwork.kt",
+      "sha256": "13d807611a0686fed4dc20928ead212ad92d82ed15f421efdfca266cd0eedaf5"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXAutoMixArtwork.kt",
+      "sha256": "a0b576c63b8cea0111ff7108e9845fed8e340ac845e168c4b891c81119791110"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXDetailPalette.kt",
+      "sha256": "8183f631119786090b84738cd546bf684cd6ccb4fc00d523d6c7622f90bd8a38"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXGlyphLyricText.kt",
+      "sha256": "5d5311d4ac841496824c880374e60a468bc02305bf978edc1f4ed6dcdf330b75"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXIOSLandscapePlayerScene.kt",
+      "sha256": "c478f5ab1d5d3be83601361bb2b6e4b5332caa028c3d75d3f23c91966f771352"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXIOSPlayerScene.kt",
+      "sha256": "231dc9e107af0b634fab16ebd7dcdab9899dd10afe0efa4fd9ea1295196dc036"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXLanOutputPanel.kt",
+      "sha256": "3f116c0a6f8b4bfa5fc3bd036af07bcc1287ddbe3bd317ab8da118b12ad6b8ca"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXLibraryDownloads.kt",
+      "sha256": "24ff5b0b0a0bde6ccd4b8393ecfc426eb5dda29713f1fa683ba0f8b74ce7bf31"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXLibraryGlyphs.kt",
+      "sha256": "ddf6c21071e863ab5958c20779bebb8f3715af233af793f6093b31c2e6a568f1"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXLibraryPlaylistDetail.kt",
+      "sha256": "c92cfc1d7e3a4fd5ed3cc51458d642dce0b43f749619091033647c07477167e0"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXLibraryScreen.kt",
+      "sha256": "908a50013a9c6511e7b0a6889bf834572f0ef764989ecbcff2d292ba3576334e"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXLyricCascade.kt",
+      "sha256": "c93e446cd25a5b3073e884cd1c5f890b22066ff53063a540157919337bc886ca"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXLyricSurface.kt",
+      "sha256": "73b9a9e13b8cdb912ff89e28931d4b9b20d02b080cb5dbd2731bda7c55aeb8a9"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXMiniPlayer.kt",
+      "sha256": "d28249f96045ca00a7452c682661d4e75005bb1c4a611b79a90e2b69d0937914"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXNowPlaying.kt",
+      "sha256": "d28145950d6a15a94c85f211418c3c6a239d980d8c7f8cadaa22560287bd27c4"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerLyrics.kt",
+      "sha256": "d589e9af697d41249bba6ca7f1d05bad705d83d11f71066bcf9a219e7225e085"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerQuality.kt",
+      "sha256": "f6f76ea479d4380c8edc0eef4a8daec54538b1c236eb38148c1439722eee94f3"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerTransition.kt",
+      "sha256": "b6defb23b742ca69939b9a10271a6ec482915c8b617ce57b7320696029dba622"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlaylistSharing.kt",
+      "sha256": "372a5ce68fc2a451fa3e329db6b3aca4ebe84a5b0db642d504442c22b6dca804"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXProviderLibraryScreen.kt",
+      "sha256": "016d996a96473bb6dd0b0bb6a0acb398cb9bf43374575247cb7fc9b37d99ab82"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXProviderSongList.kt",
+      "sha256": "5ecb06d69362937fe99d865d149b9c54751c1dded0369cc28e28df13cf18cd7c"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXQueuePanel.kt",
+      "sha256": "d282536ca1fb80c030757ed38240fc8ad5253d8f226e1a3cd4c205a93ce80c77"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXSongActionsOverlay.kt",
+      "sha256": "b5e0da49b586124b9193fb1ca53b5a7a6584d24b9c6e429e4e7c65e95445149f"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXSwipeActionRow.kt",
+      "sha256": "0cd8611353cd6ec78b9ba199f0aadb38b8c875ab99fd0ef30b38a05127a5151f"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/MessagesScreen.kt",
+      "sha256": "2af8818a8e2a783bbc232eb7839f2e632b0e5669d65d892c3c87d3db41b93ef1"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/PinnedAboutSettings.kt",
+      "sha256": "e7739696c6692ab1d0afefa1b10e0983d4a8fe92068845b8f04211632d2df6cd"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/PinnedPlaybackSettings.kt",
+      "sha256": "686be503480330141c9adb6976754d5ea4323c74a5190bff3da738634b4dea53"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/PinnedStorageSettings.kt",
+      "sha256": "096973701c4eafcfab7b37ec0a323b94b3299d7c93997a44d96d927de5c2092d"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/PlatformSettingsPages.kt",
+      "sha256": "4b99a1378966cc60b198bbc4dc633ceec6857d2b608ec8f49b567f88c3e398e4"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/PlaylistDetailScreen.kt",
+      "sha256": "04195cd019cecd8ff19590e7fedffb96be7665d199cb6ffb8d4825c6f281f7d4"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/PodcastsScreen.kt",
+      "sha256": "68f7906db76a4fd65341fc943aee42c77087c35857bffe6609a4effa348d82fe"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/PrivacySettings.kt",
+      "sha256": "4999b61f3e9cdd2b5b677679514b02fadec5f6fbffa0686179caeac61ef04468"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/ProviderServicesScreen.kt",
+      "sha256": "a517239b1b2cf601ef4431ad02e3afb033aa8d26b0267c631a86324dd216693f"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/QishuiQrLoginPane.kt",
+      "sha256": "b00f28100339a3bb06136c6ba17c9bbfefb36daa9dcd01b1f4354f54709378fb"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/RemoteCompatibilityNotice.kt",
+      "sha256": "777e3d9c06048503b5e8b8553c5de36c5abfda966eeb76f687b54ef1c394762a"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/RemoteConfigSettings.kt",
+      "sha256": "a15ebd3a623cf3376aa55c154de7be2f1cf44c833885d090da0f59b7938ea28d"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/SearchScreen.kt",
+      "sha256": "15030843012da0735b9babd559dcdb0d10e5fd0e9ea572dda14429963a876114"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/SettingsPageComponents.kt",
+      "sha256": "af00fe3c7e31cddcdbf817926b21d8dddd143dd5506ffdf026dee503465b90a8"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/SettingsScreen.kt",
+      "sha256": "c5a4aba0783f359f95b3cd4790fe90b1d99cf10a41b4d3e6cae37f472ce4039c"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/SkylineLyricsSettings.kt",
+      "sha256": "54f2991f462f882ca3cefde5ac2699ca6cd2740181d9b2584b7ffbbbfcc3b91b"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/TabLayoutSettings.kt",
+      "sha256": "233a2ca51ec28235372fe4611478237fa9e1a6d115bd2c2b3f4ae4106c80367d"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/theme/MeloXColors.kt",
+      "sha256": "7c3a5e35db87d27a7918da840a4a72d11d41a2e10ef732b9e0c3f12ca8b808de"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/theme/MeloXFont.kt",
+      "sha256": "6efc3025abf8a3ab9f98d829d6a99a77cb5f100ab844918a76378e953f91db6d"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/theme/MeloXMaterialTheme.kt",
+      "sha256": "408866b12c5e4d31966e42a9f1186b87e48cad7e366210cfe1273de585488af6"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/theme/MeloXTypography.kt",
+      "sha256": "8ee80b9db9f4cfd574d2a34ed5be6e66ad5d78cebb0bf89cc1dcd4737a05f98e"
+    }
+  ],
+  "all_windows_business_sources": [
+    {
+      "path": "shared/src/commonMain/kotlin/melox/MeloXBuildConfig.kt",
+      "sha256": "b0c7f2810403717ab62045df1cf015aa36a0f2fdde1c65c70a3f3ecabe47acf7"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/account/NeteaseAccountModels.kt",
+      "sha256": "f398cae9235bca8cac3af83d1dd711a9faffd2b6f49832650564556768b06dbd"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/account/NeteaseSessionStore.kt",
+      "sha256": "7f8a5b285951fce167fe589fa170da03a4c54e40e98969598ce738cdbe1a7fd1"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/account/SecureSessionPreferences.kt",
+      "sha256": "d0e7bc03e24c57d9837975e84179c914a159741588e5b379f8f1fa36bfd413ce"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/audio/MusicQuality.kt",
+      "sha256": "a3e9e3715a50f7c2734c85c4031f50297f9fbd4ca423119d9d3c791185b595ee"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/audio/NeteaseQualityClient.kt",
+      "sha256": "fff85f51538b3a51541b282d6c948bc2e04c473c13185a3866db0f3468a17d9a"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/cache/MeloXResourceLruCache.kt",
+      "sha256": "64488a7e867807ef3eb2019c2b158afc32bfb57d53cd754758d1a6832638f5b3"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/cache/MeloXWeightedLruCache.kt",
+      "sha256": "5a10157a2f32d4bd47c672dd090b987b3e7d9d12e9701359aaa3f5bbd8675fb1"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/diagnostics/MeloXLogExporter.kt",
+      "sha256": "2dc31e7d7bcebc3a20c73768577393252bb490070fd4d63034c26724346f15a9"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/diagnostics/MeloXMemoryDiagnostics.kt",
+      "sha256": "5c0a8042e1f2521af42f6fc5ed354528ccbc22dd599c4fbe2281d4217292ef28"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/diagnostics/MeloXProcessLogs.kt",
+      "sha256": "833dfa34e39a0a9db7105e2c293a58ca3564f16594691870c69ee7fdc95903c9"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/dlna/DlnaDiscovery.kt",
+      "sha256": "f6022800a24d1f04e699d12c92d891b0c5891690954e7bcf34e763dcd4b61b78"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/dlna/DlnaProtocol.kt",
+      "sha256": "26bd7eff612584452a3886a70cb5ef312b53f2461f963818239364fad6db5d6e"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/dlna/DlnaSession.kt",
+      "sha256": "5b166d287744a421c092e028345810242470a80e883c787db536bec75bcbaa77"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/download/MeloXDownloadStore.kt",
+      "sha256": "74f7e1ea846dacf8fa24486a07cf28eac378d310aff9f8618838fbdb602b36ab"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/download/MeloXProviderDownloadStore.kt",
+      "sha256": "715501038f7cfbabbd9f4eb8dc5c1105acd2abdd8c5b4c0ba1fcbc99e36cc5af"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/lan/MeloXLanAudioRelay.kt",
+      "sha256": "51d64c5c7b8e347c95037be5ebb0601c7672398c43171c9a9ffa989858af510f"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/lan/MeloXLanCast.kt",
+      "sha256": "fe1ae5ee24f6f64ac98e0f5c6843bd6c8d5a3bdd231efd35d13269c1be688bfb"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/lan/MeloXLanLink.kt",
+      "sha256": "9e69637df7bd880c7a2fe0e394fad26cff660d32717c9442d2e5ef71d4ed7c77"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/lan/MeloXLanProtocol.kt",
+      "sha256": "96cc1e7848d3c0d1af03a473f245ec0097c38796ddaebd8265fb9ebe01397108"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/lan/MeloXLanRuntime.kt",
+      "sha256": "af37cd3db9f5793f8a8e68942cf5dba68c360ed44b90fb22ca439b6be0da2b6f"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/lan/MeloXLanSession.kt",
+      "sha256": "12f5c60fb578200b1507d7b0d156ed969ff9c20caa7bea00d7193d749673ce43"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/lan/MeloXLanTogetherCoordinator.kt",
+      "sha256": "514f676e5b684cb4b9de8f779f92f5293acf94ce5b436e54a48053d52331ab0f"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/layout/MeloXDesktopGeometry.kt",
+      "sha256": "de4f268fee9e7946be1615f89fd7c46425cec366b13c0531cb24bd6cf8d74297"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/layout/MeloXSplitGeometry.kt",
+      "sha256": "580e8160b60b24c6f65e79e9b61b1481a76057b154d561e54703e625eea34d3f"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/legal/MeloXOnboardingSession.kt",
+      "sha256": "69fdf9b48ee832b71a18720e222f0639dba6e7e3ada0bb645da6eefc36917c31"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/library/NeteaseDiscoveryModels.kt",
+      "sha256": "b494eadad384b6e7e537fdff0f5dd94194aa65355eeb0823e17463945b692424"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/library/NeteaseHomeBlockParser.kt",
+      "sha256": "77a09b8b6382150d44710b0c4935cdf586b7ff112a712befd1b17ed18b46e1fe"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/library/NeteaseLibraryCache.kt",
+      "sha256": "62c0277eea6ee9ddbb8f5f3f6b9c42d7f295d37895652689009d4e1399062386"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/library/NeteaseLibraryClient.kt",
+      "sha256": "2b4e02e7147b614b3e40f7b220bba1b450fcd6dec37e9dc349d50b2e1e8ca44f"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/library/NeteaseLibraryModels.kt",
+      "sha256": "1619fbfec71bf919a3c0a89ab60a36ea00f8773ee7940563d3c4940b7ba13c9b"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/lyrics/AmlldbLyricsClient.kt",
+      "sha256": "9ef9d82f8f8df01f155762bec2dac567d40102cf8670b4f15f0a915d6d122967"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/lyrics/BilibiliMatchedLyrics.kt",
+      "sha256": "67c9687527f950b9d771ba1510a1995f606c73a88f2be251816b1c48171a710d"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/lyrics/KugouKrcLyricsParser.kt",
+      "sha256": "11e09958f6fe5b374f5116ddffd37eea8537dce188f2c2e206be9d7ceb90b723"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/lyrics/LrcLibLyricsClient.kt",
+      "sha256": "44a2099ebd43a771c3dce77c1c6dd3c1cf994f8299387b8fa5e38eabcc9ef187"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/lyrics/LrcLyricsParser.kt",
+      "sha256": "6f25e35a943c8d12d356109c152084eef535dd7eaa7c5efda2d81f7b231e3f4c"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/lyrics/LyricBindingStore.kt",
+      "sha256": "afadd0bb52fd69c6851c9228dc5f08c6e7f44040c468d6034f58eb50ea0a0e20"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/lyrics/LyricModels.kt",
+      "sha256": "6d658c5acfab5452c136644f256bd0e38512eba17ff8134e19e2be84238955c9"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/lyrics/LyricRomanizationAligner.kt",
+      "sha256": "03b5137c025c0d1ba6b59aa1621449ad04e16b874fcd3c1765be134fdddfb5cb"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/lyrics/LyricTimelineProcessor.kt",
+      "sha256": "8ebcc89e14b4c577d9d45bba4559f64100427a957f83b73b5513945bc3abdf11"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/lyrics/MeloXLyricPresentation.kt",
+      "sha256": "36fe9a2062514dce54c53f6ced6be30641ae478666033abcdc883fd012857b4d"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/lyrics/MeloXLyricScript.kt",
+      "sha256": "0761a9da0ea60ae605d904111c0f99501fdd9a2bf4f6da21918d7133bceb59af"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/lyrics/MeloXLyricsLoad.kt",
+      "sha256": "872deefe216aeb94d0d70c40c141a80a5a55203ee54d5e5e47b517895fdd365b"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/lyrics/QQMusicMeiQrcDecoder.kt",
+      "sha256": "bb7ef356ea235370083655416b1596f6e27f8433e191cdf92fbc260917b77aac"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/lyrics/QQMusicQrcLyricsParser.kt",
+      "sha256": "ed6e5a5169c1a4a23fafc761bada8e86a14aaa10a73ddf9eb071a8ed87830c1f"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/lyrics/TtmlLyricsParser.kt",
+      "sha256": "07c279b94888c0f9a25773226c97699b907c015d968230bdbcc2e3a06d573975"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/model/SearchSong.kt",
+      "sha256": "e991851c868be3f5650710f6fd8c8502be45fb954a4c86c14b1584bfdbf52732"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/music/experience/MusicExperience.kt",
+      "sha256": "f96fd43836093b25fe812795506f651d3bbe898239f6a59b3c992def073f936b"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/music/model/MusicModels.kt",
+      "sha256": "5a900d9f801c683047a39b45d6ba272decb95ab3b3e624aa42a54aec5f8734e5"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/music/provider/MeloXLegacyUiBridge.kt",
+      "sha256": "e13a23b9c442cf711b1b2b96a725d5dc0cae47656a9dcfb213ae177d96013cc2"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/music/provider/MeloXMusicProviders.kt",
+      "sha256": "98ec2a69822aba7dc83bdec1b57e2230c3ec0dabc395e5fc1896bcb3c13f3d6f"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/music/provider/MusicProvider.kt",
+      "sha256": "d5a1160ec633f7d7472d3c9d14fec469bb0e5b6d13793a8cd0a04742c3406059"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/music/provider/MusicProviderSelectionStore.kt",
+      "sha256": "e9b9a2cf4debdc7052432541c76399b39dee13d65f1aafe68206eb0b1bef1468"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/music/provider/PlaybackAccountSlot.kt",
+      "sha256": "3988de9bf080f90a0c77e4635937dce931e55645555c97e009a77aae04f5c1ee"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/music/provider/PlaybackAccountStore.kt",
+      "sha256": "901daaf417e40e3e39056882619349e883f536b46fd7833cede3d8cc85c518b7"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/music/provider/ProviderAccountManager.kt",
+      "sha256": "93d435c694f65fc170452bb23b990794a77e86b9dd1546e7cbdfc0ea081edbeb"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/music/provider/ProviderCollectionPaging.kt",
+      "sha256": "b229c774fab2084118262035b93a1921b8c0955adf2779b5c8607f783796a08e"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/music/provider/ThirdPartyMusicSourceConsentStore.kt",
+      "sha256": "517ea18136f70f91132cf4b6ba6443517ad29b756b0f4a3a3441b5932b798baa"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/music/provider/TrackAggregation.kt",
+      "sha256": "7310ba298972ce125265647595b4614781394828a43d631d29fc6ffb8c9c95cc"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/music/provider/UnifiedMusicService.kt",
+      "sha256": "14d76454450525db7666fde76c85ce7264d016aa52ff865b5a9d6bd833d86e63"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/network/MeloXGitHubRouting.kt",
+      "sha256": "e0c9d10d4171c709c35420d0637e760f9f1026cd15a6e3f38e56503ec2844a8c"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/network/MeloXHttpClient.kt",
+      "sha256": "0f0aa5f66a5de020048fdfdf54a1979a78b45110fd0b03b238be24267ff1e0c3"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/network/MeloXNetworkAvailability.kt",
+      "sha256": "1d1dd095b0932921eb68a9327c625cc43bd90e21807229732c696e7e4d1889b1"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/network/MeloXOwnedHttpCall.kt",
+      "sha256": "ee8ea6f2191b564b2655e2a3b873e34ed295577d01df14f42a46b5815ee6b5a7"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/network/NeteaseAccountDetailsClient.kt",
+      "sha256": "d8d329f5b8c51f4eee887f27860378fa846f897c930daa7cc5662d41eefd2e25"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/network/NeteaseAuthenticatedEapi.kt",
+      "sha256": "a7e6bfd871dfecc618457485730646da5cd79af2660590308cf4e1a7c975ab36"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/network/NeteaseAuthenticatedWeapi.kt",
+      "sha256": "bed37eaf3bb4ba3fd7131266a0cc19d5bf87d4594b407b0098161515fd1f0d00"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/network/NeteaseClipboardIntake.kt",
+      "sha256": "bc3475e37335d47080fa01f55f5ec917de46baca665a6f4d03b942ffe3b0f89e"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/network/NeteaseClipboardLink.kt",
+      "sha256": "7a3bf3773e441853c454080c0920291a955c19cd3e1bd122035c9832c2e9d1c9"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/network/NeteaseCloudUploadClient.kt",
+      "sha256": "bbc61e9d990f316b5a231abea1e2f832585bc6669ccb27554fdaeee907e14feb"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/network/NeteaseCollectionDetailsClient.kt",
+      "sha256": "99db0650f55466197ad2719f77aba09c174b73629ff5e45051a09b30550ddf7d"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/network/NeteaseListenTogetherInvitation.kt",
+      "sha256": "9dff6b876d9b2d708a81233a6615a8de2fd9f605532195b7150a495e007ed15a"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/network/NeteaseListenTogetherTransport.kt",
+      "sha256": "2184cb13bc59fc89af4f4695ad53b827d70bd6d8be864367ec524b5f7287bead"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/network/NeteaseMusicOperationsClient.kt",
+      "sha256": "7d563d451561dcfbb38ee6530d9ad5f9548de913abfac04f86033b4009b4b9f2"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/network/NeteasePhoneAuthClient.kt",
+      "sha256": "70aa7d2c1d6398337f635a7b1bcabeb10ee6d4729d8228ab201b562ecf855baa"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/network/NeteasePhoneSignInFacade.kt",
+      "sha256": "cc7a93017699842df1dd9f79d7f58b5a7e7e4aca1271554928f94cb4d25c905a"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/network/NeteaseRequestGovernor.kt",
+      "sha256": "25d783ff26a8bcbf97c99acf018909edc0c34a809a7a58bfa1740c0862a2de26"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/network/NeteaseResponseJson.kt",
+      "sha256": "601b64f326d49072eb9c1a19900cb6a8a50bab4e62eb13e4197d8f867727cfd1"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/network/NeteaseSearchClient.kt",
+      "sha256": "1f5de66a6d4ac6c4b6d6383272dc00f2cd849f8c4c203b1c369eb4dfef455b80"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/network/NeteaseSearchResponseCache.kt",
+      "sha256": "9dccbdb6cc1bfdb705c1106969cba2c6c493878632ad530b85dd96deb6e5d88b"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/network/NeteaseSocialExtrasClient.kt",
+      "sha256": "c34b88bdf29ab4ec18d71718e2e0b66fb7197579b26bc7f28b7cfbafdf7f663f"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/network/NeteaseUniversalSearchClient.kt",
+      "sha256": "ea2b53d44c9a0be5e913b031b5985e482db875bb5e3e79fc5d82729b8b0ae570"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/platform/DesktopNotification.kt",
+      "sha256": "969e936e1564d9d76b2be6cb6f10e4f6aab8892be4ddc3d4df43fd0182643cd4"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/platform/MeloXNetwork.kt",
+      "sha256": "a831861b2c66e531b09ab2028d483489e839d5e2a7bd0350a1f86dcb5cf3389f"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/platform/MeloXPlatform.kt",
+      "sha256": "65e6f839aff1ce3315ac7e37987c37a3df9bdfaad4f8d5d61eca6f593cc29c43"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/platform/MeloXPreferences.kt",
+      "sha256": "2aabf19f58b57e4b9c60020bbe9062664568ac18bccc74632fbcdeee4db34c30"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/platform/MeloXStorage.kt",
+      "sha256": "bc13e789315c5683484d34a1c461e405346d25952a141bf2709b0535202ab30a"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/playback/ChkszPlaybackResolver.kt",
+      "sha256": "d4fb835b54107305720fb150bb042802d21d74c71a237855645161a033586d76"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/playback/CrossProviderPlaybackFallback.kt",
+      "sha256": "6afdf6505b950bee876a8119b0314f55b2c19f7b1234336804f973c1020e20ff"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/playback/LxUserPlaybackResolver.kt",
+      "sha256": "2eff4dab744693875f0c449292a768c4acfe68bfa187da3989e7ae5edab17431"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/playback/MeloXAudioAnalysisRuntime.kt",
+      "sha256": "97ac8e7e2120d14c182e50605c7e52cbefd2d5a58162b31056ef4f3b0f76ff29"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/playback/MeloXAudioAnalysisStore.kt",
+      "sha256": "a4ec49f4d6b18d219fb9a875054e10a2a07995949687b022659502581b4ff5fe"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/playback/MeloXAudioReactiveRuntime.kt",
+      "sha256": "e392ad42d34dbf6d239fc94438d62060e0e63ec0096918b877cc17972c7efb80"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/playback/MeloXAutoMix.kt",
+      "sha256": "5af8851d88b73b0a3e36206142aa75f4a7e6d5335fd1e776d8db8cb0a8c0db32"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/playback/MeloXAutoMixAudioAnalyzer.kt",
+      "sha256": "7bd3473ae20ef41230329cf7e46368ca69384f15412852c07a239ca9a23b838b"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/playback/MeloXAutoMixEqualizerEnvelope.kt",
+      "sha256": "d5b48128d74b2c3a1f0ea313032847b634bb4ab477f4d675753f449e66579d84"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/playback/MeloXAutoMixTransitionRuntime.kt",
+      "sha256": "bc54cbffe93f06e48c078041cdf66da312023e727376ef2029c9b3eb2971e2c5"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/playback/MeloXAutoMixTransitionScorer.kt",
+      "sha256": "06fbbc8363568ea42b3c4ed48c6d65a5eec4d2a08b03406056fe4ae87fadb69f"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/playback/MeloXDesktopAutoplay.kt",
+      "sha256": "e7f9da4f6a4dda8713f5472a7ee4cf81928a91eb1dc1f7216895af8b12339808"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/playback/MeloXEqualizerController.kt",
+      "sha256": "46c022ecfdc174f04ee3b27ab58f729d160209664445c199e4a2e8241b121cb9"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/playback/MeloXEqualizerSettings.kt",
+      "sha256": "8865961feb5a2393d4542131946fe453011b5efc0d58b09259771288e076fefb"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/playback/MeloXLastPlaybackStore.kt",
+      "sha256": "265b4748d1027dc6468c8fe0e9eb5323b2fc5449093150df94c7d674eb8feb3c"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/playback/MeloXListenTogetherCoordinator.kt",
+      "sha256": "feeda9e070a318830ed9a5c6c9b3563369b4275b0cb0d0328b663e0523039f75"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/playback/MeloXListenedTimeTracker.kt",
+      "sha256": "bbf3d336b9e027280e23592d2c0058f7d714fb99ec12471995d4e88c91a32117"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/playback/MeloXMediaCache.kt",
+      "sha256": "4335ec83d8eca93f42359d699cbabcae3daab65d379df4369020d6db8a6fb567"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/playback/MeloXPlaybackEvents.kt",
+      "sha256": "878441c6a697f8f12f35286795d39ea4c30f2bbee38159ecb43ff2a3596e427d"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/playback/MeloXPlaybackHistoryReporter.kt",
+      "sha256": "aa15e60041d85ea3629207cb17d438fed21662eac2318e5bc5009902ab41b6f0"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/playback/MeloXPlaybackModePreferences.kt",
+      "sha256": "9db3f2fdc564b013f9df43ec7393e1c309262a8e06eba22a4c9e147691ade2ec"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/playback/MeloXPlaybackOutput.kt",
+      "sha256": "072bb4263ef1883cab265d2064d7e39d17f342302e55766fa66acd19721f68d7"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/playback/MeloXPlaybackQueueStore.kt",
+      "sha256": "21c94a3869356865face08949365fe340fb16a13d27096c4505e867284e3ff2c"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/playback/MeloXPlaybackService.kt",
+      "sha256": "022a7fe1b86bfe2adf778a90e2982a50f8c4934f96755fc3c9388705d640a553"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/playback/MeloXPlayerTransitionState.kt",
+      "sha256": "ab4ebc76915c94249e37425bd3af6bc2590bbb4962cc28aff5d964965cb79cd0"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/playback/MeloXSleepTimer.kt",
+      "sha256": "36d822be02ff2c8f9ea25e5ef1492a78f6199105e893be8e477e068207bde730"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/playback/MeloXSmartQueueBuilder.kt",
+      "sha256": "a8ceee58d4b1057ba55d44e5e12a79e0cc10f75ac0bbffa6c97bc51cc889d2b9"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/playback/NeteasePlaybackResolver.kt",
+      "sha256": "580a5b233748f165eab102391d941d6a1964a268ad4a8ea23e14ec084d4fe486"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/playback/PlaybackCommands.kt",
+      "sha256": "46c0981b720095e4c7261d5c1521ebf3cd58271059c9eec58e545059ad356c44"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/playback/PlaybackFallbackChain.kt",
+      "sha256": "463c8aa8356281218e8f2f7f96655867ac9de6aadc8bfa3cb94a3310a5084ab9"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/playback/PlaybackTrackIdentity.kt",
+      "sha256": "f264efc468e3222a4449272e8a3f82ca61d0547855b09a0043dd0b60f9933548"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/playback/ProviderPlaybackCommands.kt",
+      "sha256": "26872deecdc32a3bf466738fdd1049bde0cb048233a5073fd77f41698f112cd7"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/playback/ProviderPlaybackQualityRuntime.kt",
+      "sha256": "f4d16639ff09b3b58beb7c49c8bae499cd55d62e57ef411383cd59e9ce46d129"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/playback/ProviderPlaybackResolver.kt",
+      "sha256": "0e831eff4ed82d557f75a21d06e0534ecc2d888e883508355c7c86a88854aa99"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/playback/ProviderPlaybackRuntime.kt",
+      "sha256": "761fc44cb58b2ad82aea6db0f5f53211b78d9071ed2323e36617a75c7e85766f"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/playback/ThirdPartyPlaybackResolver.kt",
+      "sha256": "06f88ad0e62abf4cba97c0910be8d2323d69c510ce2ec1ad60269926a1878c1e"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/player/AudioPlayer.kt",
+      "sha256": "2fb3fffcbdf42b8f5e58a90a28141df2b65d2ca18689c9f840c44da4531e151a"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/player/FfmpegPcmDecoder.kt",
+      "sha256": "f6d299dec6727211b2d5d820f1903b08794339297cae7f4a192482475fc4c37e"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/player/MeloXBufferedPcmDeck.kt",
+      "sha256": "a2e6420966a28ac8c45fb655ef63285328582cb3d8f4421d270edc28879730cc"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/player/MeloXDualDecodeSession.kt",
+      "sha256": "b08995ecf27db0e44da79e8a449d19a7fca6bba60cdc5a31984c8c434328efce"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/player/MeloXPcmMix.kt",
+      "sha256": "9f38653fec6bfe693b4e721d38ac58211dea87ad807e724e27b8ddce150d274e"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/player/MeloXPcmOutput.kt",
+      "sha256": "1321f934d2d42a456f949f661a74842cbeaa10b607398e372be460dfe5fb7c49"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/player/MeloXPcmRate.kt",
+      "sha256": "88ce2b8881b01afc9669135385ca73d3e6713d32321555bcee742290f6dfb0da"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/player/MeloXPcmWriter.kt",
+      "sha256": "b4f7f203c289260eeba556fd63deb8df746fee5a26369b0d1d39de998b25ec39"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/provider/applemusic/AppleMusicApiClient.kt",
+      "sha256": "cab9d9d5948a5bcd9b95f159a68173431b148c08e256c71edd22cf03f79d0cdf"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/provider/applemusic/AppleMusicSdkBridge.kt",
+      "sha256": "e3384bc46f891893822b7983bee7fe9a0b835fb4ee4c6e28141a64d0ffec36b3"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/provider/applemusic/AppleMusicSessionStore.kt",
+      "sha256": "945c6281c9bb134bcd3df97e25c4d206d05b25ba156a4bce98dd08be45448794"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/provider/bilibili/BilibiliApiCache.kt",
+      "sha256": "0cea7205e905f3c1fc43df62616f250727bbd9c6f08ba320104c872668834b54"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/provider/bilibili/BilibiliLyricAlignment.kt",
+      "sha256": "6dd82c89b4bac51a29c37ae71a2a219534171f5c62c3ea2d3514190c3726640a"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/provider/bilibili/BilibiliLyricOffsetStore.kt",
+      "sha256": "f02161918faba7a1e7f2b3383cec37dbf8629d1c4f834f9f0988d5eb3cd1baf7"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/provider/bilibili/BilibiliPlaybackAssociationStore.kt",
+      "sha256": "cce1434b22327d58cf35e9e6094775f12138d4404bf7763a22c99b6550530d47"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/provider/bilibili/BilibiliProvider.kt",
+      "sha256": "7fc9070f2cfa609f3858025632542ad058f4d0903d075feac0a2a3502646253b"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/provider/bilibili/BilibiliSessionStore.kt",
+      "sha256": "961bb6682613141e6926b13167132c4640d6e72454dec4d1a306161275241804"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/provider/bilibili/BilibiliWbiSigner.kt",
+      "sha256": "39e1e908692447dd9b495f27fab340f329ff31ed7ed42730d354f03fcfc8e0b3"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/provider/jellyfin/JellyfinApiClient.kt",
+      "sha256": "e11d68a56c66e519e2faab351d66855bc0df450d2c25e046a1be5ae1a9ffc06e"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/provider/jellyfin/JellyfinArtworkAccess.kt",
+      "sha256": "e1768b053cf96671b9f03e2e66a00adaa8ff5be3c0c1133255573531e70dc344"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/provider/jellyfin/JellyfinModels.kt",
+      "sha256": "8d27e0d9395eac7fc79e565455f7117c945e1d4f73269bfb285dae2ea9a7edb7"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/provider/jellyfin/JellyfinProvider.kt",
+      "sha256": "b3a4ed142f32aa93aa232c5ebe43b5662c1642717bc582ff21496a7d08774b3d"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/provider/jellyfin/JellyfinSessionStore.kt",
+      "sha256": "fd1c6714c1b0f0a829ed4f776b89c332b24661a37c3402d6f28be1c8aa65e7e3"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/provider/kugou/KugouApiClient.kt",
+      "sha256": "4b20496a69a6a06334046e9c85f3a351f056b356814262fc9243844f0568a0e0"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/provider/kugou/KugouArtworkUrl.kt",
+      "sha256": "ad3ea7abbff609e56151693a3b4def531208906f47cb9fc535a9dfa3e500587f"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/provider/kugou/KugouCatalogClient.kt",
+      "sha256": "7e8f0aa9dafca20ea1930ab40a2bc348a723c2fa23065bcea6282dc2afae8882"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/provider/kugou/KugouDiscoveryClient.kt",
+      "sha256": "4e37af42a006f4e2cf9ff6f8bd4cd1432708d6ee94bbdef83ae98fe268dd4340"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/provider/kugou/KugouLoginClient.kt",
+      "sha256": "6293a5b276eb9ec6d734c55c9fe5558c78bb52b8a8a3bf9a10eb3335cc7339e8"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/provider/kugou/KugouLyricsClient.kt",
+      "sha256": "6e5cb9136d86a4175d7a8081c4376d1893a3dc8e3d3fb2bb6ecba8b219b9f4cb"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/provider/kugou/KugouPlaylistClient.kt",
+      "sha256": "2d6de1f7d09663fedc098248610a33571b2f97881cce842f9384b1cf106bc30c"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/provider/kugou/KugouPlaylistWriteClient.kt",
+      "sha256": "03ced9d9c71f4b39d82dfc7da653a6e3c4018c107c4aadc2d207f069705f1f34"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/provider/kugou/KugouProvider.kt",
+      "sha256": "15a51e1376044b8f1cae78e957484a475bef105ce0c6cbb513fbb12da6c8956b"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/provider/kugou/KugouRankingClient.kt",
+      "sha256": "a9675999bfe8194b80f5866a3da4c9d5b5b528cb5d027599a7471acb3a3d1557"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/provider/kugou/KugouRequestClient.kt",
+      "sha256": "52b11e126bfb7c79884a23ca3865a3f7b59ad5507ff2eac9dd7439edb35fa7c5"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/provider/kugou/KugouSessionStore.kt",
+      "sha256": "a1f06cc65fc1f8ede157f605c86d6efc25b2741378da402c8a8bfb29443faf59"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/provider/kuwo/KuwoApiClient.kt",
+      "sha256": "ae9814c586b3706820558a46f5f6dc7b72b2d002efde0f2d31482699c95aa151"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/provider/kuwo/KuwoJsonNormalizer.kt",
+      "sha256": "ecf042c22cdd499958c5b7bfe3fd840869275300cac5ec880b303051907d75fd"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/provider/kuwo/KuwoLyricsClient.kt",
+      "sha256": "89bfd3256826036087395c0d2f88130cb046ce6f42f297e4b77d26f82f646287"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/provider/kuwo/KuwoPhoneAuthClient.kt",
+      "sha256": "62144ccb9382a04eeeea99a28faff6934cd9a1b03b86256737989df862a0d933"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/provider/kuwo/KuwoPlaylistClient.kt",
+      "sha256": "eff1a7a729850b0f8e788d0362c9d4a37cc4a66c51b6e106fe38ad81ae6fb13d"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/provider/kuwo/KuwoProvider.kt",
+      "sha256": "62c75bfeb8602b7c7da4a844db2dcddf89b64639bbda19c447b4de1ab7d1da31"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/provider/kuwo/KuwoRequestClient.kt",
+      "sha256": "670ac4c1c3369b5213ea73b44d1b8fd17aec96cb2882b6e0d8ece8df8cad1ef1"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/provider/kuwo/KuwoSessionStore.kt",
+      "sha256": "58eb4aa275fd4c82d8ac6581e0e2423ee0a3956c129870bde3eb64976fceb5ab"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/provider/local/LocalMediaScanner.kt",
+      "sha256": "8df0f2125102ced58f66e8d028daa9e6ef9e83e18c20237b9276c60b631052a7"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/provider/local/LocalModels.kt",
+      "sha256": "508f02ee46d80836e99e04753c144f64db466f32bfeb0122ec8a89e707c29b26"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/provider/local/LocalMusicRepository.kt",
+      "sha256": "45483bcc22817fd9f473220315278b76ff2abd553727c779a00748ba6bd1eb2c"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/provider/local/LocalProvider.kt",
+      "sha256": "1476854fb438b083137c8e47835fff636a1b4e53721f8b886dbaa462004b497a"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/provider/local/LocalRecognitionCoordinator.kt",
+      "sha256": "ecc565bb208f9d478b75cde8ce1903df71d443d482fb0d983ee8d66d4177ef14"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/provider/lxuser/ChkszApiClient.kt",
+      "sha256": "16d90a7149b24be420f6fcc1a5783beb8c0da4a41599c6facca5c92be39ded11"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/provider/lxuser/ChkszApiKeyStore.kt",
+      "sha256": "28a756ab5e733343eb06ce6d1f1a8b030140ddb89db8d37f3f98166a4576affd"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/provider/lxuser/LxUserRuntime.kt",
+      "sha256": "cb50aa03e9b7fbc016562ec914d06c21dd21661eb1f71bec7cefe9f34dc4cf1e"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/provider/lxuser/LxUserScript.kt",
+      "sha256": "69d63994fdc3db8ac05ee2fe4a67497955d742028ca1660299df9571571aaf34"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/provider/lxuser/LxUserScriptMetadata.kt",
+      "sha256": "c0435feb9342fe461d2694ccf71ce5954228b9cf56560927c3bc6653d2e5df86"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/provider/lxuser/LxUserSourceStore.kt",
+      "sha256": "cdb0b7af2f33e00ceeeb35b508af5f3436c47568df3ed917f80877c59d8bacb6"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/provider/netease/NeteaseProvider.kt",
+      "sha256": "0cf697046cbabc7e63b91d5e28c87cb3bbf9d144c0260a5efcbbefe634d1b737"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/provider/qishui/QishuiApiClient.kt",
+      "sha256": "d2b21f340d9d1e3e22eaaa41914ac0a62c8ce6396d4ab5ece49464c2f0960788"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/provider/qishui/QishuiParsing.kt",
+      "sha256": "69e26022962a4d49b7838147f95dfa7ebe77c81bb403fd546428ef81c80a0ebf"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/provider/qishui/QishuiProvider.kt",
+      "sha256": "7d58c6b6f17ce02478b05afb674a012782a35996454a927799d4eb7a6b52e772"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/provider/qishui/QishuiSessionStore.kt",
+      "sha256": "311c49951e9eae9269d3912c2f3f00a5bc1e0d80b0d62359107967a8024af2f4"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicApiClient.kt",
+      "sha256": "6a27c86db0c062538700a34ee72476422343063203e5db53d528e8ad0767fb50"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicCatalogClient.kt",
+      "sha256": "8f875032708599d7993e6a8020a416587291441439083ccbf20e3aa213e021d9"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicFavoriteClient.kt",
+      "sha256": "a3d442df89c77987a9c11a6a058009d56f36775c42e7eb3834b3730ae29bc4bd"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicPhoneAuthClient.kt",
+      "sha256": "136d72e1a7328f99ca64af18f0845584d5b0e14e92cc328e23ec55961720d27a"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicPlaybackVkeyClient.kt",
+      "sha256": "98796c020c12afe9d6a39d5da042a2982d9598b9f5492a673d5f4bbb143e9396"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicPlaylistClient.kt",
+      "sha256": "f1e92ce78551a435d5aff7444fa54daa0bcf977eb1646ceee339c0db5d680851"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicProvider.kt",
+      "sha256": "85a48a0e0826fea0ffb6752a4899191e3f7b9cc2bd4455d77bc2d7180f53e01e"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicQrLoginClient.kt",
+      "sha256": "f5d4e1f2b17d4ba45fa7cf6e964836cf37932c36cf893bef3cd0dee8ccd2baad"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicRankingClient.kt",
+      "sha256": "96c187db531a56813af0c6c7a68e1cc7fed56cb1048f87b92d060a6fa22806ba"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicRichLyricsClient.kt",
+      "sha256": "4499b0aea1a9bf81f856dba2819159ed785fcf9341e7c261977b28bc61db720f"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicSessionStore.kt",
+      "sha256": "c3be59131b5a5ae2942b4a54ab744e89d0449b74ed4c21daa1592ea5d2c8b195"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/provider/spotify/SpotifyApiClient.kt",
+      "sha256": "8bc5c88dd8a176a21401110817b65f59965565efc610dbfc87d5b74d5dc8fd9e"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/provider/spotify/SpotifyClientConfig.kt",
+      "sha256": "614b36cd223176c59e3110c21b6c222101155f5ced8b2abb69dcb247826fa27f"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/provider/spotify/SpotifyDesktopLogin.kt",
+      "sha256": "4784e7bcb23134e72e9ca8eb4fcf4956b061a635bbf9224c54635a5b89771fe5"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/provider/spotify/SpotifyLibrespotPlayback.kt",
+      "sha256": "a1ce4cfed6a2bb09033f0e0f9b42eea8c7a1d0f3a7b6a1b4ed79534f4387ea9d"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/provider/spotify/SpotifyOAuth.kt",
+      "sha256": "7a19e0fac9e88eefc92e34d658fca9dc43d35ba39f1823c75c14da26634b3918"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/provider/spotify/SpotifyProvider.kt",
+      "sha256": "d26275a8cd5bdb1656d12f93c46378e1a943d8dadb1d78b67179f3a1cd6d0e4d"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/provider/spotify/SpotifySessionStore.kt",
+      "sha256": "39cd573de9449a589d9223ae6d84ab4cbccce89378bb993c7a8683ff7208ba87"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/provider/spotify/SpotifyTrackMatcher.kt",
+      "sha256": "0cb88d1006677fb9bd0d202cab77cb2deadd8b1191cc79652ba767b874c5e281"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/provider/youtubemusic/YouTubeMusicProvider.kt",
+      "sha256": "968b392ce33b23ca534591b8ba8252a0c790eb78b65e80409266c55b10f76228"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/provider/youtubemusic/YouTubeSessionStore.kt",
+      "sha256": "dc90dafe5e165bc1c3907e54aed429412d6bc1f45af9a5f8f0b727dcf2a3a264"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/recognition/LocalAudioSegmentExtractor.kt",
+      "sha256": "61e53f1a9098a07405aa5e58fd2d5f15b40526c8c3d8490829f258d8be764a08"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/recognition/PinnedAudioFingerprint.kt",
+      "sha256": "da5c13272680071f273a6fb4cfd963f9e0dfbd7851041a5d62e6fd0c2c14c25d"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/recognition/SongRecognitionClient.kt",
+      "sha256": "b60717ad3a5b730ebd928be03f7b25ac5db6b0bf7a57763c77f4b5021aa7318d"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/recommendation/LocalRecommendationEngine.kt",
+      "sha256": "0f36c3f368696b605574edc1cf383c8991e6541befdb1a3dab3e6087fc02b234"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/recommendation/LocalRecommendationModels.kt",
+      "sha256": "5c82ab367638664c3ada297ec0bd680fa06bc8615c7a95846f10af7e19002084"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/recommendation/LocalRecommendationStore.kt",
+      "sha256": "5c35f9097abcba3b84bf3f980c33692738f5132aa2b8e34816d6329ff729a622"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/remoteconfig/MeloXRemoteConfigClient.kt",
+      "sha256": "9bc51131ce41c8a2af6168c0b2da4c6d7f6de5c5d1941bdf809d5d31ac31b387"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/remoteconfig/MeloXRemoteConfigConsent.kt",
+      "sha256": "d118593044e64db5241a53dee5a34559982892a4ea2b76156d25ace9ab8fae36"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/remoteconfig/MeloXRemoteConfigDefaults.kt",
+      "sha256": "dea0f847dcc2e40e78abf0f718a70c0998ad9a7f4f8737eb0576e01e660129cc"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/remoteconfig/MeloXRemoteConfigModels.kt",
+      "sha256": "a41ccee7bb4339e12e045ab16549e6abd3bccdc6794949a178cd3a5eb337af25"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/remoteconfig/MeloXRemoteConfigPolicy.kt",
+      "sha256": "eaea63bc2c86e1ecddbf4b4cb88990b5e5aee0c67178b73a6dad7686d6be618c"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/remoteconfig/MeloXRemoteConfigRuntime.kt",
+      "sha256": "ce7bb2fa3be88de656297a8739cd842de974975a2d759cb3b3a4bd06da7575cf"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/remoteconfig/MeloXRemoteConfigStore.kt",
+      "sha256": "5fa98e21edcbb6db5c38cc81494d01945e2e825c2ba75341bd1a07ba42e1e1b0"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/remoteconfig/MeloXRemoteConfigVerifier.kt",
+      "sha256": "a97e016d26ac72b9c757fad846e1195cf8534b7052d259a05cbf0af4bd312e95"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/remoteconfig/MeloXRemoteNoticeStore.kt",
+      "sha256": "1273d218c237144a1fb5396640657306cddb770b61ede79557c3795c7a7119a3"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/settings/MeloXAppLanguage.kt",
+      "sha256": "8034ae7f3d53caace842994143716143661434dde41842d36348cb77e71e34b5"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/settings/MeloXContentLayout.kt",
+      "sha256": "385f0c5807c6341dd0df0da99cfc45c0a5e885ffc5098ff4910ea93793683e13"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/settings/MeloXCustomBackgroundStore.kt",
+      "sha256": "146eb4d2e6782ed32f0364054c31ef9245bafa4aa460f84d3d0fc21b125702df"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/settings/MeloXPlayerAppearance.kt",
+      "sha256": "1279804713aee0b41ae66794704e1d1bff2c9672233750f601b3246a66580a0e"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/settings/MeloXScreenAwakePolicy.kt",
+      "sha256": "c830b8340d622e56937802b4fd1d87d46796ade775a10edf4af82ba13d58042e"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/settings/MeloXSettingsPreferences.kt",
+      "sha256": "ff4ebc887beb6d4f4edaac7f1d931318fca86fce3115adecb26ac6dcd7a29991"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/settings/MeloXSettingsRuntime.kt",
+      "sha256": "47cd1de0751b516cd5ca7c265f2e8b877e2f6a35849c9f88c2f4b225fa1ee842"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/settings/MeloXSplitChromePosition.kt",
+      "sha256": "3379456d5e48b0ab9e7f85d0b8be54ac177a75aa2cbe5f03181d9b60b4a61855"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/ui/LyricsView.kt",
+      "sha256": "bb6790c8881e6790a39b393d23e75c5264aac0829208adc49126fd9be10af3bb"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/update/MeloXUpdateClient.kt",
+      "sha256": "6cc007b1d52ccf1c0abcd0a70d1924412f08cf6f554eaf40d652cd0577da221e"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/update/UpdateChecker.kt",
+      "sha256": "d331feca68b704f90e6c8b9d549e6422a079dbc7ab107587146f800485b1e716"
+    }
+  ],
+  "android_setting_keys_absent_from_windows_settings": [
+    "player_transition_duration_ms__migrated_v2"
+  ],
+  "empty_click_handlers_for_review": [
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/MeloXApp.kt",
+      "line": 614,
+      "code": "onClick = {},",
+      "status": "REVIEW: may be a deliberate modal input shield"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/glass/MeloXGlassSheet.kt",
+      "line": 138,
+      "code": "onClick = {},",
+      "status": "REVIEW: may be a deliberate modal input shield"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/glass/MeloXGlassSheet.kt",
+      "line": 219,
+      "code": "onClick = {},",
+      "status": "REVIEW: may be a deliberate modal input shield"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXIOSPlayerScene.kt",
+      "line": 251,
+      "code": "onClick = {}))",
+      "status": "REVIEW: may be a deliberate modal input shield"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXLanOutputPanel.kt",
+      "line": 107,
+      "code": ".clickable(indication = null, interactionSource = remember { androidx.compose.foundation.interaction.MutableInteractionSource() }, onClick = {})",
+      "status": "REVIEW: may be a deliberate modal input shield"
+    },
+    {
+      "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXPlayerQuality.kt",
+      "line": 215,
+      "code": ".clickable(interactionSource = remember { MutableInteractionSource() }, indication = null, onClick = {})",
+      "status": "REVIEW: may be a deliberate modal input shield"
+    }
+  ]
+}

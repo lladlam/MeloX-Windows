@@ -12,7 +12,7 @@ enum class MeloXSwipeFullAction { PlayNext, AddToQueue }
 enum class MeloXLyricAnnotationDisplayMode { FocusedLine, AllLines }
 enum class MeloXLyricsStyle { AppleMusic, Eva, TextPV }
 enum class MeloXLyricsRenderingQuality { Low, Balanced, High }
-enum class MeloXPlayerBackgroundMode { FlowingLight, AppleLyrics, BlurredArtwork, MeiMesh }
+enum class MeloXPlayerBackgroundMode { FlowingLight, AppleLyrics, BlurredArtwork, MeiMesh, CustomImage }
 enum class MeloXPlayerShell { AppleMusic, Classic }
 enum class MeloXTextPVStyle {
     BlueBold, KineticSplit, BluePlane, CyberGrunge, Geometric, RainCity,
@@ -45,6 +45,8 @@ enum class MeloXLyricsFontWeight(val composeWeight: FontWeight) {
 
 /** Process-visible settings used by UI paths that need immediate recomposition. */
 object MeloXSettingsRuntime {
+    var customBackgroundPath by mutableStateOf("")
+        internal set
     var desktopLayoutEnabled by mutableStateOf(false)
         internal set
     var closeToTrayEnabled by mutableStateOf(true)
@@ -372,6 +374,8 @@ object MeloXSettingsRuntime {
 
     /** Reads only state required to draw the first root frame. The remaining settings load after setContent. */
     fun initializeCritical() {
+        MeloXAppLanguage.initialize()
+        customBackgroundPath = prefs().getString("player_custom_background_path", "").orEmpty()
         desktopLayoutEnabled = prefs().getBoolean("general_desktop_layout", false)
         closeToTrayEnabled = prefs().getBoolean("windows_close_to_tray", true)
         immersiveCaptionEnabled = prefs().getBoolean("windows_immersive_caption", false)
@@ -401,6 +405,8 @@ object MeloXSettingsRuntime {
     fun initialize(force: Boolean = false) {
         if (initialized && !force) return
         initialized = true
+        MeloXAppLanguage.initialize()
+        customBackgroundPath = prefs().getString("player_custom_background_path", "").orEmpty()
         performanceOverlayEnabled = prefs().getBoolean("developer_performance_overlay", false)
         themeMode = runCatching {
             MeloXThemeMode.valueOf((prefs().getString("theme_mode", MeloXThemeMode.System.name) ?: MeloXThemeMode.System.name))

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="DesktopAutoplayTest[desktop]" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-10-25T06:47:12.113Z" hostname="lladlam-arch" time="0.469">
+  <properties/>
+  <testcase name="crossProviderSeedsRequireTheSourceTitleArtistAndDurationMatch[desktop]" classname="melox.playback.DesktopAutoplayTest" time="0.118"/>
+  <testcase name="disabledAutoplayCannotCommitAnUncancellableLateRecommendation[desktop]" classname="melox.playback.DesktopAutoplayTest" time="0.134"/>
+  <testcase name="failureWaitsFifteenSecondsAndConcurrentRequestsAreDeduplicated[desktop]" classname="melox.playback.DesktopAutoplayTest" time="0.115"/>
+  <testcase name="changingTracksDiscardsTheOldResultAndAllowsTheNewSeed[desktop]" classname="melox.playback.DesktopAutoplayTest" time="0.101"/>
+  <system-out><![CDATA[[WARN MeloXPlayback] Autoplay recommendations failed: network down
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

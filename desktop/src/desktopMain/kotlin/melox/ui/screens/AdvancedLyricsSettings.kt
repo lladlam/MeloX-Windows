@@ -144,6 +144,10 @@ private fun offOrPercent(value: Float) = if (value == 0f) pinnedString("settings
 @Composable
 internal fun LyricsGroup(topSpacing: Boolean = true, content: @Composable ColumnScope.() -> Unit) {
     if (topSpacing) Spacer(Modifier.height(10.dp))
+    if (melox.ui.desktop.LocalDesktopSettingsPresentation.current) {
+        melox.ui.desktop.DesktopSettingsForm(content)
+        return
+    }
     CompositionLocalProvider(LocalSettingsGroupRowIndex provides mutableIntStateOf(0)) {
         MeloXIosGroupedList(surfaceColor = MaterialTheme.colorScheme.surface, content = content)
     }
@@ -157,6 +161,10 @@ internal fun LyricsSliderGroup(content: @Composable ColumnScope.() -> Unit) {
 
 @Composable
 internal fun LyricsToggle(title: String, key: String, checked: Boolean, note: String? = null) {
+    if (melox.ui.desktop.LocalDesktopSettingsPresentation.current) {
+        melox.ui.desktop.DesktopSettingsCheckbox(pinnedString(title), checked, key) { MeloXSettingsPreferences.setBoolean(key, it) }
+        return
+    }
     // Pinned SettingsToggleRow accepts `note` but intentionally renders only the title.
     MeloXIosListRow(title = pinnedString(title), showChevron = false,
         showTopSeparator = LocalSettingsGroupRowIndex.current.intValue++ > 0,

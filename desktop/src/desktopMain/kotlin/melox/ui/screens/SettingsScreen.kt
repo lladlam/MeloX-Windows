@@ -115,7 +115,7 @@ private val SettingsSections = listOf(
     "settings_section_app" to listOf(SettingsRoute.General, SettingsRoute.Appearance, SettingsRoute.Content, SettingsRoute.Playback, SettingsRoute.Lyrics, SettingsRoute.Storage),
     "settings_section_more" to listOf(SettingsRoute.Features, SettingsRoute.Recognition, SettingsRoute.Messages, SettingsRoute.ListenTogether,
         SettingsRoute.TabLayout, SettingsRoute.SystemPlayback, SettingsRoute.SkylineLyrics, SettingsRoute.FloatingLyrics),
-    "settings_section_about" to listOf(SettingsRoute.RemoteConfig, SettingsRoute.About, SettingsRoute.Legal, SettingsRoute.Developer, SettingsRoute.Experimental),
+    "settings_section_about" to listOf(SettingsRoute.RemoteConfig, SettingsRoute.About, SettingsRoute.Legal, SettingsRoute.Privacy, SettingsRoute.Developer, SettingsRoute.Experimental),
 )
 
 @Composable
@@ -505,6 +505,12 @@ private fun SettingsRouteContent(route: SettingsRoute, currentSource: MusicSourc
 @Composable
 private fun GeneralSettings() {
     SettingsGlassGroup {
+        val languages = listOf("system" to melox.ui.desktop.desktopPlatformString("language_system"),
+            "zh-CN" to "简体中文", "zh-TW" to "繁體中文", "en-US" to "English", "ja-JP" to "日本語")
+        Box(Modifier.testTag("application_language")) {
+            MeloXSettingsDropdown(melox.ui.desktop.desktopPlatformString("language_title"), melox.settings.MeloXAppLanguage.selectedTag,
+                languages, onSelected = melox.settings.MeloXAppLanguage::select, grouped = true)
+        }
         SettingsExternalToggleRow(melox.ui.desktop.desktopPlatformString("layout_title"),
             MeloXSettingsRuntime.desktopLayoutEnabled, "setting-general_desktop_layout",
             subtitle = melox.ui.desktop.desktopPlatformString("layout_hint")) {
@@ -576,9 +582,11 @@ private fun AppearanceSettings() {
         SettingsChoice("settings_player_background", "player_background_mode", r.playerBackgroundMode,
             listOf(MeloXPlayerBackgroundMode.FlowingLight to pinnedString("settings_bg_flowing_light"),
                 MeloXPlayerBackgroundMode.AppleLyrics to pinnedString("settings_bg_apple_lyrics"),
-                MeloXPlayerBackgroundMode.BlurredArtwork to pinnedString("settings_bg_blurred_artwork"))) {
+                MeloXPlayerBackgroundMode.BlurredArtwork to pinnedString("settings_bg_blurred_artwork"),
+                MeloXPlayerBackgroundMode.CustomImage to "自定义图片")) {
             MeloXSettingsPreferences.setString("player_background_mode", it.name)
         }
+        if (r.playerBackgroundMode == MeloXPlayerBackgroundMode.CustomImage) CustomBackgroundSettings()
         if (r.playerBackgroundMode == MeloXPlayerBackgroundMode.FlowingLight) {
             LyricsFloatSlider("settings_flowing_speed", "player_flowing_speed", r.flowingLightSpeed, .25f..2f, 6) { "%.2fx".format(it) }
             LyricsFloatSlider("settings_flowing_saturation", "player_flowing_saturation", r.flowingLightSaturation, 0f..2f, 19)

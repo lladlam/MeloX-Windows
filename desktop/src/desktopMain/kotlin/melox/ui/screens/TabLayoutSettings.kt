@@ -90,6 +90,10 @@ internal fun TabLayoutSettings(source: MusicSource) {
 @Composable
 private fun LayoutGroup(modifier: Modifier = Modifier, topSpacing: Boolean = true, content: @Composable ColumnScope.() -> Unit) {
     if (topSpacing) Spacer(Modifier.height(10.dp))
+    if (melox.ui.desktop.LocalDesktopSettingsPresentation.current) {
+        Column(modifier) { melox.ui.desktop.DesktopSettingsForm(content) }
+        return
+    }
     MeloXIosGroupedList(modifier, surfaceColor = MaterialTheme.colorScheme.surface, content = content)
 }
 
@@ -102,6 +106,13 @@ private fun LayoutGroupTitle(title: String) {
 @Composable
 private fun LayoutOrderGroup(title: String, key: String, order: List<String>) {
     Spacer(Modifier.height(10.dp))
+    if (melox.ui.desktop.LocalDesktopSettingsPresentation.current) {
+        Column(Modifier.testTag("layout-$key").semantics { stateDescription = order.joinToString(">") }) {
+            LayoutGroupTitle(title)
+            LayoutOrderRows(key, order)
+        }
+        return
+    }
     MeloXIosGroupedList(Modifier
         .testTag("layout-$key").semantics { stateDescription = order.joinToString(">") }) {
         LayoutGroupTitle(title)

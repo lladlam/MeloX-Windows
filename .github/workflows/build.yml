@@ -266,6 +266,16 @@ jobs:
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           python tools/verify_settings_pages_capture.py desktop/build/parity desktop/build/verification/settings-pages.json
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Replay app language, privacy and background controls in both layouts
+        shell: pwsh
+        run: |
+          foreach ($layout in @("mobile", "desktop")) {
+            $homeDir = "$pwd/desktop/build/parity/feature-surface-$layout-home"
+            python tools/capture_feature_surface.py $layout controls $homeDir "desktop/build/parity/feature-surface-$layout-controls"
+            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+            python tools/capture_feature_surface.py $layout reload $homeDir "desktop/build/parity/feature-surface-$layout-reload"
+            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          }
       - name: Replay every Desktop settings page and shared account actions
         shell: pwsh
         run: |

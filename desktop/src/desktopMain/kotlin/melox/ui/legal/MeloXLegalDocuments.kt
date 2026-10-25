@@ -61,7 +61,7 @@ private object PinnedSettingsStrings {
 }
 
 internal fun pinnedString(key: String, vararg args: Any): String {
-    val locale = Locale.getDefault()
+    val locale = melox.settings.MeloXAppLanguage.locale
     val value = checkNotNull(PinnedSettingsStrings.forLocale(locale).getProperty(key)) { "Missing pinned Android string: $key" }
     return if (args.isEmpty()) value else String.format(locale, value, *args)
 }

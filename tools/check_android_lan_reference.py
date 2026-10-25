@@ -30,6 +30,13 @@ while True:
     files.update(root.glob('docs/**/*.md'))
     files.update(root.glob('android/app/src/main/assets/legal/*'))
     files.update(root.glob('android/app/src/main/res/values*/strings.xml'))
+    files.update(root.glob('android/app/i18n/**/strings.xml'))
+    files.update(root.glob('android/app/src/main/res/**/*.xml'))
+    files.update(root.glob('android/app/src/main/cpp/**/*.[ch]'))
+    files.update(root.glob('android/app/src/main/cpp/**/*.cpp'))
+    files.update(root.glob('android/app/src/main/cpp/**/*.hpp'))
+    files.update(root.glob('gradle/*.toml'))
+    files.add(root/'android/app/src/main/AndroidManifest.xml')
     files.add(root/'android/app/build.gradle.kts')
     contents = {str(p.relative_to(root)): p.read_bytes() for p in sorted(files)}
     current = {name: hashlib.sha256(data).hexdigest() for name, data in contents.items()}

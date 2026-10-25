@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="DesktopSongOperationIdentityTest[desktop]" tests="1" skipped="0" failures="0" errors="0" timestamp="2026-10-25T06:47:37.451Z" hostname="lladlam-arch" time="0.1">
+  <properties/>
+  <testcase name="bridgedNeteaseWritesUseNativeIdAndForeignNumericIdsNeverReachNetease[desktop]" classname="melox.playback.DesktopSongOperationIdentityTest" time="0.1"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

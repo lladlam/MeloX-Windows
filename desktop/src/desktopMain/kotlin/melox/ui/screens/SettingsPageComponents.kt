@@ -85,7 +85,7 @@ internal fun SettingsInfoCard(value: String, modifier: Modifier = Modifier) {
 /** Platform availability is explicit. Unimplemented adapters must never persist a successful enable. */
 @Composable
 internal fun SettingsPlatformNote(vararg features: String) {
-    val locale = java.util.Locale.getDefault()
+    val locale = melox.settings.MeloXAppLanguage.locale
     val available = when (locale.language) {
         "zh" -> "当前桌面端尚未实现：${features.joinToString("、")}。"
         "ja" -> "このデスクトップ版では未対応：${features.joinToString("、")}。"

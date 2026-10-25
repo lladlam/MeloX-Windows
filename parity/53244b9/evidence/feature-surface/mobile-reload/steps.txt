@@ -1,0 +1,4 @@
+reveal-0:reveal@settings-open-general
+open-General:tap@settings-open-general
+reveal-2:reveal@application_language
+language-reloaded:wait@100

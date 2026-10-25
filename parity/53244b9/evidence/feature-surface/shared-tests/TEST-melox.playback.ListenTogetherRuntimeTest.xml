@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ListenTogetherRuntimeTest[desktop]" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-10-25T06:47:40.756Z" hostname="lladlam-arch" time="2.332">
+  <properties/>
+  <testcase name="failedSyncReportsReconnectingAndRecoversWithoutDiscardingRoom[desktop]" classname="melox.playback.ListenTogetherRuntimeTest" time="0.808"/>
+  <testcase name="remoteQueueAndSeekApplyToRealControllerWithoutEchoAndHeartbeatContinues[desktop]" classname="melox.playback.ListenTogetherRuntimeTest" time="0.548"/>
+  <testcase name="logoutWhileSongLookupIsSuspendedCannotInstallOldAccountQueue[desktop]" classname="melox.playback.ListenTogetherRuntimeTest" time="0.328"/>
+  <testcase name="concreteRemoteOrderBypassesLocalShuffleAndSmartQueue[desktop]" classname="melox.playback.ListenTogetherRuntimeTest" time="0.648"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

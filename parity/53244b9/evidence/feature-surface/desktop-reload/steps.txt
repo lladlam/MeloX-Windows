@@ -1,0 +1,5 @@
+group-General:tap@desktop-settings-tab:General
+reveal-1:reveal@desktop-settings-subtab:General
+open-General:tap@desktop-settings-subtab:General
+reveal-3:reveal@application_language
+language-reloaded:wait@100
