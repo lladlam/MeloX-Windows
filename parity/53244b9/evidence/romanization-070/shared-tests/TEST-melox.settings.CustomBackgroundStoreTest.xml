@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="CustomBackgroundStoreTest[desktop]" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-10-25T07:15:21.076Z" hostname="lladlam-arch" time="2.363">
+  <properties/>
+  <testcase name="rejectedImportPreservesTheCurrentBackground[desktop]" classname="melox.settings.CustomBackgroundStoreTest" time="1.806"/>
+  <testcase name="pruningOnlyRemovesOwnedImagesAndNeverOriginalOrUnrelatedFiles[desktop]" classname="melox.settings.CustomBackgroundStoreTest" time="0.119"/>
+  <testcase name="oversizedInputsAreRejectedBeforeDecode[desktop]" classname="melox.settings.CustomBackgroundStoreTest" time="0.007"/>
+  <testcase name="importedImageIsOwnedBoundedAndIndependentOfTheOriginal[desktop]" classname="melox.settings.CustomBackgroundStoreTest" time="0.431"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

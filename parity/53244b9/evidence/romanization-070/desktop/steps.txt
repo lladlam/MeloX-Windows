@@ -1,0 +1,7 @@
+consent:tap@remote-reject
+songs:tap@desktop-nav:Songs
+play-local:tap@provider-library-play-all
+decoded:wait@1800
+player:tap@mini-player-expand
+ruby:wait@1000
+pause:tap@mini-player-play-pause

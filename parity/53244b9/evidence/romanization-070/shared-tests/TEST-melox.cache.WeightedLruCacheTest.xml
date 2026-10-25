@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="WeightedLruCacheTest[desktop]" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-10-25T07:11:55.046Z" hostname="lladlam-arch" time="0.01">
+  <properties/>
+  <testcase name="thousandsOfDistinctSmallImagesRespectCountAndByteLimits[desktop]" classname="melox.cache.WeightedLruCacheTest" time="0.008"/>
+  <testcase name="decodedByteBudgetEvictsLeastRecentlyUsedAndLeavesVisibleOwnerValid[desktop]" classname="melox.cache.WeightedLruCacheTest" time="0.001"/>
+  <testcase name="duplicateAndOversizedDecodesDoNotExpandRetentionOrFlushUsefulImages[desktop]" classname="melox.cache.WeightedLruCacheTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

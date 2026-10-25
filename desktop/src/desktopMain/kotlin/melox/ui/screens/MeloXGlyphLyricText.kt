@@ -247,51 +247,70 @@ internal fun MeloXTimedAccompaniment(vocal: LyricAccompaniment, time: () -> Long
 internal fun MeloXRubyLyricText(line: LyricLine, time: () -> Long, timed: Boolean,
     fontScale: Float, quality: MeloXLyricsRenderingQuality, blur: Float, modifier: Modifier = Modifier) {
     val foreground = LocalMeloXLyricSurface.current.foreground
-    if (MeloXSettingsRuntime.lyricWordByWordEnabled) {
-        Column(modifier) {
-            MeloXGlyphLyricText(line, time, timed, fontScale, false, 1f, renderingQuality = quality, softBlurDp = blur,
-                modifier = Modifier.fillMaxWidth())
-            if (!line.romanization.isNullOrBlank()) {
-                val size = max(34f * fontScale * MeloXSettingsRuntime.lyricRomanizationFontScale, 13f)
-                Text(line.romanization.orEmpty(), color = foreground.copy(alpha = MeloXSettingsRuntime.lyricRomanizationOpacity),
-                    fontFamily = MeloXLanTingProFontFamily, fontSize = size.sp, lineHeight = (size * 1.2f).sp,
-                    fontWeight = MeloXSettingsRuntime.lyricFontWeight.composeWeight,
-                    textAlign = if (line.agent?.alignment == LyricAgentAlignment.Flipped) TextAlign.End else TextAlign.Start,
-                    modifier = Modifier.fillMaxWidth().padding(top = 4.dp))
+    val density = LocalDensity.current
+    val direction = LocalLayoutDirection.current
+    val measurer = rememberTextMeasurer(cacheSize = 0)
+    val flipped = line.agent?.alignment == LyricAgentAlignment.Flipped
+    val style = TextStyle(color = foreground, fontFamily = MeloXLanTingProFontFamily,
+        fontSize = (34f * fontScale).sp, lineHeight = (40.8f * fontScale).sp,
+        fontWeight = MeloXSettingsRuntime.lyricFontWeight.composeWeight, textAlign = if (flipped) TextAlign.End else TextAlign.Start)
+    BoxWithConstraints(modifier.testTag("lyric-ruby")) {
+        val width = with(density) { maxWidth.roundToPx().coerceAtLeast(1) }
+        val layout = remember(line.text, width, style, density, direction) {
+            measurer.measure(AnnotatedString(line.text), style, constraints = Constraints(minWidth = width, maxWidth = width), softWrap = true)
+        }
+        val segments = remember(line, layout) {
+            splitRomanizedSegments(line, (0 until layout.lineCount).map { layout.getLineStart(it) to layout.getLineEnd(it, true) })
+        }
+        Column(Modifier.fillMaxWidth()) {
+            segments.forEachIndexed { index, segment ->
+                Column(Modifier.fillMaxWidth().testTag("lyric-ruby-row-$index")) {
+                    MeloXGlyphLyricText(segment.line, time, timed, fontScale, MeloXSettingsRuntime.lyricReduceMotion, 1f,
+                        renderingQuality = quality, softBlurDp = blur, modifier = Modifier.fillMaxWidth())
+                    MeloXRomanizationRow(segment, style, fontScale, Modifier.fillMaxWidth())
+                }
             }
         }
-        return
     }
-    val units = remember(line) { LyricRomanizationAligner.units(line) }
-    if (units.isEmpty()) {
-        MeloXGlyphLyricText(line, time, timed, fontScale, true, 1f, renderingQuality = quality, softBlurDp = blur, modifier = modifier)
-        return
-    }
-    val flipped = line.agent?.alignment == LyricAgentAlignment.Flipped
-    val primarySize = 34f * fontScale
-    val rubySize = max(primarySize * MeloXSettingsRuntime.lyricRomanizationFontScale, 13f)
-    FlowRow(modifier.testTag("lyric-ruby"), horizontalArrangement = Arrangement.spacedBy(2.dp,
-        if (flipped) Alignment.End else Alignment.Start), verticalArrangement = Arrangement.spacedBy(2.dp)) {
-        units.forEach { unit ->
-            val start = unit.originalSyllables.minOfOrNull { it.startTimeMs } ?: 0L
-            val end = unit.originalSyllables.maxOfOrNull { it.endTimeMs }?.coerceAtLeast(start + 1) ?: 1L
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Text(unit.originalText, color = foreground, fontFamily = MeloXLanTingProFontFamily,
-                    modifier = Modifier.graphicsLayer {
-                        alpha = if (!timed || unit.originalSyllables.isEmpty()) 1f else .3f +
-                            ((time() - start).toFloat() / (end - start)).coerceIn(0f, 1f) * .7f
-                    }, fontSize = primarySize.sp, lineHeight = (40.8f * fontScale).sp,
-                    fontWeight = MeloXSettingsRuntime.lyricFontWeight.composeWeight, maxLines = 1,
-                    style = TextStyle(shadow = if (blur > .05f) Shadow(foreground.copy(alpha = .48f), Offset.Zero, blur) else null))
-                val romanization = unit.romanizationText
-                if (!romanization.isNullOrBlank()) {
-                    val originalCount = unit.originalText.codePointCount(0, unit.originalText.length).coerceAtLeast(1)
-                    val rubyCount = romanization.codePointCount(0, romanization.length).coerceAtLeast(1)
-                    Text(romanization, color = foreground.copy(alpha = MeloXSettingsRuntime.lyricRomanizationOpacity),
-                        fontFamily = MeloXLanTingProFontFamily, fontSize = (rubySize * (originalCount * 1.85f / rubyCount).coerceIn(.68f, 1f)).sp,
-                        lineHeight = (rubySize * 1.2f).sp, fontWeight = MeloXSettingsRuntime.lyricFontWeight.composeWeight, maxLines = 1,
-                        style = TextStyle(shadow = if (blur > .05f) Shadow(foreground.copy(alpha = .42f), Offset.Zero, blur) else null))
-                }
+}
+
+/** Uses the same shaped paragraph as the primary glyph renderer, including flipped/RTL geometry. */
+@Composable
+private fun MeloXRomanizationRow(segment: LyricRomanizedSegment, primaryStyle: TextStyle, fontScale: Float, modifier: Modifier) {
+    if (segment.units.isEmpty()) return
+    val density = LocalDensity.current
+    val direction = LocalLayoutDirection.current
+    val measurer = rememberTextMeasurer(cacheSize = 0)
+    val rubySize = max(34f * fontScale * MeloXSettingsRuntime.lyricRomanizationFontScale, 13f)
+    val color = LocalMeloXLyricSurface.current.foreground.copy(alpha = MeloXSettingsRuntime.lyricRomanizationOpacity)
+    BoxWithConstraints(modifier) {
+        val width = with(density) { maxWidth.roundToPx().coerceAtLeast(1) }
+        val layout = remember(segment.line.text, width, primaryStyle, density, direction) {
+            measurer.measure(AnnotatedString(segment.line.text), primaryStyle,
+                constraints = Constraints(minWidth = width, maxWidth = width), softWrap = true)
+        }
+        val spans = remember(layout, segment.units) {
+            segment.units.mapNotNull { unit ->
+                val boxes = (unit.start until unit.end).map { layout.getBoundingBox(it) }.filter { it.width.isFinite() && it.height.isFinite() }
+                if (boxes.isEmpty()) null else unit.reading to ((boxes.minOf { it.left } + boxes.maxOf { it.right }) / 2f)
+            }.sortedBy { it.second }
+        }
+        val readingStyle = primaryStyle.copy(fontSize = rubySize.sp, lineHeight = (rubySize * 1.2f).sp, textAlign = TextAlign.Start)
+        val annotations = remember(spans, readingStyle, width, density, direction) {
+            spans.mapIndexed { index, (reading, center) ->
+                val left = spans.getOrNull(index - 1)?.let { (it.second + center) / 2f } ?: 0f
+                val right = spans.getOrNull(index + 1)?.let { (it.second + center) / 2f } ?: width.toFloat()
+                val natural = measurer.measure(AnnotatedString(reading), readingStyle, softWrap = false, maxLines = 1)
+                val scale = ((right - left).coerceAtLeast(1f) / natural.size.width.coerceAtLeast(1)).coerceIn(.35f, 1f)
+                val measured = if (scale == 1f) natural else measurer.measure(AnnotatedString(reading),
+                    readingStyle.copy(fontSize = (rubySize * scale).sp), softWrap = false, maxLines = 1)
+                Triple(measured, (center - measured.size.width / 2f).coerceIn(left, (right - measured.size.width).coerceAtLeast(left)), left to right)
+            }
+        }
+        Canvas(Modifier.fillMaxWidth().height(with(density) { (rubySize * 1.2f).sp.toDp() } + 4.dp)
+            .testTag("lyric-romanization-row").semantics { text = AnnotatedString(segment.units.joinToString(" ") { it.reading }) }) {
+            annotations.forEach { (annotation, x, limits) ->
+                clipRect(left = limits.first, right = limits.second) { drawText(annotation, color = color, topLeft = Offset(x, 4.dp.toPx())) }
             }
         }
     }

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ContentLayoutRestorationTest[desktop]" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-10-25T07:15:16.506Z" hostname="lladlam-arch" time="4.526">
+  <properties/>
+  <testcase name="homeReorderingKeepsQuickActionsInTheirSavedPositionAndHonorsFeatureTogglesAfterReload[desktop]" classname="melox.settings.ContentLayoutRestorationTest" time="1.046"/>
+  <testcase name="rootDestinationsMatchRealFeedCapabilitiesAndKeepNeteaseModulesSourceScoped[desktop]" classname="melox.settings.ContentLayoutRestorationTest" time="0.433"/>
+  <testcase name="shortcutCanOpenEnabledCloudWithoutChangingDockOrPretendingOtherProviderOwnsIt[desktop]" classname="melox.settings.ContentLayoutRestorationTest" time="0.315"/>
+  <testcase name="rememberingOffUsesDefaultWithoutOverwritingPreviousPerProviderHistory[desktop]" classname="melox.settings.ContentLayoutRestorationTest" time="0.507"/>
+  <testcase name="libraryRemembersPerSourceAndDisabledSavedPageFallsBackToConfiguredVisibleDefault[desktop]" classname="melox.settings.ContentLayoutRestorationTest" time="0.977"/>
+  <testcase name="persistedTabOrderAndPlacementSurviveCriticalThenFullStartupWithoutLosingSettings[desktop]" classname="melox.settings.ContentLayoutRestorationTest" time="1.245"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

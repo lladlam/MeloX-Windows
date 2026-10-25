@@ -41,14 +41,14 @@
 | Bilibili | `4c94f7e`：收藏的他人列表／合集、分页与单视频隔离 | 用户私人列表；WBI 播放及音质细节与最新 Android 持续对照 |
 | 播放回退 | `566d099`：native → 内置串行严格完整匹配 → CHKSZ／LX | 概念版候选随真实 provider 迁入；真实账号／权限与网络验收 |
 | 播放器／队列／MiniPlay | 两套独立呈现＋真实 PlaybackCommands／PCM；既有 Dock／AutoMix 证据 | MiniPlay 材质与侧反射、横竖屏同一时钟、所有页面封面 morph |
-| 歌词／罗马音 | 双布局渲染、语言链、真实歌词 | Android 新 JapaneseRubyAlignment 的字符范围／视觉行对齐尚未迁移；天际／EVA／TextPV 同内容动画验收 |
+| 歌词／罗马音 | 双布局渲染、语言链、真实歌词；本轮接 JapaneseRubyAlignment 及视觉行字符范围；348 tests 与双布局 17 scenes／18 assertions 通过，见 ROMANIZATION_070_UPDATE.md | 线上同内容日文曲目、天际／EVA／TextPV 同内容动画验收 |
 | 歌词样式选项 | Windows 仍保留 Apple Music／EVA／TextPV 可选 | Android 0.7 当前仅显示 Apple Music；现有用户设置兼容策略需随迁移明确核销 |
 | 歌词分享 | 已有真实 PNG 导出，本轮接自定义图背景 | 长按多行、背景与排版同内容对照、原生保存对话框 |
 | AutoSync 模型 | 当前没有 Windows 等价模型面板／完整推理链 | **ONNX／中文 CIF／日文 G2P、模型下载校验／存储所有权、真实推理均待实现** |
 | EQ／AutoMix | 实际 PCM DSP、智能队列分析额度与既有 Linux／Windows 回归 | 物理听感、长时内存和所有硬件输出接入 |
 | LAN／DLNA | 进程级会话、两套输出面板、真实协议与回环测试 | Windows↔Android 跨机、多网卡／防火墙／长时漂移、物理音箱 |
 | MiPlay／USB 独占 | Android 为 Binder／usbfs 平台实现 | **Windows 对应 backend 未实现**；不能仅增加开关称支持 |
-| 系统媒体／悬浮歌词 | 有设置页，未支持项显式 disabled | Windows SMTC、悬浮歌词窗／权限与原生输入等价实现 |
+| 系统媒体／悬浮歌词 | 有设置页，未支持项显式 disabled；已跟踪 Android 统一 loader 值参数、后台完整 media ID／多源歌词更新 | Windows SMTC、悬浮歌词窗／权限与原生输入等价实现，并复用同一真实歌词链 |
 | 引导／法律／关于 | 现有两套 Onboarding／About＋legal 文档页 | Android 0.7 全屏连续引导、1.3 版文本的 Windows 平台适配与品牌逐项核销 |
 | 云控／主题／规则 | 当前签名平台熔断与基础配置已实现 | 新 schema 的文案／主题／规则消费者与受限 QuickJS 脚本未完成 |
 | 多语言 | 本轮补实际语言选择；已有 pinned 资源保持原文 | 全量最新资源导出、硬编码文案、土耳其语、桌面全部 Locale 覆盖 |
@@ -69,3 +69,7 @@
 最后专辑账号边界修正：按专辑 ID 与会话 revision 创建独立 composition／协程 scope，使用固定会话 Cookie 的请求 client，切换账号时销毁旧详情与操作任务；修正后额外桌面编译通过。共享业务无需因该 UI 生命周期修正重复全量运行。
 
 证据：`evidence/feature-surface/summary.json`、四组 UI capture／截图／semantics／压缩日志、shared-tests 及最终编译日志。Android 扩大监听新增 164 个原已存在的 XML／本地源码／i18n 文件；原共同监控文件内容变化为 0，新增监控不冒充 Android 本次刚新增代码。
+
+设置提交 `8186c3b` 的 Windows CI `40170895379` 在共享测试阶段因 `MeloXLanProtocolTest:36` 的真实 loopback 监听端口无法绑定而失败，尚未产生可验收的新发行。原测试随机选择 49000 段，可能落入 Windows runner 保留端口区间；已改为先由操作系统选择可用 loopback 端口，真实 socket／鉴权／协议断言保留。失败日志见 `evidence/feature-surface/windows-ci-40170895379-failed.log.gz`，后续重跑结果另记。
+
+端口修正已包含在后续 348 tests 的全量成功回归中；额外修正“错误 PIN 固定为 0000 恰好等于随机真实 PIN”的低概率不确定性后，独立重跑该套真实 loopback 协议测试 3 项全部通过。证据 `evidence/romanization-070/lan-port-selection-validation.log.gz` 与 `lan-protocol-final.xml`。

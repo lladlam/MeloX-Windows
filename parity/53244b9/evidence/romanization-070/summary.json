@@ -1,0 +1,29 @@
+{
+  "shared_tests": {
+    "suites": 68,
+    "tests": 348,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "ui": {
+    "mobile": {
+      "layout": "mobile",
+      "scenes": 9,
+      "assertions": 9,
+      "visual_rows": 3,
+      "reading_rows": 3,
+      "fixture": "generated real Local WAV + TTML, no online lyric claim",
+      "physical_audible": false
+    },
+    "desktop": {
+      "layout": "desktop",
+      "scenes": 8,
+      "assertions": 9,
+      "visual_rows": 2,
+      "reading_rows": 2,
+      "fixture": "generated real Local WAV + TTML, no online lyric claim",
+      "physical_audible": false
+    }
+  }
+}

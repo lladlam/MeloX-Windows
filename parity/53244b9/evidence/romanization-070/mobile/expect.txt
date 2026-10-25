@@ -1,0 +1,5 @@
+play-local=tag:mini-player-expand
+decoded=playing:true,no-playback-error:true
+player=tag:now-playing
+ruby=tag:lyric-ruby,tag:lyric-ruby-row-1,tag:lyric-romanization-row
+pause=playing:false,no-playback-error:true

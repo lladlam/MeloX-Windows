@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ProviderRankingShapeTest[desktop]" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-10-25T07:14:49.014Z" hostname="lladlam-arch" time="0.451">
+  <properties/>
+  <testcase name="kmrV2JoinsNestedAudioIdentityAndMillisecondDurationToItsParentSong[desktop]" classname="melox.provider.ProviderRankingShapeTest" time="0.272"/>
+  <testcase name="videoChartDoesNotConsumeTheSongRankingLimit[desktop]" classname="melox.provider.ProviderRankingShapeTest" time="0.179"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

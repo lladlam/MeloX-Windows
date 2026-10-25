@@ -1,0 +1,9 @@
+{
+  "layout": "desktop",
+  "scenes": 8,
+  "assertions": 9,
+  "visual_rows": 2,
+  "reading_rows": 2,
+  "fixture": "generated real Local WAV + TTML, no online lyric claim",
+  "physical_audible": false
+}

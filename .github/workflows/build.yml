@@ -276,6 +276,13 @@ jobs:
             python tools/capture_feature_surface.py $layout reload $homeDir "desktop/build/parity/feature-surface-$layout-reload"
             if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           }
+      - name: Replay wrapped Japanese readings with real Local decoding in both layouts
+        shell: pwsh
+        run: |
+          foreach ($layout in @("mobile", "desktop")) {
+            python tools/capture_ruby_alignment.py $layout "$pwd/desktop/build/parity/ruby-$layout-home" "desktop/build/parity/ruby-$layout"
+            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          }
       - name: Replay every Desktop settings page and shared account actions
         shell: pwsh
         run: |

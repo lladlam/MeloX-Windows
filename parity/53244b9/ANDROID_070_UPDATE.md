@@ -26,6 +26,10 @@
 
 汽水提交 `ec5753a` 的 Windows CI `40164499557` 成功；完整下载发行 ZIP **339546447 bytes / 357 entries**，SHA-256 **`b492f43bb8b31c6b343080fb45337bad7e2a402778887e46f8d3ee16821de83a`**。独立检查 ZIP/JAR CRC、build-info 精确提交、固定资源与 Windows PE 解码器均通过，JSON 在 `evidence/windows-download-40164499557/`。此发行只对应汽水批次，不能当作后续回退／Bilibili／设置功能发行已通过。
 
+回退链提交 `566d099` 的 Windows CI `40165291486` 成功；完整下载 ZIP **339555148 bytes / 357 entries**，SHA-256 **`0b52ee0e7496a9332c8e75057975eed3e352bbe6078548f22fb84223c003b058`**。独立提交 stamp、CRC／资源／PE 核验均通过，证据 `evidence/windows-download-40165291486/`。
+
+Bilibili 提交 `4c94f7e` 的 Windows CI `40166205146` 成功；完整下载 ZIP **339557951 bytes / 357 entries**，SHA-256 **`c3feac829aff3d61915420b523f1e0a289e91ba1acaa1d99bb377e5ecb1d32fd`**。独立提交 stamp、CRC／资源／PE 核验均通过，证据 `evidence/windows-download-40166205146/`。此包仍不含后续 `8186c3b` 设置补齐及罗马音增量。
+
 匿名上游只读核查：推荐接口 HTTP 200 返回 10 个内容块；H5 示例曲目 `7079108541549643812` 返回原曲 297240ms、音频 30.047 秒，为试听。该检查没有进行用户登录或签到写入操作。
 
 ## 持续检查

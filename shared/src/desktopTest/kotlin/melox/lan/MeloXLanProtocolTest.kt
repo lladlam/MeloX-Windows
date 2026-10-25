@@ -31,14 +31,16 @@ class MeloXLanProtocolTest {
         val suffix = UUID.randomUUID().toString().take(8)
         val host = Host()
         val serverIdentity = LanIdentity("lan-test-server-$suffix")
-        serverIdentity.port = 49000 + (suffix.hashCode() and 1023)
+        // Windows hosted runners reserve whole dynamic-port ranges. Ask the OS
+        // for an available loopback port instead of guessing inside one range.
+        serverIdentity.port = java.net.ServerSocket(0, 0, InetAddress.getLoopbackAddress()).use { it.localPort }
         val server = LanServer(serverIdentity, host, InetAddress.getLoopbackAddress())
         val port = server.start()
         try {
             val clientIdentity = LanIdentity("lan-test-client-$suffix")
             val device = LanDevice(serverIdentity.deviceId, "Desktop", "127.0.0.1", port)
             val wrong = LanClient(device, clientIdentity).let { c ->
-                val auth = c.connect("0000"); c.close(); auth
+                val auth = c.connect(if (serverIdentity.pin == "0000") "0001" else "0000"); c.close(); auth
             }
             assertEquals("auth_required", wrong.optString("type"))
             val events = mutableListOf<JSONObject>()

@@ -1,7 +1,7 @@
 {
   "repository": "MeloX-Android local working tree",
   "head": "91adac7e778b712d3ed9ea6c90c89c2b2ca8766c",
-  "checked_utc": "2026-10-25T04:49:30.015832+00:00",
+  "checked_utc": "2026-10-25T07:10:29.028564+00:00",
   "files": {
     "android/app/src/androidTest/java/com/lladlam/melox/miplay/MiPlayProbeRunner.java": "f2055ef7b306ade9b6c9369f87511f528ff456654dfb8932ebd1830b1ad26c25",
     "android/app/src/androidTest/java/com/lladlam/melox/miplay/MiPlayWireRegression.java": "26de6574d48a9fd061f50fa340527770141ee213ad70cea9a54e257d26650555",
@@ -27,7 +27,7 @@
     "android/app/src/main/kotlin/com/lladlam/melox/lan/MeloXLanTogetherCoordinator.kt": "1a2d0d62a62d29c65032481a237972e34292e935696b6c6b2e9737a409ebb665",
     "android/app/src/main/kotlin/com/lladlam/melox/lan/MeloXLanTogetherSync.kt": "958e8a2a116af266075edac5ffb2788501da8285605074ed97df72094d21435a",
     "android/app/src/main/kotlin/com/lladlam/melox/miplay/MiPlaySession.kt": "977ebe3b0d3cfecf16b89bc6a07b1da821cee22beb62ccc4000ef5bb9bbeb15c",
-    "android/app/src/main/kotlin/com/lladlam/melox/playback/MeloXPlaybackService.kt": "192805fe798dd7410177f72061a95b094359976897e64dcdcb15a740e25701f3",
+    "android/app/src/main/kotlin/com/lladlam/melox/playback/MeloXPlaybackService.kt": "0699135310ed64b76352a1959a4c262d733c42c352098eeae594f8a455aa74e3",
     "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXAudioOutputDialog.kt": "ee21f45ec97af3f3c6512ce0fb47c4e07925af2867704f5a57f1798e4c5e7034",
     "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXAudioOutputPlaybackPanel.kt": "410d467f2bcf6d1c99b58cc81615460a4d0998e3d4a6ec5cbc62548a6e5b0477",
     "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXLanOutputPanel.kt": "27e7cef62808a89e1331d6223dc3344cfb395533a428881b71de9f4642a1b393",
@@ -42,5 +42,7 @@
     "android/app/src/test/kotlin/com/lladlam/melox/usb/UsbAudioDescriptorsTest.kt": "62dc2218c3e204c10fac2ee47c4bbe113cbbcb465527e9172df2295ddbebe233",
     "docs/MELOX-LAN.md": "44e92d908259dc0b5db8c6015c7ef3133c0894fddf3553b4e9fa00e5fcf66a6e"
   },
-  "changed_since_previous_check": []
+  "changed_since_previous_check": [
+    "android/app/src/main/kotlin/com/lladlam/melox/playback/MeloXPlaybackService.kt"
+  ]
 }

@@ -1,0 +1,8 @@
+consent:tap@remote-reject
+songs:tap@library-page:Songs
+play-local:tap@provider-library-play-all
+decoded:wait@1800
+player:tap@mini-player-expand
+lyrics:tap@player-show-lyrics
+ruby:wait@1000
+pause:tap@player-play-pause

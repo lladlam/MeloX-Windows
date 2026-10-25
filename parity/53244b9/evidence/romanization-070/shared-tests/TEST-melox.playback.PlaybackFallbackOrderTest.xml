@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="PlaybackFallbackOrderTest[desktop]" tests="9" skipped="0" failures="0" errors="0" timestamp="2026-10-25T07:14:22.177Z" hostname="lladlam-arch" time="0.128">
+  <properties/>
+  <testcase name="configuredOrderIsSerialAndPreviewCandidatesDoNotWin[desktop]" classname="melox.playback.PlaybackFallbackOrderTest" time="0.061"/>
+  <testcase name="disabledOrMembershipOnlyThirdPartyStagesRespectTheirSwitches[desktop]" classname="melox.playback.PlaybackFallbackOrderTest" time="0.001"/>
+  <testcase name="fallbackSettingChangesInvalidateTheResolvedProviderCache[desktop]" classname="melox.playback.PlaybackFallbackOrderTest" time="0.012"/>
+  <testcase name="exhaustedBuiltInsUseThirdPartyLast[desktop]" classname="melox.playback.PlaybackFallbackOrderTest" time="0.009"/>
+  <testcase name="aPlayableCurrentProviderNeverCallsFallbacks[desktop]" classname="melox.playback.PlaybackFallbackOrderTest" time="0.008"/>
+  <testcase name="failedNativeUsesStrictBuiltInBeforeThirdPartyAndKeepsHeaders[desktop]" classname="melox.playback.PlaybackFallbackOrderTest" time="0.007"/>
+  <testcase name="builtInStageFailureStillAllowsTheConfiguredFinalStage[desktop]" classname="melox.playback.PlaybackFallbackOrderTest" time="0.001"/>
+  <testcase name="loginRequiredDoesNotFallThroughAnEntireQueue[desktop]" classname="melox.playback.PlaybackFallbackOrderTest" time="0.011"/>
+  <testcase name="aFailingConfiguredThirdPartySourceDoesNotHideTheNextOne[desktop]" classname="melox.playback.PlaybackFallbackOrderTest" time="0.018"/>
+  <system-out><![CDATA[[DEBUG MeloXThirdParty] resolve detail source=qishui id=70791085 title=Song artists=Artist durationMs=200000 metadata=Empty
+[INFO MeloXThirdParty] Resolve start source=qishui quality=Standard thirdParty=true
+[INFO MeloXThirdParty] Resolve fallback source=qishui stage=provider chksz=unavailable
+[DEBUG MeloXThirdParty] resolve detail source=qishui id=70791085 title=Song artists=Artist durationMs=200000 metadata=Empty
+[INFO MeloXThirdParty] Resolve start source=qishui quality=Standard thirdParty=true
+[INFO MeloXThirdParty] Resolve fallback source=qishui stage=provider chksz=unavailable
+[DEBUG MeloXThirdParty] resolve detail source=qishui id=70791085 title=Song artists=Artist durationMs=200000 metadata=Empty
+[INFO MeloXThirdParty] Resolve start source=qishui quality=Standard thirdParty=true
+[INFO MeloXThirdParty] Resolve fallback source=qishui stage=provider chksz=unavailable
+[DEBUG MeloXThirdParty] resolve detail source=qishui id=70791085 title=Song artists=Artist durationMs=200000 metadata=Empty
+[INFO MeloXThirdParty] Resolve start source=qishui quality=Standard thirdParty=true
+[INFO MeloXThirdParty] Resolve fallback source=qishui stage=provider chksz=unavailable
+[DEBUG MeloXThirdParty] resolve detail source=qishui id=70791085 title=Song artists=Artist durationMs=200000 metadata=Empty
+[INFO MeloXThirdParty] Resolve start source=qishui quality=Standard thirdParty=true
+[INFO MeloXThirdParty] Resolve fallback source=qishui stage=provider chksz=unavailable
+[DEBUG MeloXThirdParty] resolve detail source=qishui id=70791085 title=Song artists=Artist durationMs=200000 metadata=Empty
+[INFO MeloXThirdParty] Resolve start source=qishui quality=Standard thirdParty=true
+[INFO MeloXThirdParty] Resolve fallback source=qishui stage=provider chksz=unavailable
+[DEBUG MeloXThirdParty] resolve detail source=qishui id=70791085 title=Song artists=Artist durationMs=200000 metadata=Empty
+[INFO MeloXThirdParty] Resolve start source=qishui quality=Standard thirdParty=true
+[INFO MeloXThirdParty] Resolve fallback source=qishui stage=provider chksz=unavailable
+[WARN MeloXThirdParty] Source failed: IllegalStateException
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

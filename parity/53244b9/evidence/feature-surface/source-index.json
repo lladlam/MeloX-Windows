@@ -1,5 +1,5 @@
 {
-  "checked_utc": "2026-10-25T06:55:02.730652+00:00",
+  "checked_utc": "2026-10-25T07:24:26.569708+00:00",
   "android_head": "91adac7e778b712d3ed9ea6c90c89c2b2ca8766c",
   "scope": "Live working-tree source inventory. Presence is not functional or visual parity; missing pattern matches require manual routing review.",
   "areas": {
@@ -812,7 +812,7 @@
         },
         {
           "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXProviderLyricsLoader.kt",
-          "sha256": "7e63b721dc4476c0c041c45aff197d865ae4dd910814b5292fa87c8a899e58aa"
+          "sha256": "86ab43f9d745e82437236764419d0c564379ac8e04acea1d11aaf631fdd8c8a2"
         },
         {
           "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXSkylineLyrics.kt",
@@ -861,6 +861,10 @@
           "sha256": "67c9687527f950b9d771ba1510a1995f606c73a88f2be251816b1c48171a710d"
         },
         {
+          "path": "shared/src/commonMain/kotlin/melox/lyrics/JapaneseRubyAlignment.kt",
+          "sha256": "2234b3a2c17f8c0bd0e916439095f313fa501318c33754892865e39f8951a29a"
+        },
+        {
           "path": "shared/src/commonMain/kotlin/melox/lyrics/KugouKrcLyricsParser.kt",
           "sha256": "11e09958f6fe5b374f5116ddffd37eea8537dce188f2c2e206be9d7ceb90b723"
         },
@@ -882,7 +886,11 @@
         },
         {
           "path": "shared/src/commonMain/kotlin/melox/lyrics/LyricRomanizationAligner.kt",
-          "sha256": "03b5137c025c0d1ba6b59aa1621449ad04e16b874fcd3c1765be134fdddfb5cb"
+          "sha256": "b3be16c7de3dd30782698f14fc666d5a49e7327c37ec48687e7e5fdbcdae3486"
+        },
+        {
+          "path": "shared/src/commonMain/kotlin/melox/lyrics/LyricRomanizedSegments.kt",
+          "sha256": "365bb9c454544e89e13384e751cfbdc16b532fa234c11eb148a65007c8f3b5b0"
         },
         {
           "path": "shared/src/commonMain/kotlin/melox/lyrics/LyricTimelineProcessor.kt",
@@ -1956,7 +1964,7 @@
     },
     {
       "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXProviderLyricsLoader.kt",
-      "sha256": "7e63b721dc4476c0c041c45aff197d865ae4dd910814b5292fa87c8a899e58aa"
+      "sha256": "86ab43f9d745e82437236764419d0c564379ac8e04acea1d11aaf631fdd8c8a2"
     },
     {
       "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXProviderSongActionsOverlay.kt",
@@ -2490,7 +2498,7 @@
     },
     {
       "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXGlyphLyricText.kt",
-      "sha256": "5d5311d4ac841496824c880374e60a468bc02305bf978edc1f4ed6dcdf330b75"
+      "sha256": "993f96164d24fd82463d50f692fb587cbbdea89a7308349f27883c5e2fd6945e"
     },
     {
       "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/MeloXIOSLandscapePlayerScene.kt",
@@ -2791,6 +2799,10 @@
       "sha256": "67c9687527f950b9d771ba1510a1995f606c73a88f2be251816b1c48171a710d"
     },
     {
+      "path": "shared/src/commonMain/kotlin/melox/lyrics/JapaneseRubyAlignment.kt",
+      "sha256": "2234b3a2c17f8c0bd0e916439095f313fa501318c33754892865e39f8951a29a"
+    },
+    {
       "path": "shared/src/commonMain/kotlin/melox/lyrics/KugouKrcLyricsParser.kt",
       "sha256": "11e09958f6fe5b374f5116ddffd37eea8537dce188f2c2e206be9d7ceb90b723"
     },
@@ -2812,7 +2824,11 @@
     },
     {
       "path": "shared/src/commonMain/kotlin/melox/lyrics/LyricRomanizationAligner.kt",
-      "sha256": "03b5137c025c0d1ba6b59aa1621449ad04e16b874fcd3c1765be134fdddfb5cb"
+      "sha256": "b3be16c7de3dd30782698f14fc666d5a49e7327c37ec48687e7e5fdbcdae3486"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/lyrics/LyricRomanizedSegments.kt",
+      "sha256": "365bb9c454544e89e13384e751cfbdc16b532fa234c11eb148a65007c8f3b5b0"
     },
     {
       "path": "shared/src/commonMain/kotlin/melox/lyrics/LyricTimelineProcessor.kt",

@@ -18,7 +18,10 @@ object LyricRomanizationAligner {
         val romanization = line.romanization?.trim().orEmpty()
         if (romanization.isBlank()) return emptyList()
 
-        timedUnits(line)?.let { return it }
+        timedUnits(line)?.let { return it.flatMap(::splitJapanese) }
+
+        val japanese = splitJapanese(LyricRubyUnit(line.text, line.syllables, romanization))
+        if (japanese.size > 1) return japanese
 
         val tokens = romanization.split(Regex("\\s+")).filter(String::isNotBlank)
         if (tokens.isNotEmpty() && line.syllables.size == tokens.size) {
@@ -38,6 +41,24 @@ object LyricRomanizationAligner {
         }
 
         return listOf(LyricRubyUnit(line.text, line.syllables, romanization))
+    }
+
+    private fun splitJapanese(unit: LyricRubyUnit): List<LyricRubyUnit> {
+        val parts = JapaneseRubyAlignment.align(unit.originalText, unit.romanizationText.orEmpty()) ?: return listOf(unit)
+        if (unit.originalSyllables.isNotEmpty() && unit.originalSyllables.joinToString("") { it.text } != unit.originalText) return listOf(unit)
+        var offset = 0
+        return parts.map { part ->
+            val start = offset; offset += part.original.length
+            var syllableOffset = 0
+            val syllables = unit.originalSyllables.mapNotNull { syllable ->
+                val from = max(start, syllableOffset)
+                val to = min(offset, syllableOffset + syllable.text.length)
+                val originalOffset = syllableOffset
+                syllableOffset += syllable.text.length
+                if (from < to) syllable.copy(text = syllable.text.substring(from - originalOffset, to - originalOffset)) else null
+            }
+            LyricRubyUnit(part.original, syllables, part.reading)
+        }
     }
 
     private fun timedUnits(line: LyricLine): List<LyricRubyUnit>? {
