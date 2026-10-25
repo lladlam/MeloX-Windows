@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="QishuiProviderTest[desktop]" tests="10" skipped="0" failures="0" errors="0" timestamp="2026-10-25T07:33:36.752Z" hostname="lladlam-arch" time="0.198">
+  <properties/>
+  <testcase name="playlistCursorContinuesBeyondFirstReportedCount[desktop]" classname="melox.provider.qishui.QishuiProviderTest" time="0.053"/>
+  <testcase name="h5ShortAudioIsExplicitlyAPreview[desktop]" classname="melox.provider.qishui.QishuiProviderTest" time="0.042"/>
+  <testcase name="signedOutLibraryDoesNotSendAnAccountRequest[desktop]" classname="melox.provider.qishui.QishuiProviderTest" time="0.017"/>
+  <testcase name="searchFollowsOpaqueCursorInsteadOfAnAssumedOffset[desktop]" classname="melox.provider.qishui.QishuiProviderTest" time="0.011"/>
+  <testcase name="authenticatedFullAudioPreservesActualQualityWithoutCdnCookies[desktop]" classname="melox.provider.qishui.QishuiProviderTest" time="0.003"/>
+  <testcase name="qrCreationCookiesAreIsolatedAndConfirmedSessionIsExtracted[desktop]" classname="melox.provider.qishui.QishuiProviderTest" time="0.038"/>
+  <testcase name="encryptedAndUntrustedUrlsDoNotResolve[desktop]" classname="melox.provider.qishui.QishuiProviderTest" time="0.0"/>
+  <testcase name="redirectsAreNotAcceptedAsSuccessfulNonPassportRequests[desktop]" classname="melox.provider.qishui.QishuiProviderTest" time="0.013"/>
+  <testcase name="passportRedirectPreservesFullCookieAcrossPollsAndProfileVerification[desktop]" classname="melox.provider.qishui.QishuiProviderTest" time="0.019"/>
+  <testcase name="nestedTracksPreserveLongIdentityMillisecondsAndArtwork[desktop]" classname="melox.provider.qishui.QishuiProviderTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

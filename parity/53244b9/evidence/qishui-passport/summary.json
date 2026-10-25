@@ -1,0 +1,26 @@
+{
+  "full_shared": {
+    "suites": 68,
+    "tests": 350,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "final_qishui": {
+    "tests": 10,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "ui": {
+    "mobile": {
+      "scenes": 9,
+      "assertions": 12
+    },
+    "desktop": {
+      "scenes": 9,
+      "assertions": 12
+    }
+  },
+  "user_scan_confirmation": "pending"
+}

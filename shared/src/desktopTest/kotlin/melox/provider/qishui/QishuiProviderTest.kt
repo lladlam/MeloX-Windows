@@ -88,4 +88,56 @@ class QishuiProviderTest {
         assertEquals("confirmed-session", api.pollQr(qr.token).sessionId)
         assertFailsWith<IllegalArgumentException> { api.pollQr("stale-token") }
     }
+
+    @Test fun passportRedirectPreservesFullCookieAcrossPollsAndProfileVerification() = runBlocking {
+        var poll = 0
+        val requests = mutableListOf<String>()
+        val http = OkHttpClient.Builder().addInterceptor { chain ->
+            val request = chain.request(); val path = request.url.encodedPath
+            requests += path
+            val response = Response.Builder().request(request).protocol(Protocol.HTTP_1_1).message("fixture")
+            when {
+                path.endsWith("get_qrcode/") -> {
+                    assertNull(request.header("Cookie"))
+                    response.code(200).addHeader("Set-Cookie", "csrf=initial; Domain=.douyin.com; Secure")
+                        .addHeader("Set-Cookie", "sessionid=handshake; Domain=.douyin.com; Secure")
+                        .body("""{"data":{"token":"redirect-qr","qrcode":"data:image/png;base64,AA=="}}""".toResponseBody())
+                }
+                path.endsWith("check_qrconnect/") -> {
+                    poll++
+                    assertEquals(if (poll == 1) "csrf=initial; sessionid=handshake" else "csrf=rotated; sessionid=handshake", request.header("Cookie"))
+                    if (poll == 1) response.code(200).addHeader("Set-Cookie", "csrf=rotated; Domain=.douyin.com; Secure")
+                        .body("""{"data":{"status":"scanned"}}""".toResponseBody())
+                    else response.code(302).addHeader("Location", "https://example.invalid/must-not-follow")
+                        .addHeader("Set-Cookie", "sessionid=confirmed; Domain=.douyin.com; Secure; HttpOnly")
+                        .addHeader("Set-Cookie", "sid_tt=extra; Domain=.douyin.com; Secure")
+                        .body("".toResponseBody())
+                }
+                else -> {
+                    assertEquals("/luna/pc/me", path)
+                    assertEquals("csrf=rotated; sessionid=confirmed; sid_tt=extra", request.header("Cookie"))
+                    response.code(200).body("""{"my_info":{"id":"real-profile-id","nickname":"Verified"}}""".toResponseBody())
+                }
+            }.build()
+        }.build()
+        val api = QishuiApiClient({ session }, http)
+        val qr = api.createQr()
+        assertEquals("", api.pollQr(qr.token).sessionId)
+        val confirmed = api.pollQr(qr.token)
+        assertEquals("confirmed", confirmed.sessionId)
+        assertEquals("csrf=rotated; sessionid=confirmed; sid_tt=extra", confirmed.cookie)
+        val profile = QishuiApiClient({ session.copy(sessionId = confirmed.sessionId, cookie = confirmed.cookie) }, http).profile()
+        assertEquals("real-profile-id", profile?.id)
+        assertEquals(4, requests.size)
+        api.createQr()
+        assertEquals(5, requests.size) // refreshed attempt sends no old QR/account Cookie
+    }
+
+    @Test fun redirectsAreNotAcceptedAsSuccessfulNonPassportRequests() = runBlocking<Unit> {
+        val http = OkHttpClient.Builder().addInterceptor { chain ->
+            Response.Builder().request(chain.request()).protocol(Protocol.HTTP_1_1).message("fixture").code(302)
+                .addHeader("Location", "https://example.invalid/must-not-follow").body("".toResponseBody()).build()
+        }.build()
+        assertFailsWith<java.io.IOException> { QishuiApiClient({ session }, http).profile() }
+    }
 }

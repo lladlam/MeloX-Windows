@@ -30,6 +30,20 @@
 
 Bilibili 提交 `4c94f7e` 的 Windows CI `40166205146` 成功；完整下载 ZIP **339557951 bytes / 357 entries**，SHA-256 **`c3feac829aff3d61915420b523f1e0a289e91ba1acaa1d99bb377e5ecb1d32fd`**。独立提交 stamp、CRC／资源／PE 核验均通过，证据 `evidence/windows-download-40166205146/`。此包仍不含后续 `8186c3b` 设置补齐及罗马音增量。
 
+## 实时汽水 Passport／完整 Cookie 修复
+
+监听再次捕获 Android `QishuiApiClient`、`QishuiSessionStore`、`QishuiLoginScreen` 与协议回归更新，已迁入 Windows：
+
+- Passport 的 3xx 可作为确认结果，允许空 body，提取全部 Set-Cookie 的 name/value；不跟随 Location。普通音乐 API 的 3xx 仍报错。
+- QR 创建请求隔离旧账号 Cookie；轮询 Cookie 按名字合并覆盖，保留 CSRF／sid_tt 等信息；创建阶段的握手 sessionid 不作为登录确认，只有当前轮询新发的 sessionid 才进入真实 `/luna/pc/me` 校验。
+- 校验临时会话包含完整 Cookie，并清空旧用户 ID／昵称，防止沿用旧账号身份；校验成功且协程未取消才安全保存完整凭据。退出清除 sessionid 与 Cookie，保留设备身份。
+- 旧 sessionid-only 安全存储兼容；Cookie 加入 SHA-256 播放认证指纹；Session／QrState 的字符串表示不输出凭据；媒体 CDN 仍不携带账号 Cookie。
+- 同期 Android 构建切换为 ARM ABI 分包，属于手机发行变动，不套用到 Windows 分发。
+
+本地 **68 suites / 350 tests** 零失败／错误／跳过、桌面编译通过；追加“握手 sessionid 不算确认”修正后最终定向 **10 tests** 全通过。协议回归覆盖父域 Cookie、CSRF 轮换、空体 302、完整 profile 请求、刷新隔离、普通 API 重定向失败。双 UI 真实上游 QR 加载／刷新／关闭各 **9 scenes / 12 assertions** 通过；最终 UI 修正亦重新编译。证据 `evidence/qishui-passport/`。
+
+没有用户扫码确认，因此离线协议响应与匿名 QR 回放不计真实账号登录、私人收藏或完整歌曲物理可听验收。此次改动仍须对应新 Windows CI／完整发行核验，旧发行不自动升级。
+
 匿名上游只读核查：推荐接口 HTTP 200 返回 10 个内容块；H5 示例曲目 `7079108541549643812` 返回原曲 297240ms、音频 30.047 秒，为试听。该检查没有进行用户登录或签到写入操作。
 
 ## 持续检查

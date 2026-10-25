@@ -1,0 +1,8 @@
+consent:tap@remote-reject
+library:wait@800
+signed-out:wait@1200
+login:tap@provider-library-login
+qr-loaded:wait@25000
+qr-refresh:tap@qishui-login-refresh
+qr-reloaded:wait@25000
+close-login:tap@account-dialog-close

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ProviderFirstLyricsTest[desktop]" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-10-25T07:32:41.293Z" hostname="lladlam-arch" time="0.75">
+  <properties/>
+  <testcase name="explicitProviderSelectionDoesNotMakeCrossProviderRequests[desktop]" classname="melox.lyrics.ProviderFirstLyricsTest" time="0.14"/>
+  <testcase name="cancelledScreenNeverReceivesUpgradeForPreviousTrack[desktop]" classname="melox.lyrics.ProviderFirstLyricsTest" time="0.21"/>
+  <testcase name="slowCrossProviderDoesNotBlockFastProviderAndLazyUpgradeArrives[desktop]" classname="melox.lyrics.ProviderFirstLyricsTest" time="0.4"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

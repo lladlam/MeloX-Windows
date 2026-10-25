@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ProviderRankingShapeTest[desktop]" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-10-25T07:33:33.299Z" hostname="lladlam-arch" time="0.238">
+  <properties/>
+  <testcase name="kmrV2JoinsNestedAudioIdentityAndMillisecondDurationToItsParentSong[desktop]" classname="melox.provider.ProviderRankingShapeTest" time="0.091"/>
+  <testcase name="videoChartDoesNotConsumeTheSongRankingLimit[desktop]" classname="melox.provider.ProviderRankingShapeTest" time="0.147"/>
+  <system-out><![CDATA[[WARN MeloXQuality] Playback candidate rejected: song=1 quality=standard; IOException: no URL for standard
+[INFO MeloXPlayback] Cross-provider fallback: skipped song=1: disabled or missing metadata
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

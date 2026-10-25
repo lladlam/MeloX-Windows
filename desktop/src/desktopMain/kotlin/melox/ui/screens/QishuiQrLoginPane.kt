@@ -52,10 +52,11 @@ internal fun QishuiQrLoginPane(onLoginSuccess: (String) -> Unit) {
                 delay(2000)
                 val state = api.pollQr(qr.token)
                 if (state.sessionId.isNotBlank()) {
-                    val temporary = QishuiSessionStore.read().copy(sessionId = state.sessionId)
+                    val temporary = QishuiSessionStore.read().copy(sessionId = state.sessionId, cookie = state.cookie,
+                        userId = "", nickname = "")
                     val profile = QishuiApiClient({ temporary }).profile() ?: error("汽水音乐没有返回账号资料")
                     coroutineContext.ensureActive()
-                    QishuiSessionStore.save(state.sessionId, profile.id, profile.displayName)
+                    QishuiSessionStore.save(state.sessionId, profile.id, profile.displayName, state.cookie)
                     latestSuccess(profile.displayName)
                     return@LaunchedEffect
                 }

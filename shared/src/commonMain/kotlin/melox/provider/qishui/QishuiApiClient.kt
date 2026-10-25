@@ -7,7 +7,6 @@ import java.util.concurrent.TimeUnit
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.withContext
-import okhttp3.Cookie
 import okhttp3.FormBody
 import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.MediaType.Companion.toMediaType
@@ -38,20 +37,27 @@ class QishuiApiClient(
         val session = sessionProvider()
         val builder = Request.Builder().url(url).header("Accept", "application/json")
             .header("User-Agent", if (path.startsWith("/passport") || path.contains("/h5/")) WebAgent else if (app) "Luna/19.1.0 Android" else "LunaPC/3.0.0(290101097)")
-        val credentials = cookie ?: session.sessionId.takeIf(String::isNotBlank)?.let { "sessionid=$it" }.orEmpty()
+        val credentials = cookie ?: session.cookie.takeIf(String::isNotBlank)
+            ?: session.sessionId.takeIf(String::isNotBlank)?.let { "sessionid=$it" }.orEmpty()
         if (credentials.isNotBlank()) builder.header("Cookie", credentials)
         if (body != null) builder.post(body)
         http.newCall(builder.build()).execute().use { response ->
-            if (!response.isSuccessful) throw IOException("汽水音乐请求失败：HTTP ${response.code}")
+            val passportRedirect = path.startsWith("/passport/") && response.code in 300..399
+            if (!response.isSuccessful && !passportRedirect) throw IOException("汽水音乐请求失败：HTTP ${response.code}（$path）")
             val text = response.body.string()
-            if (text.isBlank()) throw IOException(if (path.contains("/pc/search/"))
+            if (text.isBlank() && !passportRedirect) throw IOException(if (path.contains("/pc/search/"))
                 "汽水音乐搜索未返回数据，请先登录；此接口可能需要上游 PC 签名" else "汽水音乐返回了空响应，请稍后重试")
-            val json = runCatching { JSONObject(text) }.getOrElse { throw IOException("汽水音乐返回了无法解析的数据") }
+            val json = if (text.isBlank()) JSONObject() else runCatching { JSONObject(text) }
+                .getOrElse { throw IOException("汽水音乐返回了无法解析的数据") }
             val info = json.optJSONObject("status_info")
             val code = json.optInt("status_code", json.optInt("error_code", info?.optInt("status_code", 0) ?: 0))
             if (code != 0) throw IOException("汽水音乐请求未获通过（$code），请检查登录状态后重试")
             if (QishuiParsing.text(info, "status_msg").startsWith("ERR_")) throw IOException("汽水音乐暂未允许本次请求，请登录后重试")
-            json to Cookie.parseAll(url, response.headers).joinToString("; ") { "${it.name}=${it.value}" }
+            // Passport can set parent-domain cookies which the URL-scoped parser
+            // rejects. Retain name/value pairs; never follow its Location URL.
+            json to response.headers.values("Set-Cookie").mapNotNull { header ->
+                header.substringBefore(';').trim().takeIf { '=' in it && it.none { ch -> ch == '\r' || ch == '\n' } }
+            }.joinToString("; ")
         }
     }
     private suspend fun post(path: String, body: JSONObject) = request(path, body = body.toString().toRequestBody(Json), app = true).first
@@ -141,7 +147,9 @@ class QishuiApiClient(
     }
 
     data class Qr(val token: String, val image: String, val link: String)
-    data class QrState(val status: String, val sessionId: String)
+    data class QrState(val status: String, val sessionId: String, val cookie: String = "") {
+        override fun toString() = "QrState(status=$status, hasSession=${sessionId.isNotBlank()})"
+    }
     suspend fun createQr(): Qr {
         qrCookies = ""; qrToken = ""
         val (response, cookies) = request("/passport/web/get_qrcode/", passport + mapOf("next" to "https://api.qishui.com",
@@ -157,11 +165,22 @@ class QishuiApiClient(
         val form = FormBody.Builder().add("need_logo", "false").add("need_short_url", "false").add("is_frontier", "true")
             .add("token", token).add("is_new_login", "1").add("next", "https://api.qishui.com").build()
         val (response, cookies) = request("/passport/web/check_qrconnect/", passport + ("iid" to "27960026095955"), form, cookie = qrCookies)
+        qrCookies = mergeCookies(qrCookies, cookies)
         val data = response.optJSONObject("data") ?: response
+        // The creation response can carry a handshake sessionid. Only a fresh
+        // sessionid from this poll is a candidate for profile verification.
         val sessionId = cookies.split(';').firstOrNull { it.trim().startsWith("sessionid=") }?.trim()?.removePrefix("sessionid=").orEmpty()
-        return QrState(QishuiParsing.text(data, "status"), sessionId)
+        return QrState(QishuiParsing.text(data, "status"), sessionId, qrCookies)
     }
     companion object {
+        private fun mergeCookies(previous: String, received: String): String {
+            val values = linkedMapOf<String, String>()
+            (previous.split(';') + received.split(';')).forEach { part ->
+                val pair = part.trim(); val separator = pair.indexOf('=')
+                if (separator > 0) values[pair.substring(0, separator)] = pair.substring(separator + 1)
+            }
+            return values.entries.joinToString("; ") { "${it.key}=${it.value}" }
+        }
         const val WebAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/120 Safari/537.36"
         private val Json = "application/json; charset=utf-8".toMediaType()
     }

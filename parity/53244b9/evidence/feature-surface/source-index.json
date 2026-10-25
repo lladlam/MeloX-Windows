@@ -1,6 +1,6 @@
 {
-  "checked_utc": "2026-10-25T07:24:26.569708+00:00",
-  "android_head": "91adac7e778b712d3ed9ea6c90c89c2b2ca8766c",
+  "checked_utc": "2026-10-25T07:42:54.412282+00:00",
+  "android_head": "292652e6da6ba6ea1f04466b0e55ba1bfcdf9e69",
   "scope": "Live working-tree source inventory. Presence is not functional or visual parity; missing pattern matches require manual routing review.",
   "areas": {
     "home": {
@@ -541,7 +541,7 @@
         },
         {
           "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/account/QishuiLoginScreen.kt",
-          "sha256": "edd4dda39a683279de7c139e7f4cc8eeef8f64168b09d0e52b572039edf50b9d"
+          "sha256": "d0b3d137d41e8c4a85fccab71a34fa399fd89f6924f449a4f66283d112a06277"
         },
         {
           "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/account/SpotifyLoginScreen.kt",
@@ -559,7 +559,7 @@
         },
         {
           "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/QishuiQrLoginPane.kt",
-          "sha256": "b00f28100339a3bb06136c6ba17c9bbfefb36daa9dcd01b1f4354f54709378fb"
+          "sha256": "fd04c4a0b670be88fd77a10d06a10b9c955afce7449644993c9e43e1dd899836"
         }
       ],
       "desktop": [
@@ -591,7 +591,7 @@
         },
         {
           "path": "shared/src/commonMain/kotlin/melox/provider/qishui/QishuiSessionStore.kt",
-          "sha256": "311c49951e9eae9269d3912c2f3f00a5bc1e0d80b0d62359107967a8024af2f4"
+          "sha256": "0484b7ac61a26195d6490db82497dfa6132740853005518807d9292c9375ced9"
         },
         {
           "path": "shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicSessionStore.kt",
@@ -1110,7 +1110,7 @@
       "android": [
         {
           "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/settings/SettingsScreen.kt",
-          "sha256": "e49ee0a3546b0bba382b6ab7caff09cbe95c822596dc26d14c8ed3c5a010be7e"
+          "sha256": "4dca49ea629d32682c577e650533b7da755caefeeee5988e0e360fe3d420cbf2"
         }
       ],
       "mobile": [
@@ -1220,7 +1220,7 @@
       "android": [
         {
           "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/settings/SettingsScreen.kt",
-          "sha256": "e49ee0a3546b0bba382b6ab7caff09cbe95c822596dc26d14c8ed3c5a010be7e"
+          "sha256": "4dca49ea629d32682c577e650533b7da755caefeeee5988e0e360fe3d420cbf2"
         }
       ],
       "mobile": [
@@ -1254,7 +1254,7 @@
       "android": [
         {
           "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/settings/SettingsScreen.kt",
-          "sha256": "e49ee0a3546b0bba382b6ab7caff09cbe95c822596dc26d14c8ed3c5a010be7e"
+          "sha256": "4dca49ea629d32682c577e650533b7da755caefeeee5988e0e360fe3d420cbf2"
         }
       ],
       "mobile": [
@@ -1408,7 +1408,7 @@
         },
         {
           "path": "shared/src/commonMain/kotlin/melox/playback/ProviderPlaybackRuntime.kt",
-          "sha256": "761fc44cb58b2ad82aea6db0f5f53211b78d9071ed2323e36617a75c7e85766f"
+          "sha256": "f654d82bc5897e2da2dd6e0bd8f69a8d082b52f7b4098d626b2135ba5714fe63"
         },
         {
           "path": "shared/src/commonMain/kotlin/melox/playback/ThirdPartyPlaybackResolver.kt",
@@ -1672,7 +1672,7 @@
     },
     {
       "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/account/QishuiLoginScreen.kt",
-      "sha256": "edd4dda39a683279de7c139e7f4cc8eeef8f64168b09d0e52b572039edf50b9d"
+      "sha256": "d0b3d137d41e8c4a85fccab71a34fa399fd89f6924f449a4f66283d112a06277"
     },
     {
       "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/account/SpotifyLoginScreen.kt",
@@ -2076,7 +2076,7 @@
     },
     {
       "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/settings/SettingsScreen.kt",
-      "sha256": "e49ee0a3546b0bba382b6ab7caff09cbe95c822596dc26d14c8ed3c5a010be7e"
+      "sha256": "4dca49ea629d32682c577e650533b7da755caefeeee5988e0e360fe3d420cbf2"
     },
     {
       "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/sharing/MeloXNeteaseResourceShareActivity.kt",
@@ -2618,7 +2618,7 @@
     },
     {
       "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/QishuiQrLoginPane.kt",
-      "sha256": "b00f28100339a3bb06136c6ba17c9bbfefb36daa9dcd01b1f4354f54709378fb"
+      "sha256": "fd04c4a0b670be88fd77a10d06a10b9c955afce7449644993c9e43e1dd899836"
     },
     {
       "path": "desktop/src/desktopMain/kotlin/melox/ui/screens/RemoteCompatibilityNotice.kt",
@@ -3160,7 +3160,7 @@
     },
     {
       "path": "shared/src/commonMain/kotlin/melox/playback/ProviderPlaybackRuntime.kt",
-      "sha256": "761fc44cb58b2ad82aea6db0f5f53211b78d9071ed2323e36617a75c7e85766f"
+      "sha256": "f654d82bc5897e2da2dd6e0bd8f69a8d082b52f7b4098d626b2135ba5714fe63"
     },
     {
       "path": "shared/src/commonMain/kotlin/melox/playback/ThirdPartyPlaybackResolver.kt",
@@ -3388,7 +3388,7 @@
     },
     {
       "path": "shared/src/commonMain/kotlin/melox/provider/qishui/QishuiApiClient.kt",
-      "sha256": "d2b21f340d9d1e3e22eaaa41914ac0a62c8ce6396d4ab5ece49464c2f0960788"
+      "sha256": "119ba12d6de6ad5b4d3cadf170251ab0cced8903229ddd775784b598764807c7"
     },
     {
       "path": "shared/src/commonMain/kotlin/melox/provider/qishui/QishuiParsing.kt",
@@ -3400,7 +3400,7 @@
     },
     {
       "path": "shared/src/commonMain/kotlin/melox/provider/qishui/QishuiSessionStore.kt",
-      "sha256": "311c49951e9eae9269d3912c2f3f00a5bc1e0d80b0d62359107967a8024af2f4"
+      "sha256": "0484b7ac61a26195d6490db82497dfa6132740853005518807d9292c9375ced9"
     },
     {
       "path": "shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicApiClient.kt",

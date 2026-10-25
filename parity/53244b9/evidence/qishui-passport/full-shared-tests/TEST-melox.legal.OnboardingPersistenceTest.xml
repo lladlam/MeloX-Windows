@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="OnboardingPersistenceTest[desktop]" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-10-25T07:32:31.856Z" hostname="lladlam-arch" time="0.699">
+  <properties/>
+  <testcase name="interruptedLegalOrConnectDoesNotMarkOnboardingCompleted[desktop]" classname="melox.legal.OnboardingPersistenceTest" time="0.235"/>
+  <testcase name="cloudChoiceWaitsForCompletedConnectionAndSurvivesReopen[desktop]" classname="melox.legal.OnboardingPersistenceTest" time="0.307"/>
+  <testcase name="existingCompletedOnboardingKeepsHistoricalConsentAndOnlyAsksMissingCloudChoice[desktop]" classname="melox.legal.OnboardingPersistenceTest" time="0.156"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

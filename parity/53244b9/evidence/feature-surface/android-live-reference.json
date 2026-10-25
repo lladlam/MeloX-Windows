@@ -1,9 +1,9 @@
 {
   "repository": "MeloX-Android local working tree",
-  "head": "91adac7e778b712d3ed9ea6c90c89c2b2ca8766c",
-  "checked_utc": "2026-10-25T07:23:31.265329+00:00",
+  "head": "292652e6da6ba6ea1f04466b0e55ba1bfcdf9e69",
+  "checked_utc": "2026-10-25T07:42:13.359309+00:00",
   "files": {
-    "android/app/build.gradle.kts": "ae43c3fea6118f451a405456efd8da23fdb4c74a4e28e94cf2191a0297503cc0",
+    "android/app/build.gradle.kts": "09082aa216d21dfc0b5b66259dc55d0bc162699d37477738f05ccb58c0678d50",
     "android/app/i18n/values-ja/strings.xml": "12b88ee6e974e028255b8360f8451d03abb5db2d0c57e42976a19c5124c6e878",
     "android/app/i18n/values-tr/strings.xml": "4f4c6adf695f17c20f3f13f7baaa055c886e55ea796fdfe871cb954733586796",
     "android/app/i18n/values-zh-rCN/strings.xml": "c7f67864fedbc992664fb5af0bc8e75149db2af5e4c77a0a1380db7a97d3bda0",
@@ -14,7 +14,7 @@
     "android/app/src/androidTest/kotlin/com/lladlam/melox/dlna/DlnaDeviceRunner.kt": "5c373d24a669d5def3bb8456bd0ad5b0bcf6f29a1314ed1dc246bfe4715cfdd7",
     "android/app/src/androidTest/kotlin/com/lladlam/melox/lan/MeloXLanBarrierRegression.kt": "8891f60a480c83bd7cdccaadc25c6beb9e04031158c782268165f4947797fba7",
     "android/app/src/androidTest/kotlin/com/lladlam/melox/lan/MeloXLanDeviceRunner.kt": "980a770a1d1b44ac7a81b7288451f85f672bf7d94ba4b3a578cfc5795eb21c21",
-    "android/app/src/main/AndroidManifest.xml": "54b7e1bc841cd4c84202dcc361b54aed76e33983617b0f414c5d7237809fb1cf",
+    "android/app/src/main/AndroidManifest.xml": "d8f599664e24f44cf1d907261c38ff063e1ef1a99fd0f6d8ec81371f63b390f2",
     "android/app/src/main/assets/legal/cloud-control-privacy-zh-CN.md": "7030f44dda89b27357ba4b960562d5eae98d9b5ae451a8a398e4fb6cc68f5793",
     "android/app/src/main/assets/legal/disclaimer-zh-CN.md": "55c75d9d6f54b3aadaf37665963eaeaf9f88bc6add4b2479021f120f46676260",
     "android/app/src/main/assets/legal/privacy-policy-zh-CN.md": "ccead27c49f0f8adcb12bd90d6f35e13568623d2a7d3524798e63c4c20c8e21e",
@@ -289,10 +289,10 @@
     "android/app/src/main/kotlin/com/lladlam/melox/core/provider/lxuser/LxUserScriptMetadata.kt": "b2acfcd6731c7b506264bfd00c9dc2f1c23937bcdabf4a8fdf31aa5d9aa657b7",
     "android/app/src/main/kotlin/com/lladlam/melox/core/provider/lxuser/LxUserSourceStore.kt": "c07a454f94380ebc93f559e202d163c03fac1069522dee8a48c4f04b40fd8b6e",
     "android/app/src/main/kotlin/com/lladlam/melox/core/provider/netease/NeteaseProvider.kt": "61453140a2b0505b27cad5d7daf8381f0db1e6c73d24775f15e54291713097dd",
-    "android/app/src/main/kotlin/com/lladlam/melox/core/provider/qishui/QishuiApiClient.kt": "6fe5f037e264c661ed4cb6b6807a6a5178ac7fa12e7d4a3fedb773ff5c8440a7",
+    "android/app/src/main/kotlin/com/lladlam/melox/core/provider/qishui/QishuiApiClient.kt": "363aafda3e06938140eb79499c39ab5053790d03505c522033f131202a7e3154",
     "android/app/src/main/kotlin/com/lladlam/melox/core/provider/qishui/QishuiParsing.kt": "7056aaae1cd89eb13259859bd18b6ebbaeeb5de05ca173051a1648af9733cf77",
     "android/app/src/main/kotlin/com/lladlam/melox/core/provider/qishui/QishuiProvider.kt": "32b50032c1d23b87af025a9e5665f1aa62d2d1938dd55c7ccc4a20cb8fd4b02d",
-    "android/app/src/main/kotlin/com/lladlam/melox/core/provider/qishui/QishuiSessionStore.kt": "da699a480510f652c727f395b6b0f8acde95255b054efb9e97b53121705dd7ed",
+    "android/app/src/main/kotlin/com/lladlam/melox/core/provider/qishui/QishuiSessionStore.kt": "71a6a0314354ff5e8b8f475bece249a901fdf0de35c441d0ec805eb939ec09b1",
     "android/app/src/main/kotlin/com/lladlam/melox/core/provider/qqmusic/QQMusicApiClient.kt": "0e5f26c5ec9ea487fc02e810316a3ca1a671da52102f81b3e4ab085769aa56fe",
     "android/app/src/main/kotlin/com/lladlam/melox/core/provider/qqmusic/QQMusicCatalogClient.kt": "d4ac9a1e56f2092970e38fa6483d5545d311acbc52642ad0193fcdbe1938e714",
     "android/app/src/main/kotlin/com/lladlam/melox/core/provider/qqmusic/QQMusicFavoriteClient.kt": "e0fc64bf1cb66859e8f49633c3bec8a9f4a3606257bb4d2df7dd8edbaf7fd8e9",
@@ -354,6 +354,7 @@
     "android/app/src/main/kotlin/com/lladlam/melox/lan/MeloXLanTogetherSync.kt": "958e8a2a116af266075edac5ffb2788501da8285605074ed97df72094d21435a",
     "android/app/src/main/kotlin/com/lladlam/melox/miplay/MiPlaySession.kt": "977ebe3b0d3cfecf16b89bc6a07b1da821cee22beb62ccc4000ef5bb9bbeb15c",
     "android/app/src/main/kotlin/com/lladlam/melox/platform/MeloXVolumeKeyBridge.kt": "32361757a1e542426800a1f84f0f748f6a8dbbf916e73d8a6b2730dcec1462e5",
+    "android/app/src/main/kotlin/com/lladlam/melox/platform/cli/MeloXCliReceiver.kt": "282935b0a0c55d62779272e9ac95fe4f39b45c5e3b904f4a2c207a454f742b41",
     "android/app/src/main/kotlin/com/lladlam/melox/platform/floating/MeloXFloatingLyricsService.kt": "6d893cd737278259e622ee0b974ad895e8b461337e1046207a9efdd17f44d748",
     "android/app/src/main/kotlin/com/lladlam/melox/platform/lyricon/MeloXLyriconBridge.kt": "36a45e9a5e760edeeb95e75c3b131c29f209a66a3a7b06c61799431cb4d79f11",
     "android/app/src/main/kotlin/com/lladlam/melox/platform/vivo/VivoAtomicIslandBridge.kt": "a20ef7158f0fe4b86b54441e20e6cecf1d442fe75025b6fff478b104a8e8d857",
@@ -416,7 +417,7 @@
     "android/app/src/main/kotlin/com/lladlam/melox/ui/account/NeteaseQrBridge.kt": "21065acf9cdabbbe4fec28de894021a510a30f39909bec4af00189d478c4ca57",
     "android/app/src/main/kotlin/com/lladlam/melox/ui/account/NeteaseQrLoginScreen.kt": "1d09c2197be47ae39e6994f12975a3fabc9642e5c67023e4e8c2fc3d3b47b5f3",
     "android/app/src/main/kotlin/com/lladlam/melox/ui/account/QQMusicLoginScreen.kt": "394644ec265df115d972d142e1f5c73e480dd623cb60622c59201ac64026975b",
-    "android/app/src/main/kotlin/com/lladlam/melox/ui/account/QishuiLoginScreen.kt": "edd4dda39a683279de7c139e7f4cc8eeef8f64168b09d0e52b572039edf50b9d",
+    "android/app/src/main/kotlin/com/lladlam/melox/ui/account/QishuiLoginScreen.kt": "d0b3d137d41e8c4a85fccab71a34fa399fd89f6924f449a4f66283d112a06277",
     "android/app/src/main/kotlin/com/lladlam/melox/ui/account/SpotifyLoginScreen.kt": "c440b3d616a0d62f3ecc000c799160a3cfd2912efda1ebc6e34ee1dad9b06c6b",
     "android/app/src/main/kotlin/com/lladlam/melox/ui/account/YouTubeLoginScreen.kt": "d0de9d86467630932eee8d1bb307b8e17f57fd27424303e924be27f427fe73e0",
     "android/app/src/main/kotlin/com/lladlam/melox/ui/animation/MeloXMotion.kt": "9f9224cb55a4dc67e06bd2811801a437dee723a6cd2696f651427c22f8607533",
@@ -517,7 +518,7 @@
     "android/app/src/main/kotlin/com/lladlam/melox/ui/settings/MeloXSettingsDetailActivity.kt": "4e2fcf367d066b5c31149b5aaf653d51d59b21ae9e1faceaaee8be2e3309174e",
     "android/app/src/main/kotlin/com/lladlam/melox/ui/settings/MeloXSettingsPreferences.kt": "5dcaeb5c2f123c8f8689f2dd70f765ebc1d1ce24ae585c09faf2f7ddd766f215",
     "android/app/src/main/kotlin/com/lladlam/melox/ui/settings/MeloXSplitChromePosition.kt": "e20393c1f967e8fdea1586341dc4d64a7b509501fc4291b1e674ea42304a69bd",
-    "android/app/src/main/kotlin/com/lladlam/melox/ui/settings/SettingsScreen.kt": "e49ee0a3546b0bba382b6ab7caff09cbe95c822596dc26d14c8ed3c5a010be7e",
+    "android/app/src/main/kotlin/com/lladlam/melox/ui/settings/SettingsScreen.kt": "4dca49ea629d32682c577e650533b7da755caefeeee5988e0e360fe3d420cbf2",
     "android/app/src/main/kotlin/com/lladlam/melox/ui/sharing/MeloXNeteaseResourceShareActivity.kt": "f6d10304cbb0ed1c465a985875460e7daca08d3fc685cd9416cae658a00512ac",
     "android/app/src/main/kotlin/com/lladlam/melox/ui/song/MeloXSongDetailActivity.kt": "ad49fae51f2ec40a15b8f35e5dc42a61d2affdfed30a969d508564dcb66d551e",
     "android/app/src/main/kotlin/com/lladlam/melox/ui/song/MeloXSongWikiActivity.kt": "2be34f7c970eaf475f936fffef8cf03e951876d32d9743385468453400e74004",
@@ -602,7 +603,7 @@
     "android/app/src/test/kotlin/com/lladlam/melox/core/provider/kuwo/KuwoLyricsClientTest.kt": "91c461b0ea63d18afc56b73409cd6f23786ec562d29ae40e7bf1b3dd24910e0e",
     "android/app/src/test/kotlin/com/lladlam/melox/core/provider/kuwo/KuwoPhoneAuthClientTest.kt": "a3943cf389f77872e91dcf5e7d671e1c8aee6f9eeb081e47f0bf8311e733e818",
     "android/app/src/test/kotlin/com/lladlam/melox/core/provider/lxuser/LxUserSourceStoreTest.kt": "be9016e5fce4a327bbd42ec95580c41b7837b4c80c47214afa3a0b854ee78140",
-    "android/app/src/test/kotlin/com/lladlam/melox/core/provider/qishui/QishuiProviderTest.kt": "9f6d521ab2c154706ef22d497b979c00829868ae4cd85cc289804888352b5bb6",
+    "android/app/src/test/kotlin/com/lladlam/melox/core/provider/qishui/QishuiProviderTest.kt": "a60dc782b496d7530308675fd6f82dfcbf709f4396051b992fe00422b25d991f",
     "android/app/src/test/kotlin/com/lladlam/melox/core/provider/qqmusic/QQMusicFavoriteClientTest.kt": "33b8ce89ec32ebc92a3c99839e09c538ff3ecea03f74da62d32b4d02f6163545",
     "android/app/src/test/kotlin/com/lladlam/melox/core/provider/qqmusic/QQMusicPhoneAuthClientTest.kt": "d7df7085ed38d1a2cf2c14edae1465560f3e0b54b98ad6abf1816a8d51517802",
     "android/app/src/test/kotlin/com/lladlam/melox/core/provider/qqmusic/QQMusicPlaybackVkeyClientTest.kt": "4c9c6b71977505b2b5fd28cb4c64c468a19cb55b9c4db65ce0c4108e0665d26e",
@@ -652,6 +653,7 @@
     "android/app/src/test/kotlin/com/lladlam/melox/usb/UsbAudioDescriptorsTest.kt": "62dc2218c3e204c10fac2ee47c4bbe113cbbcb465527e9172df2295ddbebe233",
     "docs/0.4.0-beta-audit-and-remediation.md": "765f0461de11308d6fc468b642b125c30e3afea004ff556e6df0c193c07abb00",
     "docs/AUTOSYNC_DEVICE_REGRESSION.md": "c8709f45a6cc2611674b7088829368bcce60aa9288cfe07712966221d529fcb9",
+    "docs/CLI.md": "6587dd651b652f6a67204c01ddb824f568ab9818d5f94e634388fdce4faec761",
     "docs/DLNA-MIPLAY-ADAPTATION.md": "6f902afaf08d80f338d8ae87cb89d81b20667a36b699a66efd5f82634fd19c23",
     "docs/HOT_UPDATE_RESEARCH.md": "7ca68ca910a0235c1bacd932e15dc35f9894acb801df53daf1220dafe8de93a3",
     "docs/KUGOU-LITE.md": "c0cb5d33500c3e3fec6905ea15445a5e48802cc66140b846b6884509eeeba1c0",
@@ -678,6 +680,9 @@
     "docs/shared-element-transition-pr.md": "49f30ccb8624534661e0c544629e683aa5e700a14719908782549be911f3d52a"
   },
   "changed_since_previous_check": [
-    "android/app/src/main/kotlin/com/lladlam/melox/playback/PlaybackTrackIdentity.kt"
+    "android/app/src/main/AndroidManifest.xml",
+    "android/app/src/main/kotlin/com/lladlam/melox/platform/cli/MeloXCliReceiver.kt",
+    "android/app/src/main/kotlin/com/lladlam/melox/ui/settings/SettingsScreen.kt",
+    "docs/CLI.md"
   ]
 }

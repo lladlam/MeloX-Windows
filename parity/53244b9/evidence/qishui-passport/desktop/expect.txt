@@ -1,0 +1,8 @@
+consent=cloud-enabled:false
+library=tag:desktop-provider-library:Qishui,absent:library-pages
+signed-out=tag:provider-library-login,absent:provider-library-empty
+login=tag:account-screen,tag:account-form-qishui
+qr-loaded=tag:qishui-login-qr,tag:qishui-login-refresh
+qr-refresh=tag:qishui-login
+qr-reloaded=tag:qishui-login-qr
+close-login=absent:account-form-qishui
