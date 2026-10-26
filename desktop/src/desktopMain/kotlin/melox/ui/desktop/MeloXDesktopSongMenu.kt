@@ -198,7 +198,7 @@ internal fun MeloXDesktopSongMenu(
             }
             DesktopMenuDivider()
             DesktopSongMenuItem("ui.song.view_information", MeloXSymbol.Info, "information") {
-                song.neteaseSongId?.let { MeloXCollectionLaunchBus.open(MeloXCollectionTarget.Song(it)) }
+                song.neteaseSongId?.let { MeloXCollectionLaunchBus.open(MeloXCollectionTarget.Song(it, song)) }
                     ?: MeloXSearchLaunchBus.post(song.name, MeloXSearchKind.Songs, track?.id?.source ?: MusicSource.Netease)
                 onDismiss()
             }

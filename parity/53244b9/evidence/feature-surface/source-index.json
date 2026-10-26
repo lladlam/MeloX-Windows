@@ -1,5 +1,5 @@
 {
-  "checked_utc": "2026-10-26T07:16:10.413580+00:00",
+  "checked_utc": "2026-10-26T07:54:47.247442+00:00",
   "android_head": "cd345047dc578d34ee72d34abdb907acdd199b4f",
   "scope": "Live working-tree source inventory. Presence is not functional or visual parity; missing pattern matches require manual routing review.",
   "areas": {
@@ -19,7 +19,7 @@
       "desktop": [
         {
           "path": "desktop/src/desktopMain/kotlin/melox/ui/desktop/MeloXDesktopHome.kt",
-          "sha256": "04f117b5cfea6a424e50423c20b63a50d5d59e1c592d7dd97ae2514731a9d4cc"
+          "sha256": "aa0b90080da75bc3b63c58851055f2f4010ad734414fdeaaabe1fdc99a08d06f"
         },
         {
           "path": "desktop/src/desktopMain/kotlin/melox/ui/desktop/MeloXDesktopHomeShelf.kt",
@@ -336,7 +336,7 @@
         },
         {
           "path": "desktop/src/desktopMain/kotlin/melox/ui/desktop/MeloXDesktopSongDetail.kt",
-          "sha256": "971a2df6eba936715bd4aac1ab7e4c759460af998859fe06a622ded7b17800de"
+          "sha256": "f146bbd29eaa73260f86b9fbdb9fe99ed419ef5da4f1888f3663f20f072c3646"
         }
       ],
       "business": [
@@ -361,7 +361,7 @@
       "desktop": [
         {
           "path": "desktop/src/desktopMain/kotlin/melox/ui/desktop/MeloXDesktopSongDetail.kt",
-          "sha256": "971a2df6eba936715bd4aac1ab7e4c759460af998859fe06a622ded7b17800de"
+          "sha256": "f146bbd29eaa73260f86b9fbdb9fe99ed419ef5da4f1888f3663f20f072c3646"
         }
       ],
       "business": []
@@ -390,7 +390,7 @@
       "desktop": [
         {
           "path": "desktop/src/desktopMain/kotlin/melox/ui/desktop/MeloXDesktopSongMenu.kt",
-          "sha256": "cf79905768c220630669cf5a22f7412c1f3919ba9b22e1b348fe582d6c8ce2a7"
+          "sha256": "131e4afe9903d1f1777b439a1e5ffbd2d01ff8421292624c8a15fc09d64d9d5b"
         }
       ],
       "business": []
@@ -2114,7 +2114,7 @@
   "all_windows_ui_sources": [
     {
       "path": "desktop/src/desktopMain/kotlin/melox/ui/MeloXApp.kt",
-      "sha256": "083ac65913c6eb3d166ec64c5e5210e9aa58b820e371c710ce481de7bcae9061"
+      "sha256": "e09fedbeaa0d263459540d6164a235a332e1edda7f579fb9cbe118cd37ce7277"
     },
     {
       "path": "desktop/src/desktopMain/kotlin/melox/ui/MeloXClipboardDialogs.kt",
@@ -2154,7 +2154,7 @@
     },
     {
       "path": "desktop/src/desktopMain/kotlin/melox/ui/desktop/MeloXDesktopHome.kt",
-      "sha256": "04f117b5cfea6a424e50423c20b63a50d5d59e1c592d7dd97ae2514731a9d4cc"
+      "sha256": "aa0b90080da75bc3b63c58851055f2f4010ad734414fdeaaabe1fdc99a08d06f"
     },
     {
       "path": "desktop/src/desktopMain/kotlin/melox/ui/desktop/MeloXDesktopHomeShelf.kt",
@@ -2234,11 +2234,11 @@
     },
     {
       "path": "desktop/src/desktopMain/kotlin/melox/ui/desktop/MeloXDesktopSongDetail.kt",
-      "sha256": "971a2df6eba936715bd4aac1ab7e4c759460af998859fe06a622ded7b17800de"
+      "sha256": "f146bbd29eaa73260f86b9fbdb9fe99ed419ef5da4f1888f3663f20f072c3646"
     },
     {
       "path": "desktop/src/desktopMain/kotlin/melox/ui/desktop/MeloXDesktopSongMenu.kt",
-      "sha256": "cf79905768c220630669cf5a22f7412c1f3919ba9b22e1b348fe582d6c8ce2a7"
+      "sha256": "131e4afe9903d1f1777b439a1e5ffbd2d01ff8421292624c8a15fc09d64d9d5b"
     },
     {
       "path": "desktop/src/desktopMain/kotlin/melox/ui/desktop/MeloXDesktopStrings.kt",
@@ -2386,7 +2386,7 @@
     },
     {
       "path": "desktop/src/desktopMain/kotlin/melox/ui/navigation/MeloXCollectionLaunchBus.kt",
-      "sha256": "ebd732caa0245d330eca4dd7c1163354d8f7a1886a98eb39b0820921dfc94ede"
+      "sha256": "cef265cf84c2043d282bd09fea18cf297ebf8fc3ad121154b989982ab8ced9e9"
     },
     {
       "path": "desktop/src/desktopMain/kotlin/melox/ui/navigation/MeloXDetailMotion.kt",
@@ -3625,7 +3625,7 @@
   "empty_click_handlers_for_review": [
     {
       "path": "desktop/src/desktopMain/kotlin/melox/ui/MeloXApp.kt",
-      "line": 614,
+      "line": 615,
       "code": "onClick = {},",
       "status": "REVIEW: may be a deliberate modal input shield"
     },

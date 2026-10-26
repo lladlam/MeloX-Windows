@@ -1,0 +1,21 @@
+{
+  "failed_windows_run": "40282057681",
+  "windows_new_utf8_replays": "NOT REACHED: collection replay failed earlier in workflow",
+  "local_replays": [
+    {
+      "name": "song-detail-fix-menu-dark",
+      "scenes": 34,
+      "assertions": 41,
+      "passed": true,
+      "drag_scroll": false
+    },
+    {
+      "name": "song-detail-fix-menu-light",
+      "scenes": 34,
+      "assertions": 41,
+      "passed": true,
+      "drag_scroll": false
+    }
+  ],
+  "local_touch_return": "Separate full drag replay stopped before menu at exact scroll position assertion: 0-222 instead of 0-0; no touch acceptance claim"
+}

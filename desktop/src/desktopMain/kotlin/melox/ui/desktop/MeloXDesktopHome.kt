@@ -109,7 +109,7 @@ internal fun MeloXDesktopHome(content: NeteaseHomeContent?, recentSongs: List<Se
                     DesktopHomePagingShelf(history, { it.id }, mediaWidth, 24.dp, reserved, "history") { song ->
                         DesktopHomeMediaCard(song.name, song.artists, song.artworkUrl, mediaWidth, "desktop-home-track:${song.id}",
                             onOpen = { melox.ui.navigation.MeloXCollectionLaunchBus.open(
-                                melox.ui.navigation.MeloXCollectionTarget.Song(song.id)) },
+                                 melox.ui.navigation.MeloXCollectionTarget.Song(song.id, song)) },
                             onPlay = { melox.playback.PlaybackCommands.playQueue(history, song.id) })
                     }
                 }

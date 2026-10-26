@@ -33,9 +33,9 @@ import melox.ui.screens.MeloXArtworkImage
 
 /** DesktopSongDetailView: collection header, 420pt picker and three desktop content panes. */
 @Composable
-internal fun MeloXDesktopSongDetail(id: Long, onBack: () -> Unit) {
+internal fun MeloXDesktopSongDetail(id: Long, initialSong: SearchSong? = null, onBack: () -> Unit) {
     val cookie = remember { { NeteaseSessionStore.readCookie() } }
-    var song by remember(id) { mutableStateOf<SearchSong?>(null) }
+    var song by remember(id) { mutableStateOf(initialSong?.takeIf { it.neteaseSongId == id }) }
     var similar by remember(id) { mutableStateOf<List<SearchSong>>(emptyList()) }
     var lyrics by remember(id) { mutableStateOf<List<LyricLine>>(emptyList()) }
     var comments by remember(id) { mutableStateOf<List<MeloXMusicComment>>(emptyList()) }
@@ -70,7 +70,15 @@ internal fun MeloXDesktopSongDetail(id: Long, onBack: () -> Unit) {
         error = null
         lyricsError = null; similarError = null; commentsError = null
         try {
-            song = requireNotNull(NeteaseUniversalSearchClient(cookieProvider = cookie).songDetail(id)) { desktopString("ui.error.unknown") }
+            try {
+                song = requireNotNull(NeteaseUniversalSearchClient(cookieProvider = cookie).songDetail(id)) { desktopString("ui.error.unknown") }
+            } catch (cancelled: CancellationException) { throw cancelled }
+            catch (failure: Exception) {
+                error = failure.message ?: desktopString("ui.error.unknown")
+                // The selected playlist/search payload is real metadata. A failed
+                // enrichment request must not discard it or prevent independent panes loading.
+                if (song == null) return@LaunchedEffect
+            }
             coroutineScope {
                 val l = async { runCatching { NeteaseSearchClient(cookieProvider = cookie).lyrics(id).lines }.getOrElse {
                     if (it is CancellationException) throw it
@@ -95,7 +103,7 @@ internal fun MeloXDesktopSongDetail(id: Long, onBack: () -> Unit) {
         subtitle = song?.artists,
         metadata = song?.let { listOf(it.album, "${it.durationMs / 60000}:${(it.durationMs / 1000 % 60).toString().padStart(2, '0')}").filter(String::isNotBlank).joinToString(desktopString("ui.common.metadata_separator")) },
         description = null, artworkUrl = song?.artworkUrl, songs = emptyList(), hasSongs = song != null,
-        loading = loading && song == null, error = error, playingId = null, isPlaying = playback.isPlaying,
+        loading = loading && song == null, error = error.takeIf { song == null }, playingId = null, isPlaying = playback.isPlaying,
         onBack = onBack, onPlayAll = { song?.let { PlaybackCommands.playQueue(listOf(it), it.id) } },
         onShuffle = { song?.let { PlaybackCommands.playQueue(listOf(it), it.id) } },
         isFavorite = liked == true, favoriteEnabled = !favoriteBusy,
@@ -116,6 +124,15 @@ internal fun MeloXDesktopSongDetail(id: Long, onBack: () -> Unit) {
         onDownload = { song?.let { melox.download.MeloXDownloadStore.instance().start(it, melox.audio.MusicQualityPreferences.read()) } },
         onRetry = { revision++ }, onSong = { PlaybackCommands.playQueue(listOf(it), it.id) }, tag = "desktop-song-detail",
         extraContent = {
+            error?.let { message ->
+                item("metadata-error") {
+                    Column(Modifier.fillMaxWidth().testTag("desktop-song-metadata-error").padding(top = 20.dp),
+                        verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                        Text(message, color = MaterialTheme.colorScheme.error)
+                        DesktopDialogButton("ui.common.retry", onClick = { revision++ })
+                    }
+                }
+            }
             item("picker") {
                 Row(Modifier.padding(top = 28.dp, bottom = 28.dp).widthIn(max = 420.dp).fillMaxWidth()
                     .clip(RoundedCornerShape(5.dp)).background(MaterialTheme.colorScheme.onSurface.copy(alpha = .07f))

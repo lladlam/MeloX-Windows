@@ -168,7 +168,8 @@ fun MeloXApp(onExit: () -> Unit = { kotlin.system.exitProcess(0) }) {
                             onBack = melox.ui.navigation.MeloXCollectionLaunchBus::dismiss)
                         is melox.ui.navigation.MeloXCollectionTarget.Album -> AlbumDetailScreen(target.id.toString(), target.name,
                             onBack = melox.ui.navigation.MeloXCollectionLaunchBus::dismiss)
-                        is melox.ui.navigation.MeloXCollectionTarget.Song -> melox.ui.desktop.MeloXDesktopSongDetail(target.id,
+                         is melox.ui.navigation.MeloXCollectionTarget.Song -> melox.ui.desktop.MeloXDesktopSongDetail(target.id,
+                             initialSong = target.initialSong,
                             onBack = melox.ui.navigation.MeloXCollectionLaunchBus::dismiss)
                         is melox.ui.navigation.MeloXCollectionTarget.Playlist -> melox.ui.screens.PlaylistDetailScreen(
                             melox.library.NeteasePlaylistSummary(target.id, target.name, null, 0, ""),
