@@ -110,7 +110,10 @@ private fun SongActionsContent(
     val playlistSync = provider as? PlaylistSyncCapability
     val favoriteReader = provider as? FavoriteStateCapability
     val favoriteWriter = provider as? FavoriteCapability
-    val canFavorite = neteaseId != null || (favoriteReader != null && favoriteWriter != null)
+    val unifiedRevision by MeloXUnifiedFavorites.revision.collectAsState()
+    val unified = MeloXUnifiedFavorites.enabled()
+    val favoriteTrack = remember(song) { runCatching { MeloXUnifiedFavorites.fromSong(song) }.getOrNull() }
+    val canFavorite = if (unified) favoriteTrack != null else neteaseId != null || (favoriteReader != null && favoriteWriter != null)
     var page by remember { mutableStateOf(SongActionPage.Main) }
     var busy by remember { mutableStateOf(false) }
     var message by remember { mutableStateOf<String?>(null) }
@@ -164,7 +167,9 @@ private fun SongActionsContent(
         favoriteLoading = true
         favoriteError = null
         try {
-            liked = if (neteaseId != null) {
+            liked = if (unified) {
+                MeloXUnifiedFavorites.contains(requireNotNull(favoriteTrack))
+            } else if (neteaseId != null) {
                 val profile = account.accountProfile()
                 withContext(Dispatchers.IO) { neteaseId in library.likedSongIdsBlocking(profile.userId) }
             } else requireNotNull(favoriteReader).isFavorite(requireNotNull(track))
@@ -172,7 +177,7 @@ private fun SongActionsContent(
         catch (failure: Exception) { favoriteError = failure.message ?: "喜爱状态读取失败" }
         finally { favoriteLoading = false }
     }
-    LaunchedEffect(neteaseId, track?.id) { loadFavorite() }
+    LaunchedEffect(neteaseId, track?.id, unifiedRevision) { liked = null; loadFavorite() }
 
     fun loadPlaylists(append: Boolean = false) = launchOperation("歌单读取失败") {
         if (neteaseId != null) {
@@ -239,7 +244,12 @@ private fun SongActionsContent(
                 (fadeOut(MeloXMotion.panelExitSpec()) + scaleOut(MeloXMotion.panelExitSpec(), targetScale = .98f))
         }, modifier = Modifier.fillMaxWidth(), label = "song-action-page") { target ->
             Column(Modifier.fillMaxWidth().verticalScroll(rememberScrollState()).padding(18.dp)) {
-                Text(target.title, color = MaterialTheme.colorScheme.onSurface.copy(alpha = .58f), fontSize = 13.sp, fontWeight = FontWeight.SemiBold)
+                Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+                    Text(target.title, Modifier.weight(1f), color = MaterialTheme.colorScheme.onSurface.copy(alpha = .58f), fontSize = 13.sp, fontWeight = FontWeight.SemiBold)
+                    IconButton(onClick = ::back, enabled = !busy, modifier = Modifier.testTag("song-actions-close")) {
+                        MeloXSymbolIcon(MeloXSymbol.XMark, size = 18)
+                    }
+                }
                 Text(song.name, fontSize = 20.sp, fontWeight = FontWeight.Bold, maxLines = 1,
                     overflow = TextOverflow.Ellipsis, modifier = Modifier.padding(top = 3.dp, bottom = 10.dp))
                 message?.let { Text(it, color = Color(0xFFFF8A90), fontSize = 12.sp,
@@ -302,7 +312,8 @@ private fun SongActionsContent(
                                 if (liked == null) scope.launch { loadFavorite() }
                                 else launchOperation("喜爱失败") {
                                     val desired = liked != true
-                                    if (neteaseId != null) ops.setSongLiked(neteaseId, desired)
+                                    if (unified) withContext(Dispatchers.IO) { MeloXUnifiedFavorites.set(requireNotNull(favoriteTrack), desired) }
+                                    else if (neteaseId != null) ops.setSongLiked(neteaseId, desired)
                                     else requireNotNull(favoriteWriter).setFavorite(requireNotNull(track), desired)
                                     liked = desired
                                 }

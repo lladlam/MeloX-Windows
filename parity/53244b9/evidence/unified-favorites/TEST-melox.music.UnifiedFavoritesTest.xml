@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="UnifiedFavoritesTest[desktop]" tests="7" skipped="0" failures="0" errors="0" timestamp="2026-10-26T12:38:25.772Z" hostname="lladlam-arch" time="4.432">
+  <properties/>
+  <testcase name="lowerQualityCrossSourceAddKeepsHigherQualityIdentityAndRemovalUsesLogicalSong[desktop]" classname="melox.music.UnifiedFavoritesTest" time="0.781"/>
+  <testcase name="initializeReportsPartialFailureAndKeepsRealSuccessfulSourceData[desktop]" classname="melox.music.UnifiedFavoritesTest" time="0.408"/>
+  <testcase name="everyProviderMetadataAndNativeIdentitySurvivesCodecAndQueueReload[desktop]" classname="melox.music.UnifiedFavoritesTest" time="0.278"/>
+  <testcase name="malformedPersistedDataIsPreservedInsteadOfOverwrittenByEmptyInitialization[desktop]" classname="melox.music.UnifiedFavoritesTest" time="0.448"/>
+  <testcase name="reorderAndConcurrentAddsCommitWithoutLosingExistingRecords[desktop]" classname="melox.music.UnifiedFavoritesTest" time="2.326"/>
+  <testcase name="providerCannotImportForeignIdentityAndLegacyQueueStillLoads[desktop]" classname="melox.music.UnifiedFavoritesTest" time="0.111"/>
+  <testcase name="cancelledInitializationDoesNotEnableOrPersistPartialImports[desktop]" classname="melox.music.UnifiedFavoritesTest" time="0.079"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

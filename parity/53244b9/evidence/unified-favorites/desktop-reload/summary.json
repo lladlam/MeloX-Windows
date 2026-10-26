@@ -1,0 +1,9 @@
+{
+  "layout": "desktop",
+  "mode": "reload",
+  "scenes": 5,
+  "assertions": 5,
+  "real_local_pcm": true,
+  "physical_audible": false,
+  "private_account_import_verified": false
+}

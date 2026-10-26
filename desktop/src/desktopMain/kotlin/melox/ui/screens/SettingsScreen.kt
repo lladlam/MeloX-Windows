@@ -632,6 +632,7 @@ private fun ContentSettings() {
         SettingsToggleRow("settings_content_hq_playlists", "content_high_quality_playlist", true)
         SettingsToggleRow("settings_content_play_count", "content_playlist_play_count", true)
         CrossProviderFallbackSetting()
+        UnifiedFavoritesSettings()
     }
 }
 

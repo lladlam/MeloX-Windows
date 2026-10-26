@@ -97,7 +97,10 @@ internal object MeloXPlaybackQueueStore {
         put("artistId", song.artistId ?: JSONObject.NULL)
         put("artwork", song.artworkUrl)
         put("durationMs", song.durationMs)
+        put("bestQuality", song.bestQuality?.name)
+        put("bestBitrate", song.bestBitrate)
         if (track != null) {
+            put("providerTrack", melox.music.model.MeloXTrackJson.encode(track))
             put("providerSource", track.id.source.storageValue)
             put("providerId", track.id.value)
             put("providerArtists", JSONArray(track.artists.map { it.name }))
@@ -121,7 +124,8 @@ internal object MeloXPlaybackQueueStore {
         val id = value.optString("id").toLongOrNull() ?: return null
         val providerSource = value.optString("providerSource").takeIf(String::isNotBlank)
         val providerId = value.optString("providerId").takeIf(String::isNotBlank)
-        val providerTrack = if (providerSource != null && providerId != null) {
+        val providerTrack = value.optJSONObject("providerTrack")?.let(melox.music.model.MeloXTrackJson::decode)
+            ?: if (providerSource != null && providerId != null) {
             val source = MusicSource.fromStorageValue(providerSource)
             val names = value.optJSONArray("providerArtists")
             val artists = buildList {
@@ -168,6 +172,8 @@ internal object MeloXPlaybackQueueStore {
             artworkUrl = value.optString("artwork").takeIf(String::isNotBlank),
             durationMs = value.optLong("durationMs", 0L),
             providerTrack = providerTrack,
+            bestQuality = melox.music.model.AudioQualityTier.entries.firstOrNull { it.name == value.optString("bestQuality") },
+            bestBitrate = value.optInt("bestBitrate").takeIf { it > 0 },
         )
     }
 

@@ -533,7 +533,11 @@ fun SearchScreen(
                             onPlay = { song -> PlaybackCommands.playQueue(songs, song.id) },
                             onMore = { selectedActionSong = it },
                             onLike = { song -> scope.launch {
-                                runCatching { operations.setSongLiked(checkNotNull(song.neteaseSongId), true) }
+                                runCatching {
+                                    if (melox.music.provider.MeloXUnifiedFavorites.enabled()) withContext(Dispatchers.IO) {
+                                        melox.music.provider.MeloXUnifiedFavorites.set(melox.music.provider.MeloXUnifiedFavorites.fromSong(song), true)
+                                    } else operations.setSongLiked(checkNotNull(song.neteaseSongId), true)
+                                }
                                     .onFailure { if (it is kotlinx.coroutines.CancellationException) throw it
                                         error = it.message ?: pinnedString("library_add_failed") }
                             } },

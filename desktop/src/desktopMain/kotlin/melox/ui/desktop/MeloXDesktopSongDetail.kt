@@ -53,12 +53,16 @@ internal fun MeloXDesktopSongDetail(id: Long, initialSong: SearchSong? = null, o
     var operationError by remember(id) { mutableStateOf<String?>(null) }
     val scope = rememberCoroutineScope()
     val session by NeteaseSessionStore.revision.collectAsState()
+    val unifiedRevision by melox.music.provider.MeloXUnifiedFavorites.revision.collectAsState()
+    val unified = melox.music.provider.MeloXUnifiedFavorites.enabled()
     suspend fun readFavorite(): Boolean {
+        if (unified) return melox.music.provider.MeloXUnifiedFavorites.contains(
+            melox.music.provider.MeloXUnifiedFavorites.fromSong(requireNotNull(song)))
         check(NeteaseSessionStore.containsMusicU(NeteaseSessionStore.readCookie())) { desktopString("ui.desktop.sidebar.not_signed_in") }
         val user = NeteaseSearchClient(cookieProvider = cookie).accountProfile().userId
         return withContext(Dispatchers.IO) { id in NeteaseLibraryClient(cookie).likedSongIdsBlocking(user) }
     }
-    LaunchedEffect(id, session) {
+    LaunchedEffect(id, session, song, unifiedRevision) {
         liked = null
         try { liked = readFavorite() }
         catch (cancelled: CancellationException) { throw cancelled }
@@ -106,14 +110,17 @@ internal fun MeloXDesktopSongDetail(id: Long, initialSong: SearchSong? = null, o
         loading = loading && song == null, error = error.takeIf { song == null }, playingId = null, isPlaying = playback.isPlaying,
         onBack = onBack, onPlayAll = { song?.let { PlaybackCommands.playQueue(listOf(it), it.id) } },
         onShuffle = { song?.let { PlaybackCommands.playQueue(listOf(it), it.id) } },
-        isFavorite = liked == true, favoriteEnabled = !favoriteBusy,
+        isFavorite = liked == true, favoriteEnabled = !favoriteBusy && (!unified || song != null),
         onFavorite = {
             if (!favoriteBusy) {
                 favoriteBusy = true
                 scope.launch {
                     try {
                         val desired = !(liked ?: readFavorite())
-                        NeteaseMusicOperationsClient(cookie).setSongLiked(id, desired)
+                        if (unified) withContext(Dispatchers.IO) {
+                            melox.music.provider.MeloXUnifiedFavorites.set(
+                                melox.music.provider.MeloXUnifiedFavorites.fromSong(requireNotNull(song)), desired)
+                        } else NeteaseMusicOperationsClient(cookie).setSongLiked(id, desired)
                         liked = desired
                     } catch (cancelled: CancellationException) { throw cancelled }
                     catch (failure: Exception) { operationError = failure.message ?: desktopString("ui.error.favorite_failed") }

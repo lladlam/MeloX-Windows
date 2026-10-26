@@ -1,0 +1,4 @@
+open-persisted:tap@unified-favorites-library
+play-reloaded:tap@unified-favorites-play
+decoded-reloaded:wait@1600
+pause-reloaded:tap@mini-player-play-pause

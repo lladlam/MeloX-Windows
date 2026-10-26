@@ -1,0 +1,51 @@
+{
+  "shared": {
+    "suites": 70,
+    "tests": 366,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "replays": [
+    {
+      "layout": "desktop",
+      "mode": "controls",
+      "scenes": 36,
+      "assertions": 16,
+      "real_local_pcm": true,
+      "physical_audible": false,
+      "private_account_import_verified": false
+    },
+    {
+      "layout": "desktop",
+      "mode": "reload",
+      "scenes": 5,
+      "assertions": 5,
+      "real_local_pcm": true,
+      "physical_audible": false,
+      "private_account_import_verified": false
+    },
+    {
+      "layout": "mobile",
+      "mode": "controls",
+      "scenes": 44,
+      "assertions": 20,
+      "real_local_pcm": true,
+      "physical_audible": false,
+      "private_account_import_verified": false
+    },
+    {
+      "layout": "mobile",
+      "mode": "reload",
+      "scenes": 5,
+      "assertions": 5,
+      "real_local_pcm": true,
+      "physical_audible": false,
+      "private_account_import_verified": false
+    }
+  ],
+  "private_account_import_verified": false,
+  "windows_release_verified_for_this_change": false,
+  "total_scenes": 90,
+  "total_assertions": 46
+}

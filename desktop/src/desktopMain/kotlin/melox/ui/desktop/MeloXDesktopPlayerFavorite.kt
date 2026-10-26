@@ -17,6 +17,7 @@ import melox.music.provider.FavoriteStateCapability
 import melox.network.NeteaseMusicOperationsClient
 import melox.network.NeteaseSearchClient
 import melox.music.provider.MeloXMusicProviders
+import melox.music.provider.MeloXUnifiedFavorites
 import melox.ui.foundation.MeloXSymbol
 
 /** Same real readers/writers as the first-layout song actions; no optimistic fake star. */
@@ -27,20 +28,22 @@ internal fun DesktopPlayerFavorite(track: MusicTrack, scale: Float, refreshKey: 
     val reader = provider as? FavoriteStateCapability
     val writer = provider as? FavoriteCapability
     val neteaseId = track.id.value.toLongOrNull()?.takeIf { track.id.source == MusicSource.Netease }
-    val supported = neteaseId != null || (reader != null && writer != null)
+    val unifiedRevision by MeloXUnifiedFavorites.revision.collectAsState()
+    val unified = MeloXUnifiedFavorites.enabled()
+    val supported = unified || neteaseId != null || (reader != null && writer != null)
     val session by NeteaseSessionStore.revision.collectAsState()
     var liked by remember { mutableStateOf<Boolean?>(null) }
     var busy by remember { mutableStateOf(false) }
     var error by remember { mutableStateOf<String?>(null) }
     suspend fun read(): Boolean {
-        return if (neteaseId != null) {
+        return if (unified) MeloXUnifiedFavorites.contains(track) else if (neteaseId != null) {
             check(NeteaseSessionStore.containsMusicU(NeteaseSessionStore.readCookie())) { desktopString("ui.desktop.sidebar.not_signed_in") }
             val cookie = { NeteaseSessionStore.readCookie() }
             val profile = NeteaseSearchClient(cookieProvider = cookie).accountProfile()
             withContext(Dispatchers.IO) { neteaseId in NeteaseLibraryClient(cookie).likedSongIdsBlocking(profile.userId) }
         } else requireNotNull(reader).isFavorite(track)
     }
-    LaunchedEffect(session, refreshKey) {
+    LaunchedEffect(session, refreshKey, unifiedRevision) {
         if (!supported || refreshKey) return@LaunchedEffect
         liked = null
         busy = true
@@ -57,7 +60,8 @@ internal fun DesktopPlayerFavorite(track: MusicTrack, scale: Float, refreshKey: 
             scope.launch {
                 try {
                     val desired = !(liked ?: read())
-                    if (neteaseId != null) NeteaseMusicOperationsClient(cookieProvider = { NeteaseSessionStore.readCookie() }).setSongLiked(neteaseId, desired)
+                    if (unified) withContext(Dispatchers.IO) { MeloXUnifiedFavorites.set(track, desired) }
+                    else if (neteaseId != null) NeteaseMusicOperationsClient(cookieProvider = { NeteaseSessionStore.readCookie() }).setSongLiked(neteaseId, desired)
                     else requireNotNull(writer).setFavorite(track, desired)
                     liked = desired
                 } catch (cancelled: CancellationException) { throw cancelled }

@@ -1,0 +1,13 @@
+setup=tag:unified-favorites-create
+created=tag:unified-favorites-status
+menu-0=tag:desktop-song-menu
+menu-1=tag:desktop-song-menu
+open-favorites=state:unified-favorites-detail:count=2
+reorder=state:unified-favorites-track:0:local|5200d944edda98dc67042408
+decoded=playing:true,no-playback-error:true
+pause=playing:false
+remove-one=state:unified-favorites-detail:count=1
+disable=absent:unified-favorites-status
+hidden=absent:unified-favorites-library
+enable-existing=tag:unified-favorites-status,absent:unified-favorites-create
+open-persisted=state:unified-favorites-detail:count=1,state:unified-favorites-track:0:local|73e1a3c6782855076d16d0ec

@@ -1,0 +1,9 @@
+{
+  "layout": "desktop",
+  "mode": "controls",
+  "scenes": 36,
+  "assertions": 16,
+  "real_local_pcm": true,
+  "physical_audible": false,
+  "private_account_import_verified": false
+}

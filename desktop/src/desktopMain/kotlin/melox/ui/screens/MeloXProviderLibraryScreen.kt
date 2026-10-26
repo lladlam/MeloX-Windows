@@ -190,8 +190,13 @@ private fun ProviderLibraryContent(source: MusicSource, requestedPage: String?, 
                         queue.songs.getOrNull(queue.index)?.providerTrack?.id == track.id, playback.isPlaying, false,
                         { melox.playback.ProviderPlaybackCommands.playQueue(tracks, track.id) },
                         { menuAnchor = it; menuSong = song }, showsArtwork = true)
-                    else Column {
-                        MeloXLibraryTrackRow(song) { melox.playback.ProviderPlaybackCommands.playQueue(tracks, track.id) }
+                     else Column {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Box(Modifier.weight(1f)) { MeloXLibraryTrackRow(song) { melox.playback.ProviderPlaybackCommands.playQueue(tracks, track.id) } }
+                            IconButton({ menuAnchor = null; menuSong = song }, Modifier.testTag("provider-library-song-menu:${track.id.value}")) {
+                                melox.ui.foundation.MeloXSymbolIcon(melox.ui.foundation.MeloXSymbol.Ellipsis, size = 20)
+                            }
+                        }
                         HorizontalDivider(Modifier.padding(start = 68.dp), color = MaterialTheme.colorScheme.onSurface.copy(alpha = .08f))
                     }
                 }
@@ -212,7 +217,7 @@ private fun ProviderLibraryContent(source: MusicSource, requestedPage: String?, 
             }
         }
     }
-    menuSong?.let { melox.ui.desktop.MeloXDesktopSongMenu(it, { menuSong = null }, menuAnchor) }
+    menuSong?.let { MeloXSongActionsOverlay(it, tracks.map(MeloXLegacyUiBridge::track), true, { menuSong = null }, desktopAnchor = menuAnchor) }
     if (creating && writer != null) AlertDialog(onDismissRequest = { if (!createBusy) creating = false },
         shape = RoundedCornerShape(if (desktop) 10.dp else 28.dp),
         title = { Text("新建歌单") }, text = { Column {

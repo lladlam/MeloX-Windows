@@ -29,7 +29,7 @@
 | 音乐库／歌单 | 手机 Library 与 DesktopLibrary，源身份和分页保留 | 私人收藏、自建／已喜欢权限、批量写入与成员排序实机 |
 | 专辑／艺人详情 | 共享真实网络业务＋双布局详情；本轮修复手机版专辑空操作 | provider 完整目录分页、账号写入、所有分享与封面 hero |
 | 歌曲详情／百科 | `MeloXSongDetail`、DesktopSongDetail 入口 | 按 Android 歌曲百科信息块逐项对照、所有源能力边界 |
-| 歌曲菜单／收藏 | 手机 SongActions 与 DesktopSongMenu／PlayerFavorite | 私人账号收藏读取／写入、切账号并发、不同来源收藏刷新；Android 实时新增应用自有统一「我喜欢」、初始化迁移与全元数据持久化尚未接入 |
+| 歌曲菜单／收藏 | 手机 SongActions 与 DesktopSongMenu／PlayerFavorite；新增应用自有统一「我喜欢」、逐来源初始化／部分失败报告、全元数据持久化、跨源收藏开关与双布局独立库入口，见 UNIFIED_FAVORITES_UPDATE.md | 私人账号实际导入／原生收藏写入、切账号实机、多来源完整接口验收；新功能 Windows CI 与独立发行待完成 |
 | 下载／批量下载 | MeloXDownloadStore＋手机 Downloads／电脑 library pages | 权益、失败恢复、目标目录与批量任务实机 |
 | 云盘 | 手机 Cloud、电脑 library pages，真实上传接口 | 原生文件选择器、实际上传／删除与账号切换 |
 | 播客 | 手机 Podcasts、DesktopPodcasts | 收藏与节目详情实机、封面共享动画 |
@@ -40,7 +40,7 @@
 | 汽水 | `ec5753a`：真实协议、双布局、账号 QR、游标、歌词与试听识别 | 用户真实扫码确认、登录态搜索与完整播放 |
 | Bilibili | `4c94f7e`：收藏的他人列表／合集、分页与单视频隔离 | 用户私人列表；WBI 播放及音质细节与最新 Android 持续对照 |
 | 播放回退 | `566d099`：native → 内置串行严格完整匹配 → CHKSZ／LX | 概念版候选随真实 provider 迁入；真实账号／权限与网络验收 |
-| 播放器／队列／MiniPlay | 两套独立呈现＋真实 PlaybackCommands／PCM；既有 Dock／AutoMix 证据 | MiniPlay 材质与侧反射、横竖屏同一时钟、所有页面封面 morph |
+| 播放器／队列／MiniPlay | 两套独立呈现＋真实 PlaybackCommands／PCM；既有 Dock／AutoMix 证据；队列新增全 provider 元数据持久化并兼容旧字段 | MiniPlay 材质与侧反射、横竖屏同一时钟、所有页面封面 morph；Android 实时新增 AutoMix 双封面调色板合并待迁移 |
 | 歌词／罗马音 | 双布局渲染、语言链、真实歌词；本轮接 JapaneseRubyAlignment 及视觉行字符范围；348 tests 与双布局 17 scenes／18 assertions 通过，见 ROMANIZATION_070_UPDATE.md | 线上同内容日文曲目、天际／EVA／TextPV 同内容动画验收 |
 | 歌词样式选项 | Windows 仍保留 Apple Music／EVA／TextPV 可选 | Android 0.7 当前仅显示 Apple Music；现有用户设置兼容策略需随迁移明确核销 |
 | 歌词分享 | 已有真实 PNG 导出，本轮接自定义图背景 | 长按多行、背景与排版同内容对照、原生保存对话框 |

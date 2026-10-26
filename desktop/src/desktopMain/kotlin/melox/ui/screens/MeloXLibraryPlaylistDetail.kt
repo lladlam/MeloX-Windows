@@ -476,8 +476,14 @@ internal fun MeloXLibraryPlaylistDetailScreen(
                              } else {
                                 MeloXSwipeAction("添加到资料库", melox.ui.foundation.MeloXSymbol.Heart, Color(0xFFFF3B30)) {
                                     scope.launch {
-                                        runCatching { operationsClient.setSongLiked(song.id, true) }
-                                            .onSuccess {
+                                         val unified = melox.music.provider.MeloXUnifiedFavorites.enabled()
+                                         runCatching {
+                                             if (unified) withContext(Dispatchers.IO) {
+                                                 melox.music.provider.MeloXUnifiedFavorites.set(melox.music.provider.MeloXUnifiedFavorites.fromSong(song), true)
+                                             } else operationsClient.setSongLiked(song.id, true)
+                                         }
+                                             .onSuccess {
+                                                 if (unified) return@onSuccess
                                                 currentUserId?.let { userId ->
                                                     scope.launch {
                                                         cache.loadSnapshot(userId)?.let { cached ->

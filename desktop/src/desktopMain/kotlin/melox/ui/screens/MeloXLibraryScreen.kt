@@ -115,6 +115,12 @@ fun LibraryScreen(
     navState: MeloXNavState? = null,
     requestedPage: String? = null,
 ) {
+    UnifiedFavoritesLibraryHost { LibrarySourceContent(navState, requestedPage) }
+}
+
+@OptIn(ExperimentalSharedTransitionApi::class)
+@Composable
+private fun LibrarySourceContent(navState: MeloXNavState?, requestedPage: String?) {
     val requestedSource = MusicProviderSelectionStore.selectedSource()
     val openSourceLogin: () -> Unit = {
         melox.ui.navigation.MeloXLoginRequestBus.request(requestedSource)

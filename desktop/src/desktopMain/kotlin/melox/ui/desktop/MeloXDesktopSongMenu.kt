@@ -77,6 +77,9 @@ internal fun MeloXDesktopSongMenu(
     val sync = provider as? PlaylistSyncCapability
     val favoriteReader = provider as? FavoriteStateCapability
     val favoriteWriter = provider as? FavoriteCapability
+    val unifiedRevision by MeloXUnifiedFavorites.revision.collectAsState()
+    val unified = MeloXUnifiedFavorites.enabled()
+    val favoriteTrack = remember(song) { runCatching { MeloXUnifiedFavorites.fromSong(song) }.getOrNull() }
     val loggedIn = NeteaseSessionStore.containsMusicU(NeteaseSessionStore.readCookie())
     var owned by remember { mutableStateOf<List<NeteasePlaylistSummary>>(emptyList()) }
     var writable by remember { mutableStateOf<List<MusicPlaylistSummary>>(emptyList()) }
@@ -108,14 +111,17 @@ internal fun MeloXDesktopSongMenu(
             finally { busy = false }
         }
     }
-    suspend fun readFavorite(): Boolean = if (id != null) {
+    suspend fun readFavorite(): Boolean = if (unified) {
+        MeloXUnifiedFavorites.contains(requireNotNull(favoriteTrack))
+    } else if (id != null) {
         check(loggedIn) { desktopString("ui.desktop.sidebar.not_signed_in") }
         val user = NeteaseSearchClient(cookieProvider = cookie).accountProfile().userId
         withContext(Dispatchers.IO) { id in NeteaseLibraryClient(cookie).likedSongIdsBlocking(user) }
     } else requireNotNull(favoriteReader).isFavorite(requireNotNull(track))
 
-    LaunchedEffect(song) {
-        if (id != null && loggedIn || favoriteReader != null) {
+    LaunchedEffect(song, unifiedRevision) {
+        liked = null
+        if (unified && favoriteTrack != null || id != null && loggedIn || favoriteReader != null) {
             try { liked = readFavorite() }
             catch (cancelled: CancellationException) { throw cancelled }
             catch (_: Exception) { /* Unknown is not an invented unliked state. Click retries the real reader. */ }
@@ -186,10 +192,11 @@ internal fun MeloXDesktopSongMenu(
             }
             DesktopMenuDivider()
             DesktopSongMenuItem(if (liked == true) "ui.song.unlike" else "ui.song.like", if (liked == true) MeloXSymbol.StarFill else MeloXSymbol.Star,
-                "favorite", !busy && (id != null || favoriteReader != null && favoriteWriter != null)) {
+                "favorite", !busy && (if (unified) favoriteTrack != null else id != null || favoriteReader != null && favoriteWriter != null)) {
                 operation {
                     val desired = !(liked ?: readFavorite())
-                    if (id != null) operations.setSongLiked(id, desired) else requireNotNull(favoriteWriter).setFavorite(requireNotNull(track), desired)
+                    if (unified) withContext(Dispatchers.IO) { MeloXUnifiedFavorites.set(requireNotNull(favoriteTrack), desired) }
+                    else if (id != null) operations.setSongLiked(id, desired) else requireNotNull(favoriteWriter).setFavorite(requireNotNull(track), desired)
                     liked = desired; onDismiss()
                 }
             }

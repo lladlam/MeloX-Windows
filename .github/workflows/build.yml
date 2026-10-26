@@ -283,6 +283,16 @@ jobs:
             python tools/capture_ruby_alignment.py $layout "$pwd/desktop/build/parity/ruby-$layout-home" "desktop/build/parity/ruby-$layout"
             if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           }
+      - name: Replay unified favorites with real Local playback and independent reload
+        shell: pwsh
+        run: |
+          foreach ($layout in @("mobile", "desktop")) {
+            $homeDir = "$pwd/desktop/build/parity/unified-favorites-$layout-home"
+            python tools/capture_unified_favorites.py $layout controls $homeDir "desktop/build/parity/unified-favorites-$layout-controls"
+            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+            python tools/capture_unified_favorites.py $layout reload $homeDir "desktop/build/parity/unified-favorites-$layout-reload"
+            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          }
       - name: Replay every Desktop settings page and shared account actions
         shell: pwsh
         run: |
@@ -505,6 +515,10 @@ jobs:
             desktop/build/parity/ruby-*/*.txt
             desktop/build/parity/ruby-*/gradle.log
             desktop/build/parity/ruby-*/*.png
+            desktop/build/parity/unified-favorites-*/*.json
+            desktop/build/parity/unified-favorites-*/*.txt
+            desktop/build/parity/unified-favorites-*/gradle.log
+            desktop/build/parity/unified-favorites-*/*.png
             desktop/build/parity/startup-memory/*.json
             desktop/build/parity/bilibili-alignment-controls/*
             desktop/build/parity/bilibili-alignment-reload/*
