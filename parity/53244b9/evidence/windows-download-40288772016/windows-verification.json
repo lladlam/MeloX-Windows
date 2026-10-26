@@ -1,0 +1,61 @@
+{
+  "run_id": "40288772016",
+  "revision": "af4a9a4e34a5b8af1cbdda7fe8170d597642320d",
+  "replays": [
+    {
+      "name": "feature-surface-mobile-controls",
+      "scenes": 43,
+      "assertions": 28,
+      "passed": true
+    },
+    {
+      "name": "feature-surface-mobile-reload",
+      "scenes": 5,
+      "assertions": 5,
+      "passed": true
+    },
+    {
+      "name": "feature-surface-desktop-controls",
+      "scenes": 44,
+      "assertions": 24,
+      "passed": true
+    },
+    {
+      "name": "feature-surface-desktop-reload",
+      "scenes": 6,
+      "assertions": 5,
+      "passed": true
+    },
+    {
+      "name": "ruby-mobile",
+      "scenes": 9,
+      "assertions": 9,
+      "passed": true
+    },
+    {
+      "name": "ruby-desktop",
+      "scenes": 8,
+      "assertions": 9,
+      "passed": true
+    },
+    {
+      "name": "collection-playlist-dark",
+      "scenes": 38,
+      "assertions": 45,
+      "passed": true
+    },
+    {
+      "name": "collection-playlist-light",
+      "scenes": 38,
+      "assertions": 45,
+      "passed": true
+    }
+  ],
+  "shared_tests": {
+    "suites": 69,
+    "tests": 359,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  }
+}

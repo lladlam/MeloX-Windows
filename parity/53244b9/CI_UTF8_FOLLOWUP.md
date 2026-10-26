@@ -27,3 +27,11 @@ Windows 对应生命周期已核查：`MeloXLanOutputPanel:39` 与 `MeloXLanDial
 生产修复：歌曲菜单与首页的详情路由携带已从真实服务取得的 SearchSong；详情仅接受 neteaseSongId 匹配的初始数据。刷新详情失败时保留已有实际资料，显示错误和重试，继续独立加载歌词／相似歌曲／评论；没有可信初始数据时仍显示原有真实加载错误。不插入假账号、歌曲或播放链接，不把刷新失败隐藏为成功。
 
 本地明暗两轮真实网络＋实际鼠标／键盘菜单回放通过，共 **68 scenes／82 assertions**，包含标签切换、未登录收藏错误对话框、返回歌单与艺人路由；这两轮未观察到原 404，故不冒称实网稳定重现错误分支。另一次含 touch drag 的完整本地回放提前在 scroll return 停于 `0-222`（期望 `0-0`），未到歌曲菜单，失败日志如实保留；不计作触摸归位通过。Windows 原始截图／语义、两轮成功输出与该失败日志见 `evidence/song-detail-ci-fix/`。新 Windows CI 和完整发行核验仍待完成。
+
+## Windows CI 40288772016 与完整发行核验通过
+
+生产源码 **`af4a9a4e34a5b8af1cbdda7fe8170d597642320d`** 的完整 Windows CI 已成功。完整下载 `MeloX-Desktop-Windows.zip` 后，由 `tools/verify_delivery_artifact.py` 独立检查源码 stamp、全 ZIP CRC、固定资源与 PE 解码器：**PASSED**，357 entries，339671485 bytes，SHA-256 `88b00be252873f12d0358ba14512dfb6b13ec0b1b1b91020e846d98693e800d0`。
+
+另完整下载 Verification-Windows，逐一解析此次实际回放与 XML：共享 **69 suites／359 tests，零失败／错误／跳过**；双布局 feature-surface controls／reload **98 scenes／62 assertions**；双布局 ruby **17 scenes／18 assertions**；明暗 collection playlist（包括 Windows 实际拖动与菜单）**76 scenes／90 assertions** 全通过。该结果确认 UTF-8 脚本已在 Windows 全流程执行通过。证据 `evidence/windows-download-40288772016/`。
+
+此成功发行包括应用语言／背景、罗马音、Passport、搜索音质与详情保留等既有批次；不包括正在迁移、尚未提交的统一收藏增量。不把 CI 与完整 ZIP 校验等同于私人账号、跨机 LAN 或物理听音验收。
