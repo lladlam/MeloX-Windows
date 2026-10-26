@@ -497,6 +497,14 @@ jobs:
             desktop/build/parity/settings-*/*.json
             desktop/build/parity/settings-*/gradle.log
             desktop/build/parity/settings-*/*.txt
+            desktop/build/parity/feature-surface-*/*.json
+            desktop/build/parity/feature-surface-*/*.txt
+            desktop/build/parity/feature-surface-*/gradle.log
+            desktop/build/parity/feature-surface-*/*.png
+            desktop/build/parity/ruby-*/*.json
+            desktop/build/parity/ruby-*/*.txt
+            desktop/build/parity/ruby-*/gradle.log
+            desktop/build/parity/ruby-*/*.png
             desktop/build/parity/startup-memory/*.json
             desktop/build/parity/bilibili-alignment-controls/*
             desktop/build/parity/bilibili-alignment-reload/*

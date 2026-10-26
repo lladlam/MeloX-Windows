@@ -1,0 +1,22 @@
+{
+  "failed_run": "40173862466",
+  "encoding_failure_reproduced_on_same_run_japanese_settings_capture": {
+    "encoding": "cp1252",
+    "offset": 55778,
+    "byte": 141
+  },
+  "japanese_settings": {
+    "scenes": 88,
+    "assertions": 65,
+    "all_passed": true
+  },
+  "windows_shared_tests": {
+    "suites": 68,
+    "tests": 350,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "explicit_utf8_file_io_audit": "PASSED",
+  "missing_new_replay_artifacts": "Upload paths added for feature-surface and ruby; original failing file not uploaded by old workflow"
+}

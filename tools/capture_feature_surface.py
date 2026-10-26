@@ -90,9 +90,9 @@ with (output / 'gradle.log').open('w') as log:
         '-Pkotlin.compiler.execution.strategy=in-process', '-Dorg.gradle.jvmargs=-Xmx1024m -XX:+UseSerialGC',
         '-PcaptureHome=' + str(home), '-PcaptureArgsFile=' + str(output / 'arguments.txt')], cwd=repo, stdout=log, stderr=subprocess.STDOUT)
 if result.returncode:
-    print('\n'.join((output / 'gradle.log').read_text(errors='replace').splitlines()[-65:]))
+    print('\n'.join((output / 'gradle.log').read_text(encoding='utf-8', errors='replace').splitlines()[-65:]))
     sys.exit(result.returncode)
-capture = json.loads((output / 'capture.json').read_text())
+capture = json.loads((output / 'capture.json').read_text(encoding='utf-8'))
 checks = [a for scene in capture['scenes'] for a in scene.get('assertions', [])]
 assert checks and all(a['passed'] for a in checks)
 print(f'{layout}/{mode}: {len(capture["scenes"])} scenes / {len(checks)} assertions passed')

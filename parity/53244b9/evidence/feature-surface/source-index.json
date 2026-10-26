@@ -1,6 +1,6 @@
 {
-  "checked_utc": "2026-10-25T07:42:54.412282+00:00",
-  "android_head": "292652e6da6ba6ea1f04466b0e55ba1bfcdf9e69",
+  "checked_utc": "2026-10-26T06:48:30.057846+00:00",
+  "android_head": "cd345047dc578d34ee72d34abdb907acdd199b4f",
   "scope": "Live working-tree source inventory. Presence is not functional or visual parity; missing pattern matches require manual routing review.",
   "areas": {
     "home": {
@@ -143,7 +143,7 @@
       "android": [
         {
           "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/search/SearchScreen.kt",
-          "sha256": "e391d4a8733e79a664abdd60478f437656dfdd10ad0768e41a55ee34f4a2a00a"
+          "sha256": "45f40f4cb9e317ed6e28551b9a51d115ac268b77dc47fde3f97f7a8ea98b5b37"
         }
       ],
       "mobile": [
@@ -164,7 +164,7 @@
       "android": [
         {
           "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/library/LibraryScreen.kt",
-          "sha256": "957559a94164a3ffc56a0512d1c7dba4bbc7e4d8a7965ef622b68632d06721cf"
+          "sha256": "1760fb0bd7740ac9037d051195b88de614f9291b49813db5bf008e94d72adb15"
         },
         {
           "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/library/MeloXBatchDownloadSheet.kt",
@@ -262,7 +262,7 @@
       "android": [
         {
           "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/library/LibraryScreen.kt",
-          "sha256": "957559a94164a3ffc56a0512d1c7dba4bbc7e4d8a7965ef622b68632d06721cf"
+          "sha256": "1760fb0bd7740ac9037d051195b88de614f9291b49813db5bf008e94d72adb15"
         },
         {
           "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/library/MeloXBatchDownloadSheet.kt",
@@ -350,7 +350,7 @@
       "android": [
         {
           "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/song/MeloXSongDetailActivity.kt",
-          "sha256": "ad49fae51f2ec40a15b8f35e5dc42a61d2affdfed30a969d508564dcb66d551e"
+          "sha256": "095f2615cea3d3bdbe9ac803a998697a56743ee78c91b1d4389fcc78e76b3e20"
         },
         {
           "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/song/MeloXSongWikiActivity.kt",
@@ -374,11 +374,11 @@
         },
         {
           "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXProviderSongActionsOverlay.kt",
-          "sha256": "7a8eb1e52cf165ce8aa83c5d0c216afd99c198ba35822068d07f53293414df4e"
+          "sha256": "ecca9fc0f940521a310b94350b87e4dd0dc815a2ff03a07d0bd3f74eeaa7cd4b"
         },
         {
           "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXSongActionsOverlay.kt",
-          "sha256": "f9dcbefb05c20625c2a552dde21fd67888929805f9092377114586ce04d19556"
+          "sha256": "09d1daf5ccecbfb3cb6d52f32b76fb3b74166534437fa1eec40b28b774c6134e"
         }
       ],
       "mobile": [
@@ -712,7 +712,7 @@
       "android": [
         {
           "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXIOSNowPlayingScene.kt",
-          "sha256": "f48f185a9bac50feec4ba80b49fe7f2510c373c1995c7079f7835a63d030c77e"
+          "sha256": "87d074b5f7e7e2ade7dbc102dc407e4cfd85af7b39dd14a38121a908e651e384"
         },
         {
           "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXIOSNowPlayingSharedHost.kt",
@@ -800,7 +800,7 @@
         },
         {
           "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXFloatingLyricsPip.kt",
-          "sha256": "220c0e6a7704089dab0c76fe20365610e2cb621f73296f0bd6f1560a8921496b"
+          "sha256": "d42bd3713b46ccb01e5d713239492da8398ec65b9e5a031613941d02208ed001"
         },
         {
           "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXIOSLyricsPanel.kt",
@@ -1027,7 +1027,7 @@
       "android": [
         {
           "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXAudioOutputDialog.kt",
-          "sha256": "ee21f45ec97af3f3c6512ce0fb47c4e07925af2867704f5a57f1798e4c5e7034"
+          "sha256": "085eda2b2ee0384b96eb5c968ba0ba6e60f438525b7ee5255e1c836ce8681325"
         },
         {
           "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXAudioOutputPlaybackPanel.kt",
@@ -1036,6 +1036,10 @@
         {
           "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXLanOutputPanel.kt",
           "sha256": "27e7cef62808a89e1331d6223dc3344cfb395533a428881b71de9f4642a1b393"
+        },
+        {
+          "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXModernAudioOutputDialog.kt",
+          "sha256": "49b06fd933efbc9f4cbd442efb4602214606028591ce3793d31b1e76189ea1bb"
         },
         {
           "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/UsbAudioOutputRows.kt",
@@ -1110,7 +1114,7 @@
       "android": [
         {
           "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/settings/SettingsScreen.kt",
-          "sha256": "4dca49ea629d32682c577e650533b7da755caefeeee5988e0e360fe3d420cbf2"
+          "sha256": "d1eba0d72e93eba42e443e516e3f655ad894614f66b7c9eab5b0a807d879be23"
         }
       ],
       "mobile": [
@@ -1220,7 +1224,7 @@
       "android": [
         {
           "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/settings/SettingsScreen.kt",
-          "sha256": "4dca49ea629d32682c577e650533b7da755caefeeee5988e0e360fe3d420cbf2"
+          "sha256": "d1eba0d72e93eba42e443e516e3f655ad894614f66b7c9eab5b0a807d879be23"
         }
       ],
       "mobile": [
@@ -1254,7 +1258,7 @@
       "android": [
         {
           "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/settings/SettingsScreen.kt",
-          "sha256": "4dca49ea629d32682c577e650533b7da755caefeeee5988e0e360fe3d420cbf2"
+          "sha256": "d1eba0d72e93eba42e443e516e3f655ad894614f66b7c9eab5b0a807d879be23"
         }
       ],
       "mobile": [
@@ -1824,7 +1828,7 @@
     },
     {
       "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/library/LibraryScreen.kt",
-      "sha256": "957559a94164a3ffc56a0512d1c7dba4bbc7e4d8a7965ef622b68632d06721cf"
+      "sha256": "1760fb0bd7740ac9037d051195b88de614f9291b49813db5bf008e94d72adb15"
     },
     {
       "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/library/MeloXBatchDownloadSheet.kt",
@@ -1856,7 +1860,7 @@
     },
     {
       "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXAudioOutputDialog.kt",
-      "sha256": "ee21f45ec97af3f3c6512ce0fb47c4e07925af2867704f5a57f1798e4c5e7034"
+      "sha256": "085eda2b2ee0384b96eb5c968ba0ba6e60f438525b7ee5255e1c836ce8681325"
     },
     {
       "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXAudioOutputPlaybackPanel.kt",
@@ -1880,7 +1884,7 @@
     },
     {
       "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXFloatingLyricsPip.kt",
-      "sha256": "220c0e6a7704089dab0c76fe20365610e2cb621f73296f0bd6f1560a8921496b"
+      "sha256": "d42bd3713b46ccb01e5d713239492da8398ec65b9e5a031613941d02208ed001"
     },
     {
       "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXFlowingLightBackdrop.kt",
@@ -1896,7 +1900,7 @@
     },
     {
       "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXIOSNowPlayingScene.kt",
-      "sha256": "f48f185a9bac50feec4ba80b49fe7f2510c373c1995c7079f7835a63d030c77e"
+      "sha256": "87d074b5f7e7e2ade7dbc102dc407e4cfd85af7b39dd14a38121a908e651e384"
     },
     {
       "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXIOSNowPlayingSharedHost.kt",
@@ -1935,6 +1939,10 @@
       "sha256": "32987f8a09ec0814711e4c7a943d758eb927c34996b6a30a083d800e9c0b8bc0"
     },
     {
+      "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXModernAudioOutputDialog.kt",
+      "sha256": "49b06fd933efbc9f4cbd442efb4602214606028591ce3793d31b1e76189ea1bb"
+    },
+    {
       "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXNowPlayingActionsSheet.kt",
       "sha256": "0b1b2e0210795f1b66f4797421db518882fc801e8d3b072a9d7f022fe8804b06"
     },
@@ -1960,7 +1968,7 @@
     },
     {
       "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXPlayerUi.kt",
-      "sha256": "168616450e658d8193c86a25ea84109f49d9a0468a3fd702b4b68a678d851244"
+      "sha256": "f1428be0fc122a8722a0918806869833b2ffdc1f4c15a8639ec5e999dd61ff95"
     },
     {
       "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXProviderLyricsLoader.kt",
@@ -1968,7 +1976,7 @@
     },
     {
       "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXProviderSongActionsOverlay.kt",
-      "sha256": "7a8eb1e52cf165ce8aa83c5d0c216afd99c198ba35822068d07f53293414df4e"
+      "sha256": "ecca9fc0f940521a310b94350b87e4dd0dc815a2ff03a07d0bd3f74eeaa7cd4b"
     },
     {
       "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXQualitySelectionOverlay.kt",
@@ -1992,7 +2000,7 @@
     },
     {
       "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXSongActionsOverlay.kt",
-      "sha256": "f9dcbefb05c20625c2a552dde21fd67888929805f9092377114586ce04d19556"
+      "sha256": "09d1daf5ccecbfb3cb6d52f32b76fb3b74166534437fa1eec40b28b774c6134e"
     },
     {
       "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXTextPVLyrics.kt",
@@ -2044,7 +2052,7 @@
     },
     {
       "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/search/SearchScreen.kt",
-      "sha256": "e391d4a8733e79a664abdd60478f437656dfdd10ad0768e41a55ee34f4a2a00a"
+      "sha256": "45f40f4cb9e317ed6e28551b9a51d115ac268b77dc47fde3f97f7a8ea98b5b37"
     },
     {
       "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/settings/AutoSyncModelPanel.kt",
@@ -2076,7 +2084,7 @@
     },
     {
       "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/settings/SettingsScreen.kt",
-      "sha256": "4dca49ea629d32682c577e650533b7da755caefeeee5988e0e360fe3d420cbf2"
+      "sha256": "d1eba0d72e93eba42e443e516e3f655ad894614f66b7c9eab5b0a807d879be23"
     },
     {
       "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/sharing/MeloXNeteaseResourceShareActivity.kt",
@@ -2084,7 +2092,7 @@
     },
     {
       "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/song/MeloXSongDetailActivity.kt",
-      "sha256": "ad49fae51f2ec40a15b8f35e5dc42a61d2affdfed30a969d508564dcb66d551e"
+      "sha256": "095f2615cea3d3bdbe9ac803a998697a56743ee78c91b1d4389fcc78e76b3e20"
     },
     {
       "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/song/MeloXSongWikiActivity.kt",

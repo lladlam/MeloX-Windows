@@ -41,8 +41,8 @@ if layout == 'mobile':
     steps.append('lyrics:tap@player-show-lyrics')
 steps += ['ruby:wait@1000', 'pause:tap@' + ('mini-player-play-pause' if layout == 'desktop' else 'player-play-pause')]
 checks += ['ruby=tag:lyric-ruby,tag:lyric-ruby-row-1,tag:lyric-romanization-row', 'pause=playing:false,no-playback-error:true']
-(output / 'steps.txt').write_text('\n'.join(steps) + '\n')
-(output / 'expect.txt').write_text('\n'.join(checks) + '\n')
+(output / 'steps.txt').write_text('\n'.join(steps) + '\n', encoding='utf-8')
+(output / 'expect.txt').write_text('\n'.join(checks) + '\n', encoding='utf-8')
 args = ['--locale', 'ja-JP', '--source', 'Local', '--start-tab', 'Library', '--theme', 'Dark',
         '--width', '1100' if layout == 'desktop' else '430', '--height', '850', '--output', str(output),
         '--wait-ms', '450', '--startup-wait-ms', '1200', '--scan-local-dir', str(audio_dir), '--local-lyrics-file', str(ttml),
@@ -56,12 +56,12 @@ with (output / 'gradle.log').open('w') as log:
         '-Pkotlin.compiler.execution.strategy=in-process', '-Dorg.gradle.jvmargs=-Xmx1024m -XX:+UseSerialGC',
         '-PcaptureHome=' + str(home), '-PcaptureArgsFile=' + str(output / 'arguments.txt')], cwd=repo, stdout=log, stderr=subprocess.STDOUT)
 if result.returncode:
-    print('\n'.join((output / 'gradle.log').read_text(errors='replace').splitlines()[-70:]))
+    print('\n'.join((output / 'gradle.log').read_text(encoding='utf-8', errors='replace').splitlines()[-70:]))
     sys.exit(result.returncode)
-capture = json.loads((output / 'capture.json').read_text())
+capture = json.loads((output / 'capture.json').read_text(encoding='utf-8'))
 assertions = [a for scene in capture['scenes'] for a in scene.get('assertions', [])]
 assert assertions and all(a['passed'] for a in assertions)
-semantics = json.loads(next(output.glob('*-ruby.semantics.json')).read_text())
+semantics = json.loads(next(output.glob('*-ruby.semantics.json')).read_text(encoding='utf-8'))
 rows = sorted([node for node in semantics if (node.get('tag') or '').startswith('lyric-ruby-row-')], key=lambda n: n['bounds'][1])
 assert len(rows) >= 2, 'The local Japanese paragraph must really wrap'
 assert all(a['bounds'][3] <= b['bounds'][1] + 1 for a, b in zip(rows, rows[1:])), 'Visual rows must not overlap'
@@ -70,5 +70,5 @@ assert len(annotations) == len(rows), 'Every visual row needs its own reading ro
 assert sum(p.get('written_frames', 0) for p in capture['pcm_outputs']) > 44100, 'Real Local decoding must produce PCM'
 summary = {'layout': layout, 'scenes': len(capture['scenes']), 'assertions': len(assertions), 'visual_rows': len(rows),
            'reading_rows': len(annotations), 'fixture': 'generated real Local WAV + TTML, no online lyric claim', 'physical_audible': False}
-(output / 'summary.json').write_text(json.dumps(summary, ensure_ascii=False, indent=2) + '\n')
+(output / 'summary.json').write_text(json.dumps(summary, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
 print(json.dumps(summary, ensure_ascii=False))

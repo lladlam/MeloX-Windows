@@ -1,7 +1,7 @@
 {
   "repository": "MeloX-Android local working tree",
-  "head": "292652e6da6ba6ea1f04466b0e55ba1bfcdf9e69",
-  "checked_utc": "2026-10-25T07:42:13.359309+00:00",
+  "head": "68a766260ea55a3e246a579b9bc67f42e9d4c441",
+  "checked_utc": "2026-10-25T07:58:14.505940+00:00",
   "files": {
     "android/app/build.gradle.kts": "09082aa216d21dfc0b5b66259dc55d0bc162699d37477738f05ccb58c0678d50",
     "android/app/i18n/values-ja/strings.xml": "12b88ee6e974e028255b8360f8451d03abb5db2d0c57e42976a19c5124c6e878",
@@ -361,7 +361,7 @@
     "android/app/src/main/kotlin/com/lladlam/melox/platform/xiaomi/HyperOsFocusBridge.kt": "f66dbfd367e1bc6be41241acbf8c8f9ba0ede1f1ad960ad637268481703ed035",
     "android/app/src/main/kotlin/com/lladlam/melox/platform/xiaomi/ShizukuKeepAliveService.kt": "68c89643ddc2eeb81d59890bdad2fcc23518a5e308a5ec559aa185313fd7d5f1",
     "android/app/src/main/kotlin/com/lladlam/melox/platform/xiaomi/ShizukuXmsfNetworkHelper.kt": "72015611ae69a578527c5c11e3475cf5baaa0f8955aeae780912f3464e518bc9",
-    "android/app/src/main/kotlin/com/lladlam/melox/platform/xiaomi/XiaomiSuperIslandLyricService.kt": "7e81c1c966d2b630a7fd6843a627bcd3b9270bf83b5ee410e2921ce60d42cb00",
+    "android/app/src/main/kotlin/com/lladlam/melox/platform/xiaomi/XiaomiSuperIslandLyricService.kt": "e067a5ab5c121b269d0e1c297c16d169f7015a1e1b6d9c94585809e94b498b40",
     "android/app/src/main/kotlin/com/lladlam/melox/playback/ChkszPlaybackResolver.kt": "2c48844930b4dccf3cbd49429946727cb4ad7fbe3992c0a67d10a78256a836cc",
     "android/app/src/main/kotlin/com/lladlam/melox/playback/ColorOsLyricsPublisher.kt": "6ae751b81ff7503a28412638b4dc2a5e11826df2c7a669f2606a8ffa87640fdb",
     "android/app/src/main/kotlin/com/lladlam/melox/playback/CrossProviderPlaybackFallback.kt": "86fc14bf78a9360e198702b3ba181a0a429f9696675bef5dee04bf7db51f9dc4",
@@ -384,7 +384,7 @@
     "android/app/src/main/kotlin/com/lladlam/melox/playback/MeloXPlaybackModePreferences.kt": "1259a8266cd9f81714c1a7618aa7b0a8b536502bdcf36c90b11109ee5e59c8fc",
     "android/app/src/main/kotlin/com/lladlam/melox/playback/MeloXPlaybackNotice.kt": "80bf5c52fcef03e4223d40e80c0ff3935020799a428192b5106bf2fb03fd36a2",
     "android/app/src/main/kotlin/com/lladlam/melox/playback/MeloXPlaybackQueueStore.kt": "d5095ff7697f65a678b1adc70aa2ac87cc8c413c4a93f903722eab5ba883d831",
-    "android/app/src/main/kotlin/com/lladlam/melox/playback/MeloXPlaybackService.kt": "e31ca5d40b9768485b544a56c3ce220ae4e6825ee5a37afe423a16b8cbf3cd25",
+    "android/app/src/main/kotlin/com/lladlam/melox/playback/MeloXPlaybackService.kt": "4662ef8e724b628bd4ef5f136c12435f34c8198d349573848fffb9d3e19877f2",
     "android/app/src/main/kotlin/com/lladlam/melox/playback/MeloXPlayerTransitionState.kt": "74fb29565d0895c36a6be4f2de02ea6ba3fa4de3b1c5ab6a6e92ba2c92530894",
     "android/app/src/main/kotlin/com/lladlam/melox/playback/MeloXSmartQueueBuilder.kt": "41703afdb40f91f88e3771cf5c01ac724b9a0989fc334cfde532f1b11da65ff4",
     "android/app/src/main/kotlin/com/lladlam/melox/playback/NeteasePlaybackResolver.kt": "ee06b7667049a169ed7221b098553d5366e281f0d2fa08644264a2bfc5dca5b9",
@@ -463,13 +463,13 @@
     "android/app/src/main/kotlin/com/lladlam/melox/ui/player/ArtworkDynamicPalette.kt": "0d024e76d29327e9d01acda00356e0aef977341ca38e45e088ba18588d76747a",
     "android/app/src/main/kotlin/com/lladlam/melox/ui/player/BilibiliLyricOffset.kt": "634ea04276a4ff9d0ef5f808e4c2adee99519e6629af7b283c5bd0c650310d39",
     "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXAlternativeLyricsPanels.kt": "b4eee57ff0e324508d19813992b35422c8cff0bfe42c7cc4edae64550cd22e01",
-    "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXAudioOutputDialog.kt": "ee21f45ec97af3f3c6512ce0fb47c4e07925af2867704f5a57f1798e4c5e7034",
+    "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXAudioOutputDialog.kt": "7cdacb020ce904c3050e5750f8e24110c547c7e88d3b76db7116dca31d4b56fb",
     "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXAudioOutputPlaybackPanel.kt": "410d467f2bcf6d1c99b58cc81615460a4d0998e3d4a6ec5cbc62548a6e5b0477",
     "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXClassicNowPlayingScene.kt": "53652dcd5ddeb54542ba0f39828da9c4795998f3ed712179624c8b70c56f6711",
     "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXCustomBackground.kt": "2bde291b6d5acef9f9e29b22116727661cf1f6da3c1b47395b37118f5acec3ad",
     "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXDisplayCorner.kt": "c9a1c3199440299334e1269fec436f63506da822df6bfecc845e51aef600510f",
     "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXEvaLyrics.kt": "8b2e7f2d86a9009fcfaf0f212eed8353a6d8e472c67adbbee5a85724694f27e7",
-    "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXFloatingLyricsPip.kt": "220c0e6a7704089dab0c76fe20365610e2cb621f73296f0bd6f1560a8921496b",
+    "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXFloatingLyricsPip.kt": "d42bd3713b46ccb01e5d713239492da8398ec65b9e5a031613941d02208ed001",
     "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXFlowingLightBackdrop.kt": "1b705b04c99afddb7e79aa4e5e29e7e666e882dcc9610055a44cb6c93c215b44",
     "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXIOSLyricsPanel.kt": "7a00f38b4c9f6961903bc4dbb3b7227f6b988f13238b161ec541f01aaf612dec",
     "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXIOSMiniPlayer.kt": "803f21ca5ae1c08984400b68d70fd61ea86801e72240c7af3fc26043cd478634",
@@ -483,6 +483,7 @@
     "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXLyricShareDialog.kt": "0b594229ac8d7db676f51a7c6dab7d470b9fe7d837e964986366535b1bab3a48",
     "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXLyricShareImage.kt": "ff1fab8ac0e9be8e41fcd7399adab9d96616963d632cbf72e6ce0121381501ee",
     "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXLyricsPanel.kt": "32987f8a09ec0814711e4c7a943d758eb927c34996b6a30a083d800e9c0b8bc0",
+    "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXModernAudioOutputDialog.kt": "45a2bc8ee9bb74d7e56938ef2d6ccf7dbfd4fe51379c608327b40abc7d8a82ac",
     "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXNowPlayingActionsSheet.kt": "0b1b2e0210795f1b66f4797421db518882fc801e8d3b072a9d7f022fe8804b06",
     "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXNowPlayingCoreControls.kt": "e3e6ad92b238fb1e109f4079efc8eeee19b27fb2498bbec82c952ab36235d54b",
     "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXPlaybackTitleMenu.kt": "9e1f8be1e849453fa2fc14534f113c119b4a663023d4b1cc788117bd58f758c4",
@@ -680,9 +681,10 @@
     "docs/shared-element-transition-pr.md": "49f30ccb8624534661e0c544629e683aa5e700a14719908782549be911f3d52a"
   },
   "changed_since_previous_check": [
-    "android/app/src/main/AndroidManifest.xml",
-    "android/app/src/main/kotlin/com/lladlam/melox/platform/cli/MeloXCliReceiver.kt",
-    "android/app/src/main/kotlin/com/lladlam/melox/ui/settings/SettingsScreen.kt",
-    "docs/CLI.md"
+    "android/app/src/main/kotlin/com/lladlam/melox/platform/xiaomi/XiaomiSuperIslandLyricService.kt",
+    "android/app/src/main/kotlin/com/lladlam/melox/playback/MeloXPlaybackService.kt",
+    "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXAudioOutputDialog.kt",
+    "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXFloatingLyricsPip.kt",
+    "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXModernAudioOutputDialog.kt"
   ]
 }
