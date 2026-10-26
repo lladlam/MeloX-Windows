@@ -252,6 +252,7 @@ class QQMusicCatalogClient(
     }
 
     private fun parseTrack(item: JSONObject): MusicTrack? {
+        val quality = qqMusicQualityHint(item)
         val songMid = firstString(item, "mid", "songmid", "songMid")
             .ifBlank { item.optJSONObject("mid")?.optString("song").orEmpty() }
         if (songMid.isBlank()) return null
@@ -273,6 +274,8 @@ class QQMusicCatalogClient(
             .ifBlank { firstString(item, "media_mid", "mediaMid") }
             .takeIf(String::isNotBlank)
         return MusicTrack(
+            bestQuality = quality?.tier,
+            bestBitrate = quality?.bitrate,
             id = MusicResourceId(MusicSource.QQMusic, songMid),
             title = title,
             artists = artists,

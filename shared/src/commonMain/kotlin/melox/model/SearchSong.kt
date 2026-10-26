@@ -22,6 +22,8 @@ data class SearchSong(
     val artistId: Long? = null,
     val trackNumber: Int? = null,
     val disc: String? = null,
+    val bestQuality: melox.music.model.AudioQualityTier? = null,
+    val bestBitrate: Int? = null,
 ) {
     /** Only provider-native NetEase IDs may reach its write/comment endpoints. */
     val neteaseSongId: Long?

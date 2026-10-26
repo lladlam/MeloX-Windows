@@ -47,7 +47,7 @@ class DesktopSearchProtocolTest {
                 val body = when {
                     query == "error" -> """{"code":503,"message":"Service unavailable"}"""
                     decoded[0] == "/api/v3/song/detail" -> """{"code":200,"songs":[{"id":12345,"al":{"picUrl":"http://example.test/artwork.jpg"}}]}"""
-                    else -> """{"code":200,"result":{"songCount":2,"songs":[{"id":12345,"name":"Sparse song","artists":[{"id":42,"name":"Artist"}],"album":{"id":73,"name":"Album"},"duration":180000},{"id":12346,"name":"Authored song","ar":[{"id":43,"name":"Artist B"}],"al":{"id":74,"name":"Album B","picUrl":"https://example.test/b.jpg"},"dt":181000}]}}"""
+                    else -> """{"code":200,"result":{"songCount":2,"songs":[{"id":12345,"name":"Sparse song","artists":[{"id":42,"name":"Artist"}],"album":{"id":73,"name":"Album"},"duration":180000,"sq":{"br":1000000}},{"id":12346,"name":"Authored song","ar":[{"id":43,"name":"Artist B"}],"al":{"id":74,"name":"Album B","picUrl":"https://example.test/b.jpg"},"dt":181000}]}}"""
                 }.toByteArray()
                 exchange.responseHeaders.set("Content-Type", "application/json")
                 exchange.sendResponseHeaders(200, body.size.toLong())
@@ -69,6 +69,9 @@ class DesktopSearchProtocolTest {
         assertEquals(42L, songs.first().artistId); assertEquals(73L, songs.first().albumId)
         assertEquals(180000L, songs.first().durationMs)
         assertEquals("https://example.test/artwork.jpg", songs.first().artworkUrl)
+        assertEquals(melox.music.model.AudioQualityTier.Lossless, songs.first().bestQuality)
+        assertEquals(1_000_000, songs.first().bestBitrate)
+        assertNull(songs.last().bestQuality)
         assertEquals("/api/search/get", requests.first().first)
         assertEquals(1, requests.first().second.getInt("type"))
         assertEquals(30, requests.first().second.getInt("limit"))
@@ -81,6 +84,8 @@ class DesktopSearchProtocolTest {
         assertEquals("12345", tracks.first().id.value)
         assertEquals("42", tracks.first().artists.first().id?.value)
         assertEquals("73", tracks.first().album?.id?.value)
+        assertEquals(melox.music.model.AudioQualityTier.Lossless, tracks.first().bestQuality)
+        assertEquals(1_000_000, tracks.first().bestBitrate)
     }
     @Test fun paginatedUniversalSearchUsesRealPinnedRouteAndPropagatesServiceErrors() = runBlocking<Unit> {
         val client = NeteaseUniversalSearchClient(httpClient = http)
@@ -91,6 +96,8 @@ class DesktopSearchProtocolTest {
         assertEquals(1, requests.first().second.getInt("type"))
         assertNull(page.items.first().artworkUrl)
         assertEquals(180000L, page.items.first().durationMs)
+        assertEquals(melox.music.model.AudioQualityTier.Lossless, page.items.first().bestQuality)
+        assertEquals(1_000_000, page.items.first().bestBitrate)
         assertFailsWith<IOException> { client.searchSongs("error") }
         assertFailsWith<IOException> { NeteaseSearchClient(httpClient = http).searchSongs("error") }
     }

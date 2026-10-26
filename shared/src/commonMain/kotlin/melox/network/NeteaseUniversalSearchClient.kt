@@ -131,6 +131,7 @@ class NeteaseUniversalSearchClient(
             ?: album?.optJSONObject("pic")?.optString("url")?.takeIf(String::isNotBlank))
         val durationMs = neteaseSearchDurationMs(item).takeIf { it > 0L }
         val status = item.optInt("status", 0)
+        val quality = neteaseSearchQuality(item)
         return MusicTrack(
             id = MusicResourceId(MusicSource.Netease, id.toString()),
             title = name,
@@ -152,6 +153,8 @@ class NeteaseUniversalSearchClient(
             durationMs = durationMs,
             availability = if (status == 0) TrackAvailability.Playable else TrackAvailability.Unavailable,
             providerMetadata = ProviderTrackMetadata.Netease(id),
+            bestQuality = quality?.first,
+            bestBitrate = quality?.second,
         )
     }
 
@@ -251,6 +254,7 @@ class NeteaseUniversalSearchClient(
             for (i in 0 until artistArray.length()) artistArray.optJSONObject(i)?.optString("name")?.takeIf(String::isNotBlank)?.let(::add)
         }.joinToString(" / ")
         val album = value.optJSONObject("al") ?: value.optJSONObject("album")
+        val quality = neteaseSearchQuality(value)
         return SearchSong(
             id = id,
             name = value.optString("name").ifBlank { "未知歌曲" },
@@ -260,6 +264,8 @@ class NeteaseUniversalSearchClient(
             artistId = artistArray.optJSONObject(0)?.optLong("id")?.takeIf { it > 0L },
             artworkUrl = secureUrl(album?.optString("picUrl")?.takeIf(String::isNotBlank) ?: album?.optString("blurPicUrl")?.takeIf(String::isNotBlank)),
             durationMs = value.optLong("dt", value.optLong("duration", 0L)).coerceAtLeast(0L),
+            bestQuality = quality?.first,
+            bestBitrate = quality?.second,
         )
     }
 

@@ -1,0 +1,9 @@
+{
+  "suites": 69,
+  "tests": 359,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "desktop_compile": "PASSED",
+  "scope": "Local shared tests and desktop compilation; no Windows release or private account claim"
+}

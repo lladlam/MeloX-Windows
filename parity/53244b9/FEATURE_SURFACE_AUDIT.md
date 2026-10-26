@@ -25,11 +25,11 @@
 | 页面／业务 | 两套 UI 当前证据或入口 | 尚需核销 |
 | --- | --- | --- |
 | 首页／发现 | `HomeScreen`、`ExploreScreen` 与 DesktopHome／Explore；真实 provider feed／ranking | 本地推荐、播客内容块、统一刷新、源快捷工具和同内容动画 |
-| 搜索 | 手机 Search、DesktopSearch，多类型 provider 能力与真实接口 | 网易云限流实网复验、分页／取消／菜单完整一致性、所有分类转场 |
+| 搜索 | 手机 Search、DesktopSearch，多类型 provider 能力与真实接口；实时增量新增五源音质提示、可播优先推荐、时长与合作歌手去重，见 SEARCH_QUALITY_UPDATE.md | 网易云限流实网复验、分页／取消／菜单完整一致性、所有分类转场；其余来源提示继续核对 |
 | 音乐库／歌单 | 手机 Library 与 DesktopLibrary，源身份和分页保留 | 私人收藏、自建／已喜欢权限、批量写入与成员排序实机 |
 | 专辑／艺人详情 | 共享真实网络业务＋双布局详情；本轮修复手机版专辑空操作 | provider 完整目录分页、账号写入、所有分享与封面 hero |
 | 歌曲详情／百科 | `MeloXSongDetail`、DesktopSongDetail 入口 | 按 Android 歌曲百科信息块逐项对照、所有源能力边界 |
-| 歌曲菜单／收藏 | 手机 SongActions 与 DesktopSongMenu／PlayerFavorite | 私人账号收藏读取／写入、切账号并发、不同来源收藏刷新 |
+| 歌曲菜单／收藏 | 手机 SongActions 与 DesktopSongMenu／PlayerFavorite | 私人账号收藏读取／写入、切账号并发、不同来源收藏刷新；Android 实时新增应用自有统一「我喜欢」、初始化迁移与全元数据持久化尚未接入 |
 | 下载／批量下载 | MeloXDownloadStore＋手机 Downloads／电脑 library pages | 权益、失败恢复、目标目录与批量任务实机 |
 | 云盘 | 手机 Cloud、电脑 library pages，真实上传接口 | 原生文件选择器、实际上传／删除与账号切换 |
 | 播客 | 手机 Podcasts、DesktopPodcasts | 收藏与节目详情实机、封面共享动画 |

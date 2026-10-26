@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="TrackAggregationQualityTest[desktop]" tests="9" skipped="0" failures="0" errors="0" timestamp="2026-10-26T07:15:39.436Z" hostname="lladlam-arch" time="5.155">
+  <properties/>
+  <testcase name="durationSeparatesDifferentRecordingsAndToleratesMinorDrift[desktop]" classname="melox.music.TrackAggregationQualityTest" time="1.852"/>
+  <testcase name="absentCatalogueHintsDoNotInventAProviderCeiling[desktop]" classname="melox.music.TrackAggregationQualityTest" time="0.778"/>
+  <testcase name="neteaseSearchEmbeddedQualityIsOptionalAndKeepsNativeBps[desktop]" classname="melox.music.TrackAggregationQualityTest" time="0.187"/>
+  <testcase name="advertisedLosslessBeatsProviderPreferenceOnlyWhenAvailabilityIsEqual[desktop]" classname="melox.music.TrackAggregationQualityTest" time="0.002"/>
+  <testcase name="playableStandardBeatsSubscriptionLossless[desktop]" classname="melox.music.TrackAggregationQualityTest" time="0.001"/>
+  <testcase name="qqLegacyAndNewFormatShapesPreserveBestAdvertisedTierAndUnits[desktop]" classname="melox.music.TrackAggregationQualityTest" time="0.591"/>
+  <testcase name="kugouSizesAndKuwoFormatListsAreParsedWithoutBitrateUnitConfusion[desktop]" classname="melox.music.TrackAggregationQualityTest" time="1.529"/>
+  <testcase name="qishuiCatalogueHintNeverChangesPlaybackAvailability[desktop]" classname="melox.music.TrackAggregationQualityTest" time="0.213"/>
+  <testcase name="collaboratorOrderDeduplicatesButLiveAndStudioStaySeparate[desktop]" classname="melox.music.TrackAggregationQualityTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

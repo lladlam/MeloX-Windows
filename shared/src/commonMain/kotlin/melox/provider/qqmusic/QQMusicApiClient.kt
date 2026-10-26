@@ -513,6 +513,7 @@ class QQMusicApiClient(
             .takeIf(String::isNotBlank)
         val numericId = firstLong(item, "songid", "id").takeIf { it > 0L }
         val durationSeconds = firstLong(item, "interval", "duration").takeIf { it > 0L }
+        val quality = qqMusicQualityHint(item)
         return MusicTrack(
             id = MusicResourceId(MusicSource.QQMusic, songMid),
             title = name,
@@ -532,6 +533,8 @@ class QQMusicApiClient(
                 mediaMid = mediaMid,
                 numericSongId = numericId,
             ),
+            bestQuality = quality?.tier,
+            bestBitrate = quality?.bitrate,
         )
     }
 

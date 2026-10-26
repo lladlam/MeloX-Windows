@@ -100,6 +100,7 @@ class NeteaseSearchClient(
                     ?: song.optJSONObject("album")
                 val album = albumObject?.optString("name").orEmpty()
                 val artwork = artworkFromAlbum(albumObject)
+                val quality = neteaseSearchQuality(song)
 
                 add(
                     SearchSong(
@@ -111,6 +112,8 @@ class NeteaseSearchClient(
                         artistId = artistsArray.optJSONObject(0)?.optLong("id")?.takeIf { it > 0L },
                         artworkUrl = artwork,
                         durationMs = neteaseSearchDurationMs(song),
+                        bestQuality = quality?.first,
+                        bestBitrate = quality?.second,
                     ),
                 )
             }

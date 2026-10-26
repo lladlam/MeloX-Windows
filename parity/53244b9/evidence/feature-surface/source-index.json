@@ -1,5 +1,5 @@
 {
-  "checked_utc": "2026-10-26T06:48:30.057846+00:00",
+  "checked_utc": "2026-10-26T07:16:10.413580+00:00",
   "android_head": "cd345047dc578d34ee72d34abdb907acdd199b4f",
   "scope": "Live working-tree source inventory. Presence is not functional or visual parity; missing pattern matches require manual routing review.",
   "areas": {
@@ -65,7 +65,7 @@
         },
         {
           "path": "shared/src/commonMain/kotlin/melox/music/provider/TrackAggregation.kt",
-          "sha256": "7310ba298972ce125265647595b4614781394828a43d631d29fc6ffb8c9c95cc"
+          "sha256": "0620f6eeb5462e3ce788adbdbf5a56533b962ca97a7722635a7d17d1f5717ff2"
         },
         {
           "path": "shared/src/commonMain/kotlin/melox/music/provider/UnifiedMusicService.kt",
@@ -131,7 +131,7 @@
         },
         {
           "path": "shared/src/commonMain/kotlin/melox/music/provider/TrackAggregation.kt",
-          "sha256": "7310ba298972ce125265647595b4614781394828a43d631d29fc6ffb8c9c95cc"
+          "sha256": "0620f6eeb5462e3ce788adbdbf5a56533b962ca97a7722635a7d17d1f5717ff2"
         },
         {
           "path": "shared/src/commonMain/kotlin/melox/music/provider/UnifiedMusicService.kt",
@@ -250,7 +250,7 @@
         },
         {
           "path": "shared/src/commonMain/kotlin/melox/music/provider/TrackAggregation.kt",
-          "sha256": "7310ba298972ce125265647595b4614781394828a43d631d29fc6ffb8c9c95cc"
+          "sha256": "0620f6eeb5462e3ce788adbdbf5a56533b962ca97a7722635a7d17d1f5717ff2"
         },
         {
           "path": "shared/src/commonMain/kotlin/melox/music/provider/UnifiedMusicService.kt",
@@ -669,7 +669,7 @@
         },
         {
           "path": "shared/src/commonMain/kotlin/melox/music/provider/TrackAggregation.kt",
-          "sha256": "7310ba298972ce125265647595b4614781394828a43d631d29fc6ffb8c9c95cc"
+          "sha256": "0620f6eeb5462e3ce788adbdbf5a56533b962ca97a7722635a7d17d1f5717ff2"
         },
         {
           "path": "shared/src/commonMain/kotlin/melox/music/provider/UnifiedMusicService.kt",
@@ -2868,15 +2868,19 @@
     },
     {
       "path": "shared/src/commonMain/kotlin/melox/model/SearchSong.kt",
-      "sha256": "e991851c868be3f5650710f6fd8c8502be45fb954a4c86c14b1584bfdbf52732"
+      "sha256": "c0accedc51c38cb73def1ea592b9c60e7f8101c5a16ffea9275d5ccd9ab456d1"
     },
     {
       "path": "shared/src/commonMain/kotlin/melox/music/experience/MusicExperience.kt",
       "sha256": "f96fd43836093b25fe812795506f651d3bbe898239f6a59b3c992def073f936b"
     },
     {
+      "path": "shared/src/commonMain/kotlin/melox/music/model/AudioQualityRanking.kt",
+      "sha256": "2eb3c8d2263683690fb7047ecfe15b7d2aab2fd403324064c57f3ac1b7bf3cdd"
+    },
+    {
       "path": "shared/src/commonMain/kotlin/melox/music/model/MusicModels.kt",
-      "sha256": "5a900d9f801c683047a39b45d6ba272decb95ab3b3e624aa42a54aec5f8734e5"
+      "sha256": "b4371b9778edc9408ccd85774f91068a25e49baa5884beaaad644f1a37224a23"
     },
     {
       "path": "shared/src/commonMain/kotlin/melox/music/provider/MeloXLegacyUiBridge.kt",
@@ -2916,7 +2920,7 @@
     },
     {
       "path": "shared/src/commonMain/kotlin/melox/music/provider/TrackAggregation.kt",
-      "sha256": "7310ba298972ce125265647595b4614781394828a43d631d29fc6ffb8c9c95cc"
+      "sha256": "0620f6eeb5462e3ce788adbdbf5a56533b962ca97a7722635a7d17d1f5717ff2"
     },
     {
       "path": "shared/src/commonMain/kotlin/melox/music/provider/UnifiedMusicService.kt",
@@ -2996,7 +3000,11 @@
     },
     {
       "path": "shared/src/commonMain/kotlin/melox/network/NeteaseSearchClient.kt",
-      "sha256": "1f5de66a6d4ac6c4b6d6383272dc00f2cd849f8c4c203b1c369eb4dfef455b80"
+      "sha256": "02900eb3af3a243ba90353b5f521d6fb39c09016aa8370ed30f0a0af2b96570f"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/network/NeteaseSearchQuality.kt",
+      "sha256": "38d667ab4d0d5056667ec673fa435d3ed5880939043474b8f8cd44cf1fdce895"
     },
     {
       "path": "shared/src/commonMain/kotlin/melox/network/NeteaseSearchResponseCache.kt",
@@ -3008,7 +3016,7 @@
     },
     {
       "path": "shared/src/commonMain/kotlin/melox/network/NeteaseUniversalSearchClient.kt",
-      "sha256": "ea2b53d44c9a0be5e913b031b5985e482db875bb5e3e79fc5d82729b8b0ae570"
+      "sha256": "0b6e34edf540fa72ee125b5fa867ca3bb151590a036cd1d5a52869439ffb3a3d"
     },
     {
       "path": "shared/src/commonMain/kotlin/melox/platform/DesktopNotification.kt",
@@ -3268,7 +3276,7 @@
     },
     {
       "path": "shared/src/commonMain/kotlin/melox/provider/kugou/KugouApiClient.kt",
-      "sha256": "4b20496a69a6a06334046e9c85f3a351f056b356814262fc9243844f0568a0e0"
+      "sha256": "64b4026c951f30898a23488525d3a9854b071f8072be07861277b77e4b41ec9f"
     },
     {
       "path": "shared/src/commonMain/kotlin/melox/provider/kugou/KugouArtworkUrl.kt",
@@ -3311,12 +3319,16 @@
       "sha256": "52b11e126bfb7c79884a23ca3865a3f7b59ad5507ff2eac9dd7439edb35fa7c5"
     },
     {
+      "path": "shared/src/commonMain/kotlin/melox/provider/kugou/KugouSearchQuality.kt",
+      "sha256": "f5dde5dff5b8ddff3622e97de6883703c3bf192edaced48b0c631c989da6397b"
+    },
+    {
       "path": "shared/src/commonMain/kotlin/melox/provider/kugou/KugouSessionStore.kt",
       "sha256": "a1f06cc65fc1f8ede157f605c86d6efc25b2741378da402c8a8bfb29443faf59"
     },
     {
       "path": "shared/src/commonMain/kotlin/melox/provider/kuwo/KuwoApiClient.kt",
-      "sha256": "ae9814c586b3706820558a46f5f6dc7b72b2d002efde0f2d31482699c95aa151"
+      "sha256": "8fe4a502ca8077991641280381858ba089590fd85765df20fe02e33950e3b248"
     },
     {
       "path": "shared/src/commonMain/kotlin/melox/provider/kuwo/KuwoJsonNormalizer.kt",
@@ -3341,6 +3353,10 @@
     {
       "path": "shared/src/commonMain/kotlin/melox/provider/kuwo/KuwoRequestClient.kt",
       "sha256": "670ac4c1c3369b5213ea73b44d1b8fd17aec96cb2882b6e0d8ece8df8cad1ef1"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/provider/kuwo/KuwoSearchQuality.kt",
+      "sha256": "bb6647d5b56ce5aa983e393f2ab713e91eeef0f87cf3280e1262ba3b25162048"
     },
     {
       "path": "shared/src/commonMain/kotlin/melox/provider/kuwo/KuwoSessionStore.kt",
@@ -3392,7 +3408,7 @@
     },
     {
       "path": "shared/src/commonMain/kotlin/melox/provider/netease/NeteaseProvider.kt",
-      "sha256": "0cf697046cbabc7e63b91d5e28c87cb3bbf9d144c0260a5efcbbefe634d1b737"
+      "sha256": "7647a25d4ae9acf05aa3c7257d15e8cc3edba20ff825ef8d4cbbf1147c766e19"
     },
     {
       "path": "shared/src/commonMain/kotlin/melox/provider/qishui/QishuiApiClient.kt",
@@ -3400,7 +3416,7 @@
     },
     {
       "path": "shared/src/commonMain/kotlin/melox/provider/qishui/QishuiParsing.kt",
-      "sha256": "69e26022962a4d49b7838147f95dfa7ebe77c81bb403fd546428ef81c80a0ebf"
+      "sha256": "33a244228294c4e7419727ea16dde24793943a2ebcb22014fb4dbf9d9d9a358d"
     },
     {
       "path": "shared/src/commonMain/kotlin/melox/provider/qishui/QishuiProvider.kt",
@@ -3412,11 +3428,11 @@
     },
     {
       "path": "shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicApiClient.kt",
-      "sha256": "6a27c86db0c062538700a34ee72476422343063203e5db53d528e8ad0767fb50"
+      "sha256": "6e254427e533f0b0992193d6afbb4051a09fe75256a65488e5d92af59f3304c2"
     },
     {
       "path": "shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicCatalogClient.kt",
-      "sha256": "8f875032708599d7993e6a8020a416587291441439083ccbf20e3aa213e021d9"
+      "sha256": "0b0b93e883482b9ead7721cc00b9a1f6641802e85f4141ef88e19a9693280d72"
     },
     {
       "path": "shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicFavoriteClient.kt",
@@ -3449,6 +3465,10 @@
     {
       "path": "shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicRichLyricsClient.kt",
       "sha256": "4499b0aea1a9bf81f856dba2819159ed785fcf9341e7c261977b28bc61db720f"
+    },
+    {
+      "path": "shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicSearchQuality.kt",
+      "sha256": "96a13a554874856f9912ac1db08c22d2e05947113d356cc1854dc7a3b305ecf1"
     },
     {
       "path": "shared/src/commonMain/kotlin/melox/provider/qqmusic/QQMusicSessionStore.kt",

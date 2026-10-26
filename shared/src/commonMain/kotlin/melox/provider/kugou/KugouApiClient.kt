@@ -277,6 +277,7 @@ class KugouApiClient(
         ).takeIf { it > 0L }
         val durationSeconds = firstLong(item, "Duration", "duration", "time_length").takeIf { it > 0L }
         val artwork = kugouArtworkUrl(item)
+        val quality = kugouSearchQuality(item)
         return MusicTrack(
             id = MusicResourceId(MusicSource.Kugou, hash),
             title = title,
@@ -290,6 +291,8 @@ class KugouApiClient(
             },
             artworkUrl = artwork,
             durationMs = durationSeconds?.times(1_000L),
+            bestQuality = quality?.tier,
+            bestBitrate = quality?.bitrate,
             providerMetadata = ProviderTrackMetadata.Kugou(
                 hash = hash,
                 albumAudioId = albumAudioId,

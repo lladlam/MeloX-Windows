@@ -97,6 +97,8 @@ class NeteaseProvider(
                 durationMs = song.durationMs.takeIf { it > 0L },
                 availability = TrackAvailability.Playable,
                 providerMetadata = ProviderTrackMetadata.Netease(song.id),
+                bestQuality = song.bestQuality,
+                bestBitrate = song.bestBitrate,
             )
         }
         return MusicPage(

@@ -29,13 +29,16 @@ internal object QishuiParsing {
         if (name.isBlank()) return null
         val album = track.optJSONObject("album")
         val artwork = image(album?.opt("url_cover")) ?: image(album?.opt("cover_url"))
+        val bitrate = listOf("bit_rate", "bitrate", "max_bitrate", "br").maxOf { track.optInt(it, 0) }
+            .takeIf { it > 0 }?.let { if (it < 10_000) it * 1_000 else it }
         return MusicTrack(trackId, name, objects(track.optJSONArray("artists")).map { artist ->
             MusicArtistRef(id(text(artist, "id")), text(artist, "name").ifBlank {
                 text(artist, "simple_display_name").ifBlank { text(artist.optJSONObject("user_info"), "nickname") }
             })
         }.filter { it.name.isNotBlank() },
             album = album?.let { MusicAlbumRef(id(text(it, "id")), text(it, "name"), artwork) }, artworkUrl = artwork,
-            durationMs = track.optLong("duration", track.optLong("duration_ms", 0)).takeIf { it > 0 })
+            durationMs = track.optLong("duration", track.optLong("duration_ms", 0)).takeIf { it > 0 },
+            bestQuality = audioQualityForBitrate(bitrate), bestBitrate = bitrate)
     }
 
     fun playlist(resource: JSONObject): MusicPlaylistSummary? {
