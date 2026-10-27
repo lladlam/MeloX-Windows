@@ -1,13 +1,13 @@
 {
   "repository": "MeloX-Android local working tree",
-  "head": "cd345047dc578d34ee72d34abdb907acdd199b4f",
-  "checked_utc": "2026-10-26T11:50:07.742020+00:00",
+  "head": "b6e0d82723b0343ab2414993672a0b8fd07c829a",
+  "checked_utc": "2026-10-27T04:29:59.302732+00:00",
   "files": {
     "android/app/build.gradle.kts": "09082aa216d21dfc0b5b66259dc55d0bc162699d37477738f05ccb58c0678d50",
-    "android/app/i18n/values-ja/strings.xml": "12b88ee6e974e028255b8360f8451d03abb5db2d0c57e42976a19c5124c6e878",
+    "android/app/i18n/values-ja/strings.xml": "bbc9fc09af98fb916a6cdfb7733dad566ae9a0bcf59573166756c78b0eaf9567",
     "android/app/i18n/values-tr/strings.xml": "4f4c6adf695f17c20f3f13f7baaa055c886e55ea796fdfe871cb954733586796",
-    "android/app/i18n/values-zh-rCN/strings.xml": "c7f67864fedbc992664fb5af0bc8e75149db2af5e4c77a0a1380db7a97d3bda0",
-    "android/app/i18n/values-zh-rTW/strings.xml": "cdd75965834e1a2a750dacaec60ba2ca2907a5fea5161f7d9778263b6694195a",
+    "android/app/i18n/values-zh-rCN/strings.xml": "efbbfe3f364c24523f0d8d4f932ef9a03adf0509cc56fc95bfa248c868ac27d1",
+    "android/app/i18n/values-zh-rTW/strings.xml": "5721d6c59eb9476147a43dc892e2a8d9cff7766c3ddac1a85392526759fefa58",
     "android/app/src/androidTest/java/com/lladlam/melox/miplay/MiPlayProbeRunner.java": "f2055ef7b306ade9b6c9369f87511f528ff456654dfb8932ebd1830b1ad26c25",
     "android/app/src/androidTest/java/com/lladlam/melox/miplay/MiPlayWireRegression.java": "26de6574d48a9fd061f50fa340527770141ee213ad70cea9a54e257d26650555",
     "android/app/src/androidTest/kotlin/com/lladlam/melox/core/autosync/AutoSyncDeviceRunner.kt": "e283a801644e90b4adf5a8276023e32802fc1d6280d9957c5e78cbec70722c14",
@@ -526,7 +526,7 @@
     "android/app/src/main/kotlin/com/lladlam/melox/ui/settings/MeloXSettingsDetailActivity.kt": "4e2fcf367d066b5c31149b5aaf653d51d59b21ae9e1faceaaee8be2e3309174e",
     "android/app/src/main/kotlin/com/lladlam/melox/ui/settings/MeloXSettingsPreferences.kt": "5dcaeb5c2f123c8f8689f2dd70f765ebc1d1ce24ae585c09faf2f7ddd766f215",
     "android/app/src/main/kotlin/com/lladlam/melox/ui/settings/MeloXSplitChromePosition.kt": "e20393c1f967e8fdea1586341dc4d64a7b509501fc4291b1e674ea42304a69bd",
-    "android/app/src/main/kotlin/com/lladlam/melox/ui/settings/SettingsScreen.kt": "d1eba0d72e93eba42e443e516e3f655ad894614f66b7c9eab5b0a807d879be23",
+    "android/app/src/main/kotlin/com/lladlam/melox/ui/settings/SettingsScreen.kt": "f177f0be6e8a5e3fbfa677c482f59d6c9fba132392e7d3fb5a2bd2f59cfdbbb1",
     "android/app/src/main/kotlin/com/lladlam/melox/ui/sharing/MeloXNeteaseResourceShareActivity.kt": "f6d10304cbb0ed1c465a985875460e7daca08d3fc685cd9416cae658a00512ac",
     "android/app/src/main/kotlin/com/lladlam/melox/ui/song/MeloXSongDetailActivity.kt": "095f2615cea3d3bdbe9ac803a998697a56743ee78c91b1d4389fcc78e76b3e20",
     "android/app/src/main/kotlin/com/lladlam/melox/ui/song/MeloXSongWikiActivity.kt": "2be34f7c970eaf475f936fffef8cf03e951876d32d9743385468453400e74004",
@@ -554,7 +554,7 @@
     "android/app/src/main/res/values/colors.xml": "cb2271347031a04e19adcaa9971d0093fdd7e22df454211d3662a7a61abea8bb",
     "android/app/src/main/res/values/ic_launcher_background.xml": "6f19630c64dfe20246ef6233b50344cd0d2d67b0490ac784ce395d6fae6469b7",
     "android/app/src/main/res/values/lyricon.xml": "5fdf5f6ee55e98de409bcaa4d5a52631656d669fa12a389c9cdf35d284729f5a",
-    "android/app/src/main/res/values/strings.xml": "fe48ad778c520ee90562aa9efcf8b5c7208349b1ffb0797ce9f01fa47ddcca7e",
+    "android/app/src/main/res/values/strings.xml": "cb230f4337029b264e421374d3c6b2910aada888100d2667da2ded64251e6d6d",
     "android/app/src/main/res/values/strings_kugou_lite.xml": "f53623c5ff19d47dfd42e24483705daa9e7673770a1ce61b6a03c7f57079bcc7",
     "android/app/src/main/res/values/styles.xml": "e4a0a3518e7c31fb83f60576e3de518f9a4c74e14a07071c7f00bbeabf3a5285",
     "android/app/src/main/res/values-night/colors.xml": "c27782ff2e587474d5cb8918c7f7280346fbbe433ad04c0a104a44d6c5a159d6",
@@ -692,9 +692,10 @@
     "docs/shared-element-transition-pr.md": "49f30ccb8624534661e0c544629e683aa5e700a14719908782549be911f3d52a"
   },
   "changed_since_previous_check": [
-    "android/app/src/main/kotlin/com/lladlam/melox/ui/player/ArtworkDynamicPalette.kt",
-    "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXFlowingLightBackdrop.kt",
-    "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXIOSNowPlayingSharedHost.kt",
-    "android/app/src/main/kotlin/com/lladlam/melox/ui/player/MeloXIOSNowPlayingV2.kt"
+    "android/app/i18n/values-ja/strings.xml",
+    "android/app/i18n/values-zh-rCN/strings.xml",
+    "android/app/i18n/values-zh-rTW/strings.xml",
+    "android/app/src/main/kotlin/com/lladlam/melox/ui/settings/SettingsScreen.kt",
+    "android/app/src/main/res/values/strings.xml"
   ]
 }

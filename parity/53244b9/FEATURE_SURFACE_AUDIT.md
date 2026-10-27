@@ -29,7 +29,7 @@
 | 音乐库／歌单 | 手机 Library 与 DesktopLibrary，源身份和分页保留 | 私人收藏、自建／已喜欢权限、批量写入与成员排序实机 |
 | 专辑／艺人详情 | 共享真实网络业务＋双布局详情；本轮修复手机版专辑空操作 | provider 完整目录分页、账号写入、所有分享与封面 hero |
 | 歌曲详情／百科 | `MeloXSongDetail`、DesktopSongDetail 入口 | 按 Android 歌曲百科信息块逐项对照、所有源能力边界 |
-| 歌曲菜单／收藏 | 手机 SongActions 与 DesktopSongMenu／PlayerFavorite；新增应用自有统一「我喜欢」、逐来源初始化／部分失败报告、全元数据持久化、跨源收藏开关与双布局独立库入口，见 UNIFIED_FAVORITES_UPDATE.md | 私人账号实际导入／原生收藏写入、切账号实机、多来源完整接口验收；新功能 Windows CI 与独立发行待完成 |
+| 歌曲菜单／收藏 | 手机 SongActions 与 DesktopSongMenu／PlayerFavorite；新增应用自有统一「我喜欢」、逐来源初始化／部分失败报告、全元数据持久化、跨源收藏开关与双布局独立库入口；`d547727` 的 Windows CI 与完整发行独立核验已通过，见 UNIFIED_FAVORITES_UPDATE.md | 私人账号实际导入／原生收藏写入、切账号实机、多来源完整接口验收 |
 | 下载／批量下载 | MeloXDownloadStore＋手机 Downloads／电脑 library pages | 权益、失败恢复、目标目录与批量任务实机 |
 | 云盘 | 手机 Cloud、电脑 library pages，真实上传接口 | 原生文件选择器、实际上传／删除与账号切换 |
 | 播客 | 手机 Podcasts、DesktopPodcasts | 收藏与节目详情实机、封面共享动画 |
@@ -49,7 +49,7 @@
 | LAN／DLNA | 进程级会话、两套输出面板、真实协议与回环测试 | Windows↔Android 跨机、多网卡／防火墙／长时漂移、物理音箱 |
 | MiPlay／USB 独占 | Android 为 Binder／usbfs 平台实现 | **Windows 对应 backend 未实现**；不能仅增加开关称支持 |
 | 系统媒体／悬浮歌词 | 有设置页，未支持项显式 disabled；已跟踪 Android 统一 loader 值参数、后台完整 media ID／多源歌词更新 | Windows SMTC、悬浮歌词窗／权限与原生输入等价实现，并复用同一真实歌词链 |
-| 引导／法律／关于 | 现有两套 Onboarding／About＋legal 文档页 | Android 0.7 全屏连续引导、1.3 版文本的 Windows 平台适配与品牌逐项核销 |
+| 引导／法律／关于 | 现有两套 Onboarding／About＋legal 文档页 | Android 0.7 全屏连续引导、1.3 版文本的 Windows 平台适配与品牌逐项核销；10 月 27 日新增关于页两名赞助者及统一 CNY／取消包月标记的文案尚未同步 |
 | 云控／主题／规则 | 当前签名平台熔断与基础配置已实现 | 新 schema 的文案／主题／规则消费者与受限 QuickJS 脚本未完成 |
 | 多语言 | 本轮补实际语言选择；已有 pinned 资源保持原文 | 全量最新资源导出、硬编码文案、土耳其语、桌面全部 Locale 覆盖 |
 | Windows 平台集成 | 布局切换即时保存、托盘、标题栏、键鼠已有实现／部分原生证据 | 用户触屏／触摸键盘、DRM、麦克风、长时 RSS 及 DPAPI 实机验收 |
@@ -74,3 +74,11 @@
 设置提交 `8186c3b` 的 Windows CI `40170895379` 在共享测试阶段因 `MeloXLanProtocolTest:36` 的真实 loopback 监听端口无法绑定而失败，尚未产生可验收的新发行。原测试随机选择 49000 段，可能落入 Windows runner 保留端口区间；已改为先由操作系统选择可用 loopback 端口，真实 socket／鉴权／协议断言保留。失败日志见 `evidence/feature-surface/windows-ci-40170895379-failed.log.gz`，后续重跑结果另记。
 
 端口修正已包含在后续 348 tests 的全量成功回归中；额外修正“错误 PIN 固定为 0000 恰好等于随机真实 PIN”的低概率不确定性后，独立重跑该套真实 loopback 协议测试 3 项全部通过。证据 `evidence/romanization-070/lan-port-selection-validation.log.gz` 与 `lan-protocol-final.xml`。
+
+## 2026-10-27 再核查
+
+直接重新读取 Android 工作区并与 `d547727` 的内容哈希快照比较，新增变化为 5 个文件：SettingsScreen、默认 strings.xml 及简中／繁中／日文 i18n。具体是关于页增加 user_361ef（CNY 20）、user_f8b67（CNY 12.24），并将原 6 元包月标记改为 CNY 6、金额统一 CNY 格式。Windows 的 PinnedAboutSettings／DesktopAbout 尚无对应赞助列表，属于新增未迁移内容。
+
+32 域源码索引重新生成；设置 key 差分仍仅为一次性迁移标记，六处空点击仍是此前已核查的输入屏蔽。复核确认 `performanceOverlayEnabled` 目前只有 shared 定义／偏好读写，没有 desktop 显示消费者；FlowingLight 仍以单 artworkUrl 提取，未接 AutoMix 双封面调色板。KugouLite／CLI／YouTube authUser 等缺口仍保留，不能以设置 key 齐全判为功能已齐。
+
+上一批 **`d54772721bd777d12e7d1ca6a20bff4f9f069c9e`** 的 Windows CI `40325542270` 成功，新增统一收藏回放 step 成功。完整下载独立核验 ZIP **339799993 bytes／357 entries**，源码 stamp、全条目 CRC、固定资源与 PE 解码器检查通过；SHA-256 `28d940af34a0118243a1a793825122a70db1d649af57855218aa4a429324bb45`。证据 `evidence/windows-download-40325542270/`。私人账号、跨机互联和物理听音边界仍按上表保留。

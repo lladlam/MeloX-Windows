@@ -26,6 +26,8 @@
 
 证据 `evidence/unified-favorites/`。Windows workflow 加入两套 controls／reload 及相应失败诊断上传；该增量的新 Windows CI／完整发行需后续核验。既有成功包 `40288772016`／`af4a9a4` 不包含这次新功能。
 
+2026-10-27 更新：`d547727` 的 Windows CI **40325542270 已成功**，其中统一收藏双布局实际输入与独立 reload step 成功；完整下载发行 ZIP 339799993 bytes／357 entries，由独立核验工具确认源码 SHA、CRC、固定资源和 PE 解码器全部通过。SHA-256 `28d940af34a0118243a1a793825122a70db1d649af57855218aa4a429324bb45`，证据 `evidence/windows-download-40325542270/`。这次验收包含统一收藏功能，仍不冒称已验私人音源收藏导入。
+
 ## 最新 Android 四文件通知
 
 监听再次捕获 ArtworkDynamicPalette、FlowingLightBackdrop、IOSNowPlayingSharedHost／V2 的增量：AutoMix 交接前同时从 outgoing／incoming 两张真实封面提取调色板，按等面积合并 3×3 mesh；缺失封面使用另一张真实封面；提取 effect 只以封面身份为 key，避免随每帧进度重复解码。已读取内容快照差异并恢复监听，此视觉增量仍需接到 Windows 两套背景消费者，不计入本次统一收藏已迁移范围。

@@ -1,5 +1,5 @@
 {
-  "checked_utc": "2026-10-26T12:48:23.855348+00:00",
+  "checked_utc": "2026-10-27T04:31:10.185631+00:00",
   "android_head": "b6e0d82723b0343ab2414993672a0b8fd07c829a",
   "scope": "Live working-tree source inventory. Presence is not functional or visual parity; missing pattern matches require manual routing review.",
   "areas": {
@@ -1130,7 +1130,7 @@
       "android": [
         {
           "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/settings/SettingsScreen.kt",
-          "sha256": "d1eba0d72e93eba42e443e516e3f655ad894614f66b7c9eab5b0a807d879be23"
+          "sha256": "f177f0be6e8a5e3fbfa677c482f59d6c9fba132392e7d3fb5a2bd2f59cfdbbb1"
         }
       ],
       "mobile": [
@@ -1240,7 +1240,7 @@
       "android": [
         {
           "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/settings/SettingsScreen.kt",
-          "sha256": "d1eba0d72e93eba42e443e516e3f655ad894614f66b7c9eab5b0a807d879be23"
+          "sha256": "f177f0be6e8a5e3fbfa677c482f59d6c9fba132392e7d3fb5a2bd2f59cfdbbb1"
         }
       ],
       "mobile": [
@@ -1274,7 +1274,7 @@
       "android": [
         {
           "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/settings/SettingsScreen.kt",
-          "sha256": "d1eba0d72e93eba42e443e516e3f655ad894614f66b7c9eab5b0a807d879be23"
+          "sha256": "f177f0be6e8a5e3fbfa677c482f59d6c9fba132392e7d3fb5a2bd2f59cfdbbb1"
         }
       ],
       "mobile": [
@@ -2100,7 +2100,7 @@
     },
     {
       "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/settings/SettingsScreen.kt",
-      "sha256": "d1eba0d72e93eba42e443e516e3f655ad894614f66b7c9eab5b0a807d879be23"
+      "sha256": "f177f0be6e8a5e3fbfa677c482f59d6c9fba132392e7d3fb5a2bd2f59cfdbbb1"
     },
     {
       "path": "android/app/src/main/kotlin/com/lladlam/melox/ui/sharing/MeloXNeteaseResourceShareActivity.kt",
