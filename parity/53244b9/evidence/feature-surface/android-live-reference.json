@@ -1,7 +1,7 @@
 {
   "repository": "MeloX-Android local working tree",
-  "head": "b6e0d82723b0343ab2414993672a0b8fd07c829a",
-  "checked_utc": "2026-10-27T04:29:59.302732+00:00",
+  "head": "91352b886b6fa3dc4b63502715c0a03dbdbab6e7",
+  "checked_utc": "2026-10-27T04:41:01.391644+00:00",
   "files": {
     "android/app/build.gradle.kts": "09082aa216d21dfc0b5b66259dc55d0bc162699d37477738f05ccb58c0678d50",
     "android/app/i18n/values-ja/strings.xml": "bbc9fc09af98fb916a6cdfb7733dad566ae9a0bcf59573166756c78b0eaf9567",
@@ -11,6 +11,7 @@
     "android/app/src/androidTest/java/com/lladlam/melox/miplay/MiPlayProbeRunner.java": "f2055ef7b306ade9b6c9369f87511f528ff456654dfb8932ebd1830b1ad26c25",
     "android/app/src/androidTest/java/com/lladlam/melox/miplay/MiPlayWireRegression.java": "26de6574d48a9fd061f50fa340527770141ee213ad70cea9a54e257d26650555",
     "android/app/src/androidTest/kotlin/com/lladlam/melox/core/autosync/AutoSyncDeviceRunner.kt": "e283a801644e90b4adf5a8276023e32802fc1d6280d9957c5e78cbec70722c14",
+    "android/app/src/androidTest/kotlin/com/lladlam/melox/core/provider/lxuser/LxRuntimeDeviceRunner.kt": "348cd7f6d26d8efd486a50f62bbeaa2de30b81b7e50ad1b9fc0da8a0b6ec6327",
     "android/app/src/androidTest/kotlin/com/lladlam/melox/dlna/DlnaDeviceRunner.kt": "5c373d24a669d5def3bb8456bd0ad5b0bcf6f29a1314ed1dc246bfe4715cfdd7",
     "android/app/src/androidTest/kotlin/com/lladlam/melox/lan/MeloXLanBarrierRegression.kt": "8891f60a480c83bd7cdccaadc25c6beb9e04031158c782268165f4947797fba7",
     "android/app/src/androidTest/kotlin/com/lladlam/melox/lan/MeloXLanDeviceRunner.kt": "980a770a1d1b44ac7a81b7288451f85f672bf7d94ba4b3a578cfc5795eb21c21",
@@ -291,7 +292,8 @@
     "android/app/src/main/kotlin/com/lladlam/melox/core/provider/local/LocalRecognitionCoordinator.kt": "3c31937995d4b865e8312d7819d8e948dccb25fb5eb472729402604c32b939b4",
     "android/app/src/main/kotlin/com/lladlam/melox/core/provider/lxuser/ChkszApiClient.kt": "5f5091836acadc2480d9b450baf5e43506a8012ba4aa90a2c76fabe8b8da654a",
     "android/app/src/main/kotlin/com/lladlam/melox/core/provider/lxuser/ChkszApiKeyStore.kt": "f0cdf880b8be7ea99e6862d6432c1f7c647e53ae342aadc2ca5ddfbacb7f1ac5",
-    "android/app/src/main/kotlin/com/lladlam/melox/core/provider/lxuser/LxUserRuntime.kt": "8de7d538d2b3d5361f03825840f517fb8e851a9897b34accbacc711b0826acd7",
+    "android/app/src/main/kotlin/com/lladlam/melox/core/provider/lxuser/LxRuntimeThread.kt": "07269be8ae60bfc3eb9d237506a6f8084d492906361e2b525018731f3bc7cabe",
+    "android/app/src/main/kotlin/com/lladlam/melox/core/provider/lxuser/LxUserRuntime.kt": "5dd26b1cf378db9b7fd2d1a98e8f35ffd311a49c8ec2ec93694a84279f513267",
     "android/app/src/main/kotlin/com/lladlam/melox/core/provider/lxuser/LxUserScriptMetadata.kt": "b2acfcd6731c7b506264bfd00c9dc2f1c23937bcdabf4a8fdf31aa5d9aa657b7",
     "android/app/src/main/kotlin/com/lladlam/melox/core/provider/lxuser/LxUserSourceStore.kt": "c07a454f94380ebc93f559e202d163c03fac1069522dee8a48c4f04b40fd8b6e",
     "android/app/src/main/kotlin/com/lladlam/melox/core/provider/netease/NeteaseProvider.kt": "da64e694d23caeaf13154c4587f5150263d21d2be9812c23957c092dff28c550",
@@ -613,6 +615,7 @@
     "android/app/src/test/kotlin/com/lladlam/melox/core/provider/kuwo/KuwoJsonNormalizerTest.kt": "80b3ad3f1b001a24132b99298f322debb67410d9dcea61e5fa9f27a5335c0af1",
     "android/app/src/test/kotlin/com/lladlam/melox/core/provider/kuwo/KuwoLyricsClientTest.kt": "91c461b0ea63d18afc56b73409cd6f23786ec562d29ae40e7bf1b3dd24910e0e",
     "android/app/src/test/kotlin/com/lladlam/melox/core/provider/kuwo/KuwoPhoneAuthClientTest.kt": "a3943cf389f77872e91dcf5e7d671e1c8aee6f9eeb081e47f0bf8311e733e818",
+    "android/app/src/test/kotlin/com/lladlam/melox/core/provider/lxuser/LxRuntimeThreadTest.kt": "6c9548df9b78e42aec06efe2b5b86f86d21513fa16283e7252be49ace65aa920",
     "android/app/src/test/kotlin/com/lladlam/melox/core/provider/lxuser/LxUserSourceStoreTest.kt": "be9016e5fce4a327bbd42ec95580c41b7837b4c80c47214afa3a0b854ee78140",
     "android/app/src/test/kotlin/com/lladlam/melox/core/provider/qishui/QishuiProviderTest.kt": "a60dc782b496d7530308675fd6f82dfcbf709f4396051b992fe00422b25d991f",
     "android/app/src/test/kotlin/com/lladlam/melox/core/provider/qqmusic/QQMusicFavoriteClientTest.kt": "33b8ce89ec32ebc92a3c99839e09c538ff3ecea03f74da62d32b4d02f6163545",
@@ -692,10 +695,6 @@
     "docs/shared-element-transition-pr.md": "49f30ccb8624534661e0c544629e683aa5e700a14719908782549be911f3d52a"
   },
   "changed_since_previous_check": [
-    "android/app/i18n/values-ja/strings.xml",
-    "android/app/i18n/values-zh-rCN/strings.xml",
-    "android/app/i18n/values-zh-rTW/strings.xml",
-    "android/app/src/main/kotlin/com/lladlam/melox/ui/settings/SettingsScreen.kt",
-    "android/app/src/main/res/values/strings.xml"
+    "android/app/src/androidTest/kotlin/com/lladlam/melox/core/provider/lxuser/LxRuntimeDeviceRunner.kt"
   ]
 }

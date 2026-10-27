@@ -39,7 +39,7 @@
 | 酷狗概念版 | Windows 当前为标准酷狗 provider | **独立 KugouLite provider／账号隔离／真实双奖励接口／每日去重重试／签到页全部缺失**，不能把标准酷狗改名冒充 |
 | 汽水 | `ec5753a`：真实协议、双布局、账号 QR、游标、歌词与试听识别 | 用户真实扫码确认、登录态搜索与完整播放 |
 | Bilibili | `4c94f7e`：收藏的他人列表／合集、分页与单视频隔离 | 用户私人列表；WBI 播放及音质细节与最新 Android 持续对照 |
-| 播放回退 | `566d099`：native → 内置串行严格完整匹配 → CHKSZ／LX | 概念版候选随真实 provider 迁入；真实账号／权限与网络验收 |
+| 播放回退 | `566d099`：native → 内置串行严格完整匹配 → CHKSZ／LX 调用入口 | **LX 自定义 JS 运行时仍是空实现**：load 无操作、callAction 恒 null、close 无操作，不能将调用入口记为真实脚本执行已完成；概念版候选、真实账号／权限与网络验收仍待补齐 |
 | 播放器／队列／MiniPlay | 两套独立呈现＋真实 PlaybackCommands／PCM；既有 Dock／AutoMix 证据；队列新增全 provider 元数据持久化并兼容旧字段 | MiniPlay 材质与侧反射、横竖屏同一时钟、所有页面封面 morph；Android 实时新增 AutoMix 双封面调色板合并待迁移 |
 | 歌词／罗马音 | 双布局渲染、语言链、真实歌词；本轮接 JapaneseRubyAlignment 及视觉行字符范围；348 tests 与双布局 17 scenes／18 assertions 通过，见 ROMANIZATION_070_UPDATE.md | 线上同内容日文曲目、天际／EVA／TextPV 同内容动画验收 |
 | 歌词样式选项 | Windows 仍保留 Apple Music／EVA／TextPV 可选 | Android 0.7 当前仅显示 Apple Music；现有用户设置兼容策略需随迁移明确核销 |
@@ -76,6 +76,10 @@
 端口修正已包含在后续 348 tests 的全量成功回归中；额外修正“错误 PIN 固定为 0000 恰好等于随机真实 PIN”的低概率不确定性后，独立重跑该套真实 loopback 协议测试 3 项全部通过。证据 `evidence/romanization-070/lan-port-selection-validation.log.gz` 与 `lan-protocol-final.xml`。
 
 ## 2026-10-27 再核查
+
+随后 Android 又新增 `LxRuntimeDeviceRunner` instrumentation 回归源码，覆盖同会话双调用、2.3 秒延迟 HTTP 回调、驱逐后拒绝调用和新会话重建。已读取源码；未运行该设备 runner，不将其存在当作实机通过证据。
+
+后续监听又捕获 3 个 LX 文件变化：Android 新增 `LxRuntimeThread` 和并发／清理测试，将 QuickJS 创建、执行与销毁限制在同一 owner 线程；动作超时或中断后关闭会话，取消 HTTP 并屏蔽迟到回调。追查 Windows 对应文件发现更基础的缺口：`shared/src/commonMain/kotlin/melox/provider/lxuser/LxUserRuntime.kt` 仅 8 行，`load`／`close` 为空、`callAction` 恒返回 null；`LxUserPlaybackResolver` 虽有播放／歌词／封面调用链，实际无法执行用户脚本。因此这是未迁移的真实业务后端，不只是本次线程修复未同步。CHKSZ 为独立客户端，不能用其成功证明 LX 脚本运行时可用。
 
 直接重新读取 Android 工作区并与 `d547727` 的内容哈希快照比较，新增变化为 5 个文件：SettingsScreen、默认 strings.xml 及简中／繁中／日文 i18n。具体是关于页增加 user_361ef（CNY 20）、user_f8b67（CNY 12.24），并将原 6 元包月标记改为 CNY 6、金额统一 CNY 格式。Windows 的 PinnedAboutSettings／DesktopAbout 尚无对应赞助列表，属于新增未迁移内容。
 
