@@ -1,0 +1,4 @@
+reloaded:wait@800
+reveal-Developer:reveal@settings-open-developer
+open-Developer:tap@settings-open-developer
+performance-off:tap@setting-developer_performance_overlay

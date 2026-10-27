@@ -1,0 +1,9 @@
+consent=cloud-enabled:false
+playing=playing:true,tag:mini-player-expand
+open=tag:now-playing
+before=title:generated-1000hz,mix-active:false,no-playback-error:true
+mix-start=mix-active:true
+mixed=mix-active:true,no-playback-error:true
+handoff=title:generated-4000hz,mix-active:false
+after=title:generated-4000hz,mix-active:false,playing:true,no-playback-error:true
+pause=playing:false

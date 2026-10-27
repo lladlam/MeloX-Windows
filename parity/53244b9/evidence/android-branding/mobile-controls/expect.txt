@@ -1,0 +1,9 @@
+open-Appearance=tag:settings-appearance
+flow-off=unchecked:setting-player_flowing_backdrop,pref-string:player_background_mode:BlurredArtwork,pref-bool:player_flowing_backdrop:false
+flow-on=checked:setting-player_flowing_backdrop,pref-string:player_background_mode:FlowingLight,pref-bool:player_flowing_backdrop:true
+background-custom=pref-string:player_background_mode:CustomImage,pref-bool:player_flowing_backdrop:false
+flow-unchecked-custom=unchecked:setting-player_flowing_backdrop
+back-Appearance=tag:settings-root
+open-Developer=tag:settings-developer
+performance-on=checked:setting-developer_performance_overlay,tag:performance-overlay,pref-bool:developer_performance_overlay:true
+performance-samples=state:performance-overlay:sampled

@@ -27,7 +27,10 @@ object MeloXSettingsPreferences {
     }
 
     fun setBoolean(key: String, value: Boolean) {
-        prefs().putBoolean(key, value)
+        if (key == "player_flowing_backdrop") {
+            val mode = if (value) MeloXPlayerBackgroundMode.FlowingLight else MeloXPlayerBackgroundMode.BlurredArtwork
+            prefs().putValues(mapOf(key to value.toString(), "player_background_mode" to mode.name))
+        } else prefs().putBoolean(key, value)
         if (key == "download_lyrics") getPreferences("melox_downloads").putBoolean(key, value)
         if (key.startsWith("equalizer_")) melox.playback.MeloXEqualizerSettings.refresh()
         if (key == "lyrics_auto_select" && !value) {
@@ -49,7 +52,10 @@ object MeloXSettingsPreferences {
             "placement_cloud_home" -> MeloXSettingsRuntime.cloudHomePlacement = value
             "placement_cloud_tab" -> MeloXSettingsRuntime.cloudTabPlacement = value
             "placement_cloud_library" -> MeloXSettingsRuntime.cloudLibraryPlacement = value
-            "player_flowing_backdrop" -> MeloXSettingsRuntime.flowingBackdropEnabled = value
+            "player_flowing_backdrop" -> {
+                MeloXSettingsRuntime.flowingBackdropEnabled = value
+                MeloXSettingsRuntime.playerBackgroundMode = if (value) MeloXPlayerBackgroundMode.FlowingLight else MeloXPlayerBackgroundMode.BlurredArtwork
+            }
             "player_artwork_motion" -> MeloXSettingsRuntime.artworkMotionEnabled = value
             "reduce_motion" -> MeloXSettingsRuntime.reduceMotion = value
             "player_background_isolation" -> MeloXSettingsRuntime.playerBackgroundIsolationEnabled = value
@@ -189,7 +195,10 @@ object MeloXSettingsPreferences {
 
     fun setString(key: String, value: String) {
         if (key == "player_custom_background_path") MeloXSettingsRuntime.customBackgroundPath = value
-        prefs().putString(key, value)
+        if (key == "player_background_mode") {
+            val mode = runCatching { MeloXPlayerBackgroundMode.valueOf(value) }.getOrDefault(MeloXPlayerBackgroundMode.FlowingLight)
+            prefs().putValues(mapOf(key to mode.name, "player_flowing_backdrop" to (mode == MeloXPlayerBackgroundMode.FlowingLight).toString()))
+        } else prefs().putString(key, value)
         if (key.startsWith("equalizer_")) melox.playback.MeloXEqualizerSettings.refresh()
         when (key) {
             "theme_mode" -> MeloXSettingsRuntime.themeMode = runCatching {
@@ -227,7 +236,7 @@ object MeloXSettingsPreferences {
                     MeloXPlayerBackgroundMode.valueOf(value)
                 }.getOrDefault(MeloXPlayerBackgroundMode.FlowingLight)
                 MeloXSettingsRuntime.flowingBackdropEnabled =
-                    MeloXSettingsRuntime.playerBackgroundMode != MeloXPlayerBackgroundMode.BlurredArtwork
+                    MeloXSettingsRuntime.playerBackgroundMode == MeloXPlayerBackgroundMode.FlowingLight
             }
             "player_shell" -> MeloXSettingsRuntime.playerShell = runCatching {
                 MeloXPlayerShell.valueOf(value)

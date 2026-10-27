@@ -1,0 +1,3 @@
+reloaded=tag:performance-overlay,pref-bool:developer_performance_overlay:true,pref-string:player_background_mode:CustomImage,pref-bool:player_flowing_backdrop:false
+open-Developer=tag:settings-developer
+performance-off=unchecked:setting-developer_performance_overlay,absent:performance-overlay,pref-bool:developer_performance_overlay:false

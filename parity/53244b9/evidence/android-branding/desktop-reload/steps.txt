@@ -1,0 +1,5 @@
+reloaded:wait@800
+group-Developer:tap@desktop-settings-tab:Developer
+reveal-Developer:reveal@desktop-settings-subtab:Developer
+open-Developer:tap@desktop-settings-subtab:Developer
+performance-off:tap@setting-developer_performance_overlay

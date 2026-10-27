@@ -101,6 +101,7 @@ fun main() {
             val currentClose by rememberUpdatedState(closeWindow)
             Window(
                 title = "MeloX",
+                icon = androidx.compose.ui.res.painterResource("branding/melox-android.png"),
                 state = windowState,
                 visible = windowVisible,
                 undecorated = true,

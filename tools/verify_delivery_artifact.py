@@ -99,6 +99,21 @@ for label, command, output in (
     if not passed:
         failures.append(f'verification tool failed: {label}')
 
+branding_manifest = 'parity/53244b9/evidence/android-branding/source.json'
+has_android_icon = bool(subprocess.check_output(
+    ['git', 'ls-tree', '--name-only', args.expected_sha, '--', branding_manifest], cwd=repo).strip())
+if has_android_icon:
+    icon_output = args.output.parent / 'download-launcher-icon.json'
+    completed = subprocess.run([sys.executable, 'tools/verify_windows_icon.py', '--artifact', str(zip_path),
+                                '--source-revision', args.expected_sha, '--output', str(icon_output)],
+                               cwd=repo, capture_output=True, text=True)
+    passed = completed.returncode == 0 and icon_output.exists()
+    tool_status['launcher_icon'] = 'PASSED' if passed else 'FAILED'
+    tools.append({'label': 'launcher_icon', 'exit_code': completed.returncode,
+                  'stdout_tail': completed.stdout[-800:], 'stderr_tail': completed.stderr[-800:]})
+    if not passed:
+        failures.append('verification tool failed: launcher_icon')
+
 report = {
     'run_id': args.run_id,
     'expected_head_sha': args.expected_sha,
@@ -113,6 +128,7 @@ report = {
     'build_info_revision': revision,
     'pinned_resource_check': tool_status.get('pinned_resources', 'FAILED'),
     'decoder_bundle_check': tool_status.get('decoder_bundle', 'FAILED'),
+    'launcher_icon_check': tool_status.get('launcher_icon', 'NOT_IN_BASELINE'),
     'tools': tools,
     'physical_windows_execution': 'BLOCKED_NOT_RUN_HERE',
     'pinned_android_pixel_acceptance': 'BLOCKED_NO_REFERENCE_FRAMES',

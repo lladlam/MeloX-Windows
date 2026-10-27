@@ -283,6 +283,23 @@ jobs:
             python tools/capture_ruby_alignment.py $layout "$pwd/desktop/build/parity/ruby-$layout-home" "desktop/build/parity/ruby-$layout"
             if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           }
+      - name: Replay background and performance controls with independent reload
+        shell: pwsh
+        run: |
+          foreach ($layout in @("mobile", "desktop")) {
+            $homeDir = "$pwd/desktop/build/parity/background-controls-$layout-home"
+            python tools/capture_background_controls.py $layout controls $homeDir "desktop/build/parity/background-controls-$layout-controls"
+            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+            python tools/capture_background_controls.py $layout reload $homeDir "desktop/build/parity/background-controls-$layout-reload"
+            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          }
+      - name: Replay live AutoMix background and dual PCM in both layouts
+        shell: pwsh
+        run: |
+          foreach ($layout in @("mobile", "desktop")) {
+            python tools/capture_automix_background.py $layout "$pwd/desktop/build/parity/automix-background-$layout-home" "desktop/build/parity/automix-background-$layout"
+            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          }
       - name: Replay unified favorites with real Local playback and independent reload
         shell: pwsh
         run: |
@@ -404,12 +421,15 @@ jobs:
             --input "$dir" `
             --main-jar "$name" `
             --name MeloX-Desktop `
+            --icon desktop/src/main/resources/branding/melox-android.ico `
             --dest desktop/build/releases `
             --java-options "-Xms16m -Xmx1g -XX:+UseSerialGC -Dfile.encoding=UTF-8 --add-opens=java.desktop/java.awt.event=ALL-UNNAMED"
       - name: Verify app-image decoder
         run: python tools/verify_decoder_bundle.py --artifact desktop/build/releases/MeloX-Desktop --run --output desktop/build/verification/image-decoder.json
       - name: Verify app-image pinned resources
         run: python tools/verify_pinned_resources.py --artifact desktop/build/releases/MeloX-Desktop --output desktop/build/verification/image-pinned-resources.json
+      - name: Verify actual Windows launcher icon
+        run: python tools/verify_windows_icon.py --artifact desktop/build/releases/MeloX-Desktop --output desktop/build/verification/image-icon.json
       - name: Zip the app-image
         shell: pwsh
         run: |
@@ -420,6 +440,8 @@ jobs:
         run: python tools/verify_decoder_bundle.py --artifact desktop/build/releases/MeloX-Desktop-Windows.zip --run --output desktop/build/verification/zip-decoder.json
       - name: Verify final distribution pinned resources
         run: python tools/verify_pinned_resources.py --artifact desktop/build/releases/MeloX-Desktop-Windows.zip --output desktop/build/verification/zip-pinned-resources.json
+      - name: Verify final Windows launcher icon
+        run: python tools/verify_windows_icon.py --artifact desktop/build/releases/MeloX-Desktop-Windows.zip --output desktop/build/verification/zip-icon.json
       - name: Upload verification evidence
         if: always()
         uses: actions/upload-artifact@v4
@@ -511,6 +533,14 @@ jobs:
             desktop/build/parity/feature-surface-*/*.txt
             desktop/build/parity/feature-surface-*/gradle.log
             desktop/build/parity/feature-surface-*/*.png
+            desktop/build/parity/background-controls-*/*.json
+            desktop/build/parity/background-controls-*/*.txt
+            desktop/build/parity/background-controls-*/gradle.log
+            desktop/build/parity/background-controls-*/*.png
+            desktop/build/parity/automix-background-*/*.json
+            desktop/build/parity/automix-background-*/*.txt
+            desktop/build/parity/automix-background-*/gradle.log
+            desktop/build/parity/automix-background-*/*.png
             desktop/build/parity/ruby-*/*.json
             desktop/build/parity/ruby-*/*.txt
             desktop/build/parity/ruby-*/gradle.log

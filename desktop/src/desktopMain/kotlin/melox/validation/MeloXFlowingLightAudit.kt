@@ -35,14 +35,30 @@ fun main(args: Array<String>) = runBlocking {
         surface.makeImageSnapshot().use { image -> image.encodeToData()!!.use { artwork.writeBytes(it.bytes) } }
     }
     val rows = JSONArray()
+    val incomingArtwork = File(output, "generated-incoming.png")
+    Surface.makeRasterN32Premul(160, 160).use { surface ->
+        surface.canvas.clear(0xffaa3311.toInt())
+        surface.makeImageSnapshot().use { image -> image.encodeToData()!!.use { incomingArtwork.writeBytes(it.bytes) } }
+    }
+    val firstPalette = ArtworkDynamicPaletteProvider.paletteFor(artwork.absolutePath)
+    val secondPalette = ArtworkDynamicPaletteProvider.paletteFor(incomingArtwork.absolutePath)
+    val combined = firstPalette.combinedWith(secondPalette)
+    check(combined.cells.size == 9)
+    check(combined.average == androidx.compose.ui.graphics.lerp(firstPalette.average, secondPalette.average, .5f))
+    check(firstPalette.combinedWith(ArtworkDynamicPalette.Fallback) === firstPalette)
+    check(ArtworkDynamicPalette.Fallback.combinedWith(secondPalette) === secondPalette)
+    check(firstPalette.combinedWith(firstPalette) === firstPalette)
     withContext(Dispatchers.Main) {
         melox.settings.MeloXSettingsPreferences.initialize()
         for (quality in MeloXLyricsRenderingQuality.entries) {
             var playing by mutableStateOf(true)
             var reduced by mutableStateOf(false)
             var mounted by mutableStateOf(true)
+            var mixing by mutableStateOf(false)
             val scene = ImageComposeScene(320, 240, Density(1f), coroutineContext = coroutineContext) {
-                if (mounted) MeloXFlowingLightBackdrop(artwork.absolutePath, playing, quality = quality, reduceMotion = reduced)
+                if (mounted) MeloXFlowingLightBackdrop(artwork.absolutePath, playing, quality = quality, reduceMotion = reduced,
+                    mixOutgoingArtworkUrl = artwork.absolutePath.takeIf { mixing },
+                    mixIncomingArtworkUrl = incomingArtwork.absolutePath.takeIf { mixing })
             }
             val start = System.nanoTime()
             suspend fun settle(ms: Long) {
@@ -77,11 +93,19 @@ fun main(args: Array<String>) = runBlocking {
                 val still = snapshot("reduced-a")
                 settle(500)
                 check(changed(still, snapshot("reduced-b")) == 0) { "Reduce motion kept animating" }
+                mixing = true
+                settle(700)
+                val mixed = snapshot("dual-cover")
+                check(changed(still, mixed) > a.size / 3) { "Incoming cover did not change the mesh palette" }
+                mixing = false
+                settle(700)
+                check(changed(mixed, snapshot("single-cover-restored")) > a.size / 3) { "Mix end did not restore single-cover palette" }
                 reduced = false
                 repeat(12) { mounted = false; settle(18); mounted = true; settle(24) }
                 rows.put(JSONObject().put("quality", quality.name).put("changed_pixels", motion)
                     .put("pixels", a.size).put("pause_frozen", true).put("resume_moves", true)
-                    .put("reduce_motion_frozen", true).put("unmount_remount_cycles", 12))
+                    .put("reduce_motion_frozen", true).put("dual_cover_changes_palette", true)
+                    .put("single_cover_restored", true).put("unmount_remount_cycles", 12))
             } finally { scene.close() }
         }
     }

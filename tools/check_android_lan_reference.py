@@ -27,11 +27,14 @@ while True:
     for source in ('main', 'test', 'androidTest'):
         for extension in ('kt', 'java'):
             files.update(root.glob(f'android/app/src/{source}/**/*.{extension}'))
+            files.update(root.glob(f'android/innertube/src/{source}/**/*.{extension}'))
     files.update(root.glob('docs/**/*.md'))
     files.update(root.glob('android/app/src/main/assets/legal/*'))
     files.update(root.glob('android/app/src/main/res/values*/strings.xml'))
     files.update(root.glob('android/app/i18n/**/strings.xml'))
     files.update(root.glob('android/app/src/main/res/**/*.xml'))
+    files.update(root.glob('android/app/src/main/res/mipmap*/ic_launcher*.png'))
+    files.update(root.glob('android/app/src/main/res/drawable-nodpi/ic_launcher*.png'))
     files.update(root.glob('android/app/src/main/cpp/**/*.[ch]'))
     files.update(root.glob('android/app/src/main/cpp/**/*.cpp'))
     files.update(root.glob('android/app/src/main/cpp/**/*.hpp'))

@@ -1,0 +1,17 @@
+consent:tap@remote-reject
+group-Appearance:tap@desktop-settings-tab:General
+reveal-Appearance:reveal@desktop-settings-subtab:Appearance
+open-Appearance:tap@desktop-settings-subtab:Appearance
+reveal-flow:reveal@setting-player_flowing_backdrop
+flow-off:tap@setting-player_flowing_backdrop
+flow-on:tap@setting-player_flowing_backdrop
+reveal-background:reveal@player_background_mode
+background-menu:tap@player_background_mode
+background-custom:tap@settings-option:自定义图片
+reveal-flow-custom:reveal@setting-player_flowing_backdrop
+flow-unchecked-custom:wait@200
+group-Developer:tap@desktop-settings-tab:Developer
+reveal-Developer:reveal@desktop-settings-subtab:Developer
+open-Developer:tap@desktop-settings-subtab:Developer
+performance-on:tap@setting-developer_performance_overlay
+performance-samples:wait@800

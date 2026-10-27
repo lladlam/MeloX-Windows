@@ -41,7 +41,10 @@ import kotlin.math.sin
 import melox.settings.MeloXPlayerBackgroundMode
 import melox.settings.playerShowsLyricsArtworkBackdrop
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.awaitCancellation
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 import melox.network.MeloXHttpClient
@@ -61,6 +64,16 @@ internal data class ArtworkDynamicPalette(
     val cells: List<Color>,
     val average: Color,
 ) {
+    fun combinedWith(other: ArtworkDynamicPalette): ArtworkDynamicPalette {
+        if (this === Fallback) return other
+        if (other === Fallback || this == other) return this
+        return ArtworkDynamicPalette(
+            cells = List(9) { index ->
+                androidx.compose.ui.graphics.lerp(cells.getOrElse(index) { average }, other.cells.getOrElse(index) { other.average }, .5f)
+            },
+            average = androidx.compose.ui.graphics.lerp(average, other.average, .5f),
+        )
+    }
     companion object {
         val Fallback = ArtworkDynamicPalette(
             cells = listOf(
@@ -447,6 +460,8 @@ internal fun MeloXPlayerBackdrop(
     mediaId: String?,
     reduceMotion: Boolean,
     modifier: Modifier = Modifier,
+    mixOutgoingArtworkUrl: String? = null,
+    mixIncomingArtworkUrl: String? = null,
 ) {
     when {
         mode == MeloXPlayerBackgroundMode.CustomImage -> {
@@ -476,6 +491,8 @@ internal fun MeloXPlayerBackdrop(
             mediaId = mediaId,
             modifier = modifier,
             reduceMotion = reduceMotion,
+            mixOutgoingArtworkUrl = mixOutgoingArtworkUrl,
+            mixIncomingArtworkUrl = mixIncomingArtworkUrl,
         )
         else -> MeloXBlurredArtworkBackdrop(artworkUrl, modifier)
     }
@@ -490,6 +507,8 @@ internal fun MeloXFlowingLightBackdrop(
     quality: MeloXLyricsRenderingQuality = MeloXLyricsRenderingQuality.High,
     backgroundFrameRate: Int = 24,
     reduceMotion: Boolean = false,
+    mixOutgoingArtworkUrl: String? = null,
+    mixIncomingArtworkUrl: String? = null,
 ) {
     var targetPalette by remember { mutableStateOf(ArtworkDynamicPalette.Fallback) }
     val frameRate = backgroundFrameRate.coerceIn(15, 60)
@@ -518,9 +537,10 @@ internal fun MeloXFlowingLightBackdrop(
     }
 
     val jellyfinRevision by melox.provider.jellyfin.JellyfinSessionStore.revision.collectAsState()
-    LaunchedEffect(artworkUrl, jellyfinRevision) {
-        targetPalette = ArtworkDynamicPalette.Fallback
-        targetPalette = ArtworkDynamicPaletteProvider.paletteFor(artworkUrl)
+    LaunchedEffect(artworkUrl, mixOutgoingArtworkUrl, mixIncomingArtworkUrl, jellyfinRevision) {
+        val covers = listOfNotNull(mixOutgoingArtworkUrl ?: artworkUrl, mixIncomingArtworkUrl).filter(String::isNotBlank).distinct()
+        val palettes = coroutineScope { covers.map { cover -> async { ArtworkDynamicPaletteProvider.paletteFor(cover) } }.awaitAll() }
+        targetPalette = palettes.reduceOrNull(ArtworkDynamicPalette::combinedWith) ?: ArtworkDynamicPalette.Fallback
     }
 
     val controls = melox.settings.MeloXSettingsRuntime

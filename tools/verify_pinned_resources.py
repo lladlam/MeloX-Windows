@@ -81,6 +81,11 @@ def main():
         desktop_revision = desktop['commit']
         assert desktop_revision == 'a41ea0e1e1fa69fb543d827b853fe3aff5420951' and desktop['verified_against_pure_export']
         expected.update(desktop['resource_sha256'])
+    branding_path = 'parity/53244b9/evidence/android-branding/source.json'
+    has_branding = bool(subprocess.check_output(['git', 'ls-tree', '--name-only', args.source_revision, '--', branding_path], cwd=repo).strip()) if args.source_revision else (repo / branding_path).is_file()
+    if has_branding:
+        branding = manifest(branding_path)
+        expected.update({name.removeprefix('desktop/src/main/resources/'): digest for name, digest in branding['resources'].items()})
     records = []
     archive = zipfile.ZipFile(io.BytesIO(packaged_bytes(args.artifact))) if args.artifact else None
     try:

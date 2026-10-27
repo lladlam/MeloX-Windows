@@ -592,7 +592,9 @@ private fun AppearanceSettings() {
             LyricsFloatSlider("settings_flowing_saturation", "player_flowing_saturation", r.flowingLightSaturation, 0f..2f, 19)
             LyricsFloatSlider("settings_flowing_brightness", "player_flowing_brightness", r.flowingLightBrightness, .4f..1.6f, 11)
         }
-        SettingsToggleRow("settings_flowing_backdrop", "player_flowing_backdrop", true)
+        SettingsExternalToggleRow(pinnedString("settings_flowing_backdrop"), r.flowingBackdropEnabled, "setting-player_flowing_backdrop") {
+            MeloXSettingsPreferences.setBoolean("player_flowing_backdrop", it)
+        }
         SettingsToggleRow("settings_background_isolation", "player_background_isolation", true)
         LyricsIntChoice("settings_background_fps", "lyrics_background_frame_rate", r.lyricBackgroundFrameRate, listOf(15, 24, 30, 45, 60)) {
             pinnedString(if (it <= 24) "settings_fps_battery" else if (it == 30) "settings_fps_balanced" else "settings_fps_recommended", it)

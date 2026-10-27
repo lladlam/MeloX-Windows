@@ -436,7 +436,7 @@ object MeloXSettingsRuntime {
             } else {
                 MeloXPlayerBackgroundMode.BlurredArtwork
             }
-        flowingBackdropEnabled = playerBackgroundMode != MeloXPlayerBackgroundMode.BlurredArtwork
+        flowingBackdropEnabled = playerBackgroundMode == MeloXPlayerBackgroundMode.FlowingLight
         playerShell = runCatching {
             MeloXPlayerShell.valueOf((prefs().getString("player_shell", MeloXPlayerShell.AppleMusic.name) ?: MeloXPlayerShell.AppleMusic.name))
         }.getOrDefault(MeloXPlayerShell.AppleMusic)

@@ -1,7 +1,7 @@
 {
   "repository": "MeloX-Android local working tree",
   "head": "91352b886b6fa3dc4b63502715c0a03dbdbab6e7",
-  "checked_utc": "2026-10-27T04:41:01.391644+00:00",
+  "checked_utc": "2026-10-27T04:57:24.290230+00:00",
   "files": {
     "android/app/build.gradle.kts": "09082aa216d21dfc0b5b66259dc55d0bc162699d37477738f05ccb58c0678d50",
     "android/app/i18n/values-ja/strings.xml": "bbc9fc09af98fb916a6cdfb7733dad566ae9a0bcf59573166756c78b0eaf9567",
@@ -11,7 +11,7 @@
     "android/app/src/androidTest/java/com/lladlam/melox/miplay/MiPlayProbeRunner.java": "f2055ef7b306ade9b6c9369f87511f528ff456654dfb8932ebd1830b1ad26c25",
     "android/app/src/androidTest/java/com/lladlam/melox/miplay/MiPlayWireRegression.java": "26de6574d48a9fd061f50fa340527770141ee213ad70cea9a54e257d26650555",
     "android/app/src/androidTest/kotlin/com/lladlam/melox/core/autosync/AutoSyncDeviceRunner.kt": "e283a801644e90b4adf5a8276023e32802fc1d6280d9957c5e78cbec70722c14",
-    "android/app/src/androidTest/kotlin/com/lladlam/melox/core/provider/lxuser/LxRuntimeDeviceRunner.kt": "348cd7f6d26d8efd486a50f62bbeaa2de30b81b7e50ad1b9fc0da8a0b6ec6327",
+    "android/app/src/androidTest/kotlin/com/lladlam/melox/core/provider/lxuser/LxRuntimeDeviceRunner.kt": "87d3c57cbe083f25dc60d4a4fb97b50b21c9420ad958a0b83612f1ffd0876985",
     "android/app/src/androidTest/kotlin/com/lladlam/melox/dlna/DlnaDeviceRunner.kt": "5c373d24a669d5def3bb8456bd0ad5b0bcf6f29a1314ed1dc246bfe4715cfdd7",
     "android/app/src/androidTest/kotlin/com/lladlam/melox/lan/MeloXLanBarrierRegression.kt": "8891f60a480c83bd7cdccaadc25c6beb9e04031158c782268165f4947797fba7",
     "android/app/src/androidTest/kotlin/com/lladlam/melox/lan/MeloXLanDeviceRunner.kt": "980a770a1d1b44ac7a81b7288451f85f672bf7d94ba4b3a578cfc5795eb21c21",

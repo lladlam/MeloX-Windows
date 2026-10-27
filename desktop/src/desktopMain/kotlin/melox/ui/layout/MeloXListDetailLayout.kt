@@ -82,7 +82,7 @@ internal fun MeloXListDetailLayout(hasMedia: Boolean, modifier: Modifier = Modif
             Box(Modifier.fillMaxSize().testTag("layout-detail-pane").clipToBounds().padding(top = rightTop.dp).absolutePadding(right = rightSide.dp)) {
                 if (split) Box(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background).testTag("layout-detail-background"),
                     contentAlignment = Alignment.Center) {
-                    Image(painterResource("icons/pinned-v065-launcher-foreground.png"), null, Modifier.size(104.dp))
+                    Image(painterResource("branding/melox-android.png"), null, Modifier.size(104.dp))
                 }
                 CompositionLocalProvider(LocalDetailPaneState provides state, LocalMeloXListDetail provides split, LocalMeloXInDetailPane provides true,
                     LocalMeloXPaneSize provides IntSize(((if (split) size.width - leftWidth else size.width) - with(density) { rightSide.dp.roundToPx() }).coerceAtLeast(0),

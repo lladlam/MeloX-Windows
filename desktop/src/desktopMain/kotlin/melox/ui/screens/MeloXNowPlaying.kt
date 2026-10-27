@@ -208,11 +208,14 @@ fun MeloXNowPlayingScreen(
             )
         }
         val playerBackdrop = melox.ui.glass.rememberMeloXLayerBackdrop()
+        val mixBackground by melox.playback.MeloXAutoMixTransitionRuntime.state.collectAsState()
         CompositionLocalProvider(melox.ui.glass.LocalMeloXLayerBackdrop provides null) {
         MeloXPlayerBackdrop(
             mode = MeloXSettingsRuntime.playerBackgroundMode,
             lyricsPage = currentPage == 1,
             artworkUrl = track.artworkUrl,
+            mixOutgoingArtworkUrl = mixBackground.outgoing?.artworkUrl.takeIf { mixBackground.active && !mixBackground.handedOff },
+            mixIncomingArtworkUrl = mixBackground.incoming?.artworkUrl.takeIf { mixBackground.active && !mixBackground.handedOff },
             isPlaying = playerState.isPlaying,
             mediaId = "${track.id.source.storageValue}:${track.id.value}",
             reduceMotion = MeloXSettingsRuntime.reduceMotion,

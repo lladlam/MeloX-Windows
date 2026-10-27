@@ -1,0 +1,18 @@
+{
+  "layout": "desktop",
+  "status": "PASSED",
+  "scenes": 10,
+  "assertions": 17,
+  "background_box_fraction": [
+    0.02,
+    0.09,
+    0.08,
+    0.16
+  ],
+  "outgoing_incoming_difference": 91.33753967285156,
+  "outgoing_mix_difference": 43.86818313598633,
+  "mix_incoming_difference": 47.4693603515625,
+  "mixed_midpoint_error": 14.16372013092041,
+  "pcm_check": "PASSED",
+  "physical_audible_acceptance": "BLOCKED"
+}

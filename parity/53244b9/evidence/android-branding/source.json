@@ -1,0 +1,21 @@
+{
+  "source": "android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png",
+  "source_sha256": "5fe37d11ae8921300731a2b3eb325957b8ee1a8fe0d1ffe67c96f1697535bf7e",
+  "size": [
+    192,
+    192
+  ],
+  "resources": {
+    "desktop/src/main/resources/branding/melox-android.png": "5fe37d11ae8921300731a2b3eb325957b8ee1a8fe0d1ffe67c96f1697535bf7e",
+    "desktop/src/main/resources/branding/melox-android.ico": "cf45837602b0c85dbf15cbbb85550cb803df0cd659dfef9132fcc0e841b3bdaa"
+  },
+  "ico_sizes": [
+    16,
+    24,
+    32,
+    48,
+    64,
+    128,
+    256
+  ]
+}

@@ -40,7 +40,7 @@
 | 汽水 | `ec5753a`：真实协议、双布局、账号 QR、游标、歌词与试听识别 | 用户真实扫码确认、登录态搜索与完整播放 |
 | Bilibili | `4c94f7e`：收藏的他人列表／合集、分页与单视频隔离 | 用户私人列表；WBI 播放及音质细节与最新 Android 持续对照 |
 | 播放回退 | `566d099`：native → 内置串行严格完整匹配 → CHKSZ／LX 调用入口 | **LX 自定义 JS 运行时仍是空实现**：load 无操作、callAction 恒 null、close 无操作，不能将调用入口记为真实脚本执行已完成；概念版候选、真实账号／权限与网络验收仍待补齐 |
-| 播放器／队列／MiniPlay | 两套独立呈现＋真实 PlaybackCommands／PCM；既有 Dock／AutoMix 证据；队列新增全 provider 元数据持久化并兼容旧字段 | MiniPlay 材质与侧反射、横竖屏同一时钟、所有页面封面 morph；Android 实时新增 AutoMix 双封面调色板合并待迁移 |
+| 播放器／队列／MiniPlay | 两套独立呈现＋真实 PlaybackCommands／PCM；既有 Dock／AutoMix 证据；队列新增全 provider 元数据持久化并兼容旧字段；AutoMix 双封面背景与双 PCM 联合回放见 ANDROID_BRANDING_AUTOMIX_UPDATE.md | MiniPlay 材质与侧反射、横竖屏同一时钟、所有页面封面 morph、私人线上音源与物理听音 |
 | 歌词／罗马音 | 双布局渲染、语言链、真实歌词；本轮接 JapaneseRubyAlignment 及视觉行字符范围；348 tests 与双布局 17 scenes／18 assertions 通过，见 ROMANIZATION_070_UPDATE.md | 线上同内容日文曲目、天际／EVA／TextPV 同内容动画验收 |
 | 歌词样式选项 | Windows 仍保留 Apple Music／EVA／TextPV 可选 | Android 0.7 当前仅显示 Apple Music；现有用户设置兼容策略需随迁移明确核销 |
 | 歌词分享 | 已有真实 PNG 导出，本轮接自定义图背景 | 长按多行、背景与排版同内容对照、原生保存对话框 |
@@ -57,7 +57,7 @@
 
 ### 继续追查“保存了但没有消费者”的选项
 
-额外扫描 Runtime 属性在设置定义／写入之外的引用，发现 `performanceOverlayEnabled` 缺 Windows 显示消费者；旧 `flowingBackdropEnabled` 开关与实际 background mode 选择的关联需补核。系统通知／悬浮歌词相关未消费属性对应的 UI 已 disabled，属于上表平台 backend 缺口。`downloadLyricsEnabled` 虽无属性引用，下载器实际读取 `melox_downloads.download_lyrics`，不能误报未实现；底栏禁止收缩也实际按偏好 key 读取，但启用时是否立即展开仍需回放。属性名搜索仅为线索，按真实消费者核销。
+额外扫描 Runtime 属性在设置定义／写入之外的引用，已为 `performanceOverlayEnabled` 增加两套布局的帧时／JVM 堆浮层，并同步旧 `flowingBackdropEnabled` 开关与实际背景模式，双布局鼠标和独立重启回放见 ANDROID_BRANDING_AUTOMIX_UPDATE.md。系统通知／悬浮歌词相关未消费属性对应的 UI 已 disabled，属于上表平台 backend 缺口。`downloadLyricsEnabled` 虽无属性引用，下载器实际读取 `melox_downloads.download_lyrics`，不能误报未实现；底栏禁止收缩也实际按偏好 key 读取，但启用时是否立即展开仍需回放。属性名搜索仅为线索，按真实消费者核销。
 
 六处剩余空点击已检查上下文：App 与 GlassSheet 的弹层内容、LAN／Quality 弹层内容用于消费内部点击以避免穿透到背景关闭；播放器 controls 背板用于阻断拖动／页面底层命中。均为输入屏蔽，不是可见业务按钮，不机械删除。具体行与源码哈希在 source-index 中保留。本表持续更新，已知平台／模型缺口不会因为其他批次通过而标为完成。
 
@@ -77,7 +77,7 @@
 
 ## 2026-10-27 再核查
 
-随后 Android 又新增 `LxRuntimeDeviceRunner` instrumentation 回归源码，覆盖同会话双调用、2.3 秒延迟 HTTP 回调、驱逐后拒绝调用和新会话重建。已读取源码；未运行该设备 runner，不将其存在当作实机通过证据。
+随后 Android 又新增 `LxRuntimeDeviceRunner` instrumentation 回归源码，覆盖同会话双调用、2.3 秒延迟 HTTP 回调、关闭后拒绝调用和会话缓存／驱逐／重建。最新监听更新将 loopback ServerSocket 改为注入 OkHttp interceptor 响应，并断言两次请求均经过 interceptor；延迟只施加到首个响应。该测试验证脚本与 HTTP 回调桥接，响应来自测试 fixture，不是实际网络／上游服务。已读取最新源码；未运行该设备 runner，不将其存在当作实机通过证据。
 
 后续监听又捕获 3 个 LX 文件变化：Android 新增 `LxRuntimeThread` 和并发／清理测试，将 QuickJS 创建、执行与销毁限制在同一 owner 线程；动作超时或中断后关闭会话，取消 HTTP 并屏蔽迟到回调。追查 Windows 对应文件发现更基础的缺口：`shared/src/commonMain/kotlin/melox/provider/lxuser/LxUserRuntime.kt` 仅 8 行，`load`／`close` 为空、`callAction` 恒返回 null；`LxUserPlaybackResolver` 虽有播放／歌词／封面调用链，实际无法执行用户脚本。因此这是未迁移的真实业务后端，不只是本次线程修复未同步。CHKSZ 为独立客户端，不能用其成功证明 LX 脚本运行时可用。
 

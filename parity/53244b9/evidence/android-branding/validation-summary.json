@@ -1,0 +1,32 @@
+{
+  "runs": [
+    {
+      "layout": "desktop",
+      "mode": "controls",
+      "scenes": 18,
+      "assertions": 15
+    },
+    {
+      "layout": "desktop",
+      "mode": "reload",
+      "scenes": 6,
+      "assertions": 8
+    },
+    {
+      "layout": "mobile",
+      "mode": "controls",
+      "scenes": 17,
+      "assertions": 16
+    },
+    {
+      "layout": "mobile",
+      "mode": "reload",
+      "scenes": 5,
+      "assertions": 8
+    }
+  ],
+  "scenes": 46,
+  "assertions": 47,
+  "shared_tests": 367,
+  "shared_suites": 70
+}

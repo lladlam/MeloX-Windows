@@ -16,7 +16,7 @@ internal class MeloXSystemTray private constructor(private val tray: SystemTray,
         fun install(showLabel: String, quitLabel: String, onShow: () -> Unit, onQuit: () -> Unit): MeloXSystemTray? {
             if (!SystemTray.isSupported()) return null
             return runCatching {
-                val image = requireNotNull(MeloXSystemTray::class.java.getResourceAsStream("/branding/melox-windows.png"))
+                val image = requireNotNull(MeloXSystemTray::class.java.getResourceAsStream("/branding/melox-android.png"))
                     .use { requireNotNull(ImageIO.read(it)) }
                 val menu = PopupMenu().apply {
                     add(MenuItem(showLabel).apply { addActionListener { onShow() } })

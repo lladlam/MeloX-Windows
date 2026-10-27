@@ -92,6 +92,7 @@ compose.desktop {
                 "jdk.httpserver"
             )
             windows {
+                iconFile.set(project.file("src/main/resources/branding/melox-android.ico"))
                 menuGroup = "MeloX"
                 upgradeUuid = "a1b2c3d4-e5f6-7890-abcd-ef1234567890"
                 perUserInstall = true

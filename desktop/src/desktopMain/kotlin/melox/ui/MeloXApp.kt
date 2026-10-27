@@ -650,6 +650,9 @@ fun MeloXApp(onExit: () -> Unit = { kotlin.system.exitProcess(0) }) {
                 }
                 if (!MeloXSettingsRuntime.desktopLayoutEnabled) collectionLayer()
                 }
+                if (MeloXSettingsRuntime.performanceOverlayEnabled) {
+                    MeloXPerformanceOverlay(Modifier.align(Alignment.TopEnd).zIndex(30f))
+                }
             }
         }
         }

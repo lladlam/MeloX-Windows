@@ -38,7 +38,7 @@ internal fun MeloXDesktopAbout() {
     }
     Row(Modifier.fillMaxSize().padding(start = 40.dp, end = 40.dp, top = 52.dp, bottom = 28.dp).testTag("desktop-about"),
         horizontalArrangement = Arrangement.spacedBy(40.dp), verticalAlignment = Alignment.Top) {
-        Image(painterResource("branding/melox-windows.png"), null, Modifier.size(176.dp).testTag("desktop-about-logo"))
+        Image(painterResource("branding/melox-android.png"), null, Modifier.size(176.dp).testTag("desktop-about-logo"))
         Column(Modifier.weight(1f).fillMaxHeight()) {
             Text("MeloX", fontSize = 34.sp, fontWeight = FontWeight.SemiBold)
             Text(desktopFormat("ui.desktop.about.version_build", version, commit), Modifier.padding(top = 10.dp), fontSize = 17.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)

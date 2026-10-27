@@ -223,7 +223,12 @@ internal fun ListenTogetherSettings() {
 
 @Composable
 internal fun DeveloperSettings() {
-    // Pinned release builds omit the DEBUG-only performance/AutoMix controls.
+    SettingsGlassGroup {
+        SettingsExternalToggleRow("性能浮层", MeloXSettingsRuntime.performanceOverlayEnabled, "setting-developer_performance_overlay",
+            subtitle = "显示应用帧时与 JVM 堆占用") {
+            MeloXSettingsPreferences.setBoolean("developer_performance_overlay", it)
+        }
+    }
     Spacer(Modifier.height(10.dp))
 }
 

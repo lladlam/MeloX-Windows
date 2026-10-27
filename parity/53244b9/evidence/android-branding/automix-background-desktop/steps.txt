@@ -1,0 +1,9 @@
+consent:tap@remote-reject
+playing:wait@200
+open:tap@mini-player-expand
+before:wait@700
+mix-start:wait@0
+mixed:wait@800
+handoff:wait@0
+after:wait@800
+pause:tap@mini-player-play-pause

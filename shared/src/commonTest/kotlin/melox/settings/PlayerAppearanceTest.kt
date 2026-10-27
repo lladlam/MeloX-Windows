@@ -98,4 +98,32 @@ class PlayerAppearanceTest {
             MeloXSettingsPreferences.setString("player_shell", previous.name)
         }
     }
+
+    @Test
+    fun legacyFlowingSwitchAndBackgroundChoiceStayInSyncAfterReload() {
+        val prefs = melox.platform.getPreferences("melox_app_settings")
+        val oldMode = prefs.getString("player_background_mode", null)
+        val oldSwitch = prefs.getString("player_flowing_backdrop", null)
+        try {
+            MeloXSettingsPreferences.setBoolean("player_flowing_backdrop", false)
+            assertEquals(MeloXPlayerBackgroundMode.BlurredArtwork, MeloXSettingsRuntime.playerBackgroundMode)
+            MeloXSettingsRuntime.initialize(force = true)
+            assertFalse(MeloXSettingsRuntime.flowingBackdropEnabled)
+            assertEquals(MeloXPlayerBackgroundMode.BlurredArtwork, MeloXSettingsRuntime.playerBackgroundMode)
+
+            MeloXSettingsPreferences.setBoolean("player_flowing_backdrop", true)
+            MeloXSettingsRuntime.initialize(force = true)
+            assertTrue(MeloXSettingsRuntime.flowingBackdropEnabled)
+            assertEquals(MeloXPlayerBackgroundMode.FlowingLight, MeloXSettingsRuntime.playerBackgroundMode)
+
+            MeloXSettingsPreferences.setString("player_background_mode", MeloXPlayerBackgroundMode.CustomImage.name)
+            assertFalse(MeloXSettingsRuntime.flowingBackdropEnabled)
+            MeloXSettingsRuntime.initialize(force = true)
+            assertFalse(MeloXSettingsRuntime.flowingBackdropEnabled)
+            assertEquals(MeloXPlayerBackgroundMode.CustomImage, MeloXSettingsRuntime.playerBackgroundMode)
+        } finally {
+            prefs.putValues(mapOf("player_background_mode" to oldMode, "player_flowing_backdrop" to oldSwitch))
+            MeloXSettingsRuntime.initialize(force = true)
+        }
+    }
 }
