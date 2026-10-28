@@ -5,3 +5,5 @@
 新增独立资源，没有覆盖既有 pinned 文案。`tools/audit_android_sponsors.py` 对照 Android 纯 Git 字节与工作区，验证四组文案；`evidence/android-sponsors/source.json` 保存源与资源 SHA-256。`verify_pinned_resources.py` 将新资源纳入源码、JAR、app-image、ZIP 字节校验，本地源码校验 38 项通过。
 
 `tools/capture_about_sponsors.py` 通过真实鼠标／滚轮输入打开手机版简中、电脑版日文以及英文 Desktop About 对话框，每种 5 scenes，分别核对六个可见名称和金额；截图、指针输入与断言见 `evidence/android-sponsors/`。对应回放已加入 Windows CI，实际 Windows 构建结果另行记录。
+
+Windows CI `40624680277` 在源码资源核验处发现四份新增 properties 被 Windows checkout 转成 CRLF，因此未进入编译和打包。`.gitattributes` 现为这些文件显式指定 LF；使用 `core.autocrlf=true` 的独立 `git checkout-index` 复核四份文件与来源清单 SHA-256 完全一致。后续 Windows CI 仍需验证。
