@@ -6,4 +6,6 @@
 
 使用隔离 home、实际鼠标／滚轮／键盘输入的四组本地回放通过：手机版 controls／reload 为 **25／7 scenes、19／5 assertions**，电脑版 controls／reload 为 **26／8 scenes、19／5 assertions**。覆盖独立登录表单、两种音源之间的实际切换、未登录时签到按钮禁用，以及自动签到开关在新 JVM 中重载。证据在 `evidence/kugou-lite/`；为避免传播临时扫码凭据，保留回放摘要及设置截图，不归档登录时可能含二维码的截图和语义文本。
 
-最后的重试和嵌套试听标记修复前，本地 `:shared:desktopTest :desktop:desktopTest` 为 76 suites／399 tests、零失败；源码稳定后概念版定向回归 **8 项全部通过**，包含独立身份与签名、账号切换、每日部分重试以及嵌套试听标记，结果为 `evidence/kugou-lite/protocol-tests.xml`。Windows CI 结果另行记录。协议测试使用隔离账号和 HTTP fixture，不能证明真实账号扫描、私人收藏、完整线上播放或会员领取成功；这些仍需用户账号实机验收。
+最后的重试和嵌套试听标记修复前，本地 `:shared:desktopTest :desktop:desktopTest` 为 76 suites／399 tests、零失败；源码稳定后概念版定向回归 **8 项全部通过**，包含独立身份与签名、账号切换、每日部分重试以及嵌套试听标记，结果为 `evidence/kugou-lite/protocol-tests.xml`。协议测试使用隔离账号和 HTTP fixture，不能证明真实账号扫描、私人收藏、完整线上播放或会员领取成功；这些仍需用户账号实机验收。
+
+Windows CI `40655109227` 对提交 `c7fef6b62e4f6a630254a62bf699711ebb31e1f9` 全部通过，包括两套布局的独立账号与签到回放。完整下载的发行 ZIP 为 **340345446 bytes／359 条目**，SHA-256 `57b89c6ab6e04b5c9886fc550df269dfebbea0b1a9b11251c200d1e164e07c79`。独立复核 ZIP／内层 JAR 全条目 CRC、准确版本戳、固定资源、Windows PE 解码器与启动图标，以及 CLI 文件与该提交逐字节一致；报告在 `evidence/windows-download-40655109227/`。

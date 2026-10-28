@@ -9,3 +9,5 @@
 本地全量回归在最后一轮歌词接线和取消处理修改前为 **78 suites／411 tests、零失败**；修改后对最终源码运行的 LX／歌词定向回归为 **6 suites／27 tests、零失败**，并完成桌面编译，报告见 `evidence/lx-update/targeted-tests.json`。V8 测试覆盖延迟 HTTP 回调、异步注册、连续并发调用、跨源重定向头隔离、multipart 边界、buffer／crypto、动态代码限制及取消与 isolate 关闭；歌词测试验证协议启停和源列表对缓存的影响。V8 close 后的测试日志没有未回收 callback context 警告。
 
 另以独立 loopback 服务返回 WAV，经实际 LX 脚本解析和生产 FFmpeg 解码得到非零 PCM。该测试证明软件解码链，不证明物理听音、任何第三方脚本的线上可用性或真实账号权限。Windows runner 构建、发行与独立下载核验结果以相应 CI／发行证据为准；长时间内存、真实第三方音源播放仍须实机验证。
+
+Windows CI `40661608835` 在共享测试阶段失败：AutoMix 预算测试将切歌前独立播放 deck 的异步预加载也计入切歌后的解析，出现 `[15, 4]`，LX 运行时的 11 项测试本身全部通过。已在该预算测试中等待真实预加载准备完毕，再验证切歌只解析新曲且分析数量不增长；真实双解码行为未关闭。本地 `DesktopAutoMixIntegrationTest` **9 项通过**，见 `evidence/lx-update/automix-budget-final.xml`。修正后的 Windows CI 与发行仍需验证。

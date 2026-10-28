@@ -178,11 +178,17 @@ class DesktopAutoMixIntegrationTest {
         assertEquals((3L..13L).toSet(), resolvedIds.toSet(), "History and quota tail must not resolve or analyze")
         assertEquals(listOf(1L, 2L), player!!.snapshot().take(2).map { it.id }, "Do not move history")
         assertEquals(listOf(14L, 15L), player!!.snapshot().takeLast(2).map { it.id }, "Unanalyzed quota tail keeps source order")
+        // AutoMix independently resolves the next track for its playback deck.
+        // Let that work settle before measuring resolutions caused by the seek;
+        // otherwise the maintenance timer can finish a pre-existing preload
+        // after `before` and look like a restarted Smart Queue analysis.
+        until { MeloXAutoMixTransitionRuntime.state.value.status == "prepared" }
         val before = resolvedIds.size
         player!!.seekToIndex(14)
         until { starts.lastOrNull()?.track?.id == songs.last().providerTrack!!.id }
         delay(150)
         assertFalse(player!!.smartAnalysisActive)
+        assertEquals(11, player!!.smartAnalyzedCount, "Seeking must not add tracks to the analysis generation")
         assertEquals(listOf(15L), resolvedIds.drop(before), "A new playing track must not restart the generation budget")
         player!!.setSmartQueueEnabled(false)
         assertEquals(15, player!!.mediaItemCount)

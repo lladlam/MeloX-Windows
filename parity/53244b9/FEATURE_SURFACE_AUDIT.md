@@ -36,7 +36,7 @@
 | 私信 | 手机 Messages、DesktopMessages，真实联系人与发信接口 | 头像／未读／分组／刷新和真实发信验收 |
 | 来源选择／账号 | 两套音乐服务页、共享登录表单；汽水 QR 已有真实上游回放；概念版独立来源和账号见 KUGOU_LITE_UPDATE.md | Apple／酷我隐藏策略与当前 Android 对照；真实账号验收 |
 | YouTube Music | Cookie／visitor／data-sync／page／AuthUser 上下文、地区归一化、验证后频道切换、过期状态及游标分页，见 YOUTUBE_SESSION_UPDATE.md | 真实账号／多频道／私人收藏与退出重登实机；上游普通目录／写请求的全局会话并发边界 |
-| 酷狗概念版 | 独立 KugouLite provider、隔离账号与设备标识、独立二维码、真实目录／播放解析与双奖励请求；两套设置入口、每日状态及双布局回放见 KUGOU_LITE_UPDATE.md | Windows 发行待验证；真实扫码、私人收藏、完整播放和每日领取须真实账号实机验收，HTTP fixture 不代表线上成功 |
+| 酷狗概念版 | 独立 KugouLite provider、隔离账号与设备标识、独立二维码、真实目录／播放解析与双奖励请求；两套设置入口、每日状态及双布局回放见 KUGOU_LITE_UPDATE.md；Windows CI `40655109227` 通过，发行完整下载并独立核验 | 真实扫码、私人收藏、完整播放和每日领取须真实账号实机验收，HTTP fixture 不代表线上成功 |
 | 汽水 | `ec5753a`：真实协议、双布局、账号 QR、游标、歌词与试听识别 | 用户真实扫码确认、登录态搜索与完整播放 |
 | Bilibili | `4c94f7e`：收藏的他人列表／合集、分页与单视频隔离 | 用户私人列表；WBI 播放及音质细节与最新 Android 持续对照 |
 | 播放回退 | native → 内置串行严格完整匹配 → CHKSZ／LX；工作区新增 V8 脚本执行、隔离 HTTP、双布局导入和实际软件 PCM 回归，见 LX_USER_SOURCES_UPDATE.md | 本批 Windows CI 与发行待验证；真实第三方脚本／账号／权限和物理听音实机验收 |
