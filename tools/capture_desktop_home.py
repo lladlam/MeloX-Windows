@@ -94,7 +94,10 @@ add('neutral-new-theme', 'hover@desktop-nav:Home', ['tag:desktop-home'])
 (output / 'expect.txt').write_text('\n'.join(n + '=' + ','.join(v) for n, v in checks.items() if v) + '\n', encoding='utf-8')
 parameters = ['--locale', args.locale, '--source', 'Netease', '--start-tab', 'Home', '--theme', args.theme,
     '--width', str(args.width), '--height', str(args.height), '--density', str(args.density), '--output', str(output),
-    '--wait-ms', '650', '--startup-wait-ms', '1800', '--steps-file', str(output / 'steps.txt'), '--expect-file', str(output / 'expect.txt')]
+    # Public playlist details may require several real HTTP requests. Keep the
+    # header assertion, but give them the same budget as the collection replay.
+    '--wait-ms', '650', '--startup-wait-ms', '1800', '--assert-timeout-ms', '30000',
+    '--steps-file', str(output / 'steps.txt'), '--expect-file', str(output / 'expect.txt')]
 (output / 'arguments.txt').write_text('\n'.join(parameters) + '\n', encoding='utf-8')
 gradle = os.environ.get('MELOX_GRADLE') or shutil.which('gradle')
 assert gradle, 'Set MELOX_GRADLE'
