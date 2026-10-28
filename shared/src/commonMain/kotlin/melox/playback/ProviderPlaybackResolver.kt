@@ -205,7 +205,7 @@ class ResolvedRequest(
             mediaMid = queryParam(uri, QQMediaMidQuery)?.takeIf(String::isNotBlank),
             numericSongId = queryParam(uri, QQNumericIdQuery)?.toLongOrNull(),
         )
-        MusicSource.Kugou -> ProviderTrackMetadata.Kugou(
+        MusicSource.Kugou, MusicSource.KugouLite -> ProviderTrackMetadata.Kugou(
             hash = id.value,
             albumAudioId = queryParam(uri, KugouAlbumAudioIdQuery)?.toLongOrNull(),
             albumId = queryParam(uri, KugouAlbumIdQuery)?.takeIf(String::isNotBlank),

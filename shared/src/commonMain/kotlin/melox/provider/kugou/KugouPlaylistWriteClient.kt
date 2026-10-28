@@ -17,6 +17,7 @@ import org.json.JSONObject
 class KugouPlaylistWriteClient(
     private val sessionProvider: () -> KugouSession,
     httpClient: OkHttpClient = melox.network.MeloXHttpClient.shared,
+    private val source: MusicSource = MusicSource.Kugou,
 ) {
     private val requests = KugouRequestClient(sessionProvider, httpClient)
 
@@ -65,8 +66,8 @@ class KugouPlaylistWriteClient(
         track: MusicTrack,
         playlist: MusicPlaylistSummary,
     ) = withContext(Dispatchers.IO) {
-        require(track.id.source == MusicSource.Kugou) { "only Kugou tracks can be written to Kugou playlists" }
-        require(playlist.id.source == MusicSource.Kugou) { "playlist must belong to Kugou" }
+        require(track.id.source == source) { "track must belong to the selected Kugou client" }
+        require(playlist.id.source == source) { "playlist must belong to the selected Kugou client" }
         val session = sessionProvider()
         if (!session.isLoggedIn) throw IOException("请先登录酷狗音乐账号")
         val listId = playlist.id.value.toLongOrNull()
@@ -134,7 +135,7 @@ class KugouPlaylistWriteClient(
         )
         if (title.isBlank()) return null
         return MusicPlaylistSummary(
-            id = MusicResourceId(MusicSource.Kugou, listId.toString()),
+            id = MusicResourceId(source, listId.toString()),
             title = title,
             artworkUrl = kugouArtworkUrl(item),
             creatorName = firstString(item, "nickname", "nick_name", "username", "author_name")

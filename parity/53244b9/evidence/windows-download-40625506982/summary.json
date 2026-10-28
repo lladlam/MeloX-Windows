@@ -1,0 +1,48 @@
+{
+  "run_id": "40625506982",
+  "expected_head_sha": "c88ba0c196637c70f7fe28a6808fee08cf9ab94f",
+  "delivery_zip": {
+    "name": "MeloX-Desktop-Windows.zip",
+    "bytes": 340147200,
+    "sha256": "6d19bbb396dfac09ea0ef78f517c3ffda22772681cf13d2d8baa23b34889833a"
+  },
+  "zip_crc_all_entries": "PASSED",
+  "jar_crc_all_entries": "PASSED",
+  "zip_entry_count": 357,
+  "launcher_entries": [
+    "MeloX-Desktop.exe"
+  ],
+  "application_jar": "app/MeloX-Desktop-windows-x64-1.0.0.jar",
+  "decoder_entry": "app/MeloX-Desktop-windows-x64-1.0.0.jar!/decoder/ffmpeg.exe",
+  "decoder_bytes": 164352000,
+  "build_info_revision": "c88ba0c196637c70f7fe28a6808fee08cf9ab94f",
+  "pinned_resource_check": "PASSED",
+  "decoder_bundle_check": "PASSED",
+  "launcher_icon_check": "PASSED",
+  "cli_helper_check": "NOT_IN_BASELINE",
+  "cli_files": [],
+  "tools": [
+    {
+      "label": "pinned_resources",
+      "exit_code": 0,
+      "stdout_tail": "PASS: 38 pinned resources match exact source bytes, including Android MiLan Pro\n",
+      "stderr_tail": ""
+    },
+    {
+      "label": "decoder_bundle",
+      "exit_code": 0,
+      "stdout_tail": "{\n  \"check\": \"source/packaged decoder integrity\",\n  \"resources\": [\n    {\n      \"location\": \"desktop/build/windows-download-40625506982/MeloX-Desktop-Windows.zip!/app/MeloX-Desktop-windows-x64-1.0.0.jar!/decoder/ffmpeg.exe\",\n      \"bytes\": 164352000,\n      \"sha256\": \"af7913b7ddc324bf02b8af72fe8612b1471455ef8d9e04e45466510742abcff9\",\n      \"magic\": \"PE\",\n      \"verified\": true\n    }\n  ],\n  \"native\": {\n    \"decoder_native_run\": \"NOT_RUN\"\n  },\n  \"audible_acceptance\": \"BLOCKED\"\n}\n",
+      "stderr_tail": ""
+    },
+    {
+      "label": "launcher_icon",
+      "exit_code": 0,
+      "stdout_tail": "PASS: PE launcher embeds every Android-derived ICO image\n",
+      "stderr_tail": ""
+    }
+  ],
+  "physical_windows_execution": "BLOCKED_NOT_RUN_HERE",
+  "pinned_android_pixel_acceptance": "BLOCKED_NO_REFERENCE_FRAMES",
+  "failures": [],
+  "status": "PASSED"
+}

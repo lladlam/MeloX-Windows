@@ -1,0 +1,16 @@
+consent=cloud-enabled:false
+open-settings=tag:settings-kugoulitevip
+signed-out=tag:kugou-lite-account,disabled:kugou-lite-checkin,checked:kugou-lite-auto
+auto-toggle=unchecked:kugou-lite-auto
+back=tag:settings-root
+services=tag:provider-login-kugou
+source-picker=selected:provider-source-kugou_lite
+source-picker-standard=selected:provider-source-kugou
+source-picker-concept=selected:provider-source-kugou_lite
+distinct-standard=tag:provider-login-kugou
+distinct-concept=tag:provider-login-kugou_lite
+open-login=tag:account-form-kugou_lite
+close-login=absent:account-form-kugou_lite
+back-services=tag:provider-current-source
+open-standard-login=tag:account-form-kugou,absent:account-form-kugou_lite
+close-standard-login=absent:account-form-kugou

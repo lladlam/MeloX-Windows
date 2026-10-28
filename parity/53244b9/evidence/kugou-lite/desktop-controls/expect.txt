@@ -1,0 +1,16 @@
+consent=cloud-enabled:false
+open-settings=tag:settings-page:KugouLiteVip
+signed-out=tag:kugou-lite-account,disabled:kugou-lite-checkin,checked:kugou-lite-auto
+auto-toggle=unchecked:kugou-lite-auto
+general=tag:settings-general
+services=tag:desktop-provider-services
+source-picker=selected:settings-option:Kugou Concept
+source-picker-standard=selected:settings-option:Kugou Music
+source-picker-concept=selected:settings-option:Kugou Concept
+distinct-standard=tag:desktop-service-login:kugou
+distinct-concept=tag:desktop-service-login:kugou_lite
+open-login=tag:account-form-kugou_lite
+close-login=absent:account-form-kugou_lite
+back-services=tag:desktop-provider-services
+open-standard-login=tag:account-form-kugou,absent:account-form-kugou_lite
+close-standard-login=absent:account-form-kugou

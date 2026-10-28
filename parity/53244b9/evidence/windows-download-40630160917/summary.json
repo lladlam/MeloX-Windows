@@ -1,0 +1,61 @@
+{
+  "run_id": "40630160917",
+  "expected_head_sha": "72dd3743fd750f205261bb3de0d9da8f315a8847",
+  "delivery_zip": {
+    "name": "MeloX-Desktop-Windows.zip",
+    "bytes": 340183253,
+    "sha256": "df72a79107fbddd3ca1c3a3d0f263bb0f5cc07e12a4f62bb395fc92af6e8047e"
+  },
+  "zip_crc_all_entries": "PASSED",
+  "jar_crc_all_entries": "PASSED",
+  "zip_entry_count": 359,
+  "launcher_entries": [
+    "MeloX-Desktop.exe"
+  ],
+  "application_jar": "app/MeloX-Desktop-windows-x64-1.0.0.jar",
+  "decoder_entry": "app/MeloX-Desktop-windows-x64-1.0.0.jar!/decoder/ffmpeg.exe",
+  "decoder_bytes": 164352000,
+  "build_info_revision": "72dd3743fd750f205261bb3de0d9da8f315a8847",
+  "pinned_resource_check": "PASSED",
+  "decoder_bundle_check": "PASSED",
+  "launcher_icon_check": "PASSED",
+  "cli_helper_check": "PASSED",
+  "cli_files": [
+    {
+      "entry": "melox_cli.py",
+      "source": "tools/melox_cli.py",
+      "verified": true,
+      "sha256": "9416faee6259e3a5e981316d9cea4e7e581852445266b654a20d79147abbaa0a"
+    },
+    {
+      "entry": "WINDOWS_CLI.md",
+      "source": "docs/WINDOWS_CLI.md",
+      "verified": true,
+      "sha256": "c5ad9877fcb1375e46110c05e0e8e043230e2d168e519e71a45ea0b8326d7aef"
+    }
+  ],
+  "tools": [
+    {
+      "label": "pinned_resources",
+      "exit_code": 0,
+      "stdout_tail": "PASS: 38 pinned resources match exact source bytes, including Android MiLan Pro\n",
+      "stderr_tail": ""
+    },
+    {
+      "label": "decoder_bundle",
+      "exit_code": 0,
+      "stdout_tail": "{\n  \"check\": \"source/packaged decoder integrity\",\n  \"resources\": [\n    {\n      \"location\": \"desktop/build/windows-download-40630160917/MeloX-Desktop-Windows.zip!/app/MeloX-Desktop-windows-x64-1.0.0.jar!/decoder/ffmpeg.exe\",\n      \"bytes\": 164352000,\n      \"sha256\": \"af7913b7ddc324bf02b8af72fe8612b1471455ef8d9e04e45466510742abcff9\",\n      \"magic\": \"PE\",\n      \"verified\": true\n    }\n  ],\n  \"native\": {\n    \"decoder_native_run\": \"NOT_RUN\"\n  },\n  \"audible_acceptance\": \"BLOCKED\"\n}\n",
+      "stderr_tail": ""
+    },
+    {
+      "label": "launcher_icon",
+      "exit_code": 0,
+      "stdout_tail": "PASS: PE launcher embeds every Android-derived ICO image\n",
+      "stderr_tail": ""
+    }
+  ],
+  "physical_windows_execution": "BLOCKED_NOT_RUN_HERE",
+  "pinned_android_pixel_acceptance": "BLOCKED_NO_REFERENCE_FRAMES",
+  "failures": [],
+  "status": "PASSED"
+}

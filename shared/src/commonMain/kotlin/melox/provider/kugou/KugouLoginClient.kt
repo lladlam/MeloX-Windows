@@ -35,6 +35,7 @@ sealed interface KugouQrLoginState {
 class KugouLoginClient(
     private val sessionProvider: () -> KugouSession,
     private val httpClient: OkHttpClient = melox.network.MeloXHttpClient.shared,
+    private val platform: KugouPlatform = KugouPlatform.Standard,
 ) {
     suspend fun createQrSession(): KugouQrLoginSession = withContext(Dispatchers.IO) {
         val session = sessionProvider()
@@ -44,7 +45,7 @@ class KugouLoginClient(
                 "appid" to LoginQrAppId.toString(),
                 "type" to "1",
                 "plat" to "4",
-                "qrcode_txt" to "https://h5.kugou.com/apps/loginQRCode/html/index.html?appid=$MusicAppId&",
+                "qrcode_txt" to "https://h5.kugou.com/apps/loginQRCode/html/index.html?appid=${platform.appId}&",
                 "srcappid" to SourceAppId.toString(),
             ),
             session = session,
@@ -66,9 +67,10 @@ class KugouLoginClient(
             path = "/v2/get_userinfo_qrcode",
             params = mapOf(
                 "plat" to "4",
-                "appid" to MusicAppId.toString(),
+                "appid" to platform.appId.toString(),
                 "srcappid" to SourceAppId.toString(),
                 "qrcode" to key,
+                "dev" to session.dev,
             ),
             session = session,
         )
@@ -104,8 +106,8 @@ class KugouLoginClient(
         requestParams["dfid"] = session.dfid.ifBlank { "-" }
         requestParams["mid"] = session.mid
         requestParams["uuid"] = "-"
-        requestParams["appid"] = MusicAppId.toString()
-        requestParams["clientver"] = KugouRequestClient.ClientVersion.toString()
+        requestParams["appid"] = platform.appId.toString()
+        requestParams["clientver"] = platform.clientVersion.toString()
         requestParams["clienttime"] = clientTime
         if (session.token.isNotBlank()) requestParams["token"] = session.token
         if (session.userId > 0L) requestParams["userid"] = session.userId.toString()
@@ -165,7 +167,6 @@ class KugouLoginClient(
             .joinToString("") { byte -> "%02x".format(byte) }
 
     companion object {
-        private const val MusicAppId = 1005
         private const val LoginQrAppId = 1001
         private const val SourceAppId = 2919
         private const val WebSignatureSalt = "NVPh5oo715z5DIWAeQlhMDsWXXQV4hwt"

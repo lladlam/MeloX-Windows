@@ -21,6 +21,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.PointerIcon
@@ -66,6 +68,7 @@ private val allProviders = listOf(
     ServiceProvider("netease", "网易云音乐", Color(0xFFFF2442)),
     ServiceProvider("qq", "QQ音乐", Color(0xFF12B7F5)),
     ServiceProvider("kugou", "酷狗音乐", Color(0xFF2CA2F9)),
+    ServiceProvider("kugou_lite", "酷狗概念版", Color(0xFF2CA2F9)),
     ServiceProvider("qishui", "汽水音乐", Color(0xFF00B6BC)),
     ServiceProvider("kuwo", "酷我音乐", Color(0xFFFF6600)),
     ServiceProvider("bilibili", "哔哩哔哩", Color(0xFFFB7299)),
@@ -364,6 +367,27 @@ fun ProviderServicesScreen(navState: MeloXNavState, currentSource: MusicSource =
             modifier = Modifier.fillMaxSize(),
             contentPadding = PaddingValues(bottom = 32.dp),
         ) {
+            item {
+                var expanded by remember { mutableStateOf(false) }
+                Column(Modifier.padding(horizontal = 20.dp, vertical = 12.dp)) {
+                    SectionLabel("当前音乐源")
+                    Box {
+                        OutlinedButton(onClick = { expanded = true }, modifier = Modifier.fillMaxWidth().testTag("provider-current-source")) {
+                            Text(currentSource.displayName, modifier = Modifier.weight(1f))
+                            Text("▾")
+                        }
+                        DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
+                            visibleProviders.forEach { provider ->
+                                val source = provider.musicSource()
+                                DropdownMenuItem(text = { Text(provider.name) },
+                                    modifier = Modifier.testTag("provider-source-${source.storageValue}")
+                                        .semantics { selected = source == currentSource },
+                                    onClick = { expanded = false; onSourceSelected(source) })
+                            }
+                        }
+                    }
+                }
+            }
             // ── Provider list section ──
             item {
                 SectionLabel("音乐服务")
@@ -385,7 +409,7 @@ fun ProviderServicesScreen(navState: MeloXNavState, currentSource: MusicSource =
                                 username = youtubeSession?.accountName ?: state.username(source),
                                 onToggle = { state.setEnabled(source, it) },
                                 onLoginClick = {
-                                    if (source == MusicSource.YouTubeMusic) melox.ui.navigation.MeloXLoginRequestBus.request(provider.id)
+                                    melox.ui.navigation.MeloXLoginRequestBus.request(provider.id)
                                     navState.navigateTo(Route.Login)
                                 },
                                 onLogoutClick = { state.logout(source) },
@@ -537,7 +561,7 @@ fun ProviderServicesScreen(navState: MeloXNavState, currentSource: MusicSource =
                                     fontFamily = MeloXLanTingProFontFamily,
                                     fontSize = 13.sp,
                                     modifier = Modifier.clickable {
-                                        MusicProviderSelectionStore.setSelectedSource(provider.musicSource())
+                                        onSourceSelected(provider.musicSource())
                                     }
                                         .pointerHoverIcon(PointerIcon(Cursor(Cursor.HAND_CURSOR))),
                                 )

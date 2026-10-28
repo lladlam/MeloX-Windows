@@ -11,6 +11,7 @@ import melox.provider.bilibili.BilibiliApiCache
 import melox.provider.jellyfin.JellyfinProvider
 import melox.provider.jellyfin.JellyfinSessionStore
 import melox.provider.kugou.KugouProvider
+import melox.provider.kugou.KugouLiteProvider
 import melox.provider.kugou.KugouSessionStore
 import melox.provider.kuwo.KuwoProvider
 import melox.provider.kuwo.KuwoSessionStore
@@ -30,6 +31,15 @@ object MeloXMusicProviders {
     @Volatile
     private var sharedRegistry: MusicProviderRegistry? = null
 
+    private fun conceptProvider(httpClient: OkHttpClient) = KugouLiteProvider(
+        sessionProvider = { KugouSessionStore.readLite() }, httpClient = httpClient,
+        persistAuth = { session, auth -> check(KugouSessionStore.updateLiteEntitlements(expected = session, auth = auth)) { "概念版账号已变化，请重试" } },
+        persistDfid = { session, dfid -> check(KugouSessionStore.updateLiteDfid(dfid, expected = session)) { "概念版账号已变化，请重试" } },
+        persistVip = { session, vip -> check(KugouSessionStore.updateLiteEntitlements(expected = session, vipType = vip.vipType,
+            vipExpiresAtEpochSeconds = vip.expiresAtEpochSeconds, superVip = vip.superVip,
+            vipActive = vip.isVip, freeListenEligible = vip.freeListen)) { "概念版账号已变化，请重试" } },
+    )
+
     fun create(
         httpClient: OkHttpClient = MeloXHttpClient.shared,
     ): MusicProviderRegistry {
@@ -47,6 +57,7 @@ object MeloXMusicProviders {
             NeteaseProvider({ PlaybackAccountStore.neteaseCookie() }, httpClient),
             QQMusicProvider({ PlaybackAccountStore.qqSession() }, httpClient),
             KugouProvider({ PlaybackAccountStore.kugouSession() }, httpClient),
+            conceptProvider(httpClient),
             KuwoProvider({ PlaybackAccountStore.kuwoSession() }, httpClient),
             melox.provider.qishui.QishuiProvider({ melox.provider.qishui.QishuiSessionStore.read() }, httpClient),
             AppleMusicApiClient({ AppleMusicSessionStore.read() }, httpClient),
@@ -81,6 +92,7 @@ object MeloXMusicProviders {
                 sessionProvider = { KugouSessionStore.read() },
                 httpClient = httpClient,
             ),
+            conceptProvider(httpClient),
             KuwoProvider({ KuwoSessionStore.read() }, httpClient),
             melox.provider.qishui.QishuiProvider({ melox.provider.qishui.QishuiSessionStore.read() }, httpClient),
             AppleMusicApiClient(

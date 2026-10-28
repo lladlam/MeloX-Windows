@@ -56,7 +56,7 @@ object SpotifyTrackMatcher {
         MusicSource.QQMusic -> 5
         MusicSource.AppleMusic -> 4
         MusicSource.Netease -> 3
-        MusicSource.Kugou -> 2
+        MusicSource.Kugou, MusicSource.KugouLite -> 2
         MusicSource.Qishui -> 2
         MusicSource.Kuwo -> 2
         MusicSource.Bilibili -> 1

@@ -27,11 +27,12 @@ import org.json.JSONObject
 internal class KugouLyricsClient(
     sessionProvider: () -> KugouSession,
     httpClient: OkHttpClient = melox.network.MeloXHttpClient.shared,
+    private val source: MusicSource = MusicSource.Kugou,
 ) {
     private val requests = KugouRequestClient(sessionProvider, httpClient)
 
     suspend fun lyrics(track: MusicTrack): LyricsDocument {
-        require(track.id.source == MusicSource.Kugou) {
+        require(track.id.source == source) {
             "KugouLyricsClient cannot handle ${track.id.source.storageValue} track"
         }
         val metadata = (track.providerMetadata as? ProviderTrackMetadata.Kugou)

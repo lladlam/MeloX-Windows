@@ -96,6 +96,7 @@ private enum class SettingsRoute(val resourceKey: String, val symbol: String) {
     FloatingLyrics("floating", "▤"),
     Recognition("recognition", "⌁"),
     ListenTogether("listen_together", "◎"),
+    KugouLiteVip("kugou_lite_vip", "✦"),
     Storage("storage", "▰"),
     Features("features", "☷"),
     Messages("messages", "✉"),
@@ -106,14 +107,14 @@ private enum class SettingsRoute(val resourceKey: String, val symbol: String) {
     Developer("developer", "⌘"),
     Experimental("experimental", "✦"),
     ;
-    val title: String get() = pinnedString("settings_route_$resourceKey")
-    val subtitle: String get() = pinnedString(if (this == Privacy) "settings_privacy_personalization" else "settings_sub_$resourceKey")
-    val keywords: String get() = pinnedString(if (this == Privacy) "settings_privacy_algorithm" else "settings_kw_$resourceKey")
+    val title: String get() = if (this == KugouLiteVip) "签到领会员" else pinnedString("settings_route_$resourceKey")
+    val subtitle: String get() = if (this == KugouLiteVip) "酷狗概念版每日签到与会员领取" else pinnedString(if (this == Privacy) "settings_privacy_personalization" else "settings_sub_$resourceKey")
+    val keywords: String get() = if (this == KugouLiteVip) "酷狗 概念版 签到 领取 会员 VIP 畅听" else pinnedString(if (this == Privacy) "settings_privacy_algorithm" else "settings_kw_$resourceKey")
 }
 
 private val SettingsSections = listOf(
     "settings_section_app" to listOf(SettingsRoute.General, SettingsRoute.Appearance, SettingsRoute.Content, SettingsRoute.Playback, SettingsRoute.Lyrics, SettingsRoute.Storage),
-    "settings_section_more" to listOf(SettingsRoute.Features, SettingsRoute.Recognition, SettingsRoute.Messages, SettingsRoute.ListenTogether,
+    "settings_section_more" to listOf(SettingsRoute.Features, SettingsRoute.Recognition, SettingsRoute.Messages, SettingsRoute.ListenTogether, SettingsRoute.KugouLiteVip,
         SettingsRoute.TabLayout, SettingsRoute.SystemPlayback, SettingsRoute.SkylineLyrics, SettingsRoute.FloatingLyrics),
     "settings_section_about" to listOf(SettingsRoute.RemoteConfig, SettingsRoute.About, SettingsRoute.Legal, SettingsRoute.Privacy, SettingsRoute.Developer, SettingsRoute.Experimental),
 )
@@ -172,7 +173,8 @@ fun SettingsScreen(
     val motion = rememberMeloXPageMotion(route != null)
     val normalized = search.trim().lowercase()
     val visibleSections = SettingsSections.mapNotNull { (title, items) ->
-        items.filter { normalized.isBlank() || "${it.title} ${it.subtitle} ${it.keywords}".lowercase().contains(normalized) }
+        items.filter { (it != SettingsRoute.KugouLiteVip || currentSource == MusicSource.KugouLite) &&
+            (normalized.isBlank() || "${it.title} ${it.subtitle} ${it.keywords}".lowercase().contains(normalized)) }
             .takeIf { it.isNotEmpty() }?.let { title to it }
     }
     Box(Modifier.fillMaxSize().meloXPageRecede(motion, enabled = !melox.ui.layout.LocalMeloXListDetail.current)
@@ -230,7 +232,7 @@ fun SettingsScreen(
     }
     melox.ui.layout.MeloXAdaptiveDetail(route != null, onDismiss = { route = null }) { shown ->
     MeloXInterruptiblePage(shown, motion, onBack = { route = null }, modifier = Modifier.zIndex(1f)) {
-        detailRoute?.let { SettingsDetail(it, currentSource, onSourceSelected, onOpenMessages, onBack = { route = null }) }
+        detailRoute?.let { SettingsDetail(it, currentSource, onSourceSelected, onOpenMessages, onOpenServices, onBack = { route = null }) }
     }
     }
     }
@@ -247,8 +249,8 @@ private val DesktopSettingsRoutes = listOf(
 private fun desktopSettingsGroup(route: SettingsRoute): List<SettingsRoute> = when (route) {
     SettingsRoute.General, SettingsRoute.Appearance, SettingsRoute.Content ->
         listOf(SettingsRoute.General, SettingsRoute.Appearance, SettingsRoute.Content)
-    SettingsRoute.Features, SettingsRoute.TabLayout, SettingsRoute.Recognition, SettingsRoute.Messages, SettingsRoute.ListenTogether ->
-        listOf(SettingsRoute.Features, SettingsRoute.TabLayout, SettingsRoute.Recognition, SettingsRoute.Messages, SettingsRoute.ListenTogether)
+    SettingsRoute.Features, SettingsRoute.TabLayout, SettingsRoute.Recognition, SettingsRoute.Messages, SettingsRoute.ListenTogether, SettingsRoute.KugouLiteVip ->
+        listOf(SettingsRoute.Features, SettingsRoute.TabLayout, SettingsRoute.Recognition, SettingsRoute.Messages, SettingsRoute.ListenTogether, SettingsRoute.KugouLiteVip)
     SettingsRoute.Playback, SettingsRoute.Lyrics, SettingsRoute.SystemPlayback, SettingsRoute.SkylineLyrics, SettingsRoute.FloatingLyrics ->
         listOf(SettingsRoute.Playback, SettingsRoute.Lyrics, SettingsRoute.SystemPlayback, SettingsRoute.SkylineLyrics, SettingsRoute.FloatingLyrics)
     SettingsRoute.Storage -> listOf(SettingsRoute.Storage)
@@ -274,7 +276,8 @@ private fun DesktopSettingsLayout(
     var resetConfirmation by remember { mutableStateOf(false) }
     val normalized = search.trim().lowercase()
     val matchingRoutes = SettingsSections.flatMap { it.second }.filter {
-        "${it.title} ${it.subtitle} ${it.keywords}".lowercase().contains(normalized)
+        (it != SettingsRoute.KugouLiteVip || currentSource == MusicSource.KugouLite) &&
+            "${it.title} ${it.subtitle} ${it.keywords}".lowercase().contains(normalized)
     }
     Box(Modifier.fillMaxSize().testTag("settings-root")) {
         BoxWithConstraints(
@@ -303,7 +306,7 @@ private fun DesktopSettingsLayout(
                     DesktopSettingsRoutes.forEach { destination ->
                         val active = when (destination) {
                             SettingsRoute.General -> selected in setOf(SettingsRoute.General, SettingsRoute.Appearance, SettingsRoute.Content)
-                            SettingsRoute.Features -> selected in setOf(SettingsRoute.Features, SettingsRoute.TabLayout, SettingsRoute.Recognition, SettingsRoute.Messages, SettingsRoute.ListenTogether)
+                            SettingsRoute.Features -> selected in setOf(SettingsRoute.Features, SettingsRoute.TabLayout, SettingsRoute.Recognition, SettingsRoute.Messages, SettingsRoute.ListenTogether, SettingsRoute.KugouLiteVip)
                             SettingsRoute.Playback -> selected in setOf(SettingsRoute.Playback, SettingsRoute.Lyrics, SettingsRoute.SystemPlayback, SettingsRoute.SkylineLyrics, SettingsRoute.FloatingLyrics)
                             SettingsRoute.Storage -> selected == SettingsRoute.Storage
                             SettingsRoute.Developer -> selected in setOf(SettingsRoute.Developer, SettingsRoute.Experimental, SettingsRoute.RemoteConfig, SettingsRoute.About, SettingsRoute.Legal, SettingsRoute.Privacy)
@@ -359,7 +362,7 @@ private fun DesktopSettingsLayout(
                             color = colors.onBackground.copy(alpha = .48f))
                     } else {
                     Text(selected.title, fontSize = 13.sp, fontWeight = FontWeight.SemiBold)
-                    val relatedRoutes = desktopSettingsGroup(selected)
+                    val relatedRoutes = desktopSettingsGroup(selected).filter { it != SettingsRoute.KugouLiteVip || currentSource == MusicSource.KugouLite }
                     if (relatedRoutes.size > 1) {
                         androidx.compose.foundation.layout.FlowRow(
                             Modifier.fillMaxWidth().padding(top = 14.dp),
@@ -389,7 +392,7 @@ private fun DesktopSettingsLayout(
                             Spacer(Modifier.height(20.dp))
                     }
                     Column(Modifier.fillMaxWidth().testTag("settings-page:${selected.name}")) {
-                        SettingsRouteContent(selected, currentSource, onOpenMessages)
+                        SettingsRouteContent(selected, currentSource, onOpenMessages, onOpenServices)
                     }
                     if (selected == SettingsRoute.General) {
                         Spacer(Modifier.height(18.dp))
@@ -463,6 +466,7 @@ private fun SettingsDetail(
     currentSource: MusicSource,
     onSourceSelected: (MusicSource) -> Unit,
     onOpenMessages: () -> Unit,
+    onOpenServices: () -> Unit,
     onBack: () -> Unit,
 ) {
     melox.ui.glass.MeloXPinnedListPage(route.title, onNavigateBack = onBack,
@@ -470,14 +474,14 @@ private fun SettingsDetail(
         modifier = Modifier.testTag("settings-${route.name.lowercase()}")) {
         item(key = "settings-detail:${route.name}") {
           Column {
-            SettingsRouteContent(route, currentSource, onOpenMessages)
+            SettingsRouteContent(route, currentSource, onOpenMessages, onOpenServices)
           }
         }
     }
 }
 
 @Composable
-private fun SettingsRouteContent(route: SettingsRoute, currentSource: MusicSource, onOpenMessages: () -> Unit) {
+private fun SettingsRouteContent(route: SettingsRoute, currentSource: MusicSource, onOpenMessages: () -> Unit, onOpenServices: () -> Unit) {
     when (route) {
         SettingsRoute.General -> GeneralSettings()
         SettingsRoute.Appearance -> AppearanceSettings()
@@ -490,6 +494,7 @@ private fun SettingsRouteContent(route: SettingsRoute, currentSource: MusicSourc
         SettingsRoute.FloatingLyrics -> FloatingLyricsSettings()
         SettingsRoute.Recognition -> RecognitionSettings()
         SettingsRoute.ListenTogether -> ListenTogetherSettings()
+        SettingsRoute.KugouLiteVip -> if (currentSource == MusicSource.KugouLite) KugouLiteVipSettings(onOpenServices)
         SettingsRoute.Storage -> PinnedStorageSettings()
         SettingsRoute.Features -> FeatureSettings()
         SettingsRoute.Messages -> MessagesSettings(onOpenMessages)

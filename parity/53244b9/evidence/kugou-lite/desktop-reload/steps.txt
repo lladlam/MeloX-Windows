@@ -1,0 +1,7 @@
+features:tap@desktop-settings-tab:Features
+reveal-settings:reveal@desktop-settings-subtab:KugouLiteVip
+open-settings:tap@desktop-settings-subtab:KugouLiteVip
+reveal-checkin:reveal@kugou-lite-checkin
+reveal-auto:reveal@kugou-lite-auto
+signed-out:wait@300
+auto-toggle:tap@kugou-lite-auto

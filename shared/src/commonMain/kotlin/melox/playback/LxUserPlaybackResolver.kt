@@ -53,7 +53,7 @@ class LxUserPlaybackResolver {
     private fun resolveAction(track: MusicTrack, action: String): Any? {
         val sourceCode = when (track.id.source) {
             MusicSource.QQMusic -> "tx"
-            MusicSource.Kugou -> "kg"
+            MusicSource.Kugou, MusicSource.KugouLite -> "kg"
             MusicSource.Kuwo -> "kw"
             MusicSource.Netease -> "wy"
             else -> return null
@@ -99,7 +99,7 @@ class LxUserPlaybackResolver {
     internal fun resolve(track: MusicTrack, quality: AudioQualityTier): LxUserPlaybackResult? {
         val sourceCode = when (track.id.source) {
             MusicSource.QQMusic -> "tx"
-            MusicSource.Kugou -> "kg"
+            MusicSource.Kugou, MusicSource.KugouLite -> "kg"
             MusicSource.Kuwo -> "kw"
             MusicSource.Netease -> null
             else -> return null

@@ -37,6 +37,9 @@ object ProviderPlaybackRuntime {
             MusicSource.Kugou -> PlaybackAccountStore.kugouSession().let { session ->
                 listOf(session.userId, session.token, session.vipToken, session.dfid).joinToString("|")
             }
+            MusicSource.KugouLite -> KugouSessionStore.readLite().let { session ->
+                listOf(session.userId, session.token, session.vipToken, session.dfid, session.auth).joinToString("|")
+            }
             MusicSource.AppleMusic -> AppleMusicSessionStore.read().let { session ->
                 listOf(session.storefront).joinToString("|")
             }

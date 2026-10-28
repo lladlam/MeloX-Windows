@@ -30,11 +30,13 @@ import androidx.compose.ui.input.pointer.pointerHoverIcon
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -87,6 +89,7 @@ private val allProviders = listOf(
     LoginProvider("netease", "网易云音乐", Color(0xFFFF2442), "手机号登录 / 本机客户端"),
     LoginProvider("qq", "QQ音乐", Color(0xFF12B7F5), "扫码登录"),
     LoginProvider("kugou", "酷狗音乐", Color(0xFF2CA2F9), "扫码登录"),
+    LoginProvider("kugou_lite", "酷狗概念版", Color(0xFF2CA2F9), "扫码登录"),
     LoginProvider("qishui", "汽水音乐", Color(0xFF00B6BC), "抖音扫码登录"),
     LoginProvider("kuwo", "酷我音乐", Color(0xFFFF6600), "手机号登录"),
     LoginProvider("bilibili", "哔哩哔哩", Color(0xFFFB7299), "WebView登录"),
@@ -157,6 +160,7 @@ private fun LoginTopBar(onBack: () -> Unit) {
                 .align(Alignment.CenterStart)
                 .padding(start = 8.dp)
                 .size(36.dp)
+                .testTag("account-back")
                 .clip(CircleShape)
                 .hoverable(remember { MutableInteractionSource() })
                 .pointerHoverIcon(PointerIcon(Cursor(Cursor.HAND_CURSOR))),
@@ -318,7 +322,7 @@ private fun LoginDialog(
             ) {
                 when (provider.id) {
                     "netease" -> NeteaseLoginForm(state, onLoginSuccess)
-                    "qq", "kugou", "qishui" -> QRCodeLoginForm(provider, state, onLoginSuccess)
+                    "qq", "kugou", "kugou_lite", "qishui" -> QRCodeLoginForm(provider, state, onLoginSuccess)
                     "kuwo" -> PhoneCodeLoginForm(provider, state, onLoginSuccess)
                     "bilibili" -> WebViewLoginForm(provider, state, onLoginSuccess)
                     "spotify" -> OAuthLoginForm(provider, state, onLoginSuccess)
@@ -591,7 +595,7 @@ private fun NeteaseOfficialClientLoginPane(state: LoginScreenState, onLoginSucce
 private fun QRCodeLoginForm(provider: LoginProvider, state: LoginScreenState, onLoginSuccess: (String) -> Unit) {
     when (provider.id) {
         "qq" -> QqQrLoginPane(state, onLoginSuccess)
-        "kugou" -> KugouQrLoginPane(state, onLoginSuccess)
+        "kugou", "kugou_lite" -> KugouQrLoginPane(state, provider.id == "kugou_lite", onLoginSuccess)
         "qishui" -> QishuiQrLoginPane(onLoginSuccess)
         else -> Text(
             text = "该来源没有扫码登录",
@@ -684,15 +688,18 @@ private fun QqQrLoginPane(state: LoginScreenState, onLoginSuccess: (String) -> U
 }
 
 @Composable
-private fun KugouQrLoginPane(state: LoginScreenState, onLoginSuccess: (String) -> Unit) {
+private fun KugouQrLoginPane(state: LoginScreenState, lite: Boolean, onLoginSuccess: (String) -> Unit) {
     var attempt by remember { mutableIntStateOf(0) }
     var qrUrl by remember { mutableStateOf<String?>(null) }
+    var qrImage by remember { mutableStateOf<ImageBitmap?>(null) }
     var statusText by remember { mutableStateOf("正在获取二维码") }
 
     LaunchedEffect(attempt) {
         qrUrl = null
+        qrImage = null
         statusText = "正在获取二维码"
-        val client = KugouLoginClient(sessionProvider = { KugouSessionStore.read() })
+        val client = KugouLoginClient(sessionProvider = { if (lite) KugouSessionStore.readLite() else KugouSessionStore.read() },
+            platform = if (lite) melox.provider.kugou.KugouPlatform.Lite else melox.provider.kugou.KugouPlatform.Standard)
         val session = runCatching {
             withContext(Dispatchers.IO) { client.createQrSession() }
         }.getOrElse { error ->
@@ -701,7 +708,8 @@ private fun KugouQrLoginPane(state: LoginScreenState, onLoginSuccess: (String) -
             return@LaunchedEffect
         }
         qrUrl = session.qrContentUrl
-        statusText = "用酷狗 App 打开此链接"
+        qrImage = runCatching { kugouQrBitmap(session.qrContentUrl) }.getOrNull()
+        statusText = if (lite) "请使用酷狗概念版 App 扫码" else "请使用酷狗 App 扫码"
         while (isActive) {
             delay(2000)
             val result = runCatching { client.checkQrSession(session.key) }.getOrElse { error ->
@@ -717,13 +725,10 @@ private fun KugouQrLoginPane(state: LoginScreenState, onLoginSuccess: (String) -
                     return@LaunchedEffect
                 }
                 is KugouQrLoginState.Authorized -> {
-                    KugouSessionStore.updateLogin(
-                        token = result.token,
-                        userId = result.userId,
-                        vipToken = result.vipToken,
-                        vipType = result.vipType,
-                    )
-                    onLoginSuccess(result.token)
+                    kotlinx.coroutines.currentCoroutineContext().ensureActive()
+                    if (lite) KugouSessionStore.updateLiteLogin(result.token, result.userId, result.vipToken, result.vipType)
+                    else KugouSessionStore.updateLogin(result.token, result.userId, result.vipToken, result.vipType)
+                    onLoginSuccess(result.userId.toString())
                     return@LaunchedEffect
                 }
                 is KugouQrLoginState.Unknown -> statusText = "未知状态 ${result.status}"
@@ -731,7 +736,10 @@ private fun KugouQrLoginPane(state: LoginScreenState, onLoginSuccess: (String) -
         }
     }
 
-    QrStatusColumn(statusText = statusText) {
+    // Reserve the loaded QR/link area while the network request is in flight,
+    // so the dialog's close button does not move beneath the user's pointer.
+    QrStatusColumn(statusText = statusText, minContentHeight = 320.dp) {
+        qrImage?.let { Image(it, if (lite) "酷狗概念版登录二维码" else "酷狗登录二维码", Modifier.size(180.dp).testTag("kugou-login-qr")) }
         qrUrl?.let { url ->
             SelectionContainer {
                 Text(
@@ -744,7 +752,7 @@ private fun KugouQrLoginPane(state: LoginScreenState, onLoginSuccess: (String) -
             }
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                text = "用酷狗 App 打开此链接",
+                text = if (lite) "使用酷狗概念版 App 扫码" else "使用酷狗 App 扫码",
                 color = MeloXColors.TextSecondary,
                 fontFamily = MeloXLanTingProFontFamily,
                 fontSize = 13.sp,
@@ -764,8 +772,17 @@ private fun KugouQrLoginPane(state: LoginScreenState, onLoginSuccess: (String) -
     }
 }
 
+private fun kugouQrBitmap(value: String): ImageBitmap {
+    val size = 480
+    val matrix = com.google.zxing.qrcode.QRCodeWriter().encode(value, com.google.zxing.BarcodeFormat.QR_CODE, size, size)
+    val image = java.awt.image.BufferedImage(size, size, java.awt.image.BufferedImage.TYPE_INT_RGB)
+    for (y in 0 until size) for (x in 0 until size) image.setRGB(x, y, if (matrix[x, y]) 0 else 0xFFFFFF)
+    val bytes = java.io.ByteArrayOutputStream().use { stream -> javax.imageio.ImageIO.write(image, "png", stream); stream.toByteArray() }
+    return Image.makeFromEncoded(bytes).use { it.toComposeImageBitmap() }
+}
+
 @Composable
-private fun QrStatusColumn(statusText: String, content: @Composable ColumnScope.() -> Unit) {
+private fun QrStatusColumn(statusText: String, minContentHeight: Dp = 200.dp, content: @Composable ColumnScope.() -> Unit) {
     Column(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -773,7 +790,7 @@ private fun QrStatusColumn(statusText: String, content: @Composable ColumnScope.
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .heightIn(min = 200.dp)
+                .heightIn(min = minContentHeight)
                 .clip(RoundedCornerShape(12.dp))
                 .background(MeloXColors.SurfaceVariant)
                 .padding(16.dp),

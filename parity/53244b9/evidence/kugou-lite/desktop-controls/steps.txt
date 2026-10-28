@@ -1,0 +1,25 @@
+consent:tap@remote-reject
+features:tap@desktop-settings-tab:Features
+reveal-settings:reveal@desktop-settings-subtab:KugouLiteVip
+open-settings:tap@desktop-settings-subtab:KugouLiteVip
+reveal-checkin:reveal@kugou-lite-checkin
+reveal-auto:reveal@kugou-lite-auto
+signed-out:wait@300
+auto-toggle:tap@kugou-lite-auto
+general:tap@desktop-settings-tab:General
+reveal-services:reveal@settings-open-services
+services:tap@settings-open-services
+source-picker:tap@desktop-service-current-source
+source-standard:tap@settings-option:Kugou Music
+source-picker-standard:tap@desktop-service-current-source
+source-concept:tap@settings-option:Kugou Concept
+source-picker-concept:tap@desktop-service-current-source
+source-close:tap@settings-option:Kugou Concept
+distinct-standard:reveal@desktop-service-login:kugou
+distinct-concept:reveal@desktop-service-login:kugou_lite
+open-login:tap@desktop-service-login:kugou_lite
+close-login:tap@account-dialog-close
+back-services:tap@account-back
+reveal-standard-login:reveal@desktop-service-login:kugou
+open-standard-login:tap@desktop-service-login:kugou
+close-standard-login:tap@account-dialog-close

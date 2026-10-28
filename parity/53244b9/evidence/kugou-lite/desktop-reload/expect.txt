@@ -1,0 +1,3 @@
+open-settings=tag:settings-page:KugouLiteVip
+signed-out=tag:kugou-lite-account,disabled:kugou-lite-checkin,unchecked:kugou-lite-auto
+auto-toggle=checked:kugou-lite-auto

@@ -23,6 +23,7 @@ import org.json.JSONObject
 class KugouDiscoveryClient(
     private val sessionProvider: () -> KugouSession,
     httpClient: OkHttpClient = melox.network.MeloXHttpClient.shared,
+    private val source: MusicSource = MusicSource.Kugou,
 ) {
     private val requests = KugouRequestClient(sessionProvider, httpClient)
 
@@ -30,10 +31,16 @@ class KugouDiscoveryClient(
         val session = sessionProvider()
         if (!session.isLoggedIn) return null
         return MusicAccountSummary(
-            source = MusicSource.Kugou,
+            source = source,
             id = session.userId.toString(),
-            displayName = "酷狗用户 ${session.userId}",
-            subtitle = if (session.vipType > 0) "酷狗会员" else "酷狗音乐",
+            displayName = if (source == MusicSource.KugouLite) "酷狗概念版用户 ${session.userId}" else "酷狗用户 ${session.userId}",
+            subtitle = when {
+                source == MusicSource.KugouLite && session.superVip -> "酷狗概念版超级 VIP"
+                source == MusicSource.KugouLite && session.vipType > 0 -> "酷狗概念版 VIP"
+                source == MusicSource.KugouLite -> "酷狗概念版"
+                session.vipType > 0 -> "酷狗会员"
+                else -> "酷狗音乐"
+            },
         )
     }
 
@@ -199,7 +206,7 @@ class KugouDiscoveryClient(
         )
         if (title.isBlank()) return null
         return MusicPlaylistSummary(
-            id = MusicResourceId(MusicSource.Kugou, id),
+            id = MusicResourceId(source, id),
             title = title,
             artworkUrl = kugouArtworkUrl(item),
             creatorName = firstString(item, "nickname", "nick_name", "username", "author_name")
@@ -219,7 +226,7 @@ class KugouDiscoveryClient(
         val title = firstString(item, "rankname", "rank_name", "name", "title")
         if (title.isBlank()) return null
         return MusicRankingSummary(
-            id = MusicResourceId(MusicSource.Kugou, id),
+            id = MusicResourceId(source, id),
             title = title,
             artworkUrl = kugouArtworkUrl(item),
             subtitle = firstString(item, "update_frequency", "updateFrequency", "intro", "description")
@@ -248,12 +255,12 @@ class KugouDiscoveryClient(
             .ifEmpty { listOf("未知歌手") }
             .map { MusicArtistRef(name = it) }
         return MusicTrack(
-            id = MusicResourceId(MusicSource.Kugou, hash),
+            id = MusicResourceId(source, hash),
             title = title,
             artists = artists,
             album = albumName.takeIf(String::isNotBlank)?.let {
                 MusicAlbumRef(
-                    id = albumId?.let { value -> MusicResourceId(MusicSource.Kugou, value) },
+                    id = albumId?.let { value -> MusicResourceId(source, value) },
                     name = it,
                     artworkUrl = artwork,
                 )

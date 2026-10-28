@@ -17,6 +17,12 @@ data class KugouSession(
     val dev: String,
     val mac: String,
     val webGl: String,
+    val platform: KugouPlatform = KugouPlatform.Standard,
+    val auth: String = "",
+    val vipExpiresAtEpochSeconds: Long = 0L,
+    val superVip: Boolean = false,
+    val vipActive: Boolean = false,
+    val freeListenEligible: Boolean = false,
 ) {
     val isLoggedIn: Boolean
         get() = token.isNotBlank() && userId > 0L
@@ -31,6 +37,7 @@ data class KugouSession(
         if (token.isNotBlank()) put("token", token)
         if (userId > 0L) put("userid", userId.toString())
         if (vipToken.isNotBlank()) put("vip_token", vipToken)
+        if (auth.isNotBlank()) put("auth", auth)
         put("vip_type", vipType.toString())
     }
 }
@@ -42,6 +49,8 @@ data class KugouSession(
 object KugouSessionStore {
     private const val PreferencesName = "melox_kugou_session"
     private const val PlaybackPreferencesName = "melox_kugou_playback_session"
+    private const val LitePreferencesName = "melox_kugou_lite_session"
+    private const val LitePlaybackPreferencesName = "melox_kugou_lite_playback_session"
     private const val Token = "token"
     private const val UserId = "userid"
     private const val VipToken = "vip_token"
@@ -52,9 +61,18 @@ object KugouSessionStore {
     private const val Dev = "dev"
     private const val Mac = "mac"
     private const val WebGl = "webgl"
+    private const val Auth = "auth"
+    private const val VipExpiresAt = "vip_expires_at"
+    private const val SuperVip = "super_vip"
+    private const val VipActive = "vip_active"
+    private const val FreeListen = "free_listen"
 
-    private fun prefs(playback: Boolean) =
-        getPreferences(if (playback) PlaybackPreferencesName else PreferencesName)
+    private fun prefs(playback: Boolean, lite: Boolean = false) = getPreferences(when {
+        lite && playback -> LitePlaybackPreferencesName
+        lite -> LitePreferencesName
+        playback -> PlaybackPreferencesName
+        else -> PreferencesName
+    })
 
     fun read(playback: Boolean = false): KugouSession {
         val preferences = prefs(playback)
@@ -73,6 +91,71 @@ object KugouSessionStore {
             webGl = identity.webGl,
         )
     }
+
+    /** The concept account and its device identity never share standard credentials. */
+    @Synchronized
+    fun readLite(playback: Boolean = false): KugouSession {
+        val preferences = prefs(playback, lite = true)
+        val identity = if (playback) readLite().let { DeviceIdentity(it.guid, it.mid, it.dev, it.mac, it.webGl) }
+            else ensureIdentity(lite = true)
+        return KugouSession(
+            token = preferences.getString(Token, "").orEmpty(),
+            userId = preferences.getLong(UserId, 0L),
+            vipToken = preferences.getString(VipToken, "").orEmpty(),
+            vipType = preferences.getInt(VipType, 0),
+            dfid = preferences.getString(Dfid, "-").orEmpty().ifBlank { "-" },
+            mid = identity.mid, guid = identity.guid, dev = identity.dev, mac = identity.mac, webGl = identity.webGl,
+            platform = KugouPlatform.Lite, auth = preferences.getString(Auth, "").orEmpty(),
+            vipExpiresAtEpochSeconds = preferences.getLong(VipExpiresAt, 0L),
+            superVip = preferences.getBoolean(SuperVip, false),
+            vipActive = preferences.getBoolean(VipActive, false),
+            freeListenEligible = preferences.getBoolean(FreeListen, false),
+        )
+    }
+
+    @Synchronized
+    fun updateLiteLogin(token: String, userId: Long, vipToken: String = "", vipType: Int = 0, dfid: String? = null,
+                        playback: Boolean = false): KugouSession {
+        require(token.isNotBlank() && userId > 0L)
+        val preferences = prefs(playback, lite = true)
+        // A newly authenticated session must not inherit another login's cached authorization or entitlements.
+        preferences.putValues(mapOf(Token to token, UserId to userId.toString(), VipToken to vipToken,
+            VipType to vipType.toString(), Auth to null, VipExpiresAt to null, SuperVip to null, VipActive to null,
+            FreeListen to null) + (dfid?.takeIf(String::isNotBlank)?.let { mapOf(Dfid to it) } ?: emptyMap()))
+        return readLite(playback)
+    }
+
+    /** Compare and update under the same lock as login/logout to reject late responses. */
+    @Synchronized
+    fun updateLiteEntitlements(expected: KugouSession? = null, auth: String? = null, vipType: Int? = null, vipExpiresAtEpochSeconds: Long? = null,
+                               superVip: Boolean? = null, vipActive: Boolean? = null, freeListenEligible: Boolean? = null,
+                               playback: Boolean = false): Boolean {
+        if (expected != null && !sameLiteLogin(expected, readLite(playback))) return false
+        val values = buildMap<String, String?> {
+            auth?.let { put(Auth, it) }; vipType?.let { put(VipType, it.toString()) }
+            vipExpiresAtEpochSeconds?.let { put(VipExpiresAt, it.toString()) }
+            superVip?.let { put(SuperVip, it.toString()) }; vipActive?.let { put(VipActive, it.toString()) }
+            freeListenEligible?.let { put(FreeListen, it.toString()) }
+        }
+        if (values.isNotEmpty()) prefs(playback, lite = true).putValues(values)
+        return true
+    }
+
+    @Synchronized
+    fun updateLiteDfid(value: String, expected: KugouSession? = null): Boolean {
+        if (expected != null && !sameLiteLogin(expected, readLite())) return false
+        if (value.isNotBlank()) prefs(false, lite = true).putString(Dfid, value)
+        return true
+    }
+
+    @Synchronized
+    fun clearLiteLogin(playback: Boolean = false) {
+        prefs(playback, lite = true).putValues(listOf(Token, UserId, VipToken, VipType, Auth, VipExpiresAt,
+            SuperVip, VipActive, FreeListen).associateWith { null })
+    }
+
+    private fun sameLiteLogin(a: KugouSession, b: KugouSession) =
+        a.platform == b.platform && a.userId == b.userId && a.token == b.token && a.guid == b.guid
 
     fun updateLogin(
         token: String,
@@ -106,10 +189,11 @@ object KugouSessionStore {
         }
     }
 
-    private fun ensureIdentity(): DeviceIdentity {
-        val preferences = prefs(false)
+    @Synchronized
+    private fun ensureIdentity(lite: Boolean = false): DeviceIdentity {
+        val preferences = prefs(false, lite)
         val existingGuid = preferences.getString(Guid, null)
-        val guid = existingGuid?.takeIf(String::isNotBlank) ?: md5Hex(UUID.randomUUID().toString())
+        val guid = existingGuid?.takeIf(String::isNotBlank) ?: if (lite) UUID.randomUUID().toString() else md5Hex(UUID.randomUUID().toString())
         val mid = preferences.getString(Mid, null)?.takeIf(String::isNotBlank)
             ?: calculateMid(guid)
         val dev = preferences.getString(Dev, null)?.takeIf(String::isNotBlank)
@@ -118,13 +202,9 @@ object KugouSessionStore {
             ?: "02:00:00:00:00:00"
         val webGl = preferences.getString(WebGl, null)?.takeIf(String::isNotBlank)
             ?: BigInteger(64, SecureRandom()).toString()
-        preferences.apply {
-            putString(Guid, guid)
-            putString(Mid, mid)
-            putString(Dev, dev)
-            putString(Mac, mac)
-            putString(WebGl, webGl)
-        }
+        val identity = mapOf(Guid to guid, Mid to mid, Dev to dev, Mac to mac, WebGl to webGl)
+        val missing = identity.filter { (key, value) -> preferences.getString(key, null) != value }
+        if (missing.isNotEmpty()) preferences.putValues(missing)
         return DeviceIdentity(guid, mid, dev, mac, webGl)
     }
 

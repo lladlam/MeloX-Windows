@@ -15,6 +15,7 @@ import org.json.JSONObject
 class KugouRankingClient(
     private val sessionProvider: () -> KugouSession,
     httpClient: OkHttpClient = melox.network.MeloXHttpClient.shared,
+    private val source: MusicSource = MusicSource.Kugou,
 ) {
     private val requests = KugouRequestClient(sessionProvider, httpClient)
 
@@ -23,7 +24,7 @@ class KugouRankingClient(
         page: Int = 1,
         pageSize: Int = 100,
     ): MusicPage<MusicTrack> {
-        require(ranking.id.source == MusicSource.Kugou)
+        require(ranking.id.source == source)
         val rankId = ranking.id.value.toLongOrNull()
             ?: error("酷狗排行榜 ID 无效：${ranking.id.value}")
         val safePage = page.coerceAtLeast(1)
@@ -84,12 +85,12 @@ class KugouRankingClient(
             .ifEmpty { listOf("未知歌手") }
             .map { MusicArtistRef(name = it) }
         return MusicTrack(
-            id = MusicResourceId(MusicSource.Kugou, hash),
+            id = MusicResourceId(source, hash),
             title = title,
             artists = artists,
             album = albumName.takeIf(String::isNotBlank)?.let {
                 MusicAlbumRef(
-                    id = albumId?.let { value -> MusicResourceId(MusicSource.Kugou, value) },
+                    id = albumId?.let { value -> MusicResourceId(source, value) },
                     name = it,
                     artworkUrl = artwork,
                 )

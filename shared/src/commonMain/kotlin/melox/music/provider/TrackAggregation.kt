@@ -126,7 +126,7 @@ object TrackAggregation {
         val sourceBonus = when (track.id.source) {
             MusicSource.QQMusic -> 2
             MusicSource.Netease -> 1
-            MusicSource.Kugou -> 1
+            MusicSource.Kugou, MusicSource.KugouLite -> 1
             MusicSource.Qishui -> 0
             MusicSource.Kuwo -> 1
             MusicSource.AppleMusic -> 3

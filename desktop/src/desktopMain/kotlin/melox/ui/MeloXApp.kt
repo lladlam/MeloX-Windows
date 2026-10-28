@@ -189,6 +189,12 @@ fun MeloXApp(onExit: () -> Unit = { kotlin.system.exitProcess(0) }) {
         PlaybackCommands.restoreLastQueue()
         melox.playback.MeloXSleepTimer.initialize()
         melox.playback.MeloXListenTogetherCoordinator.ensureStarted()
+        // Android attempts the two concept rewards once per day when the app starts.
+        if (MeloXSettingsPreferences.boolean("onboarding_completed", false)) launch(kotlinx.coroutines.Dispatchers.IO) {
+            try { melox.provider.kugou.KugouLiteDailyCheckIn.run() }
+            catch (cancelled: kotlinx.coroutines.CancellationException) { throw cancelled }
+            catch (error: Exception) { melox.platform.logWarn("KugouLite", "Automatic check-in failed: ${error::class.simpleName}") }
+        }
         val restored = if (MeloXSettingsRuntime.rememberLastTab) {
             MeloXSettingsPreferences.string("general_last_tab", MeloXSettingsRuntime.defaultTab)
         } else {

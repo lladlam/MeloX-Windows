@@ -28,6 +28,7 @@ class ProviderAccountManager(
         }
         MusicSource.QQMusic -> QQMusicSessionStore.read().let { AccountState(source, it.isLoggedIn, it.uin.takeIf(String::isNotBlank)) }
         MusicSource.Kugou -> KugouSessionStore.read().let { AccountState(source, it.isLoggedIn, it.userId.takeIf { it > 0L }?.toString()) }
+        MusicSource.KugouLite -> KugouSessionStore.readLite().let { AccountState(source, it.isLoggedIn, it.userId.takeIf { it > 0L }?.toString()) }
         MusicSource.Kuwo -> KuwoSessionStore.read().let { AccountState(source, it.isLoggedIn, it.userId.takeIf(String::isNotBlank)) }
         MusicSource.AppleMusic -> AppleMusicSessionStore.read().let { AccountState(source, it.isConfigured, it.storefront.ifBlank { null }) }
         MusicSource.Bilibili -> BilibiliSessionStore.read().let { AccountState(source, it.isLoggedIn, it.userId.takeIf(String::isNotBlank)) }
@@ -45,6 +46,7 @@ class ProviderAccountManager(
             MusicSource.Netease -> (neteaseSessionStore ?: NeteaseSessionStore()).clear()
             MusicSource.QQMusic -> QQMusicSessionStore.clear(clearWebCookies = true)
             MusicSource.Kugou -> KugouSessionStore.clearLogin()
+            MusicSource.KugouLite -> KugouSessionStore.clearLiteLogin()
             MusicSource.Kuwo -> KuwoSessionStore.clear()
             MusicSource.AppleMusic -> AppleMusicSessionStore.clear()
             MusicSource.Bilibili -> BilibiliSessionStore.clear(clearWebCookies = true)

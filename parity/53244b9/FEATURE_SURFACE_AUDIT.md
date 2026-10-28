@@ -34,9 +34,9 @@
 | 云盘 | 手机 Cloud、电脑 library pages，真实上传接口 | 原生文件选择器、实际上传／删除与账号切换 |
 | 播客 | 手机 Podcasts、DesktopPodcasts | 收藏与节目详情实机、封面共享动画 |
 | 私信 | 手机 Messages、DesktopMessages，真实联系人与发信接口 | 头像／未读／分组／刷新和真实发信验收 |
-| 来源选择／账号 | 两套音乐服务页、共享登录表单；汽水 QR 已有真实上游回放 | 概念版来源缺失；Apple／酷我隐藏策略与当前 Android 对照；所有真实账号验收 |
+| 来源选择／账号 | 两套音乐服务页、共享登录表单；汽水 QR 已有真实上游回放；工作区接入独立概念版来源和账号 | 概念版双布局回放及发行待验证；Apple／酷我隐藏策略与当前 Android 对照；真实账号验收 |
 | YouTube Music | Cookie／visitor／data-sync／page／AuthUser 上下文、地区归一化、验证后频道切换、过期状态及游标分页，见 YOUTUBE_SESSION_UPDATE.md | 真实账号／多频道／私人收藏与退出重登实机；上游普通目录／写请求的全局会话并发边界 |
-| 酷狗概念版 | Windows 当前为标准酷狗 provider | **独立 KugouLite provider／账号隔离／真实双奖励接口／每日去重重试／签到页全部缺失**，不能把标准酷狗改名冒充 |
+| 酷狗概念版 | 独立 KugouLite provider、隔离账号与设备标识、独立二维码、真实目录／播放解析与双奖励请求；两套设置入口、每日状态及双布局回放见 KUGOU_LITE_UPDATE.md | Windows 发行待验证；真实扫码、私人收藏、完整播放和每日领取须真实账号实机验收，HTTP fixture 不代表线上成功 |
 | 汽水 | `ec5753a`：真实协议、双布局、账号 QR、游标、歌词与试听识别 | 用户真实扫码确认、登录态搜索与完整播放 |
 | Bilibili | `4c94f7e`：收藏的他人列表／合集、分页与单视频隔离 | 用户私人列表；WBI 播放及音质细节与最新 Android 持续对照 |
 | 播放回退 | `566d099`：native → 内置串行严格完整匹配 → CHKSZ／LX 调用入口 | **LX 自定义 JS 运行时仍是空实现**：load 无操作、callAction 恒 null、close 无操作，不能将调用入口记为真实脚本执行已完成；概念版候选、真实账号／权限与网络验收仍待补齐 |
@@ -53,7 +53,7 @@
 | 云控／主题／规则 | 当前签名平台熔断与基础配置已实现 | 新 schema 的文案／主题／规则消费者与受限 QuickJS 脚本未完成 |
 | 多语言 | 本轮补实际语言选择；已有 pinned 资源保持原文 | 全量最新资源导出、硬编码文案、土耳其语、桌面全部 Locale 覆盖 |
 | Windows 平台集成 | 布局切换即时保存、托盘、标题栏、键鼠已有实现／部分原生证据 | 用户触屏／触摸键盘、DRM、麦克风、长时 RSS 及 DPAPI 实机验收 |
-| CLI 模式（实时新增） | Windows 新增两套设置入口、本机 CLI、真实播放／搜索及 Windows DPAPI 凭据保护；双布局实际输入、独立客户端和重启回放见 WINDOWS_CLI_UPDATE.md | Windows runner 的 DPAPI／Python 实际互通与包含脚本的新发行独立下载核验仍待完成；软件 PCM 不代表物理听音 |
+| CLI 模式（实时新增） | Windows 新增两套设置入口、本机 CLI、真实播放／搜索及 Windows DPAPI 凭据保护；双布局实际输入、独立客户端和重启回放见 WINDOWS_CLI_UPDATE.md；Windows runner 的 DPAPI／Python 互通与发行独立核验已通过 | 软件 PCM 不代表物理听音 |
 
 ### 继续追查“保存了但没有消费者”的选项
 
@@ -92,3 +92,9 @@ Android 后续将第三方源网络隔离与 LX 设备测试提交为 `c27b493`�
 32 域源码索引重新生成；设置 key 差分仍仅为一次性迁移标记，六处空点击仍是此前已核查的输入屏蔽。复核确认 `performanceOverlayEnabled` 目前只有 shared 定义／偏好读写，没有 desktop 显示消费者；FlowingLight 仍以单 artworkUrl 提取，未接 AutoMix 双封面调色板。KugouLite／CLI／YouTube authUser 等缺口仍保留，不能以设置 key 齐全判为功能已齐。
 
 上一批 **`d54772721bd777d12e7d1ca6a20bff4f9f069c9e`** 的 Windows CI `40325542270` 成功，新增统一收藏回放 step 成功。完整下载独立核验 ZIP **339799993 bytes／357 entries**，源码 stamp、全条目 CRC、固定资源与 PE 解码器检查通过；SHA-256 `28d940af34a0118243a1a793825122a70db1d649af57855218aa4a429324bb45`。证据 `evidence/windows-download-40325542270/`。私人账号、跨机互联和物理听音边界仍按上表保留。
+
+## 2026-10-28 后续发行与 Android 增量
+
+Windows CI `40622524147`（`992c86a`）、`40625506982`（`c88ba0c`）和 `40630160917`（`72dd374`）均成功，三份 ZIP 完整下载后的独立核验均通过：第一份 **340014246 bytes／357 条目**，SHA-256 `3bbc3fb5d289867deff5615d0bcf7f2f29958207d2532af659ca442f74e108a8`；第二份 **340147200 bytes／357 条目**，SHA-256 `6d19bbb396dfac09ea0ef78f517c3ffda22772681cf13d2d8baa23b34889833a`；第三份 **340183253 bytes／359 条目**，SHA-256 `df72a79107fbddd3ca1c3a3d0f263bb0f5cc07e12a4f62bb395fc92af6e8047e`。均核对 ZIP／内层 JAR CRC、版本戳、固定资源、PE 解码器和实际 EXE 图标；第三份 CLI 脚本与说明亦逐字节匹配对应提交。证据在 `evidence/windows-download-40622524147/`、`evidence/windows-download-40625506982/` 和 `evidence/windows-download-40630160917/`。
+
+Android `7c17c00` 又调整 LX 脚本宿主契约：`musicInfo` 顶层提供 QQ 的 `strMediaMid`／`albumMid`、酷狗的 `hash`／`albumId`、`types` 等字段；HTTP 响应头扁平化，并调整脚本事件、缓冲和加密桥。当前 Windows LX 运行时仍为空，且无脚本导入管理入口；这些 Android 增量已审阅，不能将调用链或测试源码当作 Windows 上的脚本执行证据。

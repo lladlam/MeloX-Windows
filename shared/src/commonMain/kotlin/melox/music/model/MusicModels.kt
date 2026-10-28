@@ -8,6 +8,7 @@ enum class MusicSource(
     Netease("netease", "网易云音乐"),
     QQMusic("qq_music", "QQ音乐"),
     Kugou("kugou", "酷狗音乐"),
+    KugouLite("kugou_lite", "酷狗概念版"),
     Qishui("qishui", "汽水音乐"),
     Kuwo("kuwo", "酷我音乐"),
     AppleMusic("apple_music", "Apple Music"),

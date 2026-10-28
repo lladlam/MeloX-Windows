@@ -174,6 +174,7 @@ object MusicExperiences {
         MusicSource.Netease -> netease
         MusicSource.QQMusic -> qqMusic
         MusicSource.Kugou -> kugou
+        MusicSource.KugouLite -> kugou.copy(source = MusicSource.KugouLite)
         MusicSource.Kuwo -> kuwo
         MusicSource.AppleMusic -> appleMusic
         MusicSource.Bilibili -> bilibili

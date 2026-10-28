@@ -238,6 +238,16 @@ jobs:
             python tools/capture_youtube_login.py $layout "$pwd/desktop/build/parity/youtube-login-$layout-home" "desktop/build/parity/youtube-login-$layout"
             if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           }
+      - name: Replay distinct Kugou accounts and concept check-in settings
+        shell: pwsh
+        run: |
+          foreach ($layout in @("mobile", "desktop")) {
+            $homeDir = "$pwd/desktop/build/parity/kugou-lite-$layout-home"
+            foreach ($mode in @("controls", "reload")) {
+              python tools/capture_kugou_lite.py $layout $mode $homeDir "desktop/build/parity/kugou-lite-$layout-$mode"
+              if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+            }
+          }
       - name: Replay localized sponsor list in both layouts and Desktop About
         shell: pwsh
         run: |
@@ -534,6 +544,11 @@ jobs:
             desktop/build/parity/youtube-login-*/*.txt
             desktop/build/parity/youtube-login-*/*.png
             desktop/build/parity/youtube-login-*/gradle.log
+            desktop/build/parity/kugou-lite-*/capture.json
+            desktop/build/parity/kugou-lite-*/steps.txt
+            desktop/build/parity/kugou-lite-*/expect.txt
+            desktop/build/parity/kugou-lite-*/arguments.txt
+            desktop/build/parity/kugou-lite-*/gradle.log
             desktop/build/parity/cli-*/*.json
             desktop/build/parity/cli-*/*.txt
             desktop/build/parity/cli-*/*.png

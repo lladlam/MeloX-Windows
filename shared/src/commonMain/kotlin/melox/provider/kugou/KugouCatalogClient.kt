@@ -26,6 +26,7 @@ import org.json.JSONObject
 internal class KugouCatalogClient(
     private val sessionProvider: () -> KugouSession,
     httpClient: OkHttpClient = melox.network.MeloXHttpClient.shared,
+    private val source: MusicSource = MusicSource.Kugou,
 ) {
     private val requests = KugouRequestClient(sessionProvider, httpClient)
 
@@ -60,7 +61,7 @@ internal class KugouCatalogClient(
     }
 
     suspend fun albumDetail(album: MusicAlbumSummary, page: Int, pageSize: Int): MusicAlbumDetail {
-        require(album.id.source == MusicSource.Kugou)
+        require(album.id.source == source)
         val safePage = safePage(page)
         val safeSize = pageSize.coerceIn(1, 200)
         val headers = mapOf("x-router" to "openapi.kugou.com", "kg-tid" to "255")
@@ -101,7 +102,7 @@ internal class KugouCatalogClient(
     }
 
     suspend fun artistDetail(artist: MusicArtistSummary, page: Int, pageSize: Int): MusicArtistDetail {
-        require(artist.id.source == MusicSource.Kugou)
+        require(artist.id.source == source)
         val safePage = safePage(page)
         val safeSize = pageSize.coerceIn(1, 200)
         val detail = runCatching {
@@ -177,7 +178,7 @@ internal class KugouCatalogClient(
             .ifBlank { firstLong(item, "specialid", "special_id", "id").takeIf { it > 0 }?.toString().orEmpty() }
         if (id.isBlank()) return null
         return MusicPlaylistSummary(
-            id = MusicResourceId(MusicSource.Kugou, id),
+            id = MusicResourceId(source, id),
             title = firstString(item, "specialname", "special_name", "name", "title").ifBlank { "酷狗歌单" },
             artworkUrl = kugouArtworkUrl(item),
             creatorName = firstString(item, "nickname", "author_name", "username", "creator").takeIf(String::isNotBlank),
@@ -194,13 +195,13 @@ internal class KugouCatalogClient(
         val artistName = firstString(item, "author_name", "singername", "singer_name", "artist_name")
         val artistId = firstString(item, "author_id", "singer_id", "artist_id")
         return MusicAlbumSummary(
-            id = MusicResourceId(MusicSource.Kugou, id),
+            id = MusicResourceId(source, id),
             title = firstString(item, "album_name", "albumname", "name", "title").ifBlank { "酷狗专辑" },
             artworkUrl = kugouArtworkUrl(item),
             artists = artistName.takeIf(String::isNotBlank)?.let {
                 listOf(
                     MusicArtistRef(
-                        id = artistId.takeIf(String::isNotBlank)?.let { value -> MusicResourceId(MusicSource.Kugou, value) },
+                        id = artistId.takeIf(String::isNotBlank)?.let { value -> MusicResourceId(source, value) },
                         name = it,
                     ),
                 )
@@ -217,7 +218,7 @@ internal class KugouCatalogClient(
         val name = firstString(item, "author_name", "singername", "singer_name", "name", "title")
         if (name.isBlank()) return null
         return MusicArtistSummary(
-            id = MusicResourceId(MusicSource.Kugou, id),
+            id = MusicResourceId(source, id),
             name = name,
             artworkUrl = kugouArtworkUrl(item),
             description = firstString(item, "intro", "desc", "description").takeIf(String::isNotBlank),
@@ -247,12 +248,12 @@ internal class KugouCatalogClient(
         val albumAudioId = kugouFirstLong(item, "album_audio_id", "MixSongID", "mixsongid", "AlbumAudioID", "audio_id", "audioid")
             .takeIf { it > 0 }
         return MusicTrack(
-            id = MusicResourceId(MusicSource.Kugou, hash),
+            id = MusicResourceId(source, hash),
             title = title,
             artists = artists,
             album = albumName.takeIf(String::isNotBlank)?.let {
                 MusicAlbumRef(
-                    id = albumId?.let { value -> MusicResourceId(MusicSource.Kugou, value) },
+                    id = albumId?.let { value -> MusicResourceId(source, value) },
                     name = it,
                     artworkUrl = artwork,
                 )

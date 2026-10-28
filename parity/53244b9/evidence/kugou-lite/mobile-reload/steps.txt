@@ -1,0 +1,6 @@
+reveal-settings:reveal@settings-open-kugoulitevip
+open-settings:tap@settings-open-kugoulitevip
+reveal-checkin:reveal@kugou-lite-checkin
+reveal-auto:reveal@kugou-lite-auto
+signed-out:wait@300
+auto-toggle:tap@kugou-lite-auto

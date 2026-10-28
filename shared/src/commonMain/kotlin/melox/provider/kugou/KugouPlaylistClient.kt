@@ -15,6 +15,7 @@ import org.json.JSONObject
 class KugouPlaylistClient(
     private val sessionProvider: () -> KugouSession,
     httpClient: OkHttpClient = melox.network.MeloXHttpClient.shared,
+    private val source: MusicSource = MusicSource.Kugou,
 ) {
     private val requests = KugouRequestClient(sessionProvider, httpClient)
 
@@ -23,7 +24,7 @@ class KugouPlaylistClient(
         page: Int = 1,
         pageSize: Int = 100,
     ): MusicPlaylistDetail {
-        require(playlist.id.source == MusicSource.Kugou)
+        require(playlist.id.source == source)
         val safePage = page.coerceAtLeast(1)
         val safeSize = pageSize.coerceIn(1, 200)
         val session = sessionProvider()
@@ -100,7 +101,7 @@ class KugouPlaylistClient(
         val title = firstString(item, "specialname", "special_name", "listname", "name", "title")
         if (title.isBlank()) return null
         return MusicPlaylistSummary(
-            id = MusicResourceId(MusicSource.Kugou, id),
+            id = MusicResourceId(source, id),
             title = title,
             artworkUrl = kugouArtworkUrl(item),
             creatorName = firstString(item, "nickname", "username", "author_name").takeIf(String::isNotBlank),
@@ -130,12 +131,12 @@ class KugouPlaylistClient(
             .ifEmpty { listOf("未知歌手") }
             .map { MusicArtistRef(name = it) }
         return MusicTrack(
-            id = MusicResourceId(MusicSource.Kugou, hash),
+            id = MusicResourceId(source, hash),
             title = title,
             artists = artists,
             album = albumName.takeIf(String::isNotBlank)?.let {
                 MusicAlbumRef(
-                    id = albumId?.let { value -> MusicResourceId(MusicSource.Kugou, value) },
+                    id = albumId?.let { value -> MusicResourceId(source, value) },
                     name = it,
                     artworkUrl = artwork,
                 )

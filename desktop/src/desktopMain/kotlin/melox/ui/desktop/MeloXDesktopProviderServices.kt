@@ -30,6 +30,7 @@ private val desktopServiceProviders = listOf(
     DesktopServiceProvider("netease", "NetEase Cloud Music", Color(0xFFFF2442)),
     DesktopServiceProvider("qq", "QQ Music", Color(0xFF12B7F5)),
     DesktopServiceProvider("kugou", "Kugou Music", Color(0xFF2CA2F9)),
+    DesktopServiceProvider("kugou_lite", "Kugou Concept", Color(0xFF2CA2F9)),
     DesktopServiceProvider("qishui", "Qishui Music", Color(0xFF00B6BC)),
     DesktopServiceProvider("kuwo", "Kuwo Music", Color(0xFFFF6600)),
     DesktopServiceProvider("bilibili", "Bilibili", Color(0xFFFB7299)),
@@ -44,6 +45,7 @@ private fun DesktopServiceProvider.source(): MusicSource = when (id) {
     "netease" -> MusicSource.Netease
     "qq" -> MusicSource.QQMusic
     "kugou" -> MusicSource.Kugou
+    "kugou_lite" -> MusicSource.KugouLite
     "qishui" -> MusicSource.Qishui
     "kuwo" -> MusicSource.Kuwo
     "bilibili" -> MusicSource.Bilibili

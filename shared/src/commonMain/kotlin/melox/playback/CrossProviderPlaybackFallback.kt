@@ -164,6 +164,7 @@ class CrossProviderPlaybackFallbackResolver(
             MusicSource.Netease,
             MusicSource.QQMusic,
             MusicSource.Kugou,
+            MusicSource.KugouLite,
             MusicSource.Qishui,
             MusicSource.Kuwo,
             MusicSource.Bilibili,

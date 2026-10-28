@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="KugouLiteProtocolTest[desktop]" tests="8" skipped="0" failures="0" errors="0" timestamp="2026-10-28T08:10:59.561Z" hostname="lladlam-arch" time="0.625">
+  <properties/>
+  <testcase name="rewardRequestsRecognizeAlreadyClaimedAndRetryOnlyUnfinishedDays[desktop]" classname="melox.provider.kugou.KugouLiteProtocolTest" time="0.237"/>
+  <testcase name="standardCredentialsCannotBeSentByConceptProvider[desktop]" classname="melox.provider.kugou.KugouLiteProtocolTest" time="0.003"/>
+  <testcase name="conceptQrUsesConceptAppIdAndDoesNotChangeStandardQr[desktop]" classname="melox.provider.kugou.KugouLiteProtocolTest" time="0.019"/>
+  <testcase name="accountStoresKeepIdentitiesAndCredentialsIndependent[desktop]" classname="melox.provider.kugou.KugouLiteProtocolTest" time="0.309"/>
+  <testcase name="separateSourcesRejectCrossClientCollectionsAndRespectPreview[desktop]" classname="melox.provider.kugou.KugouLiteProtocolTest" time="0.036"/>
+  <testcase name="conceptSearchUsesItsOwnIdentityAndRetainsNativeTrackMetadata[desktop]" classname="melox.provider.kugou.KugouLiteProtocolTest" time="0.008"/>
+  <testcase name="vipCacheIsAccountSpecificAndRejectsLateAccountResults[desktop]" classname="melox.provider.kugou.KugouLiteProtocolTest" time="0.006"/>
+  <testcase name="rewardStopsBeforeSecondRequestWhenAccountChanges[desktop]" classname="melox.provider.kugou.KugouLiteProtocolTest" time="0.003"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
