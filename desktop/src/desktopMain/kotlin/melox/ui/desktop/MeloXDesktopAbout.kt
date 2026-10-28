@@ -17,6 +17,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import melox.network.MeloXGitHubRouting
+import melox.ui.screens.aboutSponsorRows
+import melox.ui.screens.aboutSponsorString
 import okhttp3.Request
 import org.json.JSONArray
 import org.json.JSONObject
@@ -32,6 +34,7 @@ internal fun MeloXDesktopAbout() {
     var checking by remember { mutableStateOf(false) }
     var message by remember { mutableStateOf<Pair<String, String>?>(null) }
     var releaseUrl by remember { mutableStateOf<String?>(null) }
+    var showSponsors by remember { mutableStateOf(false) }
     fun browse(url: String) {
         runCatching { java.awt.Desktop.getDesktop().browse(java.net.URI(url)) }
             .onFailure { message = "ui.about.update_check_failed.title" to (it.message ?: desktopString("ui.error.unknown")) }
@@ -43,6 +46,8 @@ internal fun MeloXDesktopAbout() {
             Text("MeloX", fontSize = 34.sp, fontWeight = FontWeight.SemiBold)
             Text(desktopFormat("ui.desktop.about.version_build", version, commit), Modifier.padding(top = 10.dp), fontSize = 17.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
             Text(desktopPlatformString("about_developer"), Modifier.padding(top = 6.dp), color = MaterialTheme.colorScheme.onSurfaceVariant)
+            TextButton(onClick = { showSponsors = true }, modifier = Modifier.testTag("desktop-about-sponsors"),
+                contentPadding = PaddingValues(0.dp)) { Text(aboutSponsorString("sponsors_title"), fontSize = 12.sp) }
             Spacer(Modifier.weight(1f))
             Text(String.format(desktopPlatformString("about_copyright"), java.time.Year.now().value), color = MaterialTheme.colorScheme.onSurfaceVariant)
             Spacer(Modifier.height(14.dp))
@@ -70,6 +75,9 @@ internal fun MeloXDesktopAbout() {
     message?.let { (title, text) -> DesktopMessageDialog(title, text, { message = null; releaseUrl = null },
         confirmKey = if (releaseUrl == null) "ui.common.ok" else "ui.about.open_release_page",
         onConfirm = releaseUrl?.let { url -> { browse(url); message = null; releaseUrl = null } }) }
+    if (showSponsors) DesktopTextDialog(aboutSponsorString("sponsors_title"),
+        aboutSponsorRows().joinToString("\n") { (name, amount) -> "$name  ·  $amount" } + "\n\n" + aboutSponsorString("sponsors_note"),
+        onDismiss = { showSponsors = false })
 }
 
 private suspend fun desktopLatestRelease(): JSONObject = withContext(Dispatchers.IO) {

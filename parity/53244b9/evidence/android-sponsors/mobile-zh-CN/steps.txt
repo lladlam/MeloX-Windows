@@ -1,0 +1,4 @@
+consent:tap@remote-reject
+find-about:reveal@settings-open-about
+open-about:tap@settings-open-about
+sponsors:reveal@about-sponsors

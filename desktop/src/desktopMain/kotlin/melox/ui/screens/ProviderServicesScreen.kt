@@ -11,6 +11,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -269,6 +270,7 @@ private fun ProviderRow(
             Surface(
                 modifier = Modifier
                     .clip(RoundedCornerShape(16.dp))
+                    .testTag("provider-login-${provider.id}")
                     .clickable {
                         if (isLoggedIn) onLogoutClick() else onLoginClick()
                     }
@@ -348,6 +350,7 @@ fun ProviderServicesScreen(navState: MeloXNavState, currentSource: MusicSource =
         return
     }
     val state = remember { ServiceState() }
+    val youtubeRevision by melox.provider.youtubemusic.YouTubeSessionStore.revision.collectAsState()
     val visibleProviders = allProviders.filter { it.musicSource() in MusicProviderSelectionStore.visibleSources() }
 
     Column(
@@ -371,16 +374,28 @@ fun ProviderServicesScreen(navState: MeloXNavState, currentSource: MusicSource =
                 ) {
                     visibleProviders.forEachIndexed { index, provider ->
                         val source = provider.musicSource()
+                        val youtubeSession = if (source == MusicSource.YouTubeMusic) remember(youtubeRevision) {
+                            melox.provider.youtubemusic.YouTubeSessionStore.read()
+                        } else null
                         Column {
                             ProviderRow(
                                 provider = provider,
                                 isEnabled = state.isEnabled(source),
-                                isLoggedIn = state.isLoggedIn(source),
-                                username = state.username(source),
+                                isLoggedIn = youtubeSession?.isLoggedIn ?: state.isLoggedIn(source),
+                                username = youtubeSession?.accountName ?: state.username(source),
                                 onToggle = { state.setEnabled(source, it) },
-                                onLoginClick = { navState.navigateTo(Route.Login) },
+                                onLoginClick = {
+                                    if (source == MusicSource.YouTubeMusic) melox.ui.navigation.MeloXLoginRequestBus.request(provider.id)
+                                    navState.navigateTo(Route.Login)
+                                },
                                 onLogoutClick = { state.logout(source) },
                             )
+                            if (source == MusicSource.YouTubeMusic && youtubeSession?.isLoggedIn == true) {
+                                YouTubeAccountControls(onRelogin = {
+                                    melox.ui.navigation.MeloXLoginRequestBus.request(provider.id)
+                                    navState.navigateTo(Route.Login)
+                                })
+                            }
                             if (index < visibleProviders.size - 1) {
                                 HorizontalDivider(
                                     modifier = Modifier.padding(start = 72.dp),

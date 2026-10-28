@@ -86,6 +86,12 @@ def main():
     if has_branding:
         branding = manifest(branding_path)
         expected.update({name.removeprefix('desktop/src/main/resources/'): digest for name, digest in branding['resources'].items()})
+    sponsors_path = 'parity/53244b9/evidence/android-sponsors/source.json'
+    has_sponsors = bool(subprocess.check_output(['git', 'ls-tree', '--name-only', args.source_revision, '--', sponsors_path], cwd=repo).strip()) if args.source_revision else (repo / sponsors_path).is_file()
+    if has_sponsors:
+        sponsors = manifest(sponsors_path)
+        assert sponsors['verified_against_pure_git_blob_and_working_tree']
+        expected.update({name: value['sha256'] for name, value in sponsors['resources'].items()})
     records = []
     archive = zipfile.ZipFile(io.BytesIO(packaged_bytes(args.artifact))) if args.artifact else None
     try:

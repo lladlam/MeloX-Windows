@@ -82,6 +82,7 @@ internal fun MeloXDesktopCollectionDetail(
     groupsByDisc: Boolean = false,
     onRetry: () -> Unit,
     onSong: (SearchSong) -> Unit,
+    onIndexedSong: ((SearchSong, Int) -> Unit)? = null,
     onMore: ((SearchSong) -> Unit)? = null,
     onMenuAnchor: (IntOffset) -> Unit = {},
     status: String? = null,
@@ -173,9 +174,11 @@ internal fun MeloXDesktopCollectionDetail(
                                 fontSize = 13.sp, fontWeight = FontWeight.SemiBold, color = colors.onSurface.copy(alpha = .5f))
                         }
                         val offset = indexOffset
-                        itemsIndexed(group, key = { _, song -> song.providerTrack?.id?.toString() ?: song.id.toString() }) { index, song ->
+                        itemsIndexed(group, key = { index, song -> "${song.providerTrack?.id ?: song.id}:${offset + index}" }) { index, song ->
                             DesktopCollectionTrackRow(if (groupsByDisc) song.trackNumber ?: (offset + index + 1) else offset + index + 1,
-                                song, playingId == song.id, isPlaying, showsAlbumColumn, { onSong(song) }, onMore?.let { action -> { anchor -> onMenuAnchor(anchor); action(song) } })
+                                song, playingId == song.id, isPlaying, showsAlbumColumn,
+                                { if (onIndexedSong != null) onIndexedSong(song, offset + index) else onSong(song) },
+                                onMore?.let { action -> { anchor -> onMenuAnchor(anchor); action(song) } })
                             Spacer(Modifier.height(1.dp))
                         }
                         indexOffset += group.size

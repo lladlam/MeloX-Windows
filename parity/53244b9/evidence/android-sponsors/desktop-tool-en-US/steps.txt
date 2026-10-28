@@ -1,0 +1,4 @@
+consent:tap@remote-reject
+open-about:tap@desktop-settings-about
+sponsors:tap@desktop-about-sponsors
+dismiss:tap@desktop-dialog:ui.common.ok

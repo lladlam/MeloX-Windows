@@ -218,6 +218,21 @@ jobs:
             python tools/capture_provider_collections.py $source desktop "$pwd/desktop/build/parity/$case-home" "desktop/build/parity/$case"
             if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           }
+      - name: Replay YouTube login form in both layouts
+        shell: pwsh
+        run: |
+          foreach ($layout in @("mobile", "desktop")) {
+            python tools/capture_youtube_login.py $layout "$pwd/desktop/build/parity/youtube-login-$layout-home" "desktop/build/parity/youtube-login-$layout"
+            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          }
+      - name: Replay localized sponsor list in both layouts and Desktop About
+        shell: pwsh
+        run: |
+          foreach ($case in @(@("mobile", "zh-CN"), @("desktop", "ja-JP"), @("desktop-tool", "en-US"))) {
+            $id = "$($case[0])-$($case[1])"
+            python tools/capture_about_sponsors.py ($case[0]) ($case[1]) "$pwd/desktop/build/parity/about-sponsors-$id-home" "desktop/build/parity/about-sponsors-$id"
+            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          }
       - name: Replay reference Desktop player, queue, volume and independent favorite reload
         shell: pwsh
         run: |
@@ -497,6 +512,14 @@ jobs:
             desktop/build/parity/collection-*/*.txt
             desktop/build/parity/collection-*/gradle.log
             desktop/build/parity/collection-*/*.png
+            desktop/build/parity/youtube-login-*/*.json
+            desktop/build/parity/youtube-login-*/*.txt
+            desktop/build/parity/youtube-login-*/*.png
+            desktop/build/parity/youtube-login-*/gradle.log
+            desktop/build/parity/about-sponsors-*/*.json
+            desktop/build/parity/about-sponsors-*/*.txt
+            desktop/build/parity/about-sponsors-*/*.png
+            desktop/build/parity/about-sponsors-*/gradle.log
             desktop/build/parity/page-motion-*/*.json
             desktop/build/parity/page-motion-*/*.txt
             desktop/build/parity/page-motion-*/gradle.log

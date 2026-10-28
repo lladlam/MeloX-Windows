@@ -1,0 +1,14 @@
+consent:tap@remote-reject
+services:tap@settings-open-services
+reveal:reveal@desktop-service-login:youtubemusic
+open:tap@desktop-service-login:youtubemusic
+cookie-focus:tap@youtube-cookie
+visitor-cookie:type@VISITOR_INFO1_LIVE=fixture
+select-cookie:select-all
+signed-cookie:type@__Secure-3PAPISID=fixture-only
+auth-focus:tap@youtube-auth-user
+select-auth:select-all
+invalid-auth:type@abc
+reselect-auth:select-all
+valid-auth:type@2
+close:tap@account-dialog-close

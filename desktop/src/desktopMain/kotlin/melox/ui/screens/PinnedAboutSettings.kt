@@ -68,6 +68,8 @@ internal fun PinnedAboutSettings() {
             Text(pinnedString("settings_about_upstream"), Modifier.padding(top = 5.dp), color = MaterialTheme.colorScheme.onSurface.copy(alpha = .58f))
         }
     }
+    Spacer(Modifier.height(10.dp))
+    SettingsGlassGroup { AboutSponsorsContent() }
     Spacer(Modifier.height(14.dp))
     SettingsGlassGroup { SettingsToggleRow("settings_about_auto_update", "update_auto_check", true, enabled = false) }
     Spacer(Modifier.height(20.dp))

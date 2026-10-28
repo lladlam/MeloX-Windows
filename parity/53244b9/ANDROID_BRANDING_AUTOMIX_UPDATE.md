@@ -19,3 +19,7 @@
 旧 `player_flowing_backdrop` 开关此前只改偏好、不改变播放背景。现在开关即时切换 FlowingLight／BlurredArtwork，背景选择器也反向更新开关，两项偏好原子持久化；选择自定义／歌词背景时不会显示为流光开启。开发者设置中的性能浮层接通两套布局，开启后显示 Compose 帧钟间隔统计和 JVM 堆用量；关闭后不继续采样。帧钟 FPS 不冒充 GPU 帧率或 Windows 进程总内存。
 
 新增鼠标驱动 `tools/capture_background_controls.py` 在两种布局检查开关、背景选择、浮层显示以及独立 JVM 重载，共 46 scenes／47 assertions 本地通过；两个回放均接入 Windows CI，新发行仍待 CI 与独立下载核验。
+
+## Windows CI 后续
+
+`4933073` 的 Windows CI `40485548388` 在浅色首页回放失败，尚未执行打包。失败截图和语义证据保存在 `evidence/android-branding/windows-ci-40485548388/`：鼠标已打开真实歌单，页面仍显示 `desktop-collection-loading`，5 秒断言窗口内尚未出现详情头部。`992c86a` 将该回放的网络页面断言等待预算调整为与独立歌单回放相同的 30 秒，保留真实请求、指针输入和详情头部断言。本地相同浅色尺寸／减少动画／账号场景回放通过 29 scenes／44 assertions，且首页和账号独立核验通过，证据 `evidence/android-branding/home-wait-fix-light/`。Windows CI `40622524147` 已启动，结果与最终发行核验待后续记录。

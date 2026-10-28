@@ -1,0 +1,4 @@
+consent:tap@remote-reject
+developer:tap@desktop-settings-tab:Developer
+open-about:tap@desktop-settings-subtab:About
+sponsors:reveal@about-sponsors

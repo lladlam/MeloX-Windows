@@ -30,6 +30,14 @@ class YouTubeMusicProvider(
     LibraryCollectionCapability, PlaylistSyncCapability {
     val session: YouTubeSession get() = YouTubeSessionStore.read()
     private val lyricsClient = LrcLibLyricsClient(httpClient)
+    private val catalogPager = YouTubeCursorPager<YTItem> { "${it.javaClass.simpleName}:${it.id}" }
+    // A video may legitimately occur more than once in a playlist. Only a
+    // membership id identifies a duplicate; absent ids must not erase entries.
+    private val playlistPager = YouTubeCursorPager<SongItem> { it.setVideoId?.takeIf(String::isNotBlank) }
+    private val playlistSummaries = java.util.concurrent.ConcurrentHashMap<String, MusicPlaylistSummary>()
+    private fun requestKey(value: String, request: YouTubeRequestSession) =
+        "$value:${request.fingerprint}:${request.revision}:${melox.settings.MeloXAppLanguage.locale.toLanguageTag()}"
+    private fun checkAccount(request: YouTubeRequestSession) = YouTubeSessionStore.requireCurrent(request)
     init { YouTubeSessionStore.apply() }
     override val source = MusicSource.YouTubeMusic
     override val displayName = source.displayName
@@ -50,20 +58,16 @@ class YouTubeMusicProvider(
         search(query, page, pageSize, YouTube.SearchFilter.FILTER_ARTIST) { (it as? ArtistItem)?.toArtistSummary() }
 
     override suspend fun accountSummary(): MusicAccountSummary? = withContext(Dispatchers.IO) {
-        if (!session.isLoggedIn) return@withContext null
-        YouTubeSessionStore.apply()
-        YouTube.accountInfo().getOrThrow().let { MusicAccountSummary(source, it.email.orEmpty(), it.name, it.thumbnailUrl) }
+        val saved = YouTubeSessionStore.apply()
+        if (!saved.isLoggedIn) return@withContext null
+        MusicAccountSummary(source, saved.pageId.ifBlank { saved.dataSyncId }.ifBlank { "youtube" },
+            saved.accountName.ifBlank { "YouTube Music" })
     }
 
-    override suspend fun userPlaylists(page: Int, pageSize: Int): MusicPage<MusicPlaylistSummary> = withContext(Dispatchers.IO) {
-        if (page > 1 || !session.isLoggedIn) return@withContext MusicPage(emptyList(), page, pageSize, 0)
-        YouTubeSessionStore.apply()
-        val liked = MusicPlaylistSummary(MusicResourceId(source, LIKED_SONGS), "Liked songs")
-        val items = listOf(liked) + YouTube.library("FEmusic_liked_playlists").getOrThrow().items
-            .filterIsInstance<PlaylistItem>().map { it.toPlaylistSummary() }
-        MusicPage(items, page, pageSize, items.size.toLong(), false)
-    }
-    override suspend fun writablePlaylists(page: Int, pageSize: Int) = userPlaylists(page, pageSize)
+    override suspend fun userPlaylists(page: Int, pageSize: Int): MusicPage<MusicPlaylistSummary> =
+        libraryPage(page, pageSize, "FEmusic_liked_playlists", includeLiked = true) { (it as? PlaylistItem)?.toPlaylistSummary() }
+    override suspend fun writablePlaylists(page: Int, pageSize: Int): MusicPage<MusicPlaylistSummary> =
+        libraryPage(page, pageSize, "FEmusic_liked_playlists", writableOnly = true) { (it as? PlaylistItem)?.toPlaylistSummary() }
     override suspend fun savedAlbums(page: Int, pageSize: Int): MusicPage<MusicAlbumSummary> =
         libraryPage(page, pageSize, "FEmusic_liked_albums") { (it as? AlbumItem)?.toAlbumSummary() }
     override suspend fun followedArtists(page: Int, pageSize: Int): MusicPage<MusicArtistSummary> =
@@ -81,7 +85,8 @@ class YouTubeMusicProvider(
     override suspend fun addTrackToPlaylist(track: MusicTrack, playlist: MusicPlaylistSummary) {
         require(track.id.source == source && playlist.id.source == source)
         requireLogin()
-        YouTube.addToPlaylist(playlist.id.value, track.id.value).getOrThrow()
+        if (playlist.id.value == LIKED_SONGS) YouTube.likeVideo(track.id.value, true).getOrThrow()
+        else YouTube.addToPlaylist(playlist.id.value, track.id.value).getOrThrow()
     }
     override suspend fun createPlaylist(name: String): MusicPlaylistSummary = withContext(Dispatchers.IO) {
         requireLogin()
@@ -90,6 +95,7 @@ class YouTubeMusicProvider(
     }
     override suspend fun renamePlaylist(playlist: MusicPlaylistSummary, name: String) {
         require(playlist.id.source == source)
+        check(playlist.id.value != LIKED_SONGS) { "喜欢的歌曲不能重命名" }
         requireLogin()
         YouTube.renamePlaylist(playlist.id.value, name).getOrThrow()
     }
@@ -102,6 +108,10 @@ class YouTubeMusicProvider(
     }
     override suspend fun removeTrackFromPlaylist(track: MusicTrack, playlist: MusicPlaylistSummary) {
         require(track.id.source == source && playlist.id.source == source)
+        if (playlist.id.value == LIKED_SONGS) {
+            setFavorite(track, false)
+            return
+        }
         val membership = track.providerMetadata as? ProviderTrackMetadata.YouTube
         val setVideoId = membership?.setVideoId ?: error("这首歌没有 YouTube 歌单成员标识，无法从歌单移除")
         requireLogin()
@@ -109,22 +119,52 @@ class YouTubeMusicProvider(
     }
     override suspend fun reorderPlaylistTrack(playlist: MusicPlaylistSummary, track: MusicTrack, newIndex: Int) {
         require(track.id.source == source && playlist.id.source == source)
+        check(playlist.id.value != LIKED_SONGS) { "喜欢的歌曲不能调整顺序" }
         val membership = track.providerMetadata as? ProviderTrackMetadata.YouTube
         val setVideoId = membership?.setVideoId ?: error("这首歌没有 YouTube 歌单成员标识，无法调整顺序")
         requireLogin()
-        val songs = YouTube.playlist(playlist.id.value).getOrThrow().songs
-        val without = songs.filterNot { it.id == track.id.value }
+        val request = YouTubeSessionStore.requestSession()
+        check(request.session.isLoggedIn) { "YouTube Music 需要登录后才能修改收藏或歌单" }
+        val songs = mutableListOf<MusicTrack>()
+        for (page in 1..100) {
+            val result = playlistDetail(playlist, page, 200)
+            checkAccount(request)
+            songs += result.tracks
+            if (result.hasMore != true) break
+            check(page < 100) { "歌单尚未完整读取，无法调整顺序" }
+        }
+        check(songs.any { (it.providerMetadata as? ProviderTrackMetadata.YouTube)?.setVideoId == setVideoId }) {
+            "这首歌已不在歌单中，请刷新后重试"
+        }
+        val without = songs.filterNot { (it.providerMetadata as? ProviderTrackMetadata.YouTube)?.setVideoId == setVideoId }
         val successor = without.getOrNull(newIndex.coerceIn(0, without.size))
-        YouTube.moveSongPlaylist(playlist.id.value, setVideoId, successor?.setVideoId).getOrThrow()
+        val successorId = successor?.let { (it.providerMetadata as? ProviderTrackMetadata.YouTube)?.setVideoId
+            ?: error("歌单成员缺少标识，请刷新后重试") }
+        checkAccount(request)
+        YouTubeSessionStore.apply()
+        YouTube.moveSongPlaylist(playlist.id.value, setVideoId, successorId).getOrThrow()
     }
 
     override suspend fun playlistDetail(playlist: MusicPlaylistSummary, page: Int, pageSize: Int): MusicPlaylistDetail = withContext(Dispatchers.IO) {
         require(playlist.id.source == source)
-        YouTubeSessionStore.apply()
-        val result = YouTube.playlist(playlist.id.value).getOrThrow()
-        val tracks = result.songs.map { it.toMusicTrack() }
-        MusicPlaylistDetail(playlist.copy(title = result.playlist.title, artworkUrl = result.playlist.thumbnail,
-            creatorName = result.playlist.author?.name), tracks, tracks.size.toLong())
+        val request = YouTubeSessionStore.requestSession()
+        val key = requestKey("playlist:${playlist.id.value}", request)
+        val result = playlistPager.page(key, page, pageSize, first = {
+            checkAccount(request)
+            val initial = YouTube.playlist(playlist.id.value).getOrThrow()
+            checkAccount(request)
+            if (playlistSummaries.size >= 24) playlistSummaries.clear()
+            playlistSummaries[key] = playlist.copy(title = initial.playlist.title, artworkUrl = initial.playlist.thumbnail,
+                creatorName = initial.playlist.author?.name)
+            YouTubeCursorPager.Batch(initial.songs, initial.songsContinuation ?: initial.continuation)
+        }, next = { cursor ->
+            checkAccount(request)
+            val more = YouTube.playlistContinuation(cursor).getOrThrow()
+            checkAccount(request)
+            YouTubeCursorPager.Batch(more.songs, more.continuation)
+        })
+        checkAccount(request)
+        MusicPlaylistDetail(playlistSummaries[key] ?: playlist, result.items.map { it.toMusicTrack() }, result.total, result.hasMore)
     }
     override suspend fun albumDetail(album: MusicAlbumSummary, page: Int, pageSize: Int): MusicAlbumDetail = withContext(Dispatchers.IO) {
         require(album.id.source == source)
@@ -200,18 +240,46 @@ class YouTubeMusicProvider(
     }
     override suspend fun resolveDownload(track: MusicTrack, quality: AudioQualityTier) = resolvePlayback(track, quality)
 
-    private suspend fun <T> libraryPage(page: Int, pageSize: Int, browseId: String, map: (YTItem) -> T?): MusicPage<T> = withContext(Dispatchers.IO) {
-        if (page > 1 || !session.isLoggedIn) return@withContext MusicPage(emptyList(), page, pageSize, 0)
-        YouTubeSessionStore.apply()
-        val items = YouTube.library(browseId).getOrThrow().items.mapNotNull(map).take(pageSize.coerceAtLeast(1))
-        MusicPage(items, page, pageSize, items.size.toLong(), false)
+    private suspend fun <T> libraryPage(page: Int, pageSize: Int, browseId: String,
+                                        includeLiked: Boolean = false, writableOnly: Boolean = false,
+                                        map: (YTItem) -> T?): MusicPage<T> = withContext(Dispatchers.IO) {
+        val request = YouTubeSessionStore.requestSession()
+        if (!request.session.isLoggedIn) return@withContext MusicPage(emptyList(), page, pageSize, 0)
+        fun select(items: List<YTItem>) = items.filter { item ->
+            (!writableOnly || item is PlaylistItem && item.isEditable && item.id != LIKED_SONGS) && map(item) != null
+        }
+        val result = catalogPager.page(requestKey("library:$browseId:$includeLiked:$writableOnly", request), page, pageSize, first = {
+            checkAccount(request)
+            val initial = YouTube.library(browseId).getOrThrow()
+            checkAccount(request)
+            val liked = if (includeLiked && initial.items.none { it.id == LIKED_SONGS })
+                listOf(PlaylistItem(id = LIKED_SONGS, title = "Liked songs", author = null, songCountText = null,
+                    thumbnail = null, playEndpoint = null, shuffleEndpoint = null, radioEndpoint = null)) else emptyList()
+            YouTubeCursorPager.Batch(liked + select(initial.items), initial.continuation)
+        }, next = { cursor ->
+            checkAccount(request)
+            val more = YouTube.libraryContinuation(cursor).getOrThrow()
+            checkAccount(request)
+            YouTubeCursorPager.Batch(select(more.items), more.continuation)
+        })
+        checkAccount(request)
+        MusicPage(result.items.mapNotNull(map), page, pageSize, result.total, result.hasMore)
     }
     private suspend fun <T> search(query: String, page: Int, pageSize: Int, filter: YouTube.SearchFilter, map: (YTItem) -> T?): MusicPage<T> = withContext(Dispatchers.IO) {
-        if (page > 1) return@withContext MusicPage(emptyList(), page, pageSize, 0, false)
-        YouTubeSessionStore.apply()
-        val result = YouTube.search(query.trim(), filter).getOrThrow()
-        MusicPage(result.items.mapNotNull(map).take(pageSize.coerceAtLeast(1)), page, pageSize,
-            result.items.size.toLong(), result.continuation != null)
+        val request = YouTubeSessionStore.requestSession()
+        val result = catalogPager.page(requestKey("search:${query.trim()}:$filter", request), page, pageSize, first = {
+            checkAccount(request)
+            val initial = YouTube.search(query.trim(), filter).getOrThrow()
+            checkAccount(request)
+            YouTubeCursorPager.Batch(initial.items.filter { map(it) != null }, initial.continuation)
+        }, next = { cursor ->
+            checkAccount(request)
+            val more = YouTube.searchContinuation(cursor).getOrThrow()
+            checkAccount(request)
+            YouTubeCursorPager.Batch(more.items.filter { map(it) != null }, more.continuation)
+        })
+        checkAccount(request)
+        MusicPage(result.items.mapNotNull(map), page, pageSize, result.total, result.hasMore)
     }
 
     private fun SongItem.toMusicTrack() = MusicTrack(

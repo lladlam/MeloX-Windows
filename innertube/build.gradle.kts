@@ -8,7 +8,7 @@ plugins {
 // Keep the entire Android main vendored network/model implementation intact.
 // The tar is a deterministic git archive, not a download performed during builds.
 val extractAndroidInnerTube by tasks.registering(Sync::class) {
-    from(tarTree(resources.gzip("vendor/android-94e17c9.tar.gz"))) {
+    from(tarTree(resources.gzip("vendor/android-b687590.tar.gz"))) {
         include("android/innertube/src/main/kotlin/**/*.kt")
         eachFile { path = path.removePrefix("android/innertube/src/main/kotlin/") }
         includeEmptyDirs = false

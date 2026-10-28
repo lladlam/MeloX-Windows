@@ -1,0 +1,8 @@
+consent=cloud-enabled:false
+services=tag:desktop-provider-services
+open=tag:account-form-youtubemusic,disabled:youtube-login-submit
+visitor-cookie=disabled:youtube-login-submit
+signed-cookie=enabled:youtube-login-submit
+invalid-auth=disabled:youtube-login-submit
+valid-auth=enabled:youtube-login-submit
+close=absent:account-form-youtubemusic

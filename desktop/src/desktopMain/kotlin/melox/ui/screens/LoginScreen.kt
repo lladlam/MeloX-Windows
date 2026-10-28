@@ -953,6 +953,7 @@ private fun YouTubeLoginForm(provider: LoginProvider, state: LoginScreenState, o
     var visitorData by remember { mutableStateOf("") }
     var dataSyncId by remember { mutableStateOf("") }
     var pageId by remember { mutableStateOf("") }
+    var authUser by remember { mutableStateOf("0") }
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
         Text("在浏览器登录 YouTube Music 后导入 Cookie 与账号上下文。", color = MeloXColors.TextSecondary)
         TextButton(onClick = {
@@ -960,32 +961,30 @@ private fun YouTubeLoginForm(provider: LoginProvider, state: LoginScreenState, o
                 .onFailure { state.dialogMessage = it.message ?: "无法打开浏览器" }
         }) { Text("打开 YouTube Music") }
         OutlinedTextField(value = state.dialogInput, onValueChange = { state.dialogInput = it },
-            label = { Text("Cookie (SAPISID)") }, modifier = Modifier.fillMaxWidth(), enabled = !state.dialogLoading)
+            label = { Text("Cookie (SAPISID / __Secure-3PAPISID)") }, modifier = Modifier.fillMaxWidth().testTag("youtube-cookie"), enabled = !state.dialogLoading,
+            visualTransformation = androidx.compose.ui.text.input.PasswordVisualTransformation())
         OutlinedTextField(value = visitorData, onValueChange = { visitorData = it },
             label = { Text("VISITOR_DATA") }, modifier = Modifier.fillMaxWidth(), singleLine = true, enabled = !state.dialogLoading)
         OutlinedTextField(value = dataSyncId, onValueChange = { dataSyncId = it },
             label = { Text("DATASYNC_ID") }, modifier = Modifier.fillMaxWidth(), singleLine = true, enabled = !state.dialogLoading)
         OutlinedTextField(value = pageId, onValueChange = { pageId = it },
             label = { Text("Page ID") }, modifier = Modifier.fillMaxWidth(), singleLine = true, enabled = !state.dialogLoading)
-        LoginButton(color = provider.color, enabled = !state.dialogLoading && state.dialogInput.contains("SAPISID=")) {
+        OutlinedTextField(value = authUser, onValueChange = { authUser = it },
+            label = { Text("Google AuthUser") }, modifier = Modifier.fillMaxWidth().testTag("youtube-auth-user"),
+            singleLine = true, enabled = !state.dialogLoading)
+        val candidate = melox.provider.youtubemusic.YouTubeSession(state.dialogInput.trim(), visitorData.trim(),
+            dataSyncId.trim(), pageId.trim(), authUser = authUser.trim())
+        LoginButton(color = provider.color, modifier = Modifier.testTag("youtube-login-submit"), enabled = !state.dialogLoading && candidate.isLoggedIn &&
+            candidate.authUser.isNotEmpty() && candidate.authUser.all(Char::isDigit)) {
             scope.launch {
                 state.dialogLoading = true
                 state.dialogMessage = null
-                val previous = melox.provider.youtubemusic.YouTubeSessionStore.read()
                 try {
-                    melox.provider.youtubemusic.YouTubeSessionStore.write(
-                        melox.provider.youtubemusic.YouTubeSession(state.dialogInput.trim(), visitorData.trim(), dataSyncId.trim(), pageId.trim()),
-                    )
-                    val summary = melox.provider.youtubemusic.YouTubeMusicProvider().accountSummary()
-                        ?: error("YouTube Music 登录态无效")
-                    val verified = melox.provider.youtubemusic.YouTubeSessionStore.read().copy(accountName = summary.displayName)
-                    melox.provider.youtubemusic.YouTubeSessionStore.write(verified)
-                    onLoginSuccess(summary.displayName)
+                    val name = melox.provider.youtubemusic.YouTubeSessionStore.validateAndSave(candidate)
+                    onLoginSuccess(name)
                 } catch (cancelled: kotlinx.coroutines.CancellationException) {
-                    melox.provider.youtubemusic.YouTubeSessionStore.write(previous)
                     throw cancelled
                 } catch (error: Exception) {
-                    melox.provider.youtubemusic.YouTubeSessionStore.write(previous)
                     state.dialogMessage = error.message ?: "YouTube Music 登录验证失败"
                 } finally { state.dialogLoading = false }
             }

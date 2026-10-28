@@ -129,9 +129,11 @@ internal fun MeloXLibraryPlaylistDetailScreen(
         }
     }
     val isProviderPlaylist = providerPlaylist != null
-    var detail by remember(initialPlaylist.id) { mutableStateOf<NeteasePlaylistDetail?>(null) }
-    var loading by remember(initialPlaylist.id) { mutableStateOf(true) }
-    var errorMessage by remember(initialPlaylist.id) { mutableStateOf<String?>(null) }
+    val youtubeRevision by melox.provider.youtubemusic.YouTubeSessionStore.revision.collectAsState()
+    val accountRevision = youtubeRevision.takeIf { providerPlaylist?.id?.source == melox.music.model.MusicSource.YouTubeMusic }
+    var detail by remember(initialPlaylist.id, accountRevision) { mutableStateOf<NeteasePlaylistDetail?>(null) }
+    var loading by remember(initialPlaylist.id, accountRevision) { mutableStateOf(true) }
+    var errorMessage by remember(initialPlaylist.id, accountRevision) { mutableStateOf<String?>(null) }
     var searchQuery by remember(initialPlaylist.id) { mutableStateOf("") }
     var isSaved by remember(initialPlaylist.id) { mutableStateOf<Boolean?>(null) }
     var currentUserId by remember(initialPlaylist.id) { mutableStateOf<Long?>(null) }
@@ -140,7 +142,7 @@ internal fun MeloXLibraryPlaylistDetailScreen(
         mutableStateOf(MeloXDetailPalette.LightFallback)
     }
     var sortMode by remember(initialPlaylist.id) { mutableStateOf(MeloXPlaylistSortMode.Original) }
-    var actionPage by remember(initialPlaylist.id) { mutableStateOf<String?>(null) }
+    var actionPage by remember(initialPlaylist.id, accountRevision) { mutableStateOf<String?>(null) }
     var actionMessage by remember(initialPlaylist.id) { mutableStateOf<String?>(null) }
     val sessionRevision by NeteaseSessionStore.revision.collectAsState()
 
@@ -174,6 +176,7 @@ internal fun MeloXLibraryPlaylistDetailScreen(
 
     suspend fun refreshPlaylist() {
         if (providedSongs != null) return
+        if (accountRevision != null && accountRevision != melox.provider.youtubemusic.YouTubeSessionStore.revision.value) return
         loading = true
         errorMessage = null
         if (providerPlaylist != null) {
@@ -208,7 +211,7 @@ internal fun MeloXLibraryPlaylistDetailScreen(
         loading = false
     }
 
-    LaunchedEffect(initialPlaylist.id, providerPlaylist?.id) {
+    LaunchedEffect(initialPlaylist.id, providerPlaylist?.id, accountRevision) {
         if (providedSongs != null) {
             loading = false
         } else if (providerPlaylist != null) {
@@ -449,7 +452,7 @@ internal fun MeloXLibraryPlaylistDetailScreen(
                     }
                     else -> itemsIndexed(
                         items = filteredSongs,
-                        key = { _, song -> song.id },
+                        key = { index, song -> "${song.id}:$index" },
                      ) { index, song ->
                         Column {
                         MeloXPlaylistTrackRow(
@@ -460,6 +463,7 @@ internal fun MeloXLibraryPlaylistDetailScreen(
                                 PlaybackCommands.playQueue(
                                     songs = filteredSongs,
                                     selectedSongId = song.id,
+                                    selectedQueueIndex = index,
                                     onFailure = { errorMessage = it.message ?: "播放失败" },
                                 )
                             },
@@ -498,7 +502,7 @@ internal fun MeloXLibraryPlaylistDetailScreen(
                                 }
                             },
                         )
-                        if (song.id != filteredSongs.lastOrNull()?.id) {
+                        if (index < filteredSongs.lastIndex) {
                             HorizontalDivider(
                                 modifier = Modifier.padding(start = 66.dp, end = 20.dp),
                                 thickness = 0.6.dp,

@@ -17,6 +17,7 @@ object ProviderPlaybackCommands {
         tracks: List<MusicTrack>,
         selectedTrackId: MusicResourceId,
         startPositionMs: Long = 0L,
+        selectedQueueIndex: Int? = null,
         onFailure: ((Throwable) -> Unit)? = null,
     ) {
         if (tracks.isEmpty()) return
@@ -24,7 +25,8 @@ object ProviderPlaybackCommands {
         val neteaseQuality = MusicQualityPreferences.read()
         MusicQualityRuntime.selected = neteaseQuality
         val qualityTier = neteaseQuality.toCommonTier()
-        val startIndex = tracks.indexOfFirst { it.id == selectedTrackId }.coerceAtLeast(0)
+        val startIndex = selectedQueueIndex?.takeIf { it in tracks.indices && tracks[it].id == selectedTrackId }
+            ?: tracks.indexOfFirst { it.id == selectedTrackId }.coerceAtLeast(0)
         val items = tracks.mapIndexed { index, track ->
             track.toMediaItem(
                 neteaseQuality = neteaseQuality,

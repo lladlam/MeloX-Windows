@@ -108,9 +108,12 @@ object PlaybackCommands {
         selectedSongId: Long,
         startPositionMs: Long = 0L,
         heartMode: Boolean = false,
+        selectedQueueIndex: Int? = null,
         onFailure: ((Throwable) -> Unit)? = null,
     ) {
-        val selectedProviderTrack = songs.firstOrNull { it.id == selectedSongId }?.providerTrack
+        val sourceStartIndex = selectedQueueIndex?.takeIf { it in songs.indices && songs[it].id == selectedSongId }
+            ?: songs.indexOfFirst { it.id == selectedSongId }.takeIf { it >= 0 } ?: 0
+        val selectedProviderTrack = songs.getOrNull(sourceStartIndex)?.providerTrack
         if (selectedProviderTrack != null) {
             val providerTracks = songs.mapNotNull(SearchSong::providerTrack)
             if (providerTracks.isEmpty()) return
@@ -119,6 +122,7 @@ object PlaybackCommands {
                 selectedTrackId = selectedProviderTrack.id,
                 startPositionMs = startPositionMs,
                 onFailure = onFailure,
+                selectedQueueIndex = songs.take(sourceStartIndex).count { it.providerTrack != null },
             )
             return
         }
@@ -129,8 +133,6 @@ object PlaybackCommands {
         CrossProviderPlaybackRuntime.clear()
         val downloads = MeloXDownloadStore.instance()
         val offline = !MeloXNetworkAvailability.isOnline()
-        val sourceStartIndex = songs.indexOfFirst { it.id == selectedSongId }
-            .takeIf { it >= 0 } ?: 0
         val playable = songs.mapIndexed { index, song -> index to song }
             .let { indexed ->
                 if (offline) indexed.filter { (_, song) -> downloads.contains(song.id) }
@@ -144,7 +146,7 @@ object PlaybackCommands {
             ?: playable.firstOrNull { it.first > sourceStartIndex }
             ?: playable.first()
         val queue = playable.map { (_, song) -> song }
-        val startIndex = queue.indexOfFirst { it.id == selectedPair.second.id }.coerceAtLeast(0)
+        val startIndex = playable.indexOfFirst { it.first == selectedPair.first }.coerceAtLeast(0)
         val origins = List(queue.size) { QUEUE_ORIGIN_BASE }
         val originalIndexes = playable.map { it.first }
 

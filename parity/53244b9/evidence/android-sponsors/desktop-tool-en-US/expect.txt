@@ -1,0 +1,4 @@
+consent=cloud-enabled:false
+open-about=tag:desktop-about,tag:desktop-about-sponsors
+sponsors=tag:desktop-message-dialog
+dismiss=absent:desktop-message-dialog,tag:desktop-about

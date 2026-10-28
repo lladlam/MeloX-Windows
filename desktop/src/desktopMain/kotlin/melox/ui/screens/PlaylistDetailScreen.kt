@@ -32,6 +32,7 @@ import melox.model.SearchSong
 import melox.music.provider.MeloXLegacyUiBridge
 import melox.music.provider.MeloXMusicProviders
 import melox.music.provider.PlaylistCapability
+import melox.music.provider.loadAllPlaylistTracks
 import melox.playback.PlaybackCommands
 import melox.ui.desktop.desktopString
 import melox.ui.desktop.desktopFormat
@@ -70,9 +71,11 @@ fun PlaylistDetailScreen(
         return
     }
     val client = remember { NeteaseLibraryClient(cookieProvider = { NeteaseSessionStore.readCookie() }) }
-    var detail by remember(playlist.id, playlist.providerPlaylist?.id) { mutableStateOf<NeteasePlaylistDetail?>(null) }
-    var loading by remember(playlist.id, playlist.providerPlaylist?.id) { mutableStateOf(true) }
-    var error by remember(playlist.id, playlist.providerPlaylist?.id) { mutableStateOf<String?>(null) }
+    val youtubeRevision by melox.provider.youtubemusic.YouTubeSessionStore.revision.collectAsState()
+    val accountRevision = youtubeRevision.takeIf { playlist.providerPlaylist?.id?.source == melox.music.model.MusicSource.YouTubeMusic }
+    var detail by remember(playlist.id, playlist.providerPlaylist?.id, accountRevision) { mutableStateOf<NeteasePlaylistDetail?>(null) }
+    var loading by remember(playlist.id, playlist.providerPlaylist?.id, accountRevision) { mutableStateOf(true) }
+    var error by remember(playlist.id, playlist.providerPlaylist?.id, accountRevision) { mutableStateOf<String?>(null) }
     val currentSongId by remember { derivedStateOf { PlaybackCommands.currentSongId() } }
     val queue by PlaybackCommands.queue.collectAsState()
     val playingId = queue.songs.getOrNull(queue.index)?.id ?: currentSongId
@@ -80,7 +83,7 @@ fun PlaylistDetailScreen(
     val scope = rememberCoroutineScope()
     var filter by remember(playlist.id) { mutableStateOf("") }
     var showSearch by remember(playlist.id, MeloXSettingsRuntime.playlistSearchBarHidden) { mutableStateOf(!MeloXSettingsRuntime.playlistSearchBarHidden) }
-    var actionSong by remember(playlist.id) { mutableStateOf<SearchSong?>(null) }
+    var actionSong by remember(playlist.id, accountRevision) { mutableStateOf<SearchSong?>(null) }
     var refreshRevision by remember(playlist.id) { mutableStateOf(0) }
     var accountUserId by remember { mutableStateOf<Long?>(null) }
     var subscribed by remember(playlist.id) { mutableStateOf<Boolean?>(null) }
@@ -100,7 +103,7 @@ fun PlaylistDetailScreen(
                 .onSuccess { accountUserId = it }
         }
     }
-    LaunchedEffect(playlist.id, playlist.providerPlaylist?.id, refreshRevision) {
+    LaunchedEffect(playlist.id, playlist.providerPlaylist?.id, accountRevision, refreshRevision) {
         loading = true
         error = null
         val backing = playlist.providerPlaylist
@@ -112,20 +115,26 @@ fun PlaylistDetailScreen(
                 val capability = provider as? PlaylistCapability
                     ?: error("${source.displayName} 当前不提供歌单详情")
                 val providerDetail = withContext(Dispatchers.IO) {
-                    capability.playlistDetail(backing)
+                    capability.loadAllPlaylistTracks(backing)
                 }
                 MeloXLegacyUiBridge.playlistDetail(providerDetail)
             } else {
                 client.playlistDetail(playlist.id)
             }
         }
-        result.onSuccess { detail = it; subscribed = it.summary.subscribed }.onFailure { error = it.message ?: "歌单加载失败" }
+        result.onSuccess { detail = it; subscribed = it.summary.subscribed }.onFailure {
+            if (it is kotlinx.coroutines.CancellationException) throw it
+            error = it.message ?: "歌单加载失败"
+        }
         loading = false
     }
 
     val shown = detail?.summary ?: playlist
     val songs = detail?.songs.orEmpty()
-    val filtered = songs.filter { filter.isBlank() || it.name.contains(filter, true) || it.artists.contains(filter, true) || it.album.contains(filter, true) }
+    val filteredIndexes = songs.indices.filter { index -> songs[index].let {
+        filter.isBlank() || it.name.contains(filter, true) || it.artists.contains(filter, true) || it.album.contains(filter, true)
+    } }
+    val filtered = filteredIndexes.map(songs::get)
     val totalDurationMs = songs.sumOf { it.durationMs }
 
     if (MeloXSettingsRuntime.desktopLayoutEnabled) {
@@ -174,6 +183,7 @@ fun PlaylistDetailScreen(
             filter = filter,
             onFilterChange = { filter = it },
             onSong = { PlaybackCommands.playQueue(songs, it.id) },
+            onIndexedSong = { song, index -> PlaybackCommands.playQueue(songs, song.id, selectedQueueIndex = filteredIndexes[index]) },
             onMore = { actionSong = it },
             onMenuAnchor = { menuAnchor = it },
             status = operation,
@@ -365,12 +375,12 @@ fun PlaylistDetailScreen(
                         fontSize = 14.sp,
                     )
                 }
-                else -> itemsIndexed(filtered, key = { _, song -> song.providerTrack?.id?.toString() ?: song.id.toString() }) { index, song ->
+                else -> itemsIndexed(filtered, key = { index, song -> "${song.providerTrack?.id ?: song.id}:$index" }) { index, song ->
                     SongRow(
                         index = index + 1,
                         song = song,
                         isPlaying = playingId == song.id,
-                        onClick = { PlaybackCommands.playQueue(songs, song.id) },
+                        onClick = { PlaybackCommands.playQueue(songs, song.id, selectedQueueIndex = filteredIndexes[index]) },
                         onMore = { actionSong = song },
                     )
                 }

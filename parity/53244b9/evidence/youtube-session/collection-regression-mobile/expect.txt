@@ -1,0 +1,11 @@
+consent=cloud-enabled:false
+library=tag:mobile-provider-library:Local,tag:library-pages
+songs=tag:mobile-provider-library:Local,tag:provider-library-play-all
+more-settled=tag:provider-library-more
+more=absent:provider-library-more
+picker-settled=tag:library-page:Playlists
+playlists=tag:provider-library-create,tag:provider-library-empty
+create-dialog=tag:provider-playlist-name
+created=tag-prefix:provider-library-card:Local:,absent:provider-library-empty
+detail-loaded=tag:playlist-tracks,text:Generated library replay
+back=tag:mobile-provider-library:Local,tag-prefix:provider-library-card:Local:

@@ -59,6 +59,7 @@ private fun DesktopServiceProvider.source(): MusicSource = when (id) {
 internal fun MeloXDesktopProviderServices(navState: MeloXNavState, currentSource: MusicSource, onSourceSelected: (MusicSource) -> Unit) {
     val accounts = remember { ProviderAccountManager() }
     var revision by remember { mutableIntStateOf(0) }
+    val youtubeRevision by melox.provider.youtubemusic.YouTubeSessionStore.revision.collectAsState()
     var unified by remember { mutableStateOf(MusicProviderSelectionStore.unifiedEnabled()) }
     var scope by remember { mutableStateOf(MusicProviderSelectionStore.unifiedSources()) }
     val visible = remember(revision) {
@@ -80,7 +81,9 @@ internal fun MeloXDesktopProviderServices(navState: MeloXNavState, currentSource
             DesktopSettingsForm {
                 Text(desktopPlatformString("services_providers"), fontSize = 13.sp, fontWeight = FontWeight.SemiBold)
                 visible.forEachIndexed { index, provider ->
-                    val account = accounts.state(provider.source())
+                    val account = if (provider.source() == MusicSource.YouTubeMusic) remember(youtubeRevision) {
+                        accounts.state(provider.source())
+                    } else accounts.state(provider.source())
                     Row(Modifier.fillMaxWidth().heightIn(min = 40.dp), verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.spacedBy(9.dp)) {
                         Box(Modifier.size(22.dp).clip(CircleShape).background(provider.color.copy(alpha = .18f)), contentAlignment = Alignment.Center) {
@@ -104,6 +107,12 @@ internal fun MeloXDesktopProviderServices(navState: MeloXNavState, currentSource
                             melox.ui.navigation.MeloXLoginRequestBus.request(provider.id)
                             navState.navigateTo(Route.Login)
                         }
+                    }
+                    if (provider.source() == MusicSource.YouTubeMusic && account.loggedIn) {
+                        melox.ui.screens.YouTubeAccountControls(onRelogin = {
+                            melox.ui.navigation.MeloXLoginRequestBus.request(provider.id)
+                            navState.navigateTo(Route.Login)
+                        })
                     }
                     if (index < visible.lastIndex) HorizontalDivider(Modifier.padding(start = 31.dp), thickness = .5.dp,
                         color = MaterialTheme.colorScheme.onSurface.copy(alpha = .08f))

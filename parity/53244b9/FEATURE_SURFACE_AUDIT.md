@@ -35,7 +35,7 @@
 | 播客 | 手机 Podcasts、DesktopPodcasts | 收藏与节目详情实机、封面共享动画 |
 | 私信 | 手机 Messages、DesktopMessages，真实联系人与发信接口 | 头像／未读／分组／刷新和真实发信验收 |
 | 来源选择／账号 | 两套音乐服务页、共享登录表单；汽水 QR 已有真实上游回放 | 概念版来源缺失；Apple／酷我隐藏策略与当前 Android 对照；所有真实账号验收 |
-| YouTube Music | Cookie／visitor／data-sync／page 上下文导入、真实库与播放 | Android authUser／地区、自动校验、过期状态、频道枚举／切换 UI 与 backend 尚未迁移 |
+| YouTube Music | Cookie／visitor／data-sync／page／AuthUser 上下文、地区归一化、验证后频道切换、过期状态及游标分页，见 YOUTUBE_SESSION_UPDATE.md | 真实账号／多频道／私人收藏与退出重登实机；上游普通目录／写请求的全局会话并发边界 |
 | 酷狗概念版 | Windows 当前为标准酷狗 provider | **独立 KugouLite provider／账号隔离／真实双奖励接口／每日去重重试／签到页全部缺失**，不能把标准酷狗改名冒充 |
 | 汽水 | `ec5753a`：真实协议、双布局、账号 QR、游标、歌词与试听识别 | 用户真实扫码确认、登录态搜索与完整播放 |
 | Bilibili | `4c94f7e`：收藏的他人列表／合集、分页与单视频隔离 | 用户私人列表；WBI 播放及音质细节与最新 Android 持续对照 |
@@ -49,7 +49,7 @@
 | LAN／DLNA | 进程级会话、两套输出面板、真实协议与回环测试 | Windows↔Android 跨机、多网卡／防火墙／长时漂移、物理音箱 |
 | MiPlay／USB 独占 | Android 为 Binder／usbfs 平台实现 | **Windows 对应 backend 未实现**；不能仅增加开关称支持 |
 | 系统媒体／悬浮歌词 | 有设置页，未支持项显式 disabled；已跟踪 Android 统一 loader 值参数、后台完整 media ID／多源歌词更新 | Windows SMTC、悬浮歌词窗／权限与原生输入等价实现，并复用同一真实歌词链 |
-| 引导／法律／关于 | 现有两套 Onboarding／About＋legal 文档页 | Android 0.7 全屏连续引导、1.3 版文本的 Windows 平台适配与品牌逐项核销；10 月 27 日新增关于页两名赞助者及统一 CNY／取消包月标记的文案尚未同步 |
+| 引导／法律／关于 | 两套 About 设置页及 Desktop About 补齐 Android 六名赞助者和 CNY 金额，四语言资源核对见 ANDROID_071_SPONSORS.md | Android 0.7 全屏连续引导、1.3 版文本的 Windows 平台适配与品牌逐项核销 |
 | 云控／主题／规则 | 当前签名平台熔断与基础配置已实现 | 新 schema 的文案／主题／规则消费者与受限 QuickJS 脚本未完成 |
 | 多语言 | 本轮补实际语言选择；已有 pinned 资源保持原文 | 全量最新资源导出、硬编码文案、土耳其语、桌面全部 Locale 覆盖 |
 | Windows 平台集成 | 布局切换即时保存、托盘、标题栏、键鼠已有实现／部分原生证据 | 用户触屏／触摸键盘、DRM、麦克风、长时 RSS 及 DPAPI 实机验收 |
@@ -82,6 +82,12 @@
 后续监听又捕获 3 个 LX 文件变化：Android 新增 `LxRuntimeThread` 和并发／清理测试，将 QuickJS 创建、执行与销毁限制在同一 owner 线程；动作超时或中断后关闭会话，取消 HTTP 并屏蔽迟到回调。追查 Windows 对应文件发现更基础的缺口：`shared/src/commonMain/kotlin/melox/provider/lxuser/LxUserRuntime.kt` 仅 8 行，`load`／`close` 为空、`callAction` 恒返回 null；`LxUserPlaybackResolver` 虽有播放／歌词／封面调用链，实际无法执行用户脚本。因此这是未迁移的真实业务后端，不只是本次线程修复未同步。CHKSZ 为独立客户端，不能用其成功证明 LX 脚本运行时可用。
 
 直接重新读取 Android 工作区并与 `d547727` 的内容哈希快照比较，新增变化为 5 个文件：SettingsScreen、默认 strings.xml 及简中／繁中／日文 i18n。具体是关于页增加 user_361ef（CNY 20）、user_f8b67（CNY 12.24），并将原 6 元包月标记改为 CNY 6、金额统一 CNY 格式。Windows 的 PinnedAboutSettings／DesktopAbout 尚无对应赞助列表，属于新增未迁移内容。
+
+Android 后续将第三方源网络隔离与 LX 设备测试提交为 `c27b493`，随后两个提交调整 Android APK 签名；当前 Android 工作区已干净。前者为第三方脚本及媒体建立无账号 Cookie、无共享缓存的客户端，跨源重定向去除敏感请求头，限制脚本下载上限为 9 MB；其 HTTP 别名是适配 Android 全局 cleartext 网络策略的专用机制，不能直接等同于 Windows 需求。Windows LX 运行时仍为空，未来迁移须同时处理独立客户端、响应大小限制和重定向凭据边界，不能仅复制别名或声称已有脚本执行。Android 的最新设备测试未在此运行；Android APK 签名变更不影响 Windows 包。
+
+## 2026-10-28 Android 0.7.1 再核查
+
+实时工作区 HEAD 为 `9faacd8fade4861aa416b68dad3b2cffa4d230a7`，工作区干净。较 `cb654f5`，`b7dd284` 扩展 Android 实验性 USB 独占到部分高速 UAC1／双声道自适应或同步设备，并增加描述符、诊断与 PCM 转换测试；24／32 位容器由 PCM16 补零，不是高位深直通。Android 还修正 LAN Cast 停止时的本地静音释放，避免覆盖仍活动的 USB 会话；协议未随此变更。Windows 当前没有 USB 独占输出后端，不能把 Android usbfs、其设备测试或本地 LAN 回环视为 Windows 已支持，也不能移植一个恒为 false 的所有权判断冒充后端。`9faacd8` 为 Android 0.7.1 发行及说明更新；新增 USB 法律文案仍是 Android 平台声明，既有 pinned Windows 资源未覆盖。跨设备 LAN、实际 DAC 和 Windows USB 后端仍待完成。
 
 32 域源码索引重新生成；设置 key 差分仍仅为一次性迁移标记，六处空点击仍是此前已核查的输入屏蔽。复核确认 `performanceOverlayEnabled` 目前只有 shared 定义／偏好读写，没有 desktop 显示消费者；FlowingLight 仍以单 artworkUrl 提取，未接 AutoMix 双封面调色板。KugouLite／CLI／YouTube authUser 等缺口仍保留，不能以设置 key 齐全判为功能已齐。
 

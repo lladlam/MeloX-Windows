@@ -1,0 +1,10 @@
+consent=cloud-enabled:false
+library=tag:desktop-provider-library:Local,absent:library-pages,absent:desktop-nav:Home,absent:desktop-nav:Explore
+songs=tag:desktop-provider-library:Local,tag:provider-library-play-all
+more-settled=tag:provider-library-more
+more=absent:provider-library-more
+playlists=tag:provider-library-create,tag:provider-library-empty
+create-dialog=tag:provider-playlist-name
+created=tag-prefix:provider-library-card:Local:,absent:provider-library-empty
+detail-loaded=tag:desktop-playlist-detail,text:Generated library replay
+back=tag:desktop-provider-library:Local,tag-prefix:provider-library-card:Local:

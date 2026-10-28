@@ -1,0 +1,49 @@
+{
+  "status": "PASSED",
+  "scope": "Physical production replay, source geometry and rendered theme colours; not full-image parity",
+  "scenes": 29,
+  "assertions": 44,
+  "columns": 3,
+  "quick_card_width_dp": 247,
+  "themes": [
+    {
+      "theme": "Light",
+      "background_rgb": [
+        246,
+        246,
+        246
+      ],
+      "sidebar_rgb": [
+        250,
+        250,
+        250
+      ],
+      "selected_rgb": [
+        205,
+        2,
+        18
+      ]
+    },
+    {
+      "theme": "Dark",
+      "background_rgb": [
+        30,
+        30,
+        30
+      ],
+      "sidebar_rgb": [
+        26,
+        26,
+        27
+      ],
+      "selected_rgb": [
+        221,
+        18,
+        34
+      ]
+    }
+  ],
+  "touch_events": 0,
+  "retained_home_scroll": true,
+  "reference": null
+}

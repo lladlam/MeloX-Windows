@@ -1,0 +1,35 @@
+{
+  "android_commit": "9faacd8fade4861aa416b68dad3b2cffa4d230a7",
+  "verified_against_pure_git_blob_and_working_tree": true,
+  "android_fallback": "localized missing keys use default resources",
+  "resources": {
+    "parity/android-about-sponsors.properties": {
+      "sha256": "c79d2e87b4042e0bf16aa1ba90f618878846a84d07fd2390d601527b004525f9",
+      "bytes": 619,
+      "android_source": "android/app/src/main/res/values/strings.xml",
+      "android_source_sha256": "920bfa1d607e0bb7b62772ef7689d8a09ace84fc15eeef02ddec18ce1265fcc3",
+      "keys": 14
+    },
+    "parity/android-about-sponsors-zh-rCN.properties": {
+      "sha256": "1fd6ac8090206a9984e834954f9a755d39fb81124dd1aba1cf6593b6d3475fef",
+      "bytes": 460,
+      "android_source": "android/app/i18n/values-zh-rCN/strings.xml",
+      "android_source_sha256": "7686856f554e1e6e7fad729a7742e3426af2e66dfe4024f23e13c7b26ed4b58a",
+      "keys": 10
+    },
+    "parity/android-about-sponsors-zh-rTW.properties": {
+      "sha256": "6ff92e8deb55c71cc5445da19a2d377ea047f7af011f096ab8cf030ef0450955",
+      "bytes": 472,
+      "android_source": "android/app/i18n/values-zh-rTW/strings.xml",
+      "android_source_sha256": "5721d6c59eb9476147a43dc892e2a8d9cff7766c3ddac1a85392526759fefa58",
+      "keys": 10
+    },
+    "parity/android-about-sponsors-ja.properties": {
+      "sha256": "c1c84c20279acdbece1b98af8cef81218a54b2a624e6b4e16801e467292074ac",
+      "bytes": 385,
+      "android_source": "android/app/i18n/values-ja/strings.xml",
+      "android_source_sha256": "bbc9fc09af98fb916a6cdfb7733dad566ae9a0bcf59573166756c78b0eaf9567",
+      "keys": 8
+    }
+  }
+}

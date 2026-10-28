@@ -1,0 +1,3 @@
+consent=cloud-enabled:false
+open-about=tag:settings-about
+sponsors=tag:about-sponsors,tag:about-sponsor:0,tag:about-sponsor:5

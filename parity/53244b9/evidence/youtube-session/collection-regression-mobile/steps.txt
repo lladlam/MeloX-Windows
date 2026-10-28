@@ -1,0 +1,16 @@
+consent:tap@remote-reject
+library:wait@800
+songs:tap@library-page:Songs
+more-scroll:scroll@220,400,200
+more-settled:wait@1500
+more:tap@provider-library-more
+picker-reveal:scroll@220,400,-200
+picker-settled:wait@1500
+playlists:tap@library-page:Playlists
+create-dialog:tap@provider-library-create
+create-name:text@provider-playlist-name,Generated library replay
+create:tap@provider-playlist-create-confirm
+created:wait@600
+detail:tap-first@provider-library-card:Local:
+detail-loaded:wait@800
+back:escape

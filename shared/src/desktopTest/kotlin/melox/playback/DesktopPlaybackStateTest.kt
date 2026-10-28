@@ -100,6 +100,20 @@ class DesktopPlaybackStateTest {
         assertEquals(2400L, saved.positionMs)
     }
 
+    @Test fun clickingARepeatedProviderEntryStartsThatQueuePosition() = runTest {
+        val player = player({ DesktopPlaybackRequest("resolved") })
+        PlaybackCommands.adoptController(player)
+        val tracks = listOf("first", "second").map { entry ->
+            MusicTrack(MusicResourceId(MusicSource.YouTubeMusic, "same-video"), "Video", emptyList(),
+                providerMetadata = ProviderTrackMetadata.YouTube("same-video", entry))
+        }
+        val songs = tracks.map(melox.music.provider.MeloXLegacyUiBridge::track)
+        PlaybackCommands.playQueue(songs, songs[1].id, selectedQueueIndex = 1)
+        runCurrent()
+        assertEquals(1, player.currentMediaItemIndex)
+        assertEquals("second", (player.snapshot()[1].providerTrack?.providerMetadata as ProviderTrackMetadata.YouTube).setVideoId)
+    }
+
     @Test fun localContentLocationSurvivesQueuePersistenceForDeferredPlayback() = runTest {
         val player = player({ DesktopPlaybackRequest("unused") })
         PlaybackCommands.adoptController(player)

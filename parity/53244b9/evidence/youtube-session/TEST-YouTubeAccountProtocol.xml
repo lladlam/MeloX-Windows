@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="YouTubeAccountProtocolTest[desktop]" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-10-28T03:01:47.645Z" hostname="lladlam-arch" time="1.051">
+  <properties/>
+  <testcase name="channelListFindsPersonalAndBrandIdentitiesInNestedResponse[desktop]" classname="melox.provider.youtubemusic.YouTubeAccountProtocolTest" time="0.688"/>
+  <testcase name="accountCredentialsAreNotForwardedToARedirect[desktop]" classname="melox.provider.youtubemusic.YouTubeAccountProtocolTest" time="0.316"/>
+  <testcase name="accountValidationUsesTheSuppliedCookieAndCompleteSelectedContext[desktop]" classname="melox.provider.youtubemusic.YouTubeAccountProtocolTest" time="0.039"/>
+  <testcase name="authenticationErrorsAreTypedWithoutExposingCookie[desktop]" classname="melox.provider.youtubemusic.YouTubeAccountProtocolTest" time="0.004"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
