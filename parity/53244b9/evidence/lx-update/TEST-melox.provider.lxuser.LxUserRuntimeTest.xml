@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="LxUserRuntimeTest[desktop]" tests="11" skipped="0" failures="0" errors="0" timestamp="2026-10-28T08:52:29.127Z" hostname="lladlam-arch" time="63.217">
+  <properties/>
+  <testcase name="redirectAcrossOriginsDropsSensitiveHeaders[desktop]" classname="melox.provider.lxuser.LxUserRuntimeTest" time="1.462"/>
+  <testcase name="sourceStoreAndPlaybackResolverUseFlatTrackIdentity[desktop]" classname="melox.provider.lxuser.LxUserRuntimeTest" time="4.768"/>
+  <testcase name="requestFailureIsAnErrorAndDoesNotExposeAccountCookies[desktop]" classname="melox.provider.lxuser.LxUserRuntimeTest" time="1.167"/>
+  <testcase name="multipartRequestsCarryTheirGeneratedBoundary[desktop]" classname="melox.provider.lxuser.LxUserRuntimeTest" time="1.051"/>
+  <testcase name="interruptionCancelsRequestsAndEventuallyClosesTheIsolate[desktop]" classname="melox.provider.lxuser.LxUserRuntimeTest" time="0.887"/>
+  <testcase name="invalidScriptsAndEscapedPathsAreRejectedWithoutTouchingOtherFiles[desktop]" classname="melox.provider.lxuser.LxUserRuntimeTest" time="0.1"/>
+  <testcase name="sandboxDeniesDynamicCodeAndClosesItsV8Isolates[desktop]" classname="melox.provider.lxuser.LxUserRuntimeTest" time="1.323"/>
+  <testcase name="buffersCryptoErrorsAndCommonJsAreAvailable[desktop]" classname="melox.provider.lxuser.LxUserRuntimeTest" time="0.584"/>
+  <testcase name="asyncHttpHeadersTimersAndConcurrentCallsRunInRealV8[desktop]" classname="melox.provider.lxuser.LxUserRuntimeTest" time="4.338"/>
+  <testcase name="concurrentResolutionUsesRealHttpAndFfmpegPcm[desktop]" classname="melox.provider.lxuser.LxUserRuntimeTest" time="46.739"/>
+  <testcase name="asynchronousConfigurationCanRegisterTheHandler[desktop]" classname="melox.provider.lxuser.LxUserRuntimeTest" time="0.796"/>
+  <system-out><![CDATA[[DEBUG MeloXThirdParty] LX resolve start provider=qq_music id=song-mid quality=320k source=tx title=song artist=artist
+[DEBUG MeloXThirdParty] LX candidate script=user_api_bafc1838-2905-48f4-a552-ccc947902755 source=tx quality=320k
+[DEBUG MeloXThirdParty] LX candidate result script=user_api_bafc1838-2905-48f4-a552-ccc947902755 source=tx quality=320k url=true
+[INFO MeloXThirdParty] LX resolved source=qq_music script=user_api_bafc1838-2905-48f4-a552-ccc947902755
+[DEBUG MeloXThirdParty] LX resolve start provider=netease id=123 quality=128k source=wy title=song artist=artist
+[DEBUG MeloXThirdParty] LX candidate script=user_api_9a391901-35aa-4496-ab76-3c595af68a9f source=wy quality=128k
+[DEBUG MeloXThirdParty] LX candidate result script=user_api_9a391901-35aa-4496-ab76-3c595af68a9f source=wy quality=128k url=true
+[INFO MeloXThirdParty] LX resolved source=netease script=user_api_9a391901-35aa-4496-ab76-3c595af68a9f
+[DEBUG AudioPlayer] Bundled FFmpeg verified: sha256=ee930e8def21a993f4b8c680757df15054da1c8f2698da0fdf87f1f3b15bd633 bytes=172690600
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

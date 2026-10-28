@@ -121,6 +121,8 @@ internal fun MeloXDesktopProviderServices(navState: MeloXNavState, currentSource
                 }
             }
             Spacer(Modifier.height(22.dp))
+            melox.ui.screens.LxServicesSettings(desktop = true)
+            Spacer(Modifier.height(22.dp))
             DesktopSettingsForm {
                 Text(desktopPlatformString("services_search"), fontSize = 13.sp, fontWeight = FontWeight.SemiBold)
                 DesktopSettingsCheckbox(desktopPlatformString("services_unified"), unified, "desktop-service-unified") {

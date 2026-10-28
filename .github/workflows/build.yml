@@ -248,6 +248,16 @@ jobs:
               if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
             }
           }
+      - name: Replay LX source import and reload in both layouts
+        shell: pwsh
+        run: |
+          foreach ($layout in @("mobile", "desktop")) {
+            $homeDir = "$pwd/desktop/build/parity/lx-$layout-home"
+            foreach ($mode in @("controls", "reload")) {
+              python tools/capture_lx_services.py $layout $mode $homeDir "desktop/build/parity/lx-$layout-$mode"
+              if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+            }
+          }
       - name: Replay localized sponsor list in both layouts and Desktop About
         shell: pwsh
         run: |
@@ -549,6 +559,11 @@ jobs:
             desktop/build/parity/kugou-lite-*/expect.txt
             desktop/build/parity/kugou-lite-*/arguments.txt
             desktop/build/parity/kugou-lite-*/gradle.log
+            desktop/build/parity/lx-*/capture.json
+            desktop/build/parity/lx-*/steps.txt
+            desktop/build/parity/lx-*/expect.txt
+            desktop/build/parity/lx-*/arguments.txt
+            desktop/build/parity/lx-*/gradle.log
             desktop/build/parity/cli-*/*.json
             desktop/build/parity/cli-*/*.txt
             desktop/build/parity/cli-*/*.png

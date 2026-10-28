@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="LxLyricsIntegrationTest[desktop]" tests="1" skipped="0" failures="0" errors="0" timestamp="2026-10-28T08:51:25.197Z" hostname="lladlam-arch" time="28.54">
+  <properties/>
+  <testcase name="consentAndSourceChangesInvalidateCachedProviderLyrics[desktop]" classname="melox.lyrics.LxLyricsIntegrationTest" time="28.538"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

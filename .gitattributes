@@ -21,3 +21,5 @@ desktop/src/main/resources/parity/desktop-logo.png -text
 parity/53244b9/evidence/lan-update/**/*.xml text eol=lf
 tools/melox_cli.py text eol=lf
 docs/WINDOWS_CLI.md text eol=lf
+shared/src/desktopMain/resources/LxUser/*.js text eol=lf
+desktop/src/main/resources/parity/lx-services*.properties text eol=lf

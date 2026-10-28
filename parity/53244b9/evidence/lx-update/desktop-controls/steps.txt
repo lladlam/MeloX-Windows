@@ -1,0 +1,14 @@
+cloud-consent:tap@remote-reject
+reveal-services:reveal@settings-open-services
+services:tap@settings-open-services
+reveal-lx:reveal@lx-enabled
+enable:tap@lx-enabled
+terms:tap@lx-consent-terms
+close-terms:tap@legal-document-close
+agree:tap@lx-consent-accept
+membership:tap@lx-membership
+reveal-add:reveal@lx-add
+open-import:tap@lx-add
+url-focus:tap@lx-import-url
+type-url:type@http://127.0.0.1:40747/source.js
+import:tap@lx-import-submit

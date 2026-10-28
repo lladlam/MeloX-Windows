@@ -1,0 +1,8 @@
+reveal-services:reveal@settings-open-services
+services:tap@settings-open-services
+reveal-lx:reveal@lx-enabled
+persisted:wait@250
+reveal-add:reveal@lx-add
+remove:tap-first@lx-delete:
+disable:reveal@lx-enabled
+disabled:tap@lx-enabled

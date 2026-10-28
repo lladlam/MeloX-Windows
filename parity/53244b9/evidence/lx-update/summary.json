@@ -1,0 +1,25 @@
+{
+  "renderer": "production ImageComposeScene; mouse, wheel and keyboard input",
+  "cases": {
+    "mobile-controls": {
+      "scenes": 15,
+      "assertions": 11,
+      "passed": true
+    },
+    "mobile-reload": {
+      "scenes": 9,
+      "assertions": 6,
+      "passed": true
+    },
+    "desktop-controls": {
+      "scenes": 15,
+      "assertions": 11,
+      "passed": true
+    },
+    "desktop-reload": {
+      "scenes": 9,
+      "assertions": 6,
+      "passed": true
+    }
+  }
+}

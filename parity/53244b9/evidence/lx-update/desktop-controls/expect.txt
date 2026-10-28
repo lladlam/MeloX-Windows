@@ -1,0 +1,10 @@
+cloud-consent=cloud-enabled:false
+services=tag:desktop-provider-services
+enable=tag:lx-consent
+terms=tag:legal-document
+close-terms=tag:lx-consent
+agree=checked:lx-enabled
+membership=checked:lx-membership
+open-import=tag:lx-import-dialog
+type-url=enabled:lx-import-submit
+import=absent:lx-import-dialog,text:LX fixture

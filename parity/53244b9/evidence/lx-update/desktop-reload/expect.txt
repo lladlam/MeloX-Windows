@@ -1,0 +1,4 @@
+services=tag:desktop-provider-services
+persisted=checked:lx-enabled,checked:lx-membership
+reveal-add=text:LX fixture
+disabled=unchecked:lx-enabled,absent:lx-add

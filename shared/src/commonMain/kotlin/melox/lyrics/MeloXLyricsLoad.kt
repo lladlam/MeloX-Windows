@@ -5,6 +5,9 @@ import melox.music.model.MusicTrack
 import melox.music.provider.LyricsCapability
 import melox.music.provider.MusicProviderRegistry
 import melox.music.provider.SearchCapability
+import melox.music.provider.ThirdPartyMusicSourceConsentStore
+import melox.playback.LxUserPlaybackResolver
+import melox.provider.lxuser.LxUserSourceStore
 import melox.settings.MeloXSettingsRuntime
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
@@ -14,6 +17,7 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.runInterruptible
 import kotlinx.coroutines.withTimeoutOrNull
 import java.io.IOException
 
@@ -29,6 +33,7 @@ class MeloXLyricsLoad(
         val preference: MeloXLyricPreference,
         val registry: MusicProviderRegistry?,
         val bilibiliAlignment: Boolean,
+        val lxIdentity: String,
     )
     private val lock = Any()
     private val cache = object : LinkedHashMap<Key, LyricsDocument>(24, 0.75f, true) {
@@ -40,7 +45,8 @@ class MeloXLyricsLoad(
         val automatic = MeloXSettingsRuntime.automaticLyricSelectionEnabled || track.id.source == MusicSource.Local
         return Key(track, automatic,
             if (automatic && MeloXSettingsRuntime.lyricStrongBindingEnabled) LyricBindingStore.read(track.id) else null,
-            preference, registry, MeloXSettingsRuntime.bilibiliLyricAudioAlignmentEnabled)
+            preference, registry, MeloXSettingsRuntime.bilibiliLyricAudioAlignmentEnabled,
+            if (ThirdPartyMusicSourceConsentStore.enabled()) LxUserSourceStore.list().joinToString("|") { it.id } else "")
     }
 
     /** Collection belongs to the screen's media/language identity; cancellation suppresses stale upgrades. */
@@ -251,6 +257,13 @@ open class LyricDocumentSources {
     open suspend fun provider(track: MusicTrack, registry: MusicProviderRegistry?, preference: MeloXLyricPreference): LyricsDocument {
         val resolved = registry ?: melox.music.provider.MeloXMusicProviders.create()
         val lyrics = resolved.require(track.id.source) as? LyricsCapability ?: return LyricsDocument(emptyList())
+        if (track.id.source != MusicSource.Netease && ThirdPartyMusicSourceConsentStore.enabled()) {
+            val userSource = try {
+                runInterruptible(Dispatchers.IO) { LxUserPlaybackResolver().resolveLyrics(track) }
+            } catch (cancelled: CancellationException) { throw cancelled }
+            catch (_: Exception) { null }
+            if (userSource != null && userSource.lines.isNotEmpty()) return userSource
+        }
         return lyrics.lyrics(track, preference)
     }
 

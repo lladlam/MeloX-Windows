@@ -7,8 +7,8 @@ Checks, without trusting CI's own summary:
   3. stamped build-info revision equals the CI run's head SHA
   4. packaged pinned resource bytes (tools/verify_pinned_resources.py --artifact)
   5. packaged native decoder bytes and PE magic (tools/verify_decoder_bundle.py --artifact)
-    6. required runtime entries exist (launcher exe, application jar, ffmpeg.exe)
-   7. when present in the source revision, the CLI helper and instructions match Git bytes
+   6. required runtime entries exist (launcher exe, application jar, ffmpeg.exe)
+   7. when present, the CLI files and LX resources match Git bytes and the V8 DLL is PE
 
 Physical audio, Windows execution of ffmpeg.exe, DPAPI and pinned-Android pixels
 are out of scope here and stay BLOCKED/PENDING.
@@ -43,6 +43,8 @@ digest = hashlib.sha256(raw).hexdigest()
 
 failures = []
 cli_checks = []
+lx_checks = []
+lx_native = None
 with zipfile.ZipFile(io.BytesIO(raw)) as archive:
     bad = archive.testzip()
     if bad is not None:
@@ -76,6 +78,29 @@ with zipfile.ZipFile(io.BytesIO(raw)) as archive:
         assert len(decoders) == 1, f'expected one packaged ffmpeg.exe in the JAR, got {decoders}'
         decoder_info = jar.getinfo(decoders[0])
         decoder_bytes = decoder_info.file_size
+        lx_resources = [('shared/src/desktopMain/resources/LxUser/lx-prelude.js', 'LxUser/lx-prelude.js')]
+        lx_resources += [(f'desktop/src/main/resources/parity/lx-services{suffix}.properties', f'parity/lx-services{suffix}.properties')
+                         for suffix in ('', '-zh-rCN', '-zh-rTW', '-ja')]
+        for source, entry in lx_resources:
+            exists = bool(subprocess.check_output(['git', 'ls-tree', '--name-only', args.expected_sha, '--', source], cwd=repo).strip())
+            if not exists:
+                continue
+            expected = subprocess.check_output(['git', 'show', f'{args.expected_sha}:{source}'], cwd=repo)
+            actual = jar.read(entry) if entry in jar_names else None
+            passed = actual == expected
+            lx_checks.append({'entry': entry, 'source': source, 'verified': passed,
+                              'sha256': hashlib.sha256(actual).hexdigest() if actual is not None else None})
+            if not passed:
+                failures.append(f'LX runtime resource missing or differs from source: {entry}')
+        if lx_checks:
+            native = [name for name in jar_names if name.lower().startswith('libjavet-v8-windows-') and name.lower().endswith('.dll')]
+            native_bytes = jar.read(native[0]) if len(native) == 1 else None
+            lx_native = {'entry': native[0] if len(native) == 1 else None,
+                         'pe_magic': bool(native_bytes and native_bytes.startswith(b'MZ')),
+                         'bytes': len(native_bytes) if native_bytes is not None else None,
+                         'sha256': hashlib.sha256(native_bytes).hexdigest() if native_bytes is not None else None}
+            if not lx_native['pe_magic']:
+                failures.append(f'LX Windows V8 PE runtime missing or invalid: {native}')
     if revision != args.expected_sha:
         failures.append(f'build-info revision {revision} != expected {args.expected_sha}')
     for source, entry in (('tools/melox_cli.py', 'melox_cli.py'), ('docs/WINDOWS_CLI.md', 'WINDOWS_CLI.md')):
@@ -144,6 +169,10 @@ report = {
     'launcher_icon_check': tool_status.get('launcher_icon', 'NOT_IN_BASELINE'),
     'cli_helper_check': 'PASSED' if cli_checks and all(item['verified'] for item in cli_checks) else ('FAILED' if cli_checks else 'NOT_IN_BASELINE'),
     'cli_files': cli_checks,
+    'lx_resource_check': 'PASSED' if lx_checks and all(item['verified'] for item in lx_checks) else ('FAILED' if lx_checks else 'NOT_IN_BASELINE'),
+    'lx_resources': lx_checks,
+    'lx_v8_native_check': 'NOT_IN_BASELINE' if lx_native is None else ('PASSED' if lx_native['pe_magic'] else 'FAILED'),
+    'lx_v8_native': lx_native,
     'tools': tools,
     'physical_windows_execution': 'BLOCKED_NOT_RUN_HERE',
     'pinned_android_pixel_acceptance': 'BLOCKED_NO_REFERENCE_FRAMES',

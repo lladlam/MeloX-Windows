@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="LxUserScriptContractTest[desktop]" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-10-28T08:53:32.599Z" hostname="lladlam-arch" time="0.964">
+  <properties/>
+  <testcase name="sourceIdsAndKugouMetadataAreNotLost[desktop]" classname="melox.provider.lxuser.LxUserScriptContractTest" time="0.003"/>
+  <testcase name="responseHeadersAreLowercaseAndStringValued[desktop]" classname="melox.provider.lxuser.LxUserScriptContractTest" time="0.0"/>
+  <testcase name="qqMusicInfoIncludesFlatMediaAndQualityFields[desktop]" classname="melox.provider.lxuser.LxUserScriptContractTest" time="0.961"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

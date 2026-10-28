@@ -432,6 +432,11 @@ fun ProviderServicesScreen(navState: MeloXNavState, currentSource: MusicSource =
                 }
             }
 
+            item {
+                Spacer(Modifier.height(24.dp))
+                Column(Modifier.padding(horizontal = 20.dp)) { LxServicesSettings(desktop = false) }
+            }
+
             // ── Aggregated search section ──
             item {
                 Spacer(modifier = Modifier.height(24.dp))
