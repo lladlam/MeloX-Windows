@@ -1,0 +1,3 @@
+experimental=tag:settings-experimental,checked:setting-experimental_cli_enabled
+connected=checked:setting-experimental_cli_enabled
+disable=unchecked:setting-experimental_cli_enabled,pref-bool:experimental_cli_enabled:false

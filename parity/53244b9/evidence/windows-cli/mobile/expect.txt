@@ -1,0 +1,4 @@
+consent=cloud-enabled:false
+experimental=tag:settings-experimental
+enable=checked:setting-experimental_cli_enabled,pref-bool:experimental_cli_enabled:true
+commands=checked:setting-experimental_cli_enabled

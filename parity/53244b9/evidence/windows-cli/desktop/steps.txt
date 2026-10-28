@@ -1,0 +1,6 @@
+consent:tap@remote-reject
+developer:tap@desktop-settings-tab:Developer
+experimental:tap@desktop-settings-subtab:Experimental
+enable:tap@setting-experimental_cli_enabled
+commands:wait@40000
+disable:tap@setting-experimental_cli_enabled

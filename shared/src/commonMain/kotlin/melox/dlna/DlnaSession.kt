@@ -158,10 +158,11 @@ object DlnaSession {
                 withContext(Dispatchers.IO) { when (command) {
                     "play" -> DlnaController.call(target.transport, "Play", mapOf("Speed" to "1"))
                     "pause" -> DlnaController.call(target.transport, "Pause")
+                    "stop" -> DlnaController.call(target.transport, "Stop")
                     "seek" -> DlnaController.call(target.transport, "Seek", mapOf("Unit" to "REL_TIME", "Target" to DlnaController.time(positionMs)))
                 } }
                 mutable.update { it.copy(positionMs = if (command == "seek") positionMs else before.displayedPosition(),
-                    playing = when (command) { "play" -> true; "pause" -> false; else -> it.playing }, sampledNanos = System.nanoTime()) }
+                    playing = when (command) { "play" -> true; "pause", "stop" -> false; else -> it.playing }, sampledNanos = System.nanoTime()) }
             } catch (cancelled: CancellationException) { throw cancelled }
             catch (failure: Exception) { mutable.update { it.copy(error = failure.message) } }
         }

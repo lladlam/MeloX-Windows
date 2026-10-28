@@ -40,7 +40,20 @@ jobs:
       - name: Verify frozen Desktop SF Pro text faces
         run: python tools/build_desktop_text_fonts.py --verify
       - name: Build uber jar
-        run: gradle :shared:desktopTest :desktop:packageUberJarForCurrentOS
+        run: gradle :shared:desktopTest :desktop:desktopTest :desktop:packageUberJarForCurrentOS
+      - name: Replay Windows CLI through both real settings layouts
+        shell: pwsh
+        run: |
+          foreach ($layout in @("mobile", "desktop")) {
+            if ($layout -eq "mobile") {
+              python tools/capture_windows_cli.py $layout "$pwd/desktop/build/parity/cli-$layout-home" "desktop/build/parity/cli-$layout" --keep-enabled
+            } else {
+              python tools/capture_windows_cli.py $layout "$pwd/desktop/build/parity/cli-$layout-home" "desktop/build/parity/cli-$layout"
+            }
+            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          }
+          python tools/capture_windows_cli_reload.py "$pwd/desktop/build/parity/cli-mobile-home" "desktop/build/parity/cli-reload"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - name: Verify native equalizer PCM
         run: python tools/verify_native_equalizer.py shared/build/parity/test-home/native-pcm-evidence --output desktop/build/verification/equalizer-pcm.json
       - name: Audit decoded artwork memory budget and Windows process memory
@@ -445,6 +458,11 @@ jobs:
         run: python tools/verify_pinned_resources.py --artifact desktop/build/releases/MeloX-Desktop --output desktop/build/verification/image-pinned-resources.json
       - name: Verify actual Windows launcher icon
         run: python tools/verify_windows_icon.py --artifact desktop/build/releases/MeloX-Desktop --output desktop/build/verification/image-icon.json
+      - name: Include Windows CLI helper and instructions
+        shell: pwsh
+        run: |
+          Copy-Item tools/melox_cli.py desktop/build/releases/MeloX-Desktop/melox_cli.py
+          Copy-Item docs/WINDOWS_CLI.md desktop/build/releases/MeloX-Desktop/WINDOWS_CLI.md
       - name: Zip the app-image
         shell: pwsh
         run: |
@@ -516,6 +534,10 @@ jobs:
             desktop/build/parity/youtube-login-*/*.txt
             desktop/build/parity/youtube-login-*/*.png
             desktop/build/parity/youtube-login-*/gradle.log
+            desktop/build/parity/cli-*/*.json
+            desktop/build/parity/cli-*/*.txt
+            desktop/build/parity/cli-*/*.png
+            desktop/build/parity/cli-*/gradle.log
             desktop/build/parity/about-sponsors-*/*.json
             desktop/build/parity/about-sponsors-*/*.txt
             desktop/build/parity/about-sponsors-*/*.png
@@ -595,6 +617,7 @@ jobs:
             desktop/build/verification/font-metrics/*.json
             desktop/build/verification/font-metrics/*.png
             shared/build/test-results/desktopTest/*.xml
+            desktop/build/test-results/desktopTest/*.xml
             shared/build/parity/test-home/native-pcm-evidence/*
       - name: Upload zip artifact
         uses: actions/upload-artifact@v4

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="DesktopCliServerTest[desktop]" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-10-28T04:00:28.208Z" hostname="lladlam-arch" time="0.137">
+  <properties/>
+  <testcase name="disablingInterruptsAnInFlightCommand[desktop]" classname="melox.cli.DesktopCliServerTest" time="0.129"/>
+  <testcase name="localEndpointAuthenticatesAndClosesWithoutRunningUnauthorizedCommands[desktop]" classname="melox.cli.DesktopCliServerTest" time="0.004"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

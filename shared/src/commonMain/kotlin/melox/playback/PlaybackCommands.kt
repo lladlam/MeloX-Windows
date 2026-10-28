@@ -780,6 +780,28 @@ class MeloXDesktopPlayer internal constructor(
         persistSnapshot()
     }
 
+    /** Stop decoding without clearing the queue; a subsequent play resolves the selected item again. */
+    fun stop() {
+        if (melox.lan.MeloXLanRuntime.forwardGuestControl("pause")) return
+        actionRevision += 1
+        currentPosition = AudioPlayer.getCurrentPositionMs().coerceAtLeast(0L)
+        pendingSeekMs = currentPosition
+        playWhenReady = false
+        generation += 1
+        resolveJob?.cancel()
+        cancelMix(); smartJob?.cancel(); smartQueue.reset()
+        autoplay.cancel()
+        resetFailureRecovery()
+        awaitingAutoplay = false
+        currentResolved = null
+        playingEntryId = null
+        if (items.getOrNull(currentMediaItemIndex) != null) prepare(resolveAudio = false)
+        else if (PlaybackCommands.playerController() == this) AudioPlayer.stop()
+        melox.lan.MeloXLanRuntime.playbackChanged()
+        MeloXPlaybackEvents.publish(this, MeloXPlaybackEvents.Kind.Pause)
+        persistSnapshot()
+    }
+
     fun togglePlay() {
         if (melox.lan.MeloXLanRuntime.forwardGuestControl("toggle")) return
         if (playWhenReady && AudioPlayer.state.value.error == null && !AudioPlayer.state.value.isFinished) pause() else play()

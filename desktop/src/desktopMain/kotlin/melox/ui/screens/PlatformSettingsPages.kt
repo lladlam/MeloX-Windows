@@ -235,6 +235,15 @@ internal fun DeveloperSettings() {
 @Composable
 internal fun ExperimentalSettings(source: MusicSource) {
     var confirm by remember { mutableStateOf<String?>(null) }
+    SettingsGlassGroup {
+        SettingsExternalToggleRow("CLI 模式", melox.cli.DesktopCliRuntime.enabled, "setting-experimental_cli_enabled",
+            subtitle = "允许当前电脑上的命令行查询状态、控制播放和搜索歌曲") {
+            melox.cli.DesktopCliRuntime.setRequested(it)
+        }
+    }
+    if (melox.cli.DesktopCliRuntime.enabled) SettingsInfoCard("运行：python melox_cli.py status\n支持 play / pause / next / previous / seek / queue / search / search-play。")
+    melox.cli.DesktopCliRuntime.error?.let { Text(it, Modifier.testTag("cli-error").padding(vertical = 8.dp), color = MaterialTheme.colorScheme.error) }
+    Spacer(Modifier.height(10.dp))
     if (source == MusicSource.Bilibili) {
         SettingsGlassGroup { SettingsToggleRow("settings_bilibili_align", "bilibili_lyric_audio_alignment", false) }
         SettingsInfoCard(pinnedString("settings_bilibili_align_warning"))

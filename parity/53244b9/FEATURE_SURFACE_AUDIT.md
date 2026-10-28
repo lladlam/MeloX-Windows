@@ -53,7 +53,7 @@
 | 云控／主题／规则 | 当前签名平台熔断与基础配置已实现 | 新 schema 的文案／主题／规则消费者与受限 QuickJS 脚本未完成 |
 | 多语言 | 本轮补实际语言选择；已有 pinned 资源保持原文 | 全量最新资源导出、硬编码文案、土耳其语、桌面全部 Locale 覆盖 |
 | Windows 平台集成 | 布局切换即时保存、托盘、标题栏、键鼠已有实现／部分原生证据 | 用户触屏／触摸键盘、DRM、麦克风、长时 RSS 及 DPAPI 实机验收 |
-| CLI 模式（实时新增） | Android 新增 experimental_cli_enabled 设置、受 DUMP 权限约束的广播入口及 docs/CLI.md | Windows 运行进程的 CLI／IPC 后端、状态／队列／播放／搜索命令及双 UI 开关尚未实现；不能把 Android ADB 工具当作 Windows 控制能力 |
+| CLI 模式（实时新增） | Windows 新增两套设置入口、本机 CLI、真实播放／搜索及 Windows DPAPI 凭据保护；双布局实际输入、独立客户端和重启回放见 WINDOWS_CLI_UPDATE.md | Windows runner 的 DPAPI／Python 实际互通与包含脚本的新发行独立下载核验仍待完成；软件 PCM 不代表物理听音 |
 
 ### 继续追查“保存了但没有消费者”的选项
 

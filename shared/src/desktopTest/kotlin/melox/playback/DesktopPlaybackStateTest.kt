@@ -70,6 +70,27 @@ class DesktopPlaybackStateTest {
         assertEquals("2", starts.single().track.id.value)
     }
 
+    @Test fun stopCancelsResolutionKeepsQueueAndResumesOnlyOnPlay() = runTest {
+        val pending = CompletableDeferred<DesktopPlaybackRequest>()
+        var resolutions = 0
+        val starts = mutableListOf<DesktopPlaybackStart>()
+        val player = player({ if (++resolutions == 1) pending.await() else DesktopPlaybackRequest("resolved") }, starts)
+        PlaybackCommands.adoptController(player)
+        player.setMediaItems(listOf(song(1), song(2)), 1, 42_000)
+        player.prepare(); player.play(); runCurrent()
+        player.stop()
+        pending.complete(DesktopPlaybackRequest("stale")); runCurrent()
+        assertTrue(starts.isEmpty())
+        assertFalse(player.playWhenReady)
+        assertEquals(2, player.mediaItemCount)
+        assertEquals(1, player.currentMediaItemIndex)
+        assertEquals(42_000L, AudioPlayer.getCurrentPositionMs())
+        player.play(); runCurrent()
+        assertEquals(2, resolutions)
+        assertEquals(42_000L, starts.single().positionMs)
+        assertTrue(starts.single().playWhenReady)
+    }
+
     @Test fun collectionIdsSurviveQueuePersistenceAndBecomePlaybackMetadata() = runTest {
         val player = player({ DesktopPlaybackRequest("unused") })
         PlaybackCommands.adoptController(player)

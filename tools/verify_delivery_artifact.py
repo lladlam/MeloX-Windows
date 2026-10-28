@@ -7,7 +7,8 @@ Checks, without trusting CI's own summary:
   3. stamped build-info revision equals the CI run's head SHA
   4. packaged pinned resource bytes (tools/verify_pinned_resources.py --artifact)
   5. packaged native decoder bytes and PE magic (tools/verify_decoder_bundle.py --artifact)
-  6. required runtime entries exist (launcher exe, application jar, ffmpeg.exe)
+    6. required runtime entries exist (launcher exe, application jar, ffmpeg.exe)
+   7. when present in the source revision, the CLI helper and instructions match Git bytes
 
 Physical audio, Windows execution of ffmpeg.exe, DPAPI and pinned-Android pixels
 are out of scope here and stay BLOCKED/PENDING.
@@ -41,6 +42,7 @@ size = len(raw)
 digest = hashlib.sha256(raw).hexdigest()
 
 failures = []
+cli_checks = []
 with zipfile.ZipFile(io.BytesIO(raw)) as archive:
     bad = archive.testzip()
     if bad is not None:
@@ -76,6 +78,17 @@ with zipfile.ZipFile(io.BytesIO(raw)) as archive:
         decoder_bytes = decoder_info.file_size
     if revision != args.expected_sha:
         failures.append(f'build-info revision {revision} != expected {args.expected_sha}')
+    for source, entry in (('tools/melox_cli.py', 'melox_cli.py'), ('docs/WINDOWS_CLI.md', 'WINDOWS_CLI.md')):
+        exists = bool(subprocess.check_output(['git', 'ls-tree', '--name-only', args.expected_sha, '--', source], cwd=repo).strip())
+        if not exists:
+            continue
+        expected = subprocess.check_output(['git', 'show', f'{args.expected_sha}:{source}'], cwd=repo)
+        actual = archive.read(entry) if entry in entries else None
+        passed = actual == expected
+        cli_checks.append({'entry': entry, 'source': source, 'verified': passed,
+                           'sha256': hashlib.sha256(actual).hexdigest() if actual is not None else None})
+        if not passed:
+            failures.append(f'CLI distribution file missing or differs from source: {entry}')
 
 with zipfile.ZipFile(io.BytesIO(raw)) as archive:
     entry_sizes = {info.filename: info.file_size for info in archive.infolist()}
@@ -129,6 +142,8 @@ report = {
     'pinned_resource_check': tool_status.get('pinned_resources', 'FAILED'),
     'decoder_bundle_check': tool_status.get('decoder_bundle', 'FAILED'),
     'launcher_icon_check': tool_status.get('launcher_icon', 'NOT_IN_BASELINE'),
+    'cli_helper_check': 'PASSED' if cli_checks and all(item['verified'] for item in cli_checks) else ('FAILED' if cli_checks else 'NOT_IN_BASELINE'),
+    'cli_files': cli_checks,
     'tools': tools,
     'physical_windows_execution': 'BLOCKED_NOT_RUN_HERE',
     'pinned_android_pixel_acceptance': 'BLOCKED_NO_REFERENCE_FRAMES',

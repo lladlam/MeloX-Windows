@@ -1,0 +1,5 @@
+consent:tap@remote-reject
+reveal-experimental:reveal@settings-open-experimental
+experimental:tap@settings-open-experimental
+enable:tap@setting-experimental_cli_enabled
+commands:wait@40000

@@ -1,0 +1,232 @@
+{
+  "status": {
+    "artist": "",
+    "playWhenReady": false,
+    "mediaId": "",
+    "title": "",
+    "command": "status",
+    "volume": 1,
+    "repeat": 0,
+    "playing": false,
+    "state": 1,
+    "shuffle": false,
+    "ok": true,
+    "durationMs": -1,
+    "positionMs": 0
+  },
+  "search": {
+    "ok": true,
+    "tracks": [
+      {
+        "artist": "未知歌手",
+        "index": 0,
+        "source": "local",
+        "id": "5664e76b4bac4f3981a305bc",
+        "title": "Generated-00"
+      },
+      {
+        "artist": "未知歌手",
+        "index": 1,
+        "source": "local",
+        "id": "3a8e813370e9b5124360b18e",
+        "title": "Generated-01"
+      }
+    ]
+  },
+  "search_play": {
+    "artist": "未知歌手",
+    "playWhenReady": true,
+    "mediaId": "3a8e813370e9b5124360b18e",
+    "title": "Generated-01",
+    "command": "search-play",
+    "volume": 1,
+    "repeat": 0,
+    "playing": false,
+    "state": 2,
+    "shuffle": false,
+    "ok": true,
+    "durationMs": -1,
+    "positionMs": 0
+  },
+  "queue": {
+    "artist": "未知歌手",
+    "playWhenReady": true,
+    "mediaId": "3a8e813370e9b5124360b18e",
+    "title": "Generated-01",
+    "command": "queue",
+    "volume": 1,
+    "repeat": 0,
+    "playing": false,
+    "state": 2,
+    "shuffle": false,
+    "ok": true,
+    "durationMs": -1,
+    "queue": [
+      {
+        "index": 0,
+        "mediaId": "5664e76b4bac4f3981a305bc",
+        "title": "Generated-00"
+      },
+      {
+        "index": 1,
+        "mediaId": "3a8e813370e9b5124360b18e",
+        "title": "Generated-01"
+      }
+    ],
+    "positionMs": 0
+  },
+  "pause": {
+    "artist": "未知歌手",
+    "playWhenReady": false,
+    "mediaId": "3a8e813370e9b5124360b18e",
+    "title": "Generated-01",
+    "command": "pause",
+    "volume": 1,
+    "repeat": 0,
+    "playing": false,
+    "state": 3,
+    "shuffle": false,
+    "ok": true,
+    "durationMs": -1,
+    "positionMs": 117
+  },
+  "seek": {
+    "artist": "未知歌手",
+    "playWhenReady": false,
+    "mediaId": "3a8e813370e9b5124360b18e",
+    "title": "Generated-01",
+    "command": "seek",
+    "volume": 1,
+    "repeat": 0,
+    "playing": false,
+    "state": 3,
+    "shuffle": false,
+    "ok": true,
+    "durationMs": -1,
+    "positionMs": 2000
+  },
+  "volume": {
+    "artist": "未知歌手",
+    "playWhenReady": false,
+    "mediaId": "3a8e813370e9b5124360b18e",
+    "title": "Generated-01",
+    "command": "volume",
+    "volume": 0.5,
+    "repeat": 0,
+    "playing": false,
+    "state": 3,
+    "shuffle": false,
+    "ok": true,
+    "durationMs": -1,
+    "positionMs": 2000
+  },
+  "repeat": {
+    "artist": "未知歌手",
+    "playWhenReady": false,
+    "mediaId": "3a8e813370e9b5124360b18e",
+    "title": "Generated-01",
+    "command": "repeat",
+    "volume": 0.5,
+    "repeat": 2,
+    "playing": false,
+    "state": 3,
+    "shuffle": false,
+    "ok": true,
+    "durationMs": -1,
+    "positionMs": 2000
+  },
+  "shuffle": {
+    "artist": "未知歌手",
+    "playWhenReady": false,
+    "mediaId": "3a8e813370e9b5124360b18e",
+    "title": "Generated-01",
+    "command": "shuffle",
+    "volume": 0.5,
+    "repeat": 2,
+    "playing": false,
+    "state": 3,
+    "shuffle": true,
+    "ok": true,
+    "durationMs": -1,
+    "positionMs": 2000
+  },
+  "next": {
+    "artist": "未知歌手",
+    "playWhenReady": false,
+    "mediaId": "5664e76b4bac4f3981a305bc",
+    "title": "Generated-00",
+    "command": "next",
+    "volume": 0.5,
+    "repeat": 2,
+    "playing": false,
+    "state": 2,
+    "shuffle": true,
+    "ok": true,
+    "durationMs": -1,
+    "positionMs": 0
+  },
+  "previous": {
+    "artist": "未知歌手",
+    "playWhenReady": false,
+    "mediaId": "3a8e813370e9b5124360b18e",
+    "title": "Generated-01",
+    "command": "previous",
+    "volume": 0.5,
+    "repeat": 2,
+    "playing": false,
+    "state": 2,
+    "shuffle": true,
+    "ok": true,
+    "durationMs": -1,
+    "positionMs": 0
+  },
+  "stop": {
+    "artist": "未知歌手",
+    "playWhenReady": false,
+    "mediaId": "3a8e813370e9b5124360b18e",
+    "title": "Generated-01",
+    "command": "stop",
+    "volume": 0.5,
+    "repeat": 2,
+    "playing": false,
+    "state": 3,
+    "shuffle": true,
+    "ok": true,
+    "durationMs": -1,
+    "positionMs": 0
+  },
+  "play": {
+    "artist": "未知歌手",
+    "playWhenReady": true,
+    "mediaId": "3a8e813370e9b5124360b18e",
+    "title": "Generated-01",
+    "command": "play",
+    "volume": 0.5,
+    "repeat": 2,
+    "playing": false,
+    "state": 2,
+    "shuffle": true,
+    "ok": true,
+    "durationMs": -1,
+    "positionMs": 0
+  },
+  "invalid": {
+    "ok": false,
+    "error": "volume 范围为 0–1"
+  },
+  "final_pause": {
+    "artist": "未知歌手",
+    "playWhenReady": false,
+    "mediaId": "3a8e813370e9b5124360b18e",
+    "title": "Generated-01",
+    "command": "pause",
+    "volume": 0.5,
+    "repeat": 2,
+    "playing": false,
+    "state": 3,
+    "shuffle": true,
+    "ok": true,
+    "durationMs": -1,
+    "positionMs": 113
+  }
+}

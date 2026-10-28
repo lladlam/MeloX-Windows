@@ -67,7 +67,16 @@ kotlin {
                 implementation(compose.desktop.currentOs)
             }
         }
+        val desktopTest by getting {
+            dependencies { implementation(kotlin("test")) }
+        }
     }
+}
+
+tasks.withType<org.gradle.api.tasks.testing.Test>().configureEach {
+    val testHome = layout.buildDirectory.dir("verification/desktop-test-home")
+    systemProperty("user.home", testHome.get().asFile.absolutePath)
+    doFirst { testHome.get().asFile.mkdirs() }
 }
 
 compose.desktop {

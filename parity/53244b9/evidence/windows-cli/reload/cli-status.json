@@ -1,0 +1,15 @@
+{
+  "artist": "未知歌手",
+  "playWhenReady": false,
+  "mediaId": "3a8e813370e9b5124360b18e",
+  "title": "Generated-01",
+  "command": "status",
+  "volume": 1,
+  "repeat": 0,
+  "playing": false,
+  "state": 3,
+  "shuffle": true,
+  "ok": true,
+  "durationMs": -1,
+  "positionMs": 113
+}

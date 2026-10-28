@@ -1,0 +1,4 @@
+reveal:reveal@settings-open-experimental
+experimental:tap@settings-open-experimental
+connected:wait@10000
+disable:tap@setting-experimental_cli_enabled
