@@ -86,7 +86,9 @@ if args.song_menu:
     add('close-song-information', 'tap@desktop-collection-back', ['absent:desktop-song-detail', 'tag:desktop-playlist-detail'])
     if args.artist_route:
         add('artist-menu', 'tap-first@desktop-collection-more:', ['tag:desktop-song-menu'])
-        add('artist-route', 'tap@desktop-song-artist', ['tag:desktop-artist-detail', 'absent:artist-detail'])
+        add('artist-route', 'tap@desktop-song-artist', ['any-tag:desktop-artist-detail|desktop-search', 'absent:artist-detail'])
+        add('artist-search-result', 'tap-first-if-page@desktop-search,desktop-search-result:Artists:',
+            ['tag:desktop-artist-detail', 'absent:artist-detail'])
         # The hero appears after the real artist request resolves. Give the
         # network response its own settled scene instead of racing the first tap.
         add('artist-loaded', 'wait@1200', ['tag:desktop-artist-hero'])
@@ -95,7 +97,10 @@ if args.song_menu:
         # albums (for example a choir). Album drill-down is replayed by the
         # dedicated album page capture, so this route only asserts the real
         # artist surface and its return stack.
-        add('artist-return-playlist', 'tap@desktop-artist-back', ['tag:desktop-playlist-detail', 'absent:desktop-artist-detail'])
+        add('artist-return', 'tap@desktop-artist-back', ['any-tag:desktop-playlist-detail|desktop-search', 'absent:desktop-artist-detail'])
+        add('return-home', 'tap@desktop-nav:Home', ['tag:desktop-home'])
+        add('return-playlist-shelf', 'reveal@desktop-home-shelf:hero')
+        add('return-playlist', 'tap-first@desktop-home-playlist:', ['tag:desktop-playlist-detail'])
 add('back', 'tap@desktop-collection-back', ['absent:desktop-' + args.page + '-detail', 'tag:desktop-sidebar'])
 (output / 'steps.txt').write_text('\n'.join(steps) + '\n', encoding='utf-8')
 (output / 'expect.txt').write_text('\n'.join(name + '=' + ','.join(values) for name, values in checks.items() if values) + '\n', encoding='utf-8')

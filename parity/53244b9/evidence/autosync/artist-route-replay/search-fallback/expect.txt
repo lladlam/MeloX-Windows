@@ -1,0 +1,7 @@
+consent=cloud-enabled:false
+playlist=tag:desktop-playlist-detail
+menu=tag:desktop-song-menu
+route=tag:desktop-search
+result=tag:desktop-artist-detail
+loaded=tag:desktop-artist-hero
+back=tag:desktop-search,absent:desktop-artist-detail

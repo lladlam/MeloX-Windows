@@ -1,0 +1,115 @@
+{
+  "input": "java.awt.Robot real pointer",
+  "os": "Windows Server 2025",
+  "samples": [
+    {
+      "pointer": "java.awt.Point[x=512,y=384]",
+      "undecorated": true,
+      "stage": "floating-no-native-titlebar",
+      "bounds": "java.awt.Rectangle[x=48,y=48,width=640,height=480]",
+      "focused": true,
+      "placement": "Floating",
+      "minimized": false
+    },
+    {
+      "pointer": "java.awt.Point[x=368,y=288]",
+      "undecorated": true,
+      "stage": "physical-window-activation",
+      "bounds": "java.awt.Rectangle[x=48,y=48,width=640,height=480]",
+      "focused": true,
+      "placement": "Floating",
+      "minimized": false
+    },
+    {
+      "pointer": "java.awt.Point[x=619,y=65]",
+      "undecorated": true,
+      "stage": "physical-maximize",
+      "bounds": "java.awt.Rectangle[x=0,y=0,width=1024,height=768]",
+      "focused": true,
+      "placement": "Maximized",
+      "minimized": false
+    },
+    {
+      "pointer": "java.awt.Point[x=955,y=17]",
+      "undecorated": true,
+      "stage": "physical-restore",
+      "bounds": "java.awt.Rectangle[x=48,y=48,width=640,height=480]",
+      "focused": true,
+      "placement": "Floating",
+      "minimized": false
+    },
+    {
+      "pointer": "java.awt.Point[x=955,y=17]",
+      "undecorated": true,
+      "stage": "physical-fullscreen-restore",
+      "bounds": "java.awt.Rectangle[x=48,y=48,width=640,height=480]",
+      "focused": true,
+      "placement": "Floating",
+      "minimized": false
+    },
+    {
+      "pointer": "java.awt.Point[x=573,y=65]",
+      "undecorated": true,
+      "stage": "physical-minimize",
+      "bounds": "java.awt.Rectangle[x=48,y=48,width=640,height=480]",
+      "focused": false,
+      "placement": "Floating",
+      "minimized": true
+    },
+    {
+      "pointer": "java.awt.Point[x=168,y=65]",
+      "undecorated": true,
+      "stage": "physical-caption-double-click",
+      "bounds": "java.awt.Rectangle[x=0,y=0,width=1024,height=768]",
+      "focused": true,
+      "placement": "Maximized",
+      "minimized": false
+    },
+    {
+      "pointer": "java.awt.Point[x=758,y=574]",
+      "undecorated": true,
+      "stage": "physical-corner-resize",
+      "bounds": "java.awt.Rectangle[x=48,y=48,width=712,height=528]",
+      "focused": true,
+      "placement": "Floating",
+      "minimized": false
+    },
+    {
+      "pointer": "java.awt.Point[x=758,y=574]",
+      "undecorated": true,
+      "stage": "immersive-continuous-player-surface",
+      "bounds": "java.awt.Rectangle[x=48,y=48,width=712,height=528]",
+      "focused": true,
+      "placement": "Floating",
+      "minimized": false
+    },
+    {
+      "pointer": "java.awt.Point[x=691,y=65]",
+      "undecorated": true,
+      "stage": "immersive-physical-maximize",
+      "bounds": "java.awt.Rectangle[x=0,y=0,width=1024,height=768]",
+      "focused": true,
+      "placement": "Maximized",
+      "minimized": false
+    },
+    {
+      "pointer": "java.awt.Point[x=955,y=17]",
+      "undecorated": true,
+      "stage": "immersive-physical-restore",
+      "bounds": "java.awt.Rectangle[x=48,y=48,width=712,height=528]",
+      "focused": true,
+      "placement": "Floating",
+      "minimized": false
+    },
+    {
+      "pointer": "java.awt.Point[x=737,y=65]",
+      "undecorated": true,
+      "stage": "physical-close",
+      "bounds": "java.awt.Rectangle[x=48,y=48,width=712,height=528]",
+      "focused": true,
+      "placement": "Floating",
+      "minimized": false
+    }
+  ],
+  "status": "PASSED"
+}

@@ -1,0 +1,7 @@
+consent:tap@remote-reject
+playlist:wait@1500
+menu:tap-first@desktop-collection-more:
+route:tap@desktop-song-artist
+result:tap-first-if-page@desktop-search,desktop-search-result:Artists:
+loaded:wait@1200
+back:tap@desktop-artist-back

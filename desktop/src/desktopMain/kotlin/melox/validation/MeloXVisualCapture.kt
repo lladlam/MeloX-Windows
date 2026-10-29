@@ -114,6 +114,9 @@ fun main(args: Array<String>) = runBlocking {
         option("--album-id", "").takeIf(String::isNotBlank)?.toLong()?.let {
             melox.ui.navigation.MeloXCollectionLaunchBus.open(melox.ui.navigation.MeloXCollectionTarget.Album(it))
         }
+        option("--playlist-id", "").takeIf(String::isNotBlank)?.toLong()?.let {
+            melox.ui.navigation.MeloXCollectionLaunchBus.open(melox.ui.navigation.MeloXCollectionTarget.Playlist(it))
+        }
         val playId = option("--play-id", "").takeIf(String::isNotBlank)?.toLong()
         option("--local-wavs", "").takeIf(String::isNotBlank)?.let { paths ->
             val tracks = paths.split(',').map { path ->
@@ -179,6 +182,7 @@ fun main(args: Array<String>) = runBlocking {
                 "algorithm" -> melox.recommendation.LocalRecommendationStore.isAlgorithmEnabled() == expected.toBooleanStrict()
                 "index" -> melox.playback.PlaybackCommands.queue.value.index == expected.toInt()
                 "tag" -> semantics.tagged(expected) != null
+                "any-tag" -> expected.split('|').any { semantics.tagged(it) != null }
                 "text" -> semantics.any { node -> node.config.getOrNull(SemanticsProperties.Text)?.any { it.text == expected } == true }
                 "disabled" -> semantics.tagged(expected)?.config?.contains(SemanticsProperties.Disabled) == true
                 "enabled" -> semantics.tagged(expected)?.config?.contains(SemanticsProperties.Disabled) == false
@@ -375,7 +379,14 @@ fun main(args: Array<String>) = runBlocking {
             assertScene("00-${startTab.lowercase()}")
             val savedPoints = mutableMapOf<String, Offset>()
             steps.forEachIndexed { index, step ->
-                val (name, coordinates) = step.split(':', limit = 2)
+                val (name, requestedCoordinates) = step.split(':', limit = 2)
+                // Some real provider rows have no artist ID: the app correctly
+                // falls back to artist search. Follow that result by pointer;
+                // direct artist routes need no additional click.
+                val coordinates = if (requestedCoordinates.startsWith("tap-first-if-page@")) {
+                    val (page, prefix) = requestedCoordinates.substringAfter('@').split(',', limit = 2)
+                    if (scene.captureSemantics().tagged(page) != null) "tap-first@$prefix" else "wait@0"
+                } else requestedCoordinates
                 val eventStart = System.nanoTime()
                 if (coordinates.startsWith("remember-point@")) {
                     val tag = coordinates.substringAfter('@')

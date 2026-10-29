@@ -47,7 +47,7 @@ for scene in data['scenes']:
                 'desktop-song-favorite', 'desktop-song-information'} <= tagged.keys()
         desktop_menus.append(dict(scene=scene['file'], bounds=bounds))
     hero = tagged.get('desktop-artist-hero')
-    if hero and scene['file'].endswith('-artist-route.png'):
+    if hero and scene['file'].endswith('-artist-loaded.png'):
         assert 'artist-detail' not in tagged, 'Desktop must not render the Android artist page'
         bounds = hero['bounds']
         assert abs((bounds[3] - bounds[1]) / scale - 380) <= 1
@@ -95,6 +95,8 @@ for stage in ['native-touch-scroll', 'promoted-touch-scroll']:
         assert index > 0 or offset >= 100, (stage, state, 'Drag did not actually scroll')
 if args.page == 'playlist':
     assert search_empty and search_restored
+if any('tap@desktop-song-artist' in step for step in steps):
+    assert artist_frames, 'Artist hero geometry was not verified after the real route'
 log = (directory / 'gradle.log').read_text(encoding='utf-8', errors='replace')
 assert 'Exception in thread' not in log, 'A background exception invalidates the replay'
 reference = None
