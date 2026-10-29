@@ -43,6 +43,7 @@ import okhttp3.Response
 import okhttp3.ResponseBody.Companion.asResponseBody
 import okio.buffer
 import okio.source
+import org.json.JSONObject
 import kotlin.math.abs
 
 /**
@@ -55,6 +56,11 @@ object AutoSyncRealModelContract {
     @JvmStatic fun main(args: Array<String>) = runBlocking<Unit> {
         require(args.size == 1 && args[0].isNotBlank()) { "Set -PautoSyncFixtures to a directory of beta.4 assets and contract WAVs" }
         val fixtures = File(args[0])
+        val reference = JSONObject(File(fixtures, "python-reference.json").readText())
+        fun spans(language: String): List<Pair<Int, Int>> {
+            val entries = reference.getJSONObject(language).getJSONArray("spans")
+            return (0 until entries.length()).map { entries.getJSONArray(it).let { span -> span.getInt(0) to span.getInt(1) } }
+        }
         val indexFile = File(fixtures, "android-models.json")
         check(sha256(indexFile) == AutoSyncModelRepository.INDEX_SHA256) { "Wrong model index" }
         val waveHashes = mapOf(
@@ -86,28 +92,25 @@ object AutoSyncRealModelContract {
                 OnnxAlignmentEngine.open(model).use { engine ->
                     val pcm = pcm(wav)
                     when (language) {
-                        "en" -> checkCtc(engine, pcm, listOf(11, 5, 15, 15, 8),
-                            listOf(3 to 3, 8 to 8, 23 to 23, 63 to 63, 69 to 69), -23.99066960066557)
-                        "ja" -> checkCtc(engine, pcm, listOf(46, 11, 4, 17, 5, 46),
-                            listOf(112 to 112, 140 to 140, 143 to 143, 146 to 146, 147 to 147, 148 to 148), -3.3208488352101995)
+                        "en" -> checkCtc(engine, pcm, listOf(11, 5, 15, 15, 8), spans("en"), reference.getJSONObject("en").getDouble("total"))
+                        "ja" -> checkCtc(engine, pcm, listOf(46, 11, 4, 17, 5, 46), spans("ja"), reference.getJSONObject("ja").getDouble("total"))
                         "zh" -> {
-                            val spans = engine.chinese(pcm, 5).map { it.startMs to it.endMs }
-                            check(spans == listOf(410L to 650L, 830L to 1070L, 1250L to 1490L,
-                                2030L to 2270L, 2430L to 2670L)) { "Chinese reference mismatch: $spans" }
+                            val actualSpans = engine.chinese(pcm, 5).map { it.startMs to it.endMs }
+                            check(actualSpans == spans("zh").map { it.first.toLong() to it.second.toLong() }) { "Chinese reference mismatch: $actualSpans" }
                         }
                     }
                 }
                 println("PASS: $language beta.4 verified install and real ONNX/Python-reference alignment")
             }
-            verifyPlaybackIntegration(File(fixtures, "en_vector.wav"), "en")
-            verifyPlaybackIntegration(File(fixtures, "zh_vector.wav"), "zh")
+            verifyPlaybackIntegration(File(fixtures, "en_vector.wav"), "en", spans("en"))
+            verifyPlaybackIntegration(File(fixtures, "zh_vector.wav"), "zh", spans("zh"))
         } finally {
             routing.selectSource(previous)
             root.deleteRecursively() // This executable created this isolated directory.
         }
     }
 
-    private suspend fun verifyPlaybackIntegration(wav: File, language: String) {
+    private suspend fun verifyPlaybackIntegration(wav: File, language: String, reference: List<Pair<Int, Int>>) {
         val previousOutput = AudioPlayer.outputLineFactory
         val output = ControlledOutput()
         val scope = CoroutineScope(SupervisorJob() + Dispatchers.Unconfined)
@@ -140,9 +143,8 @@ object AutoSyncRealModelContract {
             val aligned = checkNotNull(MeloXAutoSync.generate(track, document)) { "Real playback alignment returned no timeline" }
             val units = aligned.lines.first().syllables
             val actual = units.map { Triple(it.text, it.startTimeMs, it.endTimeMs) }
-            val expected = if (language == "en") listOf(Triple("HELLO", 60L, 1400L)) else listOf(
-                Triple("你", 410L, 650L), Triple("好", 830L, 1070L), Triple("世", 1250L, 1490L),
-                Triple("界", 2030L, 2270L), Triple("啊", 2430L, 2670L))
+            val expected = if (language == "en") listOf(Triple("HELLO", reference.first().first * 20L, (reference.last().second + 1) * 20L))
+                else "你好世界啊".mapIndexed { i, char -> Triple(char.toString(), reference[i].first.toLong(), reference[i].second.toLong()) }
             check(actual == expected) { "Unexpected $language playback alignment: $actual" }
             check(aligned.lines.drop(1) == document.lines.drop(1)) { "Untimed/credit lines must retain their original timing" }
             check(MeloXAutoSync.generate(track, document) == aligned) { "Stored timeline did not reload" }

@@ -48,6 +48,10 @@ jobs:
         run: |
           python tools/fetch_autosync_fixtures.py "$pwd/desktop/build/autosync-contract-fixtures"
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python -m pip install "onnxruntime==1.31.0" numpy
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python tools/autosync_model_reference.py "$pwd/desktop/build/autosync-contract-fixtures"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           gradle :shared:verifyAutoSyncModelContracts "-PautoSyncFixtures=$pwd/desktop/build/autosync-contract-fixtures" --console=plain *> desktop/build/verification/autosync-model-contract.log
           Get-Content desktop/build/verification/autosync-model-contract.log
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
@@ -593,6 +597,7 @@ jobs:
             desktop/build/parity/autosync-*/*.png
             desktop/build/parity/autosync-*/gradle.log
             desktop/build/verification/autosync-model-contract.log
+            desktop/build/autosync-contract-fixtures/python-reference.json
             desktop/build/parity/cli-*/*.json
             desktop/build/parity/cli-*/*.txt
             desktop/build/parity/cli-*/*.png

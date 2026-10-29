@@ -11,3 +11,5 @@
 Windows CI 配置了真实模型契约、双布局设置回放和新发行包的 ONNX Windows x64 DLL 字节核验；实际 Windows CI 及完整下载后的独立发行核验结果另记。
 
 本地四组双布局真实指针／滚轮回放全部通过：controls 各 19 scenes／23 assertions，独立 JVM reload 各 6 scenes／9 assertions。截图、输入轨迹、断言和测试 XML 保存在 `evidence/autosync/`。
+
+Windows CI `40820522890` 和 `40820485793` 在真实模型测试的英文 CTC 固定 Linux 帧断言失败，两者实际输出均为 `23, 30, 49, 88, 105`，未生成发行包。模型和 WAV 哈希验证通过，具体差异原因尚待确认。为避免把不同 CPU 的量化模型数值当作固定真值，改为在同一 runner 上单独用 Python ONNX Runtime 与 NumPy 参考实现生成对齐结果，再严格比较 JVM 结果、总分及播放器时间线；Linux 上新参考复现此前独立参考的英、日、中文结果。失败日志见 `evidence/autosync/windows-ci-40820522890/`，Windows 新结果另记。
