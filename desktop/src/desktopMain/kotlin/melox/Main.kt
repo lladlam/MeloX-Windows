@@ -45,6 +45,8 @@ fun main() {
     }
 
     try {
+        val singleInstance = SingleInstance.acquire(java.nio.file.Path.of(melox.platform.meloXDataDir())) ?: return
+        try {
         melox.settings.MeloXSettingsPreferences.initializeCritical()
         application {
             androidx.compose.runtime.LaunchedEffect(Unit) {
@@ -84,6 +86,10 @@ fun main() {
             }
             val showWindow: () -> Unit = { windowVisible = true; windowState.isMinimized = false; restoreRequest++ }
             val currentShow by rememberUpdatedState(showWindow)
+            DisposableEffect(singleInstance) {
+                singleInstance.onActivate { currentShow() }
+                onDispose { }
+            }
             val currentQuit by rememberUpdatedState(quitApplication)
             val closeToTray = melox.settings.MeloXSettingsRuntime.closeToTrayEnabled
             DisposableEffect(closeToTray) {
@@ -156,6 +162,7 @@ fun main() {
                 }
             }
         }
+        } finally { singleInstance.close() }
     } catch (e: Exception) {
         val sw = StringWriter()
         e.printStackTrace(PrintWriter(sw))
