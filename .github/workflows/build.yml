@@ -41,6 +41,16 @@ jobs:
         run: python tools/build_desktop_text_fonts.py --verify
       - name: Build uber jar
         run: gradle :shared:desktopTest :desktop:desktopTest :desktop:packageUberJarForCurrentOS
+      - name: Verify real ONNX models and playback alignment on Windows
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python tools/fetch_autosync_fixtures.py "$pwd/desktop/build/autosync-contract-fixtures"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          gradle :shared:verifyAutoSyncModelContracts "-PautoSyncFixtures=$pwd/desktop/build/autosync-contract-fixtures" --console=plain *> desktop/build/verification/autosync-model-contract.log
+          Get-Content desktop/build/verification/autosync-model-contract.log
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - name: Replay Windows CLI through both real settings layouts
         shell: pwsh
         run: |
@@ -255,6 +265,20 @@ jobs:
             $homeDir = "$pwd/desktop/build/parity/lx-$layout-home"
             foreach ($mode in @("controls", "reload")) {
               python tools/capture_lx_services.py $layout $mode $homeDir "desktop/build/parity/lx-$layout-$mode"
+              if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+            }
+          }
+      - name: Replay AutoSync controls and reload in both layouts
+        shell: pwsh
+        run: |
+          foreach ($layout in @("mobile", "desktop")) {
+            $homeDir = "$pwd/desktop/build/parity/autosync-$layout-home"
+            foreach ($mode in @("controls", "reload")) {
+              if ($mode -eq "controls") {
+                python tools/capture_autosync_settings.py $layout $mode $homeDir "desktop/build/parity/autosync-$layout-$mode" --fixtures "$pwd/desktop/build/autosync-contract-fixtures"
+              } else {
+                python tools/capture_autosync_settings.py $layout $mode $homeDir "desktop/build/parity/autosync-$layout-$mode"
+              }
               if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
             }
           }
@@ -564,6 +588,11 @@ jobs:
             desktop/build/parity/lx-*/expect.txt
             desktop/build/parity/lx-*/arguments.txt
             desktop/build/parity/lx-*/gradle.log
+            desktop/build/parity/autosync-*/*.json
+            desktop/build/parity/autosync-*/*.txt
+            desktop/build/parity/autosync-*/*.png
+            desktop/build/parity/autosync-*/gradle.log
+            desktop/build/verification/autosync-model-contract.log
             desktop/build/parity/cli-*/*.json
             desktop/build/parity/cli-*/*.txt
             desktop/build/parity/cli-*/*.png

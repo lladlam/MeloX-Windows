@@ -128,6 +128,8 @@ object MeloXSettingsRuntime {
         internal set
     var lyricPseudoTimingEnabled by mutableStateOf(false)
         internal set
+    var autoSyncWordLyricsEnabled by mutableStateOf(false)
+        internal set
     var lyricTapSeekEnabled by mutableStateOf(true)
         internal set
     var lyricLongPressShareEnabled by mutableStateOf(true)
@@ -475,6 +477,7 @@ object MeloXSettingsRuntime {
         showLyricRomanization = prefs().getBoolean("lyrics_romanization", false)
         lyricWordByWordEnabled = prefs().getBoolean("lyrics_word_by_word", true)
         lyricPseudoTimingEnabled = prefs().getBoolean("lyrics_pseudo_timing", false)
+        autoSyncWordLyricsEnabled = prefs().getBoolean("autosync_word_lyrics_enabled", false)
         lyricTapSeekEnabled = prefs().getBoolean("lyrics_tap_seek", true)
         lyricLongPressShareEnabled = prefs().getBoolean("lyrics_long_press_share", true)
         lyricInterludeCountdownEnabled = prefs().getBoolean("lyrics_interlude_countdown", true)

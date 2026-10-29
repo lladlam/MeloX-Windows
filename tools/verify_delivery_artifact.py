@@ -8,7 +8,7 @@ Checks, without trusting CI's own summary:
   4. packaged pinned resource bytes (tools/verify_pinned_resources.py --artifact)
   5. packaged native decoder bytes and PE magic (tools/verify_decoder_bundle.py --artifact)
    6. required runtime entries exist (launcher exe, application jar, ffmpeg.exe)
-   7. when present, the CLI files and LX resources match Git bytes and the V8 DLL is PE
+   7. when present, CLI/LX/AutoSync resources match Git bytes and native DLLs are PE
 
 Physical audio, Windows execution of ffmpeg.exe, DPAPI and pinned-Android pixels
 are out of scope here and stay BLOCKED/PENDING.
@@ -21,6 +21,7 @@ import hashlib
 import io
 import json
 from pathlib import Path
+import struct
 import subprocess
 import sys
 import zipfile
@@ -45,6 +46,8 @@ failures = []
 cli_checks = []
 lx_checks = []
 lx_native = None
+autosync_checks = []
+onnx_native = []
 with zipfile.ZipFile(io.BytesIO(raw)) as archive:
     bad = archive.testzip()
     if bad is not None:
@@ -101,6 +104,37 @@ with zipfile.ZipFile(io.BytesIO(raw)) as archive:
                          'sha256': hashlib.sha256(native_bytes).hexdigest() if native_bytes is not None else None}
             if not lx_native['pe_magic']:
                 failures.append(f'LX Windows V8 PE runtime missing or invalid: {native}')
+        autosync_source = 'shared/src/commonMain/kotlin/melox/autosync/OnnxAlignmentEngine.kt'
+        has_autosync = bool(subprocess.check_output(['git', 'ls-tree', '--name-only', args.expected_sha, '--', autosync_source], cwd=repo).strip())
+        if has_autosync:
+            for suffix in ('', '-zh-rCN', '-zh-rTW', '-ja'):
+                source = f'desktop/src/main/resources/parity/autosync{suffix}.properties'
+                entry = f'parity/autosync{suffix}.properties'
+                expected = subprocess.check_output(['git', 'show', f'{args.expected_sha}:{source}'], cwd=repo)
+                actual = jar.read(entry) if entry in jar_names else None
+                passed = actual == expected
+                autosync_checks.append({'entry': entry, 'source': source, 'verified': passed,
+                                        'sha256': hashlib.sha256(actual).hexdigest() if actual is not None else None})
+                if not passed:
+                    failures.append(f'AutoSync settings resource missing or differs from source: {entry}')
+            # Exact Windows x64 native bytes from com.microsoft.onnxruntime:onnxruntime:1.31.0.
+            expected_native = {
+                'onnxruntime.dll': 'f5af81b2119177c237b228b2824576827cdf457526e1ac2647cbcc690736d608',
+                'onnxruntime4j_jni.dll': 'd56f5bf52fc2e3fa7d80e10a42407b4cc00b377cbd73a13f5af30280438f60d5',
+                'onnxruntime_providers_shared.dll': '1d8286a3a134aa3ffea6baeec1d90ce16e822de3fa048505b104e22206d16221',
+            }
+            for filename, expected in expected_native.items():
+                entry = f'ai/onnxruntime/native/win-x64/{filename}'
+                actual = jar.read(entry) if jar_names.count(entry) == 1 else None
+                offset = struct.unpack_from('<I', actual, 0x3c)[0] if actual and len(actual) >= 64 and actual[:2] == b'MZ' else -1
+                pe = bool(actual and 0 <= offset <= len(actual) - 6 and actual[offset:offset + 4] == b'PE\0\0'
+                          and struct.unpack_from('<H', actual, offset + 4)[0] == 0x8664)
+                sha = hashlib.sha256(actual).hexdigest() if actual is not None else None
+                passed = pe and sha == expected
+                onnx_native.append({'entry': entry, 'bytes': len(actual) if actual is not None else None,
+                                    'sha256': sha, 'expected_sha256': expected, 'pe_x64': pe, 'verified': passed})
+                if not passed:
+                    failures.append(f'AutoSync ONNX Windows x64 runtime missing or differs from pinned bytes: {entry}')
     if revision != args.expected_sha:
         failures.append(f'build-info revision {revision} != expected {args.expected_sha}')
     for source, entry in (('tools/melox_cli.py', 'melox_cli.py'), ('docs/WINDOWS_CLI.md', 'WINDOWS_CLI.md')):
@@ -173,6 +207,10 @@ report = {
     'lx_resources': lx_checks,
     'lx_v8_native_check': 'NOT_IN_BASELINE' if lx_native is None else ('PASSED' if lx_native['pe_magic'] else 'FAILED'),
     'lx_v8_native': lx_native,
+    'autosync_resource_check': 'PASSED' if autosync_checks and all(item['verified'] for item in autosync_checks) else ('FAILED' if autosync_checks else 'NOT_IN_BASELINE'),
+    'autosync_resources': autosync_checks,
+    'onnx_windows_native_check': 'PASSED' if onnx_native and all(item['verified'] for item in onnx_native) else ('FAILED' if onnx_native else 'NOT_IN_BASELINE'),
+    'onnx_windows_native': onnx_native,
     'tools': tools,
     'physical_windows_execution': 'BLOCKED_NOT_RUN_HERE',
     'pinned_android_pixel_acceptance': 'BLOCKED_NO_REFERENCE_FRAMES',

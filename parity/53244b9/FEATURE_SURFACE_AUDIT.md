@@ -39,12 +39,12 @@
 | 酷狗概念版 | 独立 KugouLite provider、隔离账号与设备标识、独立二维码、真实目录／播放解析与双奖励请求；两套设置入口、每日状态及双布局回放见 KUGOU_LITE_UPDATE.md；Windows CI `40655109227` 通过，发行完整下载并独立核验 | 真实扫码、私人收藏、完整播放和每日领取须真实账号实机验收，HTTP fixture 不代表线上成功 |
 | 汽水 | `ec5753a`：真实协议、双布局、账号 QR、游标、歌词与试听识别 | 用户真实扫码确认、登录态搜索与完整播放 |
 | Bilibili | `4c94f7e`：收藏的他人列表／合集、分页与单视频隔离 | 用户私人列表；WBI 播放及音质细节与最新 Android 持续对照 |
-| 播放回退 | native → 内置串行严格完整匹配 → CHKSZ／LX；工作区新增 V8 脚本执行、隔离 HTTP、双布局导入和实际软件 PCM 回归，见 LX_USER_SOURCES_UPDATE.md | 本批 Windows CI 与发行待验证；真实第三方脚本／账号／权限和物理听音实机验收 |
+| 播放回退 | native → 内置串行严格完整匹配 → CHKSZ／LX；新增 V8 脚本执行、隔离 HTTP、双布局导入和实际软件 PCM 回归；Windows CI `40786674119` 与发行独立核验通过，见 LX_USER_SOURCES_UPDATE.md | 真实第三方脚本／账号／权限和物理听音实机验收 |
 | 播放器／队列／MiniPlay | 两套独立呈现＋真实 PlaybackCommands／PCM；既有 Dock／AutoMix 证据；队列新增全 provider 元数据持久化并兼容旧字段；AutoMix 双封面背景与双 PCM 联合回放见 ANDROID_BRANDING_AUTOMIX_UPDATE.md | MiniPlay 材质与侧反射、横竖屏同一时钟、所有页面封面 morph、私人线上音源与物理听音 |
 | 歌词／罗马音 | 双布局渲染、语言链、真实歌词；本轮接 JapaneseRubyAlignment 及视觉行字符范围；348 tests 与双布局 17 scenes／18 assertions 通过，见 ROMANIZATION_070_UPDATE.md | 线上同内容日文曲目、天际／EVA／TextPV 同内容动画验收 |
 | 歌词样式选项 | Windows 仍保留 Apple Music／EVA／TextPV 可选 | Android 0.7 当前仅显示 Apple Music；现有用户设置兼容策略需随迁移明确核销 |
 | 歌词分享 | 已有真实 PNG 导出，本轮接自定义图背景 | 长按多行、背景与排版同内容对照、原生保存对话框 |
-| AutoSync 模型 | 当前没有 Windows 等价模型面板／完整推理链 | **ONNX／中文 CIF／日文 G2P、模型下载校验／存储所有权、真实推理均待实现** |
+| AutoSync 模型 | 两套设置入口、固定模型索引、应用自有文件管理、FFmpeg PCM、英文 CTC／中文 CIF 与逐行歌词接线，见 AUTOSYNC_UPDATE.md | 日文 OpenJTalk／词典与播放器接线、人工逐词真值、真实线上音源及 Windows 发行验证 |
 | EQ／AutoMix | 实际 PCM DSP、智能队列分析额度与既有 Linux／Windows 回归 | 物理听感、长时内存和所有硬件输出接入 |
 | LAN／DLNA | 进程级会话、两套输出面板、真实协议与回环测试 | Windows↔Android 跨机、多网卡／防火墙／长时漂移、物理音箱 |
 | MiPlay／USB 独占 | Android 为 Binder／usbfs 平台实现 | **Windows 对应 backend 未实现**；不能仅增加开关称支持 |

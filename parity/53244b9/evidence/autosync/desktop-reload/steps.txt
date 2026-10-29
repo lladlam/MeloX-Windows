@@ -1,0 +1,5 @@
+developer:tap@desktop-settings-tab:Developer
+experimental:tap@desktop-settings-subtab:Experimental
+reveal-control:reveal@autosync-enabled
+reloaded:wait@200
+disable:tap@autosync-enabled

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="LyricLanguageLoadingTest[desktop]" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-10-29T01:17:30.171Z" hostname="lladlam-arch" time="0.265">
+  <properties/>
+  <testcase name="lateOldLanguageAndRegionalCacheCannotOverwriteNewLanguage[desktop]" classname="melox.lyrics.LyricLanguageLoadingTest" time="0.185"/>
+  <testcase name="cancelledOldLanguageUpgradeKeepsSnapshotAndCannotEmitIntoNewCollection[desktop]" classname="melox.lyrics.LyricLanguageLoadingTest" time="0.078"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

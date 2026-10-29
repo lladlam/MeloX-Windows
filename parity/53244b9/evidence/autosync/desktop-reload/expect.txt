@@ -1,0 +1,3 @@
+experimental=tag:settings-page:Experimental
+reloaded=checked:autosync-enabled,pref-bool:autosync_word_lyrics_enabled:true,runtime:autoSyncWordLyricsEnabled:true,tag:autosync-notice
+disable=unchecked:autosync-enabled,pref-bool:autosync_word_lyrics_enabled:false,runtime:autoSyncWordLyricsEnabled:false,absent:autosync-notice

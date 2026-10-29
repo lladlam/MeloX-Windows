@@ -23,3 +23,5 @@ tools/melox_cli.py text eol=lf
 docs/WINDOWS_CLI.md text eol=lf
 shared/src/desktopMain/resources/LxUser/*.js text eol=lf
 desktop/src/main/resources/parity/lx-services*.properties text eol=lf
+desktop/src/main/resources/parity/autosync*.properties text eol=lf
+shared/src/desktopTest/resources/autosync/*.wav -text

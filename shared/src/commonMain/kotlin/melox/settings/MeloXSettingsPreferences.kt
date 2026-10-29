@@ -73,6 +73,7 @@ object MeloXSettingsPreferences {
             "lyrics_romanization" -> MeloXSettingsRuntime.showLyricRomanization = value
             "lyrics_word_by_word" -> MeloXSettingsRuntime.lyricWordByWordEnabled = value
             "lyrics_pseudo_timing" -> MeloXSettingsRuntime.lyricPseudoTimingEnabled = value
+            "autosync_word_lyrics_enabled" -> MeloXSettingsRuntime.autoSyncWordLyricsEnabled = value
             "lyrics_tap_seek" -> MeloXSettingsRuntime.lyricTapSeekEnabled = value
             "lyrics_long_press_share" -> MeloXSettingsRuntime.lyricLongPressShareEnabled = value
             "lyrics_interlude_countdown" -> MeloXSettingsRuntime.lyricInterludeCountdownEnabled = value

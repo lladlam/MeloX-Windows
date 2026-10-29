@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="BilibiliMatchedLyricsTest[desktop]" tests="8" skipped="0" failures="0" errors="0" timestamp="2026-10-29T01:17:27.957Z" hostname="lladlam-arch" time="1.071">
+  <properties/>
+  <testcase name="missingLowConfidenceOrConflictingThirdSourceCannotCreateAssociation[desktop]" classname="melox.lyrics.BilibiliMatchedLyricsTest" time="0.15"/>
+  <testcase name="unsafeCatalogVersionCannotReachLyricsOrPersistAssociation[desktop]" classname="melox.lyrics.BilibiliMatchedLyricsTest" time="0.023"/>
+  <testcase name="matchingPrimaryNeverFetchesNeteaseLyricsOrSearchesReplacement[desktop]" classname="melox.lyrics.BilibiliMatchedLyricsTest" time="0.015"/>
+  <testcase name="disabledAlignmentStillLoadsMatchedLyricsButNeverWritesOrSearchesReplacement[desktop]" classname="melox.lyrics.BilibiliMatchedLyricsTest" time="0.01"/>
+  <testcase name="threePreciseSourcesSavePhysicalAssociationWithoutChangingLogicalTrack[desktop]" classname="melox.lyrics.BilibiliMatchedLyricsTest" time="0.021"/>
+  <testcase name="loaderKeysAlignmentAndBypassesGenericLateUpgradeForBilibili[desktop]" classname="melox.lyrics.BilibiliMatchedLyricsTest" time="0.391"/>
+  <testcase name="productionSaveHonorsDisableAndInterveningAssociationRemoval[desktop]" classname="melox.lyrics.BilibiliMatchedLyricsTest" time="0.426"/>
+  <testcase name="unknownDurationDoesNotSearchAndCancellationIsNotAnEmptySuccess[desktop]" classname="melox.lyrics.BilibiliMatchedLyricsTest" time="0.032"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

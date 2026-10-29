@@ -235,6 +235,8 @@ internal fun DeveloperSettings() {
 @Composable
 internal fun ExperimentalSettings(source: MusicSource) {
     var confirm by remember { mutableStateOf<String?>(null) }
+    AutoSyncSettings()
+    Spacer(Modifier.height(10.dp))
     SettingsGlassGroup {
         SettingsExternalToggleRow("CLI 模式", melox.cli.DesktopCliRuntime.enabled, "setting-experimental_cli_enabled",
             subtitle = "允许当前电脑上的命令行查询状态、控制播放和搜索歌曲") {

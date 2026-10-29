@@ -74,6 +74,7 @@ import kotlin.math.roundToInt
 
 internal class MeloXPlayerLyricsState(val track: MusicTrack) {
     var document by mutableStateOf<LyricsDocument?>(null)
+    var providerDocument by mutableStateOf<LyricsDocument?>(null)
     var loading by mutableStateOf(true)
     var error by mutableStateOf<String?>(null)
     var shareIndex by mutableStateOf<Int?>(null)
@@ -111,7 +112,8 @@ internal fun rememberMeloXPlayerLyrics(track: MusicTrack): MeloXPlayerLyricsStat
         state.error = null
         try {
             MeloXLyricsLoad.shared.observe(track, preference = preference).collect { document ->
-                if (state.document == null || melox.playback.MeloXPlaybackOutput.positionMs.value <= MeloXLyricsLoad.AmllUpgradeWindowMs) {
+                if (state.providerDocument == null || melox.playback.MeloXPlaybackOutput.positionMs.value <= MeloXLyricsLoad.AmllUpgradeWindowMs) {
+                    state.providerDocument = document
                     state.document = document
                 }
                 state.loading = false
@@ -122,6 +124,25 @@ internal fun rememberMeloXPlayerLyrics(track: MusicTrack): MeloXPlayerLyricsStat
             state.error = error.message ?: "歌词加载失败"
         } finally {
             state.loading = false
+        }
+    }
+    val sourceDocument = state.providerDocument
+    val autoSyncEnabled = MeloXSettingsRuntime.autoSyncWordLyricsEnabled
+    val modelRevision by melox.autosync.MeloXAutoSyncModels.revision.collectAsState()
+    val queue by PlaybackCommands.queue.collectAsState()
+    val playbackTrack by AudioPlayer.currentTrack.collectAsState()
+    val selectedEntry = queue.entryIds.getOrNull(queue.index)
+    LaunchedEffect(state, sourceDocument, autoSyncEnabled, modelRevision, selectedEntry, playbackTrack?.id) {
+        if (sourceDocument == null) return@LaunchedEffect
+        state.document = sourceDocument
+        if (!autoSyncEnabled) return@LaunchedEffect
+        try {
+            val aligned = melox.autosync.MeloXAutoSync.generate(track, sourceDocument)
+            if (aligned != null && state.providerDocument === sourceDocument) state.document = aligned
+        } catch (cancelled: CancellationException) {
+            throw cancelled
+        } catch (error: Exception) {
+            melox.platform.logWarn("MeloXAutoSync", "Alignment unavailable: ${error.javaClass.simpleName}")
         }
     }
     return state

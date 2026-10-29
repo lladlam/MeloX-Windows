@@ -41,7 +41,7 @@ object KugouKrcLyricsParser {
                 if (timingMatches.isEmpty()) {
                     val text = content.trim()
                     if (text.isNotBlank()) {
-                        add(LyricLine(lineStart, lineDuration, text))
+                        add(LyricLine(lineStart, lineDuration, text, timingKind = LyricTimingKind.LineSynchronized))
                     }
                     continue
                 }

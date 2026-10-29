@@ -13,7 +13,12 @@ internal class FfmpegPcmDecoder(
     startMs: Long = 0,
     durationMs: Long = Long.MAX_VALUE,
     filters: String? = null,
+    outputRate: Int = 44_100,
+    outputChannels: Int = 2,
 ) : Closeable {
+    private val frameBytes = (outputChannels * 2).also {
+        require(outputRate in 8_000..192_000 && outputChannels in 1..2)
+    }
     private val closed = AtomicBoolean(false)
     private val stderr = StringBuilder()
     private val process = ProcessBuilder(buildList {
@@ -28,7 +33,7 @@ internal class FfmpegPcmDecoder(
         addAll(listOf("-i", uri))
         if (durationMs != Long.MAX_VALUE) addAll(listOf("-t", "%.3f".format(Locale.ROOT, durationMs / 1000.0)))
         if (filters != null) addAll(listOf("-af", filters))
-        addAll(listOf("-f", "s16le", "-acodec", "pcm_s16le", "-ar", "44100", "-ac", "2", "pipe:1"))
+        addAll(listOf("-f", "s16le", "-acodec", "pcm_s16le", "-ar", outputRate.toString(), "-ac", outputChannels.toString(), "pipe:1"))
     }).start()
     init { processes.add(process) }
     private val errorReader = thread(name = "melox-pcm-stderr", isDaemon = true) {
@@ -41,9 +46,9 @@ internal class FfmpegPcmDecoder(
     }
     fun read(bytes: ByteArray, length: Int = bytes.size): Int {
         check(!closed.get()) { "Decoder session released" }
-        require(length in 0..bytes.size && length % 4 == 0)
+        require(length in 0..bytes.size && length % frameBytes == 0)
         val count = process.inputStream.readNBytes(bytes, 0, length)
-        if (count % 4 != 0) throw IOException("Decoder emitted incomplete stereo PCM frame")
+        if (count % frameBytes != 0) throw IOException("Decoder emitted an incomplete PCM frame")
         return count
     }
     fun verifyExit() {

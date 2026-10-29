@@ -164,6 +164,7 @@ object QQMusicQrcLyricsParser {
                         durationMs = lineDuration,
                         text = text,
                         syllables = syllables,
+                        timingKind = if (syllables.isEmpty()) LyricTimingKind.LineSynchronized else LyricTimingKind.Precise,
                         agent = LyricAgent("qrc-${alignment.name}", alignment.name, alignment),
                     )
             }

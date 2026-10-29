@@ -32,6 +32,8 @@ kotlin {
                 implementation("org.xerial:sqlite-jdbc:3.53.4.0")
                 // Recognition runs the pinned JS/WASM only when requested; no external Node install.
                 implementation("com.caoccao.javet:javet:6.0.2")
+                // CPU ONNX Runtime matches Android's model protocol; weights are downloaded separately.
+                implementation("com.microsoft.onnxruntime:onnxruntime:1.31.0")
                 val javetOs = if (System.getProperty("os.name").startsWith("Windows")) "windows" else "linux"
                 runtimeOnly("com.caoccao.javet:javet-v8-$javetOs-x86_64:6.0.2")
                 implementation(project(":innertube"))
@@ -67,4 +69,15 @@ kotlin {
             }
         }
     }
+}
+
+// The three public model packs are fetched separately, never committed. Windows
+// CI runs this executable explicitly using the production test classpath.
+tasks.register<JavaExec>("verifyAutoSyncModelContracts") {
+    dependsOn("desktopTestClasses")
+    classpath = tasks.named<org.gradle.api.tasks.testing.Test>("desktopTest").get().classpath
+    mainClass.set("melox.autosync.AutoSyncRealModelContract")
+    args(providers.gradleProperty("autoSyncFixtures").orElse("").get())
+    maxHeapSize = "512m"
+    systemProperty("user.home", layout.buildDirectory.dir("parity/test-home").get().asFile.absolutePath)
 }
