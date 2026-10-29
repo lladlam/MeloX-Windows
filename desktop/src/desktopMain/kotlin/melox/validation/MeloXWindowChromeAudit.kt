@@ -78,7 +78,8 @@ fun main(args: Array<String>) {
                 fun record(stage: String) {
                     samples.put(JSONObject().put("stage", stage).put("placement", window.placement.toString())
                         .put("minimized", state.isMinimized).put("bounds", window.bounds.toString())
-                        .put("undecorated", window.isUndecorated))
+                        .put("focused", window.isFocused).put("undecorated", window.isUndecorated)
+                        .put("pointer", java.awt.MouseInfo.getPointerInfo()?.location.toString()))
                 }
                 fun captionPoint(buttonFromRight: Int): Pair<Int, Int> {
                     val transform = window.graphicsConfiguration.defaultTransform
@@ -94,6 +95,12 @@ fun main(args: Array<String>) {
                     check(window.isUndecorated && window.insets.top == 0) { "OS title bar still present" }
                     window.minimumSize = java.awt.Dimension(320, 240)
                     record("floating-no-native-titlebar")
+                    // A newly shown Windows window can appear behind the runner's
+                    // foreground window; the first click may only activate it.
+                    // Activate by real pointer input before exercising the caption.
+                    click(window.x + window.width / 2, window.y + window.height / 2)
+                    await { window.isFocused }
+                    record("physical-window-activation")
                     captionClick(1)
                     await { window.placement == WindowPlacement.Maximized }
                     record("physical-maximize")
@@ -161,6 +168,7 @@ fun main(args: Array<String>) {
                 } catch (error: Throwable) {
                     failure = error
                     record("failed")
+                    runCatching { ImageIO.write(robot.createScreenCapture(screen), "png", File(output.parentFile, "window-caption-failure.png")) }
                 } finally {
                     if (immersive) melox.settings.MeloXSettingsPreferences.setBoolean("windows_immersive_caption", false)
                     output.writeText(JSONObject().put("status", if (failure == null && closedByButton) "PASSED" else "FAILED")

@@ -1,0 +1,22 @@
+{
+  "input": "java.awt.Robot real pointer",
+  "os": "Windows Server 2025",
+  "error": "kotlinx.coroutines.TimeoutCancellationException: Timed out waiting for 10000 ms",
+  "samples": [
+    {
+      "undecorated": true,
+      "stage": "floating-no-native-titlebar",
+      "bounds": "java.awt.Rectangle[x=48,y=48,width=640,height=480]",
+      "placement": "Floating",
+      "minimized": false
+    },
+    {
+      "undecorated": true,
+      "stage": "failed",
+      "bounds": "java.awt.Rectangle[x=48,y=48,width=640,height=480]",
+      "placement": "Floating",
+      "minimized": false
+    }
+  ],
+  "status": "FAILED"
+}

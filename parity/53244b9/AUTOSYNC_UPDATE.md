@@ -8,8 +8,12 @@
 
 日文发布模型的 ONNX 契约已验证，但 Windows 播放歌词所需的 OpenJTalk 原生 G2P、NAIST 词典下载和原文字符映射尚未接入，界面明确显示不可生成日文逐词歌词。原生前端正在隔离目录验证，不能将单独模型推理视为日文完整功能。
 
+隔离原型现已用 Windows JRE／JNA 在 Wine 中加载 Windows PE 前端，打开包含中文路径的真实 NAIST 词典，并通过 20 组 Android／Python 日文逐字符参考向量，记录见 `evidence/autosync/openjtalk-prototype/windows-wine-jna-golden.txt`。Wine 环境自动解包 JNA DLL 时崩溃，预解包后通过；这不是 Windows 原生机或生产接线验收。
+
 Windows CI 配置了真实模型契约、双布局设置回放和新发行包的 ONNX Windows x64 DLL 字节核验；实际 Windows CI 及完整下载后的独立发行核验结果另记。
 
 本地四组双布局真实指针／滚轮回放全部通过：controls 各 19 scenes／23 assertions，独立 JVM reload 各 6 scenes／9 assertions。截图、输入轨迹、断言和测试 XML 保存在 `evidence/autosync/`。
 
 Windows CI `40820522890` 和 `40820485793` 在真实模型测试的英文 CTC 固定 Linux 帧断言失败，两者实际输出均为 `23, 30, 49, 88, 105`，未生成发行包。模型和 WAV 哈希验证通过，具体差异原因尚待确认。为避免把不同 CPU 的量化模型数值当作固定真值，改为在同一 runner 上单独用 Python ONNX Runtime 与 NumPy 参考实现生成对齐结果，再严格比较 JVM 结果、总分及播放器时间线；Linux 上新参考复现此前独立参考的英、日、中文结果。失败日志见 `evidence/autosync/windows-ci-40820522890/`，Windows 新结果另记。
+
+Windows CI `40821926845` 第一次运行中，英、日、中文实际 ONNX 与同机 Python 参考一致，英文和中文真实播放器／FFmpeg／模型／歌词缓存链以及切歌丢弃旧结果均通过。随后既有原生窗口标题栏回放在首次最大化点击后超时，按原断言重跑仍在同一位置失败，故未生成发行 ZIP；两次窗口状态与模型日志见 `evidence/autosync/windows-ci-40821926845-attempt1/`。回放现先以真实鼠标点击激活窗口并确认焦点，失败时额外保留屏幕截图；各标题栏操作断言不变，修正后结果另记。
