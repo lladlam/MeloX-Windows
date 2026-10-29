@@ -64,6 +64,7 @@ fun main(args: Array<String>) {
             }
             LaunchedEffect(window) {
                 val robot = Robot()
+                val previousAlwaysOnTop = window.isAlwaysOnTop
                 suspend fun await(condition: () -> Boolean) {
                     withTimeout(10_000) { while (!condition()) delay(25) }
                     delay(350)
@@ -93,6 +94,11 @@ fun main(args: Array<String>) {
                 try {
                     await { window.isShowing && window.width > 0 }
                     check(window.isUndecorated && window.insets.top == 0) { "OS title bar still present" }
+                    // Hosted Windows runners may display their own terminal over
+                    // the test window even when AWT reports the window focused.
+                    // Keep the audit target unobscured while using real input.
+                    window.isAlwaysOnTop = true
+                    window.toFront()
                     window.minimumSize = java.awt.Dimension(320, 240)
                     record("floating-no-native-titlebar")
                     // A newly shown Windows window can appear behind the runner's
@@ -170,6 +176,7 @@ fun main(args: Array<String>) {
                     record("failed")
                     runCatching { ImageIO.write(robot.createScreenCapture(screen), "png", File(output.parentFile, "window-caption-failure.png")) }
                 } finally {
+                    window.isAlwaysOnTop = previousAlwaysOnTop
                     if (immersive) melox.settings.MeloXSettingsPreferences.setBoolean("windows_immersive_caption", false)
                     output.writeText(JSONObject().put("status", if (failure == null && closedByButton) "PASSED" else "FAILED")
                         .put("os", System.getProperty("os.name")).put("input", "java.awt.Robot real pointer")
