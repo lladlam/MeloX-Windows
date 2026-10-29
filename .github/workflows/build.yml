@@ -41,6 +41,17 @@ jobs:
         run: python tools/build_desktop_text_fonts.py --verify
       - name: Build uber jar
         run: gradle :shared:desktopTest :desktop:desktopTest :desktop:packageUberJarForCurrentOS
+      - name: Verify real Japanese dictionary and bundled native frontend on Windows
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          New-Item -ItemType Directory -Force desktop/build/autosync-ja-fixture | Out-Null
+          gh release download v1.11.1 --repo r9y9/open_jtalk --pattern open_jtalk_dic_utf_8-1.11.tar.gz --dir desktop/build/autosync-ja-fixture
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          gradle :shared:verifyAutoSyncJapaneseDictionary "-PautoSyncDictionaryArchive=$pwd/desktop/build/autosync-ja-fixture/open_jtalk_dic_utf_8-1.11.tar.gz" "-PautoSyncDictionaryFrontend=bundled" --console=plain *> desktop/build/verification/autosync-ja-contract.log
+          Get-Content desktop/build/verification/autosync-ja-contract.log
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - name: Verify real ONNX models and playback alignment on Windows
         shell: pwsh
         env:

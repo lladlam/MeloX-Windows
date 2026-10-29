@@ -8,8 +8,13 @@ import org.json.JSONObject
 object AutoSyncJapaneseFrontendContract {
     @JvmStatic fun main(args: Array<String>) {
         require(args.size == 3) { "Expected library, dictionary directory, and golden vector paths" }
+        val report = System.getProperty("melox.autosync.ja.report")?.let(::File)
+        report?.writeText("started", Charsets.UTF_8)
         val vectors = JSONObject(File(args[2]).readText(Charsets.UTF_8)).getJSONArray("vectors")
-        JaOpenJtalk(File(args[0]), File(args[1])).use { frontend ->
+        report?.appendText("\nvectors loaded", Charsets.UTF_8)
+        val library = if (args[0] == "bundled") AutoSyncJapaneseNative.library() else File(args[0])
+        report?.appendText("\nlibrary extracted", Charsets.UTF_8)
+        JaOpenJtalk(library, File(args[1])).use { frontend ->
             val mapper = JapaneseG2pMapper(frontend)
             for (i in 0 until vectors.length()) {
                 val vector = vectors.getJSONObject(i)
@@ -31,7 +36,9 @@ object AutoSyncJapaneseFrontendContract {
             check(mapper.map("あ\u0000い") == null)
             check(frontend.phonemes("a".repeat(4097)) == null)
         }
-        println("PASS ${vectors.length()} Android/Python golden vectors through native OpenJTalk + JNA; bounded input")
+        val message = "PASS ${vectors.length()} Android/Python golden vectors through native OpenJTalk + JNA; bounded input"
+        report?.appendText("\n$message\n", Charsets.UTF_8)
+        println(message)
     }
 
     private fun JSONArray.strings() = (0 until length()).map { getString(it) }

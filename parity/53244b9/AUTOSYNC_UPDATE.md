@@ -26,4 +26,6 @@ Windows CI `40821926845` 第一次运行中，英、日、中文实际 ONNX 与�
 
 Windows CI `40834891150` 对提交 `35a35f65a4f2ed8a0e53b59b87781d1e9be46bfc` 全部通过，包括真实模型、标题栏、触摸、歌手路由、双布局回放及最终打包。完整发行 ZIP 已重新下载并独立验证：392,620,515 字节，359 个条目，SHA-256 `e44db45ed72ee5f2b2d1122b2c7052ebb8773f24fc205358689ca8fb5e58abd9`；ZIP／JAR CRC、版本戳、图标、固定资源、FFmpeg、CLI、LX V8 与三枚 ONNX Windows x64 DLL 均通过。详细记录见 `evidence/windows-download-40834891150/verification.json`；该离线核验不代表本机物理 Windows 执行或物理听音。
 
-日文基础组件已迁入源码：NAIST 词典固定哈希下载、有界解包、损坏修复及互斥管理，OpenJTalk G2P 原生源码、JNA 包装与 Android 字符映射。真实发布词典已通过安装、完整性及移除契约；仓库内 Linux 前端通过 20 组 Android／Python 逐字符向量，Windows 交叉编译前端在 Wine 中以 Windows JRE／JNA、中文词典路径通过同组向量。词典管理及原生前端尚未接入设置、打包和播放器，日文生成仍不可用；Wine 结果不是原生 Windows 验收。
+日文基础组件已迁入源码：NAIST 词典固定哈希下载、有界解包、损坏修复及互斥管理，OpenJTalk G2P 原生源码、JNA 包装与 Android 字符映射。真实发布词典已通过安装、完整性及移除契约；仓库内 Linux 前端通过 20 组 Android／Python 逐字符向量，Windows 交叉编译前端在 Wine 中以 Windows JRE／JNA、中文词典路径通过同组向量。词典管理及原生前端尚未接入设置和播放器，日文生成仍不可用；Wine 结果不是原生 Windows 验收。
+
+随包前端正在接线：固定哈希的 Linux 和 Windows x64 原生库、许可文本、校验提取及独立发行包检查已加入；Linux 使用真实归档安装的词典和随包库通过同组向量。Windows JRE／Wine 组合在 `File.createTempFile` 处中断，独立最小 Java 程序也复现该环境问题，故此前直接 DLL 加载的通过结果不代表随包提取路径通过。Windows CI 新增真实发布词典、非 ASCII 路径和随包 DLL 的完整向量契约，结果另记；设置与播放器接线仍待完成。

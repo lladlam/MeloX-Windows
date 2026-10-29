@@ -48,6 +48,8 @@ lx_checks = []
 lx_native = None
 autosync_checks = []
 onnx_native = []
+japanese_native = None
+japanese_licenses = []
 with zipfile.ZipFile(io.BytesIO(raw)) as archive:
     bad = archive.testzip()
     if bad is not None:
@@ -135,6 +137,31 @@ with zipfile.ZipFile(io.BytesIO(raw)) as archive:
                                     'sha256': sha, 'expected_sha256': expected, 'pe_x64': pe, 'verified': passed})
                 if not passed:
                     failures.append(f'AutoSync ONNX Windows x64 runtime missing or differs from pinned bytes: {entry}')
+        ja_source = 'shared/src/desktopMain/resources/autosync/native/melox_ja_g2p-win-x64.dll'
+        if subprocess.check_output(['git', 'ls-tree', '--name-only', args.expected_sha, '--', ja_source], cwd=repo).strip():
+            pointer = subprocess.check_output(['git', 'show', f'{args.expected_sha}:{ja_source}'], cwd=repo).decode('ascii')
+            oid = next(line.removeprefix('oid sha256:') for line in pointer.splitlines() if line.startswith('oid sha256:'))
+            expected_size = int(next(line.removeprefix('size ') for line in pointer.splitlines() if line.startswith('size ')))
+            entry = 'autosync/native/melox_ja_g2p-win-x64.dll'
+            actual = jar.read(entry) if jar_names.count(entry) == 1 else None
+            offset = struct.unpack_from('<I', actual, 0x3c)[0] if actual and len(actual) >= 64 and actual[:2] == b'MZ' else -1
+            pe = bool(actual and 0 <= offset <= len(actual) - 6 and actual[offset:offset + 4] == b'PE\0\0'
+                      and struct.unpack_from('<H', actual, offset + 4)[0] == 0x8664)
+            sha = hashlib.sha256(actual).hexdigest() if actual is not None else None
+            passed = pe and sha == oid and len(actual) == expected_size
+            japanese_native = {'entry': entry, 'sha256': sha, 'expected_sha256': oid, 'bytes': len(actual) if actual is not None else None,
+                               'pe_x64': pe, 'verified': passed}
+            if not passed:
+                failures.append('Japanese OpenJTalk Windows x64 frontend missing or differs from pinned LFS bytes')
+            for name in ('COPYING.mecab', 'COPYING.open_jtalk', 'NOTICE.md'):
+                source = f'shared/src/desktopMain/resources/autosync/licenses/{name}'
+                expected = subprocess.check_output(['git', 'show', f'{args.expected_sha}:{source}'], cwd=repo)
+                entry = f'autosync/licenses/{name}'
+                actual = jar.read(entry) if jar_names.count(entry) == 1 else None
+                verified = actual == expected
+                japanese_licenses.append({'entry': entry, 'verified': verified})
+                if not verified:
+                    failures.append(f'Japanese OpenJTalk license missing or differs from source: {entry}')
     if revision != args.expected_sha:
         failures.append(f'build-info revision {revision} != expected {args.expected_sha}')
     for source, entry in (('tools/melox_cli.py', 'melox_cli.py'), ('docs/WINDOWS_CLI.md', 'WINDOWS_CLI.md')):
@@ -211,6 +238,9 @@ report = {
     'autosync_resources': autosync_checks,
     'onnx_windows_native_check': 'PASSED' if onnx_native and all(item['verified'] for item in onnx_native) else ('FAILED' if onnx_native else 'NOT_IN_BASELINE'),
     'onnx_windows_native': onnx_native,
+    'japanese_native_check': 'NOT_IN_BASELINE' if japanese_native is None else ('PASSED' if japanese_native['verified'] else 'FAILED'),
+    'japanese_native': japanese_native,
+    'japanese_licenses': japanese_licenses,
     'tools': tools,
     'physical_windows_execution': 'BLOCKED_NOT_RUN_HERE',
     'pinned_android_pixel_acceptance': 'BLOCKED_NO_REFERENCE_FRAMES',

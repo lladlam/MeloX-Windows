@@ -26,3 +26,4 @@ desktop/src/main/resources/parity/lx-services*.properties text eol=lf
 desktop/src/main/resources/parity/autosync*.properties text eol=lf
 shared/src/desktopTest/resources/autosync/*.wav -text
 native/openjtalk/third_party/** -whitespace
+shared/src/desktopMain/resources/autosync/native/* filter=lfs diff=lfs merge=lfs -text

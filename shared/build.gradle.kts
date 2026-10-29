@@ -88,6 +88,9 @@ tasks.register<JavaExec>("verifyAutoSyncJapaneseDictionary") {
     classpath = tasks.named<org.gradle.api.tasks.testing.Test>("desktopTest").get().classpath
     mainClass.set("melox.autosync.AutoSyncJapaneseDictionaryContract")
     args(providers.gradleProperty("autoSyncDictionaryArchive").orElse("").get())
+    providers.gradleProperty("autoSyncDictionaryFrontend").orNull?.let { library ->
+        args(library, project.file("src/desktopTest/resources/autosync/ja_g2p_vectors.json").absolutePath)
+    }
     systemProperty("user.home", layout.buildDirectory.dir("parity/test-home").get().asFile.absolutePath)
 }
 

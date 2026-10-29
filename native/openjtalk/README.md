@@ -16,5 +16,8 @@ For a local Linux build, run `cmake -S native/openjtalk -B <build-dir>
 -DCMAKE_BUILD_TYPE=Release`, followed by `cmake --build <build-dir>`. For a
 Windows x64 cross-build use `-DCMAKE_SYSTEM_NAME=Windows`,
 `-DCMAKE_C_COMPILER=x86_64-w64-mingw32-gcc` and
-`-DCMAKE_CXX_COMPILER=x86_64-w64-mingw32-g++`. The resulting library is not yet
-connected to the application package or Japanese player alignment.
+`-DCMAKE_CXX_COMPILER=x86_64-w64-mingw32-g++`. The packaged Linux and Windows
+x64 libraries are pinned via Git LFS; `AutoSyncJapaneseNative` verifies their
+SHA-256 before loading. Windows cross-builds use `x86_64-w64-mingw32-strip
+--strip-unneeded` for the packaged DLL. Japanese player alignment is not yet
+connected.
