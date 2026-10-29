@@ -34,6 +34,7 @@ kotlin {
                 implementation("com.caoccao.javet:javet:6.0.2")
                 // CPU ONNX Runtime matches Android's model protocol; weights are downloaded separately.
                 implementation("com.microsoft.onnxruntime:onnxruntime:1.31.0")
+                implementation("org.apache.commons:commons-compress:1.27.1")
                 val javetOs = if (System.getProperty("os.name").startsWith("Windows")) "windows" else "linux"
                 runtimeOnly("com.caoccao.javet:javet-v8-$javetOs-x86_64:6.0.2")
                 implementation(project(":innertube"))
@@ -79,5 +80,23 @@ tasks.register<JavaExec>("verifyAutoSyncModelContracts") {
     mainClass.set("melox.autosync.AutoSyncRealModelContract")
     args(providers.gradleProperty("autoSyncFixtures").orElse("").get())
     maxHeapSize = "512m"
+    systemProperty("user.home", layout.buildDirectory.dir("parity/test-home").get().asFile.absolutePath)
+}
+
+tasks.register<JavaExec>("verifyAutoSyncJapaneseDictionary") {
+    dependsOn("desktopTestClasses")
+    classpath = tasks.named<org.gradle.api.tasks.testing.Test>("desktopTest").get().classpath
+    mainClass.set("melox.autosync.AutoSyncJapaneseDictionaryContract")
+    args(providers.gradleProperty("autoSyncDictionaryArchive").orElse("").get())
+    systemProperty("user.home", layout.buildDirectory.dir("parity/test-home").get().asFile.absolutePath)
+}
+
+tasks.register<JavaExec>("verifyAutoSyncJapaneseFrontend") {
+    dependsOn("desktopTestClasses")
+    classpath = tasks.named<org.gradle.api.tasks.testing.Test>("desktopTest").get().classpath
+    mainClass.set("melox.autosync.AutoSyncJapaneseFrontendContract")
+    args(providers.gradleProperty("autoSyncJapaneseLibrary").orElse("").get(),
+        providers.gradleProperty("autoSyncJapaneseDictionary").orElse("").get(),
+        project.file("src/desktopTest/resources/autosync/ja_g2p_vectors.json").absolutePath)
     systemProperty("user.home", layout.buildDirectory.dir("parity/test-home").get().asFile.absolutePath)
 }

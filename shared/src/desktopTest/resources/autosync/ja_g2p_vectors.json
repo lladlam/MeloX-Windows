@@ -1,0 +1,2175 @@
+{
+ "generator": "MeloX-AutoSync android_export/ja/g2p_reference.py chain (pyopenjtalk)",
+ "vectors": [
+  {
+   "text": "みなさん、こんにちは",
+   "phonemes": [
+    "pau",
+    "m",
+    "i",
+    "n",
+    "a",
+    "s",
+    "a",
+    "N",
+    "k",
+    "o",
+    "N",
+    "n",
+    "i",
+    "ch",
+    "i",
+    "w",
+    "a",
+    "pau"
+   ],
+   "readings": [
+    {
+     "char": "み",
+     "kana": "み",
+     "phonemes": [
+      "m",
+      "i"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "な",
+     "kana": "な",
+     "phonemes": [
+      "n",
+      "a"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "さ",
+     "kana": "さ",
+     "phonemes": [
+      "s",
+      "a"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "ん",
+     "kana": "ん",
+     "phonemes": [
+      "N"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "、",
+     "kana": "",
+     "phonemes": [],
+     "uncertain": true
+    },
+    {
+     "char": "こ",
+     "kana": "こ",
+     "phonemes": [
+      "k",
+      "o"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "ん",
+     "kana": "ん",
+     "phonemes": [
+      "N"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "に",
+     "kana": "に",
+     "phonemes": [
+      "n",
+      "i"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "ち",
+     "kana": "ち",
+     "phonemes": [
+      "ch",
+      "i"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "は",
+     "kana": "わ",
+     "phonemes": [
+      "w",
+      "a"
+     ],
+     "uncertain": false
+    }
+   ],
+   "reconstruct": "みなさん、こんにちは"
+  },
+  {
+   "text": "東京の街を歩いてる",
+   "phonemes": [
+    "pau",
+    "t",
+    "o",
+    "o",
+    "ky",
+    "o",
+    "o",
+    "n",
+    "o",
+    "m",
+    "a",
+    "ch",
+    "i",
+    "o",
+    "a",
+    "r",
+    "u",
+    "i",
+    "t",
+    "e",
+    "r",
+    "u",
+    "pau"
+   ],
+   "readings": [
+    {
+     "char": "東",
+     "kana": "と",
+     "phonemes": [
+      "t",
+      "o"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "京",
+     "kana": "ーきょー",
+     "phonemes": [
+      "o",
+      "ky",
+      "o",
+      "o"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "の",
+     "kana": "の",
+     "phonemes": [
+      "n",
+      "o"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "街",
+     "kana": "まち",
+     "phonemes": [
+      "m",
+      "a",
+      "ch",
+      "i"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "を",
+     "kana": "を",
+     "phonemes": [
+      "o"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "歩",
+     "kana": "ある",
+     "phonemes": [
+      "a",
+      "r",
+      "u"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "い",
+     "kana": "い",
+     "phonemes": [
+      "i"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "て",
+     "kana": "て",
+     "phonemes": [
+      "t",
+      "e"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "る",
+     "kana": "る",
+     "phonemes": [
+      "r",
+      "u"
+     ],
+     "uncertain": false
+    }
+   ],
+   "reconstruct": "東京の街を歩いてる"
+  },
+  {
+   "text": "きょうはいい天気ですね",
+   "phonemes": [
+    "pau",
+    "ky",
+    "o",
+    "o",
+    "w",
+    "a",
+    "i",
+    "i",
+    "t",
+    "e",
+    "N",
+    "k",
+    "i",
+    "d",
+    "e",
+    "s",
+    "U",
+    "n",
+    "e",
+    "pau"
+   ],
+   "readings": [
+    {
+     "char": "き",
+     "kana": "き",
+     "phonemes": [
+      "ky",
+      "o"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "ょ",
+     "kana": "ょ",
+     "phonemes": [],
+     "uncertain": true
+    },
+    {
+     "char": "う",
+     "kana": "ー",
+     "phonemes": [
+      "o"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "は",
+     "kana": "わ",
+     "phonemes": [
+      "w",
+      "a"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "い",
+     "kana": "い",
+     "phonemes": [
+      "i"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "い",
+     "kana": "い",
+     "phonemes": [
+      "i"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "天",
+     "kana": "て",
+     "phonemes": [
+      "t",
+      "e"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "気",
+     "kana": "んき",
+     "phonemes": [
+      "N",
+      "k",
+      "i"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "で",
+     "kana": "で",
+     "phonemes": [
+      "d",
+      "e"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "す",
+     "kana": "す",
+     "phonemes": [
+      "s",
+      "U"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "ね",
+     "kana": "ね",
+     "phonemes": [
+      "n",
+      "e"
+     ],
+     "uncertain": false
+    }
+   ],
+   "reconstruct": "きょうはいい天気ですね"
+  },
+  {
+   "text": "こんにちは せかい",
+   "phonemes": [
+    "pau",
+    "k",
+    "o",
+    "N",
+    "n",
+    "i",
+    "ch",
+    "i",
+    "w",
+    "a",
+    "s",
+    "e",
+    "k",
+    "a",
+    "i",
+    "pau"
+   ],
+   "readings": [
+    {
+     "char": "こ",
+     "kana": "こ",
+     "phonemes": [
+      "k",
+      "o"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "ん",
+     "kana": "ん",
+     "phonemes": [
+      "N"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "に",
+     "kana": "に",
+     "phonemes": [
+      "n",
+      "i"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "ち",
+     "kana": "ち",
+     "phonemes": [
+      "ch",
+      "i"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "は",
+     "kana": "わ",
+     "phonemes": [
+      "w",
+      "a"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": " ",
+     "kana": "",
+     "phonemes": [],
+     "uncertain": true
+    },
+    {
+     "char": "せ",
+     "kana": "せ",
+     "phonemes": [
+      "s",
+      "e"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "か",
+     "kana": "か",
+     "phonemes": [
+      "k",
+      "a"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "い",
+     "kana": "い",
+     "phonemes": [
+      "i"
+     ],
+     "uncertain": false
+    }
+   ],
+   "reconstruct": "こんにちは せかい"
+  },
+  {
+   "text": "興味をそそられる村を30分ほど散策するのは価値があります。",
+   "phonemes": [
+    "pau",
+    "ky",
+    "o",
+    "o",
+    "m",
+    "i",
+    "o",
+    "s",
+    "o",
+    "s",
+    "o",
+    "r",
+    "a",
+    "r",
+    "e",
+    "r",
+    "u",
+    "m",
+    "u",
+    "r",
+    "a",
+    "o",
+    "s",
+    "a",
+    "N",
+    "j",
+    "u",
+    "cl",
+    "p",
+    "u",
+    "N",
+    "h",
+    "o",
+    "d",
+    "o",
+    "s",
+    "a",
+    "N",
+    "s",
+    "a",
+    "k",
+    "U",
+    "s",
+    "u",
+    "r",
+    "u",
+    "n",
+    "o",
+    "w",
+    "a",
+    "k",
+    "a",
+    "ch",
+    "i",
+    "g",
+    "a",
+    "a",
+    "r",
+    "i",
+    "m",
+    "a",
+    "s",
+    "U",
+    "pau"
+   ],
+   "readings": [
+    {
+     "char": "興",
+     "kana": "き",
+     "phonemes": [
+      "ky",
+      "o"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "味",
+     "kana": "ょーみ",
+     "phonemes": [
+      "o",
+      "m",
+      "i"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "を",
+     "kana": "を",
+     "phonemes": [
+      "o"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "そ",
+     "kana": "そ",
+     "phonemes": [
+      "s",
+      "o"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "そ",
+     "kana": "そ",
+     "phonemes": [
+      "s",
+      "o"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "ら",
+     "kana": "ら",
+     "phonemes": [
+      "r",
+      "a"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "れ",
+     "kana": "れ",
+     "phonemes": [
+      "r",
+      "e"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "る",
+     "kana": "る",
+     "phonemes": [
+      "r",
+      "u"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "村",
+     "kana": "むら",
+     "phonemes": [
+      "m",
+      "u",
+      "r",
+      "a"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "を",
+     "kana": "を",
+     "phonemes": [
+      "o"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "3",
+     "kana": "",
+     "phonemes": [],
+     "uncertain": true
+    },
+    {
+     "char": "0",
+     "kana": "",
+     "phonemes": [],
+     "uncertain": true
+    },
+    {
+     "char": "分",
+     "kana": "さんじゅっぷん",
+     "phonemes": [
+      "s",
+      "a",
+      "N",
+      "j",
+      "u",
+      "cl",
+      "p",
+      "u",
+      "N"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "ほ",
+     "kana": "ほ",
+     "phonemes": [
+      "h",
+      "o"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "ど",
+     "kana": "ど",
+     "phonemes": [
+      "d",
+      "o"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "散",
+     "kana": "さ",
+     "phonemes": [
+      "s",
+      "a"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "策",
+     "kana": "んさく",
+     "phonemes": [
+      "N",
+      "s",
+      "a",
+      "k",
+      "U"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "す",
+     "kana": "す",
+     "phonemes": [
+      "s",
+      "u"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "る",
+     "kana": "る",
+     "phonemes": [
+      "r",
+      "u"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "の",
+     "kana": "の",
+     "phonemes": [
+      "n",
+      "o"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "は",
+     "kana": "わ",
+     "phonemes": [
+      "w",
+      "a"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "価",
+     "kana": "か",
+     "phonemes": [
+      "k",
+      "a"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "値",
+     "kana": "ち",
+     "phonemes": [
+      "ch",
+      "i"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "が",
+     "kana": "が",
+     "phonemes": [
+      "g",
+      "a"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "あ",
+     "kana": "あ",
+     "phonemes": [
+      "a"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "り",
+     "kana": "り",
+     "phonemes": [
+      "r",
+      "i"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "ま",
+     "kana": "ま",
+     "phonemes": [
+      "m",
+      "a"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "す",
+     "kana": "す",
+     "phonemes": [
+      "s",
+      "U"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "。",
+     "kana": "",
+     "phonemes": [],
+     "uncertain": true
+    }
+   ],
+   "reconstruct": "興味をそそられる村を30分ほど散策するのは価値があります。"
+  },
+  {
+   "text": "Hello 世界 123",
+   "phonemes": [
+    "pau",
+    "h",
+    "a",
+    "r",
+    "o",
+    "o",
+    "s",
+    "e",
+    "k",
+    "a",
+    "i",
+    "hy",
+    "a",
+    "k",
+    "u",
+    "n",
+    "i",
+    "j",
+    "u",
+    "u",
+    "s",
+    "a",
+    "N",
+    "pau"
+   ],
+   "readings": [
+    {
+     "char": "H",
+     "kana": "",
+     "phonemes": [],
+     "uncertain": true
+    },
+    {
+     "char": "e",
+     "kana": "",
+     "phonemes": [],
+     "uncertain": true
+    },
+    {
+     "char": "l",
+     "kana": "",
+     "phonemes": [],
+     "uncertain": true
+    },
+    {
+     "char": "l",
+     "kana": "",
+     "phonemes": [],
+     "uncertain": true
+    },
+    {
+     "char": "o",
+     "kana": "",
+     "phonemes": [],
+     "uncertain": true
+    },
+    {
+     "char": " ",
+     "kana": "",
+     "phonemes": [],
+     "uncertain": true
+    },
+    {
+     "char": "世",
+     "kana": "はろー",
+     "phonemes": [
+      "h",
+      "a",
+      "r",
+      "o",
+      "o"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "界",
+     "kana": "せかいひゃくにじゅーさん",
+     "phonemes": [
+      "s",
+      "e",
+      "k",
+      "a",
+      "i",
+      "hy",
+      "a",
+      "k",
+      "u",
+      "n",
+      "i",
+      "j",
+      "u",
+      "u",
+      "s",
+      "a",
+      "N"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": " ",
+     "kana": "",
+     "phonemes": [],
+     "uncertain": true
+    },
+    {
+     "char": "1",
+     "kana": "",
+     "phonemes": [],
+     "uncertain": true
+    },
+    {
+     "char": "2",
+     "kana": "",
+     "phonemes": [],
+     "uncertain": true
+    },
+    {
+     "char": "3",
+     "kana": "",
+     "phonemes": [],
+     "uncertain": true
+    }
+   ],
+   "reconstruct": "Hello 世界 123"
+  },
+  {
+   "text": "君の知らない物語",
+   "phonemes": [
+    "pau",
+    "k",
+    "i",
+    "m",
+    "i",
+    "n",
+    "o",
+    "sh",
+    "i",
+    "r",
+    "a",
+    "n",
+    "a",
+    "i",
+    "m",
+    "o",
+    "n",
+    "o",
+    "g",
+    "a",
+    "t",
+    "a",
+    "r",
+    "i",
+    "pau"
+   ],
+   "readings": [
+    {
+     "char": "君",
+     "kana": "きみ",
+     "phonemes": [
+      "k",
+      "i",
+      "m",
+      "i"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "の",
+     "kana": "の",
+     "phonemes": [
+      "n",
+      "o"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "知",
+     "kana": "し",
+     "phonemes": [
+      "sh",
+      "i"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "ら",
+     "kana": "ら",
+     "phonemes": [
+      "r",
+      "a"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "な",
+     "kana": "な",
+     "phonemes": [
+      "n",
+      "a"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "い",
+     "kana": "い",
+     "phonemes": [
+      "i"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "物",
+     "kana": "も",
+     "phonemes": [
+      "m",
+      "o"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "語",
+     "kana": "のがたり",
+     "phonemes": [
+      "n",
+      "o",
+      "g",
+      "a",
+      "t",
+      "a",
+      "r",
+      "i"
+     ],
+     "uncertain": false
+    }
+   ],
+   "reconstruct": "君の知らない物語"
+  },
+  {
+   "text": "最後の約束",
+   "phonemes": [
+    "pau",
+    "s",
+    "a",
+    "i",
+    "g",
+    "o",
+    "n",
+    "o",
+    "y",
+    "a",
+    "k",
+    "U",
+    "s",
+    "o",
+    "k",
+    "u",
+    "pau"
+   ],
+   "readings": [
+    {
+     "char": "最",
+     "kana": "さ",
+     "phonemes": [
+      "s",
+      "a"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "後",
+     "kana": "いご",
+     "phonemes": [
+      "i",
+      "g",
+      "o"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "の",
+     "kana": "の",
+     "phonemes": [
+      "n",
+      "o"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "約",
+     "kana": "や",
+     "phonemes": [
+      "y",
+      "a"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "束",
+     "kana": "くそく",
+     "phonemes": [
+      "k",
+      "U",
+      "s",
+      "o",
+      "k",
+      "u"
+     ],
+     "uncertain": false
+    }
+   ],
+   "reconstruct": "最後の約束"
+  },
+  {
+   "text": "がっこうへ行こう",
+   "phonemes": [
+    "pau",
+    "g",
+    "a",
+    "cl",
+    "k",
+    "o",
+    "o",
+    "e",
+    "i",
+    "k",
+    "o",
+    "o",
+    "pau"
+   ],
+   "readings": [
+    {
+     "char": "が",
+     "kana": "が",
+     "phonemes": [
+      "g",
+      "a"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "っ",
+     "kana": "っ",
+     "phonemes": [
+      "cl"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "こ",
+     "kana": "こ",
+     "phonemes": [
+      "k",
+      "o"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "う",
+     "kana": "ー",
+     "phonemes": [
+      "o"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "へ",
+     "kana": "え",
+     "phonemes": [
+      "e"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "行",
+     "kana": "い",
+     "phonemes": [
+      "i"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "こ",
+     "kana": "こ",
+     "phonemes": [
+      "k",
+      "o"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "う",
+     "kana": "ー",
+     "phonemes": [
+      "o"
+     ],
+     "uncertain": false
+    }
+   ],
+   "reconstruct": "がっこうへ行こう"
+  },
+  {
+   "text": "ラーメン大好き",
+   "phonemes": [
+    "pau",
+    "r",
+    "a",
+    "a",
+    "m",
+    "e",
+    "N",
+    "d",
+    "a",
+    "i",
+    "s",
+    "U",
+    "k",
+    "i",
+    "pau"
+   ],
+   "readings": [
+    {
+     "char": "ラ",
+     "kana": "ら",
+     "phonemes": [
+      "r",
+      "a"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "ー",
+     "kana": "ー",
+     "phonemes": [
+      "a"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "メ",
+     "kana": "め",
+     "phonemes": [
+      "m",
+      "e"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "ン",
+     "kana": "ん",
+     "phonemes": [
+      "N"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "大",
+     "kana": "だ",
+     "phonemes": [
+      "d",
+      "a"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "好",
+     "kana": "いす",
+     "phonemes": [
+      "i",
+      "s",
+      "U"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "き",
+     "kana": "き",
+     "phonemes": [
+      "k",
+      "i"
+     ],
+     "uncertain": false
+    }
+   ],
+   "reconstruct": "ラーメン大好き"
+  },
+  {
+   "text": "きゃきゅきょ しゃしゅしょ",
+   "phonemes": [
+    "pau",
+    "ky",
+    "a",
+    "ky",
+    "u",
+    "ky",
+    "o",
+    "sh",
+    "a",
+    "sh",
+    "u",
+    "sh",
+    "o",
+    "pau"
+   ],
+   "readings": [
+    {
+     "char": "き",
+     "kana": "き",
+     "phonemes": [
+      "ky",
+      "a"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "ゃ",
+     "kana": "ゃ",
+     "phonemes": [],
+     "uncertain": true
+    },
+    {
+     "char": "き",
+     "kana": "き",
+     "phonemes": [
+      "ky",
+      "u"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "ゅ",
+     "kana": "ゅ",
+     "phonemes": [],
+     "uncertain": true
+    },
+    {
+     "char": "き",
+     "kana": "き",
+     "phonemes": [
+      "ky",
+      "o"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "ょ",
+     "kana": "ょ",
+     "phonemes": [],
+     "uncertain": true
+    },
+    {
+     "char": " ",
+     "kana": "",
+     "phonemes": [],
+     "uncertain": true
+    },
+    {
+     "char": "し",
+     "kana": "し",
+     "phonemes": [
+      "sh",
+      "a"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "ゃ",
+     "kana": "ゃ",
+     "phonemes": [],
+     "uncertain": true
+    },
+    {
+     "char": "し",
+     "kana": "し",
+     "phonemes": [
+      "sh",
+      "u"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "ゅ",
+     "kana": "ゅ",
+     "phonemes": [],
+     "uncertain": true
+    },
+    {
+     "char": "し",
+     "kana": "し",
+     "phonemes": [
+      "sh",
+      "o"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "ょ",
+     "kana": "ょ",
+     "phonemes": [],
+     "uncertain": true
+    }
+   ],
+   "reconstruct": "きゃきゅきょ しゃしゅしょ"
+  },
+  {
+   "text": "彼女は日本語を話します",
+   "phonemes": [
+    "pau",
+    "k",
+    "a",
+    "n",
+    "o",
+    "j",
+    "o",
+    "w",
+    "a",
+    "n",
+    "i",
+    "h",
+    "o",
+    "N",
+    "g",
+    "o",
+    "o",
+    "h",
+    "a",
+    "n",
+    "a",
+    "sh",
+    "i",
+    "m",
+    "a",
+    "s",
+    "U",
+    "pau"
+   ],
+   "readings": [
+    {
+     "char": "彼",
+     "kana": "か",
+     "phonemes": [
+      "k",
+      "a"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "女",
+     "kana": "のじょ",
+     "phonemes": [
+      "n",
+      "o",
+      "j",
+      "o"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "は",
+     "kana": "わ",
+     "phonemes": [
+      "w",
+      "a"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "日",
+     "kana": "に",
+     "phonemes": [
+      "n",
+      "i"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "本",
+     "kana": "ほ",
+     "phonemes": [
+      "h",
+      "o"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "語",
+     "kana": "んご",
+     "phonemes": [
+      "N",
+      "g",
+      "o"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "を",
+     "kana": "を",
+     "phonemes": [
+      "o"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "話",
+     "kana": "はな",
+     "phonemes": [
+      "h",
+      "a",
+      "n",
+      "a"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "し",
+     "kana": "し",
+     "phonemes": [
+      "sh",
+      "i"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "ま",
+     "kana": "ま",
+     "phonemes": [
+      "m",
+      "a"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "す",
+     "kana": "す",
+     "phonemes": [
+      "s",
+      "U"
+     ],
+     "uncertain": false
+    }
+   ],
+   "reconstruct": "彼女は日本語を話します"
+  },
+  {
+   "text": "エモーション",
+   "phonemes": [
+    "pau",
+    "e",
+    "m",
+    "o",
+    "o",
+    "sh",
+    "o",
+    "N",
+    "pau"
+   ],
+   "readings": [
+    {
+     "char": "エ",
+     "kana": "え",
+     "phonemes": [
+      "e"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "モ",
+     "kana": "も",
+     "phonemes": [
+      "m",
+      "o"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "ー",
+     "kana": "ー",
+     "phonemes": [
+      "o"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "シ",
+     "kana": "し",
+     "phonemes": [
+      "sh",
+      "o"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "ョ",
+     "kana": "ょ",
+     "phonemes": [],
+     "uncertain": true
+    },
+    {
+     "char": "ン",
+     "kana": "ん",
+     "phonemes": [
+      "N"
+     ],
+     "uncertain": false
+    }
+   ],
+   "reconstruct": "エモーション"
+  },
+  {
+   "text": "お母さんありがとう",
+   "phonemes": [
+    "pau",
+    "o",
+    "k",
+    "a",
+    "a",
+    "s",
+    "a",
+    "N",
+    "a",
+    "r",
+    "i",
+    "g",
+    "a",
+    "t",
+    "o",
+    "o",
+    "pau"
+   ],
+   "readings": [
+    {
+     "char": "お",
+     "kana": "お",
+     "phonemes": [
+      "o"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "母",
+     "kana": "かー",
+     "phonemes": [
+      "k",
+      "a",
+      "a"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "さ",
+     "kana": "さ",
+     "phonemes": [
+      "s",
+      "a"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "ん",
+     "kana": "ん",
+     "phonemes": [
+      "N"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "あ",
+     "kana": "あ",
+     "phonemes": [
+      "a"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "り",
+     "kana": "り",
+     "phonemes": [
+      "r",
+      "i"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "が",
+     "kana": "が",
+     "phonemes": [
+      "g",
+      "a"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "と",
+     "kana": "と",
+     "phonemes": [
+      "t",
+      "o"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "う",
+     "kana": "ー",
+     "phonemes": [
+      "o"
+     ],
+     "uncertain": false
+    }
+   ],
+   "reconstruct": "お母さんありがとう"
+  },
+  {
+   "text": "超絶技巧",
+   "phonemes": [
+    "pau",
+    "ch",
+    "o",
+    "o",
+    "z",
+    "e",
+    "ts",
+    "u",
+    "g",
+    "i",
+    "k",
+    "o",
+    "o",
+    "pau"
+   ],
+   "readings": [
+    {
+     "char": "超",
+     "kana": "ち",
+     "phonemes": [
+      "ch",
+      "o"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "絶",
+     "kana": "ょーぜつ",
+     "phonemes": [
+      "o",
+      "z",
+      "e",
+      "ts",
+      "u"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "技",
+     "kana": "ぎ",
+     "phonemes": [
+      "g",
+      "i"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "巧",
+     "kana": "こー",
+     "phonemes": [
+      "k",
+      "o",
+      "o"
+     ],
+     "uncertain": false
+    }
+   ],
+   "reconstruct": "超絶技巧"
+  },
+  {
+   "text": "first love",
+   "phonemes": [
+    "pau",
+    "e",
+    "f",
+    "u",
+    "a",
+    "i",
+    "a",
+    "a",
+    "r",
+    "u",
+    "e",
+    "s",
+    "U",
+    "t",
+    "i",
+    "i",
+    "r",
+    "a",
+    "b",
+    "u",
+    "pau"
+   ],
+   "readings": [
+    {
+     "char": "f",
+     "kana": "",
+     "phonemes": [],
+     "uncertain": true
+    },
+    {
+     "char": "i",
+     "kana": "",
+     "phonemes": [],
+     "uncertain": true
+    },
+    {
+     "char": "r",
+     "kana": "",
+     "phonemes": [],
+     "uncertain": true
+    },
+    {
+     "char": "s",
+     "kana": "",
+     "phonemes": [],
+     "uncertain": true
+    },
+    {
+     "char": "t",
+     "kana": "",
+     "phonemes": [],
+     "uncertain": true
+    },
+    {
+     "char": " ",
+     "kana": "",
+     "phonemes": [],
+     "uncertain": true
+    },
+    {
+     "char": "l",
+     "kana": "",
+     "phonemes": [],
+     "uncertain": true
+    },
+    {
+     "char": "o",
+     "kana": "",
+     "phonemes": [],
+     "uncertain": true
+    },
+    {
+     "char": "v",
+     "kana": "",
+     "phonemes": [],
+     "uncertain": true
+    },
+    {
+     "char": "e",
+     "kana": "",
+     "phonemes": [],
+     "uncertain": true
+    }
+   ],
+   "reconstruct": "first love"
+  },
+  {
+   "text": "んっー",
+   "phonemes": [
+    "pau",
+    "N",
+    "cl",
+    "cl",
+    "pau"
+   ],
+   "readings": [
+    {
+     "char": "ん",
+     "kana": "ん",
+     "phonemes": [
+      "N"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "っ",
+     "kana": "っ",
+     "phonemes": [
+      "cl"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "ー",
+     "kana": "ー",
+     "phonemes": [
+      "cl"
+     ],
+     "uncertain": false
+    }
+   ],
+   "reconstruct": "んっー"
+  },
+  {
+   "text": "涙が止まらないよ",
+   "phonemes": [
+    "pau",
+    "n",
+    "a",
+    "m",
+    "i",
+    "d",
+    "a",
+    "g",
+    "a",
+    "t",
+    "o",
+    "m",
+    "a",
+    "r",
+    "a",
+    "n",
+    "a",
+    "i",
+    "y",
+    "o",
+    "pau"
+   ],
+   "readings": [
+    {
+     "char": "涙",
+     "kana": "なみだ",
+     "phonemes": [
+      "n",
+      "a",
+      "m",
+      "i",
+      "d",
+      "a"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "が",
+     "kana": "が",
+     "phonemes": [
+      "g",
+      "a"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "止",
+     "kana": "と",
+     "phonemes": [
+      "t",
+      "o"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "ま",
+     "kana": "ま",
+     "phonemes": [
+      "m",
+      "a"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "ら",
+     "kana": "ら",
+     "phonemes": [
+      "r",
+      "a"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "な",
+     "kana": "な",
+     "phonemes": [
+      "n",
+      "a"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "い",
+     "kana": "い",
+     "phonemes": [
+      "i"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "よ",
+     "kana": "よ",
+     "phonemes": [
+      "y",
+      "o"
+     ],
+     "uncertain": false
+    }
+   ],
+   "reconstruct": "涙が止まらないよ"
+  },
+  {
+   "text": "光の速さで",
+   "phonemes": [
+    "pau",
+    "h",
+    "I",
+    "k",
+    "a",
+    "r",
+    "i",
+    "n",
+    "o",
+    "h",
+    "a",
+    "y",
+    "a",
+    "s",
+    "a",
+    "d",
+    "e",
+    "pau"
+   ],
+   "readings": [
+    {
+     "char": "光",
+     "kana": "ひかり",
+     "phonemes": [
+      "h",
+      "I",
+      "k",
+      "a",
+      "r",
+      "i"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "の",
+     "kana": "の",
+     "phonemes": [
+      "n",
+      "o"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "速",
+     "kana": "はや",
+     "phonemes": [
+      "h",
+      "a",
+      "y",
+      "a"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "さ",
+     "kana": "さ",
+     "phonemes": [
+      "s",
+      "a"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "で",
+     "kana": "で",
+     "phonemes": [
+      "d",
+      "e"
+     ],
+     "uncertain": false
+    }
+   ],
+   "reconstruct": "光の速さで"
+  },
+  {
+   "text": "ありがとう、またね！",
+   "phonemes": [
+    "pau",
+    "a",
+    "r",
+    "i",
+    "g",
+    "a",
+    "t",
+    "o",
+    "o",
+    "m",
+    "a",
+    "t",
+    "a",
+    "n",
+    "e",
+    "pau"
+   ],
+   "readings": [
+    {
+     "char": "あ",
+     "kana": "あ",
+     "phonemes": [
+      "a"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "り",
+     "kana": "り",
+     "phonemes": [
+      "r",
+      "i"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "が",
+     "kana": "が",
+     "phonemes": [
+      "g",
+      "a"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "と",
+     "kana": "と",
+     "phonemes": [
+      "t",
+      "o"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "う",
+     "kana": "ー",
+     "phonemes": [
+      "o"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "、",
+     "kana": "",
+     "phonemes": [],
+     "uncertain": true
+    },
+    {
+     "char": "ま",
+     "kana": "ま",
+     "phonemes": [
+      "m",
+      "a"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "た",
+     "kana": "た",
+     "phonemes": [
+      "t",
+      "a"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "ね",
+     "kana": "ね",
+     "phonemes": [
+      "n",
+      "e"
+     ],
+     "uncertain": false
+    },
+    {
+     "char": "！",
+     "kana": "",
+     "phonemes": [],
+     "uncertain": true
+    }
+   ],
+   "reconstruct": "ありがとう、またね！"
+  }
+ ]
+}

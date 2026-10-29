@@ -1,0 +1,8 @@
+EXPORTS
+    ja_g2p_open
+    ja_g2p_close
+    ja_g2p_phonemes
+    ja_g2p_kana
+    ja_g2p_tokens
+    ja_g2p_free
+    ja_g2p_version

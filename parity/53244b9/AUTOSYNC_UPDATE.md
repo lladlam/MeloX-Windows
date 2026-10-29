@@ -25,3 +25,5 @@ Windows CI `40821926845` 第一次运行中，英、日、中文实际 ONNX 与�
 本地已验证两条路由：正常公开歌单的直接详情回放 38 scenes／45 assertions 通过；对 CI 同一真实公开歌单 `465389876` 的首曲，鼠标打开搜索、点击真实歌手结果、进入详情并返回搜索页通过。证据见 `evidence/autosync/artist-route-replay/`。带触摸拖动的本地完整回放在歌手步骤之前的触摸返回断言失败，Windows CI 的触摸断言仍保留并需重新运行。
 
 Windows CI `40834891150` 对提交 `35a35f65a4f2ed8a0e53b59b87781d1e9be46bfc` 全部通过，包括真实模型、标题栏、触摸、歌手路由、双布局回放及最终打包。完整发行 ZIP 已重新下载并独立验证：392,620,515 字节，359 个条目，SHA-256 `e44db45ed72ee5f2b2d1122b2c7052ebb8773f24fc205358689ca8fb5e58abd9`；ZIP／JAR CRC、版本戳、图标、固定资源、FFmpeg、CLI、LX V8 与三枚 ONNX Windows x64 DLL 均通过。详细记录见 `evidence/windows-download-40834891150/verification.json`；该离线核验不代表本机物理 Windows 执行或物理听音。
+
+日文基础组件已迁入源码：NAIST 词典固定哈希下载、有界解包、损坏修复及互斥管理，OpenJTalk G2P 原生源码、JNA 包装与 Android 字符映射。真实发布词典已通过安装、完整性及移除契约；仓库内 Linux 前端通过 20 组 Android／Python 逐字符向量，Windows 交叉编译前端在 Wine 中以 Windows JRE／JNA、中文词典路径通过同组向量。词典管理及原生前端尚未接入设置、打包和播放器，日文生成仍不可用；Wine 结果不是原生 Windows 验收。
