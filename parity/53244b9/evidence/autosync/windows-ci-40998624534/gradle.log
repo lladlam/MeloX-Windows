@@ -1,0 +1,152 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.5.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build
+> Task :desktop:kmpPartiallyResolvedDependenciesChecker
+> Task :desktop:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :desktop:extractPinnedGlassGeometry UP-TO-DATE
+> Task :desktop:convertXmlValueResourcesForCommonMain NO-SOURCE
+> Task :desktop:copyNonXmlValueResourcesForCommonMain NO-SOURCE
+> Task :desktop:prepareComposeResourcesTaskForCommonMain NO-SOURCE
+> Task :desktop:generateResourceAccessorsForCommonMain SKIPPED
+> Task :desktop:convertXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :desktop:copyNonXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :desktop:prepareComposeResourcesTaskForDesktopMain NO-SOURCE
+> Task :desktop:generateResourceAccessorsForDesktopMain SKIPPED
+> Task :desktop:generateActualResourceCollectorsForDesktopMain SKIPPED
+> Task :desktop:generateComposeResClass SKIPPED
+> Task :desktop:generateExpectResourceCollectorsForCommonMain SKIPPED
+> Task :innertube:kmpPartiallyResolvedDependenciesChecker
+> Task :innertube:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :innertube:extractAndroidInnerTube UP-TO-DATE
+> Task :innertube:compileKotlinDesktop UP-TO-DATE
+> Task :innertube:compileDesktopMainJava NO-SOURCE
+> Task :innertube:desktopProcessResources NO-SOURCE
+> Task :innertube:processDesktopMainResources SKIPPED
+> Task :innertube:desktopMainClasses UP-TO-DATE
+> Task :innertube:desktopJar UP-TO-DATE
+> Task :shared:kmpPartiallyResolvedDependenciesChecker
+> Task :shared:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :shared:convertXmlValueResourcesForCommonMain NO-SOURCE
+> Task :shared:copyNonXmlValueResourcesForCommonMain NO-SOURCE
+> Task :shared:prepareComposeResourcesTaskForCommonMain NO-SOURCE
+> Task :shared:generateResourceAccessorsForCommonMain SKIPPED
+> Task :shared:convertXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :shared:copyNonXmlValueResourcesForDesktopMain NO-SOURCE
+> Task :shared:prepareComposeResourcesTaskForDesktopMain NO-SOURCE
+> Task :shared:generateResourceAccessorsForDesktopMain SKIPPED
+> Task :shared:generateActualResourceCollectorsForDesktopMain SKIPPED
+> Task :shared:generateComposeResClass SKIPPED
+> Task :shared:generateExpectResourceCollectorsForCommonMain SKIPPED
+> Task :shared:compileKotlinDesktop UP-TO-DATE
+> Task :shared:compileDesktopMainJava NO-SOURCE
+> Task :shared:assembleDesktopMainResources UP-TO-DATE
+> Task :shared:desktopProcessResources UP-TO-DATE
+> Task :shared:processDesktopMainResources SKIPPED
+> Task :shared:desktopMainClasses UP-TO-DATE
+> Task :shared:desktopJar UP-TO-DATE
+> Task :desktop:compileKotlinDesktop UP-TO-DATE
+> Task :desktop:compileDesktopMainJava NO-SOURCE
+> Task :desktop:assembleDesktopMainResources UP-TO-DATE
+> Task :desktop:desktopProcessResources UP-TO-DATE
+> Task :desktop:processDesktopMainResources SKIPPED
+> Task :desktop:desktopMainClasses UP-TO-DATE
+
+> Task :desktop:captureUi
+[INFO MeloXFont] Android MiLan Pro static instances loaded: CSS=[100, 200, 300, 400, 500, 600, 700, 800, 900] files=mi_lan_pro_w{100..800}.ttf (CSS 900 shares frozen axis-700 instance)
+Captured 00-settings: 1100x850 density=1.0
+Physical click cloud-consent: remote-reject at Offset(440.5, 553.0)
+Captured 01-cloud-consent: 1100x850 density=1.0
+Verified cloud-consent: cloud-enabled:false
+Physical click developer: desktop-settings-tab:Developer at Offset(891.0, 60.0)
+Captured 02-developer: 1100x850 density=1.0
+Physical click experimental: desktop-settings-subtab:Experimental at Offset(916.0, 206.0)
+Captured 03-experimental: 1100x850 density=1.0
+Verified experimental: tag:settings-page:Experimental
+Captured 04-reveal-control: 1100x850 density=1.0
+Captured 05-initially-off: 1100x850 density=1.0
+Verified initially-off: unchecked:autosync-enabled
+Verified initially-off: runtime:autoSyncWordLyricsEnabled:false
+Physical click enable: autosync-enabled at Offset(654.0, 252.0)
+Captured 06-enable: 1100x850 density=1.0
+Verified enable: checked:autosync-enabled
+Verified enable: pref-bool:autosync_word_lyrics_enabled:true
+Verified enable: runtime:autoSyncWordLyricsEnabled:true
+Verified enable: tag:autosync-notice
+Captured 07-model-index-settled: 1100x850 density=1.0
+Verified model-index-settled: absent:autosync-loading
+Captured 08-chinese-model: 1100x850 density=1.0
+Verified chinese-model: tag:autosync-model:zh
+Captured 09-english-model: 1100x850 density=1.0
+Verified english-model: tag:autosync-model:en
+Captured 10-show-delete: 1100x850 density=1.0
+Verified show-delete: tag:autosync-delete:en
+Physical click confirm-delete: autosync-delete:en at Offset(379.0, 557.5)
+Captured 11-confirm-delete: 1100x850 density=1.0
+Verified confirm-delete: tag:autosync-confirm
+Physical click cancel-delete: autosync-confirm-cancel at Offset(440.5, 451.5)
+Captured 12-cancel-delete: 1100x850 density=1.0
+Verified cancel-delete: absent:autosync-confirm
+Verified cancel-delete: tag:autosync-delete:en
+Physical click confirm-again: autosync-delete:en at Offset(379.0, 552.5)
+Captured 13-confirm-again: 1100x850 density=1.0
+Verified confirm-again: tag:autosync-confirm
+Physical click accept-delete: autosync-confirm-accept at Offset(659.5, 451.5)
+Captured 14-accept-delete: 1100x850 density=1.0
+Captured 15-deleted: 1100x850 density=1.0
+Verified deleted: absent:autosync-delete:en
+Verified deleted: tag:autosync-download:en
+Captured 16-japanese-model: 1100x850 density=1.0
+Verified japanese-model: tag:autosync-model:ja
+Captured 17-japanese-dictionary: 1100x850 density=1.0
+Verified japanese-dictionary: tag:autosync-ja-dictionary
+Verified japanese-dictionary: tag:autosync-dictionary-download
+Physical click dictionary-confirm: autosync-dictionary-download at Offset(379.0, 563.0)
+Captured 18-dictionary-confirm: 1100x850 density=1.0
+Verified dictionary-confirm: tag:autosync-confirm
+Physical click dictionary-cancel: autosync-confirm-cancel at Offset(440.5, 451.5)
+Captured 19-dictionary-cancel: 1100x850 density=1.0
+Verified dictionary-cancel: absent:autosync-confirm
+Verified dictionary-cancel: tag:autosync-dictionary-download
+Captured failure: 1100x850 density=1.0
+Exception in thread "main" java.lang.IllegalStateException: Could not reveal production node autosync-enabled using mouse wheel at find-control
+	at melox.validation.MeloXVisualCaptureKt$main$1$6.invokeSuspend(MeloXVisualCapture.kt:554)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTaskKt.resume(DispatchedTask.kt:233)
+	at kotlinx.coroutines.DispatchedTaskKt.dispatch(DispatchedTask.kt:152)
+	at kotlinx.coroutines.CancellableContinuationImpl.dispatchResume(CancellableContinuationImpl.kt:470)
+	at kotlinx.coroutines.CancellableContinuationImpl.resumeImpl$kotlinx_coroutines_core(CancellableContinuationImpl.kt:504)
+	at kotlinx.coroutines.CancellableContinuationImpl.resumeImpl$kotlinx_coroutines_core$default(CancellableContinuationImpl.kt:493)
+	at kotlinx.coroutines.CancellableContinuationImpl.resumeUndispatched(CancellableContinuationImpl.kt:596)
+	at kotlinx.coroutines.swing.SwingDispatcher.scheduleResumeAfterDelay$lambda$0(SwingDispatcher.kt:28)
+	at java.desktop/javax.swing.Timer.fireActionPerformed(Timer.java:311)
+	at java.desktop/javax.swing.Timer$DoPostEvent.run(Timer.java:243)
+	at java.desktop/java.awt.event.InvocationEvent.dispatch(InvocationEvent.java:318)
+	at java.desktop/java.awt.EventQueue.dispatchEventImpl(EventQueue.java:773)
+	at java.desktop/java.awt.EventQueue$4.run(EventQueue.java:720)
+	at java.desktop/java.awt.EventQueue$4.run(EventQueue.java:714)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
+	at java.base/java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:86)
+	at java.desktop/java.awt.EventQueue.dispatchEvent(EventQueue.java:742)
+	at java.desktop/java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:203)
+	at java.desktop/java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:124)
+	at java.desktop/java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:113)
+	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:109)
+	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:101)
+	at java.desktop/java.awt.EventDispatchThread.run(EventDispatchThread.java:90)
+
+> Task :desktop:captureUi FAILED
+gradle/actions: Writing build results to D:\a\_temp\.gradle-actions\build-results\__run_35-1793335845596.json
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':desktop:captureUi' (registered in build file 'desktop\build.gradle.kts').
+> Process 'command 'C:\hostedtoolcache\windows\Java_Temurin-Hotspot_jdk\17.0.20-101\x64\bin\java.exe'' finished with non-zero exit value 1
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 2m 29s
+15 actionable tasks: 4 executed, 11 up-to-date

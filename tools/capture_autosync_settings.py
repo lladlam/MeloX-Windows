@@ -83,7 +83,10 @@ if mode == 'controls':
     add('japanese-dictionary', 'reveal@autosync-dictionary-download', 'tag:autosync-ja-dictionary', 'tag:autosync-dictionary-download')
     add('dictionary-confirm', 'tap@autosync-dictionary-download', 'tag:autosync-confirm')
     add('dictionary-cancel', 'tap@autosync-confirm-cancel', 'absent:autosync-confirm', 'tag:autosync-dictionary-download')
-    add('find-control', 'reveal@autosync-enabled')
+    # The control may be fully clipped after visiting the dictionary at the
+    # bottom; in that case the locator has no position from which to infer a
+    # direction. Return toward the top using the real mouse wheel.
+    add('find-control', 'reveal@autosync-enabled,,up')
     add('disable', 'tap@autosync-enabled', 'unchecked:autosync-enabled', 'pref-bool:autosync_word_lyrics_enabled:false',
         'absent:autosync-notice')
     add('persist-enabled', 'tap@autosync-enabled', 'checked:autosync-enabled', 'pref-bool:autosync_word_lyrics_enabled:true')
