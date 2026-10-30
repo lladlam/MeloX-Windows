@@ -353,7 +353,8 @@ internal fun isSafeCrossProviderLyricMatch(
     if (target.version != LyricTrackVersion.Original && target.versionLabel != other.versionLabel) return false
     if (targetDurationMs > 0L) {
         val candidateDuration = candidate.durationMs ?: return false
-        val toleranceMs = if (target.version == LyricTrackVersion.Original) 2_000L else 1_000L
+        val rules = melox.remoteconfig.MeloXRemoteConfigPolicy.activeConfig().rules
+        val toleranceMs = if (target.version == LyricTrackVersion.Original) rules.lyricMatchOriginalToleranceMs else rules.lyricMatchVersionToleranceMs
         if (kotlin.math.abs(targetDurationMs - candidateDuration) > toleranceMs) return false
     }
     val targetArtistKey = normalizeLyricMatchText(targetArtist.substringBefore(" /"))

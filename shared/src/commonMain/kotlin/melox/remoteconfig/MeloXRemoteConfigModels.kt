@@ -17,6 +17,12 @@ data class MeloXRemoteNotice(
     val frequency: String,
 )
 
+data class MeloXRemoteRules(
+    val lyricMatchOriginalToleranceMs: Long = 2_000,
+    val lyricMatchVersionToleranceMs: Long = 1_000,
+    val searchTitleStripSuffixes: List<String> = emptyList(),
+)
+
 data class MeloXRemoteConfig(
     val schemaVersion: Int,
     val configVersion: Int,
@@ -27,6 +33,7 @@ data class MeloXRemoteConfig(
     val strategies: Map<String, String>,
     val fallback: MeloXRemoteFallbackConfig,
     val notice: MeloXRemoteNotice?,
+    val rules: MeloXRemoteRules = MeloXRemoteRules(),
 ) {
     fun appliesTo(versionCode: Int): Boolean = versionCode in minVersionCode..maxVersionCode
 
@@ -82,9 +89,45 @@ data class MeloXRemoteConfig(
                     timeoutMs = timeoutMs,
                 ),
                 notice = notice,
+                rules = parseRules(root.optJSONObject("rules")),
             )
         }
     }
+}
+
+internal fun parseRules(json: JSONObject?): MeloXRemoteRules {
+    val defaults = MeloXRemoteRules()
+    if (json == null) return defaults
+    val lyric = json.optJSONObject("lyricMatch")
+    val suffixes = json.optJSONArray("searchTitleStripSuffixes")?.let { values ->
+        buildList {
+            for (index in 0 until values.length()) {
+                if (size >= 16) break
+                val text = values.optString(index).trim()
+                if (text.isNotEmpty() && text.length <= 32) add(text)
+            }
+        }.distinct()
+    } ?: defaults.searchTitleStripSuffixes
+    return MeloXRemoteRules(
+        lyric?.optLong("originalToleranceMs", defaults.lyricMatchOriginalToleranceMs)?.coerceIn(0, 10_000) ?: defaults.lyricMatchOriginalToleranceMs,
+        lyric?.optLong("versionToleranceMs", defaults.lyricMatchVersionToleranceMs)?.coerceIn(0, 10_000) ?: defaults.lyricMatchVersionToleranceMs,
+        suffixes,
+    )
+}
+
+internal fun stripTitleSuffixes(title: String, suffixes: List<String>): String {
+    var result = title.trim()
+    var changed: Boolean
+    do {
+        changed = false
+        for (suffix in suffixes) {
+            if (suffix.isNotEmpty() && result.endsWith(suffix, ignoreCase = true) && result.length > suffix.length) {
+                result = result.dropLast(suffix.length).trim()
+                changed = true
+            }
+        }
+    } while (changed && result.isNotEmpty())
+    return result.ifEmpty { title.trim() }
 }
 
 enum class MeloXRemoteConfigSource { BuiltIn, VerifiedRemote, VersionInapplicable }

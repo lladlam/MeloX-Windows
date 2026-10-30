@@ -58,12 +58,14 @@ class RemoteConfigProtocolTest {
     }
 
     private val fixtureOrder = listOf("bilibili", "kugou", "qq_music", "netease", "qishui", "kuwo")
-    private fun envelope(version: Int = 5, min: Int = 10, max: Int = 20, disabled: List<String> = listOf("qq_playback"), order: List<String> = fixtureOrder): String {
+    private fun envelope(version: Int = 5, min: Int = 10, max: Int = 20, disabled: List<String> = listOf("qq_playback"), order: List<String> = fixtureOrder,
+                         rules: JSONObject? = null): String {
         val payload = JSONObject().put("schemaVersion", 1).put("configVersion", version).put("issuedAtEpochSeconds", 100)
             .put("minVersionCode", min).put("maxVersionCode", max).put("disabledCapabilities", JSONArray(disabled))
             .put("strategies", JSONObject().put("netease_playback", "v1").put("qq_playback", "v1").put("kugou_playback", "v1"))
             .put("crossProviderFallback", JSONObject().put("enabled", true).put("timeoutMs", 4000)
                 .put("order", JSONArray(order)).put("disabledProviders", JSONArray(listOf("kugou"))))
+            .apply { if (rules != null) put("rules", rules) }
             .toString().toByteArray()
         val signature = Signature.getInstance("SHA256withECDSA").run { initSign(key.private); update(payload); sign() }
         return JSONObject().put("keyId", "fixture-p256").put("algorithm", "SHA256withECDSA")
@@ -90,6 +92,22 @@ class RemoteConfigProtocolTest {
         assertEquals(2000L, next.lastCheckedAtEpochMs); assertEquals(1000L, next.lastUpdatedAtEpochMs)
         assertEquals(5, store.read().highestConfigVersion)
         assertEquals(5, client.load(20).config.configVersion)
+    }
+
+    @Test fun signedRulesAreBoundedAndConsentOrVersionRestoresDefaults() = runBlocking {
+        val rules = JSONObject().put("lyricMatch", JSONObject().put("originalToleranceMs", 99_999).put("versionToleranceMs", -5))
+            .put("searchTitleStripSuffixes", JSONArray(listOf(" (live)", " - remix", "x".repeat(33))))
+        server.enqueue(response(envelope(rules = rules)))
+        val verified = refresh()
+        val effective = MeloXRemoteConfigPolicy.effectiveConfig(true, verified).rules
+        assertEquals(10_000L, effective.lyricMatchOriginalToleranceMs)
+        assertEquals(0L, effective.lyricMatchVersionToleranceMs)
+        assertEquals(listOf("(live)", "- remix"), effective.searchTitleStripSuffixes)
+        assertEquals("Song", stripTitleSuffixes("Song (LIVE) - Remix", effective.searchTitleStripSuffixes))
+        assertEquals("(live)", stripTitleSuffixes("(live)", effective.searchTitleStripSuffixes))
+        assertEquals(MeloXRemoteRules(), MeloXRemoteConfigPolicy.effectiveConfig(false, verified).rules)
+        server.enqueue(response(envelope(version = 6, min = 21, max = 30, rules = rules)))
+        assertEquals(MeloXRemoteRules(), refresh().config.rules)
     }
 
     @Test fun legacySignedOrderUsesExpandedBuiltInOrderAndRetainsDisabledSources() = runBlocking {

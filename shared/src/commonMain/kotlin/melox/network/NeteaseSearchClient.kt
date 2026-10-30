@@ -61,7 +61,7 @@ class NeteaseSearchClient(
         keywords: String,
         limit: Int = 30,
     ): List<SearchSong> = withContext(Dispatchers.IO) {
-        val query = keywords.trim()
+        val query = melox.remoteconfig.stripTitleSuffixes(keywords, melox.remoteconfig.MeloXRemoteConfigPolicy.activeConfig().rules.searchTitleStripSuffixes)
         if (query.isEmpty()) return@withContext emptyList()
 
         val payload = JSONObject()
