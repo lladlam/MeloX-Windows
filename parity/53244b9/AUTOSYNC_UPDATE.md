@@ -29,3 +29,5 @@ Windows CI `40834891150` 对提交 `35a35f65a4f2ed8a0e53b59b87781d1e9be46bfc` �
 日文基础组件已迁入源码：NAIST 词典固定哈希下载、有界解包、损坏修复及互斥管理，OpenJTalk G2P 原生源码、JNA 包装与 Android 字符映射。真实发布词典已通过安装、完整性及移除契约；仓库内 Linux 前端通过 20 组 Android／Python 逐字符向量，Windows 交叉编译前端在 Wine 中以 Windows JRE／JNA、中文词典路径通过同组向量。词典管理及原生前端尚未接入设置和播放器，日文生成仍不可用；Wine 结果不是原生 Windows 验收。
 
 随包前端正在接线：固定哈希的 Linux 和 Windows x64 原生库、许可文本、校验提取及独立发行包检查已加入；Linux 使用真实归档安装的词典和随包库通过同组向量。Windows JRE／Wine 组合在 `File.createTempFile` 处中断，独立最小 Java 程序也复现该环境问题，故此前直接 DLL 加载的通过结果不代表随包提取路径通过。Windows CI 新增真实发布词典、非 ASCII 路径和随包 DLL 的完整向量契约，结果另记；设置与播放器接线仍待完成。
+
+Windows CI `40893615496` 成功，完整发行 ZIP 独立核验通过：394,991,167 字节、359 条目，SHA-256 `9daeb01c69c15525456db7a102bfb0f5f99b28e84788180cac64c8ba4108efdc`，版本戳为 `4d8de3fd661f73e7959a59c6ef56cd4cae7ecedb`，详见 `evidence/windows-download-40893615496/`。后续 CI `40896173761` 的 Windows 原生真实词典／随包 DLL 及 20 组向量契约通过，但 AutoSync 桌面设置回放第二次确认点击失败，未产出 ZIP。现场截图显示模型索引请求完成后加载行消失、按钮位置上移，原点击坐标随之失效；证据见 `evidence/autosync/windows-ci-40896173761/`。回放现在等待索引加载结束并重新定位后进行真实点击，本地桌面 controls 回放通过 20 scenes／24 assertions，Windows 重跑结果另记。

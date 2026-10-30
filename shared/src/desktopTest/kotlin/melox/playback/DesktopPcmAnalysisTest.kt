@@ -50,6 +50,23 @@ class DesktopPcmAnalysisTest {
         assertTrue(result.beatTimesMs.isEmpty()); assertTrue(result.downbeatTimesMs.isEmpty())
         assertTrue(result.frames.all { it.energy == 0f })
     }
+    @Test fun longFractionalFrameBeatGridTracksActualOnsets() {
+        val bpm = 120.0
+        val start = 2.17
+        val audio = pcm(80.0) { time ->
+            val phase = (time - start) % (60 / bpm)
+            if (time >= start && phase < .06) .65 * sin(2 * PI * 130 * phase) * exp(-phase * 35) else 0.0
+        }
+        val result = MeloXAutoMixAudioAnalyzer().analyzePcm(audio, rate)
+        assertTrue(abs(result.bpm - bpm) < 1.0, "tempo=${result.bpm}")
+        val errors = (0..140).map { index ->
+            val expected = ((start + index * 60 / bpm) * 1000).roundToLong()
+            result.beatTimesMs.minOf { abs(it - expected) }
+        }
+        println("80-second 120 BPM PCM: measured=${result.bpm}, mean beat error=${errors.average()}ms, max=${errors.max()}ms")
+        assertTrue(errors.average() < 70, "mean beat error=${errors.average()}ms, max=${errors.max()}ms")
+        assertTrue(errors.max() < 120, "beat grid drift=${errors.max()}ms")
+    }
     @Test fun fftBandsDistinguishBassMidAndTrebleWithoutUnsignedByteEnergy() {
         for ((frequency, band) in listOf(100 to 0, 1000 to 1, 4000 to 2)) {
             val result = MeloXAutoMixAudioAnalyzer().analyzePcm(pcm(3.0) { .4 * sin(2 * PI * frequency * it) }, rate)

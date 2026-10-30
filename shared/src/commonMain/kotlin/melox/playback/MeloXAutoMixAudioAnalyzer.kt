@@ -32,7 +32,7 @@ class MeloXAutoMixAudioAnalyzer {
         // A changed file/quality/URL must not reuse a different recording's beats.
         val local = java.io.File(uri)
         val revision = if (local.isFile) "${local.length()}:${local.lastModified()}" else ""
-        val key = "pcm-v3|$identity|$uri|$revision|${headers.toSortedMap()}|$windowStartMs|$windowDurationMs"
+        val key = "pcm-v4|$identity|$uri|$revision|${headers.toSortedMap()}|$windowStartMs|$windowDurationMs"
         synchronized(cache) { cache[key] }?.let { return@withContext it }
         if (MeloXAudioAnalysisPreferences.persistentEnabled()) store.get(key)?.let { return@withContext it }
         val pending = CompletableDeferred<MeloXAutoMixTrackAnalysis>()
@@ -123,7 +123,9 @@ class MeloXAutoMixAudioAnalyzer {
             val energy = sqrt(squares / FFT_SIZE).toFloat()
             val flux = (novelty / magnitudeSum.coerceAtLeast(1e-6)).toFloat()
             val onset = max(energy - previousEnergy, 0f) * .62f + flux * .38f
-            frames += MeloXAutoMixFrame(offset + (samples - FFT_SIZE).coerceAtLeast(0) * 1000 / TARGET_RATE,
+            // Spectral features describe the center of the Hann window, not
+            // its first sample. Using the start biases every detected beat early.
+            frames += MeloXAutoMixFrame(offset + (samples - FFT_SIZE / 2).coerceAtLeast(0) * 1000 / TARGET_RATE,
                 energy, (low / total).toFloat(), (mid / total).toFloat(), (high / total).toFloat(), flux, onset)
             previousEnergy = energy
         }
@@ -175,16 +177,47 @@ class MeloXAutoMixAudioAnalyzer {
             val minLag = (frameRate * 60 / 190).toInt().coerceAtLeast(2)
             val maxLag = (frameRate * 60 / 65).toInt().coerceAtMost(centered.size / 2)
             if (maxLag < minLag || centered.sumOf { it * it } < 1e-12) return 0.0 to 0.0
-            val scores = (minLag..maxLag).map { lag ->
+            fun correlation(lag: Int): Double {
                 var score = 0.0; var energy = 0.0; var delayed = 0.0
                 for (index in lag until centered.size) {
                     score += centered[index] * centered[index - lag]
                     energy += centered[index] * centered[index]; delayed += centered[index - lag] * centered[index - lag]
                 }
-                lag to if (sqrt(energy * delayed) > 1e-12) score / sqrt(energy * delayed) else 0.0
+                return if (sqrt(energy * delayed) > 1e-12) score / sqrt(energy * delayed) else 0.0
             }
+            val scores = (minLag..maxLag).map { lag -> lag to correlation(lag) }
             val best = scores.maxBy { it.second }
-            var bpm = 60 * frameRate / best.first
+            // The autocorrelation peak is between FFT hops for most tempi.
+            // Refine it using its immediate neighbors instead of rounding every
+            // beat to an integer frame, which otherwise drifts over long songs.
+            val left = scores.firstOrNull { it.first == best.first - 1 }?.second
+            val right = scores.firstOrNull { it.first == best.first + 1 }?.second
+            val curvature = if (left != null && right != null) left - 2 * best.second + right else 0.0
+            val correction = if (left != null && right != null && curvature < -1e-12)
+                (0.5 * (left - right) / curvature).coerceIn(-.5, .5) else 0.0
+            var period = best.first + correction
+            var weight = 1.0
+            // Longer-lag peaks measure several beat intervals at once, so
+            // interpolation error contributes much less tempo drift. Search
+            // near the current period only; this does not choose an unrelated
+            // half/double-time autocorrelation peak.
+            for (multiple in 2..12) {
+                val expected = period * multiple
+                if (expected + 3 >= centered.size / 2) break
+                val center = expected.roundToInt()
+                val peak = (center - 2..center + 2).maxBy { correlation(it) }
+                val middle = correlation(peak)
+                if (middle < .15) continue
+                val before = correlation(peak - 1)
+                val after = correlation(peak + 1)
+                val bend = before - 2 * middle + after
+                val fraction = if (bend < -1e-12) (0.5 * (before - after) / bend).coerceIn(-.5, .5) else 0.0
+                val estimate = (peak + fraction) / multiple
+                val contribution = middle.coerceAtLeast(0.0) * multiple
+                period = (period * weight + estimate * contribution) / (weight + contribution)
+                weight += contribution
+            }
+            var bpm = 60 * frameRate / period
             while (bpm < 80) bpm *= 2
             while (bpm > 170) bpm /= 2
             val background = scores.map { it.second }.sorted().let { it[it.size / 2] }
@@ -193,10 +226,24 @@ class MeloXAutoMixAudioAnalyzer {
             return bpm to (peak * .7 + prominence * .3).coerceIn(0.0, 1.0)
         }
         private fun beatTimeline(frames: List<MeloXAutoMixFrame>, bpm: Double): LongArray {
-            val period = (TARGET_RATE.toDouble() / HOP_SIZE * 60 / bpm).toInt().coerceAtLeast(2)
-            val phase = (0 until period).maxByOrNull { offset -> (offset until frames.size step period).sumOf { frames[it].onset + frames[it].novelty * .3 } } ?: 0
+            val period = TARGET_RATE.toDouble() / HOP_SIZE * 60 / bpm
+            // Fold all frames onto the fractional beat period. Integer-period
+            // phase accumulation drifts away from actual transients even when
+            // the returned beat timeline itself uses a fractional period.
+            val bins = (period * 8).roundToInt().coerceAtLeast(16)
+            val strengths = DoubleArray(bins)
+            frames.forEachIndexed { index, frame ->
+                val phase = (index % period) / period * bins
+                val first = floor(phase).toInt().coerceIn(0, bins - 1)
+                val fraction = phase - first
+                val strength = frame.onset + frame.novelty * .3
+                strengths[first] += strength * (1 - fraction)
+                strengths[(first + 1) % bins] += strength * fraction
+            }
+            val best = strengths.indices.maxBy { strengths[it] }
+            val phaseFrames = best.toDouble() * period / bins
             return buildList {
-                var time = frames[phase.coerceIn(frames.indices)].timeMs.toDouble()
+                var time = frames.first().timeMs + phaseFrames * HOP_SIZE * 1000.0 / TARGET_RATE
                 while (time <= frames.last().timeMs + HOP_MS) { add(time.toLong()); time += 60000 / bpm }
             }.toLongArray()
         }

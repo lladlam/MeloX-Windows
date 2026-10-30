@@ -1,0 +1,158 @@
+{
+  "run_id": "40893615496",
+  "expected_head_sha": "4d8de3fd661f73e7959a59c6ef56cd4cae7ecedb",
+  "delivery_zip": {
+    "name": "MeloX-Desktop-Windows.zip",
+    "bytes": 394991167,
+    "sha256": "9daeb01c69c15525456db7a102bfb0f5f99b28e84788180cac64c8ba4108efdc"
+  },
+  "zip_crc_all_entries": "PASSED",
+  "jar_crc_all_entries": "PASSED",
+  "zip_entry_count": 359,
+  "launcher_entries": [
+    "MeloX-Desktop.exe"
+  ],
+  "application_jar": "app/MeloX-Desktop-windows-x64-1.0.0.jar",
+  "decoder_entry": "app/MeloX-Desktop-windows-x64-1.0.0.jar!/decoder/ffmpeg.exe",
+  "decoder_bytes": 164352000,
+  "build_info_revision": "4d8de3fd661f73e7959a59c6ef56cd4cae7ecedb",
+  "pinned_resource_check": "PASSED",
+  "decoder_bundle_check": "PASSED",
+  "launcher_icon_check": "PASSED",
+  "cli_helper_check": "PASSED",
+  "cli_files": [
+    {
+      "entry": "melox_cli.py",
+      "source": "tools/melox_cli.py",
+      "verified": true,
+      "sha256": "9416faee6259e3a5e981316d9cea4e7e581852445266b654a20d79147abbaa0a"
+    },
+    {
+      "entry": "WINDOWS_CLI.md",
+      "source": "docs/WINDOWS_CLI.md",
+      "verified": true,
+      "sha256": "c5ad9877fcb1375e46110c05e0e8e043230e2d168e519e71a45ea0b8326d7aef"
+    }
+  ],
+  "lx_resource_check": "PASSED",
+  "lx_resources": [
+    {
+      "entry": "LxUser/lx-prelude.js",
+      "source": "shared/src/desktopMain/resources/LxUser/lx-prelude.js",
+      "verified": true,
+      "sha256": "132352d0ede80074336850e52bf984a5e24551e45000c652ece80d68e42ed98a"
+    },
+    {
+      "entry": "parity/lx-services.properties",
+      "source": "desktop/src/main/resources/parity/lx-services.properties",
+      "verified": true,
+      "sha256": "b0f9f32dc380d45eab69aa9ed211f434ad033c24fdedc6b24f8f340507748a99"
+    },
+    {
+      "entry": "parity/lx-services-zh-rCN.properties",
+      "source": "desktop/src/main/resources/parity/lx-services-zh-rCN.properties",
+      "verified": true,
+      "sha256": "b3da32d53c362229a6f265d3abab6acfc80eb51334a409414dc557086fde96b9"
+    },
+    {
+      "entry": "parity/lx-services-zh-rTW.properties",
+      "source": "desktop/src/main/resources/parity/lx-services-zh-rTW.properties",
+      "verified": true,
+      "sha256": "e26aba691e1c31a846d04bc9f504fedac7145725628ee0f26dddd5ab0e1544a8"
+    },
+    {
+      "entry": "parity/lx-services-ja.properties",
+      "source": "desktop/src/main/resources/parity/lx-services-ja.properties",
+      "verified": true,
+      "sha256": "d227f813d520f7f03dd3ae88104961b7d750c5335921686535415bc1b8cd220b"
+    }
+  ],
+  "lx_v8_native_check": "PASSED",
+  "lx_v8_native": {
+    "entry": "libjavet-v8-windows-x86_64.v.6.0.2.dll",
+    "pe_magic": true,
+    "bytes": 32373248,
+    "sha256": "adca52df04719180b852ab7fba8a662e0a405566e5271f5004b4a1bf835d7841"
+  },
+  "autosync_resource_check": "PASSED",
+  "autosync_resources": [
+    {
+      "entry": "parity/autosync.properties",
+      "source": "desktop/src/main/resources/parity/autosync.properties",
+      "verified": true,
+      "sha256": "8b3558b069f100d5c08d5951db2a4cb6b7d7357232b72f097fa1cd664afb94e1"
+    },
+    {
+      "entry": "parity/autosync-zh-rCN.properties",
+      "source": "desktop/src/main/resources/parity/autosync-zh-rCN.properties",
+      "verified": true,
+      "sha256": "13429fd34bb6e471a14cab16cdb1662171b32c432de8cdf55ee975ea210abbb9"
+    },
+    {
+      "entry": "parity/autosync-zh-rTW.properties",
+      "source": "desktop/src/main/resources/parity/autosync-zh-rTW.properties",
+      "verified": true,
+      "sha256": "ea67b99de9cd0a45c50b7cdc2f280c55f23e356e3b646450c0f0ca64eca69f05"
+    },
+    {
+      "entry": "parity/autosync-ja.properties",
+      "source": "desktop/src/main/resources/parity/autosync-ja.properties",
+      "verified": true,
+      "sha256": "735ce6732c8d0079f2c7ac5e8c3e951d5d8fc39d2a1050f35aa21ac765dad460"
+    }
+  ],
+  "onnx_windows_native_check": "PASSED",
+  "onnx_windows_native": [
+    {
+      "entry": "ai/onnxruntime/native/win-x64/onnxruntime.dll",
+      "bytes": 17253176,
+      "sha256": "f5af81b2119177c237b228b2824576827cdf457526e1ac2647cbcc690736d608",
+      "expected_sha256": "f5af81b2119177c237b228b2824576827cdf457526e1ac2647cbcc690736d608",
+      "pe_x64": true,
+      "verified": true
+    },
+    {
+      "entry": "ai/onnxruntime/native/win-x64/onnxruntime4j_jni.dll",
+      "bytes": 100152,
+      "sha256": "d56f5bf52fc2e3fa7d80e10a42407b4cc00b377cbd73a13f5af30280438f60d5",
+      "expected_sha256": "d56f5bf52fc2e3fa7d80e10a42407b4cc00b377cbd73a13f5af30280438f60d5",
+      "pe_x64": true,
+      "verified": true
+    },
+    {
+      "entry": "ai/onnxruntime/native/win-x64/onnxruntime_providers_shared.dll",
+      "bytes": 21856,
+      "sha256": "1d8286a3a134aa3ffea6baeec1d90ce16e822de3fa048505b104e22206d16221",
+      "expected_sha256": "1d8286a3a134aa3ffea6baeec1d90ce16e822de3fa048505b104e22206d16221",
+      "pe_x64": true,
+      "verified": true
+    }
+  ],
+  "japanese_native_check": "NOT_IN_BASELINE",
+  "japanese_native": null,
+  "japanese_licenses": [],
+  "tools": [
+    {
+      "label": "pinned_resources",
+      "exit_code": 0,
+      "stdout_tail": "PASS: 38 pinned resources match exact source bytes, including Android MiLan Pro\n",
+      "stderr_tail": ""
+    },
+    {
+      "label": "decoder_bundle",
+      "exit_code": 0,
+      "stdout_tail": "{\n  \"check\": \"source/packaged decoder integrity\",\n  \"resources\": [\n    {\n      \"location\": \"desktop/build/delivery-40893615496/download/MeloX-Desktop-Windows.zip!/app/MeloX-Desktop-windows-x64-1.0.0.jar!/decoder/ffmpeg.exe\",\n      \"bytes\": 164352000,\n      \"sha256\": \"af7913b7ddc324bf02b8af72fe8612b1471455ef8d9e04e45466510742abcff9\",\n      \"magic\": \"PE\",\n      \"verified\": true\n    }\n  ],\n  \"native\": {\n    \"decoder_native_run\": \"NOT_RUN\"\n  },\n  \"audible_acceptance\": \"BLOCKED\"\n}\n",
+      "stderr_tail": ""
+    },
+    {
+      "label": "launcher_icon",
+      "exit_code": 0,
+      "stdout_tail": "PASS: PE launcher embeds every Android-derived ICO image\n",
+      "stderr_tail": ""
+    }
+  ],
+  "physical_windows_execution": "BLOCKED_NOT_RUN_HERE",
+  "pinned_android_pixel_acceptance": "BLOCKED_NO_REFERENCE_FRAMES",
+  "failures": [],
+  "status": "PASSED"
+}

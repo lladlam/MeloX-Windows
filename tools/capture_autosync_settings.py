@@ -66,6 +66,10 @@ if mode == 'controls':
     add('initially-off', 'wait@100', 'unchecked:autosync-enabled', 'runtime:autoSyncWordLyricsEnabled:false')
     add('enable', 'tap@autosync-enabled', 'checked:autosync-enabled', 'pref-bool:autosync_word_lyrics_enabled:true',
         'runtime:autoSyncWordLyricsEnabled:true', 'tag:autosync-notice')
+    # Index loading changes the height above the buttons. Wait for the real
+    # asynchronous request to settle before locating and physically clicking
+    # them, rather than clicking coordinates from a disappearing loading row.
+    add('model-index-settled', 'wait@100', 'absent:autosync-loading')
     add('chinese-model', 'reveal@autosync-model:zh', 'tag:autosync-model:zh')
     add('english-model', 'reveal@autosync-model:en', 'tag:autosync-model:en')
     if fixtures is not None:
@@ -89,7 +93,7 @@ else:
 (output / 'steps.txt').write_text(''.join(f'{name}:{action}\n' for name, action, _ in steps), encoding='utf-8')
 (output / 'expect.txt').write_text(''.join(f'{name}={",".join(checks)}\n' for name, _, checks in steps if checks), encoding='utf-8')
 args = ['--locale', 'zh-CN', '--source', 'Local', '--start-tab', 'Settings', '--width', '1100' if layout == 'desktop' else '430',
-        '--height', '850', '--output', str(output), '--wait-ms', '250', '--startup-wait-ms', '1200',
+        '--height', '850', '--output', str(output), '--wait-ms', '250', '--startup-wait-ms', '1200', '--assert-timeout-ms', '60000',
         '--steps-file', str(output / 'steps.txt'), '--expect-file', str(output / 'expect.txt')]
 (output / 'arguments.txt').write_text('\n'.join(args) + '\n', encoding='utf-8')
 gradle = os.environ.get('MELOX_GRADLE') or shutil.which('gradle')
