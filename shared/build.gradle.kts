@@ -79,6 +79,7 @@ tasks.register<JavaExec>("verifyAutoSyncModelContracts") {
     classpath = tasks.named<org.gradle.api.tasks.testing.Test>("desktopTest").get().classpath
     mainClass.set("melox.autosync.AutoSyncRealModelContract")
     args(providers.gradleProperty("autoSyncFixtures").orElse("").get())
+    args(providers.gradleProperty("autoSyncDictionaryArchive").orElse("").get())
     maxHeapSize = "512m"
     systemProperty("user.home", layout.buildDirectory.dir("parity/test-home").get().asFile.absolutePath)
 }

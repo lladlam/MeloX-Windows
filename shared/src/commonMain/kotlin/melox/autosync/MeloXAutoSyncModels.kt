@@ -20,6 +20,7 @@ data class MeloXAutoSyncInstalled(val language: String, val variant: String, val
 
 object MeloXAutoSyncModels {
     internal val repository = AutoSyncModelRepository()
+    internal val japaneseDictionary = AutoSyncJapaneseDictionary()
     private val _revision = MutableStateFlow(0L)
     val revision = _revision.asStateFlow()
 
@@ -38,6 +39,17 @@ object MeloXAutoSyncModels {
     }
 
     suspend fun remove(language: String): Boolean = repository.remove(language).also { removed ->
+        if (removed) _revision.update { it + 1 }
+    }
+
+    fun japaneseDictionaryInstalled(): Boolean = japaneseDictionary.installed()
+
+    suspend fun installJapaneseDictionary(onProgress: (Float) -> Unit = {}) {
+        japaneseDictionary.install(onProgress)
+        _revision.update { it + 1 }
+    }
+
+    suspend fun removeJapaneseDictionary(): Boolean = japaneseDictionary.remove().also { removed ->
         if (removed) _revision.update { it + 1 }
     }
 }

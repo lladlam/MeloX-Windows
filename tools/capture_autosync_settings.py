@@ -80,6 +80,9 @@ if mode == 'controls':
         add('accept-delete', 'tap@autosync-confirm-accept')
         add('deleted', 'wait@2000', 'absent:autosync-delete:en', 'tag:autosync-download:en')
     add('japanese-model', 'reveal@autosync-model:ja', 'tag:autosync-model:ja')
+    add('japanese-dictionary', 'reveal@autosync-dictionary-download', 'tag:autosync-ja-dictionary', 'tag:autosync-dictionary-download')
+    add('dictionary-confirm', 'tap@autosync-dictionary-download', 'tag:autosync-confirm')
+    add('dictionary-cancel', 'tap@autosync-confirm-cancel', 'absent:autosync-confirm', 'tag:autosync-dictionary-download')
     add('find-control', 'reveal@autosync-enabled')
     add('disable', 'tap@autosync-enabled', 'unchecked:autosync-enabled', 'pref-bool:autosync_word_lyrics_enabled:false',
         'absent:autosync-notice')

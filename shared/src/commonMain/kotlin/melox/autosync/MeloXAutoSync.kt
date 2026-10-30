@@ -48,14 +48,15 @@ object MeloXAutoSync {
                 val plan = document.lines.mapIndexedNotNull { index, line ->
                     if (line.timingKind != LyricTimingKind.LineSynchronized || !AutoSyncText.alignable(line.text)) null
                     else when (val language = AutoSyncText.language(line.text)) {
-                        AutoSyncLanguage.English, AutoSyncLanguage.Chinese -> index to language
-                        else -> null // Japanese requires the OpenJTalk dictionary and native frontend.
+                        AutoSyncLanguage.English, AutoSyncLanguage.Chinese, AutoSyncLanguage.Japanese -> index to language
+                        else -> null
                     }
                 }
                 if (plan.isEmpty()) return@withLock null
                 val languages = plan.map { it.second.tag }.distinct().sorted()
-                val models = modelKey(languages)
-                if (languages.none { MeloXAutoSyncModels.repository.installed(it) != null }) return@withLock null
+                val dictionaryReady = if ("ja" in languages) MeloXAutoSyncModels.japaneseDictionary.withInstalled { true } == true else false
+                val models = modelKey(languages, dictionaryReady)
+                if (languages.none { (it != "ja" || dictionaryReady) && MeloXAutoSyncModels.repository.installed(it) != null }) return@withLock null
                 val sourceHash = AutoSyncTimelineStore.sourceHash(document)
                 timelines.load(trackKey, sourceHash, audioKey, models)?.let { cached ->
                     ensureCurrent()
@@ -74,7 +75,8 @@ object MeloXAutoSync {
                     for ((language, entries) in plan.groupBy({ it.second }, { it.first })) {
                         ensureCurrent()
                         try {
-                            MeloXAutoSyncModels.repository.withInstalled(language.tag) { installed ->
+                            suspend fun runModel(mapper: JapaneseG2pMapper?) {
+                              MeloXAutoSyncModels.repository.withInstalled(language.tag) { installed ->
                                 OnnxAlignmentEngine.open(installed).use { engine ->
                                     for (index in entries) {
                                         ensureCurrent()
@@ -82,7 +84,7 @@ object MeloXAutoSync {
                                         val window = window(document, index, totalMs) ?: continue
                                         val samples = pcm.window(window.first, window.second)
                                         if (samples.size < AutoSyncPcmFile.SAMPLE_RATE / 10) continue
-                                        val units = try { alignLine(engine, language, line.text, samples) }
+                                        val units = try { alignLine(engine, language, line.text, samples, mapper) }
                                         catch (cancelled: CancellationException) { throw cancelled }
                                         catch (_: Exception) { emptyList() }
                                         val sanitized = sanitize(units, samples.size * 1000L / AutoSyncPcmFile.SAMPLE_RATE)
@@ -91,13 +93,24 @@ object MeloXAutoSync {
                                         }
                                     }
                                 }
+                              }
+                            }
+                            if (language == AutoSyncLanguage.Japanese) {
+                                if (dictionaryReady) MeloXAutoSyncModels.japaneseDictionary.withInstalled { dictionary ->
+                                    JaOpenJtalk(AutoSyncJapaneseNative.library(), dictionary).use { frontend ->
+                                        runModel(JapaneseG2pMapper(frontend))
+                                    }
+                                }
+                            } else {
+                                runModel(null)
                             }
                         } catch (cancelled: CancellationException) { throw cancelled }
                         catch (failure: Exception) { logWarn("MeloXAutoSync", "${language.tag} model unavailable: ${failure.javaClass.simpleName}") }
                     }
                 }
                 ensureCurrent()
-                if (result.isEmpty() || models != modelKey(languages)) return@withLock null
+                val dictionaryStillReady = if ("ja" in languages) MeloXAutoSyncModels.japaneseDictionary.withInstalled { true } == true else false
+                if (result.isEmpty() || models != modelKey(languages, dictionaryStillReady)) return@withLock null
                 timelines.save(trackKey, sourceHash, audioKey, models, result)
                 ensureCurrent()
                 AutoSyncTimelineStore.merge(document, result)
@@ -112,10 +125,10 @@ object MeloXAutoSync {
         document.lines.none { it.syllables.isNotEmpty() } &&
         document.lines.zipWithNext().all { (a, b) -> a.timeMs <= b.timeMs }
 
-    private fun modelKey(languages: List<String>): String = AutoSyncTimelineStore.hash("autosync-v1|" + languages.joinToString("|") { language ->
+    private fun modelKey(languages: List<String>, dictionaryReady: Boolean): String = AutoSyncTimelineStore.hash("autosync-v2|" + languages.joinToString("|") { language ->
         val model = MeloXAutoSyncModels.repository.installed(language)
         val identity = model?.let { runCatching { AutoSyncModelManifest.read(it).identity }.getOrNull() } ?: "missing"
-        "$language:$identity"
+        "$language:$identity" + if (language == "ja") ":dictionary=$dictionaryReady" else ""
     })
 
     private fun audioIdentity(uri: String, headers: Map<String, String>): String {
@@ -124,7 +137,8 @@ object MeloXAutoSync {
         return AutoSyncTimelineStore.hash("$uri|$revision|${headers.toSortedMap()}")
     }
 
-    private fun alignLine(engine: OnnxAlignmentEngine, language: AutoSyncLanguage, text: String, pcm: FloatArray): List<AutoSyncUnit> {
+    private fun alignLine(engine: OnnxAlignmentEngine, language: AutoSyncLanguage, text: String, pcm: FloatArray,
+                          mapper: JapaneseG2pMapper?): List<AutoSyncUnit> {
         val manifest = engine.manifest
         return when (language) {
             AutoSyncLanguage.English -> {
@@ -141,6 +155,12 @@ object MeloXAutoSync {
                 val count = normalized.count { it.toString() in vocabulary }
                 if (count == 0 || count != normalized.length) return emptyList()
                 AutoSyncText.chineseCharacters(text, normalized, manifest, engine.chinese(pcm, count))
+            }
+            AutoSyncLanguage.Japanese -> {
+                val mapping = mapper?.map(text) ?: return emptyList()
+                val targets = JapaneseCtcText.targets(mapping, manifest) ?: return emptyList()
+                val alignment = engine.ctc(pcm, targets.ids)
+                if (!alignment.feasible) emptyList() else JapaneseCtcText.units(mapping, targets, alignment.spans, manifest.frameHopSeconds)
             }
             else -> emptyList()
         }

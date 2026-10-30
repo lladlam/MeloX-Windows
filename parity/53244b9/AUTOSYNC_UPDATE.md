@@ -31,3 +31,5 @@ Windows CI `40834891150` 对提交 `35a35f65a4f2ed8a0e53b59b87781d1e9be46bfc` �
 随包前端正在接线：固定哈希的 Linux 和 Windows x64 原生库、许可文本、校验提取及独立发行包检查已加入；Linux 使用真实归档安装的词典和随包库通过同组向量。Windows JRE／Wine 组合在 `File.createTempFile` 处中断，独立最小 Java 程序也复现该环境问题，故此前直接 DLL 加载的通过结果不代表随包提取路径通过。Windows CI 新增真实发布词典、非 ASCII 路径和随包 DLL 的完整向量契约，结果另记；设置与播放器接线仍待完成。
 
 Windows CI `40893615496` 成功，完整发行 ZIP 独立核验通过：394,991,167 字节、359 条目，SHA-256 `9daeb01c69c15525456db7a102bfb0f5f99b28e84788180cac64c8ba4108efdc`，版本戳为 `4d8de3fd661f73e7959a59c6ef56cd4cae7ecedb`，详见 `evidence/windows-download-40893615496/`。后续 CI `40896173761` 的 Windows 原生真实词典／随包 DLL 及 20 组向量契约通过，但 AutoSync 桌面设置回放第二次确认点击失败，未产出 ZIP。现场截图显示模型索引请求完成后加载行消失、按钮位置上移，原点击坐标随之失效；证据见 `evidence/autosync/windows-ci-40896173761/`。回放现在等待索引加载结束并重新定位后进行真实点击，本地桌面 controls 回放通过 20 scenes／24 assertions，Windows 重跑结果另记。
+
+2026-10-30 日文生产接线：设置可独立下载／删除 NAIST 词典；播放器在词典完整时通过随包 OpenJTalk 读取并将音素 CTC 对齐映射回原字符。对于不能可靠归属发音的字符或模型词表不支持的音素，保留原行时间；缓存身份包括词典可用状态。日文、中文、英文真实 beta.4 模型均通过同机独立 Python ONNX 参考比较；真实播放器→生产 FFmpeg→真实词典和前端→日文 ONNX→歌词时间轴和缓存重载通过。安装前及删除词典后均确认保留原始行时间；英文切歌丢弃旧结果契约通过。桌面和手机版词典设置真实指针回放各 23 scenes／29 assertions 通过。以上为 Linux 执行，Windows 原生完整生产链及真实歌曲逐字精度仍需验收。

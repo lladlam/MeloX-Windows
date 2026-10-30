@@ -38,7 +38,7 @@ private object AutoSyncStrings {
     }
 }
 
-private enum class AutoSyncActionKind { Download, Precision, Standard, Remove }
+private enum class AutoSyncActionKind { Download, Precision, Standard, Remove, DictionaryDownload, DictionaryRemove }
 private data class AutoSyncAction(val language: String, val pack: MeloXAutoSyncPack?, val kind: AutoSyncActionKind)
 private fun modelLabel(language: String) = when (language) { "zh" -> "中文"; "en" -> "English"; "ja" -> "日本語"; else -> language }
 private fun modelSize(bytes: Long) = String.format(MeloXAppLanguage.locale, "%.0f MB", bytes / 1024.0 / 1024.0)
@@ -81,6 +81,10 @@ private fun AutoSyncModelPanel() {
             try {
                 when (action.kind) {
                     AutoSyncActionKind.Remove -> MeloXAutoSyncModels.remove(action.language)
+                    AutoSyncActionKind.DictionaryRemove -> MeloXAutoSyncModels.removeJapaneseDictionary()
+                    AutoSyncActionKind.DictionaryDownload -> MeloXAutoSyncModels.installJapaneseDictionary {
+                        progress.value = (it * 100).toInt().coerceIn(0, 100)
+                    }
                     else -> MeloXAutoSyncModels.install(checkNotNull(action.pack), action.kind == AutoSyncActionKind.Precision) {
                         progress.value = (it * 100).toInt().coerceIn(0, 100)
                     }
@@ -143,19 +147,48 @@ private fun AutoSyncModelPanel() {
             }
         }
     }
+    val dictionaryInstalled = remember(revision) { MeloXAutoSyncModels.japaneseDictionaryInstalled() }
+    Spacer(Modifier.height(8.dp))
+    SettingsGlassGroup {
+        Column(Modifier.fillMaxWidth().testTag("autosync-ja-dictionary").padding(12.dp)) {
+            Text(AutoSyncStrings.text("dictionary_title"), style = MaterialTheme.typography.titleSmall)
+            Text(AutoSyncStrings.text("dictionary_note"), Modifier.padding(top = 3.dp), fontSize = 12.sp,
+                color = MaterialTheme.colorScheme.onSurfaceVariant)
+            val status = when {
+                busy == "dictionary" -> AutoSyncStrings.text("downloading", progressValue)
+                dictionaryInstalled -> AutoSyncStrings.text("dictionary_installed")
+                else -> AutoSyncStrings.text("not_installed")
+            }
+            Text(status, Modifier.padding(top = 3.dp), fontSize = 12.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            when {
+                busy == "dictionary" -> SettingsActionButton(AutoSyncStrings.text("cancel"), Modifier.testTag("autosync-dictionary-cancel")) { job?.cancel() }
+                dictionaryInstalled -> SettingsActionButton(AutoSyncStrings.text("delete"), Modifier.testTag("autosync-dictionary-delete"), enabled = busy == null) {
+                    confirmation = AutoSyncAction("dictionary", null, AutoSyncActionKind.DictionaryRemove)
+                }
+                else -> SettingsActionButton(AutoSyncStrings.text("download"), Modifier.testTag("autosync-dictionary-download"), enabled = busy == null) {
+                    confirmation = AutoSyncAction("dictionary", null, AutoSyncActionKind.DictionaryDownload)
+                }
+            }
+        }
+    }
     confirmation?.let { action ->
         val pack = action.pack
         val bytes = when (action.kind) {
             AutoSyncActionKind.Precision -> pack?.precisionBytes
+            AutoSyncActionKind.DictionaryDownload -> 23_646_843L
             else -> pack?.bytes
         }
-        val message = if (action.kind == AutoSyncActionKind.Remove) AutoSyncStrings.text("delete_confirm", modelLabel(action.language))
-            else AutoSyncStrings.text("confirm", modelSize(checkNotNull(bytes)))
+        val removing = action.kind == AutoSyncActionKind.Remove || action.kind == AutoSyncActionKind.DictionaryRemove
+        val message = when (action.kind) {
+            AutoSyncActionKind.DictionaryRemove -> AutoSyncStrings.text("dictionary_delete_confirm")
+            AutoSyncActionKind.Remove -> AutoSyncStrings.text("delete_confirm", modelLabel(action.language))
+            else -> AutoSyncStrings.text("confirm", modelSize(checkNotNull(bytes)))
+        }
         MeloXGlassDialog(true, onDismiss = { confirmation = null }, modifier = Modifier.testTag("autosync-confirm")) {
             Text(message, style = MaterialTheme.typography.titleMedium)
             Row(Modifier.fillMaxWidth().padding(top = 16.dp), horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                 SettingsActionButton(AutoSyncStrings.text("cancel"), Modifier.weight(1f).testTag("autosync-confirm-cancel")) { confirmation = null }
-                SettingsActionButton(AutoSyncStrings.text(if (action.kind == AutoSyncActionKind.Remove) "delete" else "download"),
+                SettingsActionButton(AutoSyncStrings.text(if (removing) "delete" else "download"),
                     Modifier.weight(1f).testTag("autosync-confirm-accept")) { confirmation = null; run(action) }
             }
         }

@@ -63,7 +63,7 @@ jobs:
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           python tools/autosync_model_reference.py "$pwd/desktop/build/autosync-contract-fixtures"
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-          gradle :shared:verifyAutoSyncModelContracts "-PautoSyncFixtures=$pwd/desktop/build/autosync-contract-fixtures" --console=plain *> desktop/build/verification/autosync-model-contract.log
+          gradle :shared:verifyAutoSyncModelContracts "-PautoSyncFixtures=$pwd/desktop/build/autosync-contract-fixtures" "-PautoSyncDictionaryArchive=$pwd/desktop/build/autosync-ja-fixture/open_jtalk_dic_utf_8-1.11.tar.gz" --console=plain *> desktop/build/verification/autosync-model-contract.log
           Get-Content desktop/build/verification/autosync-model-contract.log
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - name: Replay Windows CLI through both real settings layouts

@@ -54,8 +54,10 @@ import kotlin.math.abs
  */
 object AutoSyncRealModelContract {
     @JvmStatic fun main(args: Array<String>) = runBlocking<Unit> {
-        require(args.size == 1 && args[0].isNotBlank()) { "Set -PautoSyncFixtures to a directory of beta.4 assets and contract WAVs" }
+        require(args.size == 2 && args.all(String::isNotBlank)) { "Set model fixtures and the published Japanese dictionary archive" }
         val fixtures = File(args[0])
+        val dictionaryArchive = File(args[1])
+        require(dictionaryArchive.isFile && dictionaryArchive.length() == AutoSyncJapaneseDictionary.RELEASE.archiveBytes)
         val reference = JSONObject(File(fixtures, "python-reference.json").readText())
         fun spans(language: String): List<Pair<Int, Int>> {
             val entries = reference.getJSONObject(language).getJSONArray("spans")
@@ -70,7 +72,7 @@ object AutoSyncRealModelContract {
         )
         val client = OkHttpClient.Builder().addInterceptor { chain ->
             val name = chain.request().url.pathSegments.last()
-            val asset = File(fixtures, name)
+            val asset = if (name == dictionaryArchive.name) dictionaryArchive else File(fixtures, name)
             check(asset.isFile) { "Missing beta.4 fixture: $name" }
             Response.Builder().request(chain.request()).protocol(Protocol.HTTP_1_1).code(200).message("OK")
                 .body(asset.source().buffer().asResponseBody(contentLength = asset.length())).build()
@@ -104,13 +106,20 @@ object AutoSyncRealModelContract {
             }
             verifyPlaybackIntegration(File(fixtures, "en_vector.wav"), "en", spans("en"))
             verifyPlaybackIntegration(File(fixtures, "zh_vector.wav"), "zh", spans("zh"))
+            verifyPlaybackIntegration(File(fixtures, "ja_vector.wav"), "ja", spans("ja"), expectMissingDictionary = true)
+            val dictionary = AutoSyncJapaneseDictionary(File(root, "home/.melox/autosync/ja-dictionary"), routing)
+            dictionary.install()
+            verifyPlaybackIntegration(File(fixtures, "ja_vector.wav"), "ja", spans("ja"))
+            check(dictionary.remove())
+            verifyPlaybackIntegration(File(fixtures, "ja_vector.wav"), "ja", spans("ja"), expectMissingDictionary = true)
         } finally {
             routing.selectSource(previous)
             root.deleteRecursively() // This executable created this isolated directory.
         }
     }
 
-    private suspend fun verifyPlaybackIntegration(wav: File, language: String, reference: List<Pair<Int, Int>>) {
+    private suspend fun verifyPlaybackIntegration(wav: File, language: String, reference: List<Pair<Int, Int>>,
+                                                  expectMissingDictionary: Boolean = false) {
         val previousOutput = AudioPlayer.outputLineFactory
         val output = ControlledOutput()
         val scope = CoroutineScope(SupervisorJob() + Dispatchers.Unconfined)
@@ -135,16 +144,25 @@ object AutoSyncRealModelContract {
                     delay(20)
                 }
             }
-            val lyric = if (language == "en") "HELLO" else "你好世界啊"
+            val lyric = when (language) { "en" -> "HELLO"; "ja" -> "かに"; else -> "你好世界啊" }
             val parsed = LrcLyricsParser.parse("[00:00.00]$lyric\n[00:02.95]作曲：Somebody")
             val document = if (language == "en") parsed.copy(lines = listOf(parsed.lines[0],
                 parsed.lines[0].copy(text = "WORLD", timingKind = LyricTimingKind.Precise), parsed.lines[1])) else parsed
             check(MeloXAutoSync.eligible(document))
+            if (expectMissingDictionary) {
+                check(MeloXAutoSync.generate(track, document) == null) { "Japanese lyrics aligned without dictionary" }
+                println("PASS: missing Japanese dictionary retains original line timing")
+                return
+            }
             val aligned = checkNotNull(MeloXAutoSync.generate(track, document)) { "Real playback alignment returned no timeline" }
             val units = aligned.lines.first().syllables
             val actual = units.map { Triple(it.text, it.startTimeMs, it.endTimeMs) }
-            val expected = if (language == "en") listOf(Triple("HELLO", reference.first().first * 20L, (reference.last().second + 1) * 20L))
-                else "你好世界啊".mapIndexed { i, char -> Triple(char.toString(), reference[i].first.toLong(), reference[i].second.toLong()) }
+            val expected = when (language) {
+                "en" -> listOf(Triple("HELLO", reference.first().first * 20L, (reference.last().second + 1) * 20L))
+                "ja" -> listOf(Triple("か", reference[1].first * 20L, (reference[2].second + 1) * 20L),
+                    Triple("に", reference[3].first * 20L, (reference[4].second + 1) * 20L))
+                else -> "你好世界啊".mapIndexed { i, char -> Triple(char.toString(), reference[i].first.toLong(), reference[i].second.toLong()) }
+            }
             check(actual == expected) { "Unexpected $language playback alignment: $actual" }
             check(aligned.lines.drop(1) == document.lines.drop(1)) { "Untimed/credit lines must retain their original timing" }
             check(MeloXAutoSync.generate(track, document) == aligned) { "Stored timeline did not reload" }
