@@ -158,8 +158,13 @@ with zipfile.ZipFile(io.BytesIO(raw)) as archive:
                 expected = subprocess.check_output(['git', 'show', f'{args.expected_sha}:{source}'], cwd=repo)
                 entry = f'autosync/licenses/{name}'
                 actual = jar.read(entry) if jar_names.count(entry) == 1 else None
-                verified = actual == expected
-                japanese_licenses.append({'entry': entry, 'verified': verified})
+                # Windows checkout may materialize Git's LF text as CRLF. Accept
+                # only the exact source bytes or that deterministic conversion.
+                verified = actual is not None and actual in (expected, expected.replace(b'\n', b'\r\n'))
+                japanese_licenses.append({'entry': entry, 'verified': verified,
+                                          'sha256': hashlib.sha256(actual).hexdigest() if actual is not None else None,
+                                          'git_sha256': hashlib.sha256(expected).hexdigest(),
+                                          'line_endings': 'exact' if actual == expected else 'windows-crlf' if verified else None})
                 if not verified:
                     failures.append(f'Japanese OpenJTalk license missing or differs from source: {entry}')
     if revision != args.expected_sha:

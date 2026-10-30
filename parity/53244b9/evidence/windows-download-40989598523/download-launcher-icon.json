@@ -1,0 +1,24 @@
+{
+  "status": "PASSED",
+  "launcher": "MeloX-Desktop.exe",
+  "source_revision": "b6ebfb3e169b04a708e6889c760e25cee7a7ffa4",
+  "ico_sha256": "cf45837602b0c85dbf15cbbb85550cb803df0cd659dfef9132fcc0e841b3bdaa",
+  "expected_sizes": [
+    16,
+    24,
+    32,
+    48,
+    64,
+    128,
+    256
+  ],
+  "matched_sizes": [
+    16,
+    24,
+    32,
+    48,
+    64,
+    128,
+    256
+  ]
+}

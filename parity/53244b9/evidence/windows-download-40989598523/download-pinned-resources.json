@@ -1,0 +1,317 @@
+{
+  "check": "pinned legal/default-string exact resource bytes",
+  "pinned_android": "3f877eaffe30c82eb6d24eb3647702f5bc554dd3",
+  "additional_android_baselines": [
+    "53244b9d6b21d7e3a609e8cb11876efef70f218b"
+  ],
+  "desktop_reference": "a41ea0e1e1fa69fb543d827b853fe3aff5420951",
+  "source_revision": "b6ebfb3e169b04a708e6889c760e25cee7a7ffa4",
+  "artifact": "desktop/build/delivery-40989598523/download/MeloX-Desktop-Windows.zip",
+  "status": "PASSED",
+  "resources": [
+    {
+      "resource": "AudioFingerprint/NeteaseAPI-LICENSE.txt",
+      "bytes": 1081,
+      "sha256": "e463bb821c363e6182f16ec1bf24405af3315b4adc72fc1402232fa98b9a0b12",
+      "expected_sha256": "e463bb821c363e6182f16ec1bf24405af3315b4adc72fc1402232fa98b9a0b12",
+      "crlf_count": 0,
+      "verified": true
+    },
+    {
+      "resource": "AudioFingerprint/NeteaseAudioFingerprint-NOTICE.txt",
+      "bytes": 397,
+      "sha256": "49f519decb43364a19327b299001ceb8d27bafc74ec8c1ebd701745264f07cda",
+      "expected_sha256": "49f519decb43364a19327b299001ceb8d27bafc74ec8c1ebd701745264f07cda",
+      "crlf_count": 0,
+      "verified": true
+    },
+    {
+      "resource": "AudioFingerprint/afp.js",
+      "bytes": 58815,
+      "sha256": "5adcf5479a882689f627e095d108d5fe34165ebb63383a2468057041498458a9",
+      "expected_sha256": "5adcf5479a882689f627e095d108d5fe34165ebb63383a2468057041498458a9",
+      "crlf_count": 0,
+      "verified": true
+    },
+    {
+      "resource": "AudioFingerprint/afp.wasm.js",
+      "bytes": 308355,
+      "sha256": "4926a6d69527a1afbc7f7d120b9c21947e677d80c484c8b65572fa7d4ce3b99f",
+      "expected_sha256": "4926a6d69527a1afbc7f7d120b9c21947e677d80c484c8b65572fa7d4ce3b99f",
+      "crlf_count": 0,
+      "verified": true
+    },
+    {
+      "resource": "branding/melox-android.ico",
+      "bytes": 86063,
+      "sha256": "cf45837602b0c85dbf15cbbb85550cb803df0cd659dfef9132fcc0e841b3bdaa",
+      "expected_sha256": "cf45837602b0c85dbf15cbbb85550cb803df0cd659dfef9132fcc0e841b3bdaa",
+      "crlf_count": 8,
+      "verified": true
+    },
+    {
+      "resource": "branding/melox-android.png",
+      "bytes": 35757,
+      "sha256": "5fe37d11ae8921300731a2b3eb325957b8ee1a8fe0d1ffe67c96f1697535bf7e",
+      "expected_sha256": "5fe37d11ae8921300731a2b3eb325957b8ee1a8fe0d1ffe67c96f1697535bf7e",
+      "crlf_count": 1,
+      "verified": true
+    },
+    {
+      "resource": "fonts/mi_lan_pro_vf.ttf",
+      "bytes": 19646728,
+      "sha256": "15fc7accb0afcbb7cf3bbf776536a37398e552f082bb13af70602bf1d7ed676f",
+      "expected_sha256": "15fc7accb0afcbb7cf3bbf776536a37398e552f082bb13af70602bf1d7ed676f",
+      "crlf_count": 1989,
+      "verified": true
+    },
+    {
+      "resource": "fonts/sf_pro_display_700.ttf",
+      "bytes": 483396,
+      "sha256": "6783abccb0efd61de14c3141d740f22ef7cbbf7b044424e77c26192f408b1652",
+      "expected_sha256": "6783abccb0efd61de14c3141d740f22ef7cbbf7b044424e77c26192f408b1652",
+      "crlf_count": 10,
+      "verified": true
+    },
+    {
+      "resource": "fonts/sf_pro_subset.ttf",
+      "bytes": 162332,
+      "sha256": "3f592d902f739de31deef2d1235d89d105508a5ea750e3d60eedcc7481d13af6",
+      "expected_sha256": "3f592d902f739de31deef2d1235d89d105508a5ea750e3d60eedcc7481d13af6",
+      "crlf_count": 6,
+      "verified": true
+    },
+    {
+      "resource": "fonts/sf_pro_subtitle_600.ttf",
+      "bytes": 483016,
+      "sha256": "9801651af24ccb45d389bfe072e12bf3ed521471e9af021b7476bf68de255c68",
+      "expected_sha256": "9801651af24ccb45d389bfe072e12bf3ed521471e9af021b7476bf68de255c68",
+      "crlf_count": 4,
+      "verified": true
+    },
+    {
+      "resource": "fonts/sf_pro_text_400.ttf",
+      "bytes": 482216,
+      "sha256": "9aac5d9e6e50eb0d4c3cc904b4d68c3a83588d7601cb88629b63aace520492aa",
+      "expected_sha256": "9aac5d9e6e50eb0d4c3cc904b4d68c3a83588d7601cb88629b63aace520492aa",
+      "crlf_count": 11,
+      "verified": true
+    },
+    {
+      "resource": "fonts/sf_pro_text_500.ttf",
+      "bytes": 482492,
+      "sha256": "23fd544dcf23a0ced3d37a6b2fa6f554bce351183069bc77301dd4a395cde834",
+      "expected_sha256": "23fd544dcf23a0ced3d37a6b2fa6f554bce351183069bc77301dd4a395cde834",
+      "crlf_count": 6,
+      "verified": true
+    },
+    {
+      "resource": "fonts/sf_pro_text_600.ttf",
+      "bytes": 483044,
+      "sha256": "a05bb51922e50659371d8db6b8881f4cf1f1a444875b2762b5f03ccb268e50ce",
+      "expected_sha256": "a05bb51922e50659371d8db6b8881f4cf1f1a444875b2762b5f03ccb268e50ce",
+      "crlf_count": 0,
+      "verified": true
+    },
+    {
+      "resource": "fonts/sf_pro_text_700.ttf",
+      "bytes": 483972,
+      "sha256": "2b77411d019bf6bdc752af1cee8df733400ab0d43dc3c58e8bf88eb768944b60",
+      "expected_sha256": "2b77411d019bf6bdc752af1cee8df733400ab0d43dc3c58e8bf88eb768944b60",
+      "crlf_count": 8,
+      "verified": true
+    },
+    {
+      "resource": "icons/pinned-v065-launcher-foreground.png",
+      "bytes": 84993,
+      "sha256": "bbb434eb8a186a770cc12bad1a03746e3b21d853baeeb661299a67c9c0e2af37",
+      "expected_sha256": "bbb434eb8a186a770cc12bad1a03746e3b21d853baeeb661299a67c9c0e2af37",
+      "crlf_count": 1,
+      "verified": true
+    },
+    {
+      "resource": "legal/cloud-control-privacy-zh-CN.md",
+      "bytes": 5020,
+      "sha256": "7030f44dda89b27357ba4b960562d5eae98d9b5ae451a8a398e4fb6cc68f5793",
+      "expected_sha256": "7030f44dda89b27357ba4b960562d5eae98d9b5ae451a8a398e4fb6cc68f5793",
+      "crlf_count": 0,
+      "verified": true
+    },
+    {
+      "resource": "legal/disclaimer-zh-CN.md",
+      "bytes": 5015,
+      "sha256": "4c6e212bb6c78bd2fa6e45a76136cba6a5cfd82c1321dfdf27d727df2a50c44e",
+      "expected_sha256": "4c6e212bb6c78bd2fa6e45a76136cba6a5cfd82c1321dfdf27d727df2a50c44e",
+      "crlf_count": 0,
+      "verified": true
+    },
+    {
+      "resource": "legal/privacy-policy-zh-CN.md",
+      "bytes": 7233,
+      "sha256": "fdf41c3aea883220ba8070823b1a35d1156869117ed607f6b5c2769997ceb097",
+      "expected_sha256": "fdf41c3aea883220ba8070823b1a35d1156869117ed607f6b5c2769997ceb097",
+      "crlf_count": 0,
+      "verified": true
+    },
+    {
+      "resource": "legal/third-party-music-sources-zh-CN.md",
+      "bytes": 3167,
+      "sha256": "4aefd5137ea6e9a2da335671753dca4d8aebcdcf0ddc903c00a03bc89ef62c38",
+      "expected_sha256": "4aefd5137ea6e9a2da335671753dca4d8aebcdcf0ddc903c00a03bc89ef62c38",
+      "crlf_count": 0,
+      "verified": true
+    },
+    {
+      "resource": "parity/android-about-sponsors-ja.properties",
+      "bytes": 385,
+      "sha256": "c1c84c20279acdbece1b98af8cef81218a54b2a624e6b4e16801e467292074ac",
+      "expected_sha256": "c1c84c20279acdbece1b98af8cef81218a54b2a624e6b4e16801e467292074ac",
+      "crlf_count": 0,
+      "verified": true
+    },
+    {
+      "resource": "parity/android-about-sponsors-zh-rCN.properties",
+      "bytes": 460,
+      "sha256": "1fd6ac8090206a9984e834954f9a755d39fb81124dd1aba1cf6593b6d3475fef",
+      "expected_sha256": "1fd6ac8090206a9984e834954f9a755d39fb81124dd1aba1cf6593b6d3475fef",
+      "crlf_count": 0,
+      "verified": true
+    },
+    {
+      "resource": "parity/android-about-sponsors-zh-rTW.properties",
+      "bytes": 472,
+      "sha256": "6ff92e8deb55c71cc5445da19a2d377ea047f7af011f096ab8cf030ef0450955",
+      "expected_sha256": "6ff92e8deb55c71cc5445da19a2d377ea047f7af011f096ab8cf030ef0450955",
+      "crlf_count": 0,
+      "verified": true
+    },
+    {
+      "resource": "parity/android-about-sponsors.properties",
+      "bytes": 619,
+      "sha256": "c79d2e87b4042e0bf16aa1ba90f618878846a84d07fd2390d601527b004525f9",
+      "expected_sha256": "c79d2e87b4042e0bf16aa1ba90f618878846a84d07fd2390d601527b004525f9",
+      "crlf_count": 0,
+      "verified": true
+    },
+    {
+      "resource": "parity/desktop-logo.png",
+      "bytes": 1840496,
+      "sha256": "18ae2ae21ba19e76267199a8b31cb84b78e56677bccba5b57508ef744f49491d",
+      "expected_sha256": "18ae2ae21ba19e76267199a8b31cb84b78e56677bccba5b57508ef744f49491d",
+      "crlf_count": 22,
+      "verified": true
+    },
+    {
+      "resource": "parity/desktop-reference-en.properties",
+      "bytes": 24768,
+      "sha256": "343c605a34bca27caab75df5fceb9d9e94dc341052c6ba022c0e1875307bc134",
+      "expected_sha256": "343c605a34bca27caab75df5fceb9d9e94dc341052c6ba022c0e1875307bc134",
+      "crlf_count": 0,
+      "verified": true
+    },
+    {
+      "resource": "parity/desktop-reference-zh-Hans.properties",
+      "bytes": 23315,
+      "sha256": "50ec384f2326c42e291df45ccee235e2512419f0fc2a6fda3c0f56e26f8a1e44",
+      "expected_sha256": "50ec384f2326c42e291df45ccee235e2512419f0fc2a6fda3c0f56e26f8a1e44",
+      "crlf_count": 0,
+      "verified": true
+    },
+    {
+      "resource": "parity/legal/BeatNet-NOTICE.md",
+      "bytes": 684,
+      "sha256": "1283dfa59592aaa9f3866126b1760b45ddf47b6edaf2d9cbc98e1ccd9257dd15",
+      "expected_sha256": "1283dfa59592aaa9f3866126b1760b45ddf47b6edaf2d9cbc98e1ccd9257dd15",
+      "crlf_count": 0,
+      "verified": true
+    },
+    {
+      "resource": "parity/legal/NeteaseAPI-LICENSE.txt",
+      "bytes": 1081,
+      "sha256": "e463bb821c363e6182f16ec1bf24405af3315b4adc72fc1402232fa98b9a0b12",
+      "expected_sha256": "e463bb821c363e6182f16ec1bf24405af3315b4adc72fc1402232fa98b9a0b12",
+      "crlf_count": 0,
+      "verified": true
+    },
+    {
+      "resource": "parity/legal/NeteaseAudioFingerprint-NOTICE.txt",
+      "bytes": 397,
+      "sha256": "49f519decb43364a19327b299001ceb8d27bafc74ec8c1ebd701745264f07cda",
+      "expected_sha256": "49f519decb43364a19327b299001ceb8d27bafc74ec8c1ebd701745264f07cda",
+      "crlf_count": 0,
+      "verified": true
+    },
+    {
+      "resource": "parity/pinned-lyrics-strings.properties",
+      "bytes": 4200,
+      "sha256": "01c641adab3e72ed3570698fe5c407f71ff82c350d29c8346d13951dadf87717",
+      "expected_sha256": "01c641adab3e72ed3570698fe5c407f71ff82c350d29c8346d13951dadf87717",
+      "crlf_count": 0,
+      "verified": true
+    },
+    {
+      "resource": "parity/pinned-settings-pages-ja.properties",
+      "bytes": 56921,
+      "sha256": "1c17bb3b7326d5eb459294e5359bf71f3622cfb01908c5f09a64ee77aaba24a5",
+      "expected_sha256": "1c17bb3b7326d5eb459294e5359bf71f3622cfb01908c5f09a64ee77aaba24a5",
+      "crlf_count": 0,
+      "verified": true
+    },
+    {
+      "resource": "parity/pinned-settings-pages-zh-rCN.properties",
+      "bytes": 44150,
+      "sha256": "4baa0606d628999f4b960e9ea8961d91038fcefc0644638b04077cdbe26b8015",
+      "expected_sha256": "4baa0606d628999f4b960e9ea8961d91038fcefc0644638b04077cdbe26b8015",
+      "crlf_count": 0,
+      "verified": true
+    },
+    {
+      "resource": "parity/pinned-settings-pages-zh-rTW.properties",
+      "bytes": 44594,
+      "sha256": "295fba795423cb6ebe666dda662f9fcc3151470973dd0bb1ad8c9ff0c23f2f3f",
+      "expected_sha256": "295fba795423cb6ebe666dda662f9fcc3151470973dd0bb1ad8c9ff0c23f2f3f",
+      "crlf_count": 0,
+      "verified": true
+    },
+    {
+      "resource": "parity/pinned-settings-pages.properties",
+      "bytes": 46507,
+      "sha256": "224470d8a443340007f3fd376dfa768472a251a59cf95f54cdb3930610b18aad",
+      "expected_sha256": "224470d8a443340007f3fd376dfa768472a251a59cf95f54cdb3930610b18aad",
+      "crlf_count": 0,
+      "verified": true
+    },
+    {
+      "resource": "parity/pinned-settings-strings.properties",
+      "bytes": 17451,
+      "sha256": "649df6af06ded94e91b6f4c728aafe2e29c76ba981097503f869e3fd8144fbc4",
+      "expected_sha256": "649df6af06ded94e91b6f4c728aafe2e29c76ba981097503f869e3fd8144fbc4",
+      "crlf_count": 0,
+      "verified": true
+    },
+    {
+      "resource": "parity/pinned-skyline-strings.properties",
+      "bytes": 1615,
+      "sha256": "f8d430f736486ca2e3e5e8d323defdf082f5f45b116de31c15dc18c7363278ca",
+      "expected_sha256": "f8d430f736486ca2e3e5e8d323defdf082f5f45b116de31c15dc18c7363278ca",
+      "crlf_count": 0,
+      "verified": true
+    },
+    {
+      "resource": "parity/pinned-v065-lyric-language.properties",
+      "bytes": 441,
+      "sha256": "3c98e00e44e140c520dae494814b38c15eb2ae2715a13bf3754e2c65015c1a9e",
+      "expected_sha256": "3c98e00e44e140c520dae494814b38c15eb2ae2715a13bf3754e2c65015c1a9e",
+      "crlf_count": 0,
+      "verified": true
+    },
+    {
+      "resource": "parity/pinned-v065-split-layout.properties",
+      "bytes": 702,
+      "sha256": "238b41799d4484a2c4f0020bde34e0a4ec2c2f6d982318bfb7c24fb5c8ca6563",
+      "expected_sha256": "238b41799d4484a2c4f0020bde34e0a4ec2c2f6d982318bfb7c24fb5c8ca6563",
+      "crlf_count": 0,
+      "verified": true
+    }
+  ]
+}
