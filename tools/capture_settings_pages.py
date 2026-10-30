@@ -109,6 +109,10 @@ elif mode == 'desktop-routes':
                 add('open-' + route, 'tap@desktop-settings-subtab:' + route)
             reveal('settings-page:' + route)
             add('inspect-' + route, 'wait@100', ['tag:settings-page:' + route])
+            if route == 'FloatingLyrics':
+                reveal('setting-floating_lyrics_enabled')
+                add('floating-desktop-enable', 'tap@setting-floating_lyrics_enabled', ['checked:setting-floating_lyrics_enabled', 'runtime:floatingLyricsEnabled:true'])
+                add('floating-desktop-disable', 'tap@setting-floating_lyrics_enabled', ['unchecked:setting-floating_lyrics_enabled', 'runtime:floatingLyricsEnabled:false'])
             if route == 'Recognition':
                 add('recognition-window', 'tap@recognition-start', ['tag:desktop-tool:Recognition', 'tag:desktop-recognition-start'])
                 add('close-recognition', 'tap@desktop-dialog:ui.common.done', ['absent:desktop-tool:Recognition'])
@@ -142,8 +146,11 @@ elif mode == 'routes':
                 if route == 'Recognition':
                     checks += ['enabled:recognition-start', 'tag:recognition-status']
                 if route == 'FloatingLyrics':
-                    checks += ['disabled:setting-floating_lyrics_enabled']
+                    checks += ['enabled:setting-floating_lyrics_enabled']
                 add('inspect-' + route.lower(), 'wait@100', checks)
+                if route == 'FloatingLyrics':
+                    add('floating-mobile-enable', 'tap@setting-floating_lyrics_enabled', ['checked:setting-floating_lyrics_enabled', 'runtime:floatingLyricsEnabled:true'])
+                    add('floating-mobile-disable', 'tap@setting-floating_lyrics_enabled', ['unchecked:setting-floating_lyrics_enabled', 'runtime:floatingLyricsEnabled:false'])
                 if route == 'General':
                     # Split controls and localized wrapping can place these
                     # rows below a short pane. Inspect each visible row after

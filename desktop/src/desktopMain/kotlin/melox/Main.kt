@@ -161,6 +161,7 @@ fun main() {
                     MeloXApp(onExit = quitApplication)
                 }
             }
+            if (melox.settings.MeloXSettingsRuntime.floatingLyricsEnabled) melox.ui.screens.FloatingLyricsWindow()
         }
         } finally { singleInstance.close() }
     } catch (e: Exception) {

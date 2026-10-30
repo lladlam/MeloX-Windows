@@ -53,15 +53,20 @@ internal fun SystemPlaybackSettings() {
 @Composable
 internal fun FloatingLyricsSettings() {
     SettingsGlassGroup {
-        SettingsToggleRow("settings_floating_show", "floating_lyrics_enabled", false, enabled = false)
+        SettingsExternalToggleRow(pinnedString("settings_floating_show"), MeloXSettingsRuntime.floatingLyricsEnabled,
+            "setting-floating_lyrics_enabled") { MeloXSettingsPreferences.setBoolean("floating_lyrics_enabled", it) }
         SettingsChoice("settings_floating_secondary", "floating_lyrics_secondary_mode", MeloXSettingsRuntime.floatingSecondaryMode,
             listOf("Auto" to "secondary_auto", "Translation" to "translation", "Romanization" to "romanization", "NextLine" to "next_line", "Hidden" to "hidden")
-                .map { (key, label) -> MeloXSecondaryLyricMode.valueOf(key) to pinnedString("settings_floating_$label") }, enabled = false) {}
+                .map { (key, label) -> MeloXSecondaryLyricMode.valueOf(key) to pinnedString("settings_floating_$label") }) {
+            MeloXSettingsPreferences.setString("floating_lyrics_secondary_mode", it.name)
+        }
         SettingsChoice("settings_floating_font_size", "floating_lyrics_font_size", MeloXSettingsRuntime.floatingFontSizeSp,
-            listOf(14, 16, 18, 20, 24, 28).map { it to pinnedString("settings_unit_sp", it) }, enabled = false) {}
-        SettingsToggleRow("settings_floating_contrast", "floating_lyrics_high_contrast", true, enabled = false)
+            listOf(14, 16, 18, 20, 24, 28).map { it to pinnedString("settings_unit_sp", it) }) {
+            MeloXSettingsPreferences.setInt("floating_lyrics_font_size", it)
+        }
+        SettingsExternalToggleRow(pinnedString("settings_floating_contrast"), MeloXSettingsRuntime.floatingHighContrast,
+            "setting-floating_lyrics_high_contrast") { MeloXSettingsPreferences.setBoolean("floating_lyrics_high_contrast", it) }
     }
-    SettingsPlatformNote(pinnedString("settings_route_floating"))
 }
 
 @Composable
