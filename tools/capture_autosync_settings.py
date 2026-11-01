@@ -86,7 +86,10 @@ if mode == 'controls':
     # The control may be fully clipped after visiting the dictionary at the
     # bottom; in that case the locator has no position from which to infer a
     # direction. Return toward the top using the real mouse wheel.
-    add('find-control', 'reveal@autosync-enabled,,up')
+    # On Windows a fully clipped checkbox can report x=0. Aim the wheel at the
+    # visible settings content, not at the offscreen node's coordinates.
+    owner = 'settings-page:Experimental' if layout == 'desktop' else 'settings-experimental'
+    add('find-control', f'reveal@autosync-enabled,{owner},up')
     add('disable', 'tap@autosync-enabled', 'unchecked:autosync-enabled', 'pref-bool:autosync_word_lyrics_enabled:false',
         'absent:autosync-notice')
     add('persist-enabled', 'tap@autosync-enabled', 'checked:autosync-enabled', 'pref-bool:autosync_word_lyrics_enabled:true')
