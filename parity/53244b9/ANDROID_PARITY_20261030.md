@@ -26,3 +26,5 @@ Android 本地及远端 `main` 已前进到 `0baa7c4b821c6cc7c3a9abd39e49b84bb0d
 本地 `LocalLyricsSidecarTest`、`DesktopLocalLyricsPersistenceTest`、`LyricsLoadTest` 通过，覆盖真实文件、编码路径、Lyricify 对唱／和声、压缩 KRC、同名候选与修改回退；`tools/capture_local_sidecar.py` 在 Linux 虚拟桌面使用真实鼠标打开两种布局的播放器，生成 WAV 进入软件 PCM 并显示逐词 sidecar，手机 5 场景、桌面 4 场景通过。Windows CI 与实际硬件听音仍待验证。
 
 后续接入纯文本无时间轴歌词：模型显式区分无时间轴，歌词选择优先同步结果，过滤占位文本；时间线事件、伪逐字、AutoSync 和悬浮歌词均不将纯文本当作可同步歌词。两种播放器布局共用手动滚动视图，鼠标／滚轮回放验证播放期间位置保持、歌词行无跳转动作；Linux 下手机 7 场景、桌面 6 场景通过，并重跑同步歌词双布局。Windows CI 尚待验证。
+
+QQ 歌曲搜索原仍使用 `client_search_cp`；对照 Android 未提交源码，现将生产 provider 接到 musicu 桌面搜索及版本化移动端回退，展开分组曲目并保留可播标记、分页和来源元数据。两个匿名公开接口的直接探测均返回 HTTP 200、10 条结果；协议夹具验证桌面成功与失败后回退，取消时不得启动回退。LX 用户脚本歌词同样接入同步格式和纯文本解析，并保留普通 LRC 翻译，真实 V8 测试使用本地脚本 fixture；这些不等于私人账号或第三方脚本线上验收。

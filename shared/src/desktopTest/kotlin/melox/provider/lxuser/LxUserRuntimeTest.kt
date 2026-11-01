@@ -13,6 +13,7 @@ import java.util.concurrent.atomic.AtomicInteger
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
+import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 import kotlin.test.assertFailsWith
 import melox.music.model.AudioQualityTier
@@ -267,6 +268,33 @@ class LxUserRuntimeTest {
         assertEquals(null, LxUserSourceStore.script(record.id))
         val replacement = LxUserRuntime.session(record.id, source)
         try { assertTrue(replacement.supportsSource("tx")) } finally { LxUserRuntime.evict(record.id) }
+    }
+
+    @Test fun userSourceLyricsSupportRichFormatsAndLrcAnnotations() {
+        val source = """
+            // @name LX lyrics fixture
+            // @version 1
+            globalThis.lx.on('request', ({info}) => {
+              if (info.musicInfo.songmid === 'rich') return {lyric:'[0]Lyricify(1000,500) words(1500,500)'};
+              if (info.musicInfo.songmid === 'plain') return 'Untimed first line\nUntimed second line';
+              return {lyric:'[00:01.00]Hello', tlyric:'[00:01.00]Translation'};
+            });
+            lx.send('inited', {sources:{wy:{type:'music',qualitys:['128k'],actions:['lyric']}}});
+        """.trimIndent()
+        val record = LxUserSourceStore.importScript(source)
+        try {
+            fun track(id: String) = MusicTrack(MusicResourceId(MusicSource.Netease, id), "song", listOf(MusicArtistRef(name = "artist")))
+            val resolver = LxUserPlaybackResolver()
+            val rich = assertNotNull(resolver.resolveLyrics(track("rich")))
+            assertEquals("Lyricify words", rich.lines.single().text)
+            assertEquals(2, rich.lines.single().syllables.size)
+            val plain = assertNotNull(resolver.resolveLyrics(track("plain")))
+            assertTrue(plain.isUnsynchronized)
+            assertEquals(2, plain.lines.size)
+            val lrc = assertNotNull(resolver.resolveLyrics(track("lrc")))
+            assertEquals("Hello", lrc.lines.single().text)
+            assertEquals("Translation", lrc.lines.single().translation)
+        } finally { LxUserSourceStore.remove(record.id) }
     }
 
     @Test fun invalidScriptsAndEscapedPathsAreRejectedWithoutTouchingOtherFiles() {

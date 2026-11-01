@@ -92,7 +92,7 @@ class QQMusicProvider(
     )
 
     override suspend fun searchSongs(query: String, page: Int, pageSize: Int): MusicPage<MusicTrack> =
-        api.searchSongs(query, page, pageSize)
+        catalog.searchTracks(query, page, pageSize)
 
     override suspend fun searchPlaylists(query: String, page: Int, pageSize: Int): MusicPage<MusicPlaylistSummary> =
         catalog.searchPlaylists(query, page, pageSize)

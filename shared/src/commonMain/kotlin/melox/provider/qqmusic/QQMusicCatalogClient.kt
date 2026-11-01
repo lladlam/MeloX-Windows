@@ -12,7 +12,15 @@ import melox.music.model.MusicSource
 import melox.music.model.MusicTrack
 import melox.music.model.MusicAlbumRef
 import melox.music.model.ProviderTrackMetadata
+import melox.music.model.TrackAvailability
 import java.io.IOException
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.currentCoroutineContext
+import kotlinx.coroutines.ensureActive
+import kotlinx.coroutines.withContext
+import melox.network.executeOwned
 import kotlin.random.Random
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
@@ -26,6 +34,66 @@ class QQMusicCatalogClient(
     private val sessionProvider: () -> QQMusicSession,
     private val httpClient: OkHttpClient = melox.network.MeloXHttpClient.shared,
 ) {
+    suspend fun searchTracks(query: String, page: Int, pageSize: Int): MusicPage<MusicTrack> = withContext(Dispatchers.IO) {
+        val safePage = page.coerceAtLeast(1)
+        val safeSize = pageSize.coerceIn(1, 50)
+        if (query.isBlank()) return@withContext MusicPage(emptyList(), safePage, safeSize, 0)
+        val owner = currentCoroutineContext()[Job]
+        val desktop = try {
+            postMusicu("music.search.SearchCgiService", "DoSearchForQQMusicDesktop",
+                JSONObject().put("searchid", "${System.currentTimeMillis()}${Random.nextInt(1000, 9999)}${Random.nextInt(0, 1000)}")
+                    .put("query", query.trim()).put("search_type", 0).put("num_per_page", safeSize)
+                    .put("page_num", safePage).put("highlight", false).put("grp", true)
+                    .put("selectors", JSONObject()).put("vec_selectors", JSONArray()), commCt = 11, commCv = 0, owner = owner)
+        } catch (error: CancellationException) {
+            throw error
+        } catch (_: Exception) {
+            currentCoroutineContext().ensureActive()
+            null
+        }
+        val desktopList = desktop?.optJSONObject("body")?.optJSONObject("song")?.optJSONArray("list")
+        val data = desktop?.takeIf { desktopList != null && desktopList.length() > 0 } ?: searchMobile(query, safePage, safeSize, owner)
+        val body = data.optJSONObject("body") ?: JSONObject()
+        val list = body.optJSONObject("song")?.optJSONArray("list") ?: body.optJSONArray("item_song") ?: JSONArray()
+        val tracks = buildList {
+            for (index in 0 until list.length()) {
+                val item = list.optJSONObject(index) ?: continue
+                parseTrack(item, assumePlayable = true)?.let(::add)
+                val group = item.optJSONArray("grp") ?: continue
+                for (i in 0 until group.length()) group.optJSONObject(i)?.let { parseTrack(it, assumePlayable = true) }?.let(::add)
+            }
+        }.distinctBy { it.id }
+        MusicPage(tracks, safePage, safeSize, searchTotal(data))
+    }
+
+    /** Anonymous mobile search profile, following Android's versioned fallback. */
+    private fun searchMobile(query: String, page: Int, pageSize: Int, owner: Job?): JSONObject {
+        val key = "music.search.SearchCgiService.DoSearchForQQMusicMobile"
+        val start = (page - 1) * pageSize
+        val param = JSONObject().put("query", query.trim()).put("highlight", 0).put("searchid", "")
+            .put("sub_searchid", 0).put("search_type", 0).put("nqc_flag", 0).put("sin", start).put("ein", start + 30)
+            .put("page_num", page).put("num_per_page", pageSize).put("cat", 2).put("grp", 1)
+            .put("remoteplace", "").put("from", "").put("multi_zhida", 1).put("sem", 0)
+            .put("related_data", "").put("ambi_data", "")
+        val payload = JSONObject().put("comm", JSONObject().put("ct", "11").put("v", "20080508")
+            .put("tmeLoginType", "0").put("tmeLoginMethod", "0"))
+            .put(key, JSONObject().put("module", "music.search.SearchCgiService")
+                .put("method", "DoSearchForQQMusicMobile").put("param", param))
+        val request = Request.Builder().url("https://u6.y.qq.com/cgi-bin/musicu.fcg")
+            .header("User-Agent", "QQMusic 20080508(android)").header("Accept", "*/*")
+            .apply { sessionProvider().cookie.takeIf(String::isNotBlank)?.let { header("Cookie", it) } }
+            .post(payload.toString().toRequestBody("application/x-www-form-urlencoded".toMediaType())).build()
+        return httpClient.executeOwned(request, owner) { response ->
+            if (!response.isSuccessful) throw IOException("QQ音乐 Mobile 搜索失败：HTTP ${response.code}")
+            val root = JSONObject(response.body?.string() ?: throw IOException("QQ音乐 Mobile 搜索响应为空"))
+            val result = root.optJSONObject(key) ?: throw IOException("QQ音乐 Mobile 搜索响应缺少结果")
+            if (root.optInt("code", 0) != 0 || result.optInt("code", 0) != 0) {
+                throw IOException("QQ音乐 Mobile 搜索错误码 ${result.optInt("code", root.optInt("code"))}")
+            }
+            result.optJSONObject("data") ?: JSONObject()
+        }
+    }
+
     suspend fun searchPlaylists(query: String, page: Int, pageSize: Int): MusicPage<MusicPlaylistSummary> {
         val result = searchByType(query, 3, page, pageSize)
         val list = extractSearchItems(result, "item_songlist")
@@ -251,7 +319,7 @@ class QQMusicCatalogClient(
         )
     }
 
-    private fun parseTrack(item: JSONObject): MusicTrack? {
+    private fun parseTrack(item: JSONObject, assumePlayable: Boolean = false): MusicTrack? {
         val quality = qqMusicQualityHint(item)
         val songMid = firstString(item, "mid", "songmid", "songMid")
             .ifBlank { item.optJSONObject("mid")?.optString("song").orEmpty() }
@@ -288,6 +356,7 @@ class QQMusicCatalogClient(
             },
             artworkUrl = artwork,
             durationMs = firstLong(item, "interval", "duration").takeIf { it > 0 }?.times(1_000L),
+            availability = if (assumePlayable) TrackAvailability.Playable else TrackAvailability.Unknown,
             providerMetadata = ProviderTrackMetadata.QQMusic(
                 songMid = songMid,
                 mediaMid = mediaMid,
@@ -296,15 +365,15 @@ class QQMusicCatalogClient(
         )
     }
 
-    private fun postMusicu(module: String, method: String, param: JSONObject): JSONObject {
+    private fun postMusicu(module: String, method: String, param: JSONObject, commCt: Int = 24, commCv: Int = 4_747_474, owner: Job? = null): JSONObject {
         val session = sessionProvider()
         val gtk = hash33(session.musicKey)
         val payload = JSONObject()
             .put(
                 "comm",
                 JSONObject()
-                    .put("ct", 24)
-                    .put("cv", 4_747_474)
+                    .put("ct", commCt)
+                    .put("cv", commCv)
                     .put("platform", "yqq.json")
                     .put("chid", "0")
                     .put("uin", session.uin.toLongOrNull() ?: 0L)
@@ -330,7 +399,7 @@ class QQMusicCatalogClient(
             .apply { if (session.cookie.isNotBlank()) header("Cookie", session.cookie) }
             .post(payload.toString().toRequestBody(JsonMediaType))
             .build()
-        httpClient.newCall(request).execute().use { response ->
+        return httpClient.executeOwned(request, owner) { response ->
             val body = response.body?.string() ?: throw IOException("空响应")
             if (!response.isSuccessful) throw IOException("QQ音乐目录请求失败：HTTP ${response.code}")
             if (body.isBlank()) throw IOException("QQ音乐目录返回空响应")
@@ -338,7 +407,7 @@ class QQMusicCatalogClient(
             val req = root.optJSONObject("req_0") ?: throw IOException("QQ音乐目录响应缺少 req_0")
             val code = req.optInt("code", 0)
             if (code != 0) throw IOException(req.optString("message").ifBlank { "QQ音乐目录错误码 $code" })
-            return req.optJSONObject("data") ?: JSONObject()
+            req.optJSONObject("data") ?: JSONObject()
         }
     }
 

@@ -8,6 +8,8 @@ import melox.provider.lxuser.LxUserSourceStore
 import melox.provider.lxuser.buildLxMusicInfo
 import melox.network.NeteaseSearchClient
 import melox.lyrics.LrcLyricsParser
+import melox.lyrics.LyricFileParser
+import melox.lyrics.LyricifyLyricsParser
 import melox.lyrics.LyricsDocument
 import melox.music.model.MusicArtistRef
 import melox.music.model.MusicResourceId
@@ -44,9 +46,12 @@ class LxUserPlaybackResolver {
 
     internal fun resolveLyrics(track: MusicTrack): LyricsDocument? {
         val value = resolveAction(track, "lyric") ?: return null
-        val data = (value as? Map<*, *>) ?: return (value as? String)?.let(LrcLyricsParser::parse)
+        val data = (value as? Map<*, *>) ?: return (value as? String)?.let(LyricFileParser::parse)
         val lyric = data["lyric"]?.toString().orEmpty().ifBlank { data["lrc"]?.toString().orEmpty() }
         if (lyric.isBlank()) return null
+        val rich = LyricFileParser.parse(lyric)
+        if (rich.lines.any { it.syllables.isNotEmpty() } || LyricifyLyricsParser.isLines(lyric) ||
+            lyric.contains(Regex("<(?:\\w+:)?tt(?:\\s|>)"))) return rich
         return LrcLyricsParser.parse(
             lrc = lyric,
             translation = data["tlyric"]?.toString().orEmpty().ifBlank { data["translation"]?.toString().orEmpty() },
