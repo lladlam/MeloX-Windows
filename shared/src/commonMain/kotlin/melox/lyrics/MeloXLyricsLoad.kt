@@ -15,6 +15,9 @@ import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.async
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.runInterruptible
@@ -121,8 +124,9 @@ class MeloXLyricsLoad(
         try {
             val current = withTimeoutOrNull(15_000L) { jobs.getValue(LyricAutoSource.Current).await() }
             if (current != null && current.lines.isNotEmpty()) {
-                val amll = withTimeoutOrNull(2_000L) { jobs.getValue(LyricAutoSource.AmlL).await() }
-                return amll?.takeIf(::hasWordTiming) ?: current
+                val candidates = if (hasWordTiming(current)) listOf(LyricAutoSource.AmlL)
+                    else order.filter { it != LyricAutoSource.Current }
+                return firstWordTimedCandidate(jobs, candidates) ?: current
             }
             val candidates = order.filter { it != LyricAutoSource.Current }.mapIndexed { index, source ->
                 val timeout = if (source == LyricAutoSource.QQMusic) 30_000L else 12_000L
@@ -150,6 +154,32 @@ class MeloXLyricsLoad(
         const val AmllUpgradeWindowMs = 30_000L
         val shared by lazy { MeloXLyricsLoad() }
     }
+}
+
+/** Observe concurrently within one shared window; completed candidates survive timeout. */
+private suspend fun firstWordTimedCandidate(
+    jobs: Map<LyricAutoSource, Deferred<LyricsDocument>>,
+    order: List<LyricAutoSource>,
+): LyricsDocument? = coroutineScope {
+    val completed = Channel<Pair<Int, LyricsDocument>>(Channel.UNLIMITED)
+    val watchers = order.mapIndexed { index, source ->
+        launch { completed.send(index to jobs.getValue(source).await()) }
+    }
+    val candidates = mutableListOf<AutoLyricCandidate>()
+    try {
+        withTimeoutOrNull(2_000L) {
+            repeat(watchers.size) {
+                val (priority, document) = completed.receive()
+                if (document.lines.isNotEmpty() && hasWordTiming(document)) {
+                    candidates += AutoLyricCandidate(priority, document)
+                }
+            }
+        }
+    } finally {
+        watchers.forEach { it.cancel() }
+        completed.close()
+    }
+    selectAutomaticLyricCandidate(candidates)?.document
 }
 
 internal fun hasWordTiming(document: LyricsDocument): Boolean = document.lines.any { it.syllables.isNotEmpty() }
@@ -181,6 +211,10 @@ internal fun selectAutomaticLyricCandidate(candidates: List<AutoLyricCandidate>)
             it.document.lines.isNotEmpty() &&
             it.document.lines.any { line -> line.syllables.isNotEmpty() }
     }?.let { return it }
+    candidates.asSequence()
+        .filter { it.document.lines.isNotEmpty() && hasWordTiming(it.document) }
+        .minByOrNull(AutoLyricCandidate::priority)
+        ?.let { return it }
     return candidates
         .asSequence()
         .filterNot { it.document.source == LyricSource.AmlL }

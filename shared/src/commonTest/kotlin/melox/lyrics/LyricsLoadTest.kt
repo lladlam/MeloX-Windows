@@ -13,6 +13,68 @@ import melox.settings.MeloXSettingsRuntime
 
 class LyricsLoadTest {
     @Test
+    fun fallbackRanksWordTimedLyricsAheadOfEarlierLineTimedProvider() {
+        val line = AutoLyricCandidate(1, doc("line", LyricSource.Netease))
+        val word = AutoLyricCandidate(2, doc("word", LyricSource.QQMusic, syllables = true))
+        val amll = AutoLyricCandidate(3, doc("amll", LyricSource.AmlL, syllables = true))
+        assertEquals(word, selectAutomaticLyricCandidate(listOf(line, word)))
+        assertEquals(amll, selectAutomaticLyricCandidate(listOf(line, word, amll)))
+    }
+
+    @Test
+    fun automaticSelectionPrefersRealWordTimingAndKeepsAmllPriority() = kotlinx.coroutines.runBlocking {
+        val previous = MeloXSettingsRuntime.automaticLyricSelectionEnabled
+        val previousBinding = MeloXSettingsRuntime.lyricStrongBindingEnabled
+        MeloXSettingsRuntime.automaticLyricSelectionEnabled = true
+        MeloXSettingsRuntime.lyricStrongBindingEnabled = false
+        try {
+            suspend fun load(current: LyricsDocument, qq: LyricsDocument, amll: LyricsDocument): LyricsDocument =
+                MeloXLyricsLoad(object : LyricDocumentSources() {
+                    override suspend fun provider(track: MusicTrack, registry: melox.music.provider.MusicProviderRegistry?, preference: MeloXLyricPreference) = current
+                    override suspend fun matchedQq(track: MusicTrack, registry: melox.music.provider.MusicProviderRegistry?) = qq
+                    override suspend fun amll(track: MusicTrack, registry: melox.music.provider.MusicProviderRegistry?, preference: MeloXLyricPreference): LyricsDocument {
+                        kotlinx.coroutines.delay(100)
+                        return amll
+                    }
+                }).load(neteaseTrack())
+            val line = doc("current-line", LyricSource.Netease)
+            val currentWord = doc("current-word", LyricSource.Netease, syllables = true)
+            val qqWord = doc("qq-word", LyricSource.QQMusic, syllables = true)
+            val amllLine = doc("amll-line", LyricSource.AmlL)
+            val amllWord = doc("amll-word", LyricSource.AmlL, syllables = true)
+            assertEquals("qq-word", load(line, qqWord, amllLine).lines.single().text)
+            assertEquals("amll-word", load(line, qqWord, amllWord).lines.single().text)
+            assertEquals("current-word", load(currentWord, qqWord, amllLine).lines.single().text)
+            assertEquals("current-line", load(line, doc("qq-line", LyricSource.QQMusic), amllLine).lines.single().text)
+        } finally {
+            MeloXSettingsRuntime.automaticLyricSelectionEnabled = previous
+            MeloXSettingsRuntime.lyricStrongBindingEnabled = previousBinding
+        }
+    }
+
+    @Test
+    fun completedWordCandidateSurvivesSlowerSourceTimeout() = kotlinx.coroutines.runBlocking {
+        val previous = MeloXSettingsRuntime.automaticLyricSelectionEnabled
+        val previousBinding = MeloXSettingsRuntime.lyricStrongBindingEnabled
+        MeloXSettingsRuntime.automaticLyricSelectionEnabled = true
+        MeloXSettingsRuntime.lyricStrongBindingEnabled = false
+        try {
+            val result = MeloXLyricsLoad(object : LyricDocumentSources() {
+                override suspend fun provider(track: MusicTrack, registry: melox.music.provider.MusicProviderRegistry?, preference: MeloXLyricPreference) = doc("current", LyricSource.Netease)
+                override suspend fun matchedQq(track: MusicTrack, registry: melox.music.provider.MusicProviderRegistry?) = doc("qq", LyricSource.QQMusic, syllables = true)
+                override suspend fun amll(track: MusicTrack, registry: melox.music.provider.MusicProviderRegistry?, preference: MeloXLyricPreference): LyricsDocument {
+                    kotlinx.coroutines.delay(5_000)
+                    return doc("late", LyricSource.AmlL, syllables = true)
+                }
+            }).load(neteaseTrack())
+            assertEquals("qq", result.lines.single().text)
+        } finally {
+            MeloXSettingsRuntime.automaticLyricSelectionEnabled = previous
+            MeloXSettingsRuntime.lyricStrongBindingEnabled = previousBinding
+        }
+    }
+
+    @Test
     fun neteaseProviderLyricsAreRequestedOnce() = kotlinx.coroutines.runBlocking {
         var providerCalls = 0
         var matchedCalls = 0
