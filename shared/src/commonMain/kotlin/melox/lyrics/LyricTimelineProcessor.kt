@@ -9,7 +9,7 @@ object LyricTimelineProcessor {
     private const val DefaultLastLineDurationMs = 3_000L
 
     fun process(document: LyricsDocument): LyricsDocument {
-        if (document.lines.isEmpty()) return document
+        if (document.isUnsynchronized || document.lines.isEmpty()) return document
         val sorted = document.lines.withIndex()
             .sortedWith(compareBy<IndexedValue<LyricLine>> { it.value.timeMs.coerceAtLeast(0L) }.thenBy { it.index })
             .map(IndexedValue<LyricLine>::value)
@@ -49,7 +49,7 @@ object LyricTimelineProcessor {
     ): Int? = document.highlightedIndex(positionMs, strategy)
 
     fun activeTimedLineIndexes(document: LyricsDocument, positionMs: Long): Set<Int> =
-        document.lines.mapIndexedNotNull { index, line ->
+        if (document.isUnsynchronized) emptySet() else document.lines.mapIndexedNotNull { index, line ->
             index.takeIf {
                 positionMs >= line.timeMs && positionMs < effectiveLineEndMs(line)
             }
@@ -70,7 +70,7 @@ object LyricTimelineProcessor {
 
     /** Absolute song position of the next line or word boundary, if one exists. */
     fun nextEventTimeMs(document: LyricsDocument, positionMs: Long): Long? {
-        if (document.lines.isEmpty()) return null
+        if (document.isUnsynchronized || document.lines.isEmpty()) return null
         var next = Long.MAX_VALUE
         fun consider(value: Long) {
             if (value > positionMs && value < next) next = value

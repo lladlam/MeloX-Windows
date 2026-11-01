@@ -183,6 +183,7 @@ class LocalMusicRepository {
         .put("source", document.source.name)
         .put("quality", document.quality.name)
         .put("pseudoTimingAllowed", document.pseudoTimingAllowed)
+        .put("isUnsynchronized", document.isUnsynchronized)
         .put("lines", JSONArray().apply { document.lines.forEach { line ->
             put(JSONObject()
                 .put("timeMs", line.timeMs).put("durationMs", line.durationMs).put("text", line.text)
@@ -215,6 +216,7 @@ class LocalMusicRepository {
         source = runCatching { LyricSource.valueOf(value.optString("source")) }.getOrDefault(LyricSource.Local),
         quality = runCatching { LyricQuality.valueOf(value.optString("quality")) }.getOrDefault(LyricQuality.Fallback),
         pseudoTimingAllowed = value.optBoolean("pseudoTimingAllowed", true),
+        isUnsynchronized = value.optBoolean("isUnsynchronized", false),
     )
 
     private fun decodeSyllables(array: JSONArray?): List<LyricSyllable> = buildList {

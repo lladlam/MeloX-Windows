@@ -14,10 +14,13 @@ object LrcLyricsParser {
         lrc: String,
         translation: String = "",
         romanization: String = "",
-    ): LyricsDocument = NeteaseLyricParser.parse(
-        yrc = "",
-        lrc = lrc,
-        translatedLrc = translation,
-        romanizedLrc = romanization,
-    ).copy(pseudoTimingAllowed = false)
+    ): LyricsDocument {
+        val timed = NeteaseLyricParser.parse(yrc = "", lrc = lrc, translatedLrc = translation,
+            romanizedLrc = romanization).copy(pseudoTimingAllowed = false)
+        if (timed.lines.isNotEmpty()) return timed.withoutPlaceholderLyrics()
+        val lines = lrc.lineSequence().map(String::trim)
+            .filter { it.isNotBlank() && !it.startsWith('[') && !it.startsWith('<') }
+            .map { LyricLine(0L, text = it, timingKind = LyricTimingKind.LineSynchronized) }.toList()
+        return LyricsDocument(lines, pseudoTimingAllowed = false, isUnsynchronized = true).withoutPlaceholderLyrics()
+    }
 }

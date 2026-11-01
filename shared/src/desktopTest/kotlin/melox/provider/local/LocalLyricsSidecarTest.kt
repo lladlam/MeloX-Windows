@@ -29,6 +29,17 @@ class LocalLyricsSidecarTest {
         assertEquals("KRC", LyricFileParser.parse(krc).lines.single().text)
     }
 
+    @Test fun untimedTextRetainsLinesWithoutCreatingPlaybackEvents() {
+        val doc = LyricFileParser.parse("[ar:Artist]\nFirst line\n\nSecond line\n纯音乐，请欣赏")
+        assertTrue(doc.isUnsynchronized)
+        assertEquals(listOf("First line", "Second line"), doc.lines.map { it.text })
+        assertNull(doc.highlightedIndex(50_000L))
+        assertEquals(doc, LyricTimelineProcessor.process(doc))
+        assertEquals(doc, doc.withPseudoTiming())
+        assertTrue(LyricTimelineProcessor.activeTimedLineIndexes(doc, 0).isEmpty())
+        assertNull(LyricTimelineProcessor.nextEventTimeMs(doc, 0))
+    }
+
     @Test fun localProviderAndLoaderReadBestSidecarAndNoticeChangesWithoutRescan() = runBlocking {
         val prefs = getPreferences("melox_local_music")
         val previous = listOf("tracks", "roots").associateWith { prefs.getString(it, null) }

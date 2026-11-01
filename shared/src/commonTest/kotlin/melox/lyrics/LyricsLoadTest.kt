@@ -13,6 +13,27 @@ import melox.settings.MeloXSettingsRuntime
 
 class LyricsLoadTest {
     @Test
+    fun synchronizedFallbackOutranksPlainTextAndPlaceholderIsNotSelected() = kotlinx.coroutines.runBlocking {
+        val previous = MeloXSettingsRuntime.automaticLyricSelectionEnabled
+        val previousBinding = MeloXSettingsRuntime.lyricStrongBindingEnabled
+        MeloXSettingsRuntime.automaticLyricSelectionEnabled = true
+        MeloXSettingsRuntime.lyricStrongBindingEnabled = false
+        try {
+            val loaded = MeloXLyricsLoad(object : LyricDocumentSources() {
+                override suspend fun provider(track: MusicTrack, registry: melox.music.provider.MusicProviderRegistry?, preference: MeloXLyricPreference) = LrcLyricsParser.parse("plain text")
+                override suspend fun amll(track: MusicTrack, registry: melox.music.provider.MusicProviderRegistry?, preference: MeloXLyricPreference) = LyricsDocument(emptyList(), LyricSource.AmlL)
+                override suspend fun matchedQq(track: MusicTrack, registry: melox.music.provider.MusicProviderRegistry?) = doc("timed", LyricSource.QQMusic)
+            }).load(neteaseTrack())
+            assertEquals("timed", loaded.lines.single().text)
+            assertTrue(!loaded.isUnsynchronized)
+            assertTrue(LrcLyricsParser.parse("[00:00.00]纯音乐，请欣赏").lines.isEmpty())
+        } finally {
+            MeloXSettingsRuntime.automaticLyricSelectionEnabled = previous
+            MeloXSettingsRuntime.lyricStrongBindingEnabled = previousBinding
+        }
+    }
+
+    @Test
     fun fallbackRanksWordTimedLyricsAheadOfEarlierLineTimedProvider() {
         val line = AutoLyricCandidate(1, doc("line", LyricSource.Netease))
         val word = AutoLyricCandidate(2, doc("word", LyricSource.QQMusic, syllables = true))

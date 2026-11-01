@@ -126,7 +126,7 @@ class MeloXLyricsLoad(
             if (current != null && current.lines.isNotEmpty()) {
                 val candidates = if (hasWordTiming(current)) listOf(LyricAutoSource.AmlL)
                     else order.filter { it != LyricAutoSource.Current }
-                return firstWordTimedCandidate(jobs, candidates) ?: current
+                return firstBetterTimedCandidate(jobs, candidates, includeLineTiming = current.isUnsynchronized) ?: current
             }
             val candidates = order.filter { it != LyricAutoSource.Current }.mapIndexed { index, source ->
                 val timeout = if (source == LyricAutoSource.QQMusic) 30_000L else 12_000L
@@ -143,7 +143,7 @@ class MeloXLyricsLoad(
         applyLyricTranslationPreference(LyricTimelineProcessor.process(document), preference)
 
     private suspend fun safe(block: suspend () -> LyricsDocument): LyricsDocument = try {
-        block()
+        block().withoutPlaceholderLyrics()
     } catch (cancelled: CancellationException) {
         throw cancelled
     } catch (_: Exception) {
@@ -157,9 +157,10 @@ class MeloXLyricsLoad(
 }
 
 /** Observe concurrently within one shared window; completed candidates survive timeout. */
-private suspend fun firstWordTimedCandidate(
+private suspend fun firstBetterTimedCandidate(
     jobs: Map<LyricAutoSource, Deferred<LyricsDocument>>,
     order: List<LyricAutoSource>,
+    includeLineTiming: Boolean,
 ): LyricsDocument? = coroutineScope {
     val completed = Channel<Pair<Int, LyricsDocument>>(Channel.UNLIMITED)
     val watchers = order.mapIndexed { index, source ->
@@ -170,7 +171,7 @@ private suspend fun firstWordTimedCandidate(
         withTimeoutOrNull(2_000L) {
             repeat(watchers.size) {
                 val (priority, document) = completed.receive()
-                if (document.lines.isNotEmpty() && hasWordTiming(document)) {
+                if (document.lines.isNotEmpty() && (hasWordTiming(document) || includeLineTiming && !document.isUnsynchronized)) {
                     candidates += AutoLyricCandidate(priority, document)
                 }
             }
@@ -219,7 +220,7 @@ internal fun selectAutomaticLyricCandidate(candidates: List<AutoLyricCandidate>)
         .asSequence()
         .filterNot { it.document.source == LyricSource.AmlL }
         .filter { it.document.lines.isNotEmpty() }
-        .minByOrNull(AutoLyricCandidate::priority)
+        .minWithOrNull(compareBy<AutoLyricCandidate> { it.document.isUnsynchronized }.thenBy { it.priority })
 }
 
 open class LyricDocumentSources {

@@ -46,6 +46,13 @@ class DesktopLocalLyricsPersistenceTest {
             reopened.setFavorite(record.fileKey, false)
             assertFalse(assertNotNull(LocalMusicRepository().track(record.fileKey)).isFavorite)
             assertEquals(lyrics, LocalMusicRepository().track(record.fileKey)?.cachedLyrics)
+            val plain = LrcLyricsParser.parse("First untimed line\nSecond untimed line")
+            assertTrue(plain.isUnsynchronized)
+            assertTrue(reopened.updateLyrics(record.fileKey, plain))
+            val restoredPlain = assertNotNull(LocalMusicRepository().track(record.fileKey)?.cachedLyrics)
+            assertTrue(restoredPlain.isUnsynchronized)
+            assertNull(restoredPlain.highlightedIndex(10_000))
+            assertEquals(listOf("First untimed line", "Second untimed line"), restoredPlain.lines.map { it.text })
             assertEquals(MusicSource.Local, track.id.source)
             assertTrue(LocalProvider(repository = reopened).lyrics(track.copy(id = MusicResourceId(MusicSource.Local, "missing"))).lines.isEmpty())
         } finally { prefs.putValues(before); directory.deleteRecursively() }

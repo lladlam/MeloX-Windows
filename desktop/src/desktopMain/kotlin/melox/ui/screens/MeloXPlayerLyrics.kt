@@ -159,11 +159,16 @@ internal fun LyricsPage(
     modifier: Modifier = Modifier,
 ) {
     val surface = LocalMeloXLyricSurface.current
+    val state = LocalMeloXPlayerLyrics.current ?: rememberMeloXPlayerLyrics(track)
+    val unsynchronized = state.document?.takeIf { it.isUnsynchronized }
+    if (unsynchronized != null) {
+        MeloXUnsynchronizedLyrics(unsynchronized, surface.foreground, interactive, modifier)
+        return
+    }
     if (MeloXSettingsRuntime.lyricsStyle != melox.settings.MeloXLyricsStyle.AppleMusic) {
         MeloXAlternativeLyricsPanel(track, modifier, onInterfaceInteraction, interactive)
         return
     }
-    val state = LocalMeloXPlayerLyrics.current ?: rememberMeloXPlayerLyrics(track)
     val playback by melox.playback.MeloXPlaybackOutput.state.collectAsState()
     val renderedPosition = remember(track.id) { mutableLongStateOf(melox.playback.MeloXPlaybackOutput.positionMs.value) }
     var anchorPosition by remember(track.id) { mutableLongStateOf(melox.playback.MeloXPlaybackOutput.positionMs.value) }

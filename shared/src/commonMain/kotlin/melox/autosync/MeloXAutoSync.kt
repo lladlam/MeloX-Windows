@@ -120,7 +120,7 @@ object MeloXAutoSync {
 
     // Several real providers leave quality at Fallback even for timestamped LRC;
     // plain, unsynchronized lyrics instead have no LineSynchronized markers.
-    internal fun eligible(document: LyricsDocument): Boolean = document.lines.isNotEmpty() &&
+    internal fun eligible(document: LyricsDocument): Boolean = !document.isUnsynchronized && document.lines.isNotEmpty() &&
         document.lines.size <= 5_000 && document.lines.any { it.timingKind == LyricTimingKind.LineSynchronized } &&
         document.lines.none { it.syllables.isNotEmpty() } &&
         document.lines.zipWithNext().all { (a, b) -> a.timeMs <= b.timeMs }

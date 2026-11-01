@@ -26,6 +26,7 @@ class LrcLibLyricsClient(
                         source = LyricSource.Local,
                         quality = LyricQuality.Fallback,
                         pseudoTimingAllowed = false,
+                        isUnsynchronized = true,
                     )
                 } ?: LyricsDocument(emptyList())
         }

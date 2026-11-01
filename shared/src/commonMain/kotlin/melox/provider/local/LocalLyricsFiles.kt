@@ -27,5 +27,6 @@ internal object LocalLyricsFiles {
             if (bytes.size > MaxFileBytes) return@runCatching null
             LyricFileParser.parse(bytes).takeIf { it.lines.isNotEmpty() }
         }.getOrNull()
-    }.maxByOrNull { document -> document.lines.count { it.syllables.isNotEmpty() } * 100 + document.lines.size }
+    }.maxWithOrNull(compareBy<LyricsDocument> { !it.isUnsynchronized }
+        .thenBy { document -> document.lines.count { it.syllables.isNotEmpty() } * 100 + document.lines.size })
 }

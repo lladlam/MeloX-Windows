@@ -21,6 +21,8 @@ Android 本地及远端 `main` 已前进到 `0baa7c4b821c6cc7c3a9abd39e49b84bb0d
 
 ## 2026-11-02 本地同步歌词
 
-对照 Android 未提交工作区的 `LyricFileParser`、`LyricifyLyricsParser` 与本地扫描增量，Windows 本地 provider 新增同目录同名 LRC／KRC／QRC／TTML／Lyricify Lines 和 Syllable 的实际读取；按逐词信息优先选择，过滤常见占位语句，文件与 KRC 解压内容均有大小限制。读取发生在歌词加载时，不覆盖原有识别缓存；本地歌词禁用跨次加载的内存缓存，使新建、修改和移除 sidecar 可在下次加载时反映。安卓新增的纯文本无时间歌词与其专用显示尚未迁移。
+对照 Android 未提交工作区的 `LyricFileParser`、`LyricifyLyricsParser` 与本地扫描增量，Windows 本地 provider 新增同目录同名 LRC／KRC／QRC／TTML／Lyricify Lines 和 Syllable 的实际读取；按逐词信息优先选择，过滤常见占位语句，文件与 KRC 解压内容均有大小限制。读取发生在歌词加载时，不覆盖原有识别缓存；本地歌词禁用跨次加载的内存缓存，使新建、修改和移除 sidecar 可在下次加载时反映。
 
 本地 `LocalLyricsSidecarTest`、`DesktopLocalLyricsPersistenceTest`、`LyricsLoadTest` 通过，覆盖真实文件、编码路径、Lyricify 对唱／和声、压缩 KRC、同名候选与修改回退；`tools/capture_local_sidecar.py` 在 Linux 虚拟桌面使用真实鼠标打开两种布局的播放器，生成 WAV 进入软件 PCM 并显示逐词 sidecar，手机 5 场景、桌面 4 场景通过。Windows CI 与实际硬件听音仍待验证。
+
+后续接入纯文本无时间轴歌词：模型显式区分无时间轴，歌词选择优先同步结果，过滤占位文本；时间线事件、伪逐字、AutoSync 和悬浮歌词均不将纯文本当作可同步歌词。两种播放器布局共用手动滚动视图，鼠标／滚轮回放验证播放期间位置保持、歌词行无跳转动作；Linux 下手机 7 场景、桌面 6 场景通过，并重跑同步歌词双布局。Windows CI 尚待验证。

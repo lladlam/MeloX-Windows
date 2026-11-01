@@ -25,17 +25,16 @@ object LyricFileParser {
         return clean(document)
     }
 
-    private fun clean(document: LyricsDocument): LyricsDocument = document.copy(
-        source = LyricSource.Local,
-        lines = document.lines.filterNot { line ->
-            line.text.filter { it.isLetterOrDigit() }.lowercase() in placeholders
-        },
-    )
+    private fun clean(document: LyricsDocument): LyricsDocument = document.copy(source = LyricSource.Local).withoutPlaceholderLyrics()
+}
 
-    private val placeholders = setOf(
+fun LyricsDocument.withoutPlaceholderLyrics(): LyricsDocument = copy(lines = lines.filterNot { line ->
+    line.text.filter { it.isLetterOrDigit() }.lowercase() in lyricPlaceholders
+})
+
+private val lyricPlaceholders = setOf(
         "此歌曲为没有填词的纯音乐请您欣赏", "此歌曲为没有填词的纯音乐请欣赏", "此歌曲為沒有填詞的純音樂請您欣賞",
         "此歌曲為沒有填詞的純音樂請欣賞", "此歌曲为dj舞曲请您欣赏", "此歌曲为没有填词的dj舞曲请您欣赏",
         "纯音乐请欣赏", "纯音乐请您欣赏", "纯音乐", "純音樂請欣賞", "純音樂請您欣賞", "純音樂",
         "暂无歌词", "暫無歌詞", "此歌曲暂无歌词", "此歌曲暫無歌詞",
-    )
-}
+)

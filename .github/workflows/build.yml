@@ -303,6 +303,8 @@ jobs:
           foreach ($layout in @("mobile", "desktop")) {
             python tools/capture_local_sidecar.py $layout "$pwd/desktop/build/parity/sidecar-$layout-home" "desktop/build/parity/sidecar-$layout"
             if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+            python tools/capture_local_sidecar.py $layout "$pwd/desktop/build/parity/plain-sidecar-$layout-home" "desktop/build/parity/plain-sidecar-$layout" plain
+            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           }
       - name: Replay localized sponsor list in both layouts and Desktop About
         shell: pwsh
