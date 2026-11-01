@@ -13,6 +13,31 @@ import melox.settings.MeloXSettingsRuntime
 
 class LyricsLoadTest {
     @Test
+    fun matchingRecognizesOnlyCreditedFeaturedArtistsAndTriesNextCandidate() = kotlinx.coroutines.runBlocking {
+        val track = MusicTrack(MusicResourceId(MusicSource.Netease, "source"), "Song",
+            listOf(MusicArtistRef(name = "Artist"), MusicArtistRef(name = "Guest")), durationMs = 180_000)
+        val featured = track.copy(id = MusicResourceId(MusicSource.QQMusic, "first"), title = "Song feat. Guest")
+        assertTrue(isSafeCrossProviderLyricMatch(track.title, track.artistText, 180_000, featured))
+        assertFalse(isSafeCrossProviderLyricMatch(track.title, track.artistText, 180_000, featured.copy(title = "Song feat. Remix")))
+        assertFalse(isSafeCrossProviderLyricMatch(track.title, track.artistText, 180_000, featured.copy(title = "Song (Live) feat. Guest")))
+        val second = featured.copy(id = MusicResourceId(MusicSource.QQMusic, "second"), durationMs = 181_000)
+        val calls = mutableListOf<String>()
+        val provider = object : melox.music.provider.MusicProvider, melox.music.provider.SearchCapability, melox.music.provider.LyricsCapability {
+            override val source = MusicSource.QQMusic
+            override val displayName = "QQ"
+            override val capabilities = setOf(melox.music.provider.MusicCapability.Search, melox.music.provider.MusicCapability.Lyrics)
+            override suspend fun searchSongs(query: String, page: Int, pageSize: Int) = melox.music.model.MusicPage(listOf(featured, second), page, pageSize)
+            override suspend fun lyrics(track: MusicTrack): LyricsDocument {
+                calls += track.id.value
+                return if (track.id.value == "first") LrcLyricsParser.parse("[00:00.00]纯音乐，请欣赏") else doc("actual", LyricSource.QQMusic)
+            }
+        }
+        val result = LyricDocumentSources().matchedQq(track, melox.music.provider.MusicProviderRegistry(listOf(provider)))
+        assertEquals("actual", result.lines.single().text)
+        assertEquals(listOf("first", "second"), calls)
+    }
+
+    @Test
     fun synchronizedFallbackOutranksPlainTextAndPlaceholderIsNotSelected() = kotlinx.coroutines.runBlocking {
         val previous = MeloXSettingsRuntime.automaticLyricSelectionEnabled
         val previousBinding = MeloXSettingsRuntime.lyricStrongBindingEnabled

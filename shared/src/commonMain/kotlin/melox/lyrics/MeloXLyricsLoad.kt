@@ -327,13 +327,18 @@ open class LyricDocumentSources {
             }
         }.distinct()
         for (query in queries) {
-            val results = runCatching { search.searchSongs(query, 1, 10).items }.getOrDefault(emptyList())
-            val match = results
+            val results = try { search.searchSongs(query, 1, 10).items }
+                catch (cancelled: CancellationException) { throw cancelled }
+                catch (_: Exception) { emptyList() }
+            val matches = results
                 .filter { isSafeCrossProviderLyricMatch(track.title, track.artistText, track.durationMs ?: 0L, it) }
-                .maxByOrNull { lyricTrackMatchScore(track, it) }
-                ?: continue
-            val document = runCatching { lyrics.lyrics(match) }.getOrNull()
-            if (document != null && document.lines.isNotEmpty()) return document
+                .sortedByDescending { lyricTrackMatchScore(track, it) }
+            for (match in matches) {
+                val document = try { lyrics.lyrics(match).withoutPlaceholderLyrics() }
+                    catch (cancelled: CancellationException) { throw cancelled }
+                    catch (_: Exception) { null }
+                if (document != null && document.lines.isNotEmpty()) return document
+            }
         }
         return LyricsDocument(emptyList())
     }
@@ -381,8 +386,8 @@ internal fun isSafeCrossProviderLyricMatch(
     targetDurationMs: Long,
     candidate: MusicTrack,
 ): Boolean {
-    val target = lyricTitleIdentity(targetTitle)
-    val other = lyricTitleIdentity(candidate.title)
+    val target = lyricTitleIdentity(withoutFeaturedArtistSuffix(targetTitle, targetArtist))
+    val other = lyricTitleIdentity(withoutFeaturedArtistSuffix(candidate.title, candidate.artistText))
     if (target.baseTitle.isBlank() || target.baseTitle != other.baseTitle) return false
     if (target.version != other.version) return false
     if (target.version != LyricTrackVersion.Original && target.versionLabel != other.versionLabel) return false
@@ -395,6 +400,13 @@ internal fun isSafeCrossProviderLyricMatch(
     val targetArtistKey = normalizeLyricMatchText(targetArtist.substringBefore(" /"))
     val candidateArtistKey = normalizeLyricMatchText(candidate.artistText)
     return targetArtistKey.isBlank() || candidateArtistKey.contains(targetArtistKey) || targetArtistKey.contains(candidateArtistKey)
+}
+
+private fun withoutFeaturedArtistSuffix(title: String, artist: String): String {
+    val suffix = Regex("(?i)\\s+(?:feat\\.?|ft\\.?)\\s*(.+?)\\s*$").find(title) ?: return title
+    val featured = normalizeLyricMatchText(suffix.groupValues[1])
+    if (featured.isBlank() || !normalizeLyricMatchText(artist).contains(featured)) return title
+    return title.substring(0, suffix.range.first).trim()
 }
 
 internal fun normalizeLyricMatchText(value: String): String = value.lowercase()
