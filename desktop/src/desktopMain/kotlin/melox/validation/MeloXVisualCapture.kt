@@ -530,7 +530,11 @@ fun main(args: Array<String>) = runBlocking {
                                 break
                             }
                         }
-                        val direction = if (rawCenterY == null) initialDirection else if (rawCenterY < topGuard) -1f else 1f
+                        // On Windows a fully clipped node can still expose a
+                        // misleading layout position. An explicit direction is
+                        // authoritative until the target is visible again.
+                        val direction = if (centerY == null && revealArgs.getOrNull(2) != null) initialDirection
+                            else if (rawCenterY == null) initialDirection else if (rawCenterY < topGuard) -1f else 1f
                         // Traverse long production settings pages by mouse wheel,
                         // with enough distance to return from their last slider.
                         // Aim inside the owning pane. Window center is the divider
@@ -538,7 +542,16 @@ fun main(args: Array<String>) = runBlocking {
                         val ownerBounds = ownerTag?.let { scene.captureSemantics().tagged(it)?.boundsInWindow }
                         val centerX = ownerBounds?.center?.x ?: node?.let { it.positionInWindow.x + it.size.width / 2f } ?: width * .5f
                         val wheelY = ownerBounds?.center?.y ?: height * .55f
-                        scene.sendPointerEvent(PointerEventType.Scroll, Offset(centerX.coerceIn(1f, width - 1f), wheelY), scrollDelta = Offset(0f, direction * 3f))
+                        if (attempt == 0 || attempt == 20 || attempt == 100 || attempt == 399) {
+                            println("Reveal $name attempt=$attempt rawY=$rawCenterY visibleY=$centerY " +
+                                "bounds=${node?.boundsInWindow} owner=$ownerBounds wheel=($centerX,$wheelY) direction=$direction")
+                        }
+                        val wheelPoint = Offset(centerX.coerceIn(1f, width - 1f), wheelY)
+                        // A real mouse must move into the pane before scrolling;
+                        // refresh the hit-test path after a modal is dismissed.
+                        scene.sendPointerEvent(PointerEventType.Move, wheelPoint)
+                        settle(16)
+                        scene.sendPointerEvent(PointerEventType.Scroll, wheelPoint, scrollDelta = Offset(0f, direction * 3f))
                         settle(240)
                     }
                     // Wheel inertia can carry the target back out after the
