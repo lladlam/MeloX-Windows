@@ -64,7 +64,7 @@ class MeloXLyricsLoad(
             val authored = withTimeoutOrNull(15_000L) { upgrade.await() } ?: return@flow
             if (authored.source != LyricSource.AmlL || !hasWordTiming(authored) || !isLyricUpgradeCompatible(initial, authored)) return@flow
             val processed = process(authored, key.preference)
-            synchronized(lock) { cache[key] = processed }
+            if (track.id.source != MusicSource.Local) synchronized(lock) { cache[key] = processed }
             emit(processed)
         } finally {
             upgrade.cancel()
@@ -78,11 +78,11 @@ class MeloXLyricsLoad(
 
     private suspend fun load(key: Key): LyricsDocument {
         val pending = synchronized(lock) {
-            cache[key]?.let { return it }
+            if (key.track.id.source != MusicSource.Local) cache[key]?.let { return it }
             inFlight.getOrPut(key) {
                 workerScope.async {
                     val document = process(loadDocument(key), key.preference)
-                    if (document.lines.isNotEmpty()) synchronized(lock) { cache[key] = document }
+                    if (key.track.id.source != MusicSource.Local && document.lines.isNotEmpty()) synchronized(lock) { cache[key] = document }
                     document
                 }
             }

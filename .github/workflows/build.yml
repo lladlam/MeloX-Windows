@@ -297,6 +297,13 @@ jobs:
               if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
             }
           }
+      - name: Replay local Lyricify sidecars in both layouts
+        shell: pwsh
+        run: |
+          foreach ($layout in @("mobile", "desktop")) {
+            python tools/capture_local_sidecar.py $layout "$pwd/desktop/build/parity/sidecar-$layout-home" "desktop/build/parity/sidecar-$layout"
+            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          }
       - name: Replay localized sponsor list in both layouts and Desktop About
         shell: pwsh
         run: |

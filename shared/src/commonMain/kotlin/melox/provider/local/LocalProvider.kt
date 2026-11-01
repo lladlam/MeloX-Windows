@@ -138,6 +138,7 @@ class LocalProvider(
 
     override suspend fun lyrics(track: MusicTrack): LyricsDocument = withContext(Dispatchers.IO) {
         val local = repository.track(track.id.value) ?: return@withContext LyricsDocument(emptyList())
+        LocalLyricsFiles.read(local.contentUri)?.let { return@withContext it }
         local.cachedLyrics?.let { return@withContext it }
         val id = local.recognizedNeteaseId ?: return@withContext LyricsDocument(emptyList())
         AmlldbLyricsClient().lyrics(id).also { document ->

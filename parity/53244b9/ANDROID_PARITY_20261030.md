@@ -18,3 +18,9 @@ Windows CI `40989598523` 对 `b6ebfb3` 已通过，发行包独立核验见 `AUT
 ## 2026-11-01 增量
 
 Android 本地及远端 `main` 已前进到 `0baa7c4b821c6cc7c3a9abd39e49b84bb0dc11f5`，新增自动歌词选择优先真实逐词时间。Android 工作区另有未提交的歌词格式、无时间歌词、在线搜索及本地媒体增量，应按实时源码继续核对，不视为已发布基线。Windows 本轮接入逐词优先策略，本地 `LyricsLoadTest` 已通过；AutoSync 控件回放滚轮落点修正的本地验证见 `AUTOSYNC_UPDATE.md`，Windows CI 结果仍待确认。
+
+## 2026-11-02 本地同步歌词
+
+对照 Android 未提交工作区的 `LyricFileParser`、`LyricifyLyricsParser` 与本地扫描增量，Windows 本地 provider 新增同目录同名 LRC／KRC／QRC／TTML／Lyricify Lines 和 Syllable 的实际读取；按逐词信息优先选择，过滤常见占位语句，文件与 KRC 解压内容均有大小限制。读取发生在歌词加载时，不覆盖原有识别缓存；本地歌词禁用跨次加载的内存缓存，使新建、修改和移除 sidecar 可在下次加载时反映。安卓新增的纯文本无时间歌词与其专用显示尚未迁移。
+
+本地 `LocalLyricsSidecarTest`、`DesktopLocalLyricsPersistenceTest`、`LyricsLoadTest` 通过，覆盖真实文件、编码路径、Lyricify 对唱／和声、压缩 KRC、同名候选与修改回退；`tools/capture_local_sidecar.py` 在 Linux 虚拟桌面使用真实鼠标打开两种布局的播放器，生成 WAV 进入软件 PCM 并显示逐词 sidecar，手机 5 场景、桌面 4 场景通过。Windows CI 与实际硬件听音仍待验证。

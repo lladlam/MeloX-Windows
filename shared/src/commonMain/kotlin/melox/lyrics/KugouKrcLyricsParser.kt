@@ -23,7 +23,9 @@ object KugouKrcLyricsParser {
                 compressed[index] = (compressed[index].toInt() xor xorKey[index % xorKey.size].toInt()).toByte()
             }
             InflaterInputStream(ByteArrayInputStream(compressed)).use { stream ->
-                stream.readBytes().toString(Charsets.UTF_8)
+                val bytes = stream.readNBytes(4 * 1024 * 1024 + 1)
+                if (bytes.size > 4 * 1024 * 1024) return@runCatching ""
+                bytes.toString(Charsets.UTF_8)
             }
         }.getOrDefault("")
     }
