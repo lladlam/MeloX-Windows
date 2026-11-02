@@ -212,17 +212,26 @@ private fun PodcastDetailContent(client: NeteaseUniversalSearchClient, initial: 
     val scope = rememberCoroutineScope()
     var podcast by remember(initial.id) { mutableStateOf(initial) }
     var programs by remember(podcast.id) { mutableStateOf<List<MeloXPodcastProgram>>(emptyList()) }
+    var offset by remember(podcast.id) { androidx.compose.runtime.mutableIntStateOf(0) }
+    var hasMore by remember(podcast.id) { mutableStateOf(false) }
     var loading by remember(podcast.id) { mutableStateOf(true) }
     var subscribing by remember(podcast.id) { mutableStateOf(false) }
     var error by remember(podcast.id) { mutableStateOf<String?>(null) }
-    LaunchedEffect(podcast.id) {
-        runCatching {
-            client.podcastDetail(podcast.id)?.let { podcast = it }
-            client.podcastPrograms(podcast.id, limit = 100).values
-        }.onSuccess { programs = it }
-            .onFailure { if (it is kotlinx.coroutines.CancellationException) throw it; error = it.message ?: "节目加载失败" }
-        loading = false
+    var operationError by remember(podcast.id) { mutableStateOf<String?>(null) }
+    suspend fun loadPage(first: Boolean) {
+        loading = true
+        error = null
+        try {
+            if (first) client.podcastDetail(podcast.id)?.let { podcast = it }
+            val page = client.podcastPrograms(podcast.id, offset = offset, limit = 50)
+            programs = (programs + page.values).distinctBy { it.id }
+            offset += page.values.size
+            hasMore = page.hasMore && page.values.isNotEmpty()
+        } catch (cancelled: kotlinx.coroutines.CancellationException) { throw cancelled }
+        catch (failure: Exception) { error = failure.message ?: "节目加载失败" }
+        finally { loading = false }
     }
+    LaunchedEffect(podcast.id) { loadPage(true) }
     Column(Modifier.fillMaxSize().testTag("podcast-detail").background(MeloXColors.pageBackground()).padding(top = 18.dp)) {
         MeloXIosTopBar(title = podcast.name, onBack = onBack)
         Row(Modifier.padding(20.dp), verticalAlignment = Alignment.CenterVertically) {
@@ -233,8 +242,9 @@ private fun PodcastDetailContent(client: NeteaseUniversalSearchClient, initial: 
             }
             MeloXGlassButton(
                 onClick = {
+                    operationError = null
                     if (NeteaseSessionStore.readCookie().isBlank()) {
-                        error = "请先登录网易云音乐"
+                        operationError = "请先登录网易云音乐"
                         return@MeloXGlassButton
                     }
                     if (subscribing) return@MeloXGlassButton
@@ -243,7 +253,7 @@ private fun PodcastDetailContent(client: NeteaseUniversalSearchClient, initial: 
                     scope.launch {
                         runCatching { client.setPodcastSubscribed(podcast.id, desired) }
                             .onSuccess { podcast = podcast.copy(subscribed = desired) }
-                            .onFailure { if (it is kotlinx.coroutines.CancellationException) throw it; error = it.message ?: "订阅失败" }
+                            .onFailure { if (it is kotlinx.coroutines.CancellationException) throw it; operationError = it.message ?: "订阅失败" }
                         subscribing = false
                     }
                 },
@@ -253,10 +263,8 @@ private fun PodcastDetailContent(client: NeteaseUniversalSearchClient, initial: 
                 Text(if (podcast.subscribed) "已订阅" else "订阅")
             }
         }
-        when {
-            loading -> Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) { CircularProgressIndicator(color = MeloXColors.Primary) }
-            error != null -> Box(Modifier.fillMaxSize().testTag("podcast-detail-error"), contentAlignment = Alignment.Center) { Text(error.orEmpty(), color = MaterialTheme.colorScheme.error) }
-            else -> LazyColumn(contentPadding = PaddingValues(bottom = 140.dp)) {
+        operationError?.let { message -> Text(message, Modifier.padding(horizontal = 20.dp), color = MaterialTheme.colorScheme.error) }
+        LazyColumn(contentPadding = PaddingValues(bottom = 140.dp)) {
                 items(programs, key = { it.id }) { program ->
                     Row(
                         Modifier.fillMaxWidth().testTag("podcast-program-${program.id}").clickable(enabled = program.playbackSong != null) {
@@ -275,7 +283,15 @@ private fun PodcastDetailContent(client: NeteaseUniversalSearchClient, initial: 
                         }
                     }
                 }
-            }
+                if (loading) item("loading") { Box(Modifier.fillMaxWidth().height(80.dp), contentAlignment = Alignment.Center) { CircularProgressIndicator(color = MeloXColors.Primary) } }
+                else if (error != null) item("error") { Column(Modifier.fillMaxWidth().testTag("podcast-detail-error"), horizontalAlignment = Alignment.CenterHorizontally) {
+                    Text(error.orEmpty(), color = MaterialTheme.colorScheme.error)
+                    MeloXGlassButton(onClick = { scope.launch { loadPage(programs.isEmpty()) } }) { Text("重试") }
+                } }
+                else if (hasMore) item("next-page") {
+                    LaunchedEffect(offset) { scope.launch { loadPage(false) } }
+                    Box(Modifier.fillMaxWidth().height(1.dp))
+                }
         }
     }
 }
