@@ -125,6 +125,7 @@ private fun NeteaseHome(
     var desktopActionKey by remember { mutableStateOf("daily_songs") }
     var recentSongs by remember { mutableStateOf<List<melox.model.SearchSong>>(emptyList()) }
     var homePodcast by remember { mutableStateOf<melox.network.MeloXPodcast?>(null) }
+    var homeEpisode by remember { mutableStateOf<Long?>(null) }
     var accountId by remember { mutableStateOf<Long?>(null) }
     val collectionClient = remember { melox.network.NeteaseCollectionDetailsClient(cookieProvider = { melox.account.NeteaseSessionStore.readCookie() }) }
     val podcastClient = remember { melox.network.NeteaseUniversalSearchClient(cookieProvider = { melox.account.NeteaseSessionStore.readCookie() }) }
@@ -135,6 +136,11 @@ private fun NeteaseHome(
             catch (cancelled: kotlinx.coroutines.CancellationException) { throw cancelled }
             catch (failure: Exception) { error = failure.message ?: "播客加载失败" }
         }
+    }
+
+    fun openHomePodcastItem(item: melox.library.NeteaseHomePodcast) {
+        val programId = item.programId
+        if (programId != null && programId > 0L) homeEpisode = programId else openHomePodcast(item.id)
     }
 
     val cacheKey = "${session.cookie.hashCode()}_${melox.settings.MeloXSettingsRuntime.musicArea}_${melox.settings.MeloXSettingsRuntime.podcastsEnabled}"
@@ -253,9 +259,12 @@ private fun NeteaseHome(
                     songs.firstOrNull()?.let { melox.playback.PlaybackCommands.playQueue(songs, it.id) }
                 } catch (cancelled: kotlinx.coroutines.CancellationException) { throw cancelled }
                 catch (failure: Exception) { error = failure.message }
-            } }, onPodcast = ::openHomePodcast, onTool = onOpenTool)
+            } }, onPodcast = ::openHomePodcastItem, onTool = onOpenTool)
         melox.ui.navigation.MeloXDetailOverlay(dailySongs.takeIf { it.isNotEmpty() }, { dailySongs = emptyList() }) { songs ->
             DailySongsPage(songs, onBack = { dailySongs = emptyList() }, title = melox.ui.desktop.desktopString("ui.home.action.$desktopActionKey"))
+        }
+        melox.ui.navigation.MeloXDetailOverlay(homeEpisode, { homeEpisode = null }) { episode ->
+            PodcastEpisodeDetail(podcastClient, episode, onBack = { homeEpisode = null }, onPodcast = ::openHomePodcast)
         }
         melox.ui.navigation.MeloXDetailOverlay(homePodcast, { homePodcast = null }) { podcast ->
             PodcastDetail(podcastClient, podcast, onBack = { homePodcast = null })
@@ -332,7 +341,7 @@ private fun NeteaseHome(
                     horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                     items(homePodcasts, key = { "podcast-${it.programId ?: it.id}" }) { podcast ->
                         Column(Modifier.width(150.dp).testTag("home-podcast:${podcast.programId ?: podcast.id}")
-                            .clickable { openHomePodcast(podcast.id) }) {
+                            .clickable { openHomePodcastItem(podcast) }) {
                             MeloXArtworkImage(podcast.artworkUrl, MeloXColors.SurfaceVariant,
                                 Modifier.size(150.dp).clip(RoundedCornerShape(14.dp)))
                             Text(podcast.name, Modifier.padding(top = 6.dp), maxLines = 2,
@@ -350,6 +359,9 @@ private fun NeteaseHome(
         MeloXProviderSongListDetail(songs, desktopActionKey) { dailySongs = emptyList() }
     }
     melox.ui.navigation.MeloXDetailOverlay(accountId, { accountId = null }) { AccountProfileScreen(it) { accountId = null } }
+    melox.ui.navigation.MeloXDetailOverlay(homeEpisode, { homeEpisode = null }) { episode ->
+        PodcastEpisodeDetail(podcastClient, episode, onBack = { homeEpisode = null }, onPodcast = ::openHomePodcast)
+    }
     melox.ui.navigation.MeloXDetailOverlay(homePodcast, { homePodcast = null }) { podcast ->
         PodcastDetail(podcastClient, podcast, onBack = { homePodcast = null })
     }

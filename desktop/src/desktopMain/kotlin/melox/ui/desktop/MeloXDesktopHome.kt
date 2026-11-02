@@ -61,7 +61,7 @@ private val quickActions = listOf(
 @Composable
 internal fun MeloXDesktopHome(content: NeteaseHomeContent?, recentSongs: List<SearchSong>, activeAction: String?, loading: Boolean, error: String?,
     onAction: (String) -> Unit, onPlaylist: (NeteasePlaylistSummary) -> Unit, onPlayPlaylist: (NeteasePlaylistSummary) -> Unit,
-    onAlbum: (Long, String) -> Unit, onPlayAlbum: (Long) -> Unit, onPodcast: (Long) -> Unit, onTool: (String) -> Unit) {
+    onAlbum: (Long, String) -> Unit, onPlayAlbum: (Long) -> Unit, onPodcast: (melox.library.NeteaseHomePodcast) -> Unit, onTool: (String) -> Unit) {
     val reserved = 0
     val currentTrack by AudioPlayer.currentTrack.collectAsState()
     val listState = rememberLazyListState()
@@ -133,9 +133,9 @@ internal fun MeloXDesktopHome(content: NeteaseHomeContent?, recentSongs: List<Se
             }
             if (MeloXSettingsRuntime.podcastsEnabled && MeloXSettingsRuntime.podcastsHomePlacement && content?.podcasts?.isNotEmpty() == true) item("podcasts") {
                 HomeSection(desktopString("ui.home.section.podcast_recommendations"), desktopString("ui.navigation.podcasts"), { onTool("Podcasts") }) {
-                    DesktopHomePagingShelf(content.podcasts.take(8), { it.id }, mediaWidth, 24.dp, reserved, "podcasts") { program ->
+                    DesktopHomePagingShelf(content.podcasts.take(8), { it.programId ?: it.id }, mediaWidth, 24.dp, reserved, "podcasts") { program ->
                         DesktopHomeMediaCard(program.name, program.playbackSong?.album.orEmpty(), program.artworkUrl, mediaWidth,
-                            "desktop-home-podcast:${program.id}", onOpen = { onPodcast(program.id) },
+                            "desktop-home-podcast:${program.programId ?: program.id}", onOpen = { onPodcast(program) },
                             onPlay = program.playbackSong?.let { song -> { melox.playback.PlaybackCommands.playQueue(listOf(song), song.id) } })
                     }
                 }

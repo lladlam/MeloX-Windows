@@ -58,6 +58,7 @@ data class MeloXPodcastProgram(
     val radioId: Long,
     val radioName: String,
     val playbackSong: melox.model.SearchSong? = null,
+    val description: String? = null,
 )
 data class MeloXPodcastPage<T>(val values: List<T>, val hasMore: Boolean = false, val totalCount: Int = values.size)
 
@@ -335,18 +336,24 @@ class NeteaseUniversalSearchClient(
         val response = eapi(
             "/api/djradio/get/subed",
             JSONObject().put("limit", limit.coerceIn(1, 100)).put("offset", offset.coerceAtLeast(0)).put("total", true),
+            owner = kotlinx.coroutines.currentCoroutineContext()[kotlinx.coroutines.Job],
         )
         val values = parsePodcasts(response.optJSONArray("djRadios")).map { it.copy(subscribed = true) }
         val total = response.optInt("count", offset + values.size)
-        MeloXPodcastPage(values, offset + values.size < total, total)
+        MeloXPodcastPage(values, if (response.has("hasMore")) response.optBoolean("hasMore") else offset + values.size < total, total)
     }
 
     suspend fun podcastPrograms(radioId: Long, offset: Int = 0, limit: Int = 30, ascending: Boolean = false): MeloXPodcastPage<MeloXPodcastProgram> = withContext(Dispatchers.IO) {
-        val response = eapi("/api/dj/program/byradio", JSONObject().put("radioId", radioId).put("limit", limit.coerceIn(1, 50)).put("offset", offset.coerceAtLeast(0)).put("asc", ascending))
+        val response = eapi("/api/dj/program/byradio", JSONObject().put("radioId", radioId).put("limit", limit.coerceIn(1, 50)).put("offset", offset.coerceAtLeast(0)).put("asc", ascending), owner = kotlinx.coroutines.currentCoroutineContext()[kotlinx.coroutines.Job])
         val source = response.optJSONArray("programs") ?: JSONArray()
         val values = buildList { for (index in 0 until source.length()) parsePodcastProgram(source.optJSONObject(index))?.let(::add) }
         val total = response.optInt("count", offset + values.size)
-        MeloXPodcastPage(values, offset + values.size < total, total)
+        MeloXPodcastPage(values, if (response.has("more")) response.optBoolean("more") else offset + values.size < total, total)
+    }
+
+    suspend fun podcastProgramDetail(programId: Long): MeloXPodcastProgram? = withContext(Dispatchers.IO) {
+        val response = eapi("/api/dj/program/detail", JSONObject().put("id", programId), owner = kotlinx.coroutines.currentCoroutineContext()[kotlinx.coroutines.Job])
+        parsePodcastProgram(response.optJSONObject("program") ?: response.optJSONObject("data"))
     }
 
     suspend fun recommendedPodcastPrograms(limit: Int = 12): List<MeloXPodcastProgram> = withContext(Dispatchers.IO) {
@@ -388,15 +395,22 @@ class NeteaseUniversalSearchClient(
         val id = value.optLong("id", -1L)
         if (id <= 0L) return null
         val radio = value.optJSONObject("radio") ?: JSONObject()
-        val song = parseSong(value.optJSONObject("mainSong"))
+        val radioName = radio.optString("name").ifBlank { "未知播客" }
+        val name = value.optString("name").ifBlank { "未知节目" }
+        val cover = secureUrl(value.optString("coverUrl").takeIf(String::isNotBlank) ?: radio.optString("picUrl").takeIf(String::isNotBlank))
+        val parsedSong = parseSong(value.optJSONObject("mainSong"))
+        val duration = value.optLong("duration", 0L).takeIf { it > 0L } ?: parsedSong?.durationMs ?: 0L
+        val song = parsedSong?.copy(name = name, artists = value.optJSONObject("dj")?.optString("nickname")?.takeIf(String::isNotBlank) ?: radioName,
+            album = radioName, artworkUrl = cover, durationMs = duration)
         return MeloXPodcastProgram(
             id = id,
-            name = value.optString("name").ifBlank { "未知节目" },
-            artworkUrl = secureUrl(value.optString("coverUrl").takeIf(String::isNotBlank) ?: radio.optString("picUrl").takeIf(String::isNotBlank)),
-            durationMs = value.optLong("duration", song?.durationMs ?: 0L),
+            name = name,
+            artworkUrl = cover,
+            durationMs = duration,
             radioId = radio.optLong("id", 0L),
-            radioName = radio.optString("name").ifBlank { "未知播客" },
+            radioName = radioName,
             playbackSong = song,
+            description = value.optString("description").takeIf(String::isNotBlank),
         )
     }
 

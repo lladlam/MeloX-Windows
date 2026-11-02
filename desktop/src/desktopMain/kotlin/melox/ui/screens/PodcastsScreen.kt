@@ -166,6 +166,48 @@ internal fun PodcastDetail(client: NeteaseUniversalSearchClient, initial: MeloXP
 }
 
 @Composable
+internal fun PodcastEpisodeDetail(client: NeteaseUniversalSearchClient, id: Long, onBack: () -> Unit, onPodcast: (Long) -> Unit) {
+    var program by remember(client, id) { mutableStateOf<MeloXPodcastProgram?>(null) }
+    var loading by remember(client, id) { mutableStateOf(true) }
+    var error by remember(client, id) { mutableStateOf<String?>(null) }
+    var retry by remember(client, id) { androidx.compose.runtime.mutableIntStateOf(0) }
+    LaunchedEffect(client, id, retry) {
+        loading = true
+        error = null
+        try {
+            program = client.podcastProgramDetail(id) ?: throw java.io.IOException("节目不存在")
+        } catch (cancelled: kotlinx.coroutines.CancellationException) { throw cancelled }
+        catch (failure: Exception) { error = failure.message ?: "节目加载失败" }
+        finally { loading = false }
+    }
+    Column(Modifier.fillMaxSize().testTag("podcast-episode-detail").background(MeloXColors.pageBackground()).padding(top = 18.dp)) {
+        MeloXIosTopBar(title = program?.name ?: "播客节目", onBack = onBack)
+        when {
+            loading -> Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) { CircularProgressIndicator(color = MeloXColors.Primary) }
+            error != null -> Column(Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
+                Text(error.orEmpty(), color = MaterialTheme.colorScheme.error)
+                MeloXGlassButton(onClick = { retry++ }) { Text("重试") }
+            }
+            else -> program?.let { episode ->
+                LazyColumn(Modifier.fillMaxSize(), contentPadding = PaddingValues(start = 20.dp, end = 20.dp, bottom = 140.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                    item { MeloXArtworkImage(episode.artworkUrl, MeloXColors.SurfaceVariant, Modifier.size(210.dp).clip(RoundedCornerShape(18.dp))) }
+                    item { Text(episode.name, color = MeloXColors.pageOnSurface(), fontSize = 23.sp, fontWeight = FontWeight.Bold) }
+                    item { Text(episode.radioName, color = MeloXColors.pageOnSurfaceVariant()) }
+                    episode.playbackSong?.let { song -> item {
+                        MeloXGlassButton(onClick = { PlaybackCommands.playQueue(listOf(song), song.id) }, modifier = Modifier.testTag("podcast-episode-play")) { Text("播放节目") }
+                    } }
+                    episode.description?.let { description -> item { Text(description, Modifier.fillMaxWidth(), color = MeloXColors.pageOnSurfaceVariant()) } }
+                    if (episode.radioId > 0L) item {
+                        MeloXGlassButton(onClick = { onPodcast(episode.radioId) }, modifier = Modifier.testTag("podcast-episode-radio")) { Text("查看播客") }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
 private fun PodcastDetailContent(client: NeteaseUniversalSearchClient, initial: MeloXPodcast, onBack: () -> Unit) {
     val scope = rememberCoroutineScope()
     var podcast by remember(initial.id) { mutableStateOf(initial) }
