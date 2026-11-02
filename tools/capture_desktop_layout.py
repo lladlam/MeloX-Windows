@@ -30,7 +30,11 @@ for index, hz in enumerate([220, 330]):
             audio.setsampwidth(2)
             audio.setframerate(16000)
             second = b''.join(struct.pack('<h', int(4000 * math.sin(i * 2 * math.pi * hz / 16000))) for i in range(16000))
-            for _ in range(420):
+            # This replay seeks to roughly 82% before several more frames. On
+            # a slow Windows runner a seven-minute track can end mid-replay,
+            # changing playback state while the artwork is still animating.
+            seconds = 1800 if mode.startswith('reference-player') else 420
+            for _ in range(seconds):
                 audio.writeframesraw(second)
     fixtures.append(path)
 lyrics = home / 'generated-desktop.lrc'

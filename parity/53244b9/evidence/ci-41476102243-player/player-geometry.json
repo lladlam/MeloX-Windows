@@ -1,0 +1,752 @@
+{
+  "status": "PASSED",
+  "scenes": 21,
+  "assertions": 35,
+  "reference": null,
+  "queue_reference": null,
+  "images": [
+    {
+      "file": "00-settings.png",
+      "sha256": "159acea74d5ace35eef9aeda922e085d30f78edf2848edb182cbf9d575e5c60c"
+    },
+    {
+      "file": "01-consent.png",
+      "sha256": "ec2f68a7e730adbfcf13f5112012727f7a0a1227a786f0daba09b352e19e3b39"
+    },
+    {
+      "file": "02-ready.png",
+      "sha256": "a71ce178599bafaa3cd6dcb4d2d4561a4f508cadf78dc04b10e13f1866e9a452"
+    },
+    {
+      "file": "03-expanded.png",
+      "sha256": "8de086f0bb6454e8c67669a84b64a0ebe42e12f978cf5aa22f02253b921c2eb5",
+      "artwork": [
+        200.81079,
+        112.81079,
+        779.1892,
+        691.1892
+      ],
+      "expected_artwork": [
+        200.81081081081084,
+        112.81081081081084,
+        779.1891891891892,
+        691.1891891891892
+      ],
+      "progress": [
+        170,
+        888,
+        810,
+        954
+      ],
+      "seek": [
+        170,
+        888,
+        810,
+        924
+      ],
+      "uploaded_landmark_delta_px": [
+        -6.189,
+        -0.189,
+        -5.811,
+        -0.811
+      ]
+    },
+    {
+      "file": "04-favorite-ready.png",
+      "sha256": "215e10092cedf75c37b52293fd523661b71aa1f0bb39a73e76b3fb482dc02317",
+      "artwork": [
+        200.81079,
+        112.81079,
+        779.1892,
+        691.1892
+      ],
+      "expected_artwork": [
+        200.81081081081084,
+        112.81081081081084,
+        779.1891891891892,
+        691.1891891891892
+      ],
+      "progress": [
+        170,
+        888,
+        810,
+        954
+      ],
+      "seek": [
+        170,
+        888,
+        810,
+        924
+      ],
+      "uploaded_landmark_delta_px": [
+        -6.189,
+        -0.189,
+        -5.811,
+        -0.811
+      ]
+    },
+    {
+      "file": "05-favorite.png",
+      "sha256": "3e22be9a1692f50c9648459a25b8bd80ef21bfbe6317c03737d890f45eca488f",
+      "artwork": [
+        200.81079,
+        112.81079,
+        779.1892,
+        691.1892
+      ],
+      "expected_artwork": [
+        200.81081081081084,
+        112.81081081081084,
+        779.1891891891892,
+        691.1891891891892
+      ],
+      "progress": [
+        170,
+        888,
+        810,
+        954
+      ],
+      "seek": [
+        170,
+        888,
+        810,
+        924
+      ],
+      "uploaded_landmark_delta_px": [
+        -6.189,
+        -0.189,
+        -5.811,
+        -0.811
+      ]
+    },
+    {
+      "file": "06-paused.png",
+      "sha256": "0dd6aa679cf2bc42e32a447ece32c9625455a1da8e8670f4109e8b6d03554f4a",
+      "artwork": [
+        276,
+        188,
+        704,
+        616
+      ],
+      "expected_artwork": [
+        276.0,
+        188.0,
+        704.0,
+        616.0
+      ],
+      "progress": [
+        170,
+        888,
+        810,
+        954
+      ],
+      "seek": [
+        170,
+        888,
+        810,
+        924
+      ]
+    },
+    {
+      "file": "07-resumed.png",
+      "sha256": "9d30d0a6c09c7a00a842b3ff8f3f7b46d507f6f96f7ff5a29d2baf53af934d0a",
+      "artwork": [
+        200.81079,
+        112.81079,
+        779.1892,
+        691.1892
+      ],
+      "expected_artwork": [
+        200.81081081081084,
+        112.81081081081084,
+        779.1891891891892,
+        691.1891891891892
+      ],
+      "progress": [
+        170,
+        888,
+        810,
+        954
+      ],
+      "seek": [
+        170,
+        888,
+        810,
+        924
+      ],
+      "uploaded_landmark_delta_px": [
+        -6.189,
+        -0.189,
+        -5.811,
+        -0.811
+      ]
+    },
+    {
+      "file": "08-seek.png",
+      "sha256": "8415005e18322df58bf335c1cc85656484c8e4f683947486082a3b03e4f95ecd",
+      "artwork": [
+        200.81079,
+        112.81079,
+        779.1892,
+        691.1892
+      ],
+      "expected_artwork": [
+        200.81081081081084,
+        112.81081081081084,
+        779.1891891891892,
+        691.1891891891892
+      ],
+      "progress": [
+        170,
+        888,
+        810,
+        954
+      ],
+      "seek": [
+        170,
+        888,
+        810,
+        924
+      ],
+      "uploaded_landmark_delta_px": [
+        -6.189,
+        -0.189,
+        -5.811,
+        -0.811
+      ]
+    },
+    {
+      "file": "09-drag-seek.png",
+      "sha256": "1a3b341062e8b48c3b5aa0080cb3d7e431558a20c39b19f221a66508f0336d3d",
+      "artwork": [
+        200.81079,
+        112.81079,
+        779.1892,
+        691.1892
+      ],
+      "expected_artwork": [
+        200.81081081081084,
+        112.81081081081084,
+        779.1891891891892,
+        691.1891891891892
+      ],
+      "progress": [
+        170,
+        888,
+        810,
+        954
+      ],
+      "seek": [
+        170,
+        888,
+        810,
+        924
+      ],
+      "uploaded_landmark_delta_px": [
+        -6.189,
+        -0.189,
+        -5.811,
+        -0.811
+      ]
+    },
+    {
+      "file": "10-mute.png",
+      "sha256": "1553dbcc859cf99885c86ac9464ed983707aa74f8cd505e8fe8def552adf95d0",
+      "artwork": [
+        200.81079,
+        112.81079,
+        779.1892,
+        691.1892
+      ],
+      "expected_artwork": [
+        200.81081081081084,
+        112.81081081081084,
+        779.1891891891892,
+        691.1891891891892
+      ],
+      "progress": [
+        170,
+        888,
+        810,
+        954
+      ],
+      "seek": [
+        170,
+        888,
+        810,
+        924
+      ],
+      "uploaded_landmark_delta_px": [
+        -6.189,
+        -0.189,
+        -5.811,
+        -0.811
+      ]
+    },
+    {
+      "file": "11-unmute.png",
+      "sha256": "1c2d1d956f33e7a2b4675de433baaf760d3366fcd07bfebfe474a032d7dfdfb2",
+      "artwork": [
+        200.81079,
+        112.81079,
+        779.1892,
+        691.1892
+      ],
+      "expected_artwork": [
+        200.81081081081084,
+        112.81081081081084,
+        779.1891891891892,
+        691.1891891891892
+      ],
+      "progress": [
+        170,
+        888,
+        810,
+        954
+      ],
+      "seek": [
+        170,
+        888,
+        810,
+        924
+      ],
+      "uploaded_landmark_delta_px": [
+        -6.189,
+        -0.189,
+        -5.811,
+        -0.811
+      ]
+    },
+    {
+      "file": "12-volume.png",
+      "sha256": "2eac433ad1c92babed8798915f2da054e329838dd52d58c5799a3b47499ff807",
+      "artwork": [
+        200.81079,
+        112.81079,
+        779.1892,
+        691.1892
+      ],
+      "expected_artwork": [
+        200.81081081081084,
+        112.81081081081084,
+        779.1891891891892,
+        691.1891891891892
+      ],
+      "progress": [
+        170,
+        888,
+        810,
+        954
+      ],
+      "seek": [
+        170,
+        888,
+        810,
+        924
+      ],
+      "uploaded_landmark_delta_px": [
+        -6.189,
+        -0.189,
+        -5.811,
+        -0.811
+      ]
+    },
+    {
+      "file": "13-queue.png",
+      "sha256": "e7d79914c614800d221a85de4895a90baddc8a962033ecc4129cbdca314a22d1",
+      "queue_modes": [
+        {
+          "tag": "desktop-queue-autoplay",
+          "bounds": [
+            1062,
+            96,
+            1436,
+            168
+          ],
+          "selected": false,
+          "surface_rgb": [
+            57,
+            53,
+            83
+          ]
+        },
+        {
+          "tag": "desktop-queue-automix",
+          "bounds": [
+            1458,
+            96,
+            1832,
+            168
+          ],
+          "selected": false,
+          "surface_rgb": [
+            54,
+            55,
+            84
+          ]
+        }
+      ],
+      "artwork": [
+        200.81079,
+        112.81079,
+        779.1892,
+        691.1892
+      ],
+      "expected_artwork": [
+        200.81081081081084,
+        112.81081081081084,
+        779.1891891891892,
+        691.1891891891892
+      ],
+      "progress": [
+        170,
+        888,
+        810,
+        954
+      ],
+      "seek": [
+        170,
+        888,
+        810,
+        924
+      ],
+      "uploaded_landmark_delta_px": [
+        -6.189,
+        -0.189,
+        -5.811,
+        -0.811
+      ]
+    },
+    {
+      "file": "14-autoplay.png",
+      "sha256": "cbf91e1d7b8ce317bd7265eeb8a8db9db568289485a8ae00104d00d903a1fcc7",
+      "queue_modes": [
+        {
+          "tag": "desktop-queue-autoplay",
+          "bounds": [
+            1062,
+            96,
+            1436,
+            168
+          ],
+          "selected": true,
+          "surface_rgb": [
+            227,
+            228,
+            232
+          ]
+        },
+        {
+          "tag": "desktop-queue-automix",
+          "bounds": [
+            1458,
+            96,
+            1832,
+            168
+          ],
+          "selected": false,
+          "surface_rgb": [
+            51,
+            56,
+            87
+          ]
+        }
+      ],
+      "artwork": [
+        200.81079,
+        112.81079,
+        779.1892,
+        691.1892
+      ],
+      "expected_artwork": [
+        200.81081081081084,
+        112.81081081081084,
+        779.1891891891892,
+        691.1891891891892
+      ],
+      "progress": [
+        170,
+        888,
+        810,
+        954
+      ],
+      "seek": [
+        170,
+        888,
+        810,
+        924
+      ],
+      "uploaded_landmark_delta_px": [
+        -6.189,
+        -0.189,
+        -5.811,
+        -0.811
+      ]
+    },
+    {
+      "file": "15-autoplay-off.png",
+      "sha256": "fdc45d962d9b6c1ec6c077eb9a8f76fc83b047ebd72b093e278f689c91f3fbb6",
+      "queue_modes": [
+        {
+          "tag": "desktop-queue-autoplay",
+          "bounds": [
+            1062,
+            96,
+            1436,
+            168
+          ],
+          "selected": false,
+          "surface_rgb": [
+            72,
+            70,
+            95
+          ]
+        },
+        {
+          "tag": "desktop-queue-automix",
+          "bounds": [
+            1458,
+            96,
+            1832,
+            168
+          ],
+          "selected": false,
+          "surface_rgb": [
+            64,
+            53,
+            84
+          ]
+        }
+      ],
+      "artwork": [
+        200.81079,
+        112.81079,
+        779.1892,
+        691.1892
+      ],
+      "expected_artwork": [
+        200.81081081081084,
+        112.81081081081084,
+        779.1891891891892,
+        691.1891891891892
+      ],
+      "progress": [
+        170,
+        888,
+        810,
+        954
+      ],
+      "seek": [
+        170,
+        888,
+        810,
+        924
+      ],
+      "uploaded_landmark_delta_px": [
+        -6.189,
+        -0.189,
+        -5.811,
+        -0.811
+      ]
+    },
+    {
+      "file": "16-automix.png",
+      "sha256": "a6b2720dae83b95015454ae0f0cf6ec7030097af2be033bad950ca7f7aca7df3",
+      "queue_modes": [
+        {
+          "tag": "desktop-queue-autoplay",
+          "bounds": [
+            1062,
+            96,
+            1436,
+            168
+          ],
+          "selected": false,
+          "surface_rgb": [
+            54,
+            53,
+            81
+          ]
+        },
+        {
+          "tag": "desktop-queue-automix",
+          "bounds": [
+            1458,
+            96,
+            1832,
+            168
+          ],
+          "selected": true,
+          "surface_rgb": [
+            228,
+            228,
+            232
+          ]
+        }
+      ],
+      "artwork": [
+        200.81079,
+        112.81079,
+        779.1892,
+        691.1892
+      ],
+      "expected_artwork": [
+        200.81081081081084,
+        112.81081081081084,
+        779.1891891891892,
+        691.1891891891892
+      ],
+      "progress": [
+        170,
+        888,
+        810,
+        954
+      ],
+      "seek": [
+        170,
+        888,
+        810,
+        924
+      ],
+      "uploaded_landmark_delta_px": [
+        -6.189,
+        -0.189,
+        -5.811,
+        -0.811
+      ]
+    },
+    {
+      "file": "17-automix-off.png",
+      "sha256": "f0457c0eebcb8139035ef3bd92e8364ded4f923fa233bb6e311b4f2a4eeb2d67",
+      "queue_modes": [
+        {
+          "tag": "desktop-queue-autoplay",
+          "bounds": [
+            1062,
+            96,
+            1436,
+            168
+          ],
+          "selected": false,
+          "surface_rgb": [
+            63,
+            70,
+            101
+          ]
+        },
+        {
+          "tag": "desktop-queue-automix",
+          "bounds": [
+            1458,
+            96,
+            1832,
+            168
+          ],
+          "selected": false,
+          "surface_rgb": [
+            75,
+            79,
+            107
+          ]
+        }
+      ],
+      "artwork": [
+        200.81079,
+        112.81079,
+        779.1892,
+        691.1892
+      ],
+      "expected_artwork": [
+        200.81081081081084,
+        112.81081081081084,
+        779.1891891891892,
+        691.1891891891892
+      ],
+      "progress": [
+        170,
+        888,
+        810,
+        954
+      ],
+      "seek": [
+        170,
+        888,
+        810,
+        924
+      ],
+      "uploaded_landmark_delta_px": [
+        -6.189,
+        -0.189,
+        -5.811,
+        -0.811
+      ]
+    },
+    {
+      "file": "18-artwork-only.png",
+      "sha256": "8f2452826ee87327f8b16ebf968f1c92e27fcdad6339943ff33f5bd0344e5f51",
+      "artwork": [
+        690.8108,
+        112.81079,
+        1269.1892,
+        691.1892
+      ],
+      "expected_artwork": [
+        690.8108108108108,
+        112.81081081081084,
+        1269.1891891891892,
+        691.1891891891892
+      ],
+      "progress": [
+        660,
+        888,
+        1300,
+        954
+      ],
+      "seek": [
+        660,
+        888,
+        1300,
+        924
+      ]
+    },
+    {
+      "file": "19-lyrics.png",
+      "sha256": "a78dc0114c14433f0cdadbb30728cda9589b0cf5654d3f042571489330edd6b4",
+      "artwork": [
+        200.81079,
+        112.81079,
+        779.1892,
+        691.1892
+      ],
+      "expected_artwork": [
+        200.81081081081084,
+        112.81081081081084,
+        779.1891891891892,
+        691.1891891891892
+      ],
+      "progress": [
+        170,
+        888,
+        810,
+        954
+      ],
+      "seek": [
+        170,
+        888,
+        810,
+        924
+      ],
+      "uploaded_landmark_delta_px": [
+        -6.189,
+        -0.189,
+        -5.811,
+        -0.811
+      ]
+    },
+    {
+      "file": "20-collapsed.png",
+      "sha256": "1e2d9d27646abddd3047041948b4cf3baee24e20309f4e5824a7abe7c8c1849e"
+    }
+  ],
+  "scope": "Production local-media replay, original-sized frames, independent source/cover landmarks; different music/text/background, NOT full-image pixel parity"
+}

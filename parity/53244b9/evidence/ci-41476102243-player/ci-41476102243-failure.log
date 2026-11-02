@@ -1,0 +1,37 @@
+build	Replay reference Desktop player, queue, volume and independent favorite reload	﻿2026-11-02T17:15:46.1376486Z ##[group]Run $homeDir = "$pwd/desktop/build/parity/reference-player-home"
+build	Replay reference Desktop player, queue, volume and independent favorite reload	2026-11-02T17:15:46.1377330Z ^[[36;1m$homeDir = "$pwd/desktop/build/parity/reference-player-home"^[[0m
+build	Replay reference Desktop player, queue, volume and independent favorite reload	2026-11-02T17:15:46.1378092Z ^[[36;1mpython tools/capture_desktop_layout.py reference-player "$homeDir" desktop/build/parity/reference-player^[[0m
+build	Replay reference Desktop player, queue, volume and independent favorite reload	2026-11-02T17:15:46.1378772Z ^[[36;1mif ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }^[[0m
+build	Replay reference Desktop player, queue, volume and independent favorite reload	2026-11-02T17:15:46.1379402Z ^[[36;1mpython tools/verify_desktop_player_capture.py desktop/build/parity/reference-player^[[0m
+build	Replay reference Desktop player, queue, volume and independent favorite reload	2026-11-02T17:15:46.1380008Z ^[[36;1mif ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }^[[0m
+build	Replay reference Desktop player, queue, volume and independent favorite reload	2026-11-02T17:15:46.1380724Z ^[[36;1mpython tools/capture_desktop_layout.py reference-player-reload "$homeDir" desktop/build/parity/reference-player-reload^[[0m
+build	Replay reference Desktop player, queue, volume and independent favorite reload	2026-11-02T17:15:46.1381465Z ^[[36;1mif ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }^[[0m
+build	Replay reference Desktop player, queue, volume and independent favorite reload	2026-11-02T17:15:46.1382077Z ^[[36;1mpython tools/verify_desktop_player_capture.py desktop/build/parity/reference-player-reload^[[0m
+build	Replay reference Desktop player, queue, volume and independent favorite reload	2026-11-02T17:15:46.1382759Z ^[[36;1mif ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }^[[0m
+build	Replay reference Desktop player, queue, volume and independent favorite reload	2026-11-02T17:15:46.1383497Z ^[[36;1mpython tools/capture_desktop_layout.py reference-lyrics "$pwd/desktop/build/parity/reference-lyrics-home" desktop/build/parity/reference-lyrics^[[0m
+build	Replay reference Desktop player, queue, volume and independent favorite reload	2026-11-02T17:15:46.1384294Z ^[[36;1mif ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }^[[0m
+build	Replay reference Desktop player, queue, volume and independent favorite reload	2026-11-02T17:15:46.1384923Z ^[[36;1mpython tools/verify_desktop_lyrics_pane_capture.py desktop/build/parity/reference-lyrics^[[0m
+build	Replay reference Desktop player, queue, volume and independent favorite reload	2026-11-02T17:15:46.1385527Z ^[[36;1mif ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }^[[0m
+build	Replay reference Desktop player, queue, volume and independent favorite reload	2026-11-02T17:15:46.1386404Z ^[[36;1mpython tools/capture_desktop_layout.py reference-lyrics-light "$pwd/desktop/build/parity/reference-lyrics-light-home" desktop/build/parity/reference-lyrics-light^[[0m
+build	Replay reference Desktop player, queue, volume and independent favorite reload	2026-11-02T17:15:46.1387327Z ^[[36;1mif ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }^[[0m
+build	Replay reference Desktop player, queue, volume and independent favorite reload	2026-11-02T17:15:46.1387958Z ^[[36;1mpython tools/verify_desktop_lyrics_pane_capture.py desktop/build/parity/reference-lyrics-light^[[0m
+build	Replay reference Desktop player, queue, volume and independent favorite reload	2026-11-02T17:15:46.1388826Z ^[[36;1mif ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }^[[0m
+build	Replay reference Desktop player, queue, volume and independent favorite reload	2026-11-02T17:15:46.1457330Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+build	Replay reference Desktop player, queue, volume and independent favorite reload	2026-11-02T17:15:46.1457814Z env:
+build	Replay reference Desktop player, queue, volume and independent favorite reload	2026-11-02T17:15:46.1458308Z   JAVA_HOME: C:\hostedtoolcache\windows\Java_Temurin-Hotspot_jdk\17.0.20-101\x64
+build	Replay reference Desktop player, queue, volume and independent favorite reload	2026-11-02T17:15:46.1458970Z   JAVA_HOME_17_X64: C:\hostedtoolcache\windows\Java_Temurin-Hotspot_jdk\17.0.20-101\x64
+build	Replay reference Desktop player, queue, volume and independent favorite reload	2026-11-02T17:15:46.1459560Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+build	Replay reference Desktop player, queue, volume and independent favorite reload	2026-11-02T17:15:46.1459986Z   GRADLE_USER_HOME: D:\a\.gradle
+build	Replay reference Desktop player, queue, volume and independent favorite reload	2026-11-02T17:15:46.1460405Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+build	Replay reference Desktop player, queue, volume and independent favorite reload	2026-11-02T17:15:46.1460815Z   GRADLE_BUILD_ACTION_CACHE_RESTORED: true
+build	Replay reference Desktop player, queue, volume and independent favorite reload	2026-11-02T17:15:46.1461381Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+build	Replay reference Desktop player, queue, volume and independent favorite reload	2026-11-02T17:15:46.1461979Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+build	Replay reference Desktop player, queue, volume and independent favorite reload	2026-11-02T17:15:46.1462417Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+build	Replay reference Desktop player, queue, volume and independent favorite reload	2026-11-02T17:15:46.1462790Z ##[endgroup]
+build	Replay reference Desktop player, queue, volume and independent favorite reload	2026-11-02T17:19:38.8299513Z PASS Desktop reference-player: 21 scenes / 35 assertions
+build	Replay reference Desktop player, queue, volume and independent favorite reload	2026-11-02T17:19:39.1944784Z Traceback (most recent call last):
+build	Replay reference Desktop player, queue, volume and independent favorite reload	2026-11-02T17:19:39.1945602Z   File "D:\a\MeloX-Windows\MeloX-Windows\tools\verify_desktop_player_capture.py", line 61, in <module>
+build	Replay reference Desktop player, queue, volume and independent favorite reload	2026-11-02T17:19:39.1946614Z     assert all(abs(a - b) <= 2 for a, b in zip(bounds, expected)), (image.name, bounds, expected)
+build	Replay reference Desktop player, queue, volume and independent favorite reload	2026-11-02T17:19:39.1954254Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+build	Replay reference Desktop player, queue, volume and independent favorite reload	2026-11-02T17:19:39.1955986Z AssertionError: ('17-automix-off.png', [200.81079, 112.81079, 779.1892, 691.1892], [276.0, 188.0, 704.0, 616.0])
+build	Replay reference Desktop player, queue, volume and independent favorite reload	2026-11-02T17:19:39.2382847Z ##[error]Process completed with exit code 1.

@@ -82,3 +82,5 @@ JDK 17 本地 `NeteasePodcastTest` 三项通过：覆盖分页标志及回退、
 电脑详情的下一页任务改由详情页面协程持有，而不再由进入加载状态后会销毁的列表尾项持有。排序切换时取消旧的续页请求并递增代际，旧响应和清理操作不能覆盖新排序的状态；首页失败及续页失败分别使用原有重试入口。播客详情 HTTP 请求也接入调用协程的取消所有权。切换排序的实际鼠标回放、续页失败重试及公开线上多页仍待验证。
 
 JDK 17 下 `NeteasePodcastTest` **5 项通过**，新增受控 HTTP 拦截器确认取消详情协程会取消底层请求。`DesktopPodcastPagingInputTest` 在 Linux Xvfb 的真实 Swing/Compose 窗口中以系统 Robot 滚轮操作生产详情列表；受控 HTTP 返回 61 期，其中第二页延迟 1.5 秒，实际按 `0, 30, 60` 请求并验证第二页未被尾项销毁取消。此测试使用 fixture、Linux 虚拟显示和软件渲染，不是公开线上多页或 Windows 实机验收；测试仅在设置 `MELOX_NATIVE_PAGING_TEST=1` 的隔离显示环境显式运行。结果见 `evidence/podcast-desktop-paging-fixture/`。
+
+Windows CI [41476102243](https://github.com/lladlam/MeloX-Windows/actions/runs/41476102243) 对 `9faa31d` 失败，未产生可交付 ZIP。`reference-player` 的 21 场景／35 断言本身通过，但后续封面几何检查在 `17-automix-off` 失败：场景报告停止播放、实际封面尚为播放尺寸。保留的原始 `capture.json` 显示该回放将 420 秒 fixture 拖至约 344 秒，随后进度递增至正好 420 秒；下一场景开始播放另一首。因此这是录制中自然结束及状态／动画时序导致的实际几何检查失败，不能视作通过，也不能据此断言真实播放器发生回归。失败日志与现场见 `evidence/ci-41476102243-player/`。回放专用音频现延长至 1800 秒，几何检查保留；Linux 本地生产 `ImageComposeScene` 重新执行 **21 场景／35 断言及几何核验通过**，第 17 场景仍在播放、进度 1528470／1800000 ms。该回放是场景指针与软件 PCM，后续 Windows CI 尚待验证。
