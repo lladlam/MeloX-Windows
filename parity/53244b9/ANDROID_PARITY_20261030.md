@@ -43,4 +43,6 @@ Windows CI [41363940211](https://github.com/lladlam/MeloX-Windows/actions/runs/4
 
 歌词分享图片按实际字体宽度换行并根据全部选中内容计算高度，替代原先每行截取 36 字符、4096 像素静默截断；图片超出 8192 像素时明确提示减少选择。`LyricShareLayoutTest` 在 Linux 覆盖长行字符保留、60 行实际 PNG 末行绘制及超限报错；原生保存对话框与 Windows 图片结果仍需实机验证。
 
+歌词分享图片的封面加载复用 Jellyfin 图片请求范围与会话鉴权：匹配当前服务器图片路径时带令牌，其他路径不附加令牌，受保护请求不自动跟随重定向。本地 loopback HTTP 测试验证上述行为，排版及实际 PNG 回归通过；真实私人服务器与原生保存对话框尚需实机验证。
+
 Windows CI [41370767122](https://github.com/lladlam/MeloX-Windows/actions/runs/41370767122) 对 `48cb3bf50e5609d2faff60c3d53281865c390da2` 全部通过，包含歌词面板重开等待修正和本地歌词双布局回放。该次 ZIP 已完整下载并独立核验版本戳、ZIP/JAR CRC、资源及原生库：396,434,097 字节，SHA-256 `703da8e67cfd26cb7e00bb56b547b785153a4ee78c97ba07477a80ff2d778e5a`，详见 `evidence/ci-41370767122/verification.json`。该包早于歌词分享图片排版修正。

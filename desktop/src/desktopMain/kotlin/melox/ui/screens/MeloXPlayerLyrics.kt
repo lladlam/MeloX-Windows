@@ -60,8 +60,6 @@ import melox.ui.player.ArtworkDynamicPaletteProvider
 import melox.ui.glass.meloXLiquidButton
 import melox.ui.glass.LocalMeloXLayerBackdrop
 import androidx.compose.ui.graphics.toArgb
-import melox.network.MeloXHttpClient
-import okhttp3.Request
 import melox.ui.navigation.MeloXBackHandler
 import java.awt.Toolkit
 import java.awt.datatransfer.StringSelection
@@ -519,12 +517,7 @@ internal suspend fun saveLyricShareImage(track: MusicTrack, lines: List<LyricLin
     } finally { metricsGraphics.dispose(); metricsImage.flush() }
     val height = layout.height
     val palette = ArtworkDynamicPaletteProvider.paletteFor(track.artworkUrl)
-    val cover = track.artworkUrl?.let { url -> runCatching {
-        if (url.startsWith("http")) MeloXHttpClient.shared.newCall(Request.Builder().url(url).build()).execute().use {
-            check(it.isSuccessful) { "Artwork HTTP ${it.code}" }
-            it.body.byteStream().use(javax.imageio.ImageIO::read)
-        } else javax.imageio.ImageIO.read(if (url.startsWith("file:")) File(java.net.URI(url)) else File(url))
-    }.getOrNull() }
+    val cover = track.artworkUrl?.let { url -> runCatching { loadLyricShareArtwork(url) }.getOrNull() }
     val image = java.awt.image.BufferedImage(width, height, java.awt.image.BufferedImage.TYPE_INT_ARGB)
     image.createGraphics().let { graphics ->
         try {
@@ -593,6 +586,18 @@ internal suspend fun saveLyricShareImage(track: MusicTrack, lines: List<LyricLin
         } finally { graphics.dispose() }
     }
     check(javax.imageio.ImageIO.write(image, "png", destination)) { "PNG 编码失败" }
+}
+
+internal fun loadLyricShareArtwork(
+    source: String,
+    session: melox.provider.jellyfin.JellyfinSession = melox.provider.jellyfin.JellyfinSessionStore.read(),
+): java.awt.image.BufferedImage? {
+    if (!source.contains("://") && !source.startsWith("file:", true)) return javax.imageio.ImageIO.read(File(source))
+    val connection = melox.provider.jellyfin.JellyfinArtworkAccess.openConnection(source, session).apply {
+        connectTimeout = 10_000
+        readTimeout = 10_000
+    }
+    return connection.getInputStream().use(javax.imageio.ImageIO::read)
 }
 
 private fun drawShareCover(graphics: java.awt.Graphics2D, cover: java.awt.image.BufferedImage,
