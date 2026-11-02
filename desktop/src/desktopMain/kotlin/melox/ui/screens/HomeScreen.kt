@@ -129,6 +129,14 @@ private fun NeteaseHome(
     val collectionClient = remember { melox.network.NeteaseCollectionDetailsClient(cookieProvider = { melox.account.NeteaseSessionStore.readCookie() }) }
     val podcastClient = remember { melox.network.NeteaseUniversalSearchClient(cookieProvider = { melox.account.NeteaseSessionStore.readCookie() }) }
 
+    fun openHomePodcast(id: Long) {
+        scope.launch {
+            try { homePodcast = podcastClient.podcastDetail(id) ?: error("网易云没有返回播客信息") }
+            catch (cancelled: kotlinx.coroutines.CancellationException) { throw cancelled }
+            catch (failure: Exception) { error = failure.message ?: "播客加载失败" }
+        }
+    }
+
     val cacheKey = "${session.cookie.hashCode()}_${melox.settings.MeloXSettingsRuntime.musicArea}_${melox.settings.MeloXSettingsRuntime.podcastsEnabled}"
 
     suspend fun refresh(forceServer: Boolean) {
@@ -186,6 +194,8 @@ private fun NeteaseHome(
     } ?: listOfNotNull(NeteaseBlock("", "", section = "QuickActions").takeIf {
         melox.settings.MeloXSettingsRuntime.homeQuickActionsEnabled
     })
+    val homePodcasts = if (melox.settings.MeloXSettingsRuntime.podcastsEnabled &&
+        melox.settings.MeloXSettingsRuntime.podcastsHomePlacement) content?.podcasts.orEmpty() else emptyList()
 
     if (melox.settings.MeloXSettingsRuntime.desktopLayoutEnabled) {
         melox.ui.desktop.MeloXDesktopHome(content, recentSongs, activeAction, refreshing, error, onAction = { title ->
@@ -243,11 +253,7 @@ private fun NeteaseHome(
                     songs.firstOrNull()?.let { melox.playback.PlaybackCommands.playQueue(songs, it.id) }
                 } catch (cancelled: kotlinx.coroutines.CancellationException) { throw cancelled }
                 catch (failure: Exception) { error = failure.message }
-            } }, onPodcast = { id -> scope.launch {
-                try { homePodcast = podcastClient.podcastDetail(id) ?: error("网易云没有返回播客信息") }
-                catch (cancelled: kotlinx.coroutines.CancellationException) { throw cancelled }
-                catch (failure: Exception) { error = failure.message }
-            } }, onTool = onOpenTool)
+            } }, onPodcast = ::openHomePodcast, onTool = onOpenTool)
         melox.ui.navigation.MeloXDetailOverlay(dailySongs.takeIf { it.isNotEmpty() }, { dailySongs = emptyList() }) { songs ->
             DailySongsPage(songs, onBack = { dailySongs = emptyList() }, title = melox.ui.desktop.desktopString("ui.home.action.$desktopActionKey"))
         }
@@ -320,7 +326,23 @@ private fun NeteaseHome(
             if (block.songs.isNotEmpty()) item { NeteaseSongCarousel(block.songs) { song -> melox.playback.PlaybackCommands.playQueue(block.songs, song.id) } }
         }
         }
-        if (content != null && blocks.none { it.section != "QuickActions" } && error == null) {
+        if (homePodcasts.isNotEmpty()) {
+            item {
+                LazyRow(Modifier.testTag("home-podcasts"), contentPadding = PaddingValues(horizontal = 20.dp),
+                    horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                    items(homePodcasts, key = { "podcast-${it.programId ?: it.id}" }) { podcast ->
+                        Column(Modifier.width(150.dp).testTag("home-podcast:${podcast.programId ?: podcast.id}")
+                            .clickable { openHomePodcast(podcast.id) }) {
+                            MeloXArtworkImage(podcast.artworkUrl, MeloXColors.SurfaceVariant,
+                                Modifier.size(150.dp).clip(RoundedCornerShape(14.dp)))
+                            Text(podcast.name, Modifier.padding(top = 6.dp), maxLines = 2,
+                                overflow = TextOverflow.Ellipsis, fontWeight = FontWeight.SemiBold)
+                        }
+                    }
+                }
+            }
+        }
+        if (content != null && blocks.none { it.section != "QuickActions" } && homePodcasts.isEmpty() && error == null) {
             item { Text("网易云音乐当前没有返回可展示内容", Modifier.padding(horizontal = 20.dp), color = MeloXColors.pageOnBackground().copy(alpha = .5f)) }
         }
     }
@@ -328,6 +350,9 @@ private fun NeteaseHome(
         MeloXProviderSongListDetail(songs, desktopActionKey) { dailySongs = emptyList() }
     }
     melox.ui.navigation.MeloXDetailOverlay(accountId, { accountId = null }) { AccountProfileScreen(it) { accountId = null } }
+    melox.ui.navigation.MeloXDetailOverlay(homePodcast, { homePodcast = null }) { podcast ->
+        PodcastDetail(podcastClient, podcast, onBack = { homePodcast = null })
+    }
     }
 }
 

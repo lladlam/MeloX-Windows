@@ -131,7 +131,7 @@ internal fun MeloXDesktopHome(content: NeteaseHomeContent?, recentSongs: List<Se
                     }
                 }
             }
-            if (MeloXSettingsRuntime.podcastsEnabled && content?.podcasts?.isNotEmpty() == true) item("podcasts") {
+            if (MeloXSettingsRuntime.podcastsEnabled && MeloXSettingsRuntime.podcastsHomePlacement && content?.podcasts?.isNotEmpty() == true) item("podcasts") {
                 HomeSection(desktopString("ui.home.section.podcast_recommendations"), desktopString("ui.navigation.podcasts"), { onTool("Podcasts") }) {
                     DesktopHomePagingShelf(content.podcasts.take(8), { it.id }, mediaWidth, 24.dp, reserved, "podcasts") { program ->
                         DesktopHomeMediaCard(program.name, program.playbackSong?.album.orEmpty(), program.artworkUrl, mediaWidth,
