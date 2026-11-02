@@ -507,10 +507,17 @@ private fun ShareAction(text: String, enabled: Boolean, modifier: Modifier, onCl
 }
 
 /** MeloXLyricShareImage: same 1080px canvas, artwork, palette, offsets and line budget. */
-private suspend fun saveLyricShareImage(track: MusicTrack, lines: List<LyricLine>, destination: File) {
+internal suspend fun saveLyricShareImage(track: MusicTrack, lines: List<LyricLine>, destination: File) {
     require(lines.isNotEmpty()) { "请至少选择一行歌词" }
-    val width = 1080
-    val height = (340 + lines.size * 86 + 140).coerceAtMost(4_096)
+    val width = LyricShareLayout.width
+    val font = java.awt.Font("SansSerif", java.awt.Font.BOLD, 40)
+    val metricsImage = java.awt.image.BufferedImage(1, 1, java.awt.image.BufferedImage.TYPE_INT_ARGB)
+    val metricsGraphics = metricsImage.createGraphics()
+    val layout = try {
+        metricsGraphics.setRenderingHint(java.awt.RenderingHints.KEY_TEXT_ANTIALIASING, java.awt.RenderingHints.VALUE_TEXT_ANTIALIAS_ON)
+        LyricShareLayout.measure(lines.map { it.text }, font, metricsGraphics.fontRenderContext)
+    } finally { metricsGraphics.dispose(); metricsImage.flush() }
+    val height = layout.height
     val palette = ArtworkDynamicPaletteProvider.paletteFor(track.artworkUrl)
     val cover = track.artworkUrl?.let { url -> runCatching {
         if (url.startsWith("http")) MeloXHttpClient.shared.newCall(Request.Builder().url(url).build()).execute().use {
@@ -580,9 +587,9 @@ private suspend fun saveLyricShareImage(track: MusicTrack, lines: List<LyricLine
             graphics.color = java.awt.Color(255, 255, 255, 180)
             graphics.drawString(track.artistText.take(34), 340, 215)
             graphics.drawString("MeloX Lyrics", 340, 270)
-            graphics.font = java.awt.Font("SansSerif", java.awt.Font.BOLD, 40)
+            graphics.font = font
             graphics.color = java.awt.Color.WHITE
-            lines.forEachIndexed { index, line -> graphics.drawString(line.text.take(36), 78, 340 + index * 86 + 55) }
+            layout.rows.forEach { row -> row.layout?.draw(graphics, 78f, row.baseline) }
         } finally { graphics.dispose() }
     }
     check(javax.imageio.ImageIO.write(image, "png", destination)) { "PNG 编码失败" }
