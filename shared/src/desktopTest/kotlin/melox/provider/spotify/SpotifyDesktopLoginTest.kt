@@ -11,6 +11,37 @@ import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 
 class SpotifyDesktopLoginTest {
+    @Test fun savedAlbumsFetchLaterPagesUsingActualOffsets() = runBlocking {
+        val server = MockWebServer()
+        server.start()
+        val previous = SpotifySessionStore.read()
+        val http = OkHttpClient.Builder().addInterceptor { chain ->
+            val original = chain.request().url
+            val target = server.url(original.encodedPath).newBuilder().encodedQuery(original.encodedQuery).build()
+            chain.proceed(chain.request().newBuilder().url(target).build())
+        }.build()
+        try {
+            SpotifySessionStore.write(SpotifySession("fixture-access", "fixture-refresh", System.currentTimeMillis() + 3_600_000L, "fixture-account"))
+            server.enqueue(MockResponse().setBody("""{"total":3,"items":[{"album":{"id":"a","name":"A"}},{"album":{"id":"b","name":"B"}}]}"""))
+            server.enqueue(MockResponse().setBody("""{"total":3,"items":[{"album":{"id":"c","name":"C"}}]}"""))
+            val api = SpotifyApiClient("", http)
+            val first = api.savedAlbums(1, 2)
+            val second = api.savedAlbums(2, 2)
+            assertEquals(listOf("a", "b"), first.items.map { it.id.value })
+            assertTrue(first.hasMore)
+            assertEquals(listOf("c"), second.items.map { it.id.value })
+            assertFalse(second.hasMore)
+            val requests = listOf(server.takeRequest(), server.takeRequest())
+            assertEquals(listOf("0", "2"), requests.map { it.requestUrl!!.queryParameter("offset") })
+            assertTrue(requests.all { it.getHeader("Authorization") == "Bearer fixture-access" })
+        } finally {
+            SpotifySessionStore.write(previous)
+            server.shutdown()
+            http.connectionPool.evictAll()
+            http.dispatcher.executorService.shutdown()
+        }
+    }
+
     @Test fun unauthorizedLibraryProfileRefreshUsesUserConfiguredClientId() = runBlocking {
         val server = MockWebServer()
         server.start()

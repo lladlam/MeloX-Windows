@@ -236,9 +236,10 @@ class SpotifyApiClient(
     }
 
     suspend fun savedAlbums(page: Int, pageSize: Int): MusicPage<MusicAlbumSummary> = withContext(Dispatchers.IO) {
-        if (page > 1) return@withContext MusicPage(emptyList(), page, pageSize, 0)
-        val result = pageItems("me/albums", 1, pageSize) { SpotifyJsonMapper.album(it.optJSONObject("album") ?: it) }
-        MusicPage(result.items, page, pageSize, result.total, false)
+        val number = page.coerceAtLeast(1)
+        val size = pageSize.coerceAtLeast(1)
+        val result = pageItems("me/albums", number, size) { SpotifyJsonMapper.album(it.optJSONObject("album") ?: it) }
+        MusicPage(result.items, number, size, result.total)
     }
 
     suspend fun followedArtists(page: Int, pageSize: Int): MusicPage<MusicArtistSummary> = withContext(Dispatchers.IO) {
