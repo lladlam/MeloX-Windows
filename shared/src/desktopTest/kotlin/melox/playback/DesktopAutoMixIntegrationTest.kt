@@ -154,6 +154,25 @@ class DesktopAutoMixIntegrationTest {
         val rms = sqrt(samples.sumOf { it * it } / samples.size)
         assertTrue(rms in 2100.0..2140.0, "actual 0.5-gain RMS $rms")
     }
+    @Test fun softwareMuteReachesPcmPromptlyWithBufferedOutput() = runBlocking<Unit> {
+        assertPromptSoftwareMute()
+    }
+    @Test fun singleDeckSoftwareMuteReachesPcmPromptlyWithBufferedOutput() = runBlocking<Unit> {
+        MeloXPlaybackModePreferences.setAutoMix(false)
+        assertPromptSoftwareMute()
+    }
+    private suspend fun assertPromptSoftwareMute() {
+        install(listOf(song(1, 1000, 8000)))
+        until { outputs.firstOrNull()?.accepted?.get()?.let { it >= 8820 * 4 } == true }
+        player!!.setVolume(0f)
+        advanceTo(500)
+        val bytes = outputs.single().bytes()
+        // The controlled output permits 200 ms queued; either pipeline can
+        // additionally have one already-processed block in flight.
+        val start = (44100 * 0.30).toInt() * 4
+        val end = (44100 * 0.45).toInt() * 4
+        assertTrue(bytes.copyOfRange(start, end).all { it == 0.toByte() }, "Mute must reach actual PCM after buffered samples drain")
+    }
     @Test fun smartQueueActuallyAnalyzesCandidatePcmAndReordersTheCompleteVisibleTimeline() = runBlocking<Unit> {
         MeloXPlaybackModePreferences.setSmartQueue(true)
         val songs = listOf(song(1, 130, 16000, 90.0), song(2, 130, 16000, 140.0), song(3, 130, 16000, 92.0))

@@ -21,7 +21,7 @@ steps = [('consent', 'tap@remote-reject', ['cloud-enabled:false']),
          ('settings', 'wait@1200', ['dock-selection:Settings']),
          ('library', 'tap@root-tab:Library', []),
          ('library-settled', 'wait@1200', ['dock-selection:Library']),
-         ('return', 'hold-drag-between@root-tab:Library,root-tab:Settings', []),
+         ('return', 'tap@root-tab:Settings', []),
          ('return-settled', 'wait@1200', ['tag:settings-root', 'dock-selection:Settings'])]
 (output/'steps.txt').write_text('\n'.join(f'{n}:{a}' for n,a,_ in steps)+'\n', encoding='utf-8')
 (output/'expect.txt').write_text('\n'.join(n+'='+','.join(c) for n,_,c in steps if c)+'\n', encoding='utf-8')

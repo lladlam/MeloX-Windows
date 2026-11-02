@@ -149,13 +149,15 @@ private data class PageButton(val page: DesktopPlayerPage, val symbol: MeloXSymb
 
 @Composable
 internal fun DesktopPlayerCircleButton(symbol: MeloXSymbol, tag: String, label: String, scale: Float,
-    enabled: Boolean = true, state: String? = null, onClick: () -> Unit) {
+    enabled: Boolean = true, state: String? = null, loading: Boolean = false, onClick: () -> Unit) {
     Box(Modifier.size((28 * scale).dp).clip(CircleShape).background(Color.White.copy(alpha = .12f))
         .border(.5.dp, Color.White.copy(alpha = .10f), CircleShape).testTag(tag).semantics {
             contentDescription = label
             state?.let { stateDescription = it }
         }.clickable(enabled = enabled, role = Role.Button, onClick = onClick), contentAlignment = Alignment.Center) {
-        MeloXSymbolIcon(symbol, size = (13 * scale).toInt(), weight = FontWeight.SemiBold,
+        if (loading) androidx.compose.material3.CircularProgressIndicator(
+            modifier = Modifier.size((14 * scale).dp), color = Color.White, strokeWidth = (1.5f * scale).dp,
+        ) else MeloXSymbolIcon(symbol, size = (13 * scale).toInt(), weight = FontWeight.SemiBold,
             color = Color.White.copy(alpha = if (enabled) 1f else .3f))
     }
 }

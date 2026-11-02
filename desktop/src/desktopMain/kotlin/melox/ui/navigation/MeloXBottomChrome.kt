@@ -180,12 +180,8 @@ fun MeloXBottomChrome(
                     .coerceAtMost(selectionWidth + 12.dp).coerceAtLeast(1.dp)
                 val selectedIndex = primaryTabs.indexOfFirst { it == selectedTab }
                 val dockExpanded = progress < 0.56f
-                val currentProgress by rememberUpdatedState(progress)
-                val currentSelectedTab by rememberUpdatedState(selectedTab)
-                val currentPrimaryTabs by rememberUpdatedState(primaryTabs)
                 val currentSelectionSegmentPx by rememberUpdatedState(selectionSegmentPx)
                 val currentSelectionEdgeInsetPx by rememberUpdatedState(selectionEdgeInsetPx)
-                val currentOnSelect by rememberUpdatedState(onSelect)
                 val dampedDock = remember(tabCount) {
                     PublicDampedDragAnimation(
                         animationScope = dockScope,
@@ -194,26 +190,7 @@ fun MeloXBottomChrome(
                         visibilityThreshold = 0.001f,
                         initialScale = 1f,
                         pressedScale = 78f / 56f,
-                        onTap = { position ->
-                            if (currentProgress < 0.56f) {
-                                val index = ((position.x - currentSelectionEdgeInsetPx) / currentSelectionSegmentPx)
-                                    .toInt()
-                                    .coerceIn(0, tabCount - 1)
-                                currentOnSelect(currentPrimaryTabs[index])
-                            } else if (currentProgress >= 0.68f) {
-                                currentOnSelect(currentSelectedTab)
-                            }
-                        },
-                        onDragStopped = {
-                            val target = targetValue.roundToInt().coerceIn(0, tabCount - 1)
-                            animateToValue(target.toFloat())
-                            currentOnSelect(currentPrimaryTabs[target])
-                        },
-                        onDrag = { _, dragAmount ->
-                            updateValue(
-                                targetValue + dragAmount.x / currentSelectionSegmentPx.coerceAtLeast(1f),
-                            )
-                        },
+                        onDrag = { _, _ -> },
                     )
                 }
                 LaunchedEffect(selectedIndex, dockExpanded) {
@@ -237,10 +214,7 @@ fun MeloXBottomChrome(
 
                 // Backdrop panel and moving optical element are siblings.
                 Box(
-                    Modifier
-                        .fillMaxSize()
-                        .then(dockHighlight.gestureModifier)
-                        .then(dampedDock.modifier),
+                    Modifier.fillMaxSize(),
                 ) {
                     Box(
                         Modifier

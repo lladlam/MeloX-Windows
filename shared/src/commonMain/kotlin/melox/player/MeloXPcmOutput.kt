@@ -10,7 +10,9 @@ import javax.sound.sampled.SourceDataLine
 /** Real Java Sound outputs. Keep decoded/EQ PCM fixed at stereo 44100Hz S16LE. */
 internal object MeloXPcmOutput {
     val format = AudioFormat(44100f, 16, 2, true, false)
-    private const val BufferBytes = 44100 * 4
+    // Software gain is applied before PCM is queued. A one-second device buffer
+    // makes a slider change audible only after the old samples have drained.
+    private const val BufferBytes = 44100 * 4 / 10
 
     fun open(): SourceDataLine {
         val candidates = sequence {

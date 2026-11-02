@@ -18,7 +18,7 @@ class DesktopPcmOutputTest {
         assertEquals(16, fixture.openedFormat?.sampleSizeInBits)
         assertEquals(2, fixture.openedFormat?.channels)
         assertEquals(false, fixture.openedFormat?.isBigEndian)
-        assertEquals(44100 * 4, fixture.requestedBuffer)
+        assertEquals(44100 * 4 / 10, fixture.requestedBuffer)
         assertEquals(0, fixture.closes)
     }
 

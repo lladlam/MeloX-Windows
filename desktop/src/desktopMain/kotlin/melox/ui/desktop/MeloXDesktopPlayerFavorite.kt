@@ -34,6 +34,8 @@ internal fun DesktopPlayerFavorite(track: MusicTrack, scale: Float, refreshKey: 
     val session by NeteaseSessionStore.revision.collectAsState()
     var liked by remember { mutableStateOf<Boolean?>(null) }
     var busy by remember { mutableStateOf(false) }
+    var reading by remember { mutableStateOf(false) }
+    var pendingToggle by remember { mutableStateOf(false) }
     var error by remember { mutableStateOf<String?>(null) }
     suspend fun read(): Boolean {
         return if (unified) MeloXUnifiedFavorites.contains(track) else if (neteaseId != null) {
@@ -44,31 +46,44 @@ internal fun DesktopPlayerFavorite(track: MusicTrack, scale: Float, refreshKey: 
         } else requireNotNull(reader).isFavorite(track)
     }
     LaunchedEffect(session, refreshKey, unifiedRevision) {
-        if (!supported || refreshKey) return@LaunchedEffect
+        if (!supported || refreshKey || busy) return@LaunchedEffect
         liked = null
         busy = true
+        reading = true
         try { liked = read() }
         catch (cancelled: CancellationException) { throw cancelled }
-        catch (_: Exception) { /* Unknown stays unknown; clicking retries and exposes the actual failure. */ }
-        finally { busy = false }
+        catch (failure: Exception) {
+            if (pendingToggle) {
+                pendingToggle = false
+                error = failure.message ?: desktopString("ui.error.favorite_failed")
+            }
+            // Unknown stays unknown; a later click retries the real read.
+        }
+        finally { reading = false; busy = false }
+    }
+    fun toggle() {
+        busy = true
+        scope.launch {
+            try {
+                val desired = !(liked ?: read())
+                if (unified) withContext(Dispatchers.IO) { MeloXUnifiedFavorites.set(track, desired) }
+                else if (neteaseId != null) NeteaseMusicOperationsClient(cookieProvider = { NeteaseSessionStore.readCookie() }).setSongLiked(neteaseId, desired)
+                else requireNotNull(writer).setFavorite(track, desired)
+                liked = desired
+            } catch (cancelled: CancellationException) { throw cancelled }
+            catch (failure: Exception) { error = failure.message ?: desktopString("ui.error.favorite_failed") }
+            finally { busy = false }
+        }
+    }
+    LaunchedEffect(busy, pendingToggle) {
+        if (!busy && pendingToggle) { pendingToggle = false; toggle() }
     }
     DesktopPlayerCircleButton(if (liked == true) MeloXSymbol.StarFill else MeloXSymbol.Star, "desktop-player-favorite",
         if (!supported) desktopPlatformString("unavailable") else desktopString(if (liked == true) "ui.desktop.collection.unfavorite" else "ui.desktop.collection.favorite"),
-        scale, enabled = supported && !busy, state = when (liked) { true -> "liked"; false -> "unliked"; null -> "unknown" }) {
-        if (!busy) {
-            busy = true
-            scope.launch {
-                try {
-                    val desired = !(liked ?: read())
-                    if (unified) withContext(Dispatchers.IO) { MeloXUnifiedFavorites.set(track, desired) }
-                    else if (neteaseId != null) NeteaseMusicOperationsClient(cookieProvider = { NeteaseSessionStore.readCookie() }).setSongLiked(neteaseId, desired)
-                    else requireNotNull(writer).setFavorite(track, desired)
-                    liked = desired
-                } catch (cancelled: CancellationException) { throw cancelled }
-                catch (failure: Exception) { error = failure.message ?: desktopString("ui.error.favorite_failed") }
-                finally { busy = false }
-            }
-        }
+        scale, state = if (busy) "loading" else when (liked) { true -> "liked"; false -> "unliked"; null -> "unknown" }, loading = busy) {
+        if (!supported) error = desktopPlatformString("unavailable")
+        else if (busy) { if (reading) pendingToggle = true }
+        else toggle()
     }
     error?.let { message ->
         AlertDialog(onDismissRequest = { error = null }, title = { Text(desktopString("ui.error.favorite_failed")) },

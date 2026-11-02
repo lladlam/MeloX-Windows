@@ -282,7 +282,9 @@ object AudioPlayer {
                 }
                 currentLine = line
             }
-            val buffer = ByteArray(PCM_SAMPLE_RATE * PCM_BYTES_PER_FRAME / 5)
+            // Bound the already-processed block as well as the output queue so
+            // volume changes take effect promptly on the software-gain path.
+            val buffer = ByteArray(PCM_SAMPLE_RATE * PCM_BYTES_PER_FRAME / 20)
             val equalizer = melox.playback.MeloXEqualizerController()
             val rateProcessor = MeloXPcmRate()
             var started = false

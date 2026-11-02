@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Exercise the production dock/capture/droplet with real pointer drags over Local Library."""
+"""Exercise dock taps and verify real pointer drags do not move the selected tab."""
 import json
 import os
 from pathlib import Path
@@ -16,10 +16,10 @@ steps = [
     ('remote-reject', 'tap@remote-reject', ['cloud-enabled:false']),
     ('settings', 'tap@root-tab:Settings', ['tag:settings-root', 'state:bottom-root-tabs:Library>Settings',
         'absent:root-tab:Home', 'absent:root-tab:Explore']),
-    ('drag-library', 'hold-drag-between@root-tab:Settings,root-tab:Library', ['absent:settings-root', 'tag:library-pages']),
-    ('drag-settings', 'hold-drag-between@root-tab:Library,root-tab:Settings', ['tag:settings-root']),
-    ('repeat-library', 'hold-drag-between@root-tab:Settings,root-tab:Library', ['absent:settings-root', 'tag:library-pages']),
-    ('repeat-settings', 'hold-drag-between@root-tab:Library,root-tab:Settings', ['tag:settings-root']),
+    ('drag-no-switch', 'hold-drag-between@root-tab:Settings,root-tab:Library', ['tag:settings-root']),
+    ('tap-library', 'tap@root-tab:Library', ['absent:settings-root', 'tag:library-pages']),
+    ('drag-no-switch-back', 'hold-drag-between@root-tab:Library,root-tab:Settings', ['tag:library-pages']),
+    ('tap-settings', 'tap@root-tab:Settings', ['tag:settings-root']),
 ]
 (output / 'steps.txt').write_text('\n'.join(f'{name}:{action}' for name, action, _ in steps) + '\n', encoding='utf-8')
 (output / 'expect.txt').write_text('\n'.join(f'{name}=' + ','.join(checks) for name, _, checks in steps) + '\n', encoding='utf-8')
