@@ -50,7 +50,8 @@ if mode.startswith('reference-lyrics'):
     add('seek-lyrics', 'reveal@lyric-line-1,player-lyrics,up,tap', ['position-min:4000', 'no-playback-error:true'])
     add('resume-lyrics', 'tap@mini-player-play-pause', ['playing:true'])
     add('queue-inspector', 'tap@desktop-show-queue', ['tag:desktop-inspector:Queue', 'absent:desktop-inspector:Lyrics'])
-    add('lyrics-again', 'tap@desktop-show-lyrics', ['tag:desktop-inspector:Lyrics', 'absent:desktop-inspector:Queue'])
+    add('lyrics-again', 'tap@desktop-show-lyrics', ['tag:desktop-inspector:Lyrics', 'tag:player-lyrics',
+        'tag-prefix:lyric-line-', 'absent:desktop-inspector:Queue'])
     add('close-pane', 'tap@desktop-show-lyrics', ['absent:desktop-inspector:Lyrics', 'tag:desktop-home'])
 elif mode.startswith('reference-player'):
     if mode == 'reference-player':
