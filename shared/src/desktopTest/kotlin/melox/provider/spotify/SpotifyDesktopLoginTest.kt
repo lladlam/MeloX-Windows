@@ -11,6 +11,50 @@ import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 
 class SpotifyDesktopLoginTest {
+    @Test fun followedArtistsUsesNativeCursorAndContinuesAcrossPages() = runBlocking<Unit> {
+        val server = MockWebServer()
+        server.start()
+        val previous = SpotifySessionStore.read()
+        val http = OkHttpClient.Builder().addInterceptor { chain ->
+            val original = chain.request().url
+            val target = server.url(original.encodedPath).newBuilder().encodedQuery(original.encodedQuery).build()
+            chain.proceed(chain.request().newBuilder().url(target).build())
+        }.build()
+        try {
+            SpotifySessionStore.write(SpotifySession("fixture-access", "fixture-refresh", System.currentTimeMillis() + 3_600_000L, "fixture-account"))
+            server.enqueue(MockResponse().setBody("""{"artists":{"total":3,"items":[{"id":"a","name":"A"}],"next":"next","cursors":{"after":"a"}}}"""))
+            server.enqueue(MockResponse().setBody("""{"artists":{"total":3,"items":[{"id":"b","name":"B"}],"next":"next","cursors":{"after":"b"}}}"""))
+            server.enqueue(MockResponse().setBody("""{"artists":{"total":3,"items":[{"id":"c","name":"C"}],"next":null,"cursors":{"after":null}}}"""))
+            val api = SpotifyApiClient("", http)
+            val second = api.followedArtists(2, 1)
+            assertEquals(listOf("b"), second.items.map { it.id.value })
+            assertTrue(second.hasMore)
+            val third = api.followedArtists(3, 1)
+            assertEquals(listOf("c"), third.items.map { it.id.value })
+            assertFalse(third.hasMore)
+            val requests = List(3) { server.takeRequest() }
+            assertEquals(listOf(null, "a", "b"), requests.map { it.requestUrl!!.queryParameter("after") })
+            assertTrue(requests.all { it.getHeader("Authorization") == "Bearer fixture-access" })
+            SpotifySessionStore.write(SpotifySession("other-access", "other-refresh", System.currentTimeMillis() + 3_600_000L, "other-account"))
+            server.enqueue(MockResponse().setBody("""{"artists":{"total":2,"items":[{"id":"x","name":"X"}],"next":"next","cursors":{"after":"x"}}}"""))
+            server.enqueue(MockResponse().setBody("""{"artists":{"total":2,"items":[{"id":"y","name":"Y"}],"next":null}}"""))
+            assertEquals("y", api.followedArtists(2, 1).items.single().id.value)
+            assertNull(server.takeRequest().requestUrl!!.queryParameter("after"))
+            assertEquals("x", server.takeRequest().requestUrl!!.queryParameter("after"))
+            server.enqueue(MockResponse().setBody("""{"artists":{"items":[{"id":"y","name":"Y"}],"next":"next","cursors":{"after":"x"}}}"""))
+            assertFailsWith<IllegalStateException> { api.followedArtists(2, 1) }
+            server.takeRequest()
+            server.enqueue(MockResponse().setBody("""{"artists":{}}"""))
+            assertFailsWith<java.io.IOException> { api.followedArtists(2, 1) }
+            server.takeRequest()
+        } finally {
+            SpotifySessionStore.write(previous)
+            server.shutdown()
+            http.connectionPool.evictAll()
+            http.dispatcher.executorService.shutdown()
+        }
+    }
+
     @Test fun savedAlbumsFetchLaterPagesUsingActualOffsets() = runBlocking {
         val server = MockWebServer()
         server.start()

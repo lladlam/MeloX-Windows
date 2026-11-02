@@ -120,6 +120,10 @@ class SpotifyApiClient(
 ) {
     private val oauth get() = SpotifyOAuth(clientId.ifBlank { SpotifyClientConfig.effective() }, httpClient)
     private val refreshMutex = Mutex()
+    private val followingMutex = Mutex()
+    private var followingRevision = -1L
+    private var followingPageSize = 0
+    private val followingCursors = mutableMapOf<Int, String?>()
 
     suspend fun accountSummary(): MusicAccountSummary = withContext(Dispatchers.IO) {
         val root = get("me")
@@ -243,11 +247,55 @@ class SpotifyApiClient(
     }
 
     suspend fun followedArtists(page: Int, pageSize: Int): MusicPage<MusicArtistSummary> = withContext(Dispatchers.IO) {
-        if (page > 1) return@withContext MusicPage(emptyList(), page, pageSize, 0)
-        val root = get("me/following", mapOf("type" to "artist", "limit" to pageSize.coerceIn(1, 50).toString()))
-        val artists = root.optJSONObject("artists")
-        val items = artists?.optJSONArray("items").objects().mapNotNull(SpotifyJsonMapper::artist)
-        MusicPage(items, page, pageSize, artists?.optLong("total")?.takeIf { it >= 0L }, false)
+        followingMutex.withLock {
+            val number = page.coerceAtLeast(1)
+            val size = pageSize.coerceIn(1, 200)
+            require(number <= 1_000) { "Spotify 关注歌手页数过大" }
+            val revision = SpotifySessionStore.revision.value
+            if (number == 1 || followingRevision != revision || followingPageSize != size) {
+                followingCursors.clear()
+                followingCursors[1] = null
+                followingRevision = revision
+                followingPageSize = size
+            }
+            var currentPage = followingCursors.keys.filter { it <= number }.maxOrNull() ?: 1
+            var cursor = followingCursors[currentPage]
+            while (true) {
+                var consumed = 0
+                var total: Long? = null
+                var hasMore: Boolean
+                val items = mutableListOf<MusicArtistSummary>()
+                val seen = mutableSetOf<String>()
+                do {
+                    val query = mutableMapOf("type" to "artist", "limit" to minOf(50, size - consumed).toString())
+                    cursor?.let { query["after"] = it }
+                    val artists = get("me/following", query).optJSONObject("artists")
+                        ?: throw IOException("Spotify 未返回关注歌手分页")
+                    if (SpotifySessionStore.revision.value != revision) throw kotlinx.coroutines.CancellationException("Spotify 登录会话已变更")
+                    if (artists.has("total") && !artists.isNull("total")) total = artists.optLong("total").takeIf { it >= 0 }
+                    val chunk = (artists.optJSONArray("items") ?: throw IOException("Spotify 未返回关注歌手列表")).objects()
+                    consumed += chunk.size
+                    items += chunk.mapNotNull(SpotifyJsonMapper::artist)
+                    hasMore = !artists.isNull("next") && artists.optString("next").isNotBlank()
+                    if (hasMore) {
+                        val next = artists.optJSONObject("cursors")?.optString("after")?.takeIf(String::isNotBlank)
+                            ?: throw IOException("Spotify 未返回关注歌手游标")
+                        check(chunk.isNotEmpty() && next != cursor && seen.add(next) &&
+                            followingCursors.none { (knownPage, knownCursor) -> knownPage <= currentPage && knownCursor == next }) {
+                            "Spotify 关注歌手分页未前进"
+                        }
+                        cursor = next
+                    }
+                } while (consumed < size && hasMore)
+                followingCursors.keys.removeAll { it > currentPage }
+                if (hasMore) followingCursors[currentPage + 1] = cursor
+                if (currentPage == number || !hasMore) {
+                    return@withLock MusicPage(if (currentPage == number) items else emptyList(), number, size, total, currentPage == number && hasMore)
+                }
+                currentPage++
+            }
+            @Suppress("UNREACHABLE_CODE") error("unreachable")
+        }
     }
 
     suspend fun createPlaylist(name: String): MusicPlaylistSummary = withContext(Dispatchers.IO) {
