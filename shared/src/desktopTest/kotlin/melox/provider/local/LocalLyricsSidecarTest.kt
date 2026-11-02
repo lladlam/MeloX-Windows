@@ -57,6 +57,9 @@ class LocalLyricsSidecarTest {
             val line = File(dir, "音乐 + #.LRC").apply { writeText("[00:01.00]line lyric") }
             val words = File(dir, "音乐 + #.lys").apply { writeText("[0]first(1000,300)word(1300,400)") }
             assertEquals("firstword", provider.lyrics(track).lines.single().text)
+            line.writeText((1..150).joinToString("\n") { "[00:01.00]line lyric $it" })
+            assertEquals("firstword", provider.lyrics(track).lines.single().text)
+            line.writeText("[00:01.00]line lyric")
             val loader = MeloXLyricsLoad(object : LyricDocumentSources() {
                 override suspend fun provider(track: MusicTrack, registry: MusicProviderRegistry?, preference: MeloXLyricPreference) = provider.lyrics(track)
                 override suspend fun amll(track: MusicTrack, registry: MusicProviderRegistry?, preference: MeloXLyricPreference) = LyricsDocument(emptyList())
