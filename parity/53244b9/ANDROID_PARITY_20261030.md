@@ -36,3 +36,5 @@ QQ 歌曲搜索原仍使用 `client_search_cp`；对照 Android 未提交源码�
 对齐 Android 下载歌词缓存：保存并恢复无时间轴标记，避免离线重载后生成错误的时间轴，同时兼容旧格式缓存；`DownloadedLyricsPersistenceTest` 本地通过。
 
 Windows CI [41362422005](https://github.com/lladlam/MeloX-Windows/actions/runs/41362422005) 对 `6954f3b` 的 AutoSync 双布局和本地 Lyricify 双布局回放通过；后续桌面歌词面板几何验证失败，因此没有发行 ZIP。现场 `08-lyrics-again` 中面板已经打开但歌词仍为 `loading`，首次打开、歌词定位、队列切换和播放断言均通过。另一次 CI `41363239281` 对 `957b4e9` 同样在歌词面板中歌词行存在性校验失败。回放新增重新打开时等待真实歌词行的断言，保留原截图和几何检查；Linux 虚拟桌面深浅两主题各 10 场景／20 断言及原有面板校验通过。日志及现场见 `evidence/ci-41362422005-reference-lyrics/`，修正后的 Windows CI 结果需另行确认。
+
+Windows CI [41363940211](https://github.com/lladlam/MeloX-Windows/actions/runs/41363940211) 对 `8fabb2926f176fe6a51b1e57bd94aa0cd91fc1fd` 全部通过，包含 AutoSync 与本地歌词双布局回放。发行 ZIP 已完整下载并独立核验版本戳、ZIP/JAR CRC、资源和原生库：396,426,894 字节，SHA-256 `9570282d9a17f8d82d0c5d5c47240492f9f3fe3c255b6f022e3cf062f1dc437b`，详细结果见 `evidence/ci-41363940211/verification.json`。该包不包含此提交之后的修改。
