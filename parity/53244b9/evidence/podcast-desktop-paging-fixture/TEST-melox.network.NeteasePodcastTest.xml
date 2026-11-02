@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="NeteasePodcastTest[desktop]" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-11-02T17:32:34.449Z" hostname="lladlam-arch" time="1.608">
+  <properties/>
+  <testcase name="secondProgramPageUsesTheRequestedOffsetAndOrder[desktop]" classname="melox.network.NeteasePodcastTest" time="1.522"/>
+  <testcase name="programPagingHonorsServerMoreAndRetainsPlayableIdentity[desktop]" classname="melox.network.NeteasePodcastTest" time="0.026"/>
+  <testcase name="cancellingDetailCancelsItsHttpCall[desktop]" classname="melox.network.NeteasePodcastTest" time="0.046"/>
+  <testcase name="subscribedPagingHonorsServerHasMore[desktop]" classname="melox.network.NeteasePodcastTest" time="0.006"/>
+  <testcase name="detailAcceptsBothResponseShapes[desktop]" classname="melox.network.NeteasePodcastTest" time="0.005"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

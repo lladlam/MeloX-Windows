@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
@@ -173,18 +174,37 @@ internal fun MeloXDesktopPodcastDetail(client: NeteaseUniversalSearchClient, ini
     val playback by melox.playback.MeloXPlaybackOutput.state.collectAsState()
     val queue by PlaybackCommands.queue.collectAsState()
     val current = queue.songs.getOrNull(queue.index)?.id
-    suspend fun page(reset: Boolean) {
+    var generation by remember { mutableIntStateOf(0) }
+    var nextPageJob by remember { mutableStateOf<Job?>(null) }
+    suspend fun page(reset: Boolean, requestGeneration: Int, requestAscending: Boolean) {
         loading = true; error = null
         try {
-            if (reset) { podcast = requireNotNull(client.podcastDetail(initial.id)); offset = 0; songs = emptyList() }
-            val page = client.podcastPrograms(initial.id, offset, 30, ascending)
+            if (reset) {
+                offset = 0; songs = emptyList(); hasMore = false
+                val detail = requireNotNull(client.podcastDetail(initial.id))
+                if (requestGeneration != generation) return
+                podcast = detail
+            }
+            val page = client.podcastPrograms(initial.id, offset, 30, requestAscending)
+            if (requestGeneration != generation) return
             songs = (songs + page.values.mapNotNull { it.playbackSong }).distinctBy { it.id }
             offset += page.values.size; total = page.totalCount; hasMore = page.hasMore && page.values.isNotEmpty()
         } catch (cancelled: CancellationException) { throw cancelled }
-        catch (failure: Exception) { error = failure.message ?: desktopString("ui.error.unknown") }
-        finally { loading = false }
+        catch (failure: Exception) { if (requestGeneration == generation) error = failure.message ?: desktopString("ui.error.unknown") }
+        finally { if (requestGeneration == generation) loading = false }
     }
-    LaunchedEffect(ascending, retry) { page(true) }
+    fun loadNextPage() {
+        if (loading) return
+        loading = true
+        val requestGeneration = generation
+        val requestAscending = ascending
+        nextPageJob = scope.launch { page(false, requestGeneration, requestAscending) }
+    }
+    LaunchedEffect(ascending, retry) {
+        generation++
+        nextPageJob?.cancel()
+        page(true, generation, ascending)
+    }
     DesktopPodcastText {
         MeloXDesktopCollectionDetail(kind = desktopString("ui.podcasts.podcast"), title = podcast.name, subtitle = podcast.host?.nickname,
             metadata = desktopFormat("ui.desktop.podcasts.metadata", maxOf(total, podcast.programCount), podcast.subscriberCount.toString()),
@@ -211,10 +231,10 @@ internal fun MeloXDesktopPodcastDetail(client: NeteaseUniversalSearchClient, ini
                         { PlaybackCommands.playQueue(songs, song.id) }, { anchor = it; selected = song }, showsArtwork = true)
                     Spacer(Modifier.height(2.dp))
                 }
-                if (error != null) item("page-error") { Text(requireNotNull(error), color = MaterialTheme.colorScheme.error); DesktopDialogButton("ui.common.retry") { scope.launch { page(false) } } }
-                else if (hasMore && !loading) item("next-page") { LaunchedEffect(offset) { page(false) }; Spacer(Modifier.height(1.dp)) }
+                if (error != null && songs.isNotEmpty()) item("page-error") { Text(requireNotNull(error), color = MaterialTheme.colorScheme.error); DesktopDialogButton("ui.common.retry") { loadNextPage() } }
+                else if (hasMore && !loading) item("next-page") { LaunchedEffect(offset) { loadNextPage() }; Spacer(Modifier.height(1.dp)) }
                 else if (loading) item("loading-more") { CircularProgressIndicator(Modifier.padding(18.dp).size(20.dp), strokeWidth = 2.dp) }
-                else if (songs.isEmpty()) item("empty") { Box(Modifier.fillMaxWidth().height(220.dp), contentAlignment = Alignment.Center) { Text(desktopString("ui.podcasts.no_episodes")) } }
+                else if (songs.isEmpty() && error == null) item("empty") { Box(Modifier.fillMaxWidth().height(220.dp), contentAlignment = Alignment.Center) { Text(desktopString("ui.podcasts.no_episodes")) } }
             })
     }
     selected?.let { MeloXDesktopSongMenu(it, { selected = null }, anchor) }

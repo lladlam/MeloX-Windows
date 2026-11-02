@@ -328,7 +328,7 @@ class NeteaseUniversalSearchClient(
     }
 
     suspend fun podcastDetail(id: Long): MeloXPodcast? = withContext(Dispatchers.IO) {
-        val response = eapi("/api/djradio/v2/get", JSONObject().put("id", id))
+        val response = eapi("/api/djradio/v2/get", JSONObject().put("id", id), owner = kotlinx.coroutines.currentCoroutineContext()[kotlinx.coroutines.Job])
         parsePodcast(response.optJSONObject("data") ?: response.optJSONObject("djRadio"))
     }
 

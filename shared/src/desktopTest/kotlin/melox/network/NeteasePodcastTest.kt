@@ -1,6 +1,10 @@
 package melox.network
 
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.cancelAndJoin
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withTimeout
 import okhttp3.OkHttpClient
 import okhttp3.FormBody
 import okhttp3.Protocol
@@ -13,6 +17,9 @@ import kotlin.test.assertTrue
 import org.json.JSONObject
 import javax.crypto.Cipher
 import javax.crypto.spec.SecretKeySpec
+import java.util.concurrent.CountDownLatch
+import java.util.concurrent.TimeUnit
+import java.util.concurrent.atomic.AtomicBoolean
 
 class NeteasePodcastTest {
     private fun client(response: String, paths: MutableList<String> = mutableListOf()) =
@@ -78,5 +85,22 @@ class NeteasePodcastTest {
         assertFalse(second.hasMore)
         assertEquals(listOf(0, 1), requests.map { it.getInt("offset") })
         assertTrue(requests.all { it.getLong("radioId") == 99L && it.getBoolean("asc") })
+    }
+
+    @Test fun cancellingDetailCancelsItsHttpCall() = runBlocking {
+        val started = CountDownLatch(1)
+        val cancelled = AtomicBoolean(false)
+        val http = OkHttpClient.Builder().addInterceptor { chain ->
+            started.countDown()
+            val deadline = System.nanoTime() + TimeUnit.SECONDS.toNanos(5)
+            while (!chain.call().isCanceled() && System.nanoTime() < deadline) Thread.sleep(10)
+            cancelled.set(chain.call().isCanceled())
+            throw java.io.IOException("fixture stopped")
+        }.build()
+        val client = NeteaseUniversalSearchClient(httpClient = http)
+        val request = launch(Dispatchers.Default) { client.podcastDetail(987654321) }
+        assertTrue(started.await(5, TimeUnit.SECONDS), "detail request did not start")
+        withTimeout(5_000) { request.cancelAndJoin() }
+        assertTrue(cancelled.get(), "cancellation did not reach the underlying HTTP call")
     }
 }
