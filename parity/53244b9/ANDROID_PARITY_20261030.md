@@ -48,3 +48,5 @@ Windows CI [41363940211](https://github.com/lladlam/MeloX-Windows/actions/runs/4
 Windows CI [41370767122](https://github.com/lladlam/MeloX-Windows/actions/runs/41370767122) 对 `48cb3bf50e5609d2faff60c3d53281865c390da2` 全部通过，包含歌词面板重开等待修正和本地歌词双布局回放。该次 ZIP 已完整下载并独立核验版本戳、ZIP/JAR CRC、资源及原生库：396,434,097 字节，SHA-256 `703da8e67cfd26cb7e00bb56b547b785153a4ee78c97ba07477a80ff2d778e5a`，详见 `evidence/ci-41370767122/verification.json`。该包早于歌词分享图片排版修正。
 
 Windows CI [41379428240](https://github.com/lladlam/MeloX-Windows/actions/runs/41379428240) 对 `0bf689f23af4b1b31b75a8710e973858c3f63d0f` 首次因真实网易艺人详情请求超时失败；保留真实网络和原断言重跑后全部通过。ZIP 已完整下载并独立核验版本戳、ZIP/JAR CRC、资源及原生库：396,440,188 字节，SHA-256 `79bd5bf9979a5c856299d281057d8992d67c5166a2a56f217678a1136a8ff7e2`，详见 `evidence/ci-41379428240/verification.json`。该包包含歌词分享图片排版，不包含后续 Jellyfin 分享封面修正。
+
+Windows CI [41389339721](https://github.com/lladlam/MeloX-Windows/actions/runs/41389339721) 对 `9984c06d8fda3e1dd88136f79060fdff2df2c6d3` 全部通过。ZIP 已完整下载并独立核验版本戳、ZIP/JAR CRC、资源及原生库：396,440,113 字节，SHA-256 `82b26454aa750beffabe14631db1af08db8ed51feca532de8ec81eb62df19936`，详见 `evidence/ci-41389339721/verification.json`。真实私人 Jellyfin 服务器和原生保存对话框仍需实机验证。
