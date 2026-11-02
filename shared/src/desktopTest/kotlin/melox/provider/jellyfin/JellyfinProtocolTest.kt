@@ -2,6 +2,7 @@ package melox.provider.jellyfin
 
 import kotlinx.coroutines.*
 import melox.music.model.*
+import melox.music.provider.loadAllPlaylistTracks
 import melox.playback.ProviderPlaybackResolver
 import melox.playback.toCommonTier
 import okhttp3.OkHttpClient
@@ -91,6 +92,26 @@ class JellyfinProtocolTest {
         provider().reorderPlaylistTrack(playlist, tracks[0], 1)
         assertEquals("/jellyfin/Playlists/playlist-one/Items/entry-first/Move/1", request().path)
         assertFailsWith<IllegalArgumentException> { provider().removeTrackFromPlaylist(tracks[0].copy(providerMetadata = ProviderTrackMetadata.Empty), playlist) }
+    }
+
+    @Test fun fullPlaylistKeepsRepeatedEntriesAcrossPagesWithoutServerTotal() = runBlocking {
+        val playlist = MusicPlaylistSummary(MusicResourceId(MusicSource.Jellyfin, "playlist-one"), "Fixture playlist")
+        server.enqueue(json("""{"Items":[${audio.dropLast(1)},"PlaylistItemId":"entry-first"}]}"""))
+        server.enqueue(json("""{"Items":[${audio.dropLast(1)},"PlaylistItemId":"entry-second"}]}"""))
+        server.enqueue(json("""{"Items":[]}"""))
+        val provider = provider()
+        val result = provider.loadAllPlaylistTracks(playlist, pageSize = 1)
+        assertEquals(2, result.tracks.size)
+        assertEquals(listOf("entry-first", "entry-second"), result.tracks.map {
+            (it.providerMetadata as ProviderTrackMetadata.Jellyfin).playlistEntryId
+        })
+        assertEquals(false, result.hasMore)
+        val requests = List(3) { request() }
+        assertEquals(listOf("0", "1", "2"), requests.map { it.requestUrl!!.queryParameter("StartIndex") })
+        assertTrue(requests.all { it.getHeader("X-Emby-Token") == "synthetic-token" })
+        server.enqueue(MockResponse().setResponseCode(204))
+        provider.removeTrackFromPlaylist(result.tracks[1], playlist)
+        assertEquals("entry-second", request().requestUrl!!.queryParameter("EntryIds"))
     }
 
     @Test fun realWriteMethodsSendServerEndpointsAndOnlyRenameName() = runBlocking {

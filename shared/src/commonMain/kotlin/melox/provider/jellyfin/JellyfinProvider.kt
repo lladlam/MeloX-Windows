@@ -51,7 +51,10 @@ class JellyfinProvider(
         val size = pageSize.coerceIn(1, 200)
         val json = api.get(session, path("Playlists", playlist.id.value, "Items"), pagination(page, size) + ("UserId" to session.userId))
         requireCurrentSession(session)
-        return MusicPlaylistDetail(playlist, items(json).map { toTrack(it, playlist.id.value, session) }, total(json))
+        val total = total(json)
+        val rawCount = json.optJSONArray("Items")?.length() ?: 0
+        val more = if (total != null) (page.coerceAtLeast(1).toLong() - 1) * size + rawCount < total else rawCount >= size
+        return MusicPlaylistDetail(playlist, items(json).map { toTrack(it, playlist.id.value, session) }, total, more)
     }
     override suspend fun albumDetail(album: MusicAlbumSummary, page: Int, pageSize: Int): MusicAlbumDetail {
         requireResource(album.id)

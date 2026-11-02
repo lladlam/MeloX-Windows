@@ -45,9 +45,9 @@ suspend fun PlaylistCapability.loadAllPlaylistTracks(
     )
     var page = 2
     var hasMore = first.hasMore
-    // YouTube playlist entries are memberships: the same video can occur
-    // multiple times. Its cursor pager already rejects repeated cursors.
-    val preserveMemberships = playlist.id.source == MusicSource.YouTubeMusic
+    // These services expose independently editable playlist entries, including
+    // multiple entries pointing at the same track.
+    val preserveMemberships = playlist.id.source in setOf(MusicSource.YouTubeMusic, MusicSource.Jellyfin)
     while ((hasMore ?: (tracks.size < target)) && page <= 100) {
         val before = tracks.size
         val next = playlistDetail(playlist, page = page, pageSize = pageSize)
@@ -60,12 +60,12 @@ suspend fun PlaylistCapability.loadAllPlaylistTracks(
             tracks += distinct
         }
         if (tracks.size == before || next.tracks.isEmpty()) {
-            check(!preserveMemberships || hasMore != true) { "YouTube Music 歌单尚未完整读取" }
+            check(!preserveMemberships || hasMore != true) { "歌单尚未完整读取" }
             break
         }
         page++
     }
-    check(!preserveMemberships || hasMore != true) { "YouTube Music 歌单尚未完整读取" }
+    check(!preserveMemberships || hasMore != true) { "歌单尚未完整读取" }
     return first.copy(
         summary = first.summary.copy(trackCount = tracks.size),
         tracks = tracks,
