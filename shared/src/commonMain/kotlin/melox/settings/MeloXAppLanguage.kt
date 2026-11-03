@@ -8,7 +8,7 @@ import java.util.Locale
 
 /** App-scoped language: changing MeloX never changes the host JVM/system locale. */
 object MeloXAppLanguage {
-    val supportedTags = listOf("system", "zh-CN", "zh-TW", "en-US", "ja-JP")
+    val supportedTags = listOf("system", "zh-CN", "zh-TW", "en-US", "ja-JP", "tr")
     var selectedTag by mutableStateOf("system")
         private set
     val locale: Locale get() = if (selectedTag == "system") Locale.getDefault() else Locale.forLanguageTag(selectedTag)

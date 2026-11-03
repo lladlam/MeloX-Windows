@@ -49,11 +49,13 @@ private object PinnedSettingsStrings {
         val suffix = when (locale.language) {
             "zh" -> if (locale.script == "Hant" || locale.country in setOf("TW", "HK", "MO")) "zh-rTW" else "zh-rCN"
             "ja" -> "ja"
+            "tr" -> "tr"
             else -> return values
         }
         return localized.getOrPut(suffix) {
             Properties(values).apply {
-                checkNotNull(PinnedSettingsStrings::class.java.classLoader.getResourceAsStream("parity/pinned-settings-pages-$suffix.properties"))
+                val resource = if (suffix == "tr") "parity/android-current-tr.properties" else "parity/pinned-settings-pages-$suffix.properties"
+                checkNotNull(PinnedSettingsStrings::class.java.classLoader.getResourceAsStream(resource))
                     .reader(Charsets.UTF_8).use(::load)
             }
         }

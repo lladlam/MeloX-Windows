@@ -511,7 +511,7 @@ private fun SettingsRouteContent(route: SettingsRoute, currentSource: MusicSourc
 private fun GeneralSettings() {
     SettingsGlassGroup {
         val languages = listOf("system" to melox.ui.desktop.desktopPlatformString("language_system"),
-            "zh-CN" to "简体中文", "zh-TW" to "繁體中文", "en-US" to "English", "ja-JP" to "日本語")
+            "zh-CN" to "简体中文", "zh-TW" to "繁體中文", "en-US" to "English", "ja-JP" to "日本語", "tr" to "Türkçe")
         Box(Modifier.testTag("application_language")) {
             MeloXSettingsDropdown(melox.ui.desktop.desktopPlatformString("language_title"), melox.settings.MeloXAppLanguage.selectedTag,
                 languages, onSelected = melox.settings.MeloXAppLanguage::select, grouped = true)

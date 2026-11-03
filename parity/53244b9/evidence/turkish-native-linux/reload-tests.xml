@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="TurkishLanguageInputTest[desktop]" tests="1" skipped="0" failures="0" errors="0" timestamp="2026-11-03T16:46:18.065Z" hostname="lladlam-arch" time="0.056">
+  <properties/>
+  <testcase name="reloadFromEarlierProcess[desktop]" classname="melox.ui.legal.TurkishLanguageInputTest" time="0.053"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

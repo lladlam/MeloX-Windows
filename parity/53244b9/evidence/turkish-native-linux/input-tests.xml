@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="TurkishLanguageInputTest[desktop]" tests="1" skipped="0" failures="0" errors="0" timestamp="2026-11-03T16:44:25.227Z" hostname="lladlam-arch" time="32.896">
+  <properties/>
+  <testcase name="captureBothLayouts[desktop]" classname="melox.ui.legal.TurkishLanguageInputTest" time="32.894"/>
+  <system-out><![CDATA[[SKIKO] warn: Fallback to next API
+org.jetbrains.skiko.RenderException: Cannot create Linux GL context
+[INFO MeloXFont] Android MiLan Pro static instances loaded: CSS=[100, 200, 300, 400, 500, 600, 700, 800, 900] files=mi_lan_pro_w{100..800}.ttf (CSS 900 shares frozen axis-700 instance)
+[SKIKO] warn: Fallback to next API
+org.jetbrains.skiko.RenderException: Cannot create Linux GL context
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
