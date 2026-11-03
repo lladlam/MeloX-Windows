@@ -51,6 +51,19 @@ class NeteaseSongWikiTest {
         assertEquals("歌曲信息", NeteaseMusicOperationsClient({ "" }, http).songWiki(123).single().title)
     }
 
+    @Test fun malformedAuthenticatedResponseFallsBackAnonymously() = runBlocking {
+        val cookies = mutableListOf<String?>()
+        val http = OkHttpClient.Builder().addInterceptor { chain ->
+            cookies.add(chain.request().header("Cookie"))
+            val body = if (cookies.size == 1) "<html>expired</html>" else """{"code":200,"blocks":$blocks}"""
+            Response.Builder().request(chain.request()).protocol(Protocol.HTTP_1_1).code(200).message("OK")
+                .body(body.toResponseBody()).build()
+        }.build()
+        assertEquals("歌曲信息", NeteaseMusicOperationsClient({ "MUSIC_U=expired" }, http).songWiki(123).single().title)
+        assertTrue(cookies.first().orEmpty().contains("MUSIC_U=expired"))
+        assertEquals(null, cookies.last())
+    }
+
     @Test fun cancellingRequestCancelsHttpAndDoesNotStartAnonymousFallback() = runBlocking {
         val started = CountDownLatch(1)
         val cancelled = AtomicBoolean(false)

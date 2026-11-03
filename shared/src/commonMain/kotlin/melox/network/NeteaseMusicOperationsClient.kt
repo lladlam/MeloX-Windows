@@ -209,7 +209,7 @@ class NeteaseMusicOperationsClient(
                 eapi(path, payload, true, owner)
             } catch (cancelled: CancellationException) {
                 throw cancelled
-            } catch (failure: IOException) {
+            } catch (failure: Exception) {
                 owner?.ensureActive()
                 eapi(path, payload, false, owner, isolateCookies = true)
             }

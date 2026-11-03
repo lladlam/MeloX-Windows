@@ -94,3 +94,5 @@ Windows CI [41494640174](https://github.com/lladlam/MeloX-Windows/actions/runs/4
 只读 Android 对照时源码 SHA-256：`core/network/NeteaseMusicOperationsClient.kt` 为 `b63ad177ac837584764158b24787a58de02b50cddcd203759cf8e0a55ebf876c`，`ui/song/MeloXSongWikiActivity.kt` 为 `2be34f7c970eaf475f936fffef8cf03e951876d32d9743385468453400e74004`。
 
 Linux JDK 17 使用工作区临时目录重新执行 `:shared:desktopTest --rerun --tests melox.network.NeteaseSongWikiTest`，3 项全部通过，覆盖匿名及过期会话回退、两种 blocks 包装和取消底层 HTTP。响应为本地拦截器 fixture，不是线上验收。XML 见 `evidence/song-wiki/`。该批不改界面，手机版现有入口及电脑菜单差异仍须真实输入验收和继续迁移。
+
+后续核对发现登录请求返回非 JSON（例如失效会话的 HTML 页面）时解析异常不属于 IOException，原回退未覆盖。补全普通异常回退，仍明确传递取消；Linux JDK 17 重新编译并执行同一套测试 **4 项通过**，新增 malformed fixture，见 `evidence/song-wiki/malformed-response-tests.xml`。
