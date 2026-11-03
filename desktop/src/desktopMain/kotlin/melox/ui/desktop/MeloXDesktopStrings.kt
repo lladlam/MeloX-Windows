@@ -50,6 +50,8 @@ internal fun desktopPlatformString(key: String): String {
         "window_restore" -> if (chinese) "还原" else "Restore"
         "window_close" -> if (chinese) "关闭" else "Close"
         "unavailable" -> if (chinese) "此音乐源或当前 Windows 后端尚不支持" else "Not available for this source or Windows backend"
+        "song_wiki" -> if (chinese) "歌曲百科" else "Song Wiki"
+        "song_wiki_empty" -> if (chinese) "暂无百科资料" else "No song wiki information available"
         "account_title" -> if (chinese) "账户" else "Account"
         "account_private_messages" -> if (chinese) "私信" else "Private Messages"
         "account_settings" -> if (chinese) "账户设置" else "Account Settings"

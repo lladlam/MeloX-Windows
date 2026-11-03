@@ -51,6 +51,7 @@ internal fun MeloXDesktopSongDetail(id: Long, initialSong: SearchSong? = null, o
     var liked by remember(id) { mutableStateOf<Boolean?>(null) }
     var favoriteBusy by remember(id) { mutableStateOf(false) }
     var operationError by remember(id) { mutableStateOf<String?>(null) }
+    var wikiOpen by remember(id) { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
     val session by NeteaseSessionStore.revision.collectAsState()
     val unifiedRevision by melox.music.provider.MeloXUnifiedFavorites.revision.collectAsState()
@@ -153,6 +154,11 @@ internal fun MeloXDesktopSongDetail(id: Long, initialSong: SearchSong? = null, o
                     }
                 }
             }
+            item("wiki-entry") {
+                Text(desktopPlatformString("song_wiki"), Modifier.testTag("desktop-song-detail-wiki")
+                    .clickable { wikiOpen = true }.padding(bottom = 18.dp),
+                    color = MaterialTheme.colorScheme.primary, fontSize = 13.sp)
+            }
             val paneError = when (tab) { 0 -> similarError; 1 -> lyricsError; else -> commentsError }
             when {
                 loading -> item("content-loading") {
@@ -200,6 +206,7 @@ internal fun MeloXDesktopSongDetail(id: Long, initialSong: SearchSong? = null, o
         },
     )
     selectedSong?.let { value -> MeloXDesktopSongMenu(value, { selectedSong = null }, menuAnchor) }
+    if (wikiOpen) DesktopSongWikiDialog(id, song?.name.orEmpty(), onDismiss = { wikiOpen = false })
     operationError?.let { message -> DesktopMessageDialog("ui.error.favorite_failed", message, { operationError = null }) }
 }
 

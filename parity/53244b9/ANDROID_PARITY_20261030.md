@@ -96,3 +96,11 @@ Windows CI [41494640174](https://github.com/lladlam/MeloX-Windows/actions/runs/4
 Linux JDK 17 使用工作区临时目录重新执行 `:shared:desktopTest --rerun --tests melox.network.NeteaseSongWikiTest`，3 项全部通过，覆盖匿名及过期会话回退、两种 blocks 包装和取消底层 HTTP。响应为本地拦截器 fixture，不是线上验收。XML 见 `evidence/song-wiki/`。该批不改界面，手机版现有入口及电脑菜单差异仍须真实输入验收和继续迁移。
 
 后续核对发现登录请求返回非 JSON（例如失效会话的 HTML 页面）时解析异常不属于 IOException，原回退未覆盖。补全普通异常回退，仍明确传递取消；Linux JDK 17 重新编译并执行同一套测试 **4 项通过**，新增 malformed fixture，见 `evidence/song-wiki/malformed-response-tests.xml`。
+
+电脑布局现为网易歌曲的菜单和详情提供百科入口，共用实际读取请求及弹窗，提供加载、空结果、错误重试、可选择文本与滚动；关闭弹窗取消请求，非网易歌曲不显示菜单入口。Linux JDK 17 编译通过，`DesktopSongWikiInputTest` 在隔离 Xvfb 的真实 Swing/Compose 窗口中，以系统 Robot 鼠标点击错误重试、滚轮滚动并以 Escape 关闭；受控 fixture 返回 50 组数据，截图从 Section 1 滚到 Section 8 之后，XML 和截图见 `evidence/song-wiki-desktop-linux/`。Xvfb 使用软件渲染，需改变窗口宽度 1 像素触发重绘；前两次显示启动因本机 `/tmp` 用户写入配额失败，后使用隔离挂载的工作区临时目录运行。此测试直接打开生产弹窗，**未验证菜单／详情入口实际点击**，也不是线上网易数据或 Windows 实机输入验收；手机版仍为操作面板而非 Android 独立页面。
+
+## 网易歌单接口续迁
+
+再次只读对照当前 Android `NeteaseMusicOperationsClient`（SHA-256 同上）发现，Windows 的歌单取消收藏仍调用 EAPI `subscribe`／`t=2`，而 Android 已使用独立的 WEAPI `unsubscribe`；自己的歌单删除也应使用 WEAPI `delete`／`pid`，而不是旧的 EAPI `remove`。现将三个共享操作分别接至认证 WEAPI；删除自身歌单的后端仍无电脑界面消费者，系统「我喜欢」歌单不可删除的界面保护也未实现，不能把后端改动当作自建歌单删除功能完成。
+
+Linux JDK 17 实际运行 `NeteasePlaylistOperationsTest` 两项及 `NeteaseSongWikiTest` 四项全部通过；前者通过本地 HTTP 拦截器核对三个实际 WEAPI 路径、认证请求格式和服务器错误传播，见 `evidence/playlist-weapi/tests.xml`。加密请求正文未由该测试解密核对；未操作私人歌单，真实账号收藏和取消收藏仍需验收。Android 工作区只读核查时存在多处未提交的歌词、下载、来源等修改，须继续按实时源码逐项对照。

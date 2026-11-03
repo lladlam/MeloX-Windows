@@ -92,6 +92,7 @@ internal fun MeloXDesktopSongMenu(
     var addOpen by remember { mutableStateOf(false) }
     var creating by remember { mutableStateOf(false) }
     var removing by remember { mutableStateOf(false) }
+    var wikiOpen by remember { mutableStateOf(false) }
     val menuFocus = remember { FocusRequester() }
     val submenuFocus = remember { FocusRequester() }
     LaunchedEffect(menuOpen, addOpen) {
@@ -209,6 +210,10 @@ internal fun MeloXDesktopSongMenu(
                     ?: MeloXSearchLaunchBus.post(song.name, MeloXSearchKind.Songs, track?.id?.source ?: MusicSource.Netease)
                 onDismiss()
             }
+            if (id != null) DesktopSongMenuItem(null, MeloXSymbol.Book, "wiki", !busy,
+                label = desktopPlatformString("song_wiki")) {
+                menuOpen = false; wikiOpen = true
+            }
             if (song.artists.isNotBlank()) DesktopSongMenuItem("ui.artist.go_to_generic", MeloXSymbol.Person, "artist") {
                 val artistId = song.artistId ?: track?.artists?.firstOrNull()?.id?.value?.toLongOrNull()
                 if (id != null && artistId != null) MeloXCollectionLaunchBus.open(MeloXCollectionTarget.Artist(artistId))
@@ -247,6 +252,7 @@ internal fun MeloXDesktopSongMenu(
                 onSourcePlaylistChanged?.invoke(); onDismiss()
             }
         })
+    if (wikiOpen && id != null) DesktopSongWikiDialog(id, song.name, onDismiss)
     if (error != null && !creating) DesktopMessageDialog("ui.library.error.title", requireNotNull(error), onDismiss = { error = null })
 }
 
