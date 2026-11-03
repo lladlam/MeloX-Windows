@@ -66,6 +66,7 @@ internal fun MeloXDesktopSongMenu(
     sourceOwnedPlaylistId: Long? = null,
     sourceProviderPlaylist: MusicPlaylistSummary? = null,
     onSourcePlaylistChanged: (() -> Unit)? = null,
+    wikiLoader: suspend (Long) -> List<melox.network.MeloXWikiSection> = ::loadDesktopSongWiki,
 ) = key(song) {
     val scope = rememberCoroutineScope()
     val cookie = remember { { NeteaseSessionStore.readCookie() } }
@@ -97,8 +98,13 @@ internal fun MeloXDesktopSongMenu(
     val submenuFocus = remember { FocusRequester() }
     LaunchedEffect(menuOpen, addOpen) {
         if (menuOpen) {
-            withFrameNanos { }
-            if (addOpen) submenuFocus.requestFocus() else menuFocus.requestFocus()
+            // A Popup/DropdownMenu may attach its focus node after its parent's first frame.
+            // Retry on subsequent frames instead of crashing the owning composition.
+            repeat(10) {
+                withFrameNanos { }
+                val requester = if (addOpen) submenuFocus else menuFocus
+                if (runCatching { requester.requestFocus() }.isSuccess) return@LaunchedEffect
+            }
         }
     }
 
@@ -252,7 +258,7 @@ internal fun MeloXDesktopSongMenu(
                 onSourcePlaylistChanged?.invoke(); onDismiss()
             }
         })
-    if (wikiOpen && id != null) DesktopSongWikiDialog(id, song.name, onDismiss)
+    if (wikiOpen && id != null) DesktopSongWikiDialog(id, song.name, onDismiss, wikiLoader)
     if (error != null && !creating) DesktopMessageDialog("ui.library.error.title", requireNotNull(error), onDismiss = { error = null })
 }
 

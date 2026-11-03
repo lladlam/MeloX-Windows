@@ -20,15 +20,16 @@ import melox.account.NeteaseSessionStore
 import melox.network.MeloXWikiSection
 import melox.network.NeteaseMusicOperationsClient
 
+internal suspend fun loadDesktopSongWiki(id: Long): List<MeloXWikiSection> =
+    NeteaseMusicOperationsClient({ NeteaseSessionStore.readCookie() }).songWiki(id)
+
 /** The dialog owns its request: closing it or changing songs cancels in-flight work. */
 @Composable
 internal fun DesktopSongWikiDialog(
     songId: Long,
     songName: String,
     onDismiss: () -> Unit,
-    load: suspend (Long) -> List<MeloXWikiSection> = { id ->
-        NeteaseMusicOperationsClient({ NeteaseSessionStore.readCookie() }).songWiki(id)
-    },
+    load: suspend (Long) -> List<MeloXWikiSection> = ::loadDesktopSongWiki,
 ) {
     var revision by remember(songId) { mutableIntStateOf(0) }
     var sections by remember(songId) { mutableStateOf<List<MeloXWikiSection>>(emptyList()) }

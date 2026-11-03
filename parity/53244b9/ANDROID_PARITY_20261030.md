@@ -101,6 +101,8 @@ Windows CI [41622205481](https://github.com/lladlam/MeloX-Windows/actions/runs/4
 
 电脑布局现为网易歌曲的菜单和详情提供百科入口，共用实际读取请求及弹窗，提供加载、空结果、错误重试、可选择文本与滚动；关闭弹窗取消请求，非网易歌曲不显示菜单入口。Linux JDK 17 编译通过，`DesktopSongWikiInputTest` 在隔离 Xvfb 的真实 Swing/Compose 窗口中，以系统 Robot 鼠标点击错误重试、滚轮滚动并以 Escape 关闭；受控 fixture 返回 50 组数据，截图从 Section 1 滚到 Section 8 之后，XML 和截图见 `evidence/song-wiki-desktop-linux/`。Xvfb 使用软件渲染，需改变窗口宽度 1 像素触发重绘；前两次显示启动因本机 `/tmp` 用户写入配额失败，后使用隔离挂载的工作区临时目录运行。此测试直接打开生产弹窗，**未验证菜单／详情入口实际点击**，也不是线上网易数据或 Windows 实机输入验收；手机版仍为操作面板而非 Android 独立页面。
 
+随后增加生产电脑歌曲菜单的真实窗口输入 fixture，最初复现 Popup 焦点节点未挂载时 `FocusRequester` 抛错（失败 XML 保留）。焦点请求现最多跨十帧等待节点附着；Linux Xvfb 以系统 Robot 点击网易歌曲菜单的百科项，受控加载器确认歌曲 ID 并显示资料，测试通过且无异常 stderr，截图及 `menu-tests.xml` 同目录。带 Escape／同步销毁窗口的先前版本曾超时 20 分钟并需终止其测试进程，最终测试只核对菜单点击和资料显示；Escape 已由上段独立弹窗测试验证。详情入口点击、真实线上数据和 Windows 实机仍待验收。
+
 ## 网易歌单接口续迁
 
 再次只读对照当前 Android `NeteaseMusicOperationsClient`（SHA-256 同上）发现，Windows 的歌单取消收藏仍调用 EAPI `subscribe`／`t=2`，而 Android 已使用独立的 WEAPI `unsubscribe`；自己的歌单删除也应使用 WEAPI `delete`／`pid`，而不是旧的 EAPI `remove`。现将三个共享操作分别接至认证 WEAPI；删除自身歌单的后端仍无电脑界面消费者，系统「我喜欢」歌单不可删除的界面保护也未实现，不能把后端改动当作自建歌单删除功能完成。
