@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="NeteasePlaylistRemovalTest[desktop]" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-11-03T18:01:33.436Z" hostname="lladlam-arch" time="0.54">
+  <properties/>
+  <testcase name="determinesRemovalFromFreshAccountList[desktop]" classname="melox.library.NeteasePlaylistRemovalTest" time="0.165"/>
+  <testcase name="refusesUnknownOrAmbiguousState[desktop]" classname="melox.library.NeteasePlaylistRemovalTest" time="0.001"/>
+  <testcase name="readsFreshListAndNeverWritesForProtectedOrChangedSession[desktop]" classname="melox.library.NeteasePlaylistRemovalTest" time="0.337"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
