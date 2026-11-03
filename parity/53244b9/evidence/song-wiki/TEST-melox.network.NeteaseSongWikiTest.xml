@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="NeteaseSongWikiTest[desktop]" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-11-03T10:38:15.114Z" hostname="lladlam-arch" time="7.272">
+  <properties/>
+  <testcase name="anonymousUsesNestedBlocksWithoutLogin[desktop]" classname="melox.network.NeteaseSongWikiTest" time="7.06"/>
+  <testcase name="cancellingRequestCancelsHttpAndDoesNotStartAnonymousFallback[desktop]" classname="melox.network.NeteaseSongWikiTest" time="0.169"/>
+  <testcase name="anonymousAndExpiredSessionReturnAllWikiBlocks[desktop]" classname="melox.network.NeteaseSongWikiTest" time="0.032"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -9,7 +9,12 @@ import java.security.SecureRandom
 import javax.crypto.Cipher
 import javax.crypto.spec.SecretKeySpec
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.currentCoroutineContext
+import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.withContext
+import okhttp3.CookieJar
 import okhttp3.FormBody
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -195,14 +200,26 @@ class NeteaseMusicOperationsClient(
     }
 
     suspend fun songWiki(songId: Long): List<MeloXWikiSection> = withContext(Dispatchers.IO) {
-        ensureLoggedIn()
-        val result = eapi(
-            "/api/song/play/about/block/page",
-            JSONObject().put("songId", songId),
-            true,
-        )
-        val blocks = result.optJSONObject("data")?.optJSONArray("blocks") ?: JSONArray()
-        buildList<MeloXWikiSection> {
+        require(songId > 0L) { "歌曲 ID 无效" }
+        val owner = currentCoroutineContext()[Job]
+        val path = "/api/song/play/about/block/page"
+        val payload = JSONObject().put("songId", songId)
+        val result = if (NeteaseSessionStore.containsMusicU(cookieProvider())) {
+            try {
+                eapi(path, payload, true, owner)
+            } catch (cancelled: CancellationException) {
+                throw cancelled
+            } catch (failure: IOException) {
+                owner?.ensureActive()
+                eapi(path, payload, false, owner, isolateCookies = true)
+            }
+        } else eapi(path, payload, false, owner, isolateCookies = true)
+        parseSongWikiSections(result)
+    }
+
+    private fun parseSongWikiSections(result: JSONObject): List<MeloXWikiSection> {
+        val blocks = result.optJSONObject("data")?.optJSONArray("blocks") ?: result.optJSONArray("blocks") ?: JSONArray()
+        return buildList<MeloXWikiSection> {
             for (i in 0 until blocks.length()) {
                 val block = blocks.optJSONObject(i) ?: continue
                 val title = block.optJSONObject("uiElement")?.optJSONObject("mainTitle")?.optString("title")
@@ -210,31 +227,23 @@ class NeteaseMusicOperationsClient(
                         "SONG_PLAY_ABOUT_MUSIC_MEMORY" -> "音乐记忆"
                         "SONG_PLAY_ABOUT_SIMILAR_SONG" -> "相似歌曲"
                         "SONG_PLAY_ABOUT_RELATED_PLAYLIST" -> "相关歌单"
+                        "SONG_PLAY_ABOUT_SONG_BASIC" -> "歌曲信息"
                         else -> "歌曲百科"
                     }
                 val lines = mutableListOf<String>()
                 val creatives = block.optJSONArray("creatives") ?: JSONArray()
                 for (j in 0 until creatives.length()) {
                     val creative = creatives.optJSONObject(j) ?: continue
-                    val ui = creative.optJSONObject("uiElement")
-                    ui?.optJSONObject("mainTitle")?.optString("title")?.takeIf(String::isNotBlank)?.let(lines::add)
+                    collectWikiUiText(creative.optJSONObject("uiElement"), lines)
                     val resources = creative.optJSONArray("resources") ?: JSONArray()
                     for (k in 0 until resources.length()) {
-                        val rui = resources.optJSONObject(k)?.optJSONObject("uiElement") ?: continue
-                        rui.optJSONObject("mainTitle")?.optString("title")?.takeIf(String::isNotBlank)?.let(lines::add)
-                        val descriptions = rui.optJSONArray("descriptions") ?: JSONArray()
-                        for (x in 0 until descriptions.length()) {
-                            descriptions.optJSONObject(x)?.optString("description")?.takeIf(String::isNotBlank)?.let(lines::add)
-                        }
-                        val subtitles = rui.optJSONArray("subTitles") ?: JSONArray()
-                        for (x in 0 until subtitles.length()) {
-                            subtitles.optJSONObject(x)?.optString("title")?.takeIf(String::isNotBlank)?.let(lines::add)
-                        }
+                        collectWikiUiText(resources.optJSONObject(k)?.optJSONObject("uiElement"), lines)
                     }
                 }
                 val directResources = block.optJSONArray("resources") ?: JSONArray()
                 for (j in 0 until directResources.length()) {
                     val r = directResources.optJSONObject(j) ?: continue
+                    collectWikiUiText(r.optJSONObject("uiElement"), lines)
                     r.optString("resourceType").takeIf(String::isNotBlank)?.let { type ->
                         val ext = r.optJSONObject("extensionInfo")
                         if (type.equals("FIRST_LISTEN", true)) {
@@ -251,6 +260,27 @@ class NeteaseMusicOperationsClient(
                 val unique = lines.map(String::trim).filter(String::isNotBlank).distinct()
                 if (unique.isNotEmpty()) add(MeloXWikiSection(title, unique))
             }
+        }
+    }
+
+    private fun collectWikiUiText(ui: JSONObject?, lines: MutableList<String>) {
+        if (ui == null) return
+        ui.optJSONObject("mainTitle")?.optString("title")?.takeIf(String::isNotBlank)?.let(lines::add)
+        val descriptions = ui.optJSONArray("descriptions") ?: JSONArray()
+        for (i in 0 until descriptions.length()) {
+            val value = descriptions.optJSONObject(i) ?: continue
+            (value.optString("description").takeIf(String::isNotBlank)
+                ?: value.optString("text").takeIf(String::isNotBlank))?.let(lines::add)
+        }
+        val subtitles = ui.optJSONArray("subTitles") ?: JSONArray()
+        for (i in 0 until subtitles.length()) {
+            subtitles.optJSONObject(i)?.optString("title")?.takeIf(String::isNotBlank)?.let(lines::add)
+        }
+        val buttons = ui.optJSONArray("buttons") ?: JSONArray()
+        for (i in 0 until buttons.length()) {
+            val value = buttons.optJSONObject(i) ?: continue
+            (value.optString("text").takeIf(String::isNotBlank)
+                ?: value.optString("title").takeIf(String::isNotBlank))?.let(lines::add)
         }
     }
 
@@ -565,7 +595,7 @@ class NeteaseMusicOperationsClient(
         if (!NeteaseSessionStore.containsMusicU(cookieProvider())) throw IOException("请先登录网易云音乐")
     }
 
-    private fun eapi(uri: String, data: JSONObject, authenticated: Boolean): JSONObject {
+    private fun eapi(uri: String, data: JSONObject, authenticated: Boolean, owner: Job? = null, isolateCookies: Boolean = false): JSONObject {
         val now=System.currentTimeMillis(); val cookie=cookieProvider(); val cookies=NeteaseSessionStore.parseCookie(cookie)
         val header=if(authenticated) authenticatedHeader(cookies,now) else JSONObject().put("os","ios").put("appver","9.0.90").put("osver","18.0").put("requestId","${now}_0000")
         val payload=JSONObject(data.toString()).put("header",header).put("e_r",false); val json=payload.toString()
@@ -575,10 +605,11 @@ class NeteaseMusicOperationsClient(
             .header("Accept","*/*").header("User-Agent",if(authenticated) "NeteaseMusic 9.0.90/5038 (iPhone; iOS 16.2; zh_CN)" else "Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 Mobile/15E148")
         if(authenticated)b.header("Cookie",encodedCookie(header))
         val req=b.post(FormBody.Builder().add("params",params).build()).build()
-        httpClient.newCall(req).execute().use { response ->
+        val client = if (isolateCookies) httpClient.newBuilder().cookieJar(CookieJar.NO_COOKIES).build() else httpClient
+        return client.executeOwned(req, owner) { response ->
             val body=response.body?.string() ?: throw IOException("网易云返回了空响应"); if(!response.isSuccessful)throw IOException("网易云请求失败：HTTP ${response.code}")
             if(body.isBlank())throw IOException("网易云返回了空响应"); val result=parseNeteaseResponseJson(body); val code=result.optInt("code",response.code)
-            if(code !in 200..299)throw IOException(result.optString("message").ifBlank{result.optString("msg")}.ifBlank{"请求失败（$code）"}); return result
+            if(code !in 200..299)throw IOException(result.optString("message").ifBlank{result.optString("msg")}.ifBlank{"请求失败（$code）"}); result
         }
     }
     private fun authenticatedHeader(c:Map<String,String>,now:Long)=JSONObject().put("osver",c["osver"]?:"16.2").put("deviceId",c["deviceId"]?:syntheticDeviceId).put("os",c["os"]?:"iPhone OS").put("appver",c["appver"]?:"9.0.90").put("versioncode",c["versioncode"]?:"140").put("buildver",c["buildver"]?:(now/1000L).toString()).put("resolution",c["resolution"]?:"1170x2532").put("__csrf",c["__csrf"]?:"").put("channel",c["channel"]?:"distribution").put("requestId","${now}_${randomDigits(4)}").apply{c["MUSIC_U"]?.takeIf(String::isNotBlank)?.let{put("MUSIC_U",it)}}

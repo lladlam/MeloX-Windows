@@ -84,3 +84,13 @@ JDK 17 本地 `NeteasePodcastTest` 三项通过：覆盖分页标志及回退、
 JDK 17 下 `NeteasePodcastTest` **5 项通过**，新增受控 HTTP 拦截器确认取消详情协程会取消底层请求。`DesktopPodcastPagingInputTest` 在 Linux Xvfb 的真实 Swing/Compose 窗口中以系统 Robot 滚轮操作生产详情列表；受控 HTTP 返回 61 期，其中第二页延迟 1.5 秒，实际按 `0, 30, 60` 请求并验证第二页未被尾项销毁取消。此测试使用 fixture、Linux 虚拟显示和软件渲染，不是公开线上多页或 Windows 实机验收；测试仅在设置 `MELOX_NATIVE_PAGING_TEST=1` 的隔离显示环境显式运行。结果见 `evidence/podcast-desktop-paging-fixture/`。
 
 Windows CI [41476102243](https://github.com/lladlam/MeloX-Windows/actions/runs/41476102243) 对 `9faa31d` 失败，未产生可交付 ZIP。`reference-player` 的 21 场景／35 断言本身通过，但后续封面几何检查在 `17-automix-off` 失败：场景报告停止播放、实际封面尚为播放尺寸。保留的原始 `capture.json` 显示该回放将 420 秒 fixture 拖至约 344 秒，随后进度递增至正好 420 秒；下一场景开始播放另一首。因此这是录制中自然结束及状态／动画时序导致的实际几何检查失败，不能视作通过，也不能据此断言真实播放器发生回归。失败日志与现场见 `evidence/ci-41476102243-player/`。回放专用音频现延长至 1800 秒，几何检查保留；Linux 本地生产 `ImageComposeScene` 重新执行 **21 场景／35 断言及几何核验通过**，第 17 场景仍在播放、进度 1528470／1800000 ms。该回放是场景指针与软件 PCM，后续 Windows CI 尚待验证。
+
+Windows CI [41494640174](https://github.com/lladlam/MeloX-Windows/actions/runs/41494640174) 对 `24002965ff01575acb66292b14cb912fc5c886bd` 全部成功。完整下载发行 ZIP 后以该精确 SHA 独立核验：**396,492,734 字节／359 条目**，SHA-256 `e335926f79232060994b8a4b6e96fe36686c299074d8d8ad023273cc4eed8d16`；ZIP／JAR 全部 CRC、版本戳、固定资源、解码器、启动图标、CLI、LX、AutoSync 资源及原生库检查通过，结果保存在 `evidence/ci-41494640174/`。此包包含电脑版分页生命周期修正及播放器回放 fixture 延长，不包含之后的变更。CI 场景指针、软件 PCM 和独立的包字节校验不能替代 Windows 实机键鼠、真实在线播客多页、实体音频或私人账号验收。
+
+## 歌曲百科读取续迁
+
+对照 Android 实时 `NeteaseMusicOperationsClient` 和 `MeloXSongWikiActivity`：手机版歌曲操作已有百科入口，但 Windows 原接口强制登录，且漏读部分直接资源与创作信息。现支持匿名读取、登录请求失败后隔离 Cookie 的匿名回退，提取嵌套或顶层 blocks、直接资源、创作信息、描述、按钮和原有听歌记忆；请求被取消时取消实际 HTTP，不启动回退。电脑专属歌曲菜单及歌曲详情目前没有百科入口，手机版仍是操作面板而非 Android 独立页面，这些 UI 差异未在此批声称完成；公开线上结果和真实账号仍需验收。
+
+只读 Android 对照时源码 SHA-256：`core/network/NeteaseMusicOperationsClient.kt` 为 `b63ad177ac837584764158b24787a58de02b50cddcd203759cf8e0a55ebf876c`，`ui/song/MeloXSongWikiActivity.kt` 为 `2be34f7c970eaf475f936fffef8cf03e951876d32d9743385468453400e74004`。
+
+Linux JDK 17 使用工作区临时目录重新执行 `:shared:desktopTest --rerun --tests melox.network.NeteaseSongWikiTest`，3 项全部通过，覆盖匿名及过期会话回退、两种 blocks 包装和取消底层 HTTP。响应为本地拦截器 fixture，不是线上验收。XML 见 `evidence/song-wiki/`。该批不改界面，手机版现有入口及电脑菜单差异仍须真实输入验收和继续迁移。
