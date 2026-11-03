@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Physical input replay of new dual-layout settings and app-language persistence."""
+"""Compose scene pointer replay of dual-layout settings and language persistence."""
 import json
 import os
 from pathlib import Path

@@ -65,7 +65,7 @@
 
 本地最终：**67 suites / 341 tests，零失败／错误／跳过**；桌面编译通过。自定义背景回归覆盖尺寸约束、原图不变、解码失败保留旧图、清理不删除原图或无关文件、过大输入提前拒绝。原四模式测试扩展为五模式及独立 CustomImage kind，最终以 v4 成功日志为准。
 
-`tools/capture_feature_surface.py` 使用隔离 home 与真实指针／滚轮／键盘，双布局 controls + 独立 JVM reload 共 **98 scenes / 62 assertions**，全部通过。验证简中→日文→英文时实际 Theme 文案改变，并在系统进程 Locale 为 zh-CN 时重载保留英文；隐私页可达，歌词翻译开关真实保存，CustomImage 模式与导入入口可用。未在此回放打开原生文件选择器，也未读写私人专辑账号。
+`tools/capture_feature_surface.py` 使用隔离 home 与生产 `ImageComposeScene` 注入的指针／滚轮／键盘事件，双布局 controls + 独立 JVM reload 共 **98 scenes / 62 assertions**，全部通过。场景验证简中→日文→英文时 Theme 文案改变，并在系统进程 Locale 为 zh-CN 时重载保留英文；隐私页可达，歌词翻译开关保存，CustomImage 模式与导入入口可用。此证据不是操作系统窗口的真实鼠标／滚轮／键盘验收；未在此回放打开原生文件选择器，也未读写私人专辑账号。
 
 最后专辑账号边界修正：按专辑 ID 与会话 revision 创建独立 composition／协程 scope，使用固定会话 Cookie 的请求 client，切换账号时销毁旧详情与操作任务；修正后额外桌面编译通过。共享业务无需因该 UI 生命周期修正重复全量运行。
 
