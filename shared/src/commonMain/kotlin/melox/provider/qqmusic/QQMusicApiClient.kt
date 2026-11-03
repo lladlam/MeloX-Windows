@@ -2,6 +2,7 @@ package melox.provider.qqmusic
 
 import melox.lyrics.LrcLyricsParser
 import melox.lyrics.LyricsDocument
+import melox.lyrics.LyricSource
 import melox.music.model.AudioQualityTier
 import melox.music.model.MusicAccountSummary
 import melox.music.model.MusicAlbumRef
@@ -255,7 +256,7 @@ class QQMusicApiClient(
         LrcLyricsParser.parse(
             lrc = decodeBase64Utf8(response.optString("lyric")),
             translation = decodeBase64Utf8(response.optString("trans")),
-        )
+        ).copy(source = LyricSource.QQMusic)
     }
 
     suspend fun resolvePlayback(

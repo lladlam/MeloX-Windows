@@ -112,3 +112,7 @@ Linux JDK 17 实际运行 `NeteasePlaylistOperationsTest` 两项及 `NeteaseSong
 ## 酷狗 KRC 元数据续迁
 
 只读对照当前 Android `KugouKrcLyricsParser.kt`（SHA-256 `218dce38d6615156a53b16615d40c21d008a4cc6b23102f6b73ac15ddee00174`）：KRC 解析结果按实际逐词／逐行内容标记质量、设置酷狗来源并禁用伪逐词时间；普通 LRC／无时间文本回退保留酷狗来源。Windows 本地 sidecar 解析器仍显式覆盖为 Local。Linux JDK 17 `KugouKrcMetadataTest` 两项及 `AutoSyncAudioAndTextTest` 五项通过，覆盖逐词时间、逐行、无时间回退、本地来源覆盖和 AutoSync 资格；XML 在 `evidence/krc-metadata/`。首次 AutoSync 运行因测试子 JVM 写入系统 `/tmp` 的用户配额不足，有两项 IOException；设置测试子进程临时目录到工作区后五项通过。不代表真实线上酷狗曲目或播放器视觉验收。
+
+## QQ 普通歌词来源续迁
+
+只读对照 Android `QQMusicApiClient.kt`（SHA-256 `e8eff275a2ff35120c1256730e314240c7c9f6ae86d79b373beeb096b0a0d45f`），将 QQ 普通歌词接口返回文档的来源从默认 Local 改为 QQMusic，原始无时间／逐行时间语义保留。Linux JDK 17 本地拦截器 fixture 从实际 API client 返回 Base64 原文，验证无时间文本不随播放高亮、逐行歌词正常高亮和两者来源均为 QQMusic；1 项通过，XML 在 `evidence/qq-lyrics-source/`。这不是线上接口或真实播放器画面验收。
