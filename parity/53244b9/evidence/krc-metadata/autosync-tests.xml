@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="AutoSyncAudioAndTextTest[desktop]" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-11-03T12:18:44.361Z" hostname="lladlam-arch" time="6.416">
+  <properties/>
+  <testcase name="cancellationClosesBlockedFfmpegNetworkRead[desktop]" classname="melox.autosync.AutoSyncAudioAndTextTest" time="5.631"/>
+  <testcase name="timestampsFromProviderLrcAreEligibleButPlainAndAuthoredLyricsAreNot[desktop]" classname="melox.autosync.AutoSyncAudioAndTextTest" time="0.27"/>
+  <testcase name="routesAndMapsTextWithoutInventingMixedOrCreditTimings[desktop]" classname="melox.autosync.AutoSyncAudioAndTextTest" time="0.149"/>
+  <testcase name="timelineCacheRequiresExactSourceAudioAndModelAndKeepsOtherLines[desktop]" classname="melox.autosync.AutoSyncAudioAndTextTest" time="0.192"/>
+  <testcase name="realFfmpegDecodesBoundedMono16kWindows[desktop]" classname="melox.autosync.AutoSyncAudioAndTextTest" time="0.141"/>
+  <system-out><![CDATA[[DEBUG AudioPlayer] Bundled FFmpeg verified: sha256=ee930e8def21a993f4b8c680757df15054da1c8f2698da0fdf87f1f3b15bd633 bytes=172690600
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

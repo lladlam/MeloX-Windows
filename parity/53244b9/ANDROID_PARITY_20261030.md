@@ -104,3 +104,7 @@ Linux JDK 17 使用工作区临时目录重新执行 `:shared:desktopTest --reru
 再次只读对照当前 Android `NeteaseMusicOperationsClient`（SHA-256 同上）发现，Windows 的歌单取消收藏仍调用 EAPI `subscribe`／`t=2`，而 Android 已使用独立的 WEAPI `unsubscribe`；自己的歌单删除也应使用 WEAPI `delete`／`pid`，而不是旧的 EAPI `remove`。现将三个共享操作分别接至认证 WEAPI；删除自身歌单的后端仍无电脑界面消费者，系统「我喜欢」歌单不可删除的界面保护也未实现，不能把后端改动当作自建歌单删除功能完成。
 
 Linux JDK 17 实际运行 `NeteasePlaylistOperationsTest` 两项及 `NeteaseSongWikiTest` 四项全部通过；前者通过本地 HTTP 拦截器核对三个实际 WEAPI 路径、认证请求格式和服务器错误传播，见 `evidence/playlist-weapi/tests.xml`。加密请求正文未由该测试解密核对；未操作私人歌单，真实账号收藏和取消收藏仍需验收。Android 工作区只读核查时存在多处未提交的歌词、下载、来源等修改，须继续按实时源码逐项对照。
+
+## 酷狗 KRC 元数据续迁
+
+只读对照当前 Android `KugouKrcLyricsParser.kt`（SHA-256 `218dce38d6615156a53b16615d40c21d008a4cc6b23102f6b73ac15ddee00174`）：KRC 解析结果按实际逐词／逐行内容标记质量、设置酷狗来源并禁用伪逐词时间；普通 LRC／无时间文本回退保留酷狗来源。Windows 本地 sidecar 解析器仍显式覆盖为 Local。Linux JDK 17 `KugouKrcMetadataTest` 两项及 `AutoSyncAudioAndTextTest` 五项通过，覆盖逐词时间、逐行、无时间回退、本地来源覆盖和 AutoSync 资格；XML 在 `evidence/krc-metadata/`。首次 AutoSync 运行因测试子 JVM 写入系统 `/tmp` 的用户配额不足，有两项 IOException；设置测试子进程临时目录到工作区后五项通过。不代表真实线上酷狗曲目或播放器视觉验收。
