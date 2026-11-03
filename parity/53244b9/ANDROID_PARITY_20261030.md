@@ -97,6 +97,8 @@ Linux JDK 17 使用工作区临时目录重新执行 `:shared:desktopTest --reru
 
 后续核对发现登录请求返回非 JSON（例如失效会话的 HTML 页面）时解析异常不属于 IOException，原回退未覆盖。补全普通异常回退，仍明确传递取消；Linux JDK 17 重新编译并执行同一套测试 **4 项通过**，新增 malformed fixture，见 `evidence/song-wiki/malformed-response-tests.xml`。
 
+Windows CI [41622205481](https://github.com/lladlam/MeloX-Windows/actions/runs/41622205481) 对 `9ef150a3a9f440147bab146fffe4b658a6574356` 已完成并成功。使用工作区临时目录完整下载其 ZIP，独立核验精确源码戳、359 个 ZIP 条目的 CRC、固定资源及原生库通过；大小 **396,493,771 字节**，SHA-256 `427eb8cb1b3f40d5bdb6f0be449d6d9b32df167b7898b67d9ae456dbb5e0449c`，结果及运行记录在 `evidence/ci-41622205481/`。该包包含百科读取与非 JSON 回退，不包含后续电脑入口、歌单和 KRC 改动；CI 场景指针和包字节核验不代表 Windows 实机键鼠、真实账号或硬件验收。
+
 电脑布局现为网易歌曲的菜单和详情提供百科入口，共用实际读取请求及弹窗，提供加载、空结果、错误重试、可选择文本与滚动；关闭弹窗取消请求，非网易歌曲不显示菜单入口。Linux JDK 17 编译通过，`DesktopSongWikiInputTest` 在隔离 Xvfb 的真实 Swing/Compose 窗口中，以系统 Robot 鼠标点击错误重试、滚轮滚动并以 Escape 关闭；受控 fixture 返回 50 组数据，截图从 Section 1 滚到 Section 8 之后，XML 和截图见 `evidence/song-wiki-desktop-linux/`。Xvfb 使用软件渲染，需改变窗口宽度 1 像素触发重绘；前两次显示启动因本机 `/tmp` 用户写入配额失败，后使用隔离挂载的工作区临时目录运行。此测试直接打开生产弹窗，**未验证菜单／详情入口实际点击**，也不是线上网易数据或 Windows 实机输入验收；手机版仍为操作面板而非 Android 独立页面。
 
 ## 网易歌单接口续迁
