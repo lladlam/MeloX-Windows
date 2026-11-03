@@ -14,6 +14,7 @@
 - Windows CI `41660785040` 对 `d77fcbf43fa9251382a7738f9500431f2cd622de` 成功；完整 ZIP 独立校验通过，396523954 字节、359 项，SHA-256 `1cf3106a077e3724f65f96d3550a7c840007e44a7298ff3c35a1e02a997899ac`，版本戳、ZIP／JAR 全部 CRC、固定资源和原生库检查见 `evidence/ci-41660785040/verification.json`。该包早于土耳其语及本批歌单改动。
 - Windows CI `41662998372` 对 `de674f1dd2227fd248a4122e23029e438d91f277` 成功；完整 ZIP 独立校验通过，396523954 字节、359 项，SHA-256 `d48256ae82ee647c20c598092321fa8e03302f6f61a15e596cb2dd72dace4c2f`，版本戳、ZIP／JAR 全部 CRC、固定资源和原生库检查见 `evidence/ci-41662998372/verification.json`。该包早于土耳其语及本批歌单改动。
 - Windows CI `41677694991` 对 `55e5a7cc8fe0f35e45b5ee4e4f5e8f9b8af53a90` 成功；完整 ZIP 独立校验通过，396529120 字节、359 项，SHA-256 `c7a687fab556bd02d0b5ad6eaba2f8f66be2eecf3d7af05e0665ddcb84235910`，版本戳、ZIP／JAR 全部 CRC、固定资源和原生库检查见 `evidence/ci-41677694991/verification.json`。该包包含部分土耳其语，不包含后续歌单移除代码。
+- Windows CI `41694570311` 对 `bbeb3ded025fa6d442be3d7d619cacf63e89b75f` 成功；完整 ZIP 独立校验通过，396535353 字节、359 项，SHA-256 `7142a05575f3b13e163145f06c6442912bb80d3394f8c69b88f30ba37f70ce4a`，版本戳、ZIP／JAR 全部 CRC、固定资源和原生库检查见 `evidence/ci-41694570311/verification.json`。该包包含歌单安全路由后端，不包含尚在验证的资料库移除 UI。
 
 ## 未完成、证据与下一步
 
