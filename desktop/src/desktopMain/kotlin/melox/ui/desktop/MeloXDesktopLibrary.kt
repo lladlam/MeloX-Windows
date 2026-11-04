@@ -26,10 +26,11 @@ import melox.playback.PlaybackCommands
 import melox.ui.navigation.MeloXCollectionLaunchBus
 import melox.ui.navigation.MeloXCollectionTarget
 import melox.ui.screens.PlaylistDetailScreen
+import melox.ui.screens.NeteasePlaylistRemovalDialog
 import melox.ui.theme.MeloXDesktopTextFontFamily
 import kotlin.math.floor
 
-private data class DesktopLibraryCard(val id: Long, val title: String, val subtitle: String, val artwork: String?, val open: () -> Unit)
+private data class DesktopLibraryCard(val id: Long, val title: String, val subtitle: String, val artwork: String?, val playlist: NeteasePlaylistSummary? = null, val open: () -> Unit)
 
 /** Non-NetEase providers keep the Mac grid/list structure with their real playlists. */
 @Composable
@@ -94,7 +95,9 @@ internal fun MeloXDesktopLibrary(page: String?, onLogin: () -> Unit) {
     val operations = remember(cookie) { NeteaseMusicOperationsClient(cookieProvider = { cookie }) }
     var songs by remember(section, cookie, revision) { mutableStateOf<List<SearchSong>>(emptyList()) }
     var cards by remember(section, cookie, revision) { mutableStateOf<List<DesktopLibraryCard>>(emptyList()) }
+    var protectedPlaylistId by remember(section, cookie, revision) { mutableStateOf<Long?>(null) }
     var playlist by remember(section, cookie, revision) { mutableStateOf<NeteasePlaylistSummary?>(null) }
+    var removingPlaylist by remember(section, cookie, revision) { mutableStateOf<NeteasePlaylistSummary?>(null) }
     var podcast by remember(section, cookie, revision) { mutableStateOf<MeloXPodcast?>(null) }
     var loading by remember(section, cookie, revision) { mutableStateOf(session.isLoggedIn) }
     var error by remember(section, cookie, revision) { mutableStateOf<String?>(null) }
@@ -131,7 +134,9 @@ internal fun MeloXDesktopLibrary(page: String?, onLogin: () -> Unit) {
                         val user = session.profile?.userId
                             ?: throw java.io.IOException(session.errorMessage ?: desktopString("ui.desktop.library.sign_in_message"))
                         if (section == "Playlists") {
-                            cards = client.userPlaylists(user).map { value -> DesktopLibraryCard(value.id, value.name, value.creatorName, value.coverUrl) { playlist = value } }
+                            val playlists = client.userPlaylists(user)
+                            protectedPlaylistId = playlists.firstOrNull()?.id
+                            cards = playlists.map { value -> DesktopLibraryCard(value.id, value.name, value.creatorName, value.coverUrl, value) { playlist = value } }
                         } else songs = client.likedSongs(user)
                     }
                 }
@@ -163,7 +168,12 @@ internal fun MeloXDesktopLibrary(page: String?, onLogin: () -> Unit) {
                     val count = floor((maxWidth.value + 20) / 165).toInt().coerceAtLeast(1)
                     val width = ((maxWidth.value - (count - 1) * 20) / count).coerceAtMost(205f).dp
                     Column(verticalArrangement = Arrangement.spacedBy(24.dp)) { cards.chunked(count).forEach { row -> Row(horizontalArrangement = Arrangement.spacedBy(20.dp)) {
-                        row.forEach { card -> DesktopHomeMediaCard(card.title, card.subtitle, card.artwork, width, "desktop-library-card:${card.id}", onOpen = card.open, isCircular = section == "Artists") }
+                        row.forEach { card ->
+                            val value = card.playlist
+                            if (value != null) DesktopLibraryPlaylistCard(value, width, card.open,
+                                onRemove = if (value.id == protectedPlaylistId) null else { { removingPlaylist = value } })
+                            else DesktopHomeMediaCard(card.title, card.subtitle, card.artwork, width, "desktop-library-card:${card.id}", onOpen = card.open, isCircular = section == "Artists")
+                        }
                     } } }
                 }
             }
@@ -178,5 +188,20 @@ internal fun MeloXDesktopLibrary(page: String?, onLogin: () -> Unit) {
             catch (failure: Exception) { error = failure.message ?: desktopString("ui.error.unknown") }
             finally { busy = false }
         }
+    }
+    removingPlaylist?.let { target ->
+        NeteasePlaylistRemovalDialog(target, session.profile?.userId, cookie,
+            onDismiss = { removingPlaylist = null },
+            onRemoved = { removingPlaylist = null; cards = cards.filterNot { it.id == target.id }; refresh++ })
+    }
+}
+
+@Composable
+internal fun DesktopLibraryPlaylistCard(playlist: NeteasePlaylistSummary, width: androidx.compose.ui.unit.Dp,
+    onOpen: () -> Unit, onRemove: (() -> Unit)?) {
+    Column(Modifier.width(width)) {
+        DesktopHomeMediaCard(playlist.name, playlist.creatorName, playlist.coverUrl, width,
+            "desktop-library-card:${playlist.id}", onOpen = onOpen)
+        if (onRemove != null) TextButton(modifier = Modifier.testTag("desktop-library-remove:${playlist.id}"), onClick = onRemove) { Text("移除") }
     }
 }

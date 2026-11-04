@@ -154,6 +154,7 @@ private fun LibrarySourceContent(navState: MeloXNavState?, requestedPage: String
         MeloXLibraryPage.entries.firstOrNull { it.name == requestedPage && it.isEnabled(source) }?.let { selectedPage = it }
     }
     var selectedPlaylist by remember(source, session.cookie, accountRevision) { mutableStateOf<NeteasePlaylistSummary?>(null) }
+    var removingPlaylist by remember(source, session.cookie, accountRevision) { mutableStateOf<NeteasePlaylistSummary?>(null) }
     var snapshot by remember(source, session.cookie, accountRevision) { mutableStateOf<NeteaseLibrarySnapshot?>(null) }
     var providerAccount by remember(source, accountRevision) { mutableStateOf<MusicAccountSummary?>(null) }
     var loading by remember(source, session.cookie, accountRevision) { mutableStateOf(source != MusicSource.Netease) }
@@ -483,6 +484,8 @@ private fun LibrarySourceContent(navState: MeloXNavState?, requestedPage: String
                             MeloXLibraryPage.Playlists -> MeloXLibraryPlaylistsPage(
                                 playlists = data.playlists,
                                 onPlaylistClick = { selectedPlaylist = it },
+                                onRemovePlaylist = if (source == MusicSource.Netease) { playlist -> removingPlaylist = playlist } else null,
+                                protectedPlaylistId = data.likedPlaylistId.takeIf { source == MusicSource.Netease },
                                 listState = playlistListState,
                                 sharedTransitionScope = sharedScope,
                                 animatedVisibilityScope = playlistTransitionVisibilityScope,
@@ -549,6 +552,28 @@ private fun LibrarySourceContent(navState: MeloXNavState?, requestedPage: String
                 }
             }
         }
+    }
+    removingPlaylist?.let { target ->
+        NeteasePlaylistRemovalDialog(target, session.profile?.userId, session.cookie,
+            onDismiss = { removingPlaylist = null },
+            onRemoved = {
+                removingPlaylist = null
+                val updated = snapshot?.let { current -> current.copy(playlists = current.playlists.filterNot { it.id == target.id }) }
+                val userId = session.profile?.userId
+                val cookie = session.cookie
+                val revision = NeteaseSessionStore.revision.value
+                if (updated != null) snapshot = updated
+                scope.launch {
+                    if (NeteaseSessionStore.revision.value == revision && session.cookie == cookie) {
+                        if (updated != null && userId != null) {
+                            try { cache.saveSnapshot(userId, updated) }
+                            catch (cancelled: kotlinx.coroutines.CancellationException) { throw cancelled }
+                            catch (_: Exception) { /* The network refresh still has to run. */ }
+                        }
+                        if (NeteaseSessionStore.revision.value == revision && session.cookie == cookie) refreshLibrary()
+                    }
+                }
+            })
     }
 }
 
@@ -898,9 +923,11 @@ internal fun MeloXLibraryTrackRow(
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-private fun MeloXLibraryPlaylistsPage(
+internal fun MeloXLibraryPlaylistsPage(
     playlists: List<NeteasePlaylistSummary>,
     onPlaylistClick: (NeteasePlaylistSummary) -> Unit,
+    onRemovePlaylist: ((NeteasePlaylistSummary) -> Unit)?,
+    protectedPlaylistId: Long? = null,
     listState: LazyListState,
     sharedTransitionScope: SharedTransitionScope,
     animatedVisibilityScope: AnimatedVisibilityScope,
@@ -983,11 +1010,18 @@ private fun MeloXLibraryPlaylistsPage(
                         color = MeloXColors.pageOnBackground().copy(alpha = 0.48f),
                     )
                 }
-                MeloXSymbolIcon(
-                    melox.ui.foundation.MeloXSymbol.ChevronRight,
-                    size = 15,
-                    color = MeloXColors.pageOnBackground().copy(alpha = 0.40f),
-                )
+                if (onRemovePlaylist != null && playlist.id != protectedPlaylistId) {
+                    androidx.compose.material3.TextButton(
+                        modifier = Modifier.testTag("library-remove:${playlist.id}"),
+                        onClick = { onRemovePlaylist(playlist) },
+                    ) { Text("移除") }
+                } else {
+                    MeloXSymbolIcon(
+                        melox.ui.foundation.MeloXSymbol.ChevronRight,
+                        size = 15,
+                        color = MeloXColors.pageOnBackground().copy(alpha = 0.40f),
+                    )
+                }
             }
             MeloXInsetDivider(leading = 84.dp)
         }

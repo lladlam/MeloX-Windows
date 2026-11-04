@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="NeteasePlaylistRemovalInputTest[desktop]" tests="1" skipped="0" failures="0" errors="0" timestamp="2026-11-04T00:04:26.379Z" hostname="lladlam-arch" time="45.756">
+  <properties/>
+  <testcase name="bothLayoutsOpenAndCancelConfirmation[desktop]" classname="melox.ui.screens.NeteasePlaylistRemovalInputTest" time="45.746"/>
+  <system-out><![CDATA[[SKIKO] warn: Fallback to next API
+org.jetbrains.skiko.RenderException: Cannot create Linux GL context
+[SKIKO] warn: Fallback to next API
+org.jetbrains.skiko.RenderException: Cannot create Linux GL context
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
